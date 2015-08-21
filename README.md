@@ -60,3 +60,4 @@ As the types are entirely implemented inline in headers, there are no linking re
 
 Just place the contents of the [include](./include) directory within your source tree so it is available
 to your compiler, then include the appropriate headers in your program, and away you go!
+
