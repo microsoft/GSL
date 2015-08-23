@@ -1,16 +1,19 @@
 # GSL: Guidelines Support Library
 
-This library contains functions and types that are suggested for use by the
-[C++ Coding Guidelines](https://github.com/Microsoft/CppCodingStandards/).
+The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
+[C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](isocpp.org). 
+This repo contains Microsoft's implementation of GSL, tracking Microsoft's fork of the Guidelines. Microsoft's fork can be found here:
+[C++ Core Guidelines](https://github.com/Microsoft/CppCoreGuidelines). 
 
-These include types like `array_view<>`, `string_view<>`, `owner<>` and others.
+The library includes types like `array_view<>`, `string_view<>`, `owner<>` and others.
 
 The entire implementation is provided inline in the headers under the [include](./include) directory.
 
 While some types have been broken out into their own headers (e.g. [include/array_view.h](./include/array_view.h)),
 it is simplest to just include [gsl.h](./include/gsl.h) and gain access to the entire library.
 
-> NOTE: We encourage contributions that improve or refine any of the types in this library.
+> NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to
+other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information about contributing. 
 
 # Quick Start
 ## Supported Platforms
@@ -23,8 +26,8 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * Linux using Clang\LLVM 3.6
 * Linux using GCC 5.1
 
-> If you successfully port GSL to another platform, we would love to hear from you. Please consider contributing
-any changes that were necessary back to this project to benefit the wider community. 
+> If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider 
+contributing any changes that were necessary back to this project to benefit the wider community. 
 
 ## Building the tests
 To build the tests, you will require the following:
