@@ -1420,10 +1420,41 @@ public:
 	}
 
 	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-	_CONSTEXPR auto operator == (const basic_array_view<OtherValueType, OtherBoundsType> & other) const -> decltype(this->m_pdata == other.m_pdata && this->m_bounds == other.m_bounds) _NOEXCEPT
+	_CONSTEXPR bool operator== (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
 	{
-		return m_pdata == other.m_pdata && m_bounds == other.m_bounds;
+        return m_bounds.size() == other.m_bounds.size() &&
+            (m_pdata == other.m_pdata || std::equal(this->begin(), this->end(), other.begin()));
 	}
+
+    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    _CONSTEXPR bool operator!= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+    {
+        return !(*this == other);
+    }
+
+    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    _CONSTEXPR bool operator< (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+    {
+        return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
+    }
+
+    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    _CONSTEXPR bool operator<= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+    {
+        return !(other < *this);
+    }
+
+    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    _CONSTEXPR bool operator> (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+    {
+        return (other < *this);
+    }
+
+    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    _CONSTEXPR bool operator>= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+    {
+        return !(*this < other);
+    }
 
 public:
 	template <typename OtherValueType, typename OtherBounds,
@@ -1603,7 +1634,7 @@ public:
 	{
 	}
 
-	_CONSTEXPR array_view(nullptr_t, size_type size) : Base(nullptr, bounds_type{})
+	_CONSTEXPR array_view(std::nullptr_t, size_type size) : Base(nullptr, bounds_type{})
 	{
 		fail_fast_assert(size == 0);
 	}
@@ -1795,6 +1826,13 @@ public:
 	{
 		return { &this->operator[](origin), strided_bounds<rank, size_type> {extents, details::make_stride(Base::bounds())}};
 	}
+
+    using Base::operator==;
+    using Base::operator!=;
+    using Base::operator<;
+    using Base::operator<=;
+    using Base::operator>;
+    using Base::operator>=;
 };
 
 template <typename T, size_t... Dimensions>
