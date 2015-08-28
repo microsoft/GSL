@@ -1634,7 +1634,7 @@ public:
 	{
 	}
 
-	_CONSTEXPR array_view(nullptr_t, size_type size) : Base(nullptr, bounds_type{})
+	_CONSTEXPR array_view(std::nullptr_t, size_type size) : Base(nullptr, bounds_type{})
 	{
 		fail_fast_assert(size == 0);
 	}
