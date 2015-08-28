@@ -11,8 +11,9 @@ include_directories(
 
 add_definitions(-DSAFER_CPP_TESTING)
 
-if(MSVC14 OR MSVC12)
-    # has the support we need
+if(MSVC14 OR MSVC12) # has the support we need
+    # remove unnecessary warnings about unchecked iterators
+    add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 else()
     include(CheckCXXCompilerFlag)
     CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)

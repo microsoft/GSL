@@ -1422,8 +1422,8 @@ public:
 	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
 	_CONSTEXPR bool operator== (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
 	{
-		return m_bounds.size() == other.m_bounds.size() &&
-            (m_pdata == other.m_pdata || std::equal(this->begin(), this->end(), other.begin(), other.end()));
+        return m_bounds.size() == other.m_bounds.size() &&
+            (m_pdata == other.m_pdata || std::equal(this->begin(), this->end(), other.begin()));
 	}
 
     template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
