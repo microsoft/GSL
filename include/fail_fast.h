@@ -27,12 +27,22 @@ namespace Guide
 //
 #if defined(SAFER_CPP_TESTING)
 
-struct fail_fast : public std::exception {};
+struct fail_fast : public std::exception 
+{
+	fail_fast() = default;
+
+	explicit fail_fast(char const* const message) :
+		std::exception(message)
+	{}
+};
+
 inline void fail_fast_assert(bool cond) { if (!cond) throw fail_fast(); }
+inline void fail_fast_assert(bool cond, const char* const message) { if (!cond) throw fail_fast(message); }
 
 #else
 
 inline void fail_fast_assert(bool cond) { if (!cond) std::terminate(); }
+inline void fail_fast_assert(bool cond, const char* const message) { if (!cond) std::terminate(); }
 
 #endif // SAFER_CPP_TESTING
 
