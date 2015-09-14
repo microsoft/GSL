@@ -1682,7 +1682,7 @@ public:
 	template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, size_type, N>,
 		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value
 		&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value>>
-	_CONSTEXPR array_view(T (&arr)[N]) : Base(arr, typename Helper::bounds_type())
+	_CONSTEXPR array_view (T (&arr)[N]) : Base(arr, typename Helper::bounds_type())
 	{
 	}
 
