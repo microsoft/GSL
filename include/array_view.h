@@ -290,7 +290,8 @@ public:
 	}	
 	_CONSTEXPR static index shift_left(const index<rank+1, value_type>& other) _NOEXCEPT
 	{
-		return (value_type(&)[rank])other.elems[1];
+            value_type (&arr)[rank] = (value_type(&)[rank])(*(other.elems + 1));
+            return index(arr);
 	}
 
 	using Base::operator[];
@@ -1647,7 +1648,8 @@ public:
 	using typename Base::index_type;
 	using typename Base::iterator;
 	using typename Base::const_iterator;
-	using Base::rank;
+	using typename Base::reference;
+        using Base::rank;
 
 public:
 	// basic
@@ -1848,14 +1850,16 @@ public:
 	// section
 	_CONSTEXPR strided_array_view<ValueTypeOpt, rank> section(index_type origin, index_type extents) const
 	{
-		size_type size = bounds().total_size() - bounds().linearize(origin);
+		size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
 		return{ &this->operator[](origin), size, strided_bounds<rank, size_type> {extents, details::make_stride(Base::bounds())} };
 	}
-	_CONSTEXPR reference operator[](const index_type& idx) const
+	
+        _CONSTEXPR reference operator[](const index_type& idx) const
 	{
 		return Base::operator[](idx);
 	}
-	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
+	
+        template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
 	_CONSTEXPR array_view<ValueTypeOpt, RestDimensions...> operator[](size_type idx) const
 	{
 		auto ret = Base::operator[](idx);
@@ -1936,6 +1940,7 @@ public:
 	using typename Base::index_type;
 	using typename Base::iterator;
 	using typename Base::const_iterator;
+        using typename Base::reference;
 	
 	// from static array of size N
 	template<size_type N>
@@ -1968,26 +1973,26 @@ public:
 	}
 
 	// convert from bytes
-	template <typename OtherValueType, typename Dummy = std::enable_if_t<std::is_same<value_type, const byte>::value>>
-	strided_array_view<OtherValueType, rank> as_strided_array_view() const
+        template <typename OtherValueType>
+        strided_array_view<typename std::enable_if<std::is_same<value_type, const byte>::value, OtherValueType>::type, rank> as_strided_array_view() const 
 	{
 		static_assert((sizeof(OtherValueType) >= sizeof(value_type)) && (sizeof(OtherValueType) % sizeof(value_type) == 0), "OtherValueType should have a size to contain a multiple of ValueTypes");
 		auto d = sizeof(OtherValueType) / sizeof(value_type);
 
-		size_type size = bounds().total_size() / d;
-		return{ (OtherValueType*)data(), size, bounds_type{ resize_extent(bounds().index_bounds(), d), resize_stride(bounds().strides(), d)} };
+		size_type size = this->bounds().total_size() / d;
+		return{ (OtherValueType*)this->data(), size, bounds_type{ resize_extent(this->bounds().index_bounds(), d), resize_stride(this->bounds().strides(), d)} };
 	}
 
 	strided_array_view section(index_type origin, index_type extents) const
 	{
-		size_type size = bounds().total_size() - bounds().linearize(origin);
+		size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
 		return { &this->operator[](origin), size, bounds_type {extents, details::make_stride(Base::bounds())}};
 	}
 
 	_CONSTEXPR reference operator[](const index_type& idx) const
-	{
-		return Base::operator[](idx);
-	}
+        {
+            return Base::operator[](idx);
+        }
 
 	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
 	_CONSTEXPR strided_array_view<value_type, rank-1> operator[](size_type idx) const
@@ -2048,7 +2053,7 @@ private:
 	const ArrayView * m_validator;
 	void validateThis() const
 	{
-		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size(), "iterator is out of range of the array");
+		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size());
 	}
 	contiguous_array_view_iterator (const ArrayView *container, bool isbegin = false) :
 		m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {	}
