@@ -1654,7 +1654,7 @@ public:
 	using typename Base::iterator;
 	using typename Base::const_iterator;
 	using typename Base::reference;
-        using Base::rank;
+	using Base::rank;
 
 public:
 	// basic
@@ -2058,7 +2058,7 @@ private:
 	const ArrayView * m_validator;
 	void validateThis() const
 	{
-		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size());
+		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size(), "iterator is out of range of the array");
 	}
 	contiguous_array_view_iterator (const ArrayView *container, bool isbegin = false) :
 		m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {	}
