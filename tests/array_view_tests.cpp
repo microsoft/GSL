@@ -320,17 +320,29 @@ SUITE(array_view_tests)
 				CHECK(sav.bounds().strides() == index<1>{ 1 });
 				CHECK(sav[1] == 2);
 
-				strided_array_view<const int, 1> sav_c{ {src}, {2, 1} };
+#if _MSC_VER > 1800
+				strided_array_view<const int, 1> sav_c{ array_view<const int>{src}, strided_bounds<1>{2, 1} };
+#else                
+                strided_array_view<const int, 1> sav_c{ array_view<const int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_c.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_c.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_c[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<volatile int, 1> sav_v{ {src}, {2, 1} };
+#else                
+				strided_array_view<volatile int, 1> sav_v{ array_view<volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_v.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_v.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_v[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+#else                
+                strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -345,7 +357,12 @@ SUITE(array_view_tests)
 				CHECK(sav_c.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_c[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+#else
+				strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
+                
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -360,7 +377,11 @@ SUITE(array_view_tests)
 				CHECK(sav_v.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_v[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+#else
+				strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -839,7 +860,8 @@ SUITE(array_view_tests)
 
 		for (unsigned int i = 0; i < section.size(); ++i)
 		{
-			CHECK(section[index<2>({ i,0 })] == av[i][1]);
+            auto idx = index<2>{ i,0 }; // avoid braces inside the CHECK macro
+			CHECK(section[idx] == av[i][1]);
 		}
 
 		CHECK(section.bounds().index_bounds()[0] == length);
@@ -848,7 +870,8 @@ SUITE(array_view_tests)
 		{
 			for (unsigned int j = 0; j < section.bounds().index_bounds()[1]; ++j)
 			{
-				CHECK(section[index<2>({ i,j })] == av[i][1]);
+                auto idx = index<2>{ i,j }; // avoid braces inside the CHECK macro
+				CHECK(section[idx] == av[i][1]);
 			}
 		}
 
@@ -923,7 +946,11 @@ SUITE(array_view_tests)
 		// pick every other element
 
 		auto length = av.size() / 2;
+#if _MSC_VER > 1800
 		auto bounds = strided_bounds<1>({ length }, { 2 });
+#else
+		auto bounds = strided_bounds<1>(index<1>{ length }, index<1>{ 2 });
+#endif        
 		strided_array_view<int, 1> strided(&av.data()[1], av.size() - 1, bounds);
 
 		CHECK(strided.size() == length);
@@ -982,7 +1009,10 @@ SUITE(array_view_tests)
 		{
 			for (unsigned int j = 0; j < section.extent<1>(); ++j)
 				for (unsigned int k = 0; k < section.extent<2>(); ++k)
-					CHECK(section[index<3>({ i,j,k })] == expected[2 * i + 2 * j + k]);
+                {
+                    auto idx = index<3>{ i,j,k }; // avoid braces in the CHECK macro
+					CHECK(section[idx] == expected[2 * i + 2 * j + k]);                   
+                }
 		}
 
 		for (unsigned int i = 0; i < section.extent<0>(); ++i)
