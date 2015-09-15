@@ -100,7 +100,7 @@ SUITE(array_view_tests)
 
 		// out of bounds
 		CHECK_THROW(av[1][3] = 3, fail_fast);
-		CHECK_THROW((av[index<2>{1, 3}] = 3), fail_fast);
+		CHECK_THROW((av[{1, 3}] = 3), fail_fast);
 
 		CHECK_THROW(av[10][2], fail_fast);
 		CHECK_THROW((av[{10,2}]), fail_fast);
@@ -320,17 +320,29 @@ SUITE(array_view_tests)
 				CHECK(sav.bounds().strides() == index<1>{ 1 });
 				CHECK(sav[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const int, 1> sav_c{ {src}, {2, 1} };
+#else                
+				strided_array_view<const int, 1> sav_c{ array_view<const int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_c.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_c.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_c[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<volatile int, 1> sav_v{ {src}, {2, 1} };
+#else                
+				strided_array_view<volatile int, 1> sav_v{ array_view<volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_v.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_v.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_v[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+#else                
+				strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -345,7 +357,12 @@ SUITE(array_view_tests)
 				CHECK(sav_c.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_c[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+#else
+				strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
+                
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -360,7 +377,11 @@ SUITE(array_view_tests)
 				CHECK(sav_v.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_v[1] == 2);
 
+#if _MSC_VER > 1800
 				strided_array_view<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+#else
+				strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
+#endif                
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -621,14 +642,18 @@ SUITE(array_view_tests)
 			// stride initializer list size should match the rank of the array
 			CHECK_THROW((index<1>{ 0,1 }), fail_fast);
 			CHECK_THROW((strided_array_view<int, 1>{ arr, {1, {1,1}} }), fail_fast);
+#ifdef _MSC_VER
 			CHECK_THROW((strided_array_view<int, 1>{ arr, {{1,1 }, {1,1}} }), fail_fast);
-
+#endif
 			CHECK_THROW((strided_array_view<int, 1>{ av, {1, {1,1}} }), fail_fast);
+#ifdef _MSC_VER
 			CHECK_THROW((strided_array_view<int, 1>{ av, {{1,1 }, {1,1}} }), fail_fast);
-			
+#endif			
 			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1}} }), fail_fast);
 			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1,1,1}} }), fail_fast);
+#ifdef _MSC_VER
 			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1,1,1}, {1}} }), fail_fast);
+#endif
 		}
 
 	}
@@ -739,8 +764,7 @@ SUITE(array_view_tests)
 			CHECK(empty_av.bounds().index_bounds() == index<1>{ 0 });
 			CHECK_THROW(empty_av[0], fail_fast);
 			CHECK_THROW(empty_av.begin()[0], fail_fast);
-			CHECK_THROW(empty_av.cbegin()[0], fail_fast);
-
+			CHECK_THROW(empty_av.cbegin()[0], fail_fast);		
 			for (auto& v : empty_av)
 			{
 				CHECK(false);
@@ -749,12 +773,10 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int> empty_av = {};
-
 			CHECK(empty_av.bounds().index_bounds() == index<1>{ 0 });
 			CHECK_THROW(empty_av[0], fail_fast);
 			CHECK_THROW(empty_av.begin()[0], fail_fast);
-			CHECK_THROW(empty_av.cbegin()[0], fail_fast);
-
+			CHECK_THROW(empty_av.cbegin()[0], fail_fast); 
 			for (auto& v : empty_av)
 			{
 				CHECK(false);
@@ -803,13 +825,13 @@ SUITE(array_view_tests)
 		array_view<int, dynamic_range> av(arr, 8);
 
 		size_t a[1] = { 0 };
-		index<1> i = index<1>(a);
+		index<1> i = a;
 
 		CHECK(av[i] == 4);
 
 		auto av2 = av.as_array_view(dim<4>(), dim<>(2));
 		size_t a2[2] = { 0, 1 };
-		index<2> i2 = index<2>(a2);
+		index<2> i2 = a2;
 
 		CHECK(av2[i2] == 0);
 		CHECK(av2[0][i] == 4);
@@ -877,7 +899,8 @@ SUITE(array_view_tests)
 
 		for (unsigned int i = 0; i < section.size(); ++i)
 		{
-			CHECK(section[index<2>({ i,0 })] == av[i][1]);
+            auto idx = index<2>{ i,0 }; // avoid braces inside the CHECK macro
+			CHECK(section[idx] == av[i][1]);
 		}
 
 		CHECK(section.bounds().index_bounds()[0] == length);
@@ -886,11 +909,12 @@ SUITE(array_view_tests)
 		{
 			for (unsigned int j = 0; j < section.bounds().index_bounds()[1]; ++j)
 			{
-				CHECK(section[index<2>({ i,j })] == av[i][1]);
+                auto idx = index<2>{ i,j }; // avoid braces inside the CHECK macro
+				CHECK(section[idx] == av[i][1]);
 			}
 		}
 
-		unsigned int idx = 0;
+		size_t idx = 0;
 		for (auto num : section)
 		{
 			CHECK(num == av[idx][1]);
@@ -961,7 +985,11 @@ SUITE(array_view_tests)
 		// pick every other element
 
 		auto length = av.size() / 2;
+#if _MSC_VER > 1800
 		auto bounds = strided_bounds<1>({ length }, { 2 });
+#else
+		auto bounds = strided_bounds<1>(index<1>{ length }, index<1>{ 2 });
+#endif        
 		strided_array_view<int, 1> strided(&av.data()[1], av.size() - 1, bounds);
 
 		CHECK(strided.size() == length);
@@ -1020,7 +1048,10 @@ SUITE(array_view_tests)
 		{
 			for (unsigned int j = 0; j < section.extent<1>(); ++j)
 				for (unsigned int k = 0; k < section.extent<2>(); ++k)
-					CHECK(section[index<3>({ i,j,k })] == expected[2 * i + 2 * j + k]);
+                {
+                    auto idx = index<3>{ i,j,k }; // avoid braces in the CHECK macro
+					CHECK(section[idx] == expected[2 * i + 2 * j + k]);                   
+                }
 		}
 
 		for (unsigned int i = 0; i < section.extent<0>(); ++i)
