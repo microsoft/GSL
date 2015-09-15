@@ -758,20 +758,62 @@ SUITE(array_view_tests)
 		}
 #endif
 
-		array_view<int, 0> empty_av(nullptr);
+		{
+			array_view<int, 0> empty_av(nullptr);
 
-		CHECK(empty_av.bounds().index_bounds() == index<1>{ 0 });
-		CHECK_THROW(empty_av[0], fail_fast);
+			CHECK(empty_av.bounds().index_bounds() == index<1>{ 0 });
+			CHECK_THROW(empty_av[0], fail_fast);
+			CHECK_THROW(empty_av.begin()[0], fail_fast);
+			CHECK_THROW(empty_av.cbegin()[0], fail_fast);		
+		
+			for (auto& v : empty_av)
+			{
+				CHECK(false);
+			}
+		}
 
-		strided_array_view<int, 1> empty_sav{ empty_av, { 0, 1 } };
+		{
+			array_view<int> empty_av = {};
+ 
+			CHECK(empty_av.bounds().index_bounds() == index<1>{ 0 });
+			CHECK_THROW(empty_av[0], fail_fast);
+			CHECK_THROW(empty_av.begin()[0], fail_fast);
+			CHECK_THROW(empty_av.cbegin()[0], fail_fast);
+ 
+			for (auto& v : empty_av)
+			{
+				CHECK(false);
+			}
+		}
 
-		CHECK(empty_sav.bounds().index_bounds() == index<1>{ 0 });
-		CHECK_THROW(empty_sav[0], fail_fast);
+		{
+			array_view<int, 0> empty_av(nullptr);
+			strided_array_view<int, 1> empty_sav{ empty_av, { 0, 1 } };
 
-		strided_array_view<int, 1> empty_sav2{ nullptr, 0, { 0, 1 } };
+			CHECK(empty_sav.bounds().index_bounds() == index<1>{ 0 });
+			CHECK_THROW(empty_sav[0], fail_fast);
+			CHECK_THROW(empty_sav.begin()[0], fail_fast);
+			CHECK_THROW(empty_sav.cbegin()[0], fail_fast);
 
-		CHECK(empty_sav.bounds().index_bounds() == index<1>{ 0 });
-		CHECK_THROW(empty_sav[0], fail_fast);
+			for (auto& v : empty_sav)
+			{
+				CHECK(false);
+			}
+		}
+
+		{
+			strided_array_view<int, 1> empty_sav{ nullptr, 0, { 0, 1 } };
+
+			CHECK(empty_sav.bounds().index_bounds() == index<1>{ 0 });
+			CHECK_THROW(empty_sav[0], fail_fast);
+			CHECK_THROW(empty_sav.begin()[0], fail_fast);
+			CHECK_THROW(empty_sav.cbegin()[0], fail_fast);
+
+			for (auto& v : empty_sav)
+			{
+				CHECK(false);
+			}
+		}
 	}
 
 	TEST(index_constructor)
