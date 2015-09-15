@@ -52,6 +52,11 @@
 
 #endif // _NOEXCEPT
 
+#if _MSC_VER <= 1800
+#pragma warning(push)
+#pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
+#endif // _MSC_VER <= 1800
+
 namespace Guide {
 
 /*
@@ -83,8 +88,12 @@ namespace details
 		_CONSTEXPR coordinate_facade() _NOEXCEPT
 		{
 			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
+		}
+		_CONSTEXPR coordinate_facade(const value_type(&values)[rank]) _NOEXCEPT
+		{
+			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
 			for (unsigned int i = 0; i < rank; ++i)
-				elems[i] = {};
+				elems[i] = values[i];
 		}
 		_CONSTEXPR coordinate_facade(value_type e0) _NOEXCEPT
 		{
@@ -96,7 +105,7 @@ namespace details
 		_CONSTEXPR coordinate_facade(std::initializer_list<value_type> il)
 		{
 			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
-			fail_fast_assert(il.size() == rank);
+			fail_fast_assert(il.size() == rank, "The size of the initializer list must match the rank of the array");
 			for (unsigned int i = 0; i < rank; ++i)
 			{
 				elems[i] = begin(il)[i];
@@ -119,13 +128,13 @@ namespace details
 		// Preconditions: component_idx < rank
 		_CONSTEXPR reference operator[](unsigned int component_idx)
 		{
-			fail_fast_assert(component_idx < rank);
+			fail_fast_assert(component_idx < rank, "Component index must be less than rank");
 			return elems[component_idx];
 		}
 		// Preconditions: component_idx < rank
 		_CONSTEXPR const_reference operator[](unsigned int component_idx) const
 		{
-			fail_fast_assert(component_idx < rank);
+			fail_fast_assert(component_idx < rank, "Component index must be less than rank");
 			return elems[component_idx];
 		}
 		_CONSTEXPR bool operator==(const ConcreteType& rhs) const _NOEXCEPT
@@ -230,7 +239,7 @@ namespace details
 				elems[i] /= v;
 			return to_concrete();
 		}
-		value_type elems[rank];
+		value_type elems[rank] = {};
 	private:
 		_CONSTEXPR const ConcreteType& to_concrete() const _NOEXCEPT
 		{
@@ -266,7 +275,8 @@ class index : private details::coordinate_facade<index<Rank, ValueType>, ValueTy
 {
 	using Base = details::coordinate_facade<index<Rank, ValueType>, ValueType, Rank>;
 	friend Base;
-
+	template <unsigned int OtherRank, typename OtherValueType>
+	friend class index;
 public:
 	using Base::rank;
 	using reference       = typename Base::reference;
@@ -274,15 +284,19 @@ public:
 	using size_type       = typename Base::value_type;
 	using value_type      = typename Base::value_type;
 	_CONSTEXPR index() _NOEXCEPT : Base(){}
-	template <bool Enabled = rank == 1, typename = std::enable_if_t<Enabled>>
-	_CONSTEXPR index(value_type e0) _NOEXCEPT : Base(e0){}
-	_CONSTEXPR index(std::initializer_list<value_type> il) : Base(il){}
+	_CONSTEXPR index(const value_type (&values)[rank]) _NOEXCEPT : Base(values) {}
+	_CONSTEXPR index(std::initializer_list<value_type> il) : Base(il) {}
 
 	_CONSTEXPR index(const index &) = default;
 
 	template <typename OtherValueType>
 	_CONSTEXPR index(const index<Rank, OtherValueType> &other) : Base(other)
 	{
+	}	
+	_CONSTEXPR static index shift_left(const index<rank+1, value_type>& other) _NOEXCEPT
+	{
+			value_type (&arr)[rank] = (value_type(&)[rank])(*(other.elems + 1));
+			return index(arr);
 	}
 
 	using Base::operator[];
@@ -318,10 +332,13 @@ public:
 	_CONSTEXPR index(value_type e0) _NOEXCEPT : value(e0)
 	{
 	}
+	_CONSTEXPR index(const value_type(&values)[1]) _NOEXCEPT : index(values[0]) 
+	{
+	}
 	// Preconditions: il.size() == rank
 	_CONSTEXPR index(std::initializer_list<value_type> il)
 	{
-		fail_fast_assert(il.size() == rank);
+		fail_fast_assert(il.size() == rank, "Size of the initializer list must match the rank of the array");
 		value = begin(il)[0];
 	}
 
@@ -334,18 +351,21 @@ public:
 		value = static_cast<ValueType>(other.value);
 	}
 
-
+	_CONSTEXPR static index shift_left(const index<rank + 1, value_type>& other) _NOEXCEPT
+	{
+		return other.elems[1];
+	}
 	// Preconditions: component_idx < rank
 	_CONSTEXPR reference operator[](size_type component_idx) _NOEXCEPT
 	{
-		fail_fast_assert(component_idx == 0);
+		fail_fast_assert(component_idx == 0, "Component index must be less than rank");
 		(void)(component_idx);
 		return value;
 	}
 	// Preconditions: component_idx < rank
 	_CONSTEXPR const_reference operator[](size_type component_idx) const _NOEXCEPT
 	{
-		fail_fast_assert(component_idx == 0);
+		fail_fast_assert(component_idx == 0, "Component index must be less than rank");
 		(void)(component_idx);
 		return value;
 	}
@@ -645,7 +665,7 @@ namespace details
 
 		template <typename T, unsigned int Dim = 0>
 		SizeType linearize(const T & arr) const {  
-			fail_fast_assert(arr[Dim] < CurrentRange);
+			fail_fast_assert(arr[Dim] < CurrentRange, "Index is out of range");
 			return static_cast<SizeType>(this->Base::totalSize()) * arr[Dim] + this->Base::template linearize<T, Dim + 1>(arr);
 		}
 
@@ -782,7 +802,8 @@ public:
 
 	_CONSTEXPR static_bounds(std::initializer_list<size_type> il) : m_ranges(il.begin())
 	{
-		fail_fast_assert(MyRanges::DynamicNum == il.size() && m_ranges.totalSize() <= details::SizeTypeTraits<size_type>::max_value);
+		fail_fast_assert(MyRanges::DynamicNum == il.size(), "Size of the initializer list must match the rank of the array");
+		fail_fast_assert(m_ranges.totalSize() <= details::SizeTypeTraits<size_type>::max_value, "Size of the range is larger than the max element of the size type");
 	}
 	
 	_CONSTEXPR static_bounds() = default;
@@ -807,6 +828,11 @@ public:
 	{
 		return static_cast<size_type>(m_ranges.totalSize());
 	}
+
+	_CONSTEXPR size_type total_size() const _NOEXCEPT
+	{
+		return static_cast<size_type>(m_ranges.totalSize());
+	}
 	
 	_CONSTEXPR size_type linearize(const index_type & idx) const
 	{
@@ -826,6 +852,7 @@ public:
 	template <unsigned int Dim = 0>
 	_CONSTEXPR size_type extent() const _NOEXCEPT
 	{
+		static_assert(Dim < rank, "dimension should be less than rank (dimension count starts from 0)");
 		return details::createTypeListIndexer(m_ranges).template get<Dim>().elementNum();
 	}
 	
@@ -866,12 +893,9 @@ class strided_bounds : private details::coordinate_facade<strided_bounds<Rank>, 
 {
 	using Base = details::coordinate_facade<strided_bounds<Rank>, SizeType, Rank>;
 	friend Base;
-	_CONSTEXPR void makeRegularStriae() _NOEXCEPT
-	{
-		strides[rank - 1] = 1;
-		for (int i = rank - 2; i >= 0; i--)
-			strides[i] = strides[i + 1] * Base::elems[i + 1];
-	}
+	template <unsigned int OtherRank, typename OtherSizeType>
+	friend class strided_bounds;
+
 public:
 	using Base::rank;
 	using reference       = typename Base::reference;
@@ -886,37 +910,40 @@ public:
 	static const size_t static_size = dynamic_range;
 	using sliced_type = std::conditional_t<rank != 0, strided_bounds<rank - 1>, void>;
 	using mapping_type = generalized_mapping_tag;
-	_CONSTEXPR strided_bounds() _NOEXCEPT : Base(), strides() {}
 	_CONSTEXPR strided_bounds(const strided_bounds &) = default;
 
 	template <typename OtherSizeType>
-	_CONSTEXPR strided_bounds(const strided_bounds<rank, OtherSizeType> &other) : Base(other)
+	_CONSTEXPR strided_bounds(const strided_bounds<rank, OtherSizeType> &other) 
+		: Base(other), m_strides(other.strides)
 	{
 	}
 
-	_CONSTEXPR strided_bounds(const index_type &extents, const index_type &stride)
-		: strides(stride)
+	_CONSTEXPR strided_bounds(const index_type &extents, const index_type &strides) 
+		: m_strides(strides)
 	{
 		for (unsigned int i = 0; i < rank; i++)
 			Base::elems[i] = extents[i];
 	}
-	_CONSTEXPR strided_bounds(std::initializer_list<value_type> il)
-		: Base(il)
+	_CONSTEXPR strided_bounds(const value_type(&values)[rank], index_type strides)
+		: Base(values), m_strides(std::move(strides))
 	{
-#ifndef NDEBUG
-		for (const auto& v : il)
-		{
-			fail_fast_assert(v >= 0);
-		}
-#endif
-		makeRegularStriae();
 	}
-	index_type strides;
-	_CONSTEXPR size_type size() const _NOEXCEPT
+	_CONSTEXPR index_type strides() const _NOEXCEPT
+	{ 
+		return m_strides;  
+	}
+	_CONSTEXPR size_type total_size() const _NOEXCEPT
 	{
 		size_type ret = 0;
 		for (unsigned int i = 0; i < rank; ++i)
-			ret += (Base::elems[i] - 1) * strides[i];
+			ret += (Base::elems[i] - 1) * m_strides[i];
+		return ret + 1;
+	}
+	_CONSTEXPR size_type size() const _NOEXCEPT
+	{
+		size_type ret = 1;
+		for (unsigned int i = 0; i < rank; ++i)
+			ret *= Base::elems[i];
 		return ret;
 	}
 	_CONSTEXPR bool contains(const index_type& idx) const _NOEXCEPT
@@ -933,32 +960,29 @@ public:
 		size_type ret = 0;
 		for (unsigned int i = 0; i < rank; i++)
 		{
-			fail_fast_assert(idx[i] < Base::elems[i]);
-			ret += idx[i] * strides[i];
+			fail_fast_assert(idx[i] < Base::elems[i], "index is out of bounds of the array");
+			ret += idx[i] * m_strides[i];
 		}
 		return ret;
 	}
+	_CONSTEXPR size_type stride() const _NOEXCEPT
+	{
+		return m_strides[0];
+	}
+	template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
 	_CONSTEXPR sliced_type slice() const
 	{
-		sliced_type ret;
-		for (unsigned int i = 1; i < rank; ++i)
-		{
-			ret.elems[i - 1] = Base::elems[i];
-			ret.strides[i - 1] = strides[i];
-		}
-		return ret;
+		return{ (value_type(&)[rank - 1])Base::elems[1], sliced_type::index_type::shift_left(m_strides) };
 	}
 	template <unsigned int Dim = 0>
 	_CONSTEXPR size_type extent() const _NOEXCEPT
 	{
+		static_assert(Dim < Rank, "dimension should be less than rank (dimension count starts from 0)");
 		return Base::elems[Dim];
 	}
 	_CONSTEXPR index_type index_bounds() const _NOEXCEPT
 	{
-		index_type extents;
-		for (unsigned int i = 0; i < rank; ++i)
-			extents[i] = (*this)[i];
-		return extents;
+		return index_type(Base::elems);
 	}
 	const_iterator begin() const _NOEXCEPT
 	{
@@ -968,6 +992,8 @@ public:
 	{
 		return const_iterator{ *this, index_bounds() };
 	}
+private:
+	index_type m_strides;
 };
 
 template <typename T>
@@ -1296,7 +1322,7 @@ namespace details
 	template <typename Bounds>
 	_CONSTEXPR std::enable_if_t<std::is_same<typename Bounds::mapping_type, generalized_mapping_tag>::value, typename Bounds::index_type> make_stride(const Bounds& bnd) _NOEXCEPT
 	{
-		return bnd.strides;
+		return bnd.strides();
 	}
 
 	// Make a stride vector from bounds, assuming continugous memory.
@@ -1358,6 +1384,7 @@ public:
 	template <unsigned int Dim = 0>
 	_CONSTEXPR size_type extent() const _NOEXCEPT
 	{
+		static_assert(Dim < rank, "dimension should be less than rank (dimension count starts from 0)");
 		return m_bounds.template extent<Dim>();
 	}
 	_CONSTEXPR size_type size() const _NOEXCEPT
@@ -1372,11 +1399,13 @@ public:
 	{
 		return m_pdata;
 	}
-	template <bool Enabled = rank != 1, typename Ret = std::enable_if_t<Enabled, sliced_type>>
+	template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
 	_CONSTEXPR Ret operator[](size_type idx) const
 	{
+		fail_fast_assert(idx < m_bounds.size(), "index is out of bounds of the array");
 		const size_type ridx = idx * m_bounds.stride();
-		fail_fast_assert(ridx < m_bounds.size());
+
+		fail_fast_assert(ridx < m_bounds.total_size(), "index is out of bounds of the underlying data");
 		return Ret {m_pdata + ridx, m_bounds.slice()};
 	}
 
@@ -1422,39 +1451,39 @@ public:
 	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
 	_CONSTEXPR bool operator== (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
 	{
-        return m_bounds.size() == other.m_bounds.size() &&
-            (m_pdata == other.m_pdata || std::equal(this->begin(), this->end(), other.begin()));
+		return m_bounds.size() == other.m_bounds.size() &&
+			(m_pdata == other.m_pdata || std::equal(this->begin(), this->end(), other.begin()));
 	}
 
-    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    _CONSTEXPR bool operator!= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
-    {
-        return !(*this == other);
-    }
+	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+	_CONSTEXPR bool operator!= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+	{
+		return !(*this == other);
+	}
 
-    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    _CONSTEXPR bool operator< (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
-    {
-        return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
-    }
+	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+	_CONSTEXPR bool operator< (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+	{
+		return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
+	}
 
-    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    _CONSTEXPR bool operator<= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
-    {
-        return !(other < *this);
-    }
+	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+	_CONSTEXPR bool operator<= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+	{
+		return !(other < *this);
+	}
 
-    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    _CONSTEXPR bool operator> (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
-    {
-        return (other < *this);
-    }
+	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+	_CONSTEXPR bool operator> (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+	{
+		return (other < *this);
+	}
 
-    template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    _CONSTEXPR bool operator>= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
-    {
-        return !(*this < other);
-    }
+	template <typename OtherValueType, typename OtherBoundsType, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+	_CONSTEXPR bool operator>= (const basic_array_view<OtherValueType, OtherBoundsType> & other) const _NOEXCEPT
+	{
+		return !(*this < other);
+	}
 
 public:
 	template <typename OtherValueType, typename OtherBounds,
@@ -1613,7 +1642,7 @@ class array_view : public basic_array_view<typename details::ArrayViewTypeTraits
 {
 	template <typename ValueTypeOpt2, size_t FirstDimension2, size_t... RestDimensions2>
 	friend class array_view;
-	using Base = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, 
+	using Base = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type,
 		static_bounds<typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type, FirstDimension, RestDimensions...>>;
 
 public:
@@ -1622,6 +1651,9 @@ public:
 	using typename Base::pointer;
 	using typename Base::value_type;
 	using typename Base::index_type;
+	using typename Base::iterator;
+	using typename Base::const_iterator;
+	using typename Base::reference;
 	using Base::rank;
 
 public:
@@ -1644,19 +1676,19 @@ public:
 	_CONSTEXPR array_view() : Base(nullptr, bounds_type())
 	{
 	}
-	
+
 	// from n-dimensions dynamic array (e.g. new int[m][4]) (precedence will be lower than the 1-dimension pointer)
 	template <typename T, typename Helper = details::ArrayViewArrayTraits<T, size_type, dynamic_range>,
 		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type (*)[], typename Base::value_type (*)[]>::value
 			&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value>>
-	_CONSTEXPR array_view(T * const & data,  size_type size) : Base(data, typename Helper::bounds_type{size})
+	_CONSTEXPR array_view(T * const & data, size_type size) : Base(data, typename Helper::bounds_type{size})
 	{
 	}
 
 	// from n-dimensions static array
 	template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, size_type, N>,
 		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value
-			&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value>>
+		&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value>>
 	_CONSTEXPR array_view (T (&arr)[N]) : Base(arr, typename Helper::bounds_type())
 	{
 	}
@@ -1664,8 +1696,8 @@ public:
 	// from n-dimensions static array with size
 	template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, size_type, dynamic_range>,
 		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value
-		&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value >>
-		_CONSTEXPR array_view(T(&arr)[N], size_type size) : Base(arr, typename Helper::bounds_type{ size })
+			&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value >>
+	_CONSTEXPR array_view(T(&arr)[N], size_type size) : Base(arr, typename Helper::bounds_type{ size })
 	{
 		fail_fast_assert(size <= N);
 	}
@@ -1693,17 +1725,17 @@ public:
 	// from containers. It must has .size() and .data() two function signatures
 	template <typename Cont, typename DataType = typename Cont::value_type, typename SizeType = typename Cont::size_type,
 		typename Dummy = std::enable_if_t<!details::is_array_view<Cont>::value
-			&& std::is_convertible<DataType (*)[], typename Base::value_type (*)[]>::value
-			&& std::is_convertible<static_bounds<SizeType, dynamic_range>, typename Base::bounds_type>::value
-			&& std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
+		&& std::is_convertible<DataType (*)[], typename Base::value_type (*)[]>::value
+		&& std::is_convertible<static_bounds<SizeType, dynamic_range>, typename Base::bounds_type>::value
+		&& std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
 	>
 	_CONSTEXPR array_view (Cont& cont) : Base(static_cast<pointer>(cont.data()), details::newBoundsHelper<typename Base::bounds_type>(cont.size()))
 	{
 
 	}
-	
+
 	_CONSTEXPR  array_view(const array_view &) = default;
-	
+
 	// convertible
 	template <typename OtherValueTypeOpt, size_t... OtherDimensions,
 		typename BaseType = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, static_bounds<typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type, FirstDimension, RestDimensions...>>,
@@ -1717,7 +1749,7 @@ public:
 	_CONSTEXPR array_view<ValueTypeOpt, Dimensions2::value...> as_array_view(Dimensions2... dims)
 	{
 		static_assert(sizeof...(Dimensions2) > 0, "the target array_view must have at least one dimension.");
-		using BoundsType = typename array_view<ValueTypeOpt, (Dimensions2::value)...>::bounds_type; 
+		using BoundsType = typename array_view<ValueTypeOpt, (Dimensions2::value)...>::bounds_type;
 		auto tobounds = details::static_as_array_view_helper<BoundsType>(dims..., details::Sep{});
 		details::verifyBoundsReshape(this->bounds(), tobounds);
 		return {this->data(), tobounds};
@@ -1725,7 +1757,7 @@ public:
 
 	// to bytes array
 	template <bool Enabled = std::is_standard_layout<std::decay_t<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type>>::value>
-	_CONSTEXPR auto as_bytes() const _NOEXCEPT -> 
+	_CONSTEXPR auto as_bytes() const _NOEXCEPT ->
 		array_view<array_view_options<const byte, size_type>, static_cast<size_t>(details::StaticSizeHelper<size_type, Base::bounds_type::static_size, sizeof(value_type)>::value)>
 	{
 		static_assert(Enabled, "The value_type of array_view must be standarded layout");
@@ -1733,7 +1765,7 @@ public:
 	}
 
 	template <bool Enabled = std::is_standard_layout<std::decay_t<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type>>::value>
-	_CONSTEXPR auto as_writeable_bytes() const _NOEXCEPT -> 
+	_CONSTEXPR auto as_writeable_bytes() const _NOEXCEPT ->
 		array_view<array_view_options<byte, size_type>, static_cast<size_t>(details::StaticSizeHelper<size_type, Base::bounds_type::static_size, sizeof(value_type)>::value)>
 	{
 		static_assert(Enabled, "The value_type of array_view must be standarded layout");
@@ -1759,7 +1791,7 @@ public:
 		fail_fast_assert((this->bytes() % sizeof(U)) == 0);
 		return { reinterpret_cast<U*>(this->data()), this->bytes() / sizeof(U) };
 	}
-	
+
 	// section on linear space
 	template<size_t Count>
 	_CONSTEXPR array_view<ValueTypeOpt, Count> first() const _NOEXCEPT
@@ -1824,15 +1856,28 @@ public:
 	// section
 	_CONSTEXPR strided_array_view<ValueTypeOpt, rank> section(index_type origin, index_type extents) const
 	{
-		return { &this->operator[](origin), strided_bounds<rank, size_type> {extents, details::make_stride(Base::bounds())}};
+		size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
+		return{ &this->operator[](origin), size, strided_bounds<rank, size_type> {extents, details::make_stride(Base::bounds())} };
+	}
+	
+		_CONSTEXPR reference operator[](const index_type& idx) const
+	{
+		return Base::operator[](idx);
+	}
+	
+		template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
+	_CONSTEXPR array_view<ValueTypeOpt, RestDimensions...> operator[](size_type idx) const
+	{
+		auto ret = Base::operator[](idx);
+		return{ ret.data(), ret.bounds() };
 	}
 
-    using Base::operator==;
-    using Base::operator!=;
-    using Base::operator<;
-    using Base::operator<=;
-    using Base::operator>;
-    using Base::operator>=;
+	using Base::operator==;
+	using Base::operator!=;
+	using Base::operator<;
+	using Base::operator<=;
+	using Base::operator>;
+	using Base::operator>=;
 };
 
 template <typename T, size_t... Dimensions>
@@ -1889,6 +1934,9 @@ template <typename ValueTypeOpt, unsigned int Rank>
 class strided_array_view : public basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, strided_bounds<Rank, typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type>>
 {
 	using Base = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, strided_bounds<Rank, typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type>>;
+
+	template<typename OtherValueOpt, unsigned int OtherRank>
+	friend class strided_array_view;
 public:
 	using Base::rank;
 	using typename Base::bounds_type;
@@ -1896,18 +1944,103 @@ public:
 	using typename Base::pointer;
 	using typename Base::value_type;
 	using typename Base::index_type;
+	using typename Base::iterator;
+	using typename Base::const_iterator;
+	using typename Base::reference;
+	
+	// from static array of size N
+	template<size_type N>
+	strided_array_view(value_type(&values)[N], bounds_type bounds) : Base(values, std::move(bounds))
+	{
+		fail_fast_assert(this->bounds().total_size() <= N, "Bounds cross data boundaries");
+	}
 
-	strided_array_view (pointer ptr, bounds_type bounds): Base(ptr, std::move(bounds))
+	// from raw data
+	strided_array_view(pointer ptr, size_type size, bounds_type bounds): Base(ptr, std::move(bounds))
 	{
+		fail_fast_assert(this->bounds().total_size() <= size, "Bounds cross data boundaries");
 	}
+
+	// from array view
 	template <size_t... Dimensions, typename Dummy = std::enable_if<sizeof...(Dimensions) == Rank>>
-	strided_array_view (array_view<ValueTypeOpt, Dimensions...> av, index_type strides): Base(av.data(), bounds_type{av.bounds().index_bounds(), strides})
+	strided_array_view(array_view<ValueTypeOpt, Dimensions...> av, bounds_type bounds) : Base(av.data(), std::move(bounds))
+	{
+		fail_fast_assert(this->bounds().total_size() <= av.bounds().total_size(), "Bounds cross data boundaries");
+	}
+	
+	// convertible
+	template <typename OtherValueTypeOpt,
+		typename BaseType = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, strided_bounds<Rank, typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type>>,
+		typename OtherBaseType = basic_array_view<typename details::ArrayViewTypeTraits<OtherValueTypeOpt>::value_type, strided_bounds<Rank, typename details::ArrayViewTypeTraits<OtherValueTypeOpt>::size_type>>,
+		typename Dummy = std::enable_if_t<std::is_convertible<OtherBaseType, BaseType>::value>
+	>
+	_CONSTEXPR strided_array_view(const strided_array_view<OtherValueTypeOpt, Rank> &av): Base(static_cast<const typename strided_array_view<OtherValueTypeOpt, Rank>::Base &>(av)) // static_cast is required
 	{
 	}
-	// section
+
+	// convert from bytes
+		template <typename OtherValueType>
+		strided_array_view<typename std::enable_if<std::is_same<value_type, const byte>::value, OtherValueType>::type, rank> as_strided_array_view() const 
+	{
+		static_assert((sizeof(OtherValueType) >= sizeof(value_type)) && (sizeof(OtherValueType) % sizeof(value_type) == 0), "OtherValueType should have a size to contain a multiple of ValueTypes");
+		auto d = sizeof(OtherValueType) / sizeof(value_type);
+
+		size_type size = this->bounds().total_size() / d;
+		return{ (OtherValueType*)this->data(), size, bounds_type{ resize_extent(this->bounds().index_bounds(), d), resize_stride(this->bounds().strides(), d)} };
+	}
+
 	strided_array_view section(index_type origin, index_type extents) const
 	{
-		return { &this->operator[](origin), bounds_type {extents, details::make_stride(Base::bounds())}};
+		size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
+		return { &this->operator[](origin), size, bounds_type {extents, details::make_stride(Base::bounds())}};
+	}
+
+	_CONSTEXPR reference operator[](const index_type& idx) const
+	{
+		return Base::operator[](idx);
+	}
+
+	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
+	_CONSTEXPR strided_array_view<value_type, rank-1> operator[](size_type idx) const
+	{
+		auto ret = Base::operator[](idx);
+		return{ ret.data(), ret.bounds().total_size(), ret.bounds() };
+	}
+
+private:
+	static index_type resize_extent(const index_type& extent, size_t d)
+	{
+		fail_fast_assert(extent[rank - 1] >= d && (extent[rank-1] % d == 0), "The last dimension of the array needs to contain a multiple of new type elements");
+
+		index_type ret = extent;
+		ret[rank - 1] /= d;
+
+		return ret;
+	}
+
+	template <bool Enabled = (rank == 1), typename Dummy = std::enable_if_t<Enabled>>
+	static index_type resize_stride(const index_type& strides, size_t d, void *p = 0)
+	{
+		fail_fast_assert(strides[rank - 1] == 1, "Only strided arrays with regular strides can be resized");
+
+		return strides;
+	}
+
+	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
+	static index_type resize_stride(const index_type& strides, size_t d)
+	{
+		fail_fast_assert(strides[rank - 1] == 1, "Only strided arrays with regular strides can be resized");
+		fail_fast_assert(strides[rank - 2] >= d && (strides[rank - 2] % d == 0), "The strides must have contiguous chunks of memory that can contain a multiple of new type elements");
+
+		for (int i = rank - 2; i >= 0; --i)
+		{
+			fail_fast_assert((strides[i] >= strides[i + 1]) && (strides[i] % strides[i + 1] == 0), "Only strided arrays with regular strides can be resized");
+		}
+
+		index_type ret = strides / d;
+		ret[rank - 1] = 1;
+
+		return ret;
 	}
 };
 
@@ -1926,7 +2059,7 @@ private:
 	const ArrayView * m_validator;
 	void validateThis() const
 	{
-		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size());
+		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size(), "iterator is out of range of the array");
 	}
 	contiguous_array_view_iterator (const ArrayView *container, bool isbegin = false) :
 		m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {	}
@@ -2043,7 +2176,7 @@ private:
 	template <typename ValueType, typename Bounds>
 	friend class basic_array_view;
 	const ArrayView * m_container;
-	typename ArrayView::iterator m_itr;
+	typename ArrayView::bounds_type::iterator m_itr;
 	general_array_view_iterator(const ArrayView *container, bool isbegin = false) :
 		m_container(container), m_itr(isbegin ? m_container->bounds().begin() : m_container->bounds().end())
 	{
@@ -2147,5 +2280,10 @@ general_array_view_iterator<ArrayView> operator+(typename general_array_view_ite
 }
 
 } // namespace Guide
+
+#if _MSC_VER <= 1800
+#pragma warning(pop)
+#endif // _MSC_VER <= 1800
+
 
 #pragma pop_macro("_NOEXCEPT")
