@@ -1946,7 +1946,7 @@ public:
 	using typename Base::index_type;
 	using typename Base::iterator;
 	using typename Base::const_iterator;
-		using typename Base::reference;
+	using typename Base::reference;
 	
 	// from static array of size N
 	template<size_type N>
@@ -1996,9 +1996,9 @@ public:
 	}
 
 	_CONSTEXPR reference operator[](const index_type& idx) const
-		{
-			return Base::operator[](idx);
-		}
+	{
+		return Base::operator[](idx);
+	}
 
 	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
 	_CONSTEXPR strided_array_view<value_type, rank-1> operator[](size_type idx) const
