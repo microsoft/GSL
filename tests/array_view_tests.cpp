@@ -362,7 +362,7 @@ SUITE(array_view_tests)
 #else
 				strided_array_view<const volatile int, 1> sav_cv{ array_view<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif                
-                
+				
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -899,7 +899,7 @@ SUITE(array_view_tests)
 
 		for (unsigned int i = 0; i < section.size(); ++i)
 		{
-            auto idx = index<2>{ i,0 }; // avoid braces inside the CHECK macro
+			auto idx = index<2>{ i,0 }; // avoid braces inside the CHECK macro
 			CHECK(section[idx] == av[i][1]);
 		}
 
@@ -909,7 +909,7 @@ SUITE(array_view_tests)
 		{
 			for (unsigned int j = 0; j < section.bounds().index_bounds()[1]; ++j)
 			{
-                auto idx = index<2>{ i,j }; // avoid braces inside the CHECK macro
+				auto idx = index<2>{ i,j }; // avoid braces inside the CHECK macro
 				CHECK(section[idx] == av[i][1]);
 			}
 		}
@@ -1048,10 +1048,10 @@ SUITE(array_view_tests)
 		{
 			for (unsigned int j = 0; j < section.extent<1>(); ++j)
 				for (unsigned int k = 0; k < section.extent<2>(); ++k)
-                {
-                    auto idx = index<3>{ i,j,k }; // avoid braces in the CHECK macro
+				{
+					auto idx = index<3>{ i,j,k }; // avoid braces in the CHECK macro
 					CHECK(section[idx] == expected[2 * i + 2 * j + k]);                   
-                }
+				}
 		}
 
 		for (unsigned int i = 0; i < section.extent<0>(); ++i)

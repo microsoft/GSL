@@ -295,8 +295,8 @@ public:
 	}	
 	_CONSTEXPR static index shift_left(const index<rank+1, value_type>& other) _NOEXCEPT
 	{
-            value_type (&arr)[rank] = (value_type(&)[rank])(*(other.elems + 1));
-            return index(arr);
+			value_type (&arr)[rank] = (value_type(&)[rank])(*(other.elems + 1));
+			return index(arr);
 	}
 
 	using Base::operator[];
@@ -1860,12 +1860,12 @@ public:
 		return{ &this->operator[](origin), size, strided_bounds<rank, size_type> {extents, details::make_stride(Base::bounds())} };
 	}
 	
-        _CONSTEXPR reference operator[](const index_type& idx) const
+		_CONSTEXPR reference operator[](const index_type& idx) const
 	{
 		return Base::operator[](idx);
 	}
 	
-        template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
+		template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
 	_CONSTEXPR array_view<ValueTypeOpt, RestDimensions...> operator[](size_type idx) const
 	{
 		auto ret = Base::operator[](idx);
@@ -1946,7 +1946,7 @@ public:
 	using typename Base::index_type;
 	using typename Base::iterator;
 	using typename Base::const_iterator;
-        using typename Base::reference;
+		using typename Base::reference;
 	
 	// from static array of size N
 	template<size_type N>
@@ -1979,8 +1979,8 @@ public:
 	}
 
 	// convert from bytes
-        template <typename OtherValueType>
-        strided_array_view<typename std::enable_if<std::is_same<value_type, const byte>::value, OtherValueType>::type, rank> as_strided_array_view() const 
+		template <typename OtherValueType>
+		strided_array_view<typename std::enable_if<std::is_same<value_type, const byte>::value, OtherValueType>::type, rank> as_strided_array_view() const 
 	{
 		static_assert((sizeof(OtherValueType) >= sizeof(value_type)) && (sizeof(OtherValueType) % sizeof(value_type) == 0), "OtherValueType should have a size to contain a multiple of ValueTypes");
 		auto d = sizeof(OtherValueType) / sizeof(value_type);
@@ -1996,9 +1996,9 @@ public:
 	}
 
 	_CONSTEXPR reference operator[](const index_type& idx) const
-        {
-            return Base::operator[](idx);
-        }
+		{
+			return Base::operator[](idx);
+		}
 
 	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
 	_CONSTEXPR strided_array_view<value_type, rank-1> operator[](size_type idx) const
