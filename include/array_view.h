@@ -1643,7 +1643,7 @@ class array_view : public basic_array_view<typename details::ArrayViewTypeTraits
 	template <typename ValueTypeOpt2, size_t FirstDimension2, size_t... RestDimensions2>
 	friend class array_view;
 	using Base = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type,
-		static_bounds<typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type, FirstDimension, RestDimensions... >>;
+		static_bounds<typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type, FirstDimension, RestDimensions...>>;
 
 public:
 	using typename Base::bounds_type;
@@ -1679,17 +1679,17 @@ public:
 
 	// from n-dimensions dynamic array (e.g. new int[m][4]) (precedence will be lower than the 1-dimension pointer)
 	template <typename T, typename Helper = details::ArrayViewArrayTraits<T, size_type, dynamic_range>,
-		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value
-			&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value >>
-	_CONSTEXPR array_view(T * const & data, size_type size) : Base(data, typename Helper::bounds_type{ size })
+		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type (*)[], typename Base::value_type (*)[]>::value
+			&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value>>
+	_CONSTEXPR array_view(T * const & data, size_type size) : Base(data, typename Helper::bounds_type{size})
 	{
 	}
 
 	// from n-dimensions static array
 	template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, size_type, N>,
 		typename Dummy = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value
-		&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value >>
-	_CONSTEXPR array_view(T(&arr)[N]) : Base(arr, typename Helper::bounds_type())
+		&& std::is_convertible<typename Helper::bounds_type, typename Base::bounds_type>::value>>
+	_CONSTEXPR array_view (T (&arr)[N]) : Base(arr, typename Helper::bounds_type())
 	{
 	}
 
@@ -1725,11 +1725,11 @@ public:
 	// from containers. It must has .size() and .data() two function signatures
 	template <typename Cont, typename DataType = typename Cont::value_type, typename SizeType = typename Cont::size_type,
 		typename Dummy = std::enable_if_t<!details::is_array_view<Cont>::value
-		&& std::is_convertible<DataType(*)[], typename Base::value_type(*)[]>::value
+		&& std::is_convertible<DataType (*)[], typename Base::value_type (*)[]>::value
 		&& std::is_convertible<static_bounds<SizeType, dynamic_range>, typename Base::bounds_type>::value
 		&& std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
 	>
-	_CONSTEXPR array_view(Cont& cont) : Base(static_cast<pointer>(cont.data()), details::newBoundsHelper<typename Base::bounds_type>(cont.size()))
+	_CONSTEXPR array_view (Cont& cont) : Base(static_cast<pointer>(cont.data()), details::newBoundsHelper<typename Base::bounds_type>(cont.size()))
 	{
 
 	}
@@ -1752,7 +1752,7 @@ public:
 		using BoundsType = typename array_view<ValueTypeOpt, (Dimensions2::value)...>::bounds_type;
 		auto tobounds = details::static_as_array_view_helper<BoundsType>(dims..., details::Sep{});
 		details::verifyBoundsReshape(this->bounds(), tobounds);
-		return{ this->data(), tobounds };
+		return {this->data(), tobounds};
 	}
 
 	// to bytes array
@@ -1761,7 +1761,7 @@ public:
 		array_view<array_view_options<const byte, size_type>, static_cast<size_t>(details::StaticSizeHelper<size_type, Base::bounds_type::static_size, sizeof(value_type)>::value)>
 	{
 		static_assert(Enabled, "The value_type of array_view must be standarded layout");
-		return{ reinterpret_cast<const byte*>(this->data()), this->bytes() };
+		return { reinterpret_cast<const byte*>(this->data()), this->bytes() };
 	}
 
 	template <bool Enabled = std::is_standard_layout<std::decay_t<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type>>::value>
@@ -1769,8 +1769,9 @@ public:
 		array_view<array_view_options<byte, size_type>, static_cast<size_t>(details::StaticSizeHelper<size_type, Base::bounds_type::static_size, sizeof(value_type)>::value)>
 	{
 		static_assert(Enabled, "The value_type of array_view must be standarded layout");
-		return{ reinterpret_cast<byte*>(this->data()), this->bytes() };
+		return { reinterpret_cast<byte*>(this->data()), this->bytes() };
 	}
+
 
 	// from bytes array
 	template<typename U, bool IsByte = std::is_same<value_type, const byte>::value, typename Dummy = std::enable_if_t<IsByte && sizeof...(RestDimensions) == 0>>
@@ -1779,7 +1780,7 @@ public:
 		static_assert(std::is_standard_layout<U>::value && (Base::bounds_type::static_size == dynamic_range || Base::bounds_type::static_size % sizeof(U) == 0),
 			"Target type must be standard layout and its size must match the byte array size");
 		fail_fast_assert((this->bytes() % sizeof(U)) == 0);
-		return{ reinterpret_cast<const U*>(this->data()), this->bytes() / sizeof(U) };
+		return { reinterpret_cast<const U*>(this->data()), this->bytes() / sizeof(U) };
 	}
 
 	template<typename U, bool IsByte = std::is_same<value_type, byte>::value, typename Dummy = std::enable_if_t<IsByte && sizeof...(RestDimensions) == 0>>
@@ -1788,7 +1789,7 @@ public:
 		static_assert(std::is_standard_layout<U>::value && (Base::bounds_type::static_size == dynamic_range || Base::bounds_type::static_size % sizeof(U) == 0),
 			"Target type must be standard layout and its size must match the byte array size");
 		fail_fast_assert((this->bytes() % sizeof(U)) == 0);
-		return{ reinterpret_cast<U*>(this->data()), this->bytes() / sizeof(U) };
+		return { reinterpret_cast<U*>(this->data()), this->bytes() / sizeof(U) };
 	}
 
 	// section on linear space
@@ -1797,13 +1798,13 @@ public:
 	{
 		static_assert(bounds_type::static_size == dynamic_range || Count <= bounds_type::static_size, "Index is out of bound");
 		fail_fast_assert(bounds_type::static_size != dynamic_range || Count <= this->size()); // ensures we only check condition when needed
-		return{ this->data(), Count };
+		return { this->data(), Count };
 	}
 
 	_CONSTEXPR array_view<ValueTypeOpt, dynamic_range> first(size_type count) const _NOEXCEPT
 	{
 		fail_fast_assert(count <= this->size());
-		return{ this->data(), count };
+		return { this->data(), count };
 	}
 
 	template<size_t Count>
@@ -1811,13 +1812,13 @@ public:
 	{
 		static_assert(bounds_type::static_size == dynamic_range || Count <= bounds_type::static_size, "Index is out of bound");
 		fail_fast_assert(bounds_type::static_size != dynamic_range || Count <= this->size());
-		return{ this->data() + this->size() - Count, Count };
+		return { this->data() + this->size() - Count, Count };
 	}
 
 	_CONSTEXPR array_view<ValueTypeOpt, dynamic_range> last(size_type count) const _NOEXCEPT
 	{
 		fail_fast_assert(count <= this->size());
-		return{ this->data() + this->size() - count, count };
+		return { this->data() + this->size() - count, count };
 	}
 
 	template<size_t Offset, size_t Count>
@@ -1825,13 +1826,13 @@ public:
 	{
 		static_assert(bounds_type::static_size == dynamic_range || ((Offset == 0 || Offset < bounds_type::static_size) && Offset + Count <= bounds_type::static_size), "Index is out of bound");
 		fail_fast_assert(bounds_type::static_size != dynamic_range || ((Offset == 0 || Offset < this->size()) && Offset + Count <= this->size()));
-		return{ this->data() + Offset, Count };
+		return { this->data() + Offset, Count };
 	}
 
 	_CONSTEXPR array_view<ValueTypeOpt, dynamic_range> sub(size_type offset, size_type count) const _NOEXCEPT
 	{
 		fail_fast_assert((offset == 0 || offset < this->size()) && offset + count <= this->size());
-		return{ this->data() + offset, count };
+		return { this->data() + offset, count };
 	}
 
 	// size
