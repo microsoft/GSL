@@ -765,7 +765,6 @@ SUITE(array_view_tests)
 			CHECK_THROW(empty_av[0], fail_fast);
 			CHECK_THROW(empty_av.begin()[0], fail_fast);
 			CHECK_THROW(empty_av.cbegin()[0], fail_fast);		
-		
 			for (auto& v : empty_av)
 			{
 				CHECK(false);
@@ -774,12 +773,10 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int> empty_av = {};
- 
 			CHECK(empty_av.bounds().index_bounds() == index<1>{ 0 });
 			CHECK_THROW(empty_av[0], fail_fast);
 			CHECK_THROW(empty_av.begin()[0], fail_fast);
-			CHECK_THROW(empty_av.cbegin()[0], fail_fast);
- 
+			CHECK_THROW(empty_av.cbegin()[0], fail_fast); 
 			for (auto& v : empty_av)
 			{
 				CHECK(false);
@@ -1532,114 +1529,114 @@ SUITE(array_view_tests)
 
 	TEST(ArrayViewComparison)
 	{
-        {
-            int arr[10][2];
-            auto av1 = as_array_view(arr);
-            array_view<const int, dynamic_range, 2> av2 = av1;
+		{
+			int arr[10][2];
+			auto av1 = as_array_view(arr);
+			array_view<const int, dynamic_range, 2> av2 = av1;
 
-            CHECK(av1 == av2);
+			CHECK(av1 == av2);
 
-            array_view<array_view_options<int, char>, 20> av3 = av1.as_array_view(dim<>(20));
-            CHECK(av3 == av2 && av3 == av1);
-        }
+			array_view<array_view_options<int, char>, 20> av3 = av1.as_array_view(dim<>(20));
+			CHECK(av3 == av2 && av3 == av1);
+		}
 
-        {
-            auto av1 = nullptr;
-            auto av2 = nullptr;
-            CHECK(av1 == av2);
-            CHECK(!(av1 != av2));
-            CHECK(!(av1 < av2));
-            CHECK(av1 <= av2);
-            CHECK(!(av1 > av2));
-            CHECK(av1 >= av2);
-            CHECK(av2 == av1);
-            CHECK(!(av2 != av1));
-            CHECK(!(av2 < av1));
-            CHECK(av2 <= av1);
-            CHECK(!(av2 > av1));
-            CHECK(av2 >= av1);
-        }
+		{
+			auto av1 = nullptr;
+			auto av2 = nullptr;
+			CHECK(av1 == av2);
+			CHECK(!(av1 != av2));
+			CHECK(!(av1 < av2));
+			CHECK(av1 <= av2);
+			CHECK(!(av1 > av2));
+			CHECK(av1 >= av2);
+			CHECK(av2 == av1);
+			CHECK(!(av2 != av1));
+			CHECK(!(av2 < av1));
+			CHECK(av2 <= av1);
+			CHECK(!(av2 > av1));
+			CHECK(av2 >= av1);
+		}
 
-        {
-            int arr[] = { 2, 1 }; // bigger
+		{
+			int arr[] = { 2, 1 }; // bigger
 
-            array_view<int> av1 = nullptr;
-            array_view<int> av2 = arr;
+			array_view<int> av1 = nullptr;
+			array_view<int> av2 = arr;
 
-            CHECK(av1 != av2);
-            CHECK(av2 != av1);
-            CHECK(!(av1 == av2));
-            CHECK(!(av2 == av1));
-            CHECK(av1 < av2);
-            CHECK(!(av2 < av1));
-            CHECK(av1 <= av2);
-            CHECK(!(av2 <= av1));
-            CHECK(av2 > av1);
-            CHECK(!(av1 > av2));
-            CHECK(av2 >= av1);
-            CHECK(!(av1 >= av2));
-        }
+			CHECK(av1 != av2);
+			CHECK(av2 != av1);
+			CHECK(!(av1 == av2));
+			CHECK(!(av2 == av1));
+			CHECK(av1 < av2);
+			CHECK(!(av2 < av1));
+			CHECK(av1 <= av2);
+			CHECK(!(av2 <= av1));
+			CHECK(av2 > av1);
+			CHECK(!(av1 > av2));
+			CHECK(av2 >= av1);
+			CHECK(!(av1 >= av2));
+		}
 
-        {
-            int arr1[] = { 1, 2 };
-            int arr2[] = { 1, 2 };
-            array_view<int> av1 = arr1;
-            array_view<int> av2 = arr2;
+		{
+			int arr1[] = { 1, 2 };
+			int arr2[] = { 1, 2 };
+			array_view<int> av1 = arr1;
+			array_view<int> av2 = arr2;
 
-            CHECK(av1 == av2);
-            CHECK(!(av1 != av2));
-            CHECK(!(av1 < av2));
-            CHECK(av1 <= av2);
-            CHECK(!(av1 > av2));
-            CHECK(av1 >= av2);
-            CHECK(av2 == av1);
-            CHECK(!(av2 != av1));
-            CHECK(!(av2 < av1));
-            CHECK(av2 <= av1);
-            CHECK(!(av2 > av1));
-            CHECK(av2 >= av1);
-        }
+			CHECK(av1 == av2);
+			CHECK(!(av1 != av2));
+			CHECK(!(av1 < av2));
+			CHECK(av1 <= av2);
+			CHECK(!(av1 > av2));
+			CHECK(av1 >= av2);
+			CHECK(av2 == av1);
+			CHECK(!(av2 != av1));
+			CHECK(!(av2 < av1));
+			CHECK(av2 <= av1);
+			CHECK(!(av2 > av1));
+			CHECK(av2 >= av1);
+		}
 
-        {
-            int arr[] = { 1, 2, 3 };
+		{
+			int arr[] = { 1, 2, 3 };
 
-            array_view<int> av1 = { &arr[0], 2 }; // shorter
-            array_view<int> av2 = arr;            // longer
+			array_view<int> av1 = { &arr[0], 2 }; // shorter
+			array_view<int> av2 = arr;            // longer
 
-            CHECK(av1 != av2);
-            CHECK(av2 != av1);
-            CHECK(!(av1 == av2));
-            CHECK(!(av2 == av1));
-            CHECK(av1 < av2);
-            CHECK(!(av2 < av1));
-            CHECK(av1 <= av2);
-            CHECK(!(av2 <= av1));
-            CHECK(av2 > av1);
-            CHECK(!(av1 > av2));
-            CHECK(av2 >= av1);
-            CHECK(!(av1 >= av2));
-        }
+			CHECK(av1 != av2);
+			CHECK(av2 != av1);
+			CHECK(!(av1 == av2));
+			CHECK(!(av2 == av1));
+			CHECK(av1 < av2);
+			CHECK(!(av2 < av1));
+			CHECK(av1 <= av2);
+			CHECK(!(av2 <= av1));
+			CHECK(av2 > av1);
+			CHECK(!(av1 > av2));
+			CHECK(av2 >= av1);
+			CHECK(!(av1 >= av2));
+		}
 
-        {
-            int arr1[] = { 1, 2 }; // smaller
-            int arr2[] = { 2, 1 }; // bigger
+		{
+			int arr1[] = { 1, 2 }; // smaller
+			int arr2[] = { 2, 1 }; // bigger
 
-            array_view<int> av1 = arr1;
-            array_view<int> av2 = arr2;
+			array_view<int> av1 = arr1;
+			array_view<int> av2 = arr2;
 
-            CHECK(av1 != av2);
-            CHECK(av2 != av1);
-            CHECK(!(av1 == av2));
-            CHECK(!(av2 == av1));
-            CHECK(av1 < av2);
-            CHECK(!(av2 < av1));
-            CHECK(av1 <= av2);
-            CHECK(!(av2 <= av1));
-            CHECK(av2 > av1);
-            CHECK(!(av1 > av2));
-            CHECK(av2 >= av1);
-            CHECK(!(av1 >= av2));
-        }
+			CHECK(av1 != av2);
+			CHECK(av2 != av1);
+			CHECK(!(av1 == av2));
+			CHECK(!(av2 == av1));
+			CHECK(av1 < av2);
+			CHECK(!(av2 < av1));
+			CHECK(av1 <= av2);
+			CHECK(!(av2 <= av1));
+			CHECK(av2 > av1);
+			CHECK(!(av1 > av2));
+			CHECK(av2 >= av1);
+			CHECK(!(av1 >= av2));
+		}
 	}
 }
 
