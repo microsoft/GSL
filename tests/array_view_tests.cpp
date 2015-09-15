@@ -751,11 +751,11 @@ SUITE(array_view_tests)
 	TEST(empty_arrays)
 	{
 #ifdef CONFIRM_COMPILATION_ERRORS
-	{
-		array_view<int, 1> empty;
-		strided_array_view<int, 2> empty2;
-		strided_array_view<int, 1> empty3{ nullptr,{ 0, 1 } };
-	}
+		{
+			array_view<int, 1> empty;
+			strided_array_view<int, 2> empty2;
+			strided_array_view<int, 1> empty3{ nullptr,{ 0, 1 } };
+		}
 #endif
 
 		array_view<int, 0> empty_av(nullptr);
