@@ -52,10 +52,12 @@
 
 #endif // _NOEXCEPT
 
+#if _MSC_VER
 #if _MSC_VER <= 1800
 #pragma warning(push)
 #pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
 #endif // _MSC_VER <= 1800
+#endif
 
 namespace Guide {
 
@@ -547,7 +549,7 @@ namespace details
 		// TODO : following signature is for work around VS bug
 		template <typename OtherType>
 		BoundsRanges (const OtherType &, bool firstLevel) {}
-		BoundsRanges(const SizeType * const arr) { }
+		BoundsRanges(const SizeType * const) { }
 		BoundsRanges() = default;
 
 
@@ -2281,9 +2283,10 @@ general_array_view_iterator<ArrayView> operator+(typename general_array_view_ite
 
 } // namespace Guide
 
+#if _MSC_VER
 #if _MSC_VER <= 1800
 #pragma warning(pop)
 #endif // _MSC_VER <= 1800
-
+#endif
 
 #pragma pop_macro("_NOEXCEPT")
