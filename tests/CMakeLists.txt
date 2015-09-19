@@ -87,6 +87,20 @@ add_test(
     COMMAND bounds_tests
 )
 
+add_executable(final_act_tests
+    final_act_tests.cpp    
+)
+target_link_libraries(final_act_tests
+    UnitTest++
+)
+install(TARGETS final_act_tests
+    RUNTIME DESTINATION bin
+)
+add_test(
+    NAME final_act_tests
+    COMMAND final_act_tests
+)
+
 add_executable(maybenull_tests
     maybenull_tests.cpp
 )

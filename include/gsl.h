@@ -40,25 +40,97 @@ using std::shared_ptr;
 //
 
 // Final_act allows you to ensure something gets run at the end of a scope
-template <class F>
-class Final_act
+template <typename F_t>
+class Final_act_noexcept
 {
-public:
-    explicit Final_act(F f) : f_(f) {}
-    
-    Final_act(const Final_act&& other) : f_(other.f_) {}
-    Final_act(const Final_act&) = delete;
-    Final_act& operator=(const Final_act&) = delete;
-    
-    ~Final_act() { f_(); }
+  F_t f;
+  bool run;
 
-private:
-    F f_;
+public:
+  explicit Final_act_noexcept(F_t f_) : f(f_), run(true) { }
+
+  ~Final_act_noexcept()
+  {
+    if (!run) return;
+    f();
+  }
+
+  Final_act_noexcept(const Final_act_noexcept& s) = delete;
+  Final_act_noexcept(Final_act_noexcept&& s)
+      : f(std::move(s.f)), run(s.run)
+  { s.run = false; }
+
+  Final_act_noexcept& operator=(const Final_act_noexcept& s) = delete;
+
+  Final_act_noexcept& operator=(Final_act_noexcept&& s)
+  {
+    f = std::move(s.f);
+    run = s.run;
+    s.run = false;
+    return *this;
+  }
+
+  void release() { run = false; }
 };
 
+// Final_act allows you to ensure something gets run at the end of a scope
+template <typename F_t>
+class Final_act
+{
+  F_t f;
+  bool run;
+
+public:
+  explicit Final_act(F_t f_) : f(f_), run(true) { }
+
+  ~Final_act()
+  {
+    if (!run)
+      return;
+
+    try { f(); }
+    catch (...) { }
+  }
+
+  Final_act(const Final_act& s) = delete;
+
+  Final_act(Final_act&& s) : f(std::move(s.f)), run(s.run)
+  {
+    s.run = false;
+  }
+
+  Final_act& operator=(const Final_act& s) = delete;
+
+  Final_act& operator=(Final_act&& s)
+  {
+    f = std::move(s.f);
+    run = s.run;
+    s.run = false;
+    return *this;
+  }
+
+  void release() { run = false; }
+};
+
+template <bool b, typename T, typename U>
+struct if_type_else_type { };
+
+template <typename T, typename U>
+struct if_type_else_type<true, T, U> { typedef T type; };
+
+template <typename T, typename U>
+struct if_type_else_type<false, T, U> { typedef U type; };
+
+template <bool b, typename T, typename U>
+using if_type_else_type_t = typename if_type_else_type<b, T, U>::type;
+
 // finally() - convenience function to generate a Final_act
-template <class F>
-Final_act<F> finally(F f) { return Final_act<F>(f); }
+template <typename F_t, typename Final_act_t = if_type_else_type_t<
+                            noexcept(std::declval<F_t&>()()),
+                            Final_act_noexcept<F_t>, Final_act<F_t>>>
+auto finally(F_t f) {
+  return Final_act_t(std::move(f));
+}
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
