@@ -52,12 +52,10 @@
 
 #endif // _NOEXCEPT
 
-#if _MSC_VER
-#if _MSC_VER <= 1800
+#if defined(_MSC_VER) && _MSC_VER <= 1800
 #pragma warning(push)
 #pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
 #endif // _MSC_VER <= 1800
-#endif
 
 namespace Guide {
 
@@ -2283,10 +2281,8 @@ general_array_view_iterator<ArrayView> operator+(typename general_array_view_ite
 
 } // namespace Guide
 
-#if _MSC_VER
-#if _MSC_VER <= 1800
+#if defined(_MSC_VER) && _MSC_VER <= 1800
 #pragma warning(pop)
 #endif // _MSC_VER <= 1800
-#endif
 
 #pragma pop_macro("_NOEXCEPT")
