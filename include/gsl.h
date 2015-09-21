@@ -29,6 +29,9 @@ namespace Guide
 using std::unique_ptr;
 using std::shared_ptr;
 
+template <class T>
+using owner = T;
+
 //
 // GSL.assert: assertions
 //

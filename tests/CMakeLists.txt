@@ -142,3 +142,17 @@ add_test(
     NAME utils_tests
     COMMAND utils_tests
 )
+
+add_executable(owner_tests
+    owner_tests.cpp
+)
+target_link_libraries(owner_tests
+    UnitTest++
+)
+install(TARGETS owner_tests
+    RUNTIME DESTINATION bin
+)
+add_test(
+    NAME owner_tests
+    COMMAND owner_tests
+)
