@@ -31,128 +31,24 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp)
   message(FATAL_ERROR "Could not find unittest-cpp enlistment. Please run 'git clone https://github.com/Microsoft/unittest-cpp.git unittest-cpp' in the tests directory")
 endif()
 
-add_executable(array_view_tests
-    array_view_tests.cpp    
-)
-target_link_libraries(array_view_tests
-    UnitTest++
-)
-install(TARGETS array_view_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME array_view_tests
-    COMMAND array_view_tests
-)
+function(add_gsl_test name)
+    add_executable(${name} ${name}.cpp)
+    target_link_libraries(${name} UnitTest++)
+    install(TARGETS ${name}
+        RUNTIME DESTINATION bin
+    )
+    add_test(
+        NAME ${name}
+        COMMAND ${name}
+    )
+endfunction()
 
-add_executable(string_view_tests
-    string_view_tests.cpp    
-)
-target_link_libraries(string_view_tests
-    UnitTest++
-)
-install(TARGETS string_view_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME string_view_tests
-    COMMAND string_view_tests
-)
-
-add_executable(at_tests
-    at_tests.cpp
-)
-target_link_libraries(at_tests
-    UnitTest++
-)
-install(TARGETS at_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME at_tests
-    COMMAND at_tests
-)
-
-add_executable(bounds_tests
-    bounds_tests.cpp
-)
-target_link_libraries(bounds_tests
-    UnitTest++
-)
-install(TARGETS bounds_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME bounds_tests
-    COMMAND bounds_tests
-)
-
-add_executable(maybenull_tests
-    maybenull_tests.cpp
-)
-target_link_libraries(maybenull_tests
-    UnitTest++
-)
-install(TARGETS maybenull_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME maybenull_tests
-    COMMAND maybenull_tests
-)
-
-add_executable(notnull_tests
-    notnull_tests.cpp
-)
-target_link_libraries(notnull_tests
-    UnitTest++
-)
-install(TARGETS notnull_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME notnull_tests
-    COMMAND notnull_tests
-)
-
-add_executable(assertion_tests
-    assertion_tests.cpp
-)
-target_link_libraries(assertion_tests
-    UnitTest++
-)
-install(TARGETS assertion_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME assertion_tests
-    COMMAND assertion_tests
-)
-
-add_executable(utils_tests
-    utils_tests.cpp
-)
-target_link_libraries(utils_tests
-    UnitTest++
-)
-install(TARGETS utils_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME utils_tests
-    COMMAND utils_tests
-)
-
-add_executable(owner_tests
-    owner_tests.cpp
-)
-target_link_libraries(owner_tests
-    UnitTest++
-)
-install(TARGETS owner_tests
-    RUNTIME DESTINATION bin
-)
-add_test(
-    NAME owner_tests
-    COMMAND owner_tests
-)
+add_gsl_test(array_view_tests)
+add_gsl_test(string_view_tests)
+add_gsl_test(at_tests)
+add_gsl_test(bounds_tests)
+add_gsl_test(maybenull_tests)
+add_gsl_test(notnull_tests)
+add_gsl_test(assertion_tests)
+add_gsl_test(utils_tests)
+add_gsl_test(owner_tests)
