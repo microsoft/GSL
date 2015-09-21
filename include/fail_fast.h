@@ -39,7 +39,7 @@ inline void fail_fast_assert(bool cond, const char* const message) { if (!cond) 
 #else
 
 inline void fail_fast_assert(bool cond) { if (!cond) std::terminate(); }
-inline void fail_fast_assert(bool cond, const char* const message) { if (!cond) std::terminate(); }
+inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::terminate(); }
 
 #endif // SAFER_CPP_TESTING
 
