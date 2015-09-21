@@ -1,9 +1,9 @@
 # GSL: Guidelines Support Library
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
-[C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](isocpp.org). 
+[C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org). 
 This repo contains Microsoft's implementation of GSL, tracking Microsoft's fork of the Guidelines. Microsoft's fork can be found here:
-[C++ Core Guidelines](https://github.com/Microsoft/CppCoreGuidelines). 
+[C++ Core Guidelines](https://github.com/Microsoft/CppCoreGuidelines).
 
 The library includes types like `array_view<>`, `string_view<>`, `owner<>` and others.
 
