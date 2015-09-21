@@ -1329,6 +1329,7 @@ SUITE(array_view_tests)
 			CHECK((av.sub<2,2>().bounds() == static_bounds<size_t, 2>()));
 			CHECK((av.sub<2,2>().length() == 2));
 			CHECK(av.sub(2,2).length() == 2);
+            CHECK(av.sub(2,3).length() == 3);
 		}
 
 
@@ -1344,15 +1345,16 @@ SUITE(array_view_tests)
 			CHECK((av.sub<0,5>().bounds() == static_bounds<size_t, 5>()));
 			CHECK((av.sub<0,5>().length() == 5));
 			CHECK(av.sub(0,5).length() == 5);
+            CHECK_THROW(av.sub(0,6).length(), fail_fast);
+            CHECK_THROW(av.sub(1,5).length(), fail_fast);
 		}
 
 		{
 			array_view<int, 5> av = arr;
-#ifdef CONFIRM_COMPILATION_ERRORS
 			CHECK((av.sub<5,0>().bounds() == static_bounds<size_t, 0>()));
-			CHECK((av.sub<5,0>().length() == 0));
-#endif
-			CHECK_THROW(av.sub(5,0).length(), fail_fast);
+            CHECK((av.sub<5, 0>().length() == 0));
+            CHECK(av.sub(5,0).length() == 0);
+            CHECK_THROW(av.sub(6,0).length(), fail_fast);
 		}
 
 		{
@@ -1360,8 +1362,39 @@ SUITE(array_view_tests)
 			CHECK((av.sub<0,0>().bounds() == static_bounds<size_t, 0>()));
 			CHECK((av.sub<0,0>().length() == 0));
 			CHECK(av.sub(0,0).length() == 0);
+            CHECK_THROW((av.sub<1,0>().length()), fail_fast);
 		}
-	}
+
+        {
+            array_view<int> av;
+            CHECK(av.sub(0).length() == 0);
+            CHECK_THROW(av.sub(1).length(), fail_fast);
+        }
+
+        {
+            array_view<int> av = arr;
+            CHECK(av.sub(0).length() == 5);
+            CHECK(av.sub(1).length() == 4);
+            CHECK(av.sub(4).length() == 1);
+            CHECK(av.sub(5).length() == 0);
+            CHECK_THROW(av.sub(6).length(), fail_fast);
+            auto av2 = av.sub(1);
+            for (int i = 0; i < 4; ++i)
+                CHECK(av2[i] == i+2);
+        }
+        
+        {
+            array_view<int,5> av = arr;
+            CHECK(av.sub(0).length() == 5);
+            CHECK(av.sub(1).length() == 4);
+            CHECK(av.sub(4).length() == 1);
+            CHECK(av.sub(5).length() == 0);
+            CHECK_THROW(av.sub(6).length(), fail_fast);
+            auto av2 = av.sub(1);
+            for (int i = 0; i < 4; ++i)
+                CHECK(av2[i] == i+2);
+        }
+    }
 
 	void AssertNullEmptyProperties(array_view<int, dynamic_range>& av)
 	{

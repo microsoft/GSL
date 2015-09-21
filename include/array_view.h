@@ -1824,15 +1824,15 @@ public:
 	template<size_t Offset, size_t Count>
 	_CONSTEXPR array_view<ValueTypeOpt, Count> sub() const _NOEXCEPT
 	{
-		static_assert(bounds_type::static_size == dynamic_range || ((Offset == 0 || Offset < bounds_type::static_size) && Offset + Count <= bounds_type::static_size), "Index is out of bound");
-		fail_fast_assert(bounds_type::static_size != dynamic_range || ((Offset == 0 || Offset < this->size()) && Offset + Count <= this->size()));
+		static_assert(bounds_type::static_size == dynamic_range || ((Offset == 0 || Offset <= bounds_type::static_size) && Offset + Count <= bounds_type::static_size), "Index is out of bound");
+		fail_fast_assert(bounds_type::static_size != dynamic_range || ((Offset == 0 || Offset <= this->size()) && Offset + Count <= this->size()));
 		return { this->data() + Offset, Count };
 	}
 
-	_CONSTEXPR array_view<ValueTypeOpt, dynamic_range> sub(size_type offset, size_type count) const _NOEXCEPT
+	_CONSTEXPR array_view<ValueTypeOpt, dynamic_range> sub(size_type offset, size_type count = dynamic_range) const _NOEXCEPT
 	{
-		fail_fast_assert((offset == 0 || offset < this->size()) && offset + count <= this->size());
-		return { this->data() + offset, count };
+		fail_fast_assert((offset == 0 || offset <= this->size()) && (count == dynamic_range || (offset + count) <= this->size()));
+		return { this->data() + offset, count == dynamic_range ? this->length() - offset : count };
 	}
 
 	// size
