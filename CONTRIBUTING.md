@@ -4,7 +4,7 @@ The Guidelines Support Library (GSL) contains functions and types that are sugge
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines). GSL design changes are made only as a result of modifications to the Guidelines. 
 
 GSL is accepting contributions that improve or refine any of the types in this library as well as ports to other platforms. Changes should have an issue 
-tracking the suggestion that has been approved the maintainers. Your pull request should include a link to the bug that you are fixing. If you've submitted 
+tracking the suggestion that has been approved by the maintainers. Your pull request should include a link to the bug that you are fixing. If you've submitted 
 a PR, please post a comment in the associated issue to avoid duplication of effort.
 
 ## Legal
