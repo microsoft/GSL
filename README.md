@@ -1,7 +1,7 @@
-# GSL: Guidelines Support Library
+# GSL: Guidelines Support Library [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
-[C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org). 
+[C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
 This repo contains Microsoft's implementation of GSL.
 
 The library includes types like `array_view<>`, `string_view<>`, `owner<>` and others.
@@ -12,7 +12,7 @@ While some types have been broken out into their own headers (e.g. [include/arra
 it is simplest to just include [gsl.h](./include/gsl.h) and gain access to the entire library.
 
 > NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to
-other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information about contributing. 
+other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information about contributing.
 
 # Quick Start
 ## Supported Platforms
@@ -27,13 +27,13 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * Mac OS Yosemite using XCode with AppleClang 7.0.0.7000072
 * Mac OS Yosemite using GCC-5.2.0
 
-> If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider 
-contributing any changes that were necessary back to this project to benefit the wider community. 
+> If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
+contributing any changes that were necessary back to this project to benefit the wider community.
 
 ## Building the tests
 To build the tests, you will require the following:
 
-* [CMake](http://cmake.org), version 3.3 or later to be installed and in your PATH.
+* [CMake](http://cmake.org), version 2.8.7 or later to be installed and in your PATH.
 * [UnitTest-cpp](https://github.com/Microsoft/unittest-cpp), to be cloned under the [tests/unittest-cpp](./tests/unittest-cpp) directory
 of your GSL source.
 
@@ -46,13 +46,13 @@ These steps assume the source code of this repository has been cloned into a dir
         cd build-x86
 
 2. Configure CMake to use the compiler of your choice (you can see a list by running `cmake --help`).
-    
+
         cmake -G "Visual Studio 14 2015" c:\GSL
-    
+
 3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).    
 
         cmake --build . --config Debug
- 
+
 4. Run the test suite.    
 
         ctest -C Debug
