@@ -1,1 +1,18 @@
 tests/unittest-cpp
+tests/*.dir/
+
+# CMake generated files
+CMakeFiles/
+*.cmake
+CMakeCache.txt
+
+# Visual Studio files
+*.vcxproj
+*.filters
+*.sln
+*.opensdf
+*.sdf
+# VS build files
+x64/
+Win32/
+ARM/
