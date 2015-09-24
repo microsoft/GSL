@@ -16,6 +16,9 @@
 
 #pragma once
 
+#ifndef FAIL_FAST_H
+#define FAIL_FAST_H
+
 #include <exception>
 #include <stdexcept>
 
@@ -45,3 +48,5 @@ inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::ter
 #endif // SAFER_CPP_TESTING
 
 }
+
+#endif // FAIL_FAST_H

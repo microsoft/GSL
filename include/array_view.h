@@ -16,6 +16,9 @@
 
 #pragma once
 
+#ifndef ARRAY_VIEW_H
+#define ARRAY_VIEW_H
+
 #include <new>
 #include <stdexcept>
 #include <cstddef>
@@ -2286,3 +2289,5 @@ general_array_view_iterator<ArrayView> operator+(typename general_array_view_ite
 #endif // _MSC_VER <= 1800
 
 #pragma pop_macro("_NOEXCEPT")
+
+#endif // ARRAY_VIEW_H

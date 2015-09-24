@@ -16,6 +16,9 @@
 
 #pragma once
 
+#ifndef STRING_VIEW_H
+#define STRING_VIEW_H
+
 #include "array_view.h"
 #include <cstring>
 
@@ -176,3 +179,5 @@ using zstring_builder = basic_zstring_builder<char, Max>;
 template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
+
+#endif // STRING_VIEW_H
