@@ -27,21 +27,21 @@ SUITE(utils_tests)
         i += 1;
     }
 
-    TEST(finally_lambda)
+    TEST(make_final_act_lambda)
     {
         int i = 0;
         {
-            auto _ = finally([&]() {f(i);});
+            auto _ = make_final_act([&]() {f(i);});
             CHECK(i == 0);
         }
         CHECK(i == 1);
     }
 
-    TEST(finally_function_with_bind)
+    TEST(make_final_act_function_with_bind)
     {
         int i = 0;
         {
-            auto _ = finally(std::bind(&f, std::ref(i)));
+            auto _ = make_final_act(std::bind(&f, std::ref(i)));
             CHECK(i == 0);
         }
         CHECK(i == 1);
@@ -49,11 +49,11 @@ SUITE(utils_tests)
 
     int j = 0;
     void g() { j += 1; };
-    TEST(finally_function_ptr)
+    TEST(make_final_act_function_ptr)
     {
         j = 0;
         {
-            auto _ = finally(&g);
+            auto _ = make_final_act(&g);
             CHECK(j == 0);
         }
         CHECK(j == 1);

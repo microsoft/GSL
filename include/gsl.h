@@ -59,9 +59,9 @@ private:
     F f_;
 };
 
-// finally() - convenience function to generate a Final_act
+// make_final_act() - convenience function to generate a Final_act
 template <class F>
-Final_act<F> finally(F f) { return Final_act<F>(f); }
+Final_act<F> make_final_act(F f) { return Final_act<F>(f); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
