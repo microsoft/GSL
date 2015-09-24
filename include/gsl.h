@@ -205,6 +205,8 @@ public:
 
     bool operator==(const T& rhs) const { tested_ = true; return ptr_ == rhs; }
     bool operator!=(const T& rhs) const { return !(*this == rhs); }
+    bool operator==(const maybe_null_dbg& rhs) const { tested_ = true; rhs.tested_ = true; return ptr_ == rhs.ptr_; }
+    bool operator!=(const maybe_null_dbg& rhs) const { return !(*this == rhs); }
 
     T get() const {
         fail_fast_assert(tested_);
