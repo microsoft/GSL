@@ -189,6 +189,58 @@ SUITE(MaybeNullTests)
         CHECK(q.present());
         CHECK(q->foo());
     }
+
+    TEST(TestMaybeNullCompare)
+    {
+        int i1 = 1;
+        int i2 = 2;
+
+        maybe_null_dbg<int*> p1 = &i1;
+        maybe_null_dbg<int*> p1_2 = &i1;
+        maybe_null_dbg<int*> p2 = &i2;
+
+        CHECK_THROW(p1.get(), fail_fast);
+        CHECK_THROW(p1_2.get(), fail_fast);
+        CHECK_THROW(p2.get(), fail_fast);
+
+        CHECK(p1 != p2);
+        CHECK(!(p1 == p2));
+        CHECK(p1 == p1);
+        CHECK(p1 == p1_2);
+
+        // Make sure we no longer throw here
+        CHECK(p1.get() != nullptr);
+        CHECK(p1_2.get() != nullptr);
+        CHECK(p2.get() != nullptr);
+    }
+
+    TEST(TestMaybeNullCopy)
+    {
+        int i1 = 1;
+        int i2 = 2;
+
+        maybe_null_dbg<int*> p1 = &i1;
+        maybe_null_dbg<int*> p1_2 = &i1;
+        maybe_null_dbg<int*> p2 = &i2;
+
+        CHECK(p1 != p2);
+        CHECK(p1 == p1_2);
+
+        // Make sure we no longer throw here
+        CHECK(p1.get() != nullptr);
+        CHECK(p2.get() != nullptr);
+
+        p1 = p2;
+
+        // Make sure we now throw
+        CHECK_THROW(p1.get(), fail_fast);
+
+        CHECK(p1 == p2);
+        CHECK(p1 != p1_2);
+
+        // Make sure we no longer throw here
+        CHECK(p1.get() != nullptr);
+    }
 }
 
 int main(int, const char *[])
