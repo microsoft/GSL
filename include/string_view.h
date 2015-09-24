@@ -16,8 +16,8 @@
 
 #pragma once
 
-#ifndef STRING_VIEW_H
-#define STRING_VIEW_H
+#ifndef GSL_STRING_VIEW_H
+#define GSL_STRING_VIEW_H
 
 #include "array_view.h"
 #include <cstring>
@@ -180,4 +180,4 @@ template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
 
-#endif // STRING_VIEW_H
+#endif // GSL_STRING_VIEW_H

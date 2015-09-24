@@ -16,8 +16,8 @@
 
 #pragma once
 
-#ifndef FAIL_FAST_H
-#define FAIL_FAST_H
+#ifndef GSL_FAIL_FAST_H
+#define GSL_FAIL_FAST_H
 
 #include <exception>
 #include <stdexcept>
@@ -49,4 +49,4 @@ inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::ter
 
 }
 
-#endif // FAIL_FAST_H
+#endif // GSL_FAIL_FAST_H
