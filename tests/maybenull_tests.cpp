@@ -241,6 +241,20 @@ SUITE(MaybeNullTests)
         // Make sure we no longer throw here
         CHECK(p1.get() != nullptr);
     }
+
+    TEST(TestMaybeNullPtrT)
+    {
+        maybe_null<std::nullptr_t> p1;
+        maybe_null<std::nullptr_t> p2;
+
+        CHECK_THROW(p1.get(), fail_fast);
+
+        CHECK(p1 == p2);
+
+        // Make sure we no longer throw here
+        CHECK(p1.get() == nullptr);
+        CHECK(p2.get() == nullptr);
+    }
 }
 
 int main(int, const char *[])
