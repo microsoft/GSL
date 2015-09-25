@@ -81,9 +81,9 @@ namespace details
 		template <typename OtherConcreteType, typename OtherValueType, unsigned int OtherRank>
 		friend class coordinate_facade;
 	public:
-		using reference       = typename std::add_lvalue_reference<ValueType>::type;
-		using const_reference = typename std::add_lvalue_reference<typename std::add_const<ValueType>::type>::type;
-		using value_type      = typename std::remove_reference<typename std::remove_cv<ValueType>::type>::type;
+		using value_type      = typename std::remove_reference<ValueType>::type;
+		using reference       = typename std::add_lvalue_reference<value_type>::type;
+		using const_reference = typename std::add_lvalue_reference<typename std::add_const<value_type>::type>::type;
 		static const unsigned int rank = Rank;
 		_CONSTEXPR coordinate_facade() _NOEXCEPT
 		{
@@ -1363,9 +1363,9 @@ public:
 	using bounds_type = BoundsType;
 	using size_type = typename bounds_type::size_type;
 	using index_type = typename bounds_type::index_type;
-	using value_type = ValueType;
-	using pointer = ValueType*;
-	using reference = ValueType&;
+	using value_type = typename std::remove_reference<ValueType>::type;
+	using pointer = typename std::add_pointer<value_type>::type;
+	using reference = typename std::add_lvalue_reference<value_type>::type;
 	using iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view>, general_array_view_iterator<basic_array_view>>;
 	using const_iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view<const ValueType, BoundsType>>, general_array_view_iterator<basic_array_view<const ValueType, BoundsType>>>;
 	using reverse_iterator = std::reverse_iterator<iterator>;
