@@ -75,6 +75,7 @@ namespace details
 	class coordinate_facade
 	{
 		static_assert(std::is_integral<ValueType>::value
+			&& !std::is_signed<ValueType>::value
 			&& sizeof(ValueType) <= sizeof(size_t), "ValueType must be unsigned integral type!");
 		static_assert(Rank > 0, "Rank must be greater than 0!");
 
@@ -1629,6 +1630,10 @@ namespace details
 template <typename ValueType, typename SizeType>
 struct array_view_options
 {
+	static_assert(std::is_integral<ValueType>::value
+		&& !std::is_signed<ValueType>::value
+		&& sizeof(ValueType) <= sizeof(size_t), "ValueType must be unsigned integral type!");
+
 	struct array_view_traits
 	{
 		using value_type = ValueType;
