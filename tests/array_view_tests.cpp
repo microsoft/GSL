@@ -1305,7 +1305,7 @@ SUITE(array_view_tests)
 	TEST(custmized_array_view_size)
 	{
 		double (*arr)[3][4] = new double[100][3][4];
-		array_view<array_view_options<double, char>, dynamic_range, 3, 4> av1(arr, (char)10);
+		array_view<array_view_options<double, unsigned char>, dynamic_range, 3, 4> av1(arr, (char)10);
 
 		struct EffectiveStructure
 		{
@@ -1569,7 +1569,7 @@ SUITE(array_view_tests)
 
 			CHECK(av1 == av2);
 
-			array_view<array_view_options<int, char>, 20> av3 = av1.as_array_view(dim<>(20));
+			array_view<array_view_options<int, unsigned char>, 20> av3 = av1.as_array_view(dim<>(20));
 			CHECK(av3 == av2 && av3 == av1);
 		}
 
