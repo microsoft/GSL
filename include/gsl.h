@@ -267,6 +267,9 @@ public:
     maybe_null_ret& operator=(const T& p) { if (ptr_ != p) { ptr_ = p; } return *this; }
     maybe_null_ret& operator=(const maybe_null_ret& rhs) = default;
 
+	bool operator==(const T& rhs) const { return ptr_ == rhs; }
+	bool operator!=(const T& rhs) const { return ptr_ != rhs; }
+
     bool present() const { return ptr_ != nullptr; }
 
     T get() const { return ptr_; }
