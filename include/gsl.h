@@ -16,6 +16,9 @@
 
 #pragma once
 
+#ifndef GSL_GSL_H
+#define GSL_GSL_H
+
 #include "array_view.h"     // array_view, strided_array_view...
 #include "string_view.h"    // zstring, string_view, zstring_builder...
 #include <memory>
@@ -287,3 +290,5 @@ private:
 template<class T> using maybe_null = maybe_null_ret<T>;
 
 } // namespace Guide
+
+#endif // GSL_GSL_H
