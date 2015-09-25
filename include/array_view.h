@@ -71,20 +71,20 @@ namespace details
 	};
 
 
-	template <typename ConcreteType, typename ValueType, unsigned int Rank>
+	template <typename ConcreteType, typename ValueType, size_t Rank>
 	class coordinate_facade
 	{
 		static_assert(std::is_integral<ValueType>::value
 			&& sizeof(ValueType) <= sizeof(size_t), "ValueType must be unsigned integral type!");
 		static_assert(Rank > 0, "Rank must be greater than 0!");
 
-		template <typename OtherConcreteType, typename OtherValueType, unsigned int OtherRank>
+		template <typename OtherConcreteType, typename OtherValueType, size_t OtherRank>
 		friend class coordinate_facade;
 	public:
 		using reference       = ValueType&;
 		using const_reference = const ValueType&;
 		using value_type      = ValueType;
-		static const unsigned int rank = Rank;
+		static const size_t rank = Rank;
 		_CONSTEXPR coordinate_facade() _NOEXCEPT
 		{
 			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
@@ -92,7 +92,7 @@ namespace details
 		_CONSTEXPR coordinate_facade(const value_type(&values)[rank]) _NOEXCEPT
 		{
 			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 				elems[i] = values[i];
 		}
 		_CONSTEXPR coordinate_facade(value_type e0) _NOEXCEPT
@@ -106,7 +106,7 @@ namespace details
 		{
 			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
 			fail_fast_assert(il.size() == rank, "The size of the initializer list must match the rank of the array");
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 			{
 				elems[i] = begin(il)[i];
 			}
@@ -117,7 +117,7 @@ namespace details
 		template <typename OtherConcreteType, typename OtherValueType>
 		_CONSTEXPR coordinate_facade(const coordinate_facade<OtherConcreteType, OtherValueType, Rank> & other)
 		{
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 			{
 				fail_fast_assert(static_cast<size_t>(other.elems[i]) <= SizeTypeTraits<value_type>::max_value);
 				elems[i] = static_cast<value_type>(other.elems[i]);
@@ -126,20 +126,20 @@ namespace details
 	protected:
 		coordinate_facade& operator=(const coordinate_facade& rhs) = default;
 		// Preconditions: component_idx < rank
-		_CONSTEXPR reference operator[](unsigned int component_idx)
+		_CONSTEXPR reference operator[](size_t component_idx)
 		{
 			fail_fast_assert(component_idx < rank, "Component index must be less than rank");
 			return elems[component_idx];
 		}
 		// Preconditions: component_idx < rank
-		_CONSTEXPR const_reference operator[](unsigned int component_idx) const
+		_CONSTEXPR const_reference operator[](size_t component_idx) const
 		{
 			fail_fast_assert(component_idx < rank, "Component index must be less than rank");
 			return elems[component_idx];
 		}
 		_CONSTEXPR bool operator==(const ConcreteType& rhs) const _NOEXCEPT
 		{
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 			{
 				if (elems[i] != rhs.elems[i])
 					return false;
@@ -157,7 +157,7 @@ namespace details
 		_CONSTEXPR ConcreteType operator-() const
 		{
 			ConcreteType ret = to_concrete();
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 				ret.elems[i] = -ret.elems[i];
 			return ret;
 		}
@@ -175,13 +175,13 @@ namespace details
 		}
 		_CONSTEXPR ConcreteType& operator+=(const ConcreteType& rhs)
 		{
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 				elems[i] += rhs.elems[i];
 			return to_concrete();
 		}
 		_CONSTEXPR ConcreteType& operator-=(const ConcreteType& rhs)
 		{
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 				elems[i] -= rhs.elems[i];
 			return to_concrete();
 		}
@@ -229,13 +229,13 @@ namespace details
 		}
 		_CONSTEXPR ConcreteType& operator*=(value_type v)
 		{
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 				elems[i] *= v;
 			return to_concrete();
 		}
 		_CONSTEXPR ConcreteType& operator/=(value_type v)
 		{
-			for (unsigned int i = 0; i < rank; ++i)
+			for (size_t i = 0; i < rank; ++i)
 				elems[i] /= v;
 			return to_concrete();
 		}
@@ -270,12 +270,12 @@ namespace details
 	};
 }
 
-template <unsigned int Rank, typename ValueType = size_t>
+template <size_t Rank, typename ValueType = size_t>
 class index : private details::coordinate_facade<index<Rank, ValueType>, ValueType, Rank>
 {
 	using Base = details::coordinate_facade<index<Rank, ValueType>, ValueType, Rank>;
 	friend Base;
-	template <unsigned int OtherRank, typename OtherValueType>
+	template <size_t OtherRank, typename OtherValueType>
 	friend class index;
 public:
 	using Base::rank;
@@ -317,10 +317,10 @@ public:
 template <typename ValueType>
 class index<1, ValueType>
 {
-	template <unsigned int, typename OtherValueType>
+	template <size_t, typename OtherValueType>
 	friend class index;
 public:
-	static const unsigned int rank = 1;
+	static const size_t rank = 1;
 	using reference = ValueType&;
 	using const_reference = const ValueType&;
 	using size_type = ValueType;
@@ -537,8 +537,8 @@ namespace details
 
 	template <typename SizeType, size_t... Ranges>
 	struct BoundsRanges {
-		static const unsigned int Depth = 0;
-		static const unsigned int DynamicNum = 0;
+		static const size_t Depth = 0;
+		static const size_t DynamicNum = 0;
 		static const SizeType CurrentRange = 1;
 		static const SizeType TotalSize = 1;
 
@@ -551,14 +551,14 @@ namespace details
 		BoundsRanges() = default;
 
 
-		template <typename T, unsigned int Dim>
+		template <typename T, size_t Dim>
 		void serialize(T &) const {
 		}
-		template <typename T, unsigned int Dim>
+		template <typename T, size_t Dim>
 		SizeType linearize(const T &) const { 
 			return 0;
 		}
-		template <typename T, unsigned int Dim>
+		template <typename T, size_t Dim>
 		ptrdiff_t contains(const T &) const {
 			return 0;
 		}
@@ -576,8 +576,8 @@ namespace details
 	template <typename SizeType, size_t... RestRanges>
 	struct BoundsRanges <SizeType, dynamic_range, RestRanges...> : BoundsRanges<SizeType, RestRanges...>{
 		using Base = BoundsRanges <SizeType, RestRanges... >;
-		static const unsigned int Depth = Base::Depth + 1;
-		static const unsigned int DynamicNum = Base::DynamicNum + 1;
+		static const size_t Depth = Base::Depth + 1;
+		static const size_t DynamicNum = Base::DynamicNum + 1;
 		static const SizeType CurrentRange = dynamic_range;
 		static const SizeType TotalSize = dynamic_range;
 		const SizeType m_bound;
@@ -596,19 +596,19 @@ namespace details
 		{
 		}
 
-		template <typename T, unsigned int Dim = 0>
+		template <typename T, size_t Dim = 0>
 		void serialize(T & arr) const {
 			arr[Dim] = elementNum();
 			this->Base::template serialize<T, Dim + 1>(arr);
 		}
-		template <typename T, unsigned int Dim = 0>
+		template <typename T, size_t Dim = 0>
 		SizeType linearize(const T & arr) const { 
 			const size_t index = this->Base::totalSize() * arr[Dim];
 			fail_fast_assert(index < static_cast<size_t>(m_bound));
 			return static_cast<SizeType>(index) + this->Base::template linearize<T, Dim + 1>(arr);
 		}
 		
-		template <typename T, unsigned int Dim = 0>
+		template <typename T, size_t Dim = 0>
 		ptrdiff_t contains(const T & arr) const {
 			const ptrdiff_t last = this->Base::template contains<T, Dim + 1>(arr);
 			if (last == -1)
@@ -625,7 +625,7 @@ namespace details
 			return static_cast<SizeType>(totalSize() / this->Base::totalSize());
 		}
 		
-		SizeType elementNum(unsigned int dim) const _NOEXCEPT{
+		SizeType elementNum(size_t dim) const _NOEXCEPT{
 			if (dim > 0)
 				return this->Base::elementNum(dim - 1);
 			else
@@ -641,8 +641,8 @@ namespace details
 	template <typename SizeType, size_t CurRange, size_t... RestRanges>
 	struct BoundsRanges <SizeType, CurRange, RestRanges...> : BoundsRanges<SizeType, RestRanges...>{
 		using Base = BoundsRanges <SizeType, RestRanges... >;
-		static const unsigned int Depth = Base::Depth + 1;
-		static const unsigned int DynamicNum = Base::DynamicNum;
+		static const size_t Depth = Base::Depth + 1;
+		static const size_t DynamicNum = Base::DynamicNum;
 		static const SizeType CurrentRange = static_cast<SizeType>(CurRange);
 		static const SizeType TotalSize = StaticSizeHelper<SizeType, Base::TotalSize, CurrentRange>::value;
 		static_assert (CurRange <= SizeTypeTraits<SizeType>::max_value, "CurRange must be smaller than SizeType limits");
@@ -657,19 +657,19 @@ namespace details
 			fail_fast_assert((firstLevel && totalSize() <= other.totalSize()) || totalSize() == other.totalSize());
 		}
 
-		template <typename T, unsigned int Dim = 0>
+		template <typename T, size_t Dim = 0>
 		void serialize(T & arr) const {
 			arr[Dim] = elementNum();
 			this->Base::template serialize<T, Dim + 1>(arr);
 		}
 
-		template <typename T, unsigned int Dim = 0>
+		template <typename T, size_t Dim = 0>
 		SizeType linearize(const T & arr) const {  
 			fail_fast_assert(arr[Dim] < CurrentRange, "Index is out of range");
 			return static_cast<SizeType>(this->Base::totalSize()) * arr[Dim] + this->Base::template linearize<T, Dim + 1>(arr);
 		}
 
-		template <typename T, unsigned int Dim = 0>
+		template <typename T, size_t Dim = 0>
 		ptrdiff_t contains(const T & arr) const {
 			if (static_cast<size_t>(arr[Dim]) >= CurrentRange)
 				return -1;
@@ -687,7 +687,7 @@ namespace details
 			return CurrentRange;
 		}
 
-		SizeType elementNum(unsigned int dim) const _NOEXCEPT{
+		SizeType elementNum(size_t dim) const _NOEXCEPT{
 			if (dim > 0)
 				return this->Base::elementNum(dim - 1);
 			else
@@ -732,17 +732,17 @@ namespace details
 	{
 		const TypeChain & obj;
 		TypeListIndexer(const TypeChain & obj) :obj(obj){}
-		template<unsigned int N>
+		template<size_t N>
 		const TypeChain & getObj(std::true_type)
 		{
 			return obj;
 		}
-		template<unsigned int N, typename MyChain = TypeChain, typename MyBase = typename MyChain::Base>
+		template<size_t N, typename MyChain = TypeChain, typename MyBase = typename MyChain::Base>
 		auto getObj(std::false_type) -> decltype(TypeListIndexer<MyBase>(static_cast<const MyBase &>(obj)).template get<N>())
 		{
 			return TypeListIndexer<MyBase>(static_cast<const MyBase &>(obj)).template get<N>();
 		}
-		template <unsigned int N>
+		template <size_t N>
 		auto get() -> decltype(getObj<N - 1>(std::integral_constant<bool, true>()))
 		{
 			return getObj<N - 1>(std::integral_constant<bool, N == 0>());
@@ -779,8 +779,8 @@ class static_bounds<SizeType, FirstRange, RestRanges...>
 	template <typename SizeType2, size_t... Ranges2>
 	friend class static_bounds;
 public:
-	static const unsigned int rank = MyRanges::Depth;
-	static const unsigned int dynamic_rank = MyRanges::DynamicNum;
+	static const size_t rank = MyRanges::Depth;
+	static const size_t dynamic_rank = MyRanges::DynamicNum;
 	static const SizeType static_size = static_cast<SizeType>(MyRanges::TotalSize);
 
 	using size_type = SizeType;
@@ -844,12 +844,12 @@ public:
 		return m_ranges.contains(idx) != -1;
 	}
 	
-	_CONSTEXPR size_type operator[](unsigned int index) const _NOEXCEPT
+	_CONSTEXPR size_type operator[](size_t index) const _NOEXCEPT
 	{
 		return m_ranges.elementNum(index);
 	}
 	
-	template <unsigned int Dim = 0>
+	template <size_t Dim = 0>
 	_CONSTEXPR size_type extent() const _NOEXCEPT
 	{
 		static_assert(Dim < rank, "dimension should be less than rank (dimension count starts from 0)");
@@ -888,12 +888,12 @@ public:
 	}
 };
 
-template <unsigned int Rank, typename SizeType = size_t>
+template <size_t Rank, typename SizeType = size_t>
 class strided_bounds : private details::coordinate_facade<strided_bounds<Rank>, SizeType, Rank>
 {
 	using Base = details::coordinate_facade<strided_bounds<Rank>, SizeType, Rank>;
 	friend Base;
-	template <unsigned int OtherRank, typename OtherSizeType>
+	template <size_t OtherRank, typename OtherSizeType>
 	friend class strided_bounds;
 
 public:
@@ -921,7 +921,7 @@ public:
 	_CONSTEXPR strided_bounds(const index_type &extents, const index_type &strides) 
 		: m_strides(strides)
 	{
-		for (unsigned int i = 0; i < rank; i++)
+		for (size_t i = 0; i < rank; i++)
 			Base::elems[i] = extents[i];
 	}
 	_CONSTEXPR strided_bounds(const value_type(&values)[rank], index_type strides)
@@ -935,20 +935,20 @@ public:
 	_CONSTEXPR size_type total_size() const _NOEXCEPT
 	{
 		size_type ret = 0;
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 			ret += (Base::elems[i] - 1) * m_strides[i];
 		return ret + 1;
 	}
 	_CONSTEXPR size_type size() const _NOEXCEPT
 	{
 		size_type ret = 1;
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 			ret *= Base::elems[i];
 		return ret;
 	}
 	_CONSTEXPR bool contains(const index_type& idx) const _NOEXCEPT
 	{
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 		{
 			if (idx[i] < 0 || idx[i] >= Base::elems[i])
 				return false;
@@ -958,7 +958,7 @@ public:
 	_CONSTEXPR size_type linearize(const index_type & idx) const
 	{
 		size_type ret = 0;
-		for (unsigned int i = 0; i < rank; i++)
+		for (size_t i = 0; i < rank; i++)
 		{
 			fail_fast_assert(idx[i] < Base::elems[i], "index is out of bounds of the array");
 			ret += idx[i] * m_strides[i];
@@ -974,7 +974,7 @@ public:
 	{
 		return{ (value_type(&)[rank - 1])Base::elems[1], sliced_type::index_type::shift_left(m_strides) };
 	}
-	template <unsigned int Dim = 0>
+	template <size_t Dim = 0>
 	_CONSTEXPR size_type extent() const _NOEXCEPT
 	{
 		static_assert(Dim < Rank, "dimension should be less than rank (dimension count starts from 0)");
@@ -1000,7 +1000,7 @@ template <typename T>
 struct is_bounds : std::integral_constant<bool, false> {};
 template <typename SizeType, size_t... Ranges>
 struct is_bounds<static_bounds<SizeType, Ranges...>> : std::integral_constant<bool, true> {};
-template <unsigned int Rank, typename SizeType>
+template <size_t Rank, typename SizeType>
 struct is_bounds<strided_bounds<Rank, SizeType>> : std::integral_constant<bool, true> {};
 
 template <typename IndexType>
@@ -1014,7 +1014,7 @@ class bounds_iterator
 private:
 	using Base = std::iterator <std::random_access_iterator_tag, IndexType, ptrdiff_t, const details::arrow_proxy<IndexType>, const IndexType>;
 public:
-	static const unsigned int rank = IndexType::rank;
+	static const size_t rank = IndexType::rank;
 	using typename Base::reference;
 	using typename Base::pointer;
 	using typename Base::difference_type;
@@ -1038,7 +1038,7 @@ public:
 	}
 	bounds_iterator& operator++() _NOEXCEPT
 	{
-		for (unsigned int i = rank; i-- > 0;)
+		for (size_t i = rank; i-- > 0;)
 		{
 			if (++curr[i] < boundary[i])
 			{
@@ -1050,7 +1050,7 @@ public:
 			}
 		}
 		// If we're here we've wrapped over - set to past-the-end.
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 		{
 			curr[i] = boundary[i];
 		}
@@ -1096,11 +1096,11 @@ public:
 		auto linear_idx = linearize(curr) + n;
 		value_type stride;
 		stride[rank - 1] = 1;
-		for (unsigned int i = rank - 1; i-- > 0;)
+		for (size_t i = rank - 1; i-- > 0;)
 		{
 			stride[i] = stride[i + 1] * boundary[i + 1];
 		}
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 		{
 			curr[i] = linear_idx / stride[i];
 			linear_idx = linear_idx % stride[i];
@@ -1134,7 +1134,7 @@ public:
 	}
 	bool operator<(const bounds_iterator& rhs) const _NOEXCEPT
 	{
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 		{
 			if (curr[i] < rhs.curr[i])
 				return true;
@@ -1164,7 +1164,7 @@ private:
 		// TODO: Smarter impl.
 		// Check if past-the-end
 		bool pte = true;
-		for (unsigned int i = 0; i < rank; ++i)
+		for (size_t i = 0; i < rank; ++i)
 		{
 			if (idx[i] != boundary[i])
 			{
@@ -1177,7 +1177,7 @@ private:
 		if (pte)
 		{
 			res = 1;
-			for (unsigned int i = rank; i-- > 0;)
+			for (size_t i = rank; i-- > 0;)
 			{
 				res += (idx[i] - 1) * multiplier;
 				multiplier *= boundary[i];
@@ -1185,7 +1185,7 @@ private:
 		}
 		else
 		{
-			for (unsigned int i = rank; i-- > 0;)
+			for (size_t i = rank; i-- > 0;)
 			{
 				res += idx[i] * multiplier;
 				multiplier *= boundary[i];
@@ -1359,7 +1359,7 @@ template <typename ValueType, typename BoundsType>
 class basic_array_view
 {
 public:
-	static const unsigned int rank = BoundsType::rank;
+	static const size_t rank = BoundsType::rank;
 	using bounds_type = BoundsType;
 	using size_type = typename bounds_type::size_type;
 	using index_type = typename bounds_type::index_type;
@@ -1381,7 +1381,7 @@ public:
 	{
 		return m_bounds;
 	}
-	template <unsigned int Dim = 0>
+	template <size_t Dim = 0>
 	_CONSTEXPR size_type extent() const _NOEXCEPT
 	{
 		static_assert(Dim < rank, "dimension should be less than rank (dimension count starts from 0)");
@@ -1537,7 +1537,7 @@ struct dim<dynamic_range>
 
 template <typename ValueTypeOpt, size_t FirstDimension = dynamic_range, size_t... RestDimensions>
 class array_view;
-template <typename ValueTypeOpt, unsigned int Rank>
+template <typename ValueTypeOpt, size_t Rank>
 class strided_array_view;
 
 namespace details
@@ -1616,7 +1616,7 @@ namespace details
 	template <typename ValueType, size_t FirstDimension, size_t... RestDimensions>
 	struct is_array_view_oracle<array_view<ValueType, FirstDimension, RestDimensions...>> : std::true_type
 	{};
-	template <typename ValueType, unsigned int Rank>
+	template <typename ValueType, size_t Rank>
 	struct is_array_view_oracle<strided_array_view<ValueType, Rank>> : std::true_type
 	{};
 	template <typename T>
@@ -1930,12 +1930,12 @@ template <typename Cont>
 _CONSTEXPR auto as_array_view(Cont &&arr) -> std::enable_if_t<!details::is_array_view<std::decay_t<Cont>>::value,
 	array_view<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>> = delete;
 
-template <typename ValueTypeOpt, unsigned int Rank>
+template <typename ValueTypeOpt, size_t Rank>
 class strided_array_view : public basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, strided_bounds<Rank, typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type>>
 {
 	using Base = basic_array_view<typename details::ArrayViewTypeTraits<ValueTypeOpt>::value_type, strided_bounds<Rank, typename details::ArrayViewTypeTraits<ValueTypeOpt>::size_type>>;
 
-	template<typename OtherValueOpt, unsigned int OtherRank>
+	template<typename OtherValueOpt, size_t OtherRank>
 	friend class strided_array_view;
 public:
 	using Base::rank;
