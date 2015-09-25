@@ -16,6 +16,7 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
+#include <vector>
 
 using namespace Guide;
 
@@ -27,6 +28,10 @@ SUITE(MaybeNullTests)
 {
     TEST(TestMaybeNull1)
     {
+#ifdef CONFIRM_COMPILATION_ERRORS
+        maybe_null_dbg<std::vector<int>> f(std::vector<int>{1}); // Not a pointer type. Must be tested with a non-integral type.
+        maybe_null_ret<std::vector<int>> g(std::vector<int>{1}); // Not a pointer type. Must be tested with a non-integral type.
+#endif
         int n = 5;
         maybe_null_dbg<int *> opt_n(&n);
         int result = 0;
