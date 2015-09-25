@@ -75,7 +75,7 @@ namespace details
 	class coordinate_facade
 	{
 		static_assert(std::is_integral<ValueType>::value
-			&& sizeof(ValueType) <= sizeof(size_t), "ValueType must be unsigned integral type!");
+			&& std::is_unsigned<ValueType>::value, "ValueType must be unsigned integral type!");
 		static_assert(Rank > 0, "Rank must be greater than 0!");
 
 		template <typename OtherConcreteType, typename OtherValueType, unsigned int OtherRank>
@@ -771,7 +771,7 @@ class static_bounds<SizeType, FirstRange, RestRanges...>
 {
 	using MyRanges = details::BoundsRanges <SizeType, FirstRange, RestRanges... >;
 	static_assert(std::is_integral<SizeType>::value
-		&& details::SizeTypeTraits<SizeType>::max_value <= SIZE_MAX, "SizeType must be an integral type and its numeric limits must be smaller than SIZE_MAX");
+		&& details::SizeTypeTraits<SizeType>::max_value <= (std::numeric_limits<size_t>::max)(), "SizeType must be an integral type and its numeric limits must be smaller than max size_t.");
 
 	MyRanges m_ranges;
 	_CONSTEXPR static_bounds(const MyRanges & range) : m_ranges(range) { }
