@@ -16,6 +16,7 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
+#include <vector>
 
 using namespace Guide;
 
@@ -48,11 +49,18 @@ SUITE(NotNullTests)
         not_null<int*> p; // yay...does not compile!
         std::unique_ptr<int> up = std::make_unique<int>(120);
         not_null<int*> p = up;
+
+        // Forbid non-nullptr assignable types
+        not_null<std::vector<int>> f(std::vector<int>{1});
+        not_null<int> z(10);
+        not_null<std::vector<int>> y({1,2});
 #endif
       int i = 12; 
       auto rp = RefCounted<int>(&i);
       not_null<int*> p(rp);
       CHECK(p.get() == &i);
+
+      not_null<std::shared_ptr<int>> x(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
     }
 
     TEST(TestNotNullCasting)
