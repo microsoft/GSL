@@ -28,6 +28,7 @@
 #include <utility>
 #include <array>
 #include <iterator>
+#include <algorithm>
 #include "fail_fast.h"
 
 #ifndef _MSC_VER
@@ -142,12 +143,7 @@ namespace details
 		}
 		_CONSTEXPR bool operator==(const ConcreteType& rhs) const _NOEXCEPT
 		{
-			for (unsigned int i = 0; i < rank; ++i)
-			{
-				if (elems[i] != rhs.elems[i])
-					return false;
-			}
-			return true;
+			return std::equal(elems, elems + rank, rhs.elems);
 		}
 		_CONSTEXPR bool operator!=(const ConcreteType& rhs) const _NOEXCEPT
 		{
@@ -160,8 +156,7 @@ namespace details
 		_CONSTEXPR ConcreteType operator-() const
 		{
 			ConcreteType ret = to_concrete();
-			for (unsigned int i = 0; i < rank; ++i)
-				ret.elems[i] = -ret.elems[i];
+            std::transform(ret, ret + rank, ret, std::negate<ValueType>{});
 			return ret;
 		}
 		_CONSTEXPR ConcreteType operator+(const ConcreteType& rhs) const
