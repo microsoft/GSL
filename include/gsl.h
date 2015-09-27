@@ -50,7 +50,7 @@ template <class F>
 class Final_act
 {
 public:
-    explicit Final_act(F f) : f_(f) {}
+    explicit Final_act(F f) : f_(std::move(f)) {}
     
     Final_act(const Final_act&& other) : f_(other.f_) {}
     Final_act(const Final_act&) = delete;
@@ -64,7 +64,10 @@ private:
 
 // finally() - convenience function to generate a Final_act
 template <class F>
-Final_act<F> finally(F f) { return Final_act<F>(f); }
+Final_act<F> finally(const F &f) { return Final_act<F>(f); }
+
+template <class F>
+Final_act<F> finally(F &&f) { return Final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
@@ -105,6 +108,7 @@ typename Cont::value_type& at(Cont& cont, size_t index) { fail_fast_assert(index
 template<class T>
 class not_null
 {
+    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     not_null(T t) : ptr_(t) { ensure_invariant(); }
 
@@ -165,6 +169,7 @@ private:
 template<class T>
 class maybe_null_dbg
 {
+    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     maybe_null_dbg() : ptr_(nullptr), tested_(false) {}
 
@@ -240,6 +245,7 @@ private:
 template<class T>
 class maybe_null_ret
 {
+    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     maybe_null_ret() : ptr_(nullptr) {}
     maybe_null_ret(std::nullptr_t) : ptr_(nullptr) {}
