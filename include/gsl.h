@@ -108,6 +108,7 @@ typename Cont::value_type& at(Cont& cont, size_t index) { fail_fast_assert(index
 template<class T>
 class not_null
 {
+    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     not_null(T t) : ptr_(t) { ensure_invariant(); }
 
@@ -168,6 +169,7 @@ private:
 template<class T>
 class maybe_null_dbg
 {
+    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     maybe_null_dbg() : ptr_(nullptr), tested_(false) {}
 
@@ -243,6 +245,7 @@ private:
 template<class T>
 class maybe_null_ret
 {
+    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     maybe_null_ret() : ptr_(nullptr) {}
     maybe_null_ret(std::nullptr_t) : ptr_(nullptr) {}
