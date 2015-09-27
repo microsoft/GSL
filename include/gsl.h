@@ -50,7 +50,7 @@ template <class F>
 class Final_act
 {
 public:
-    explicit Final_act(F f) : f_(f) {}
+    explicit Final_act(F f) : f_(std::move(f)) {}
     
     Final_act(const Final_act&& other) : f_(other.f_) {}
     Final_act(const Final_act&) = delete;
@@ -64,7 +64,10 @@ private:
 
 // finally() - convenience function to generate a Final_act
 template <class F>
-Final_act<F> finally(F f) { return Final_act<F>(f); }
+Final_act<F> finally(const F &f) { return Final_act<F>(f); }
+
+template <class F>
+Final_act<F> finally(F &&f) { return Final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
