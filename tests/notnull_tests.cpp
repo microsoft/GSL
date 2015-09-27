@@ -16,6 +16,7 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
+#include <vector>
 
 using namespace Guide;
 
@@ -48,6 +49,7 @@ SUITE(NotNullTests)
         not_null<int*> p; // yay...does not compile!
         std::unique_ptr<int> up = std::make_unique<int>(120);
         not_null<int*> p = up;
+        not_null<std::vector<int>> f(std::vector<int>{1}); // Not a pointer type. Must be tested with a non-integral type.
 #endif
       int i = 12; 
       auto rp = RefCounted<int>(&i);
