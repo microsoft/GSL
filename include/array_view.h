@@ -70,7 +70,7 @@ namespace details
 	template <typename SizeType>
 	struct SizeTypeTraits
 	{
-		static const size_t max_value = std::is_signed<SizeType>::value ? static_cast<typename std::make_unsigned<SizeType>::type>(-1) / 2 : static_cast<SizeType>(-1);
+		static const size_t max_value = std::is_signed<SizeType>::value ? static_cast<std::make_unsigned_t<SizeType>>(-1) / 2 : static_cast<SizeType>(-1);
 	};
 
 
@@ -84,9 +84,9 @@ namespace details
 		template <typename OtherConcreteType, typename OtherValueType, size_t OtherRank>
 		friend class coordinate_facade;
 	public:
-		using value_type      = typename std::remove_reference<ValueType>::type;
-		using reference       = typename std::add_lvalue_reference<value_type>::type;
-		using const_reference = typename std::add_lvalue_reference<typename std::add_const<value_type>::type>::type;
+		using value_type      = std::remove_reference_t<ValueType>;
+		using reference       = std::add_lvalue_reference_t<value_type>;
+		using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 		static const size_t rank = Rank;
 		_CONSTEXPR coordinate_facade() _NOEXCEPT
 		{
@@ -324,10 +324,10 @@ class index<1, ValueType>
 	friend class index;
 public:
 	static const size_t rank = 1;
-	using reference = ValueType&;
-	using const_reference = const ValueType&;
+	using value_type = std::remove_reference_t<ValueType>;
+	using reference = std::add_lvalue_reference_t<value_type>;
+	using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 	using size_type = ValueType;
-	using value_type = ValueType;
 
 	_CONSTEXPR index() _NOEXCEPT : value(0)
 	{
@@ -1335,8 +1335,8 @@ namespace details
 		auto extents = bnd.index_bounds();
 		typename Bounds::index_type stride;
 		stride[Bounds::rank - 1] = 1;
-		for (int i = Bounds::rank - 2; i >= 0; --i)
-			stride[i] = stride[i + 1] * extents[i + 1];
+		for (size_t i = Bounds::rank - 1; i > 0; --i)
+			stride[i - 1] = stride[i] * extents[i];
 		return stride;
 	}
 
@@ -1366,9 +1366,9 @@ public:
 	using bounds_type = BoundsType;
 	using size_type = typename bounds_type::size_type;
 	using index_type = typename bounds_type::index_type;
-	using value_type = typename std::remove_reference<ValueType>::type;
-	using pointer = typename std::add_pointer<value_type>::type;
-	using reference = typename std::add_lvalue_reference<value_type>::type;
+	using value_type = std::remove_reference_t<ValueType>;
+	using pointer = std::add_pointer_t<value_type>;
+	using reference = std::add_lvalue_reference_t<value_type>;
 	using iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view>, general_array_view_iterator<basic_array_view>>;
 	using const_iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view<const ValueType, BoundsType>>, general_array_view_iterator<basic_array_view<const ValueType, BoundsType>>>;
 	using reverse_iterator = std::reverse_iterator<iterator>;
@@ -1553,7 +1553,7 @@ namespace details
 	};
 
 	template <typename Traits>
-	struct ArrayViewTypeTraits<Traits, typename std::is_reference<typename Traits::array_view_traits &>::type>
+	struct ArrayViewTypeTraits<Traits, std::integral_constant<bool, std::is_reference<typename Traits::array_view_traits &>::value>>
 	{
 		using value_type = typename Traits::array_view_traits::value_type;
 		using size_type = typename Traits::array_view_traits::size_type;
@@ -1562,10 +1562,10 @@ namespace details
 	template <typename T, typename SizeType, size_t... Ranks>
 	struct ArrayViewArrayTraits {
 		using type = array_view<T, Ranks...>;
-		using value_type = T;
+		using value_type = std::remove_reference_t<T>;
 		using bounds_type = static_bounds<SizeType, Ranks...>;
-		using pointer = T*;
-		using reference = T&;
+		using pointer = std::add_pointer_t<value_type>;
+		using reference = std::add_lvalue_reference_t<value_type>;
 	};
 	template <typename T, typename SizeType, size_t N, size_t... Ranks>
 	struct ArrayViewArrayTraits<T[N], SizeType, Ranks...> : ArrayViewArrayTraits<T, SizeType, Ranks..., N> {};
@@ -1983,7 +1983,7 @@ public:
 
 	// convert from bytes
 		template <typename OtherValueType>
-		strided_array_view<typename std::enable_if<std::is_same<value_type, const byte>::value, OtherValueType>::type, rank> as_strided_array_view() const
+		strided_array_view<std::enable_if_t<std::is_same<value_type, const byte>::value, OtherValueType>, rank> as_strided_array_view() const
 	{
 		static_assert((sizeof(OtherValueType) >= sizeof(value_type)) && (sizeof(OtherValueType) % sizeof(value_type) == 0), "OtherValueType should have a size to contain a multiple of ValueTypes");
 		auto d = sizeof(OtherValueType) / sizeof(value_type);

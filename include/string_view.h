@@ -128,7 +128,7 @@ template<class T, size_t N>
 basic_string_view<T, dynamic_range> ensure_z(T(&sz)[N]) { return ensure_z(&sz[0], N); }
 
 template<class Cont>
-basic_string_view<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_range> ensure_z(Cont& cont)
+basic_string_view<typename std::remove_pointer_t<typename Cont::pointer>, dynamic_range> ensure_z(Cont& cont)
 {
     return ensure_z(cont.data(), cont.length());
 }
@@ -137,7 +137,7 @@ basic_string_view<typename std::remove_pointer<typename Cont::pointer>::type, dy
 // to_string() allow (explicit) conversions from string_view to string
 //
 template<class CharT, size_t Extent>
-std::basic_string<typename std::remove_const<CharT>::type> to_string(const basic_string_view<CharT, Extent>& view)
+std::basic_string<typename std::remove_const_t<CharT>> to_string(const basic_string_view<CharT, Extent>& view)
 {
     return{ view.data(), view.length() };
 }
