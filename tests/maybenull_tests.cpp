@@ -17,6 +17,7 @@
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
 #include <vector>
+#include <iostream>
 
 using namespace Guide;
 
@@ -253,6 +254,43 @@ SUITE(MaybeNullTests)
 
         // Make sure we no longer throw here
         CHECK(p1.get() != nullptr);
+    }
+
+    TEST(TestMaybeNullAssignmentOps)
+    {
+        MyBase base;
+        MyDerived derived;
+        Unrelated unrelated;
+
+        not_null<MyBase*> nnBase(&base);
+        not_null<MyDerived*> nnDerived(&derived);
+        not_null<Unrelated*> nnUnrelated(&unrelated);
+
+        maybe_null_ret<MyBase*> mnBase_ret1(&base), mnBase_ret2;
+        mnBase_ret2 = mnBase_ret1; // maybe_null_ret<T> = maybe_null_ret<T>
+        mnBase_ret2 = nnBase; // maybe_null_ret<T> = not_null<T>
+
+        maybe_null_ret<MyDerived*> mnDerived_ret(&derived);
+        mnBase_ret2 = mnDerived_ret; // maybe_null_ret<T> = maybe_null_ret<U>
+        mnBase_ret1 = &derived; // maybe_null_ret<T> = U;
+        mnBase_ret1 = nnDerived; // maybe_null_ret<T> = not_null<U>
+
+        maybe_null_ret<Unrelated*> mnUnrelated_ret;
+        mnUnrelated_ret = &unrelated; // maybe_null_ret<T> = T
+
+        maybe_null_dbg<MyBase*> mnBase_dbg1(&base), mnBase_dbg2;
+        mnBase_dbg2 = mnBase_dbg1; // maybe_null_dbg<T> = maybe_null_dbg<T>
+        mnBase_dbg2 = nnBase; // maybe_null_dbg<T> = not_null<T>
+
+        maybe_null_dbg<MyDerived*> mnDerived_dbg(&derived);
+        CHECK(mnDerived_dbg.present());
+        mnBase_dbg2 = mnDerived_dbg; // maybe_null_dbg<T> = maybe_null_dbg<U>
+        
+        mnBase_dbg1 = &derived; // maybe_null_dbg<T> = U;
+        mnBase_dbg1 = nnDerived; // maybe_null_dbg<T> = not_null<U>
+
+        maybe_null_dbg<Unrelated*> mnUnrelated_dbg;
+        mnUnrelated_dbg = &unrelated; // maybe_null_dbg<T> = T
     }
 }
 
