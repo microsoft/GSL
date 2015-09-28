@@ -129,6 +129,12 @@ public:
     not_null<T>& operator=(std::nullptr_t) = delete;
 	not_null<T>& operator=(int) = delete;
     
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    not_null<T> & operator=( not_null<U> const & other ) 
+    { 
+        ptr_ = other.get(); ensure_invariant(); return *this; 
+    }
+
     T get() const {
 #ifdef _MSC_VER
         __assume(ptr_ != nullptr);

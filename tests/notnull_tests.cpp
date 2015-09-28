@@ -86,6 +86,26 @@ SUITE(NotNullTests)
 
         int* q = nullptr;
         CHECK_THROW(p = q, fail_fast);
+
+        // Allows assignment from a not_null related pointer type.
+        {            
+            MyDerived derived;
+            not_null<MyDerived*> p = &derived;
+            not_null<MyBase*> q = p;
+            
+            q = p;
+
+            CHECK(q == p);
+        }
+
+        // Terminates assignment from related pointer types for null pointer value.
+        {
+            MyDerived* z = nullptr;
+            MyDerived derived;
+            not_null<MyBase*> p = &derived;
+
+            CHECK_THROW(p = z, fail_fast);            
+        }
     }
 }
 
