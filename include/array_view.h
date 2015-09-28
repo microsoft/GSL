@@ -548,7 +548,7 @@ namespace details
 
 		// TODO : following signature is for work around VS bug
 		template <typename OtherType>
-		BoundsRanges (const OtherType &, bool firstLevel) {}
+		BoundsRanges (const OtherType &, bool /* firstLevel */) {}
 		BoundsRanges(const SizeType * const) { }
 		BoundsRanges() = default;
 
@@ -593,7 +593,7 @@ namespace details
 		BoundsRanges() : m_bound(0) {}
 
 		template <typename OtherSizeType, size_t OtherRange, size_t... RestOtherRanges>
-		BoundsRanges(const BoundsRanges<OtherSizeType, OtherRange, RestOtherRanges...> &other, bool firstLevel = true) :
+		BoundsRanges(const BoundsRanges<OtherSizeType, OtherRange, RestOtherRanges...> &other, bool /* firstLevel */ = true) :
 			Base(static_cast<const BoundsRanges<OtherSizeType, RestOtherRanges...>&>(other), false), m_bound (static_cast<SizeType>(other.totalSize()))
 		{
 		}
@@ -764,7 +764,7 @@ class bounds_iterator;
 template <typename SizeType, size_t... Ranges>
 class static_bounds {
 public:
-	static_bounds(const details::BoundsRanges<SizeType, Ranges...> &empty) {
+	static_bounds(const details::BoundsRanges<SizeType, Ranges...> &) {
 	}
 };
 
@@ -2021,7 +2021,7 @@ private:
 	}
 
 	template <bool Enabled = (rank == 1), typename Dummy = std::enable_if_t<Enabled>>
-	static index_type resize_stride(const index_type& strides, size_t d, void *p = 0)
+	static index_type resize_stride(const index_type& strides, size_t , void * = 0)
 	{
 		fail_fast_assert(strides[rank - 1] == 1, "Only strided arrays with regular strides can be resized");
 
