@@ -20,6 +20,7 @@
 #define GSL_GSL_H
 
 #include "array_view.h"     // array_view, strided_array_view...
+#include "fail_fast.h"      // fail_fast_assert
 #include "string_view.h"    // zstring, string_view, zstring_builder...
 #include <memory>
 
@@ -38,8 +39,8 @@ using owner = T;
 //
 // GSL.assert: assertions
 //
-#define Expects(x)  Guide::fail_fast_assert((x))
-#define Ensures(x)  Guide::fail_fast_assert((x))
+inline void Expects(bool cond) { Guide::fail_fast_assert(cond); }
+inline void Ensures(bool cond) { Guide::fail_fast_assert(cond); }
 
 //
 // GSL.util: utilities
