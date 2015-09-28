@@ -1067,7 +1067,7 @@ public:
 	}
 	bounds_iterator& operator--() _NOEXCEPT
 	{
-		for (int i = rank; i-- > 0;)
+		for (size_t i = rank; i-- > 0;)
 		{
 			if (curr[i]-- > 0)
 			{
@@ -1328,15 +1328,15 @@ namespace details
 		return bnd.strides();
 	}
 
-	// Make a stride vector from bounds, assuming continugous memory.
+	// Make a stride vector from bounds, assuming contiguous memory.
 	template <typename Bounds>
 	_CONSTEXPR std::enable_if_t<std::is_same<typename Bounds::mapping_type, contiguous_mapping_tag>::value, typename Bounds::index_type> make_stride(const Bounds& bnd) _NOEXCEPT
 	{
 		auto extents = bnd.index_bounds();
 		typename Bounds::index_type stride;
 		stride[Bounds::rank - 1] = 1;	
-		for (int i = Bounds::rank - 2; i >= 0; --i)
-			stride[i] = stride[i + 1] * extents[i + 1];
+        for (size_t i = Bounds::rank - 1; Bounds::rank > 1 && i > 0; --i)
+            stride[i-1] = stride[i] * extents[i];
 		return stride;		
 	}
 
@@ -2035,10 +2035,8 @@ private:
 		fail_fast_assert(strides[rank - 1] == 1, "Only strided arrays with regular strides can be resized");
 		fail_fast_assert(strides[rank - 2] >= d && (strides[rank - 2] % d == 0), "The strides must have contiguous chunks of memory that can contain a multiple of new type elements");
 
-		for (int i = rank - 2; i >= 0; --i)
-		{
-			fail_fast_assert((strides[i] >= strides[i + 1]) && (strides[i] % strides[i + 1] == 0), "Only strided arrays with regular strides can be resized");
-		}
+		for (size_t i = rank - 1; i > 0; --i)
+			fail_fast_assert((strides[i-1] >= strides[i]) && (strides[i-1] % strides[i] == 0), "Only strided arrays with regular strides can be resized");
 
 		index_type ret = strides / d;
 		ret[rank - 1] = 1;

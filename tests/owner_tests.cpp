@@ -33,6 +33,7 @@ SUITE(owner_tests)
         CHECK(*p == 120);
         f(p);
         CHECK(*p == 121);
+        delete p;
     }
 }
 
