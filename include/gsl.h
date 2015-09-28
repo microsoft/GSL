@@ -178,6 +178,9 @@ class maybe_null_ret;
 template<class T>
 class maybe_null_dbg
 {
+    template<class U>
+    friend class maybe_null_dbg;
+
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
     maybe_null_dbg() : ptr_(nullptr), tested_(false) {}
@@ -220,12 +223,12 @@ public:
 
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    maybe_null_dbg(const maybe_null_dbg<U> &other) : ptr_(other.get()), tested_(false) {}
+    maybe_null_dbg(const maybe_null_dbg<U> &other) : ptr_(other.ptr_), tested_(false) {}
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
     maybe_null_dbg& operator=(const maybe_null_dbg<U> &other)
     {
-        ptr_ = other.get();
+        ptr_ = other.ptr_;
         tested_ = false;
         return *this;
     }
@@ -247,8 +250,10 @@ public:
 
     bool operator==(const T& rhs) const { tested_ = true; return ptr_ == rhs; }
     bool operator!=(const T& rhs) const { return !(*this == rhs); }
-    bool operator==(const maybe_null_dbg& rhs) const { tested_ = true; rhs.tested_ = true; return ptr_ == rhs.ptr_; }
-    bool operator!=(const maybe_null_dbg& rhs) const { return !(*this == rhs); }
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    bool operator==(const maybe_null_dbg<U>& rhs) const { tested_ = true; rhs.tested_ = true; return ptr_ == rhs.ptr_; }
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    bool operator!=(const maybe_null_dbg<U>& rhs) const { return !(*this == rhs); }
 
     T get() const {
         fail_fast_assert(tested_);
