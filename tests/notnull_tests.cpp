@@ -65,12 +65,19 @@ SUITE(NotNullTests)
 
     TEST(TestNotNullCasting)
     {
-        MyDerived derived;
+        MyBase base;
+	MyDerived derived;
+	Unrelated unrelated;
+	not_null<Unrelated*> u = &unrelated;
         not_null<MyDerived*> p = &derived;
-        not_null<MyBase*> q = p;
+        not_null<MyBase*> q = &base;
+	q = p; // allowed with heterogeneous copy ctor
         CHECK(q == p);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
+	q = u; // no viable conversion possible between MyBase* and Unrelated*
+	p = q; // not possible to implicitly convert MyBase* to MyDerived*
+
         not_null<Unrelated*> r = p;
         not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
