@@ -77,7 +77,7 @@ namespace details
 	class coordinate_facade
 	{
 		static_assert(std::is_integral<ValueType>::value
-			&& sizeof(ValueType) <= sizeof(size_t), "ValueType must be unsigned integral type!");
+			&& sizeof(ValueType) <= sizeof(size_t), "ValueType must be an integral type!");
 		static_assert(Rank > 0, "Rank must be greater than 0!");
 
 		template <typename OtherConcreteType, typename OtherValueType, size_t OtherRank>
