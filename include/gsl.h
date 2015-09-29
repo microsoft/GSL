@@ -52,7 +52,7 @@ class Final_act
 public:
     explicit Final_act(F f) : f_(std::move(f)), invoke_(true) {}
 
-    Final_act(Final_act&& other) : f_(std::move(other.f_)), invoke_(true) { other._invoke = false; }
+    Final_act(Final_act&& other) : f_(std::move(other.f_)), invoke_(true) { other.invoke_ = false; }
     Final_act(const Final_act&) = delete;
     Final_act& operator=(const Final_act&) = delete;
 
