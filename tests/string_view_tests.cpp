@@ -27,26 +27,26 @@ SUITE(string_view_tests)
 
     TEST(TestLiteralConstruction)
 	{
-        cwstring_view<> v = ensure_z(L"Hello");
+        cwstring_view v = ensure_z(L"Hello");
 
         CHECK(5 == v.length());
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        wstring_view<> v2 = ensure0(L"Hello");
+        wstring_view v2 = ensure0(L"Hello");
 #endif
 	}
 
     TEST(TestConstructFromStdString)
     {
         std::string s = "Hello there world";
-        cstring_view<> v = s;
+        cstring_view v = s;
         CHECK(v.length() == s.length());
     }
 
     TEST(TestConstructFromStdVector)
     {
         std::vector<char> vec('h', 5);
-        string_view<> v = vec;
+        string_view v = vec;
         CHECK(v.length() == vec.size());
     }
 
@@ -55,25 +55,25 @@ SUITE(string_view_tests)
         wchar_t stack_string[] = L"Hello";
 
         {
-            cwstring_view<> v = ensure_z(stack_string);
+            cwstring_view v = ensure_z(stack_string);
             CHECK(v.length() == 5);
             CHECK(v.used_length() == v.length());
         }
 
         {
-            cwstring_view<> v = stack_string;
+            cwstring_view v = stack_string;
             CHECK(v.length() == 6);
             CHECK(v.used_length() == v.length());
         }
 
         {
-            wstring_view<> v = ensure_z(stack_string);
+            wstring_view v = ensure_z(stack_string);
             CHECK(v.length() == 5);
             CHECK(v.used_length() == v.length());
         }
 
         {
-            wstring_view<> v = stack_string;
+            wstring_view v = stack_string;
             CHECK(v.length() == 6);
             CHECK(v.used_length() == v.length());
         }
@@ -82,18 +82,18 @@ SUITE(string_view_tests)
     TEST(TestConversionToConst)
     {
         char stack_string[] = "Hello";
-        string_view<> v = ensure_z(stack_string);
-        cstring_view<> v2 = v; 
+        string_view v = ensure_z(stack_string);
+        cstring_view v2 = v;
         CHECK(v.length() == v2.length());
     }
 
     TEST(TestConversionFromConst)
     {
         char stack_string[] = "Hello";
-        cstring_view<> v = ensure_z(stack_string);
+        cstring_view v = ensure_z(stack_string);
 #ifdef CONFIRM_COMPILATION_ERRORS
-        string_view<> v2 = v;
-        string_view<> v3 = "Hello";
+        string_view v2 = v;
+        string_view v3 = "Hello";
 #endif
     }
 }
