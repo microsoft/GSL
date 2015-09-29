@@ -178,13 +178,19 @@ SUITE(MaybeNullTests)
         maybe_null<MyBase*> q = p;
         CHECK(q == p);
 
+        maybe_null_dbg<MyDerived*> pdbg = &derived;
+        CHECK(pdbg.present());
+
+        maybe_null_dbg<MyBase*> qdbg = pdbg;
+        CHECK(qdbg == pdbg);
+
 #ifdef CONFIRM_COMPILATION_ERRORS
         maybe_null<Unrelated*> r = p;
         maybe_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
         maybe_null_dbg<Unrelated*> t = reinterpret_cast<Unrelated*>(p.get());
 
-	CHECK_THROW((void)(void*)t.get(), fail_fast);
+        CHECK_THROW((void)(void*)t.get(), fail_fast);
         maybe_null_dbg<Unrelated*> u = reinterpret_cast<Unrelated*>(p.get());
         CHECK(u.present());
         CHECK((void*)p.get() == (void*)u.get());
