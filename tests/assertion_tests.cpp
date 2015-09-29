@@ -17,7 +17,7 @@
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
 
-using namespace Guide;
+using namespace gsl;
 
 SUITE(assertion_tests)
 {

@@ -22,14 +22,14 @@
 #include <exception>
 #include <stdexcept>
 
-namespace Guide
+namespace gsl
 {
 
 //
 // Having "fail fast" result in an exception makes unit testing
 // the GSL classes that rely upon it much simpler. 
 //
-#if defined(SAFER_CPP_TESTING)
+#if defined(GSL_THROWS_FOR_TESTING)
 
 struct fail_fast : public std::runtime_error 
 {
@@ -45,7 +45,7 @@ inline void fail_fast_assert(bool cond, const char* const message) { if (!cond) 
 inline void fail_fast_assert(bool cond) { if (!cond) std::terminate(); }
 inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::terminate(); }
 
-#endif // SAFER_CPP_TESTING
+#endif // GSL_THROWS_FOR_TESTING
 
 }
 

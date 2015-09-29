@@ -39,7 +39,7 @@
 
 #ifndef _NOEXCEPT
 
-#ifdef SAFER_CPP_TESTING
+#ifdef GSL_THROWS_FOR_TESTING
 #define _NOEXCEPT 
 #else 
 #define _NOEXCEPT noexcept
@@ -47,7 +47,7 @@
 
 #else // _NOEXCEPT
 
-#ifdef SAFER_CPP_TESTING
+#ifdef GSL_THROWS_FOR_TESTING
 #undef _NOEXCEPT
 #define _NOEXCEPT 
 #endif 
@@ -59,7 +59,7 @@
 #pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
 #endif // _MSC_VER <= 1800
 
-namespace Guide {
+namespace gsl {
 
 /*
 ** begin definitions of index and bounds
@@ -2279,7 +2279,7 @@ general_array_view_iterator<ArrayView> operator+(typename general_array_view_ite
 	return rhs + n;
 }
 
-} // namespace Guide
+} // namespace gsl
 
 #if defined(_MSC_VER)
 #undef constexpr

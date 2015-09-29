@@ -22,7 +22,7 @@
 #include "array_view.h"
 #include <cstring>
 
-namespace Guide
+namespace gsl
 {
 //
 // czstring and wzstring
@@ -164,7 +164,7 @@ public:
     size_type length() const { return sv_.length(); }
 
     pointer assume0() const { return data(); }
-    string_view_type ensure_z() const { return Guide::ensure_z(sv_); }
+    string_view_type ensure_z() const { return gsl::ensure_z(sv_); }
 
     iterator begin() const { return sv_.begin(); }
     iterator end() const { return sv_.end(); }

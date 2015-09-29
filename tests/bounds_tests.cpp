@@ -19,7 +19,7 @@
 #include <vector>
 
 using namespace std;
-using namespace Guide;;
+using namespace gsl;;
 
 namespace 
 {

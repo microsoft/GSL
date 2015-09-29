@@ -9,7 +9,7 @@ include_directories(
     ./unittest-cpp
 )
 
-add_definitions(-DSAFER_CPP_TESTING)
+add_definitions(-DGSL_THROWS_FOR_TESTING)
 
 if(MSVC14 OR MSVC12) # has the support we need
     # remove unnecessary warnings about unchecked iterators

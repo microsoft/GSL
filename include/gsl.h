@@ -23,7 +23,7 @@
 #include "string_view.h"    // zstring, string_view, zstring_builder...
 #include <memory>
 
-namespace Guide
+namespace gsl
 {
 
 //
@@ -38,8 +38,8 @@ using owner = T;
 //
 // GSL.assert: assertions
 //
-#define Expects(x)  Guide::fail_fast_assert((x))
-#define Ensures(x)  Guide::fail_fast_assert((x))
+#define Expects(x)  gsl::fail_fast_assert((x))
+#define Ensures(x)  gsl::fail_fast_assert((x))
 
 //
 // GSL.util: utilities
@@ -354,6 +354,6 @@ private:
 
 template<class T> using maybe_null = maybe_null_ret<T>;
 
-} // namespace Guide
+} // namespace gsl
 
 #endif // GSL_GSL_H

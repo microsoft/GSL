@@ -27,7 +27,7 @@
 
 
 using namespace std;
-using namespace Guide;
+using namespace gsl;
 
 namespace 
 {
@@ -261,8 +261,8 @@ SUITE(array_view_tests)
 		int a[30][4][5];
 		
 		auto av = as_array_view(a);
-		auto sub = av.section({15, 0, 0}, Guide::index<3>{2, 2, 2});
-		auto subsub = sub.section({1, 0, 0}, Guide::index<3>{1, 1, 1});
+		auto sub = av.section({15, 0, 0}, gsl::index<3>{2, 2, 2});
+		auto subsub = sub.section({1, 0, 0}, gsl::index<3>{1, 1, 1});
 	}
 
 	TEST(array_view_section)
