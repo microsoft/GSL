@@ -19,7 +19,7 @@
 #include <vector>
 #include <iostream>
 
-using namespace Guide;
+using namespace gsl;
 
 struct MyBase { bool foo() { return true; } };
 struct MyDerived : public MyBase {};

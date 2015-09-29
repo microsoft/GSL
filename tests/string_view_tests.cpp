@@ -20,7 +20,7 @@
 #include <cstdlib>
 
 using namespace std;
-using namespace Guide;
+using namespace gsl;
 
 SUITE(string_view_tests)
 {

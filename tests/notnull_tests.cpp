@@ -18,7 +18,7 @@
 #include <gsl.h>
 #include <vector>
 
-using namespace Guide;
+using namespace gsl;
 
 struct MyBase {};
 struct MyDerived : public MyBase {};

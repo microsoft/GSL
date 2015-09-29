@@ -18,7 +18,7 @@
 #include <gsl.h>
 #include <functional>
 
-using namespace Guide;
+using namespace gsl;
 
 SUITE(owner_tests)
 {
