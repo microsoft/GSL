@@ -37,6 +37,20 @@ SUITE(utils_tests)
         CHECK(i == 1);
     }
 
+    TEST(finally_lambda_move)
+    {
+        int i = 0;
+        {
+            auto _1 = finally([&]() {f(i);});
+            {
+                auto _2 = std::move(_1);
+                CHECK(i == 0);   
+            }
+            CHECK(i == 1);   
+        }
+        CHECK(i == 1);
+    }
+
     TEST(finally_function_with_bind)
     {
         int i = 0;
