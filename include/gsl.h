@@ -89,7 +89,13 @@ template <class T, size_t N>
 T& at(std::array<T, N>& arr, size_t index) { fail_fast_assert(index < N); return arr[index]; }
 
 template <class Cont>
-typename Cont::value_type& at(Cont& cont, size_t index) { fail_fast_assert(index < cont.size()); return cont[index]; }
+typename Cont::value_type& at(Cont& cont, size_t index)
+{
+    fail_fast_assert(index < cont.size());
+    auto it = cont.begin();
+    std::advance(it, index);
+    return *it;
+}
 
 
 //
