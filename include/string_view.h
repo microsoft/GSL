@@ -137,7 +137,7 @@ basic_string_view<typename std::remove_pointer<typename Cont::pointer>::type, dy
 // to_string() allow (explicit) conversions from string_view to string
 //
 template<class CharT, size_t Extent>
-std::basic_string<typename std::remove_const<CharT>::type> to_string(const basic_string_view<CharT, Extent>& view)
+std::basic_string<typename std::remove_const<CharT>::type> to_string(basic_string_view<CharT, Extent> view)
 {
     return{ view.data(), view.length() };
 }
