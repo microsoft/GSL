@@ -50,16 +50,17 @@ template <class F>
 class Final_act
 {
 public:
-    explicit Final_act(F f) : f_(std::move(f)) {}
-    
-    Final_act(const Final_act&& other) : f_(other.f_) {}
+    explicit Final_act(F f) : f_(std::move(f)), invoke_(true) {}
+
+    Final_act(Final_act&& other) : f_(std::move(other.f_)), invoke_(true) { other._invoke = false; }
     Final_act(const Final_act&) = delete;
     Final_act& operator=(const Final_act&) = delete;
-    
-    ~Final_act() { f_(); }
+
+    ~Final_act() { if (invoke_) f_(); }
 
 private:
     F f_;
+    bool invoke_;
 };
 
 // finally() - convenience function to generate a Final_act
