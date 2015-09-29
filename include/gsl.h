@@ -22,6 +22,7 @@
 #include "array_view.h"     // array_view, strided_array_view...
 #include "string_view.h"    // zstring, string_view, zstring_builder...
 #include <memory>
+#include <experimental/optional>
 
 namespace Guide
 {
@@ -52,14 +53,19 @@ class Final_act
 public:
     explicit Final_act(F f) : f_(std::move(f)) {}
     
-    Final_act(const Final_act&& other) : f_(other.f_) {}
+    Final_act(Final_act&& other)
+      : f_(std::move(other.f_))
+    {
+        other.f_ = std::experimental::nullopt;
+    }
+
     Final_act(const Final_act&) = delete;
     Final_act& operator=(const Final_act&) = delete;
     
-    ~Final_act() { f_(); }
+    ~Final_act() { if (f_) (*f_)(); }
 
 private:
-    F f_;
+    std::experimental::optional<F> f_;
 };
 
 // finally() - convenience function to generate a Final_act
