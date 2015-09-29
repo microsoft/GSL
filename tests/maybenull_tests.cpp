@@ -289,9 +289,7 @@ SUITE(MaybeNullTests)
         mnBase_dbg2 = nnBase; // maybe_null_dbg<T> = not_null<T>
 
         maybe_null_dbg<MyDerived*> mnDerived_dbg(&derived);
-        CHECK(mnDerived_dbg.present());
         mnBase_dbg2 = mnDerived_dbg; // maybe_null_dbg<T> = maybe_null_dbg<U>
-        
         mnBase_dbg1 = &derived; // maybe_null_dbg<T> = U;
         mnBase_dbg1 = nnDerived; // maybe_null_dbg<T> = not_null<U>
 

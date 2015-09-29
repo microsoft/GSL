@@ -223,12 +223,12 @@ public:
 
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    maybe_null_dbg(const maybe_null_dbg<U> &other) : ptr_(other.get()), tested_(false) {}
+    maybe_null_dbg(const maybe_null_dbg<U> &other) : ptr_(other.ptr_), tested_(false) {}
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
     maybe_null_dbg& operator=(const maybe_null_dbg<U> &other)
     {
-        ptr_ = other.get();
+        ptr_ = other.ptr_;
         tested_ = false;
         return *this;
     }
