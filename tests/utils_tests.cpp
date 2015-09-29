@@ -58,6 +58,38 @@ SUITE(utils_tests)
         }
         CHECK(j == 1);
     }
+    TEST(finally_local_functor)
+    {
+        int i = 0;
+        struct local
+        {
+            local(int& a) : a{a} {}
+
+            void operator()() const { ++a;}
+
+            int& a;
+        };
+        local l{i};
+        const local cl{i};
+
+        {
+            auto _ = finally(l);
+            CHECK(i == 0);
+        }
+        {
+            auto _ = finally(cl);
+            CHECK(i == 1);
+        }
+        {
+            auto _ = finally(std::move(l));
+            CHECK(i == 2);
+        }
+        {
+            auto _ = finally(std::move(cl));
+            CHECK(i == 3);
+        }
+        CHECK(i == 4);
+    }
 
     TEST(narrow_cast)
     {

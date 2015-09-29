@@ -64,10 +64,7 @@ private:
 
 // finally() - convenience function to generate a Final_act
 template <class F>
-Final_act<F> finally(const F &f) { return Final_act<F>(f); }
-
-template <class F>
-Final_act<F> finally(F &&f) { return Final_act<F>(std::forward<F>(f)); }
+auto finally(F &&f) { return Final_act<std::decay_t<F>>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
