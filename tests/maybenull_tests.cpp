@@ -1,29 +1,39 @@
-/////////////////////////////////////////////////////////////////////////////// 
-// 
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
-// 
-// This code is licensed under the MIT License (MIT). 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-// THE SOFTWARE. 
-// 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h> 
+#include <UnitTest++/UnitTest++.h>
 #include <gsl.h>
 #include <vector>
 #include <iostream>
 
 using namespace gsl;
 
-struct MyBase { bool foo() { return true; } };
-struct MyDerived : public MyBase {};
-struct Unrelated {};
+struct MyBase
+{
+    bool foo()
+    {
+        return true;
+    }
+};
+struct MyDerived : public MyBase
+{
+};
+struct Unrelated
+{
+};
 
 SUITE(MaybeNullTests)
 {
@@ -31,46 +41,45 @@ SUITE(MaybeNullTests)
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         // Forbid non-nullptr assignable types
-        maybe_null_ret<std::vector<int>> f_ret(std::vector<int>{1});
-        maybe_null_ret<std::vector<int>> f_ret(std::vector<int>{1});
+        maybe_null_ret<std::vector<int>> f_ret(std::vector<int>{ 1 });
+        maybe_null_ret<std::vector<int>> f_ret(std::vector<int>{ 1 });
         maybe_null_ret<int> z_ret(10);
-        maybe_null_dbg<std::vector<int>> y_dbg({1,2});
+        maybe_null_dbg<std::vector<int>> y_dbg({ 1, 2 });
         maybe_null_dbg<int> z_dbg(10);
-        maybe_null_dbg<std::vector<int>> y_dbg({1,2});
+        maybe_null_dbg<std::vector<int>> y_dbg({ 1, 2 });
 #endif
         int n = 5;
-        maybe_null_dbg<int *> opt_n(&n);
+        maybe_null_dbg<int*> opt_n(&n);
         int result = 0;
         bool threw = false;
 
         CHECK_THROW(result = *opt_n, fail_fast);
 
-        maybe_null_ret<std::shared_ptr<int>> x_ret(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
-        maybe_null_dbg<std::shared_ptr<int>> x_dbg(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+        maybe_null_ret<std::shared_ptr<int>> x_ret(
+        std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+        maybe_null_dbg<std::shared_ptr<int>> x_dbg(
+        std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
     }
 
     TEST(TestMaybeNull2)
     {
         int n = 5;
-        maybe_null<int *> opt_n(&n);
+        maybe_null<int*> opt_n(&n);
         int result = 0;
-        if (opt_n.present())
-	        result = *opt_n;
+        if (opt_n.present()) result = *opt_n;
     }
 
     TEST(TestMaybeNull3)
     {
         int n = 5;
-        maybe_null<int *> opt_n(&n);
+        maybe_null<int*> opt_n(&n);
         int result = 0;
-        if (opt_n != nullptr) 
-		    result = *opt_n;
+        if (opt_n != nullptr) result = *opt_n;
     }
 
-    int test4_helper(maybe_null<int *> p)
+    int test4_helper(maybe_null<int*> p)
     {
-        if (p != nullptr)
-            return *p;
+        if (p != nullptr) return *p;
         return -1;
     }
 
@@ -81,7 +90,7 @@ SUITE(MaybeNullTests)
         result = test4_helper(&n);
     }
 
-    int test5_helper(maybe_null_dbg<int *> p)
+    int test5_helper(maybe_null_dbg<int*> p)
     {
         return *p;
     }
@@ -104,68 +113,64 @@ SUITE(MaybeNullTests)
 #endif
 
     int g_int;
-    void test7_helper(maybe_null<maybe_null<int *> *> outptr)
+    void test7_helper(maybe_null<maybe_null<int*>*> outptr)
     {
         g_int = 5;
 
-        if (outptr.present())
-	        *outptr = &g_int;
+        if (outptr.present()) *outptr = &g_int;
     }
 
-    void test7b_helper(maybe_null_dbg<maybe_null_dbg<int *> *> outptr)
+    void test7b_helper(maybe_null_dbg<maybe_null_dbg<int*>*> outptr)
     {
         g_int = 5;
 
-        if (outptr.present())
-            *outptr = &g_int;
+        if (outptr.present()) *outptr = &g_int;
     }
 
     TEST(TestMaybeNull7a)
     {
-        maybe_null<int *> outval;
+        maybe_null<int*> outval;
         test7_helper(&outval);
         CHECK(outval.present() && *outval == 5);
     }
 
     TEST(TestMaybeNull7b)
     {
-        maybe_null_dbg<int *> outval;
+        maybe_null_dbg<int*> outval;
         test7b_helper(&outval);
-	CHECK_THROW((void)*outval, fail_fast);
+        CHECK_THROW((void)*outval, fail_fast);
     }
 
-    int test8_helper1(maybe_null_dbg<int *> opt)
+    int test8_helper1(maybe_null_dbg<int*> opt)
     {
         return *opt;
     }
 
-    int test8_helper2a(maybe_null_dbg<int *> opt)
+    int test8_helper2a(maybe_null_dbg<int*> opt)
     {
-        if (!opt.present())
-	        return 0;
+        if (!opt.present()) return 0;
         return test8_helper1(opt);
     }
 
     TEST(TestMaybeNull8a)
     {
         int n = 5;
-        maybe_null_dbg<int *> opt(&n);
-	    CHECK_THROW(test8_helper2a(opt), fail_fast);
+        maybe_null_dbg<int*> opt(&n);
+        CHECK_THROW(test8_helper2a(opt), fail_fast);
     }
 
 #ifdef CONVERT_TO_PTR_TO_CONST
-    int test9_helper(maybe_null<const int *> copt)
+    int test9_helper(maybe_null<const int*> copt)
     {
-        if (copt.present())
-	        return *copt;
+        if (copt.present()) return *copt;
         return 0;
     }
 
     void TestMaybeNull9()
     {
         int n = 5;
-        maybe_null<int *> opt(&n);
-	    CHECK_THROW(test9_helper(opt), fail_fast);
+        maybe_null<int*> opt(&n);
+        CHECK_THROW(test9_helper(opt), fail_fast);
     }
 #endif
 
@@ -298,7 +303,7 @@ SUITE(MaybeNullTests)
     }
 }
 
-int main(int, const char *[])
+int main(int, const char* [])
 {
     return UnitTest::RunAllTests();
 }
