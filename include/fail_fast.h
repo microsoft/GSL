@@ -20,7 +20,10 @@
 #define GSL_FAIL_FAST_H
 
 #include <exception>
+
+#if defined(GSL_THROWS_FOR_TESTING)
 #include <stdexcept>
+#endif
 
 namespace gsl
 {
