@@ -50,13 +50,13 @@ template <class F>
 class final_act
 {
 public:
-    explicit final_act(F f) : f_(std::move(f)), invoke_(true) {}
+    explicit final_act(F f) noexcept : f_(std::move(f)), invoke_(true) {}
 
-    final_act(final_act&& other) : f_(std::move(other.f_)), invoke_(true) { other.invoke_ = false; }
+    final_act(final_act&& other) noexcept : f_(std::move(other.f_)), invoke_(true) { other.invoke_ = false; }
     final_act(const final_act&) = delete;
     final_act& operator=(const final_act&) = delete;
 
-    ~final_act() { if (invoke_) f_(); }
+    ~final_act() noexcept { if (invoke_) f_(); }
 
 private:
     F f_;
@@ -65,14 +65,14 @@ private:
 
 // finally() - convenience function to generate a final_act
 template <class F>
-final_act<F> finally(const F &f) { return final_act<F>(f); }
+final_act<F> finally(const F &f) noexcept { return final_act<F>(f); }
 
 template <class F>
-final_act<F> finally(F &&f) { return final_act<F>(std::forward<F>(f)); }
+final_act<F> finally(F &&f) noexcept { return final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
-T narrow_cast(U u) { return static_cast<T>(u); }
+T narrow_cast(U u) noexcept { return static_cast<T>(u); }
 
 struct narrowing_error : public std::exception {};
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
