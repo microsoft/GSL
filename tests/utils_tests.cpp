@@ -18,7 +18,7 @@
 #include <gsl.h>
 #include <functional>
 
-using namespace Guide;
+using namespace gsl;
 
 SUITE(utils_tests)
 {
@@ -33,6 +33,20 @@ SUITE(utils_tests)
         {
             auto _ = finally([&]() {f(i);});
             CHECK(i == 0);
+        }
+        CHECK(i == 1);
+    }
+
+    TEST(finally_lambda_move)
+    {
+        int i = 0;
+        {
+            auto _1 = finally([&]() {f(i);});
+            {
+                auto _2 = std::move(_1);
+                CHECK(i == 0);   
+            }
+            CHECK(i == 1);   
         }
         CHECK(i == 1);
     }

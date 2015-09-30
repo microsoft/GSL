@@ -26,6 +26,7 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * GNU/Linux using GCC 5.1
 * OS X Yosemite using Xcode with AppleClang 7.0.0.7000072
 * OS X Yosemite using GCC-5.2.0
+* FreeBSD 10.x with Clang/LLVM 3.6
 
 > If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
 contributing any changes that were necessary back to this project to benefit the wider community.
