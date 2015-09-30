@@ -1,20 +1,20 @@
-/////////////////////////////////////////////////////////////////////////////// 
-// 
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
-// 
-// This code is licensed under the MIT License (MIT). 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-// THE SOFTWARE. 
-// 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h> 
+#include <UnitTest++/UnitTest++.h>
 #include <string_view.h>
 #include <vector>
 #include <cstdlib>
@@ -26,7 +26,7 @@ SUITE(string_view_tests)
 {
 
     TEST(TestLiteralConstruction)
-	{
+    {
         cwstring_view<> v = ensure_z(L"Hello");
 
         CHECK(5 == v.length());
@@ -34,7 +34,7 @@ SUITE(string_view_tests)
 #ifdef CONFIRM_COMPILATION_ERRORS
         wstring_view<> v2 = ensure0(L"Hello");
 #endif
-	}
+    }
 
     TEST(TestConstructFromStdString)
     {
@@ -50,8 +50,8 @@ SUITE(string_view_tests)
         CHECK(v.length() == vec.size());
     }
 
-	TEST(TestStackArrayConstruction)
-	{
+    TEST(TestStackArrayConstruction)
+    {
         wchar_t stack_string[] = L"Hello";
 
         {
@@ -77,13 +77,13 @@ SUITE(string_view_tests)
             CHECK(v.length() == 6);
             CHECK(v.used_length() == v.length());
         }
-	}
+    }
 
     TEST(TestConversionToConst)
     {
         char stack_string[] = "Hello";
         string_view<> v = ensure_z(stack_string);
-        cstring_view<> v2 = v; 
+        cstring_view<> v2 = v;
         CHECK(v.length() == v2.length());
     }
 
@@ -98,7 +98,7 @@ SUITE(string_view_tests)
     }
 }
 
-int main(int, const char *[])
+int main(int, const char* [])
 {
     return UnitTest::RunAllTests();
 }
