@@ -45,30 +45,30 @@ using owner = T;
 // GSL.util: utilities
 //
 
-// Final_act allows you to ensure something gets run at the end of a scope
+// final_act allows you to ensure something gets run at the end of a scope
 template <class F>
-class Final_act
+class final_act
 {
 public:
-    explicit Final_act(F f) : f_(std::move(f)), invoke_(true) {}
+    explicit final_act(F f) : f_(std::move(f)), invoke_(true) {}
 
-    Final_act(Final_act&& other) : f_(std::move(other.f_)), invoke_(true) { other.invoke_ = false; }
-    Final_act(const Final_act&) = delete;
-    Final_act& operator=(const Final_act&) = delete;
+    final_act(final_act&& other) : f_(std::move(other.f_)), invoke_(true) { other.invoke_ = false; }
+    final_act(const final_act&) = delete;
+    final_act& operator=(const final_act&) = delete;
 
-    ~Final_act() { if (invoke_) f_(); }
+    ~final_act() { if (invoke_) f_(); }
 
 private:
     F f_;
     bool invoke_;
 };
 
-// finally() - convenience function to generate a Final_act
+// finally() - convenience function to generate a final_act
 template <class F>
-Final_act<F> finally(const F &f) { return Final_act<F>(f); }
+final_act<F> finally(const F &f) { return final_act<F>(f); }
 
 template <class F>
-Final_act<F> finally(F &&f) { return Final_act<F>(std::forward<F>(f)); }
+final_act<F> finally(F &&f) { return final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
