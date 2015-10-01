@@ -112,7 +112,7 @@ public:
     not_null(const not_null &other) = default;
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    not_null(const not_null<U> &other) : ptr_(other.get())
+    not_null(const not_null<U> &other) : ptr_(other)
     {
     }
 
@@ -122,15 +122,15 @@ public:
     not_null<T>& operator=(std::nullptr_t) = delete;
 	not_null<T>& operator=(int) = delete;
     
-    T get() const {
-#ifdef _MSC_VER
-        __assume(ptr_ != nullptr);
-#endif
-        return ptr_;
-    } // the assume() should help the optimizer
-
-    operator T() const {  return get(); }
-    T operator->() const { return get(); }
+    // if T has .get() forward its value wrapped in not_null
+    template<typename U = T, typename = decltype(std::declval<U>().get())>
+    not_null<decltype(std::declval<U>().get())> get() const
+    {
+        return ptr_.get();
+    }
+    
+    operator T() const {  return get_assume_not_null(); }
+    T operator->() const { return get_assume_not_null(); }
 
 	bool operator==(const T& rhs) const { return ptr_ == rhs; }
 	bool operator!=(const T& rhs) const { return !(*this == rhs); }
@@ -140,6 +140,13 @@ private:
     // we assume that the compiler can hoist/prove away most of the checks inlined from this function
     // if not, we could make them optional via conditional compilation
     void ensure_invariant() const { fail_fast_assert(ptr_ != nullptr); }
+
+    T get_assume_not_null() const {
+#ifdef _MSC_VER
+        __assume(ptr_ != nullptr);
+#endif
+        return ptr_;
+    } // the assume() should help the optimizer
 
     // unwanted operators...pointers only point to single objects!
     // TODO ensure all arithmetic ops on this type are unavailable

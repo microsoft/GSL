@@ -52,7 +52,32 @@ SUITE(NotNullTests)
       int i = 12; 
       auto rp = RefCounted<int>(&i);
       not_null<int*> p(rp);
-      CHECK(p.get() == &i);
+      CHECK(p == &i);
+    }
+
+    template <class T>
+    struct resultof_member_get
+    {
+        using type = decltype(std::declval<T>().get());
+    };
+
+    template <class T>
+    using resultof_member_get_t = resultof_member_get<T>;
+
+    TEST(TestForwardGet)
+    {
+        int value = 12;
+        not_null<std::shared_ptr<int>> sp = std::make_shared<int>(value);
+        CHECK(*sp.get() == value);
+
+        {
+            using raw_type = std::shared_ptr<int>;
+            static_assert(
+                std::is_same<
+                resultof_member_get_t<not_null<raw_type>>::type,
+                not_null<resultof_member_get_t<raw_type>::type >> ::value,
+                "assert decltype(not_null<T>::get) == not_null<decltype(T::get)>");
+        }
     }
 
     TEST(TestNotNullCasting)
@@ -66,8 +91,8 @@ SUITE(NotNullTests)
         not_null<Unrelated*> r = p;
         not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
-        not_null<Unrelated*> t = reinterpret_cast<Unrelated*>(p.get());
-        CHECK((void*)p.get() == (void*)t.get());
+        not_null<Unrelated*> t = reinterpret_cast<Unrelated*>(&*p);
+        CHECK((void*)p == (void*)t);
     }
 
     TEST(TestNotNullAssignment)
