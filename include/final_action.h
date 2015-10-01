@@ -58,7 +58,7 @@ private:
 //
 // Function name: finally
 //
-// This is convenience function to generate a final_action
+// This is a convenience function to generate a final_action
 //
 template <class F>
 final_action<F> finally(const F& f) noexcept { return final_action<F>(f); }
