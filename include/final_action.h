@@ -61,10 +61,10 @@ private:
 // This is convenience function to generate a final_action
 //
 template <class F>
-final_action<F> finally(const F& act) noexcept { return final_action<F>(act); }
+final_action<F> finally(const F& f) noexcept { return final_action<F>(f); }
 
 template <class F>
-final_action<F> finally(F&& act) noexcept {	return final_action<F>(std::forward<F>(act)); }
+final_action<F> finally(F&& f) noexcept {	return final_action<F>(std::forward<F>(f)); }
 
 } // close namespace gsl
 
