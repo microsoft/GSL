@@ -23,6 +23,34 @@
 #include "string_view.h"    // zstring, string_view, zstring_builder...
 #include <memory>
 
+#ifdef _MSC_VER
+
+// No MSVC does constexpr fully yet
+#pragma push_macro("constexpr")
+#define constexpr /* nothing */
+
+// MSVC 2013 workarounds
+#if _MSC_VER <= 1800
+
+// noexcept is not understood 
+#ifndef GSL_THROWS_FOR_TESTING
+#define noexcept /* nothing */ 
+#endif
+
+// turn off some misguided warnings
+#pragma warning(push)
+#pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
+
+// In order to test the library, we need it to throw exceptions that we can catch
+#ifdef GSL_THROWS_FOR_TESTING
+#define noexcept /* nothing */ 
+#endif // GSL_THROWS_FOR_TESTING 
+
+
 namespace gsl
 {
 
@@ -355,5 +383,25 @@ private:
 template<class T> using maybe_null = maybe_null_ret<T>;
 
 } // namespace gsl
+
+#ifdef _MSC_VER
+
+#undef constexpr
+#pragma pop_macro("constexpr")
+
+#if _MSC_VER <= 1800
+#pragma warning(pop)
+
+#ifndef GSL_THROWS_FOR_TESTING
+#pragma undef noexcept
+#endif // GSL_THROWS_FOR_TESTING
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
+
+#if defined(GSL_THROWS_FOR_TESTING) 
+#undef noexcept 
+#endif // GSL_THROWS_FOR_TESTING 
 
 #endif // GSL_GSL_H
