@@ -57,17 +57,10 @@ using wzstring = wchar_t*;
 template <class CharT, size_t Extent = dynamic_range>
 using basic_string_view = array_view<CharT, Extent>;
 
-template<size_t Extent = dynamic_range>
-using string_view = basic_string_view<char, Extent>;
-
-template<size_t Extent = dynamic_range>
-using cstring_view = basic_string_view<const char, Extent>;
-
-template<size_t Extent = dynamic_range>
-using wstring_view = basic_string_view<wchar_t, Extent>;
-
-template<size_t Extent = dynamic_range>
-using cwstring_view = basic_string_view<const wchar_t, Extent>;
+using string_view = basic_string_view<char>;
+using cstring_view = basic_string_view<const char>;
+using wstring_view = basic_string_view<wchar_t>;
+using cwstring_view = basic_string_view<const wchar_t>;
 
 
 //
