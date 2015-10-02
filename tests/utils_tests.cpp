@@ -78,6 +78,62 @@ SUITE(utils_tests)
         CHECK(j == 1);
     }
 
+    TEST(finally_function_object)
+    {
+        struct Functor
+        {
+            bool destructed_ = false;
+            int& callCount_;
+            int& moveCount_;
+            int& copyCount_;
+        public:
+            Functor(int& callCount, int& moveCount, int& copyCount) : callCount_(callCount), moveCount_(moveCount), copyCount_(copyCount) {}
+            Functor(Functor&& other) : callCount_(other.callCount_), moveCount_(++other.moveCount_), copyCount_(other.copyCount_) {}
+            Functor(const Functor& other) : callCount_(other.callCount_), moveCount_(other.moveCount_), copyCount_(++other.copyCount_) {}
+
+            ~Functor()
+            {
+                Expects(destructed_ == false);
+                destructed_ = true;
+            }
+            void operator()()
+            {
+                Expects(destructed_ == false);
+                ++callCount_;
+            }
+        };
+
+        int callCount, copyCount, moveCount;
+        {
+            Functor functor(callCount, moveCount, copyCount);
+
+            callCount = copyCount = moveCount = 0;
+            auto _ = finally(functor);
+            CHECK(callCount == 0);
+            CHECK(copyCount == 1);
+            CHECK(moveCount == 0);
+
+            {
+                callCount = copyCount = moveCount = 0;
+                auto _2 = decltype(_)(std::move(_));
+                CHECK(callCount == 0);
+                CHECK(copyCount == 0);
+                CHECK(moveCount == 1);
+            }
+            CHECK(callCount == 1);
+
+            {
+                callCount = copyCount = moveCount = 0;
+                auto _2 = finally(std::move(functor));
+                CHECK(callCount == 0);
+                CHECK(copyCount == 0);
+                CHECK(moveCount == 1);
+            }
+            CHECK(callCount == 1);
+        }
+        CHECK(callCount == 1);
+    }
+
     TEST(narrow_cast)
     {
         int n = 120;
