@@ -78,17 +78,18 @@ template <class F>
 class final_act
 {
 public:
-    explicit final_act(F f) noexcept : f_(std::move(f)), invoke_(true) {}
+    explicit final_act(F f) noexcept : f_(std::move(f)) {}
 
-    final_act(final_act&& other) noexcept : f_(std::move(other.f_)), invoke_(true) { other.invoke_ = false; }
+    final_act(final_act&& other) noexcept : f_(std::move(other.f_)) { other.f_ = NoAction; }
     final_act(const final_act&) = delete;
     final_act& operator=(const final_act&) = delete;
 
-    ~final_act() noexcept { if (invoke_) f_(); }
+    ~final_act() noexcept { f_(); }
 
 private:
     F f_;
-    bool invoke_;
+
+    static void NoAction(){}
 };
 
 // finally() - convenience function to generate a final_act
