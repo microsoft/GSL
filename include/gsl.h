@@ -73,11 +73,6 @@ using owner = T;
 // GSL.util: utilities
 //
 
-namespace detail
-{
-    void no_action() noexcept {}
-}
-
 // final_act allows you to ensure something gets run at the end of a scope
 template <class F>
 class final_act
@@ -85,7 +80,7 @@ class final_act
 public:
     explicit final_act(F f) noexcept : f_(std::move(f)) {}
 
-    final_act(final_act&& other) noexcept : f_(std::move(other.f_)) { other.f_ = detail::no_action; }
+    final_act(final_act&& other) noexcept : f_(std::move(other.f_)) { other.f_ = _no_action; }
     final_act(const final_act&) = delete;
     final_act& operator=(const final_act&) = delete;
 
@@ -93,6 +88,8 @@ public:
 
 private:
     F f_;
+
+    static void _no_action() noexcept {}
 };
 
 // finally() - convenience function to generate a final_act
