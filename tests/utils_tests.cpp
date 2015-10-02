@@ -44,9 +44,14 @@ SUITE(utils_tests)
             auto _1 = finally([&]() {f(i);});
             {
                 auto _2 = std::move(_1);
-                CHECK(i == 0);   
+                CHECK(i == 0);
             }
-            CHECK(i == 1);   
+            CHECK(i == 1);
+            {
+                auto _2 = std::move(_1);
+                CHECK(i == 1);
+            }
+            CHECK(i == 1);
         }
         CHECK(i == 1);
     }
