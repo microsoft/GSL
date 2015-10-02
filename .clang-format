@@ -1,4 +1,4 @@
-ColumnLimit: 0
+ColumnLimit: 100
 
 UseTab: Never
 IndentWidth: 4
@@ -6,7 +6,7 @@ AccessModifierOffset: -4
 NamespaceIndentation: Inner
 
 BreakBeforeBraces: Allman
-AlwaysBreakTemplateDeclarations: false
+AlwaysBreakTemplateDeclarations: true
 BreakConstructorInitializersBeforeComma: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 AllowShortBlocksOnASingleLine: true
