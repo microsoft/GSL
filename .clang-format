@@ -1,0 +1,21 @@
+ColumnLimit: 100
+
+UseTab: Never
+IndentWidth: 4
+AccessModifierOffset: -4
+NamespaceIndentation: Inner
+
+BreakBeforeBraces: Allman
+AlwaysBreakTemplateDeclarations: true
+BreakConstructorInitializersBeforeComma: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+
+PointerAlignment: Left
+AlignConsecutiveAssignments: false
+AlignTrailingComments: false
+
+SpaceAfterCStyleCast: true

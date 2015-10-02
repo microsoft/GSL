@@ -18,7 +18,7 @@
 #include <gsl.h>
 #include <functional>
 
-using namespace Guide;
+using namespace gsl;
 
 SUITE(owner_tests)
 {
@@ -33,6 +33,7 @@ SUITE(owner_tests)
         CHECK(*p == 120);
         f(p);
         CHECK(*p == 121);
+        delete p;
     }
 }
 

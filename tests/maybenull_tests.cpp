@@ -16,8 +16,10 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
+#include <vector>
+#include <iostream>
 
-using namespace Guide;
+using namespace gsl;
 
 struct MyBase { bool foo() { return true; } };
 struct MyDerived : public MyBase {};
@@ -27,12 +29,24 @@ SUITE(MaybeNullTests)
 {
     TEST(TestMaybeNull1)
     {
+#ifdef CONFIRM_COMPILATION_ERRORS
+        // Forbid non-nullptr assignable types
+        maybe_null_ret<std::vector<int>> f_ret(std::vector<int>{1});
+        maybe_null_ret<std::vector<int>> f_ret(std::vector<int>{1});
+        maybe_null_ret<int> z_ret(10);
+        maybe_null_dbg<std::vector<int>> y_dbg({1,2});
+        maybe_null_dbg<int> z_dbg(10);
+        maybe_null_dbg<std::vector<int>> y_dbg({1,2});
+#endif
         int n = 5;
         maybe_null_dbg<int *> opt_n(&n);
         int result = 0;
         bool threw = false;
 
         CHECK_THROW(result = *opt_n, fail_fast);
+
+        maybe_null_ret<std::shared_ptr<int>> x_ret(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+        maybe_null_dbg<std::shared_ptr<int>> x_dbg(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
     }
 
     TEST(TestMaybeNull2)
@@ -164,13 +178,19 @@ SUITE(MaybeNullTests)
         maybe_null<MyBase*> q = p;
         CHECK(q == p);
 
+        maybe_null_dbg<MyDerived*> pdbg = &derived;
+        CHECK(pdbg.present());
+
+        maybe_null_dbg<MyBase*> qdbg = pdbg;
+        CHECK(qdbg == pdbg);
+
 #ifdef CONFIRM_COMPILATION_ERRORS
         maybe_null<Unrelated*> r = p;
         maybe_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
         maybe_null_dbg<Unrelated*> t = reinterpret_cast<Unrelated*>(p.get());
 
-	CHECK_THROW((void)(void*)t.get(), fail_fast);
+        CHECK_THROW((void)(void*)t.get(), fail_fast);
         maybe_null_dbg<Unrelated*> u = reinterpret_cast<Unrelated*>(p.get());
         CHECK(u.present());
         CHECK((void*)p.get() == (void*)u.get());
@@ -240,6 +260,41 @@ SUITE(MaybeNullTests)
 
         // Make sure we no longer throw here
         CHECK(p1.get() != nullptr);
+    }
+
+    TEST(TestMaybeNullAssignmentOps)
+    {
+        MyBase base;
+        MyDerived derived;
+        Unrelated unrelated;
+
+        not_null<MyBase*> nnBase(&base);
+        not_null<MyDerived*> nnDerived(&derived);
+        not_null<Unrelated*> nnUnrelated(&unrelated);
+
+        maybe_null_ret<MyBase*> mnBase_ret1(&base), mnBase_ret2;
+        mnBase_ret2 = mnBase_ret1; // maybe_null_ret<T> = maybe_null_ret<T>
+        mnBase_ret2 = nnBase; // maybe_null_ret<T> = not_null<T>
+
+        maybe_null_ret<MyDerived*> mnDerived_ret(&derived);
+        mnBase_ret2 = mnDerived_ret; // maybe_null_ret<T> = maybe_null_ret<U>
+        mnBase_ret1 = &derived; // maybe_null_ret<T> = U;
+        mnBase_ret1 = nnDerived; // maybe_null_ret<T> = not_null<U>
+
+        maybe_null_ret<Unrelated*> mnUnrelated_ret;
+        mnUnrelated_ret = &unrelated; // maybe_null_ret<T> = T
+
+        maybe_null_dbg<MyBase*> mnBase_dbg1(&base), mnBase_dbg2;
+        mnBase_dbg2 = mnBase_dbg1; // maybe_null_dbg<T> = maybe_null_dbg<T>
+        mnBase_dbg2 = nnBase; // maybe_null_dbg<T> = not_null<T>
+
+        maybe_null_dbg<MyDerived*> mnDerived_dbg(&derived);
+        mnBase_dbg2 = mnDerived_dbg; // maybe_null_dbg<T> = maybe_null_dbg<U>
+        mnBase_dbg1 = &derived; // maybe_null_dbg<T> = U;
+        mnBase_dbg1 = nnDerived; // maybe_null_dbg<T> = not_null<U>
+
+        maybe_null_dbg<Unrelated*> mnUnrelated_dbg;
+        mnUnrelated_dbg = &unrelated; // maybe_null_dbg<T> = T
     }
 }
 
