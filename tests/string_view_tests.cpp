@@ -45,7 +45,7 @@ SUITE(string_view_tests)
 
     TEST(TestConstructFromStdVector)
     {
-        std::vector<char> vec('h', 5);
+        std::vector<char> vec(5, 'h');
         string_view<> v = vec;
         CHECK(v.length() == vec.size());
     }
