@@ -29,7 +29,7 @@
 #include <array>
 #include <iterator>
 #include <algorithm>
-#include "gslassert.h"
+#include "assert.h"
 
 #ifdef _MSC_VER
 
