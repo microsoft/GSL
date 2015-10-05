@@ -94,7 +94,7 @@ private:
 
 // finally() - convenience function to generate a final_act
 template <class F>
-final_act<std::remove_reference_t<std::remove_const_t<F>>> finally(F &&f) noexcept { return final_act<std::remove_reference_t<std::remove_const_t<F>>>(std::forward<F>(f)); }
+final_act<std::decay_t<F>> finally(F &&f) noexcept { return final_act<std::decay_t<F>>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
