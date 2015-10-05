@@ -553,26 +553,6 @@ SUITE(array_view_tests)
 		}
 
 		{
-			// zero stride
-			strided_array_view<int, 1> sav{ av, {{4}, {}} };
-			CHECK(sav[0] == 0);
-			CHECK(sav[3] == 0);
-			CHECK_THROW(sav[4], fail_fast);
-		}
-
-		{
-			// zero extent
-			strided_array_view<int, 1> sav{ av,{ {},{1} } };
-			CHECK_THROW(sav[0], fail_fast);
-		}
-
-		{
-			// zero extent and stride
-			strided_array_view<int, 1> sav{ av,{ {},{} } };
-			CHECK_THROW(sav[0], fail_fast);
-		}
-
-		{
 			// strided array ctor with matching strided bounds 
 			strided_array_view<int, 1> sav{ arr,{ 4, 1 } };
 			CHECK(sav.bounds().index_bounds() == index<1>{ 4 });
@@ -627,6 +607,9 @@ SUITE(array_view_tests)
 
 #ifdef CONFIRM_COMPILATION_ERRORS
 		{
+			strided_array_view<int, 1> sav{ av,{ { 4 },{} } };
+			strided_array_view<int, 1> sav{ av,{ {},{ 1 } } };
+			strided_array_view<int, 1> sav{ av,{ {},{} } };
 			strided_array_view<int, 1> sav0{ av.data(), { 3, 2 } };
 			strided_array_view<int, 1> sav1{ arr, { 1 } };
 			strided_array_view<int, 1> sav2{ arr, { 1,1,1 } };
