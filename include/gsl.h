@@ -171,7 +171,7 @@ public:
         return ptr_;
     } // the assume() should help the optimizer
 
-    operator T() const {  return get(); }
+    explicit operator T() const { return get(); }
     T operator->() const { return get(); }
 
 	bool operator==(const T& rhs) const { return ptr_ == rhs; }
@@ -292,7 +292,7 @@ public:
         return ptr_; 
     }
 
-    operator T() const { return get(); }
+    explicit operator T() const { return get(); }
     T operator->() const { return get(); }
 
 private:
@@ -362,7 +362,7 @@ public:
 
     T get() const { return ptr_; }
 
-    operator T() const { return get(); }
+    explicit operator T() const { return get(); }
     T operator->() const { return get(); }
 
 private:
