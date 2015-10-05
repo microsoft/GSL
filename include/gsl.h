@@ -21,6 +21,7 @@
 
 #include "array_view.h"     // array_view, strided_array_view...
 #include "string_view.h"    // zstring, string_view, zstring_builder...
+#include "gslassert.h"
 #include <memory>
 
 #ifdef _MSC_VER
@@ -64,12 +65,6 @@ template <class T>
 using owner = T;
 
 //
-// GSL.assert: assertions
-//
-#define Expects(x)  gsl::fail_fast_assert((x))
-#define Ensures(x)  gsl::fail_fast_assert((x))
-
-//
 // GSL.util: utilities
 //
 
@@ -111,13 +106,13 @@ T narrow(U u) { T t = narrow_cast<T>(u); if (static_cast<U>(t) != u) throw narro
 // at() - Bounds-checked way of accessing static arrays, std::array, std::vector
 //
 template <class T, size_t N>
-T& at(T(&arr)[N], size_t index) { fail_fast_assert(index < N); return arr[index]; }
+T& at(T(&arr)[N], size_t index) { Expects(index < N); return arr[index]; }
 
 template <class T, size_t N>
-T& at(std::array<T, N>& arr, size_t index) { fail_fast_assert(index < N); return arr[index]; }
+T& at(std::array<T, N>& arr, size_t index) { Expects(index < N); return arr[index]; }
 
 template <class Cont>
-typename Cont::value_type& at(Cont& cont, size_t index) { fail_fast_assert(index < cont.size()); return cont[index]; }
+typename Cont::value_type& at(Cont& cont, size_t index) { Expects(index < cont.size()); return cont[index]; }
 
 
 //
