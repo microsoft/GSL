@@ -131,13 +131,13 @@ namespace details
 		// Preconditions: component_idx < rank
 		constexpr reference operator[](size_t component_idx)
 		{
-            Expects(component_idx < rank);
+			Expects(component_idx < rank);
 			return elems[component_idx];
 		}
 		// Preconditions: component_idx < rank
 		constexpr const_reference operator[](size_t component_idx) const
 		{
-            Expects(component_idx < rank);
+			Expects(component_idx < rank);
 			return elems[component_idx];
 		}
 		constexpr bool operator==(const ConcreteType& rhs) const noexcept
