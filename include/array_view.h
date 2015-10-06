@@ -70,7 +70,7 @@ namespace details
 	template <typename SizeType>
 	struct SizeTypeTraits
 	{
-		static const size_t max_value = std::is_signed<SizeType>::value ? static_cast<typename std::make_unsigned<SizeType>::type>(-1) / 2 : static_cast<SizeType>(-1);
+		static const SizeType max_value = std::is_signed<SizeType>::value ? static_cast<typename std::make_unsigned<SizeType>::type>(-1) / 2 : static_cast<SizeType>(-1);
 	};
 
 	template <typename T>
@@ -108,6 +108,9 @@ public:
 	using reference = std::add_lvalue_reference_t<value_type>;
 	using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 
+	constexpr index() noexcept
+	{}
+
 	constexpr index(const value_type(&values)[Rank]) noexcept
 	{
 		std::copy(values, values + Rank, elems);
@@ -120,36 +123,29 @@ public:
 		std::copy(begin(il), end(il), elems);
 	}
 
-	constexpr index(const index& other) noexcept  = default;
+	constexpr index(const index& other) noexcept = default;
 
 	// copy from index over smaller domain
-	template <typename OtherValueType>
-	constexpr index(typename std::enable_if_t<(details::SizeTypeTraits<OtherValueType>::max_value <= details::SizeTypeTraits<value_type>::max_value), const index<Rank, OtherValueType>>::type& other) noexcept
+	template <typename OtherValueType,
+		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value <= details::SizeTypeTraits<value_type>::max_value),
+		typename Other = std::enable_if_t<Enabled, index<Rank, OtherValueType>>>
+	constexpr index(const index<Rank, OtherValueType>& other) noexcept
 	{
 		std::copy(other.elems, other.elems + Rank, elems);
 	}
 
 	// copy from index over larger domain
-	template <typename OtherValueType>
-	constexpr index(typename std::enable_if_t<(details::SizeTypeTraits<OtherValueType>::max_value > details::SizeTypeTraits<value_type>::max_value), const index<Rank, OtherValueType>>::type& other) noexcept
+	template <typename OtherValueType,
+		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value > details::SizeTypeTraits<value_type>::max_value),
+		typename Other = std::enable_if_t<Enabled, index<Rank, OtherValueType>>>
+	constexpr index(const index<Rank, OtherValueType>& other, void* ptr = 0) noexcept
 	{
-		for (size_t i = 0; i < Rank; ++i)
-		{
-			fail_fast_assert(other.elems[i] <= static_cast<OtherValueType>(SizeTypeTraits<value_type>::max_value));
-			elems[i] = static_cast<value_type>(other.elems[i]);
-		}
-	}
+		bool ok = std::accumulate(other.elems, other.elems + Rank, true,
+			[&](bool b, OtherValueType val) { return b && (val <= static_cast<OtherValueType>(details::SizeTypeTraits<value_type>::max_value)); }
+		);
 
-	constexpr static index shift_left(const index<Rank + 1, value_type>& other) noexcept
-	{
-		value_type(&arr)[Rank] = (value_type(&)[Rank])(*(other.elems + 1));
-		return index(arr);
-	}
-
-	constexpr static index zero() noexcept
-	{
-		value_type zero[Rank] = {};
-		return index(zero);
+		fail_fast_assert(ok, "other value must fit in the new domain");
+		std::transform(other.elems, other.elems + rank, elems, [&](OtherValueType val) { return static_cast<value_type>(val); });
 	}
 
 	constexpr index& operator=(const index& rhs) noexcept = default;
@@ -230,7 +226,7 @@ public:
 		return ret;
 	}
 
-	friend static constexpr index operator*(value_type v, const index& rhs) noexcept
+	friend constexpr index operator*(value_type v, const index& rhs) noexcept
 	{
 		return rhs * v;
 	}
@@ -246,6 +242,7 @@ public:
 		std::transform(elems, elems + rank, elems, [v](value_type x) { return std::divides<ValueType>{}(x, v); });
 		return *this;
 	}
+
 private:
 	value_type elems[Rank] = {};
 };
@@ -262,42 +259,32 @@ public:
 	using reference = std::add_lvalue_reference_t<value_type>;
 	using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 	
-	constexpr index(value_type e0) noexcept : value(e0)
+	constexpr index() noexcept : value(0)
 	{}
 
-	constexpr index(const value_type(&values)[1]) noexcept : index(values[0]) 
+	constexpr index(value_type e) noexcept : value(e)
 	{}
 
-	// Preconditions: il.size() == rank
-	constexpr index(std::initializer_list<value_type> il) noexcept
-	{
-		fail_fast_assert(il.size() == rank, "Size of the initializer list must match the rank of the array");
-		value = begin(il)[0];
-	}
+	constexpr index(const value_type(&values)[1]) noexcept : index(values[0])
+	{}
 
 	constexpr index(const index &) noexcept = default;
 
-	template <typename OtherValueType>
-	constexpr index(typename std::enable_if_t<(details::SizeTypeTraits<OtherValueType>::max_value <= details::SizeTypeTraits<value_type>::max_value), const index<1, OtherValueType>>::type& other) noexcept
+	template <typename OtherValueType,
+		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value <= details::SizeTypeTraits<value_type>::max_value),
+		typename Other = std::enable_if_t<Enabled, index<1, OtherValueType>>>
+	constexpr index(const index<1, OtherValueType>& other) noexcept
 	{
 		value = static_cast<ValueType>(other.value);
 	}
 
-	template <typename OtherValueType>
-	constexpr index(typename std::enable_if_t<(details::SizeTypeTraits<OtherValueType>::max_value > details::SizeTypeTraits<value_type>::max_value), const index<1, OtherValueType>>::type& other) noexcept
+	template <typename OtherValueType,
+		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value > details::SizeTypeTraits<value_type>::max_value),
+		typename Other = std::enable_if_t<Enabled, index<1, OtherValueType>>>
+	constexpr index(const index<1, OtherValueType>& other, void* ptr=0) noexcept
 	{
-		fail_fast_assert(other.value <= static_cast<OtherValueType>(SizeTypeTraits<value_type>::max_value));
+		fail_fast_assert(other.value <= static_cast<OtherValueType>(details::SizeTypeTraits<value_type>::max_value));
 		value = static_cast<value_type>(other.value);
-	}
-
-	constexpr static index shift_left(const index<2, value_type>& other) noexcept
-	{
-		return other.elems[1];
-	}
-
-	constexpr static index zero() noexcept
-	{
-		return 0;
 	}
 
 	// Preconditions: component_idx < 1
@@ -388,7 +375,7 @@ public:
 		value /= v;
 		return *this;
 	}
-	friend static constexpr index operator*(value_type v, const index& rhs) noexcept
+	friend constexpr index operator*(value_type v, const index& rhs) noexcept
 	{
 		return{ rhs * v };
 	}
@@ -822,7 +809,7 @@ public:
 	
 	constexpr const_iterator begin() const noexcept
 	{
-		return const_iterator(*this, index_type::zero());
+		return const_iterator(*this);
 	}
 	
 	constexpr const_iterator end() const noexcept
@@ -908,7 +895,7 @@ public:
 	template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
 	constexpr sliced_type slice() const
 	{
-		return{ sliced_type::index_type::shift_left(m_extents), sliced_type::index_type::shift_left(m_strides) };
+		return{ details::shift_left(m_extents), details::shift_left(m_strides) };
 	}
 	template <size_t Dim = 0>
 	constexpr size_type extent() const noexcept
@@ -922,7 +909,7 @@ public:
 	}
 	const_iterator begin() const noexcept
 	{
-		return const_iterator{ *this, index_type::zero() };
+		return const_iterator{ *this };
 	}
 	const_iterator end() const noexcept
 	{
@@ -959,9 +946,9 @@ public:
 	using index_type = value_type;
 	using index_size_type = typename IndexType::value_type;
 	template <typename Bounds>
-	explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
+	explicit bounds_iterator(const Bounds& bnd, value_type curr = value_type{}) noexcept
 		: boundary(bnd.index_bounds())
-		, curr( std::move(curr) )
+		, curr(std::move(curr))
 	{
 		static_assert(is_bounds<Bounds>::value, "Bounds type must be provided");
 	}
@@ -1270,11 +1257,22 @@ namespace details
 		Bounds::size_type stride[Bounds::rank];
 
 		stride[Bounds::rank - 1] = 1;
-		for (size_t i = Bounds::rank - 1; Bounds::rank > 1 && i > 0; --i)
+		for (size_t i = 1; i < Bounds::rank; ++i)
 		{
-			stride[i - 1] = stride[i] * extents[i];
+			stride[Bounds::rank - i - 1] = stride[Bounds::rank - i] * extents[Bounds::rank - i];
 		}
 		return{ stride };
+	}
+
+	template <size_t Rank, typename ValueType, bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, index<Rank-1, ValueType>>>
+	constexpr Ret shift_left(const index<Rank, ValueType>& other) noexcept
+	{
+		Ret ret;
+		for (size_t i = 0; i < Rank - 1; ++i)
+		{
+			ret[i] = other[i + 1];
+		}
+		return ret;
 	}
 
 	template <typename BoundsSrc, typename BoundsDest>
