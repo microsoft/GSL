@@ -16,8 +16,8 @@
 
 #pragma once
 
-#ifndef GSL_FAIL_FAST_H
-#define GSL_FAIL_FAST_H
+#ifndef GSL_ASSERT_H
+#define GSL_ASSERT_H
 
 #include <exception>
 
@@ -25,8 +25,8 @@
 #include <stdexcept>
 #endif
 
-namespace gsl
-{
+namespace gsl {
+
 
 //
 // Having "fail fast" result in an exception makes unit testing
@@ -36,8 +36,8 @@ namespace gsl
 
 struct fail_fast : public std::runtime_error 
 {
-	fail_fast() : std::runtime_error("") {}
-	explicit fail_fast(char const* const message) : std::runtime_error(message) {}
+    fail_fast() : std::runtime_error("") {}
+    explicit fail_fast(char const* const message) : std::runtime_error(message) {}
 };
 
 inline void fail_fast_assert(bool cond) { if (!cond) throw fail_fast(); }
@@ -50,6 +50,12 @@ inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::ter
 
 #endif // GSL_THROWS_FOR_TESTING
 
-}
+//
+// GSL.assert: assertions
+//
+#define Expects(x, ...)  gsl::fail_fast_assert((x), __VA_ARGS__)
+#define Ensures(x, ...)  gsl::fail_fast_assert((x), __VA_ARGS__)
 
-#endif // GSL_FAIL_FAST_H
+} // namespace gsl
+
+#endif // GSL_ASSERT_H

@@ -21,7 +21,7 @@
 
 #include "array_view.h"     // array_view, strided_array_view...
 #include "string_view.h"    // zstring, string_view, zstring_builder...
-#include "assert.h"
+#include "gsl_assert.h"
 #include <memory>
 
 #ifdef _MSC_VER
