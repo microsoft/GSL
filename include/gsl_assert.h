@@ -53,8 +53,10 @@ inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::ter
 //
 // GSL.assert: assertions
 //
-#define Expects(x, ...)  gsl::fail_fast_assert((x), __VA_ARGS__)
-#define Ensures(x, ...)  gsl::fail_fast_assert((x), __VA_ARGS__)
+inline void Expects(bool cond) { fail_fast_assert(cond); }
+inline void Expects(bool cond, const char* msg) { fail_fast_assert(cond, msg); }
+inline void Ensures(bool cond) { fail_fast_assert(cond); }
+inline void Ensures(bool cond, const char* msg) { fail_fast_assert(cond, msg); }
 
 } // namespace gsl
 
