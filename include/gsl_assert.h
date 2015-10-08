@@ -27,7 +27,6 @@
 
 namespace gsl {
 
-
 //
 // Having "fail fast" result in an exception makes unit testing
 // the GSL classes that rely upon it much simpler. 
@@ -53,10 +52,8 @@ inline void fail_fast_assert(bool cond, const char* const) { if (!cond) std::ter
 //
 // GSL.assert: assertions
 //
-inline void Expects(bool cond) { fail_fast_assert(cond); }
-inline void Expects(bool cond, const char* msg) { fail_fast_assert(cond, msg); }
-inline void Ensures(bool cond) { fail_fast_assert(cond); }
-inline void Ensures(bool cond, const char* msg) { fail_fast_assert(cond, msg); }
+#define Expects(x)  gsl::fail_fast_assert((x))
+#define Ensures(x)  gsl::fail_fast_assert((x))
 
 } // namespace gsl
 

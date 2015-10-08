@@ -108,7 +108,7 @@ namespace details
 		constexpr coordinate_facade(std::initializer_list<value_type> il)
 		{
 			static_assert(std::is_base_of<coordinate_facade, ConcreteType>::value, "ConcreteType must be derived from coordinate_facade.");
-			Expects(il.size() == rank, "The size of the initializer list must match the rank of the array");
+			Expects(il.size() == rank); // The size of the initializer list must match the rank of the array
 			for (size_t i = 0; i < rank; ++i)
 			{
 				elems[i] = begin(il)[i];
@@ -131,13 +131,13 @@ namespace details
 		// Preconditions: component_idx < rank
 		constexpr reference operator[](size_t component_idx)
 		{
-			Expects(component_idx < rank, "Component index must be less than rank");
+			Expects(component_idx < rank); // Component index must be less than rank
 			return elems[component_idx];
 		}
 		// Preconditions: component_idx < rank
 		constexpr const_reference operator[](size_t component_idx) const
 		{
-			Expects(component_idx < rank, "Component index must be less than rank");
+			Expects(component_idx < rank); // Component index must be less than rank
 			return elems[component_idx];
 		}
 		constexpr bool operator==(const ConcreteType& rhs) const noexcept
@@ -335,7 +335,7 @@ public:
 	// Preconditions: il.size() == rank
 	constexpr index(std::initializer_list<value_type> il)
 	{
-		Expects(il.size() == rank, "Size of the initializer list must match the rank of the array");
+		Expects(il.size() == rank); // Size of the initializer list must match the rank of the array
 		value = begin(il)[0];
 	}
 
@@ -355,14 +355,14 @@ public:
 	// Preconditions: component_idx < rank
 	constexpr reference operator[](size_type component_idx) noexcept
 	{
-		Expects(component_idx == 0, "Component index must be less than rank");
+		Expects(component_idx == 0); // Component index must be less than rank
 		(void)(component_idx);
 		return value;
 	}
 	// Preconditions: component_idx < rank
 	constexpr const_reference operator[](size_type component_idx) const noexcept
 	{
-		Expects(component_idx == 0, "Component index must be less than rank");
+		Expects(component_idx == 0); // Component index must be less than rank
 		(void)(component_idx);
 		return value;
 	}
@@ -661,7 +661,7 @@ namespace details
 
 		template <typename T, size_t Dim = 0>
 		SizeType linearize(const T & arr) const {  
-			Expects(arr[Dim] < CurrentRange, "Index is out of range");
+			Expects(arr[Dim] < CurrentRange); // Index is out of range
 			return static_cast<SizeType>(this->Base::totalSize()) * arr[Dim] + this->Base::template linearize<T, Dim + 1>(arr);
 		}
 
@@ -798,8 +798,8 @@ public:
 
 	constexpr static_bounds(std::initializer_list<size_type> il) : m_ranges(il.begin())
 	{
-		Expects(MyRanges::DynamicNum == il.size(), "Size of the initializer list must match the rank of the array");
-		Expects(il.size() <= details::SizeTypeTraits<size_type>::max_value, "Size of the range is larger than the max element of the size type");
+		Expects(MyRanges::DynamicNum == il.size()); // Size of the initializer list must match the rank of the array
+		Expects(il.size() <= details::SizeTypeTraits<size_type>::max_value); // Size of the range is larger than the max element of the size type
 	}
 	
 	constexpr static_bounds() = default;
@@ -1398,8 +1398,8 @@ public:
 	template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
 	constexpr Ret operator[](size_type idx) const
 	{
-		Expects(idx < m_bounds.size(), "index is out of bounds of the array");
-		Expects(idx * m_bounds.stride() < m_bounds.total_size(), "index is out of bounds of the underlying data");
+		Expects(idx < m_bounds.size()); // index is out of bounds of the array
+		Expects(idx * m_bounds.stride() < m_bounds.total_size()); // index is out of bounds of the underlying data
 		return Ret {m_pdata + idx * m_bounds.stride(), m_bounds.slice()};
 	}
 
@@ -1946,20 +1946,20 @@ public:
 	template<size_type N>
 	strided_array_view(value_type(&values)[N], bounds_type bounds) : Base(values, std::move(bounds))
 	{
-		Expects(this->bounds().total_size() <= N, "Bounds cross data boundaries");
+		Expects(this->bounds().total_size() <= N); // Bounds cross data boundaries
 	}
 
 	// from raw data
 	strided_array_view(pointer ptr, size_type size, bounds_type bounds): Base(ptr, std::move(bounds))
 	{
-		Expects(this->bounds().total_size() <= size, "Bounds cross data boundaries");
+		Expects(this->bounds().total_size() <= size); // Bounds cross data boundaries
 	}
 
 	// from array view
 	template <size_t... Dimensions, typename Dummy = std::enable_if<sizeof...(Dimensions) == Rank>>
 	strided_array_view(array_view<ValueTypeOpt, Dimensions...> av, bounds_type bounds) : Base(av.data(), std::move(bounds))
 	{
-		Expects(this->bounds().total_size() <= av.bounds().total_size(), "Bounds cross data boundaries");
+		Expects(this->bounds().total_size() <= av.bounds().total_size()); // Bounds cross data boundaries
 	}
 	
 	// convertible
@@ -2004,7 +2004,7 @@ public:
 private:
 	static index_type resize_extent(const index_type& extent, size_t d)
 	{
-		Expects(extent[rank - 1] >= d && (extent[rank-1] % d == 0), "The last dimension of the array needs to contain a multiple of new type elements");
+		Expects(extent[rank - 1] >= d && (extent[rank-1] % d == 0)); // The last dimension of the array needs to contain a multiple of new type elements
 
 		index_type ret = extent;
 		ret[rank - 1] /= d;
@@ -2015,7 +2015,7 @@ private:
 	template <bool Enabled = (rank == 1), typename Dummy = std::enable_if_t<Enabled>>
 	static index_type resize_stride(const index_type& strides, size_t , void * = 0)
 	{
-		Expects(strides[rank - 1] == 1, "Only strided arrays with regular strides can be resized");
+		Expects(strides[rank - 1] == 1); // Only strided arrays with regular strides can be resized
 
 		return strides;
 	}
@@ -2023,8 +2023,8 @@ private:
 	template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
 	static index_type resize_stride(const index_type& strides, size_t d)
 	{
-		Expects(strides[rank - 1] == 1, "Only strided arrays with regular strides can be resized");
-		Expects(strides[rank - 2] >= d && (strides[rank - 2] % d == 0), "The strides must have contiguous chunks of memory that can contain a multiple of new type elements");
+		Expects(strides[rank - 1] == 1); // Only strided arrays with regular strides can be resized
+		Expects(strides[rank - 2] >= d && (strides[rank - 2] % d == 0)); // The strides must have contiguous chunks of memory that can contain a multiple of new type elements
 
 		for (size_t i = rank - 1; i > 0; --i)
 			fail_fast_assert((strides[i-1] >= strides[i]) && (strides[i-1] % strides[i] == 0), "Only strided arrays with regular strides can be resized");
