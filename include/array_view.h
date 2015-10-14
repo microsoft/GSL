@@ -686,6 +686,17 @@ namespace details
 	{
 		return TypeListIndexer<TypeChain>(obj);
 	}
+
+	template <size_t Rank, typename ValueType, bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, index<Rank - 1, ValueType>>>
+	constexpr Ret shift_left(const index<Rank, ValueType>& other) noexcept
+	{
+		Ret ret;
+		for (size_t i = 0; i < Rank - 1; ++i)
+		{
+			ret[i] = other[i + 1];
+		}
+		return ret;
+	}
 }
 
 template <typename IndexType>
@@ -790,7 +801,7 @@ public:
 	
 	constexpr index_type index_bounds() const noexcept
 	{
-		size_type extents[rank];
+		size_type extents[rank] = {};
 		m_ranges.serialize(extents);
 		return{ extents };
 	}
@@ -826,11 +837,11 @@ class strided_bounds
 
 public:
 	static const size_t rank = Rank;
-	using reference       = typename SizeType&;
-	using const_reference = typename const SizeType&;
-	using size_type       = typename SizeType;
-	using difference_type = typename SizeType;
-	using value_type      = typename SizeType;
+	using reference       = SizeType&;
+	using const_reference = const SizeType&;
+	using size_type       = SizeType;
+	using difference_type = SizeType;
+	using value_type      = SizeType;
 	using index_type      = index<rank, size_type>;
 	using iterator        = bounds_iterator<index_type>;
 	using const_iterator  = bounds_iterator<index_type>;
@@ -1254,7 +1265,7 @@ namespace details
 	constexpr std::enable_if_t<std::is_same<typename Bounds::mapping_type, contiguous_mapping_tag>::value, typename Bounds::index_type> make_stride(const Bounds& bnd) noexcept
 	{
 		auto extents = bnd.index_bounds();
-		Bounds::size_type stride[Bounds::rank];
+		typename Bounds::size_type stride[Bounds::rank] = {};
 
 		stride[Bounds::rank - 1] = 1;
 		for (size_t i = 1; i < Bounds::rank; ++i)
@@ -1262,17 +1273,6 @@ namespace details
 			stride[Bounds::rank - i - 1] = stride[Bounds::rank - i] * extents[Bounds::rank - i];
 		}
 		return{ stride };
-	}
-
-	template <size_t Rank, typename ValueType, bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, index<Rank-1, ValueType>>>
-	constexpr Ret shift_left(const index<Rank, ValueType>& other) noexcept
-	{
-		Ret ret;
-		for (size_t i = 0; i < Rank - 1; ++i)
-		{
-			ret[i] = other[i + 1];
-		}
-		return ret;
 	}
 
 	template <typename BoundsSrc, typename BoundsDest>

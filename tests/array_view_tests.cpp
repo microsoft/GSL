@@ -17,6 +17,7 @@
 #include <UnitTest++/UnitTest++.h> 
 #include <array_view.h>
 #include <numeric>
+#include <limits>
 #include <array>
 #include <string>
 #include <vector>
@@ -1197,7 +1198,7 @@ SUITE(array_view_tests)
 
 		// to smaller (failure)
 		{
-			index<2, int> big_int_index{ INT_MAX, 1 };
+			index<2, int> big_int_index{ std::numeric_limits<int>::max(), 1 };
 			CHECK_THROW((Convert<2,int, short int>(big_int_index)), fail_fast);
 		}
 
@@ -1239,10 +1240,10 @@ SUITE(array_view_tests)
 
 		// to bigger with max index
 		{
-			index<2, int> big_int_index{ INT_MAX, 1 };
+			index<2, int> big_int_index{ std::numeric_limits<int>::max(), 1 };
 			index<2, long long> longlong_index{ big_int_index };
 
-			CHECK(longlong_index[0] == INT_MAX);
+			CHECK(longlong_index[0] == std::numeric_limits<int>::max());
 			CHECK(longlong_index[1] == 1);
 		}
 
@@ -1269,7 +1270,7 @@ SUITE(array_view_tests)
 
 		// to smaller (failure)
 		{
-			index<1, int> big_int_index{ INT_MAX };
+			index<1, int> big_int_index{ std::numeric_limits<int>::max() };
 
 			CHECK_THROW((Convert<1, int, short int>(big_int_index)), fail_fast);
 		}
@@ -1308,10 +1309,10 @@ SUITE(array_view_tests)
 
 		// to bigger with max index
 		{
-			index<1, int> big_int_index{ INT_MAX };
+			index<1, int> big_int_index{ std::numeric_limits<int>::max() };
 			index<1, long long> longlong_index{ big_int_index };
 
-			CHECK(longlong_index[0] == INT_MAX);
+			CHECK(longlong_index[0] == std::numeric_limits<int>::max());
 		}
 
 		// to bigger, sign mismatch
