@@ -826,11 +826,11 @@ class strided_bounds
 
 public:
 	static const size_t rank = Rank;
-	using reference       = typename SizeType&;
-	using const_reference = typename const SizeType&;
-	using size_type       = typename SizeType;
-	using difference_type = typename SizeType;
-	using value_type      = typename SizeType;
+	using reference       = SizeType&;
+	using const_reference = const SizeType&;
+	using size_type       = SizeType;
+	using difference_type = SizeType;
+	using value_type      = SizeType;
 	using index_type      = index<rank, size_type>;
 	using iterator        = bounds_iterator<index_type>;
 	using const_iterator  = bounds_iterator<index_type>;
