@@ -30,6 +30,7 @@
 #include <array>
 #include <iterator>
 #include <algorithm>
+#include <functional>
 #include "fail_fast.h"
 
 #ifdef _MSC_VER
