@@ -50,7 +50,7 @@ SUITE(array_view_tests)
 		delete[] ptr.data();
 
 
-		static_bounds<size_t, 4, dynamic_range, 2> bounds{ 3 };
+		static_bounds<4, dynamic_range, 2> bounds{ 3 };
 	
 #ifdef CONFIRM_COMPILATION_ERRORS
 		array_view<int, 4, dynamic_range, 2> av(nullptr, bounds);
@@ -151,9 +151,9 @@ SUITE(array_view_tests)
 
 	TEST(md_access)
 	{
-		unsigned int width = 5, height = 20;
+		auto width = 5, height = 20;
 
-		unsigned int imgSize = width * height;
+		auto imgSize = width * height;
 		auto image_ptr = new int[imgSize][3];
 
 		// size check will be done
@@ -162,9 +162,9 @@ SUITE(array_view_tests)
 		iota(image_view.begin(), image_view.end(), 1);
 
 		int expected = 0;
-		for (unsigned int i = 0; i < height; i++)
+		for (auto i = 0; i < height; i++)
 		{
-			for (unsigned int j = 0; j < width; j++)
+			for (auto j = 0; j < width; j++)
 			{
 				CHECK(expected + 1 == image_view[i][j][0]);
 				CHECK(expected + 2 == image_view[i][j][1]);
@@ -244,7 +244,7 @@ SUITE(array_view_tests)
 		auto av8 = av7.as_array_view<int>();
 
 		CHECK(av8.size() == av6.size());
-		for (size_t i = 0; i < av8.size(); i++)
+		for (auto i = 0; i < av8.size(); i++)
 		{
 			CHECK(av8[i] == 1);
 		}
