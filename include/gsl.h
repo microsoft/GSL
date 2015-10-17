@@ -200,11 +200,11 @@ private:
 namespace std
 {
     template<class T>
-    struct hash<gsl::not_null<T *>>
+    struct hash<gsl::not_null<T>>
     {
-        size_t operator()(const gsl::not_null<T *> & value) const
+        size_t operator()(const gsl::not_null<T> & value) const
         {
-            return hash<T *>{}(value);
+            return hash<T>{}(value);
         }
     };
 
