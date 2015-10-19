@@ -72,7 +72,7 @@ namespace details
 	template <typename SizeType>
 	struct SizeTypeTraits
 	{
-		static const SizeType max_value = std::is_signed<SizeType>::value ? static_cast<typename std::make_unsigned<SizeType>::type>(-1) / 2 : static_cast<SizeType>(-1);
+		static const SizeType max_value = std::numeric_limits<SizeType>::max();
 	};
 }
 
@@ -99,12 +99,9 @@ public:
 		std::copy(values, values + Rank, elems);
 	}
 
-	// Preconditions: il.size() == rank
-	constexpr index(std::initializer_list<value_type> il) noexcept
-	{
-		fail_fast_assert(il.size() == Rank, "The size of the initializer list must match the rank of the array");
-		std::copy(begin(il), end(il), elems);
-	}
+	template<typename... Ts, bool Enabled = (sizeof...(Ts) == Rank), typename Dummy = std::enable_if_t<Enabled, bool>>
+	constexpr index(Ts... ds) noexcept : elems{ static_cast<value_type>(ds)... }
+	{}
 
 	constexpr index(const index& other) noexcept = default;
 

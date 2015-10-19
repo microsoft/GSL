@@ -16,16 +16,11 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <array_view.h>
-#include <numeric>
-#include <limits>
-#include <array>
+
 #include <string>
 #include <vector>
 #include <list>
 #include <iostream>
-#include <functional>
-#include <algorithm>
-
 
 using namespace std;
 using namespace gsl;
@@ -639,23 +634,14 @@ SUITE(array_view_tests)
 
 			index<1> index{ 0, 1 };
 			strided_array_view<int, 1> sav8{ arr,{ 1,{ 1,1 } } };
-#ifdef _MSC_VER
 			strided_array_view<int, 1> sav9{ arr,{ { 1,1 },{ 1,1 } } };
-#endif
 			strided_array_view<int, 1> sav10{ av,{ 1,{ 1,1 } } };
-#ifdef _MSC_VER
 			strided_array_view<int, 1> sav11{ av,{ { 1,1 },{ 1,1 } } };
-#endif
+			strided_array_view<int, 2> sav12{ av.as_array_view(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
+			strided_array_view<int, 2> sav13{ av.as_array_view(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
+			strided_array_view<int, 2> sav14{ av.as_array_view(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
 		}
 #endif
-
-		{
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1}} }), fail_fast);
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1,1,1}} }), fail_fast);
-#ifdef _MSC_VER
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1,1,1}, {1}} }), fail_fast);
-#endif
-		}
 	}
 
 	TEST(strided_array_view_type_conversion)
@@ -837,6 +823,94 @@ SUITE(array_view_tests)
 		CHECK(av2[0][i] == 4);
 
 		delete[] arr;
+	}
+
+	TEST(index_constructors)
+	{
+		{
+			// components of the same type
+			index<3> i1(0, 1, 2);
+			CHECK(i1[0] == 0);
+
+			// components of different types
+			size_t c0 = 0;
+			size_t c1 = 1;
+			index<3> i2(c0, c1, 2);
+			CHECK(i2[0] == 0);
+
+			// from array
+			index<3> i3 = { 0,1,2 };
+			CHECK(i3[0] == 0);
+
+			// from other index of the same size type
+			index<3> i4 = i3;
+			CHECK(i4[0] == 0);
+
+			// from other index of bigger size type
+			index<3, short> i5 = i4;
+			CHECK(i5[0] == 0);
+
+			// from other index of smaller size type
+			index<3, long long> i6 = i4;
+			CHECK(i6[0] == 0);
+
+			// default
+			index<3, long long> i7;
+			CHECK(i7[0] == 0);
+
+			// default
+			index<3, long long> i9 = {};
+			CHECK(i9[0] == 0);
+		}
+
+		{
+			// components of the same type
+			index<1> i1(0);
+			CHECK(i1[0] == 0);
+
+			// components of different types
+			size_t c0 = 0;
+			index<1> i2(c0);
+			CHECK(i2[0] == 0);
+
+			// from array
+			index<1> i3 = { 0 };
+			CHECK(i3[0] == 0);
+
+			// from int
+			index<1> i4 = 0;
+			CHECK(i4[0] == 0);
+
+			// from other index of the same size type
+			index<1> i5 = i3;
+			CHECK(i5[0] == 0);
+
+			// from other index of bigger size type
+			index<1, short> i6 = i5;
+			CHECK(i6[0] == 0);
+
+			// from other index of smaller size type
+			index<1, long long> i7 = i6;
+			CHECK(i7[0] == 0);
+
+			// default
+			index<1, long long> i8;
+			CHECK(i8[0] == 0);
+
+			// default
+			index<1, long long> i9 = {};
+			CHECK(i9[0] == 0);
+		}
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+		{
+			index<3> i1(0, 1);
+			index<3> i2(0, 1, 2, 3);
+			index<3> i3 = { 0 };
+			index<3> i4 = { 0, 1, 2, 3 };
+			index<1> i5 = { 0,1 };
+		}
+#endif
 	}
 
 	TEST(index_operations)
