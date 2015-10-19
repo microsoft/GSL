@@ -925,11 +925,35 @@ SUITE(array_view_tests)
 			}
 		}
 
-		size_t idx = 0;
-		for (auto num : section)
+		size_t check_sum = 0;
+		for (size_t i = 0; i < length; ++i)
 		{
-			CHECK(num == av[idx][1]);
-			idx++;
+			check_sum += av[i][1];
+		}
+
+		{
+			size_t idx = 0;
+			size_t sum = 0;
+			for (auto num : section)
+			{
+				CHECK(num == av[idx][1]);
+				sum += num;
+				idx++;
+			}
+
+			CHECK(sum == check_sum);
+		}
+		{
+			size_t idx = length - 1;
+			size_t sum = 0;
+			for (auto iter = section.rbegin(); iter != section.rend(); ++iter)
+			{
+				CHECK(*iter == av[idx][1]);
+				sum += *iter;
+				idx--;
+			}
+
+			CHECK(sum == check_sum);
 		}
 	}
 
@@ -1688,7 +1712,7 @@ SUITE(array_view_tests)
 		CHECK_THROW(f(), fail_fast);
 	}
 
-	TEST(AsWriteableBytes)		
+	TEST(AsWriteableBytes)
 	{
 		int a[] = { 1, 2, 3, 4 };
 
@@ -1714,7 +1738,36 @@ SUITE(array_view_tests)
 			CHECK(wav.data() == (byte*)&a[0]);
 			CHECK(wav.length() == sizeof(a));
 		}
+	}
 
+	TEST(NonConstIterator)
+	{
+		int a[] = { 1, 2, 3, 4 };
+
+		{
+			array_view<int, dynamic_range> av = a;
+			auto wav = av.as_writeable_bytes();
+			for (auto& b : wav)
+			{
+				b = byte(0);
+			}
+			for (size_t i = 0; i < 4; ++i)
+			{
+				CHECK(a[i] == 0);
+			}
+		}
+
+		{
+			array_view<int, dynamic_range> av = a;
+			for (auto& n : av)
+			{
+				n = 1;
+			}
+			for (size_t i = 0; i < 4; ++i)
+			{
+				CHECK(a[i] == 1);
+			}
+		}
 	}
 
 	TEST(ArrayViewComparison)
