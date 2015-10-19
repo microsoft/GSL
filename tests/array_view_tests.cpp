@@ -1828,6 +1828,17 @@ SUITE(array_view_tests)
 			CHECK(!(av1 >= av2));
 		}
 	}
+
+	TEST(bounds_iterator_ordering)
+	{
+		static_bounds<size_t, 2, 2> bounds;
+
+		auto i1 = bounds.begin() + 1;
+		auto i2 = bounds.begin() + 2;
+
+		CHECK(i1 < i2);
+		CHECK(!(i2 < i1));
+	}
 }
 
 int main(int, const char *[])

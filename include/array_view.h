@@ -1075,6 +1075,8 @@ public:
 		{
 			if (curr[i] < rhs.curr[i])
 				return true;
+			if (rhs.curr[i] < curr[i])
+				return false;
 		}
 		return false;
 	}
