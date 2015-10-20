@@ -11,3 +11,4 @@ tests/*tests.dir
 *.tlog
 Testing/Temporary/*.*
 CMakeCache.txt
+*.suo
