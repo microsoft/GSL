@@ -72,27 +72,15 @@ namespace details
 	template <typename SizeType>
 	struct SizeTypeTraits
 	{
-		static const SizeType max_value = std::is_signed<SizeType>::value ? static_cast<typename std::make_unsigned<SizeType>::type>(-1) / 2 : static_cast<SizeType>(-1);
+		static const SizeType max_value = std::numeric_limits<SizeType>::max();
 	};
 
-	template <typename T>
-	class arrow_proxy
-	{
-	public:
-		explicit arrow_proxy(T t)
-			: val(t)
-		{}
-		const T operator*() const noexcept
-		{
-			return val;
-		}
-		const T* operator->() const noexcept
-		{
-			return &val;
-		}
-	private:
-		T val;
-	};
+
+	template<typename... Ts>
+	class are_integral : public std::integral_constant<bool, true> {};
+
+	template<typename T, typename... Ts>
+	class are_integral<T, Ts...> : public std::integral_constant<bool, std::is_integral<T>::value && are_integral<Ts...>::value> {};
 }
 
 template <size_t Rank, typename ValueType = size_t>
@@ -118,12 +106,9 @@ public:
 		std::copy(values, values + Rank, elems);
 	}
 
-	// Preconditions: il.size() == rank
-	constexpr index(std::initializer_list<value_type> il) noexcept
-	{
-		fail_fast_assert(il.size() == Rank, "The size of the initializer list must match the rank of the array");
-		std::copy(begin(il), end(il), elems);
-	}
+	template<typename... Ts, bool Enabled1 = (sizeof...(Ts) == Rank), bool Enabled2 = details::are_integral<Ts...>::value, typename Dummy = std::enable_if_t<Enabled1 && Enabled2, bool>>
+	constexpr index(Ts... ds) noexcept : elems{ static_cast<value_type>(ds)... }
+	{}
 
 	constexpr index(const index& other) noexcept = default;
 
@@ -247,142 +232,6 @@ public:
 
 private:
 	value_type elems[Rank] = {};
-};
-
-template <typename ValueType>
-class index<1, ValueType>
-{
-	template <size_t, typename OtherValueType>
-	friend class index;
-
-public:
-	static const size_t rank = 1;
-	using value_type = std::remove_reference_t<ValueType>;
-	using reference = std::add_lvalue_reference_t<value_type>;
-	using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
-	
-	constexpr index() noexcept : value(0)
-	{}
-
-	constexpr index(value_type e) noexcept : value(e)
-	{}
-
-	constexpr index(const value_type(&values)[1]) noexcept : index(values[0])
-	{}
-
-	constexpr index(const index &) noexcept = default;
-
-	template <typename OtherValueType,
-		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value <= details::SizeTypeTraits<value_type>::max_value),
-		typename Other = std::enable_if_t<Enabled, index<1, OtherValueType>>>
-	constexpr index(const index<1, OtherValueType>& other) noexcept
-	{
-		value = static_cast<ValueType>(other.value);
-	}
-
-	template <typename OtherValueType,
-		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value > details::SizeTypeTraits<value_type>::max_value),
-		typename Other = std::enable_if_t<Enabled, index<1, OtherValueType>>>
-	constexpr index(const index<1, OtherValueType>& other, void* ptr=0) noexcept
-	{
-		fail_fast_assert(other.value <= static_cast<OtherValueType>(details::SizeTypeTraits<value_type>::max_value));
-		value = static_cast<value_type>(other.value);
-	}
-
-	// Preconditions: component_idx < 1
-	constexpr reference operator[](value_type component_idx) noexcept
-	{
-		fail_fast_assert(component_idx == 0, "Component index must be less than rank");
-		(void)(component_idx);
-		return value;
-	}
-	// Preconditions: component_idx < 1
-	constexpr const_reference operator[](value_type component_idx) const noexcept
-	{
-		fail_fast_assert(component_idx == 0, "Component index must be less than rank");
-		(void)(component_idx);
-		return value;
-	}
-	constexpr bool operator==(const index& rhs) const noexcept
-	{
-		return value == rhs.value;
-	}
-	constexpr bool operator!=(const index& rhs) const noexcept
-	{
-		return !(*this == rhs);
-	}
-	constexpr index operator+() const noexcept
-	{
-		return *this;
-	}
-	constexpr index operator-() const noexcept
-	{
-		return index(-value);
-	}
-	constexpr index operator+(const index& rhs) const noexcept
-	{
-		return index(value + rhs.value);
-	}
-	constexpr index operator-(const index& rhs) const noexcept
-	{
-		return index(value - rhs.value);
-	}
-	constexpr index& operator+=(const index& rhs) noexcept
-	{
-		value += rhs.value;
-		return *this;
-	}
-	constexpr index& operator-=(const index& rhs) noexcept
-	{
-		value -= rhs.value;
-		return *this;
-	}
-	constexpr index& operator++() noexcept
-	{
-		++value;
-		return *this;
-	}
-	constexpr index operator++(int) noexcept
-	{
-		index ret = *this;
-		++(*this);
-		return ret;
-	}
-	constexpr index& operator--() noexcept
-	{
-		--value;
-		return *this;
-	}
-	constexpr index operator--(int) noexcept
-	{
-		index ret = *this;
-		--(*this);
-		return ret;
-	}
-	constexpr index operator*(value_type v) const noexcept
-	{
-		return index(value * v);
-	}
-	constexpr index operator/(value_type v) const noexcept
-	{
-		return index(value / v);
-	}
-	constexpr index& operator*=(value_type v) noexcept
-	{
-		value *= v;
-		return *this;
-	}
-	constexpr index& operator/=(value_type v) noexcept
-	{
-		value /= v;
-		return *this;
-	}
-	friend constexpr index operator*(value_type v, const index& rhs) noexcept
-	{
-		return{ rhs * v };
-	}
-private:
-	value_type value;
 };
 
 #ifndef _MSC_VER
@@ -730,8 +579,9 @@ public:
 
 	using size_type = SizeType;
 	using index_type = index<rank, size_type>;
-	using iterator = bounds_iterator<index_type>;
-	using const_iterator = bounds_iterator<index_type>;
+	using const_index_type = std::add_const_t<index_type>;
+	using iterator = bounds_iterator<const_index_type>;
+	using const_iterator = bounds_iterator<const_index_type>;
 	using difference_type = ptrdiff_t;
 	using sliced_type = static_bounds<SizeType, RestRanges...>;
 	using mapping_type = contiguous_mapping_tag;
@@ -822,7 +672,7 @@ public:
 	
 	constexpr const_iterator begin() const noexcept
 	{
-		return const_iterator(*this);
+		return const_iterator(*this, index_type{});
 	}
 	
 	constexpr const_iterator end() const noexcept
@@ -845,8 +695,9 @@ public:
 	using difference_type = SizeType;
 	using value_type      = SizeType;
 	using index_type      = index<rank, size_type>;
-	using iterator        = bounds_iterator<index_type>;
-	using const_iterator  = bounds_iterator<index_type>;
+	using const_index_type = std::add_const_t<index_type>;
+	using iterator = bounds_iterator<const_index_type>;
+	using const_iterator = bounds_iterator<const_index_type>;
 	static const int dynamic_rank = rank;
 	static const size_t static_size = dynamic_range;
 	using sliced_type = std::conditional_t<rank != 0, strided_bounds<rank - 1>, void>;
@@ -920,11 +771,11 @@ public:
 	{
 		return m_extents;
 	}
-	const_iterator begin() const noexcept
+	constexpr const_iterator begin() const noexcept
 	{
-		return const_iterator{ *this };
+		return const_iterator{ *this, index_type{} };
 	}
-	const_iterator end() const noexcept
+	constexpr const_iterator end() const noexcept
 	{
 		return const_iterator{ *this, index_bounds() };
 	}
@@ -941,15 +792,11 @@ template <size_t Rank, typename SizeType>
 struct is_bounds<strided_bounds<Rank, SizeType>> : std::integral_constant<bool, true> {};
 
 template <typename IndexType>
-class bounds_iterator
-	: public std::iterator<std::random_access_iterator_tag,
-		IndexType,
-		ptrdiff_t,
-		const details::arrow_proxy<IndexType>,
-		const IndexType>
+class bounds_iterator: public std::iterator<std::random_access_iterator_tag, IndexType>
 {
 private:
-	using Base = std::iterator <std::random_access_iterator_tag, IndexType, ptrdiff_t, const details::arrow_proxy<IndexType>, const IndexType>;
+	using Base = std::iterator <std::random_access_iterator_tag, IndexType>;
+
 public:
 	static const size_t rank = IndexType::rank;
 	using typename Base::reference;
@@ -959,79 +806,88 @@ public:
 	using index_type = value_type;
 	using index_size_type = typename IndexType::value_type;
 	template <typename Bounds>
-	explicit bounds_iterator(const Bounds& bnd, value_type curr = value_type{}) noexcept
-		: boundary(bnd.index_bounds())
-		, curr(std::move(curr))
+	explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
+		: boundary(bnd.index_bounds()), curr(std::move(curr))
 	{
 		static_assert(is_bounds<Bounds>::value, "Bounds type must be provided");
 	}
-	reference operator*() const noexcept
+
+	constexpr reference operator*() const noexcept
 	{
 		return curr;
 	}
-	pointer operator->() const noexcept
+
+	constexpr pointer operator->() const noexcept
 	{
-		return details::arrow_proxy<value_type>{ curr };
+		return &curr;
 	}
-	bounds_iterator& operator++() noexcept
+
+	constexpr bounds_iterator& operator++() noexcept
 	{
 		for (size_t i = rank; i-- > 0;)
 		{
-			if (++curr[i] < boundary[i])
+			if (curr[i] < boundary[i] - 1)
 			{
+				curr[i]++;
 				return *this;
 			}
-			else
-			{
-				curr[i] = 0;
-			}
+			curr[i] = 0;
 		}
 		// If we're here we've wrapped over - set to past-the-end.
-		for (size_t i = 0; i < rank; ++i)
-		{
-			curr[i] = boundary[i];
-		}
+		curr = boundary;
 		return *this;
 	}
-	bounds_iterator operator++(int) noexcept
+
+	constexpr bounds_iterator operator++(int) noexcept
 	{
 		auto ret = *this;
 		++(*this);
 		return ret;
 	}
-	bounds_iterator& operator--() noexcept
+
+	constexpr bounds_iterator& operator--() noexcept
 	{
-		for (size_t i = rank; i-- > 0;)
+		if (!less(curr, boundary))
 		{
-			if (curr[i]-- > 0)
-			{
-				return *this;
-			}
-			else
+			// if at the past-the-end, set to last element
+			for (size_t i = 0; i < rank; ++i)
 			{
 				curr[i] = boundary[i] - 1;
 			}
+			return *this;
+		}
+		for (size_t i = rank; i-- > 0;)
+		{
+			if (curr[i] >= 1)
+			{
+				curr[i]--;
+				return *this;
+			}
+			curr[i] = boundary[i] - 1;
 		}
 		// If we're here the preconditions were violated
 		// "pre: there exists s such that r == ++s"
 		fail_fast_assert(false);
 		return *this;
 	}
-	bounds_iterator operator--(int) noexcept
+
+	constexpr bounds_iterator operator--(int) noexcept
 	{
 		auto ret = *this;
 		--(*this);
 		return ret;
 	}
-	bounds_iterator operator+(difference_type n) const noexcept
+
+	constexpr bounds_iterator operator+(difference_type n) const noexcept
 	{
 		bounds_iterator ret{ *this };
 		return ret += n;
 	}
-	bounds_iterator& operator+=(difference_type n) noexcept
+
+	constexpr bounds_iterator& operator+=(difference_type n) noexcept
 	{
 		auto linear_idx = linearize(curr) + n;
-		value_type stride;
+		std::remove_const_t<value_type> stride;
 		stride[rank - 1] = 1;
 		for (size_t i = rank - 1; i-- > 0;)
 		{
@@ -1042,76 +898,84 @@ public:
 			curr[i] = linear_idx / stride[i];
 			linear_idx = linear_idx % stride[i];
 		}
+		fail_fast_assert(!less(curr, index_type{}) && !less(boundary, curr), "index is out of bounds of the array");
 		return *this;
 	}
-	bounds_iterator operator-(difference_type n) const noexcept
+
+	constexpr bounds_iterator operator-(difference_type n) const noexcept
 	{
 		bounds_iterator ret{ *this };
 		return ret -= n;
 	}
-	bounds_iterator& operator-=(difference_type n) noexcept
+
+	constexpr bounds_iterator& operator-=(difference_type n) noexcept
 	{
 		return *this += -n;
 	}
-	difference_type operator-(const bounds_iterator& rhs) const noexcept
+
+	constexpr difference_type operator-(const bounds_iterator& rhs) const noexcept
 	{
 		return linearize(curr) - linearize(rhs.curr);
 	}
-	reference operator[](difference_type n) const noexcept
+
+	constexpr reference operator[](difference_type n) const noexcept
 	{
 		return *(*this + n);
 	}
-	bool operator==(const bounds_iterator& rhs) const noexcept
+
+	constexpr bool operator==(const bounds_iterator& rhs) const noexcept
 	{
 		return curr == rhs.curr;
 	}
-	bool operator!=(const bounds_iterator& rhs) const noexcept
+
+	constexpr bool operator!=(const bounds_iterator& rhs) const noexcept
 	{
 		return !(*this == rhs);
 	}
-	bool operator<(const bounds_iterator& rhs) const noexcept
+
+	constexpr bool operator<(const bounds_iterator& rhs) const noexcept
 	{
-		for (size_t i = 0; i < rank; ++i)
-		{
-			if (curr[i] < rhs.curr[i])
-				return true;
-		}
-		return false;
+		return less(curr, rhs.curr);
 	}
-	bool operator<=(const bounds_iterator& rhs) const noexcept
+
+	constexpr bool operator<=(const bounds_iterator& rhs) const noexcept
 	{
 		return !(rhs < *this);
 	}
-	bool operator>(const bounds_iterator& rhs) const noexcept
+
+	constexpr bool operator>(const bounds_iterator& rhs) const noexcept
 	{
 		return rhs < *this;
 	}
-	bool operator>=(const bounds_iterator& rhs) const noexcept
+
+	constexpr bool operator>=(const bounds_iterator& rhs) const noexcept
 	{
 		return !(rhs > *this);
 	}
+
 	void swap(bounds_iterator& rhs) noexcept
 	{
 		std::swap(boundary, rhs.boundary);
 		std::swap(curr, rhs.curr);
 	}
 private:
-	index_size_type linearize(const value_type& idx) const noexcept
+	constexpr bool less(index_type& one, index_type& other) const noexcept
+	{
+		for (size_t i = 0; i < rank; ++i)
+		{
+			if (one[i] < other[i])
+				return true;
+		}
+		return false;
+	}
+
+	constexpr index_size_type linearize(const value_type& idx) const noexcept
 	{
 		// TODO: Smarter impl.
 		// Check if past-the-end
-		bool pte = true;
-		for (size_t i = 0; i < rank; ++i)
-		{
-			if (idx[i] != boundary[i])
-			{
-				pte = false;
-				break;
-			}
-		}
 		index_size_type multiplier = 1;
 		index_size_type res = 0;
-		if (pte)
+		if (!less(idx, boundary))
 		{
 			res = 1;
 			for (size_t i = rank; i-- > 0;)
@@ -1130,119 +994,9 @@ private:
 		}
 		return res;
 	}
+
 	value_type boundary;
-	value_type curr;
-};
-
-template <typename SizeType>
-class bounds_iterator<index<1, SizeType>>
-	: public std::iterator<std::random_access_iterator_tag,
-	index<1, SizeType>,
-	ptrdiff_t,
-	const details::arrow_proxy<index<1, SizeType>>,
-	const index<1, SizeType>>
-{
-	using Base = std::iterator<std::random_access_iterator_tag, index<1, SizeType>, ptrdiff_t, const details::arrow_proxy<index<1, SizeType>>, const index<1, SizeType>>;
-
-public:
-	using typename Base::reference;
-	using typename Base::pointer;
-	using typename Base::difference_type;
-	using typename Base::value_type;
-	using index_type = value_type;
-	using index_size_type = typename index_type::value_type;
-
-	template <typename Bounds>
-	explicit bounds_iterator(const Bounds &, value_type curr = value_type{}) noexcept
-		: curr( std::move(curr) )
-	{}
-	reference operator*() const noexcept
-	{
-		return curr;
-	}
-	pointer operator->() const noexcept
-	{
-		return details::arrow_proxy<value_type>{ curr };
-	}
-	bounds_iterator& operator++() noexcept
-	{
-		++curr;
-		return *this;
-	}
-	bounds_iterator operator++(int) noexcept
-	{
-		auto ret = *this;
-		++(*this);
-		return ret;
-	}
-	bounds_iterator& operator--() noexcept
-	{
-		curr--;
-		return *this;
-	}
-	bounds_iterator operator--(int) noexcept
-	{
-		auto ret = *this;
-		--(*this);
-		return ret;
-	}
-	bounds_iterator operator+(difference_type n) const noexcept
-	{
-		bounds_iterator ret{ *this };
-		return ret += n;
-	}
-	bounds_iterator& operator+=(difference_type n) noexcept
-	{
-		curr += n;
-		return *this;
-	}
-	bounds_iterator operator-(difference_type n) const noexcept
-	{
-		bounds_iterator ret{ *this };
-		return ret -= n;
-	}
-	bounds_iterator& operator-=(difference_type n) noexcept
-	{
-		return *this += -n;
-	}
-	difference_type operator-(const bounds_iterator& rhs) const noexcept
-	{
-		return curr[0] - rhs.curr[0];
-	}
-	reference operator[](difference_type n) const noexcept
-	{
-		return curr + n;
-	}
-	bool operator==(const bounds_iterator& rhs) const noexcept
-	{
-		return curr == rhs.curr;
-	}
-	bool operator!=(const bounds_iterator& rhs) const noexcept
-	{
-		return !(*this == rhs);
-	}
-	bool operator<(const bounds_iterator& rhs) const noexcept
-	{
-		return curr[0] < rhs.curr[0];
-	}
-	bool operator<=(const bounds_iterator& rhs) const noexcept
-	{
-		return !(rhs < *this);
-	}
-	bool operator>(const bounds_iterator& rhs) const noexcept
-	{
-		return rhs < *this;
-	}
-	bool operator>=(const bounds_iterator& rhs) const noexcept
-	{
-		return !(rhs > *this);
-	}
-	void swap(bounds_iterator& rhs) noexcept
-	{
-		std::swap(curr, rhs.curr);
-	}
-private:
-	value_type curr;
+	std::remove_const_t<value_type> curr;
 };
 
 template <typename IndexType>
@@ -1304,10 +1058,11 @@ public:
 	using size_type = typename bounds_type::size_type;
 	using index_type = typename bounds_type::index_type;
 	using value_type = ValueType;
+	using const_value_type = std::add_const_t<value_type>;
 	using pointer = ValueType*;
 	using reference = ValueType&;
 	using iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view>, general_array_view_iterator<basic_array_view>>;
-	using const_iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view<const ValueType, BoundsType>>, general_array_view_iterator<basic_array_view<const ValueType, BoundsType>>>;
+	using const_iterator = std::conditional_t<std::is_same<typename BoundsType::mapping_type, contiguous_mapping_tag>::value, contiguous_array_view_iterator<basic_array_view<const_value_type, BoundsType>>, general_array_view_iterator<basic_array_view<const_value_type, BoundsType>>>;
 	using reverse_iterator = std::reverse_iterator<iterator>;
 	using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 	using sliced_type = std::conditional_t<rank == 1, value_type, basic_array_view<value_type, typename BoundsType::sliced_type>>;
@@ -1360,7 +1115,7 @@ public:
 	}
 	constexpr iterator end() const
 	{
-		return iterator {this};
+		return iterator {this, false};
 	}
 	constexpr const_iterator cbegin() const
 	{
@@ -1368,7 +1123,7 @@ public:
 	}
 	constexpr const_iterator cend() const
 	{
-		return const_iterator {reinterpret_cast<const basic_array_view<const value_type, bounds_type> *>(this)};
+		return const_iterator {reinterpret_cast<const basic_array_view<const value_type, bounds_type> *>(this), false};
 	}
 
 	constexpr reverse_iterator rbegin() const
@@ -1999,8 +1754,8 @@ private:
 	{
 		fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size(), "iterator is out of range of the array");
 	}
-	contiguous_array_view_iterator (const ArrayView *container, bool isbegin = false) :
-		m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {	}
+	contiguous_array_view_iterator (const ArrayView *container, bool isbegin) :
+		m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {}
 public:
 	reference operator*() const noexcept
 	{
@@ -2115,16 +1870,16 @@ private:
 	friend class basic_array_view;
 	const ArrayView * m_container;
 	typename ArrayView::bounds_type::iterator m_itr;
-	general_array_view_iterator(const ArrayView *container, bool isbegin = false) :
+	general_array_view_iterator(const ArrayView *container, bool isbegin) :
 		m_container(container), m_itr(isbegin ? m_container->bounds().begin() : m_container->bounds().end())
 	{
 	}
 public:
-	reference operator*() const noexcept
+	reference operator*() noexcept
 	{
 		return (*m_container)[*m_itr];
 	}
-	pointer operator->() const noexcept
+	pointer operator->() noexcept
 	{
 		return &(*m_container)[*m_itr];
 	}
