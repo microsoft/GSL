@@ -16,15 +16,11 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <array_view.h>
-#include <numeric>
-#include <array>
+
 #include <string>
 #include <vector>
 #include <list>
 #include <iostream>
-#include <functional>
-#include <algorithm>
-
 
 using namespace std;
 using namespace gsl;
@@ -554,7 +550,7 @@ SUITE(array_view_tests)
 
 		{
 			// zero stride
-			strided_array_view<int, 1> sav{ av, {{4}, {}} };
+			strided_array_view<int, 1> sav{ av,{ { 4 },{} } };
 			CHECK(sav[0] == 0);
 			CHECK(sav[3] == 0);
 			CHECK_THROW(sav[4], fail_fast);
@@ -562,7 +558,7 @@ SUITE(array_view_tests)
 
 		{
 			// zero extent
-			strided_array_view<int, 1> sav{ av,{ {},{1} } };
+			strided_array_view<int, 1> sav{ av,{ {},{ 1 } } };
 			CHECK_THROW(sav[0], fail_fast);
 		}
 
@@ -635,27 +631,17 @@ SUITE(array_view_tests)
 			strided_array_view<int, 2> sav5{ av.as_array_view(dim<2>(), dim<2>()), { 1 } };
 			strided_array_view<int, 2> sav6{ av.as_array_view(dim<2>(), dim<2>()), { 1,1,1 } };
 			strided_array_view<int, 2> sav7{ av.as_array_view(dim<2>(), dim<2>()), { { 1,1 },{ 1,1 },{ 1,1 } } };
-		}
-#endif
-		
-		{
-			// stride initializer list size should match the rank of the array
-			CHECK_THROW((index<1>{ 0,1 }), fail_fast);
-			CHECK_THROW((strided_array_view<int, 1>{ arr, {1, {1,1}} }), fail_fast);
-#ifdef _MSC_VER
-			CHECK_THROW((strided_array_view<int, 1>{ arr, {{1,1 }, {1,1}} }), fail_fast);
-#endif
-			CHECK_THROW((strided_array_view<int, 1>{ av, {1, {1,1}} }), fail_fast);
-#ifdef _MSC_VER
-			CHECK_THROW((strided_array_view<int, 1>{ av, {{1,1 }, {1,1}} }), fail_fast);
-#endif			
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1}} }), fail_fast);
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1,1,1}} }), fail_fast);
-#ifdef _MSC_VER
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1,1,1}, {1}} }), fail_fast);
-#endif
-		}
 
+			index<1> index{ 0, 1 };
+			strided_array_view<int, 1> sav8{ arr,{ 1,{ 1,1 } } };
+			strided_array_view<int, 1> sav9{ arr,{ { 1,1 },{ 1,1 } } };
+			strided_array_view<int, 1> sav10{ av,{ 1,{ 1,1 } } };
+			strided_array_view<int, 1> sav11{ av,{ { 1,1 },{ 1,1 } } };
+			strided_array_view<int, 2> sav12{ av.as_array_view(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
+			strided_array_view<int, 2> sav13{ av.as_array_view(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
+			strided_array_view<int, 2> sav14{ av.as_array_view(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
+		}
+#endif
 	}
 
 	TEST(strided_array_view_type_conversion)
@@ -839,6 +825,94 @@ SUITE(array_view_tests)
 		delete[] arr;
 	}
 
+	TEST(index_constructors)
+	{
+		{
+			// components of the same type
+			index<3> i1(0, 1, 2);
+			CHECK(i1[0] == 0);
+
+			// components of different types
+			size_t c0 = 0;
+			size_t c1 = 1;
+			index<3> i2(c0, c1, 2);
+			CHECK(i2[0] == 0);
+
+			// from array
+			index<3> i3 = { 0,1,2 };
+			CHECK(i3[0] == 0);
+
+			// from other index of the same size type
+			index<3> i4 = i3;
+			CHECK(i4[0] == 0);
+
+			// from other index of bigger size type
+			index<3, short> i5 = i4;
+			CHECK(i5[0] == 0);
+
+			// from other index of smaller size type
+			index<3, long long> i6 = i4;
+			CHECK(i6[0] == 0);
+
+			// default
+			index<3, long long> i7;
+			CHECK(i7[0] == 0);
+
+			// default
+			index<3, long long> i9 = {};
+			CHECK(i9[0] == 0);
+		}
+
+		{
+			// components of the same type
+			index<1> i1(0);
+			CHECK(i1[0] == 0);
+
+			// components of different types
+			size_t c0 = 0;
+			index<1> i2(c0);
+			CHECK(i2[0] == 0);
+
+			// from array
+			index<1> i3 = { 0 };
+			CHECK(i3[0] == 0);
+
+			// from int
+			index<1> i4 = 0;
+			CHECK(i4[0] == 0);
+
+			// from other index of the same size type
+			index<1> i5 = i3;
+			CHECK(i5[0] == 0);
+
+			// from other index of bigger size type
+			index<1, short> i6 = i5;
+			CHECK(i6[0] == 0);
+
+			// from other index of smaller size type
+			index<1, long long> i7 = i6;
+			CHECK(i7[0] == 0);
+
+			// default
+			index<1, long long> i8;
+			CHECK(i8[0] == 0);
+
+			// default
+			index<1, long long> i9 = {};
+			CHECK(i9[0] == 0);
+		}
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+		{
+			index<3> i1(0, 1);
+			index<3> i2(0, 1, 2, 3);
+			index<3> i3 = { 0 };
+			index<3> i4 = { 0, 1, 2, 3 };
+			index<1> i5 = { 0,1 };
+		}
+#endif
+	}
+
 	TEST(index_operations)
 	{
 		size_t a[3] = { 0, 1, 2 };
@@ -873,7 +947,18 @@ SUITE(array_view_tests)
 		}
 
 		{
-			index<2> k = index<2>::shift_left(i);
+			index<3> k = 3 * i;
+
+			CHECK(i[0] == 0);
+			CHECK(i[1] == 1);
+			CHECK(i[2] == 2);
+			CHECK(k[0] == 0);
+			CHECK(k[1] == 3);
+			CHECK(k[2] == 6);
+		}
+
+		{
+			index<2> k = details::shift_left(i);
 
 			CHECK(i[0] == 0);
 			CHECK(i[1] == 1);
@@ -914,11 +999,35 @@ SUITE(array_view_tests)
 			}
 		}
 
-		size_t idx = 0;
-		for (auto num : section)
+		size_t check_sum = 0;
+		for (size_t i = 0; i < length; ++i)
 		{
-			CHECK(num == av[idx][1]);
-			idx++;
+			check_sum += av[i][1];
+		}
+
+		{
+			size_t idx = 0;
+			size_t sum = 0;
+			for (auto num : section)
+			{
+				CHECK(num == av[idx][1]);
+				sum += num;
+				idx++;
+			}
+
+			CHECK(sum == check_sum);
+		}
+		{
+			size_t idx = length - 1;
+			size_t sum = 0;
+			for (auto iter = section.rbegin(); iter != section.rend(); ++iter)
+			{
+				CHECK(*iter == av[idx][1]);
+				sum += *iter;
+				idx--;
+			}
+
+			CHECK(sum == check_sum);
 		}
 	}
 
@@ -989,7 +1098,7 @@ SUITE(array_view_tests)
 		auto bounds = strided_bounds<1>({ length }, { 2 });
 #else
 		auto bounds = strided_bounds<1>(index<1>{ length }, index<1>{ 2 });
-#endif        
+#endif
 		strided_array_view<int, 1> strided(&av.data()[1], av.size() - 1, bounds);
 
 		CHECK(strided.size() == length);
@@ -1050,7 +1159,7 @@ SUITE(array_view_tests)
 				for (unsigned int k = 0; k < section.extent<2>(); ++k)
 				{
 					auto idx = index<3>{ i,j,k }; // avoid braces in the CHECK macro
-					CHECK(section[idx] == expected[2 * i + 2 * j + k]);                   
+					CHECK(section[idx] == expected[2 * i + 2 * j + k]);
 				}
 		}
 
@@ -1164,6 +1273,152 @@ SUITE(array_view_tests)
 		{
 			CHECK(num == arr[i].c);
 			i++;
+		}
+
+	}
+
+	template<size_t Rank, typename T1, typename T2>
+	index<Rank, T2> Convert(index<Rank, T1> index)
+	{
+		return{ index };
+	}
+
+	TEST(DomainConverters)
+	{
+		// to smaller
+		{
+			index<2, int> int_index{ 0,1 };
+			index<2, short> short_index{ int_index };
+
+			CHECK(short_index[0] == 0);
+			CHECK(short_index[1] == 1);
+		}
+
+		// to smaller (failure)
+		{
+			index<2, int> big_int_index{ std::numeric_limits<int>::max(), 1 };
+			CHECK_THROW((Convert<2,int, short int>(big_int_index)), fail_fast);
+		}
+
+		// to same, sign mismatch
+		{
+			index<2, int> int_index{ 0,1 };
+			index<2, unsigned int> uint_index{ int_index };
+
+			CHECK(uint_index[0] == 0);
+			CHECK(uint_index[1] == 1);
+		}
+
+		// to same, sign mismatch, reversed
+		{
+			index<2, unsigned int> uint_index{ 0,1 };
+			index<2, int> int_index{ uint_index };
+
+			CHECK(int_index[0] == 0);
+			CHECK(int_index[1] == 1);
+		}
+
+		// to smaller, sign mismatch
+		{
+			index<2, int> int_index{ 0,1 };
+			index<2, unsigned short> ushort_index{ int_index };
+
+			CHECK(ushort_index[0] == 0);
+			CHECK(ushort_index[1] == 1);
+		}
+
+		// to bigger
+		{
+			index<2, int> int_index{ 0,1 };
+			index<2, long long> longlong_index{ int_index };
+
+			CHECK(longlong_index[0] == 0);
+			CHECK(longlong_index[1] == 1);
+		}
+
+		// to bigger with max index
+		{
+			index<2, int> big_int_index{ std::numeric_limits<int>::max(), 1 };
+			index<2, long long> longlong_index{ big_int_index };
+
+			CHECK(longlong_index[0] == std::numeric_limits<int>::max());
+			CHECK(longlong_index[1] == 1);
+		}
+
+		// to bigger, sign mismatch
+		{
+			index<2, int> int_index{ 0,1 };
+			index<2, unsigned long long> ulonglong_index{ int_index };
+
+			CHECK(ulonglong_index[0] == 0);
+			CHECK(ulonglong_index[1] == 1);
+		}
+
+	}
+
+	TEST(DomainConvertersRank1)
+	{
+		// to smaller
+		{
+			index<1, int> int_index{ 0 };
+			index<1, short> short_index{ int_index };
+
+			CHECK(short_index[0] == 0);
+		}
+
+		// to smaller (failure)
+		{
+			index<1, int> big_int_index{ std::numeric_limits<int>::max() };
+
+			CHECK_THROW((Convert<1, int, short int>(big_int_index)), fail_fast);
+		}
+
+		// to same, sign mismatch
+		{
+			index<1, int> int_index{ 0 };
+			index<1, unsigned int> uint_index{ int_index };
+
+			CHECK(uint_index[0] == 0);
+		}
+
+		// to same, sign mismatch, reversed
+		{
+			index<1, unsigned int> uint_index{ 0 };
+			index<1, int> int_index{ uint_index };
+
+			CHECK(int_index[0] == 0);
+		}
+
+		// to smaller, sign mismatch
+		{
+			index<1, int> int_index{ 0 };
+			index<1, unsigned short> ushort_index{ int_index };
+
+			CHECK(ushort_index[0] == 0);
+		}
+
+		// to bigger
+		{
+			index<1, int> int_index{ 0 };
+			index<1, long long> longlong_index{ int_index };
+
+			CHECK(longlong_index[0] == 0);
+		}
+
+		// to bigger with max index
+		{
+			index<1, int> big_int_index{ std::numeric_limits<int>::max() };
+			index<1, long long> longlong_index{ big_int_index };
+
+			CHECK(longlong_index[0] == std::numeric_limits<int>::max());
+		}
+
+		// to bigger, sign mismatch
+		{
+			index<1, int> int_index{ 0 };
+			index<1, unsigned long long> ulonglong_index{ int_index };
+
+			CHECK(ulonglong_index[0] == 0);
 		}
 
 	}
@@ -1531,7 +1786,7 @@ SUITE(array_view_tests)
 		CHECK_THROW(f(), fail_fast);
 	}
 
-	TEST(AsWriteableBytes)		
+	TEST(AsWriteableBytes)
 	{
 		int a[] = { 1, 2, 3, 4 };
 
@@ -1557,7 +1812,36 @@ SUITE(array_view_tests)
 			CHECK(wav.data() == (byte*)&a[0]);
 			CHECK(wav.length() == sizeof(a));
 		}
+	}
 
+	TEST(NonConstIterator)
+	{
+		int a[] = { 1, 2, 3, 4 };
+
+		{
+			array_view<int, dynamic_range> av = a;
+			auto wav = av.as_writeable_bytes();
+			for (auto& b : wav)
+			{
+				b = byte(0);
+			}
+			for (size_t i = 0; i < 4; ++i)
+			{
+				CHECK(a[i] == 0);
+			}
+		}
+
+		{
+			array_view<int, dynamic_range> av = a;
+			for (auto& n : av)
+			{
+				n = 1;
+			}
+			for (size_t i = 0; i < 4; ++i)
+			{
+				CHECK(a[i] == 1);
+			}
+		}
 	}
 
 	TEST(ArrayViewComparison)
