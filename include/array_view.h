@@ -125,7 +125,7 @@ public:
 	template <typename OtherValueType,
 		bool Enabled = (details::SizeTypeTraits<OtherValueType>::max_value > details::SizeTypeTraits<value_type>::max_value),
 		typename Other = std::enable_if_t<Enabled, index<Rank, OtherValueType>>>
-	constexpr index(const index<Rank, OtherValueType>& other, void* ptr = 0) noexcept
+	constexpr index(const index<Rank, OtherValueType>& other, void* = 0) noexcept
 	{
 		bool ok = std::accumulate(other.elems, other.elems + Rank, true,
 			[&](bool b, OtherValueType val) { return b && (val <= static_cast<OtherValueType>(details::SizeTypeTraits<value_type>::max_value)); }
