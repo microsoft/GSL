@@ -16,16 +16,11 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <array_view.h>
-#include <numeric>
-#include <limits>
-#include <array>
+
 #include <string>
 #include <vector>
 #include <list>
 #include <iostream>
-#include <functional>
-#include <algorithm>
-
 
 using namespace std;
 using namespace gsl;
@@ -408,71 +403,71 @@ SUITE(array_view_tests)
 			array_view<const int, 2> av2{ av };
 			CHECK(av2[1] == 5);
 
-			static_assert(std::is_convertible<const array_view<int, 2>, array_view<const int, 2>>::value, "ctor is not implicit!");
-		
-			const strided_array_view<int, 1> src{ arr, {2, 1} };
-			strided_array_view<const int, 1> sav{ src };
-			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
-			CHECK(sav.bounds().stride() == 1);
-			CHECK(sav[1] == 5);
-			
-			static_assert(std::is_convertible<const strided_array_view<int, 1>, strided_array_view<const int, 1>>::value, "ctor is not implicit!");
+		//	static_assert(std::is_convertible<const array_view<int, 2>, array_view<const int, 2>>::value, "ctor is not implicit!");
+		//
+		//	const strided_array_view<int, 1> src{ arr, {2, 1} };
+		//	strided_array_view<const int, 1> sav{ src };
+		//	CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
+		//	CHECK(sav.bounds().stride() == 1);
+		//	CHECK(sav[1] == 5);
+		//	
+		//	static_assert(std::is_convertible<const strided_array_view<int, 1>, strided_array_view<const int, 1>>::value, "ctor is not implicit!");
 		}
-
-		// Check copy constructor
-		{
-			int arr1[2] = { 3, 4 };
-			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
-			strided_array_view<int, 1> sav1{ src1 };
- 
-			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
-			CHECK(sav1.bounds().stride() == 1);
-			CHECK(sav1[0] == 3);
-
-			int arr2[6] = { 1, 2, 3, 4, 5, 6 };
-			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 }, { 2, 1 }} };
-			strided_array_view<const int, 2> sav2{ src2 };
-			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
-			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
-			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
-		}
-
-		// Check const-casting assignment operator
-		{
-			int arr1[2] = { 1, 2 };
-			int arr2[6] = { 3, 4, 5, 6, 7, 8 };
-
-			const strided_array_view<int, 1> src{ arr1, {{2}, {1}} };
-			strided_array_view<const int, 1> sav{ arr2, {{3}, {2}} };
-			strided_array_view<const int, 1>& sav_ref = (sav = src);
-			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
-			CHECK(sav.bounds().strides() == index<1>{ 1 });
-			CHECK(sav[0] == 1);
-			CHECK(&sav_ref == &sav);
-		}
-		
-		// Check copy assignment operator
-		{
-			int arr1[2] = { 3, 4 };
-			int arr1b[1] = { 0 };
-			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
-			strided_array_view<int, 1> sav1{ arr1b, {1, 1} };
-			strided_array_view<int, 1>& sav1_ref = (sav1 = src1);
-			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
-			CHECK(sav1.bounds().strides() == index<1>{ 1 });
-			CHECK(sav1[0] == 3);
-			CHECK(&sav1_ref == &sav1);
-
-			const int arr2[6] = { 1, 2, 3, 4, 5, 6 };
-			const int arr2b[1] = { 0 };
-			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 },{ 2, 1 }} };
-			strided_array_view<const int, 2> sav2{ arr2b, {{ 1, 1 },{ 1, 1 }} };
-			strided_array_view<const int, 2>& sav2_ref = (sav2 = src2);
-			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
-			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
-			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
-			CHECK(&sav2_ref == &sav2);
-		}
+//
+//		// Check copy constructor
+//		{
+//			int arr1[2] = { 3, 4 };
+//			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
+//			strided_array_view<int, 1> sav1{ src1 };
+// 
+//			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
+//			CHECK(sav1.bounds().stride() == 1);
+//			CHECK(sav1[0] == 3);
+//
+//			int arr2[6] = { 1, 2, 3, 4, 5, 6 };
+//			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 }, { 2, 1 }} };
+//			strided_array_view<const int, 2> sav2{ src2 };
+//			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
+//			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
+//			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
+//		}
+//
+//		// Check const-casting assignment operator
+//		{
+//			int arr1[2] = { 1, 2 };
+//			int arr2[6] = { 3, 4, 5, 6, 7, 8 };
+//
+//			const strided_array_view<int, 1> src{ arr1, {{2}, {1}} };
+//			strided_array_view<const int, 1> sav{ arr2, {{3}, {2}} };
+//			strided_array_view<const int, 1>& sav_ref = (sav = src);
+//			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
+//			CHECK(sav.bounds().strides() == index<1>{ 1 });
+//			CHECK(sav[0] == 1);
+//			CHECK(&sav_ref == &sav);
+//		}
+//		
+//		// Check copy assignment operator
+//		{
+//			int arr1[2] = { 3, 4 };
+//			int arr1b[1] = { 0 };
+//			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
+//			strided_array_view<int, 1> sav1{ arr1b, {1, 1} };
+//			strided_array_view<int, 1>& sav1_ref = (sav1 = src1);
+//			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
+//			CHECK(sav1.bounds().strides() == index<1>{ 1 });
+//			CHECK(sav1[0] == 3);
+//			CHECK(&sav1_ref == &sav1);
+//
+//			const int arr2[6] = { 1, 2, 3, 4, 5, 6 };
+//			const int arr2b[1] = { 0 };
+//			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 },{ 2, 1 }} };
+//			strided_array_view<const int, 2> sav2{ arr2b, {{ 1, 1 },{ 1, 1 }} };
+//			strided_array_view<const int, 2>& sav2_ref = (sav2 = src2);
+//			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
+//			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
+//			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
+//			CHECK(&sav2_ref == &sav2);
+//		}
 	}
 
 	TEST(strided_array_view_slice)
@@ -640,23 +635,14 @@ SUITE(array_view_tests)
 
 			index<1> index{ 0, 1 };
 			strided_array_view<int, 1> sav8{ arr,{ 1,{ 1,1 } } };
-#ifdef _MSC_VER
 			strided_array_view<int, 1> sav9{ arr,{ { 1,1 },{ 1,1 } } };
-#endif
 			strided_array_view<int, 1> sav10{ av,{ 1,{ 1,1 } } };
-#ifdef _MSC_VER
 			strided_array_view<int, 1> sav11{ av,{ { 1,1 },{ 1,1 } } };
-#endif
+			strided_array_view<int, 2> sav12{ av.as_array_view(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
+			strided_array_view<int, 2> sav13{ av.as_array_view(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
+			strided_array_view<int, 2> sav14{ av.as_array_view(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
 		}
 #endif
-
-		{
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1}} }), fail_fast);
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1}, {1,1,1}} }), fail_fast);
-#ifdef _MSC_VER
-			CHECK_THROW((strided_array_view<int, 2>{ av.as_array_view(dim<2>(), dim<2>()), {{1,1,1}, {1}} }), fail_fast);
-#endif
-		}
 	}
 
 	TEST(strided_array_view_type_conversion)
@@ -840,6 +826,78 @@ SUITE(array_view_tests)
 		delete[] arr;
 	}
 
+	TEST(index_constructors)
+	{
+		{
+			// components of the same type
+			index<3> i1(0, 1, 2);
+			CHECK(i1[0] == 0);
+
+			// components of different types
+			size_t c0 = 0;
+			size_t c1 = 1;
+			index<3> i2(c0, c1, 2);
+			CHECK(i2[0] == 0);
+
+			// from array
+			index<3> i3 = { 0,1,2 };
+			CHECK(i3[0] == 0);
+
+			// from other index of the same size type
+			index<3> i4 = i3;
+			CHECK(i4[0] == 0);
+
+			// default
+			index<3> i7;
+			CHECK(i7[0] == 0);
+
+			// default
+			index<3> i9 = {};
+			CHECK(i9[0] == 0);
+		}
+
+		{
+			// components of the same type
+			index<1> i1(0);
+			CHECK(i1[0] == 0);
+
+			// components of different types
+			size_t c0 = 0;
+			index<1> i2(c0);
+			CHECK(i2[0] == 0);
+
+			// from array
+			index<1> i3 = { 0 };
+			CHECK(i3[0] == 0);
+
+			// from int
+			index<1> i4 = 0;
+			CHECK(i4[0] == 0);
+
+			// from other index of the same size type
+			index<1> i5 = i3;
+			CHECK(i5[0] == 0);
+
+			// default
+			index<1> i8;
+			CHECK(i8[0] == 0);
+
+			// default
+			index<1> i9 = {};
+			CHECK(i9[0] == 0);
+		}
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+		{
+			index<3> i1(0, 1);
+			index<3> i2(0, 1, 2, 3);
+			index<3> i3 = { 0 };
+			index<3> i4 = { 0, 1, 2, 3 };
+			index<1> i5 = { 0,1 };
+		}
+#endif
+	}
+
 	TEST(index_operations)
 	{
         ptrdiff_t a[3] = { 0, 1, 2 };
@@ -926,11 +984,35 @@ SUITE(array_view_tests)
 			}
 		}
 
-        ptrdiff_t idx = 0;
-		for (auto num : section)
+		size_t check_sum = 0;
+		for (auto i = 0; i < length; ++i)
 		{
-			CHECK(num == av[idx][1]);
-			idx++;
+			check_sum += av[i][1];
+		}
+
+		{
+			auto idx = 0;
+			size_t sum = 0;
+			for (auto num : section)
+			{
+				CHECK(num == av[idx][1]);
+				sum += num;
+				idx++;
+			}
+
+			CHECK(sum == check_sum);
+		}
+		{
+			size_t idx = length - 1;
+			size_t sum = 0;
+			for (auto iter = section.rbegin(); iter != section.rend(); ++iter)
+			{
+				CHECK(*iter == av[idx][1]);
+				sum += *iter;
+				idx--;
+			}
+
+			CHECK(sum == check_sum);
 		}
 	}
 
@@ -955,7 +1037,7 @@ SUITE(array_view_tests)
 		}
 		// both bounds are dynamic
 		{
-			array_view<int, dynamic_range, dynamic_range> av(arr, 4);
+			array_view<int, dynamic_range, dynamic_range> av = arr;
 			iterate_second_column(av);
 		}
 	}
@@ -1543,7 +1625,7 @@ SUITE(array_view_tests)
 		CHECK_THROW(f(), fail_fast);
 	}
 
-	TEST(AsWriteableBytes)		
+	TEST(AsWriteableBytes)
 	{
 		int a[] = { 1, 2, 3, 4 };
 
@@ -1569,7 +1651,36 @@ SUITE(array_view_tests)
 			CHECK(wav.data() == (byte*)&a[0]);
 			CHECK(wav.length() == sizeof(a));
 		}
+	}
 
+	TEST(NonConstIterator)
+	{
+		int a[] = { 1, 2, 3, 4 };
+
+		{
+			array_view<int, dynamic_range> av = a;
+			auto wav = av.as_writeable_bytes();
+			for (auto& b : wav)
+			{
+				b = byte(0);
+			}
+			for (size_t i = 0; i < 4; ++i)
+			{
+				CHECK(a[i] == 0);
+			}
+		}
+
+		{
+			array_view<int, dynamic_range> av = a;
+			for (auto& n : av)
+			{
+				n = 1;
+			}
+			for (size_t i = 0; i < 4; ++i)
+			{
+				CHECK(a[i] == 1);
+			}
+		}
 	}
 
 	TEST(ArrayViewComparison)

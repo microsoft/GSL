@@ -197,6 +197,19 @@ private:
 
 } // namespace gsl
 
+namespace std
+{
+    template<class T>
+    struct hash<gsl::not_null<T>>
+    {
+        size_t operator()(const gsl::not_null<T> & value) const
+        {
+            return hash<T>{}(value);
+        }
+    };
+
+} // namespace std
+
 #ifdef _MSC_VER
 
 #undef constexpr
