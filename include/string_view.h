@@ -82,9 +82,9 @@ template<class T, class SizeType, const T Sentinel>
 array_view<T, dynamic_range> ensure_sentinel(const T* seq, SizeType max = std::numeric_limits<SizeType>::max())
 {
     auto cur = seq;
-    while ((cur - seq) < max && *cur != Sentinel) ++cur;
+    while (SizeType(cur - seq) < max && *cur != Sentinel) ++cur;
     fail_fast_assert(*cur == Sentinel);
-    return{ seq, cur - seq };
+    return{ seq, SizeType(cur - seq) };
 }
 
 
@@ -96,7 +96,7 @@ array_view<T, dynamic_range> ensure_sentinel(const T* seq, SizeType max = std::n
 template<class T>
 inline basic_string_view<T, dynamic_range> ensure_z(T* const & sz, size_t max = std::numeric_limits<size_t>::max())
 {
-    return ensure_sentinel<0>(sz, max);
+    return ensure_sentinel<T, size_t, 0>(sz, max);
 }
 
 // TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation

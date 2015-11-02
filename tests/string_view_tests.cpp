@@ -79,6 +79,14 @@ SUITE(string_view_tests)
         }
 	}
 
+    TEST(TestConstructFromConstCharPointer)
+    {
+        const char* s = "Hello";
+        cstring_view<> v = ensure_z(s);
+        CHECK(v.length() == 5);
+        CHECK(v.used_length() == v.length());
+    }
+
     TEST(TestConversionToConst)
     {
         char stack_string[] = "Hello";
