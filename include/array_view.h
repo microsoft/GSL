@@ -508,7 +508,7 @@ namespace details
 	template <size_t Rank, bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, index<Rank - 1>>>
 	constexpr Ret shift_left(const index<Rank>& other) noexcept
 	{
-		Ret ret;
+		Ret ret{};
 		for (size_t i = 0; i < Rank - 1; ++i)
 		{
 			ret[i] = other[i + 1];
@@ -865,7 +865,7 @@ public:
 	constexpr bounds_iterator& operator+=(difference_type n) noexcept
 	{
 		auto linear_idx = linearize(curr) + n;
-		std::remove_const_t<value_type> stride;
+		std::remove_const_t<value_type> stride = 0;
 		stride[rank - 1] = 1;
 		for (size_t i = rank - 1; i-- > 0;)
 		{

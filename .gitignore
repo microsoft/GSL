@@ -1,1 +1,14 @@
 tests/unittest-cpp
+CMakeFiles
+tests/CMakeFiles
+tests/Debug
+*.opensdf
+*.sdf
+tests/*tests.dir
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.tlog
+Testing/Temporary/*.*
+CMakeCache.txt
+*.suo
