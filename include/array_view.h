@@ -1408,8 +1408,9 @@ public:
     {}
 
 	// reshape
-	template <typename... Dimensions2, typename = std::enable_if_t<(sizeof...(Dimensions2) > 0)>>
-	constexpr array_view<ValueType, Dimensions2::value...> as_array_view(Dimensions2... dims)
+    // DimCount here is a workaround for a bug in MSVC 2015
+    template <typename... Dimensions2, size_t DimCount = sizeof...(Dimensions2), typename = std::enable_if_t<(DimCount > 0)>>
+    constexpr array_view<ValueType, Dimensions2::value...> as_array_view(Dimensions2... dims)
 	{
 		using BoundsType = typename array_view<ValueType, (Dimensions2::value)...>::bounds_type;
 		auto tobounds = details::static_as_array_view_helper<BoundsType>(dims..., details::Sep{});

@@ -78,13 +78,13 @@ using cwstring_view = basic_string_view<const wchar_t, Extent>;
 //
 // Will fail-fast if sentinel cannot be found before max elements are examined.
 //
-template<class T, class SizeType, const T Sentinel>
-array_view<T, dynamic_range> ensure_sentinel(const T* seq, SizeType max = std::numeric_limits<SizeType>::max())
+template<class T, const T Sentinel>
+array_view<T, dynamic_range> ensure_sentinel(const T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
 {
     auto cur = seq;
-    while (SizeType(cur - seq) < max && *cur != Sentinel) ++cur;
+    while ((cur - seq) < max && *cur != Sentinel) ++cur;
     fail_fast_assert(*cur == Sentinel);
-    return{ seq, SizeType(cur - seq) };
+    return{ seq, cur - seq };
 }
 
 
@@ -96,7 +96,7 @@ array_view<T, dynamic_range> ensure_sentinel(const T* seq, SizeType max = std::n
 template<class T>
 inline basic_string_view<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_t max = PTRDIFF_MAX)
 {
-    return ensure_sentinel<T, size_t, 0>(sz, max);
+    return ensure_sentinel<T, 0>(sz, max);
 }
 
 // TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation
