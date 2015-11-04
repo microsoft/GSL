@@ -46,7 +46,7 @@ SUITE(array_view_tests)
 		delete[] ptr.data();
 
 
-		static_bounds<size_t, 4, dynamic_range, 2> bounds{ 3 };
+		static_bounds<4, dynamic_range, 2> bounds{ 3 };
 	
 #ifdef CONFIRM_COMPILATION_ERRORS
 		array_view<int, 4, dynamic_range, 2> av(nullptr, bounds);
@@ -147,9 +147,9 @@ SUITE(array_view_tests)
 
 	TEST(md_access)
 	{
-		unsigned int width = 5, height = 20;
+		auto width = 5, height = 20;
 
-		unsigned int imgSize = width * height;
+		auto imgSize = width * height;
 		auto image_ptr = new int[imgSize][3];
 
 		// size check will be done
@@ -158,9 +158,9 @@ SUITE(array_view_tests)
 		iota(image_view.begin(), image_view.end(), 1);
 
 		int expected = 0;
-		for (unsigned int i = 0; i < height; i++)
+		for (auto i = 0; i < height; i++)
 		{
-			for (unsigned int j = 0; j < width; j++)
+			for (auto j = 0; j < width; j++)
 			{
 				CHECK(expected + 1 == image_view[i][j][0]);
 				CHECK(expected + 2 == image_view[i][j][1]);
@@ -222,11 +222,13 @@ SUITE(array_view_tests)
 #endif
 		}
 	}
-
+	
+	template <class Bounds> void fn(const Bounds& b) { static_assert(Bounds::static_size == 60, "static bounds is wrong size"); }
 	TEST (array_view_reshape_test)
 	{
 		int a[3][4][5];
 		auto av = as_array_view(a);
+        	fn(av.bounds());
 		auto av2 = av.as_array_view(dim<60>());
 		auto av3 = av2.as_array_view(dim<3>(), dim<4>(), dim<5>());
 		auto av4 = av3.as_array_view(dim<4>(), dim<>(3), dim<5>());
@@ -240,7 +242,7 @@ SUITE(array_view_tests)
 		auto av8 = av7.as_array_view<int>();
 
 		CHECK(av8.size() == av6.size());
-		for (size_t i = 0; i < av8.size(); i++)
+		for (auto i = 0; i < av8.size(); i++)
 		{
 			CHECK(av8[i] == 1);
 		}
@@ -309,7 +311,7 @@ SUITE(array_view_tests)
 
 			// From non-cv-qualified source
 			{
-				const array_view<int> src{ arr };
+				const array_view<int> src = arr;
 
 				strided_array_view<int, 1> sav{ src, {2, 1} };
 				CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
@@ -810,13 +812,13 @@ SUITE(array_view_tests)
 
 		array_view<int, dynamic_range> av(arr, 8);
 
-		size_t a[1] = { 0 };
+		ptrdiff_t a[1] = { 0 };
 		index<1> i = a;
 
 		CHECK(av[i] == 4);
 
 		auto av2 = av.as_array_view(dim<4>(), dim<>(2));
-		size_t a2[2] = { 0, 1 };
+        ptrdiff_t a2[2] = { 0, 1 };
 		index<2> i2 = a2;
 
 		CHECK(av2[i2] == 0);
@@ -846,20 +848,12 @@ SUITE(array_view_tests)
 			index<3> i4 = i3;
 			CHECK(i4[0] == 0);
 
-			// from other index of bigger size type
-			index<3, short> i5 = i4;
-			CHECK(i5[0] == 0);
-
-			// from other index of smaller size type
-			index<3, long long> i6 = i4;
-			CHECK(i6[0] == 0);
-
 			// default
-			index<3, long long> i7;
+			index<3> i7;
 			CHECK(i7[0] == 0);
 
 			// default
-			index<3, long long> i9 = {};
+			index<3> i9 = {};
 			CHECK(i9[0] == 0);
 		}
 
@@ -885,20 +879,12 @@ SUITE(array_view_tests)
 			index<1> i5 = i3;
 			CHECK(i5[0] == 0);
 
-			// from other index of bigger size type
-			index<1, short> i6 = i5;
-			CHECK(i6[0] == 0);
-
-			// from other index of smaller size type
-			index<1, long long> i7 = i6;
-			CHECK(i7[0] == 0);
-
 			// default
-			index<1, long long> i8;
+			index<1> i8;
 			CHECK(i8[0] == 0);
 
 			// default
-			index<1, long long> i9 = {};
+			index<1> i9 = {};
 			CHECK(i9[0] == 0);
 		}
 
@@ -915,8 +901,8 @@ SUITE(array_view_tests)
 
 	TEST(index_operations)
 	{
-		size_t a[3] = { 0, 1, 2 };
-		size_t b[3] = { 3, 4, 5 };
+        ptrdiff_t a[3] = { 0, 1, 2 };
+        ptrdiff_t b[3] = { 3, 4, 5 };
 		index<3> i = a;
 		index<3> j = b;
 
@@ -977,12 +963,12 @@ SUITE(array_view_tests)
 		auto section = av.section({ 0,1 }, { length,1 });
 
 		CHECK(section.size() == length);
-		for (unsigned int i = 0; i < section.size(); ++i)
+		for (auto i = 0; i < section.size(); ++i)
 		{
 			CHECK(section[i][0] == av[i][1]);
 		}
 
-		for (unsigned int i = 0; i < section.size(); ++i)
+		for (auto i = 0; i < section.size(); ++i)
 		{
 			auto idx = index<2>{ i,0 }; // avoid braces inside the CHECK macro
 			CHECK(section[idx] == av[i][1]);
@@ -990,9 +976,9 @@ SUITE(array_view_tests)
 
 		CHECK(section.bounds().index_bounds()[0] == length);
 		CHECK(section.bounds().index_bounds()[1] == 1);
-		for (unsigned int i = 0; i < section.bounds().index_bounds()[0]; ++i)
+		for (auto i = 0; i < section.bounds().index_bounds()[0]; ++i)
 		{
-			for (unsigned int j = 0; j < section.bounds().index_bounds()[1]; ++j)
+			for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j)
 			{
 				auto idx = index<2>{ i,j }; // avoid braces inside the CHECK macro
 				CHECK(section[idx] == av[i][1]);
@@ -1000,13 +986,13 @@ SUITE(array_view_tests)
 		}
 
 		size_t check_sum = 0;
-		for (size_t i = 0; i < length; ++i)
+		for (auto i = 0; i < length; ++i)
 		{
 			check_sum += av[i][1];
 		}
 
 		{
-			size_t idx = 0;
+			auto idx = 0;
 			size_t sum = 0;
 			for (auto num : section)
 			{
@@ -1052,18 +1038,18 @@ SUITE(array_view_tests)
 		}
 		// both bounds are dynamic
 		{
-			array_view<int, dynamic_range, dynamic_range> av(arr, 4);
+			array_view<int, dynamic_range, dynamic_range> av = arr;
 			iterate_second_column(av);
 		}
 	}
 
 	TEST(dynamic_array_view_section_iteration)
 	{
-		unsigned int height = 4, width = 2;
-		unsigned int size = height * width;
+		auto height = 4, width = 2;
+		auto size = height * width;
 
 		auto arr = new int[size];
-		for (int unsigned i = 0; i < size; ++i)
+		for (auto i = 0; i < size; ++i)
 		{
 			arr[i] = i;
 		}
@@ -1103,7 +1089,7 @@ SUITE(array_view_tests)
 
 		CHECK(strided.size() == length);
 		CHECK(strided.bounds().index_bounds()[0] == length);
-		for (unsigned int i = 0; i < strided.size(); ++i)
+		for (auto i = 0; i < strided.size(); ++i)
 		{
 			CHECK(strided[i] == av[2 * i + 1]);
 		}
@@ -1153,20 +1139,20 @@ SUITE(array_view_tests)
 		int expected[6] = { 2,3,10,11,18,19 };
 		auto section = av.section({ 0,1,0 }, { 3,1,2 });
 
-		for (unsigned int i = 0; i < section.extent<0>(); ++i)
+		for (auto i = 0; i < section.extent<0>(); ++i)
 		{
-			for (unsigned int j = 0; j < section.extent<1>(); ++j)
-				for (unsigned int k = 0; k < section.extent<2>(); ++k)
+			for (auto j = 0; j < section.extent<1>(); ++j)
+				for (auto k = 0; k < section.extent<2>(); ++k)
 				{
 					auto idx = index<3>{ i,j,k }; // avoid braces in the CHECK macro
 					CHECK(section[idx] == expected[2 * i + 2 * j + k]);
 				}
 		}
 
-		for (unsigned int i = 0; i < section.extent<0>(); ++i)
+		for (auto i = 0; i < section.extent<0>(); ++i)
 		{
-			for (unsigned int j = 0; j < section.extent<1>(); ++j)
-				for (unsigned int k = 0; k < section.extent<2>(); ++k)
+			for (auto j = 0; j < section.extent<1>(); ++j)
+				for (auto k = 0; k < section.extent<2>(); ++k)
 					CHECK(section[i][j][k] == expected[2 * i + 2 * j + k]);
 		}
 
@@ -1181,10 +1167,10 @@ SUITE(array_view_tests)
 	TEST(strided_array_view_section_iteration_3d)
 	{
 		int arr[3][4][2];
-		for (int i = 0; i < 3; ++i)
+		for (auto i = 0; i < 3; ++i)
 		{
-			for (int j = 0; j < 4; ++j)
-				for (unsigned int k = 0; k < 2; ++k)
+			for (auto j = 0; j < 4; ++j)
+				for (auto k = 0; k < 2; ++k)
 					arr[i][j][k] = 8 * i + 2 * j + k;
 		}
 
@@ -1196,11 +1182,11 @@ SUITE(array_view_tests)
 
 	TEST(dynamic_strided_array_view_section_iteration_3d)
 	{
-		unsigned int height = 12, width = 2;
-		unsigned int size = height * width;
+		auto height = 12, width = 2;
+		auto size = height * width;
 
 		auto arr = new int[size];
-		for (int unsigned i = 0; i < size; ++i)
+		for (auto i = 0; i < size; ++i)
 		{
 			arr[i] = i;
 		}
@@ -1235,7 +1221,7 @@ SUITE(array_view_tests)
 
 		X arr[4] = { { 0,1,2 },{ 3,4,5 },{ 6,7,8 },{ 9,10,11 } };
 
-		auto s = sizeof(int) / sizeof(byte);
+		int s = sizeof(int) / sizeof(byte);
 		auto d2 = 3 * s;
 		auto d1 = sizeof(int) * 12 / d2;
 
@@ -1273,152 +1259,6 @@ SUITE(array_view_tests)
 		{
 			CHECK(num == arr[i].c);
 			i++;
-		}
-
-	}
-
-	template<size_t Rank, typename T1, typename T2>
-	index<Rank, T2> Convert(index<Rank, T1> index)
-	{
-		return{ index };
-	}
-
-	TEST(DomainConverters)
-	{
-		// to smaller
-		{
-			index<2, int> int_index{ 0,1 };
-			index<2, short> short_index{ int_index };
-
-			CHECK(short_index[0] == 0);
-			CHECK(short_index[1] == 1);
-		}
-
-		// to smaller (failure)
-		{
-			index<2, int> big_int_index{ std::numeric_limits<int>::max(), 1 };
-			CHECK_THROW((Convert<2,int, short int>(big_int_index)), fail_fast);
-		}
-
-		// to same, sign mismatch
-		{
-			index<2, int> int_index{ 0,1 };
-			index<2, unsigned int> uint_index{ int_index };
-
-			CHECK(uint_index[0] == 0);
-			CHECK(uint_index[1] == 1);
-		}
-
-		// to same, sign mismatch, reversed
-		{
-			index<2, unsigned int> uint_index{ 0,1 };
-			index<2, int> int_index{ uint_index };
-
-			CHECK(int_index[0] == 0);
-			CHECK(int_index[1] == 1);
-		}
-
-		// to smaller, sign mismatch
-		{
-			index<2, int> int_index{ 0,1 };
-			index<2, unsigned short> ushort_index{ int_index };
-
-			CHECK(ushort_index[0] == 0);
-			CHECK(ushort_index[1] == 1);
-		}
-
-		// to bigger
-		{
-			index<2, int> int_index{ 0,1 };
-			index<2, long long> longlong_index{ int_index };
-
-			CHECK(longlong_index[0] == 0);
-			CHECK(longlong_index[1] == 1);
-		}
-
-		// to bigger with max index
-		{
-			index<2, int> big_int_index{ std::numeric_limits<int>::max(), 1 };
-			index<2, long long> longlong_index{ big_int_index };
-
-			CHECK(longlong_index[0] == std::numeric_limits<int>::max());
-			CHECK(longlong_index[1] == 1);
-		}
-
-		// to bigger, sign mismatch
-		{
-			index<2, int> int_index{ 0,1 };
-			index<2, unsigned long long> ulonglong_index{ int_index };
-
-			CHECK(ulonglong_index[0] == 0);
-			CHECK(ulonglong_index[1] == 1);
-		}
-
-	}
-
-	TEST(DomainConvertersRank1)
-	{
-		// to smaller
-		{
-			index<1, int> int_index{ 0 };
-			index<1, short> short_index{ int_index };
-
-			CHECK(short_index[0] == 0);
-		}
-
-		// to smaller (failure)
-		{
-			index<1, int> big_int_index{ std::numeric_limits<int>::max() };
-
-			CHECK_THROW((Convert<1, int, short int>(big_int_index)), fail_fast);
-		}
-
-		// to same, sign mismatch
-		{
-			index<1, int> int_index{ 0 };
-			index<1, unsigned int> uint_index{ int_index };
-
-			CHECK(uint_index[0] == 0);
-		}
-
-		// to same, sign mismatch, reversed
-		{
-			index<1, unsigned int> uint_index{ 0 };
-			index<1, int> int_index{ uint_index };
-
-			CHECK(int_index[0] == 0);
-		}
-
-		// to smaller, sign mismatch
-		{
-			index<1, int> int_index{ 0 };
-			index<1, unsigned short> ushort_index{ int_index };
-
-			CHECK(ushort_index[0] == 0);
-		}
-
-		// to bigger
-		{
-			index<1, int> int_index{ 0 };
-			index<1, long long> longlong_index{ int_index };
-
-			CHECK(longlong_index[0] == 0);
-		}
-
-		// to bigger with max index
-		{
-			index<1, int> big_int_index{ std::numeric_limits<int>::max() };
-			index<1, long long> longlong_index{ big_int_index };
-
-			CHECK(longlong_index[0] == std::numeric_limits<int>::max());
-		}
-
-		// to bigger, sign mismatch
-		{
-			index<1, int> int_index{ 0 };
-			index<1, unsigned long long> ulonglong_index{ int_index };
-
-			CHECK(ulonglong_index[0] == 0);
 		}
 
 	}
@@ -1468,7 +1308,7 @@ SUITE(array_view_tests)
 
 		int arr[] = {3, 4, 5};
 		av1 = arr;
-		array_view<array_view_options<const int, unsigned char>, dynamic_range> av2;
+		array_view<const int, dynamic_range> av2;
 		av2 = av1;
 	}
 
@@ -1478,21 +1318,21 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.first<2>().bounds() == static_bounds<size_t, 2>()));
+			CHECK((av.first<2>().bounds() == static_bounds<2>()));
 			CHECK(av.first<2>().length() == 2);
 			CHECK(av.first(2).length() == 2);
 		}
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.first<0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.first<0>().bounds() == static_bounds<0>()));
 			CHECK(av.first<0>().length() == 0);
 			CHECK(av.first(0).length() == 0);
 		}
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.first<5>().bounds() == static_bounds<size_t, 5>()));
+			CHECK((av.first<5>().bounds() == static_bounds<5>()));
 			CHECK(av.first<5>().length() == 5);
 			CHECK(av.first(5).length() == 5);
 		}
@@ -1500,7 +1340,7 @@ SUITE(array_view_tests)
 		{
 			array_view<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-			CHECK(av.first<6>().bounds() == static_bounds<size_t, 6>());
+			CHECK(av.first<6>().bounds() == static_bounds<6>());
 			CHECK(av.first<6>().length() == 6);
 #endif
 			CHECK_THROW(av.first(6).length(), fail_fast);
@@ -1508,7 +1348,7 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, dynamic_range> av;
-			CHECK((av.first<0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.first<0>().bounds() == static_bounds<0>()));
 			CHECK(av.first<0>().length() == 0);
 			CHECK(av.first(0).length() == 0);
 		}
@@ -1520,21 +1360,21 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.last<2>().bounds() == static_bounds<size_t, 2>()));
+			CHECK((av.last<2>().bounds() == static_bounds<2>()));
 			CHECK(av.last<2>().length() == 2);
 			CHECK(av.last(2).length() == 2);
 		}
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.last<0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.last<0>().bounds() == static_bounds<0>()));
 			CHECK(av.last<0>().length() == 0);
 			CHECK(av.last(0).length() == 0);
 		}
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.last<5>().bounds() == static_bounds<size_t, 5>()));
+			CHECK((av.last<5>().bounds() == static_bounds<5>()));
 			CHECK(av.last<5>().length() == 5);
 			CHECK(av.last(5).length() == 5);
 		}
@@ -1543,7 +1383,7 @@ SUITE(array_view_tests)
 		{
 			array_view<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-			CHECK((av.last<6>().bounds() == static_bounds<size_t, 6>()));
+			CHECK((av.last<6>().bounds() == static_bounds<6>()));
 			CHECK(av.last<6>().length() == 6);
 #endif
 			CHECK_THROW(av.last(6).length(), fail_fast);
@@ -1551,7 +1391,7 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, dynamic_range> av;
-			CHECK((av.last<0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.last<0>().bounds() == static_bounds<0>()));
 			CHECK(av.last<0>().length() == 0);
 			CHECK(av.last(0).length() == 0);
 		}
@@ -1560,12 +1400,12 @@ SUITE(array_view_tests)
 	TEST(custmized_array_view_size)
 	{
 		double (*arr)[3][4] = new double[100][3][4];
-		array_view<array_view_options<double, char>, dynamic_range, 3, 4> av1(arr, (char)10);
+		array_view<double, dynamic_range, 3, 4> av1(arr, 10);
 
 		struct EffectiveStructure
 		{
 			double* v1;
-			char v2;
+			ptrdiff_t v2;
 		};
 		CHECK(sizeof(av1) == sizeof(EffectiveStructure));
 
@@ -1581,7 +1421,7 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.sub<2,2>().bounds() == static_bounds<size_t, 2>()));
+			CHECK((av.sub<2,2>().bounds() == static_bounds<2>()));
 			CHECK((av.sub<2,2>().length() == 2));
 			CHECK(av.sub(2,2).length() == 2);
             CHECK(av.sub(2,3).length() == 3);
@@ -1590,14 +1430,14 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.sub<0,0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.sub<0,0>().bounds() == static_bounds<0>()));
 			CHECK((av.sub<0,0>().length() == 0));
 			CHECK(av.sub(0,0).length() == 0);
 		}
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.sub<0,5>().bounds() == static_bounds<size_t, 5>()));
+			CHECK((av.sub<0,5>().bounds() == static_bounds<5>()));
 			CHECK((av.sub<0,5>().length() == 5));
 			CHECK(av.sub(0,5).length() == 5);
             CHECK_THROW(av.sub(0,6).length(), fail_fast);
@@ -1606,7 +1446,7 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, 5> av = arr;
-			CHECK((av.sub<5,0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.sub<5,0>().bounds() == static_bounds<0>()));
             CHECK((av.sub<5, 0>().length() == 0));
             CHECK(av.sub(5,0).length() == 0);
             CHECK_THROW(av.sub(6,0).length(), fail_fast);
@@ -1614,7 +1454,7 @@ SUITE(array_view_tests)
 
 		{
 			array_view<int, dynamic_range> av;
-			CHECK((av.sub<0,0>().bounds() == static_bounds<size_t, 0>()));
+			CHECK((av.sub<0,0>().bounds() == static_bounds<0>()));
 			CHECK((av.sub<0,0>().length() == 0));
 			CHECK(av.sub(0,0).length() == 0);
             CHECK_THROW((av.sub<1,0>().length()), fail_fast);
@@ -1662,7 +1502,7 @@ SUITE(array_view_tests)
 	void AssertContentsMatch(T a1, U a2)
 	{
 		CHECK(a1.length() == a2.length());
-		for (size_t i = 0; i < a1.length(); ++i)
+		for (auto i = 0; i < a1.length(); ++i)
 			CHECK(a1[i] == a2[i]);
 	}
 
@@ -1853,7 +1693,7 @@ SUITE(array_view_tests)
 
 			CHECK(av1 == av2);
 
-			array_view<array_view_options<int, char>, 20> av3 = av1.as_array_view(dim<>(20));
+			array_view<int, 20> av3 = av1.as_array_view(dim<>(20));
 			CHECK(av3 == av2 && av3 == av1);
 		}
 
