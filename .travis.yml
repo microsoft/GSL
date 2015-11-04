@@ -1,0 +1,68 @@
+# Based on https://github.com/ldionne/hana/blob/master/.travis.yml
+
+language: cpp
+sudo: false
+
+matrix:
+  include:
+    - env: COMPILER=clang++-3.6 BUILD_TYPE=Debug CLANG=1
+      compiler: clang
+      addons: &clang36
+        apt:
+          packages:
+            - clang-3.6
+            - cmake
+            - g++-5
+          sources: &sources
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+            - kalakris-cmake
+    - env: COMPILER=clang++-3.6 BUILD_TYPE=Release CLANG=1
+      compiler: clang
+      addons: *clang36
+    - env: COMPILER=g++-5 BUILD_TYPE=Debug
+      compiler: gcc
+      addons: &gcc5
+        apt:
+          packages: g++-5
+          sources: *sources
+    - env: COMPILER=g++-5 BUILD_TYPE=Release
+      compiler: gcc
+      addons: *gcc5
+
+install:
+  - which $COMPILER
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+  - |
+    if [[ "$CLANG" == 1 && "${TRAVIS_OS_NAME}" == "linux" && "${STDLIB}" != "libstdc++" ]]; then
+      if [[ "${COMPILER}" == "clang++-3.5" ]]; then LLVM_VERSION="3.5.2"; fi
+      if [[ "${COMPILER}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2"; fi
+      if [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.0"; fi
+      LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
+      LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
+      LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
+      mkdir -p llvm llvm/build llvm/projects/libcxx llvm/projects/libcxxabi
+      travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 -xJ -C llvm
+      travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 -xJ -C llvm/projects/libcxx
+      travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 -xJ -C llvm/projects/libcxxabi
+      (cd llvm/build && cmake .. -DCMAKE_INSTALL_PREFIX=${DEPS_DIR}/llvm/install -DCMAKE_CXX_COMPILER=clang++)
+      (cd llvm/build/projects/libcxx && make install -j2)
+      (cd llvm/build/projects/libcxxabi && make install -j2)
+      export CXXFLAGS="-I ${DEPS_DIR}/llvm/install/include/c++/v1"
+      export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
+      export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
+    fi
+
+before_script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - git clone --depth 1 https://github.com/Microsoft/unittest-cpp tests/unittest-cpp
+  - cmake -H. -Bb -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_INSTALL_PREFIX=$PWD/o -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - cmake --build b
+
+script:
+  - cd b
+  - ctest
+
+notifications:
+  email: false

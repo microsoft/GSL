@@ -16,10 +16,13 @@
 
 #pragma once
 
+#ifndef GSL_STRING_VIEW_H
+#define GSL_STRING_VIEW_H
+
 #include "array_view.h"
 #include <cstring>
 
-namespace Guide
+namespace gsl
 {
 //
 // czstring and wzstring
@@ -79,9 +82,9 @@ template<class T, class SizeType, const T Sentinel>
 array_view<T, dynamic_range> ensure_sentinel(const T* seq, SizeType max = std::numeric_limits<SizeType>::max())
 {
     auto cur = seq;
-    while ((cur - seq) < max && *cur != Sentinel) ++cur;
+    while (SizeType(cur - seq) < max && *cur != Sentinel) ++cur;
     fail_fast_assert(*cur == Sentinel);
-    return{ seq, cur - seq };
+    return{ seq, SizeType(cur - seq) };
 }
 
 
@@ -93,7 +96,7 @@ array_view<T, dynamic_range> ensure_sentinel(const T* seq, SizeType max = std::n
 template<class T>
 inline basic_string_view<T, dynamic_range> ensure_z(T* const & sz, size_t max = std::numeric_limits<size_t>::max())
 {
-    return ensure_sentinel<0>(sz, max);
+    return ensure_sentinel<T, size_t, 0>(sz, max);
 }
 
 // TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation
@@ -134,7 +137,7 @@ basic_string_view<typename std::remove_pointer<typename Cont::pointer>::type, dy
 // to_string() allow (explicit) conversions from string_view to string
 //
 template<class CharT, size_t Extent>
-std::basic_string<typename std::remove_const<CharT>::type> to_string(const basic_string_view<CharT, Extent>& view)
+std::basic_string<typename std::remove_const<CharT>::type> to_string(basic_string_view<CharT, Extent> view)
 {
     return{ view.data(), view.length() };
 }
@@ -161,7 +164,7 @@ public:
     size_type length() const { return sv_.length(); }
 
     pointer assume0() const { return data(); }
-    string_view_type ensure_z() const { return Guide::ensure_z(sv_); }
+    string_view_type ensure_z() const { return gsl::ensure_z(sv_); }
 
     iterator begin() const { return sv_.begin(); }
     iterator end() const { return sv_.end(); }
@@ -176,3 +179,5 @@ using zstring_builder = basic_zstring_builder<char, Max>;
 template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
+
+#endif // GSL_STRING_VIEW_H

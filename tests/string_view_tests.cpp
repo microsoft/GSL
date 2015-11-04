@@ -20,7 +20,7 @@
 #include <cstdlib>
 
 using namespace std;
-using namespace Guide;
+using namespace gsl;
 
 SUITE(string_view_tests)
 {
@@ -45,7 +45,7 @@ SUITE(string_view_tests)
 
     TEST(TestConstructFromStdVector)
     {
-        std::vector<char> vec('h', 5);
+        std::vector<char> vec(5, 'h');
         string_view<> v = vec;
         CHECK(v.length() == vec.size());
     }
@@ -78,6 +78,14 @@ SUITE(string_view_tests)
             CHECK(v.used_length() == v.length());
         }
 	}
+
+    TEST(TestConstructFromConstCharPointer)
+    {
+        const char* s = "Hello";
+        cstring_view<> v = ensure_z(s);
+        CHECK(v.length() == 5);
+        CHECK(v.used_length() == v.length());
+    }
 
     TEST(TestConversionToConst)
     {

@@ -16,8 +16,9 @@
 
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl.h>
+#include <vector>
 
-using namespace Guide;
+using namespace gsl;
 
 struct MyBase {};
 struct MyDerived : public MyBase {};
@@ -48,21 +49,35 @@ SUITE(NotNullTests)
         not_null<int*> p; // yay...does not compile!
         std::unique_ptr<int> up = std::make_unique<int>(120);
         not_null<int*> p = up;
+
+        // Forbid non-nullptr assignable types
+        not_null<std::vector<int>> f(std::vector<int>{1});
+        not_null<int> z(10);
+        not_null<std::vector<int>> y({1,2});
 #endif
       int i = 12; 
       auto rp = RefCounted<int>(&i);
       not_null<int*> p(rp);
       CHECK(p.get() == &i);
+
+      not_null<std::shared_ptr<int>> x(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
     }
 
     TEST(TestNotNullCasting)
     {
-        MyDerived derived;
+        MyBase base;
+	MyDerived derived;
+	Unrelated unrelated;
+	not_null<Unrelated*> u = &unrelated;
         not_null<MyDerived*> p = &derived;
-        not_null<MyBase*> q = p;
+        not_null<MyBase*> q = &base;
+	q = p; // allowed with heterogeneous copy ctor
         CHECK(q == p);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
+	q = u; // no viable conversion possible between MyBase* and Unrelated*
+	p = q; // not possible to implicitly convert MyBase* to MyDerived*
+
         not_null<Unrelated*> r = p;
         not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
