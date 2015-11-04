@@ -241,11 +241,11 @@ SUITE(array_view_tests)
 		
 		auto av8 = av7.as_array_view<int>();
 
-		//CHECK(av8.size() == av6.size());
-		//for (auto i = 0; i < av8.size(); i++)
-		//{
-		//	CHECK(av8[i] == 1);
-		//}
+		CHECK(av8.size() == av6.size());
+		for (auto i = 0; i < av8.size(); i++)
+		{
+			CHECK(av8[i] == 1);
+		}
 
 #ifdef CONFIRM_COMPILATION_ERRORS
 		struct Foo {char c[11];};
@@ -404,71 +404,71 @@ SUITE(array_view_tests)
 			array_view<const int, 2> av2{ av };
 			CHECK(av2[1] == 5);
 
-		//	static_assert(std::is_convertible<const array_view<int, 2>, array_view<const int, 2>>::value, "ctor is not implicit!");
-		//
-		//	const strided_array_view<int, 1> src{ arr, {2, 1} };
-		//	strided_array_view<const int, 1> sav{ src };
-		//	CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
-		//	CHECK(sav.bounds().stride() == 1);
-		//	CHECK(sav[1] == 5);
-		//	
-		//	static_assert(std::is_convertible<const strided_array_view<int, 1>, strided_array_view<const int, 1>>::value, "ctor is not implicit!");
+			static_assert(std::is_convertible<const array_view<int, 2>, array_view<const int, 2>>::value, "ctor is not implicit!");
+		
+			const strided_array_view<int, 1> src{ arr, {2, 1} };
+			strided_array_view<const int, 1> sav{ src };
+			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
+			CHECK(sav.bounds().stride() == 1);
+			CHECK(sav[1] == 5);
+			
+			static_assert(std::is_convertible<const strided_array_view<int, 1>, strided_array_view<const int, 1>>::value, "ctor is not implicit!");
 		}
-//
-//		// Check copy constructor
-//		{
-//			int arr1[2] = { 3, 4 };
-//			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
-//			strided_array_view<int, 1> sav1{ src1 };
-// 
-//			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
-//			CHECK(sav1.bounds().stride() == 1);
-//			CHECK(sav1[0] == 3);
-//
-//			int arr2[6] = { 1, 2, 3, 4, 5, 6 };
-//			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 }, { 2, 1 }} };
-//			strided_array_view<const int, 2> sav2{ src2 };
-//			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
-//			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
-//			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
-//		}
-//
-//		// Check const-casting assignment operator
-//		{
-//			int arr1[2] = { 1, 2 };
-//			int arr2[6] = { 3, 4, 5, 6, 7, 8 };
-//
-//			const strided_array_view<int, 1> src{ arr1, {{2}, {1}} };
-//			strided_array_view<const int, 1> sav{ arr2, {{3}, {2}} };
-//			strided_array_view<const int, 1>& sav_ref = (sav = src);
-//			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
-//			CHECK(sav.bounds().strides() == index<1>{ 1 });
-//			CHECK(sav[0] == 1);
-//			CHECK(&sav_ref == &sav);
-//		}
-//		
-//		// Check copy assignment operator
-//		{
-//			int arr1[2] = { 3, 4 };
-//			int arr1b[1] = { 0 };
-//			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
-//			strided_array_view<int, 1> sav1{ arr1b, {1, 1} };
-//			strided_array_view<int, 1>& sav1_ref = (sav1 = src1);
-//			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
-//			CHECK(sav1.bounds().strides() == index<1>{ 1 });
-//			CHECK(sav1[0] == 3);
-//			CHECK(&sav1_ref == &sav1);
-//
-//			const int arr2[6] = { 1, 2, 3, 4, 5, 6 };
-//			const int arr2b[1] = { 0 };
-//			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 },{ 2, 1 }} };
-//			strided_array_view<const int, 2> sav2{ arr2b, {{ 1, 1 },{ 1, 1 }} };
-//			strided_array_view<const int, 2>& sav2_ref = (sav2 = src2);
-//			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
-//			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
-//			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
-//			CHECK(&sav2_ref == &sav2);
-//		}
+
+		// Check copy constructor
+		{
+			int arr1[2] = { 3, 4 };
+			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
+			strided_array_view<int, 1> sav1{ src1 };
+ 
+			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
+			CHECK(sav1.bounds().stride() == 1);
+			CHECK(sav1[0] == 3);
+
+			int arr2[6] = { 1, 2, 3, 4, 5, 6 };
+			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 }, { 2, 1 }} };
+			strided_array_view<const int, 2> sav2{ src2 };
+			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
+			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
+			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
+		}
+
+		// Check const-casting assignment operator
+		{
+			int arr1[2] = { 1, 2 };
+			int arr2[6] = { 3, 4, 5, 6, 7, 8 };
+
+			const strided_array_view<int, 1> src{ arr1, {{2}, {1}} };
+			strided_array_view<const int, 1> sav{ arr2, {{3}, {2}} };
+			strided_array_view<const int, 1>& sav_ref = (sav = src);
+			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
+			CHECK(sav.bounds().strides() == index<1>{ 1 });
+			CHECK(sav[0] == 1);
+			CHECK(&sav_ref == &sav);
+		}
+		
+		// Check copy assignment operator
+		{
+			int arr1[2] = { 3, 4 };
+			int arr1b[1] = { 0 };
+			const strided_array_view<int, 1> src1{ arr1, {2, 1} };
+			strided_array_view<int, 1> sav1{ arr1b, {1, 1} };
+			strided_array_view<int, 1>& sav1_ref = (sav1 = src1);
+			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
+			CHECK(sav1.bounds().strides() == index<1>{ 1 });
+			CHECK(sav1[0] == 3);
+			CHECK(&sav1_ref == &sav1);
+
+			const int arr2[6] = { 1, 2, 3, 4, 5, 6 };
+			const int arr2b[1] = { 0 };
+			const strided_array_view<const int, 2> src2{ arr2, {{ 3, 2 },{ 2, 1 }} };
+			strided_array_view<const int, 2> sav2{ arr2b, {{ 1, 1 },{ 1, 1 }} };
+			strided_array_view<const int, 2>& sav2_ref = (sav2 = src2);
+			CHECK((sav2.bounds().index_bounds() == index<2>{ 3, 2 }));
+			CHECK((sav2.bounds().strides() == index<2>{ 2, 1 }));
+			CHECK((sav2[{0, 0}] == 1 && sav2[{2, 0}] == 5));
+			CHECK(&sav2_ref == &sav2);
+		}
 	}
 
 	TEST(strided_array_view_slice)
