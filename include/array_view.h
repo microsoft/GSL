@@ -43,6 +43,10 @@
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
 
+#pragma push_macro("GSL_MSVC_HAS_VARIADIC_CTOR_BUG") 
+#define GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
+
+
 // noexcept is not understood 
 #ifndef GSL_THROWS_FOR_TESTING
 #define noexcept /* nothing */ 
@@ -106,9 +110,19 @@ public:
 		std::copy(values, values + Rank, elems);
 	}
 
-	template<typename... Ts, bool Enabled1 = (sizeof...(Ts) == Rank), bool Enabled2 = details::are_integral<Ts...>::value, typename Dummy = std::enable_if_t<Enabled1 && Enabled2, bool>>
-	constexpr index(Ts... ds) noexcept : elems{ static_cast<value_type>(ds)... }
-	{}
+#ifdef GSL_MSVC_HAS_VARIADIC_CTOR_BUG           
+	template<typename T, typename... Ts, 
+        typename = std::enable_if_t<((sizeof...(Ts) + 1) == Rank) && 
+        std::is_integral<T>::value && 
+        details::are_integral<Ts...>::value>> 
+    constexpr index(T t, Ts... ds) : index({ static_cast<value_type>(t), static_cast<value_type>(ds)... }) 
+    {} 
+#else 
+	template<typename... Ts, 
+        typename = std::enable_if_t<(sizeof...(Ts) == Rank) && details::are_integral<Ts...>::value>> 
+	constexpr index(Ts... ds) noexcept : elems{ static_cast<value_type>(ds)... } 
+    {} 
+#endif 
 
 	constexpr index(const index& other) noexcept = default;
 
@@ -1956,6 +1970,10 @@ general_array_view_iterator<ArrayView> operator+(typename general_array_view_ite
 #ifndef GSL_THROWS_FOR_TESTING
 #pragma undef noexcept
 #endif // GSL_THROWS_FOR_TESTING
+
+#undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
+#pragma pop_macro("GSL_MSVC_HAS_VARIADIC_CTOR_BUG") 
+
 
 #endif // _MSC_VER <= 1800
 
