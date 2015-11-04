@@ -146,7 +146,7 @@ public:
 	constexpr index operator-() const noexcept
 	{
 		index ret = *this;
-		std::transform(ret, ret + rank, ret, std::negate<ValueType>{});
+		std::transform(ret, ret + rank, ret, std::negate<value_type>{});
 		return ret;
 	}
 
@@ -266,7 +266,7 @@ namespace details
 
 	template <std::ptrdiff_t... Ranges>
 	struct BoundsRanges {
-        using size_type = std::ptrdiff_t;
+        	using size_type = std::ptrdiff_t;
 		static const size_type Depth = 0;
 		static const size_type DynamicNum = 0;
 		static const size_type CurrentRange = 1;
@@ -278,7 +278,7 @@ namespace details
         {}
 		
 		BoundsRanges (const BoundsRanges&) = default;
-		BoundsRanges(const size_type* const) { }
+		BoundsRanges(const std::ptrdiff_t* const) { }
 		BoundsRanges() = default;
 
 
@@ -312,7 +312,7 @@ namespace details
 	template <std::ptrdiff_t... RestRanges>
 	struct BoundsRanges <dynamic_range, RestRanges...> : BoundsRanges<RestRanges...>{
 		using Base = BoundsRanges <RestRanges... >;
-        using size_type = Base::size_type;
+        	using size_type = std::ptrdiff_t;
 		static const size_t Depth = Base::Depth + 1;
 		static const size_t DynamicNum = Base::DynamicNum + 1;
 		static const size_type CurrentRange = dynamic_range;
@@ -321,7 +321,7 @@ namespace details
 
 		BoundsRanges (const BoundsRanges&) = default;
 		
-        BoundsRanges(const size_type* const arr) : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
+	        BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
 		{
 			fail_fast_assert(0 <= *arr);
 		}
@@ -329,9 +329,9 @@ namespace details
 		BoundsRanges() : m_bound(0) {}
 
 		template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
-        BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other, bool /* firstLevel */ = true) :
-            Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false), m_bound(other.totalSize())
-        {}
+        	BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other, bool /* firstLevel */ = true) :
+            	Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false), m_bound(other.totalSize())
+        	{}
 
 		template <typename T, size_t Dim = 0>
 		void serialize(T& arr) const
@@ -386,14 +386,14 @@ namespace details
 	struct BoundsRanges <CurRange, RestRanges...> : BoundsRanges<RestRanges...>
     {
 		using Base = BoundsRanges <RestRanges... >;
-        using size_type = Base::size_type;
+        	using size_type = std::ptrdiff_t;
 		static const size_t Depth = Base::Depth + 1;
 		static const size_t DynamicNum = Base::DynamicNum;
 		static const size_type CurrentRange = CurRange;
 		static const size_type TotalSize = Base::TotalSize == dynamic_range ? dynamic_range : CurrentRange * Base::TotalSize;
 
 		BoundsRanges (const BoundsRanges&) = default;
-		BoundsRanges(const size_type* const arr) : Base(arr) { }
+		BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) { }
 		BoundsRanges() = default;
 
 		template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
@@ -469,10 +469,10 @@ namespace details
 	template <typename SourceType, typename TargetType>
 	struct BoundsRangeConvertible2<SourceType, TargetType, 0> : std::true_type {};
 
-	template <typename SourceType, typename TargetType, size_t Rank = TargetType::Depth>
+	template <typename SourceType, typename TargetType, std::ptrdiff_t Rank = TargetType::Depth>
 	struct BoundsRangeConvertible : decltype(helpBoundsRangeConvertible<Rank - 1>(SourceType(), TargetType(), 
 		std::integral_constant<bool, SourceType::Depth == TargetType::Depth 
-		&& (!LessThan<size_t(SourceType::CurrentRange), size_t(TargetType::CurrentRange)>::value || TargetType::CurrentRange == dynamic_range || SourceType::CurrentRange == dynamic_range)>())) 
+		&& (!LessThan<SourceType::CurrentRange, TargetType::CurrentRange>::value || TargetType::CurrentRange == dynamic_range || SourceType::CurrentRange == dynamic_range)>())) 
 	{};
 	template <typename SourceType, typename TargetType>
 	struct BoundsRangeConvertible<SourceType, TargetType, 0> : std::true_type {};
@@ -561,7 +561,7 @@ public:
     constexpr static_bounds(const static_bounds<Ranges...>& other) : m_ranges(other.m_ranges)
     {}
                                                        
-	constexpr static_bounds(std::initializer_list<size_type> il) : m_ranges(il.begin())
+	constexpr static_bounds(std::initializer_list<size_type> il) : m_ranges((const std::ptrdiff_t*)il.begin())
 	{
 		fail_fast_assert((MyRanges::DynamicNum == 0 && il.size() == 1 && *il.begin() == static_size) || MyRanges::DynamicNum == il.size(), "Size of the initializer list must match the rank of the array");
 		fail_fast_assert(m_ranges.totalSize() <= PTRDIFF_MAX, "Size of the range is larger than the max element of the size type");
@@ -1230,7 +1230,7 @@ namespace details
 		using size_type = typename Traits::array_view_traits::size_type;
 	};
 
-	template <typename T, size_t... Ranks>
+	template <typename T, std::ptrdiff_t... Ranks>
 	struct ArrayViewArrayTraits {
 		using type = array_view<T, Ranks...>;
 		using value_type = T;
@@ -1238,7 +1238,7 @@ namespace details
 		using pointer = T*;
 		using reference = T&;
 	};
-	template <typename T, size_t N, size_t... Ranks>
+	template <typename T, std::ptrdiff_t N, std::ptrdiff_t... Ranks>
 	struct ArrayViewArrayTraits<T[N], Ranks...> : ArrayViewArrayTraits<T, Ranks..., N> {};
 
 	template <typename BoundsType>
@@ -1292,7 +1292,7 @@ namespace details
 	struct is_array_view_oracle<array_view<ValueType, FirstDimension, RestDimensions...>> : std::true_type
 	{};
 	
-    template <typename ValueType, size_t Rank>
+    template <typename ValueType, std::ptrdiff_t Rank>
 	struct is_array_view_oracle<strided_array_view<ValueType, Rank>> : std::true_type
 	{};
 	
@@ -1339,7 +1339,7 @@ public:
 	}
 
 	// default
-	template <size_t DynamicRank = bounds_type::dynamic_rank, typename = std::enable_if_t<DynamicRank != 0>>
+	template <std::ptrdiff_t DynamicRank = bounds_type::dynamic_rank, typename = std::enable_if_t<DynamicRank != 0>>
 	constexpr array_view() : Base(nullptr, bounds_type())
 	{}
 
@@ -1351,15 +1351,15 @@ public:
 
 	// from n-dimensions static array
 	template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, N>,
-        typename = std::enable_if_t<std::is_convertible<Helper::value_type(*)[], typename Base::value_type(*)[]>::value>>
-	constexpr array_view (T (&arr)[N]) : Base(arr, Helper::bounds_type())
+        typename = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value>>
+	constexpr array_view (T (&arr)[N]) : Base(arr, typename Helper::bounds_type())
 	{}
 
 	// from n-dimensions static array with size
 	template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, N>,
-		typename = std::enable_if_t<std::is_convertible<Helper::value_type(*)[], typename Base::value_type(*)[]>::value>
+		typename = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value>
     >
-    constexpr array_view(T(&arr)[N], size_type size) : Base(arr, Helper::bounds_type{size})
+    constexpr array_view(T(&arr)[N], size_type size) : Base(arr, typename Helper::bounds_type{size})
 	{
 		fail_fast_assert(size <= N);
 	}
@@ -1420,14 +1420,14 @@ public:
 
 	// to bytes array
 	template <bool Enabled = std::is_standard_layout<std::decay_t<ValueType>>::value>
-	constexpr auto as_bytes() const noexcept -> array_view<const byte>
+	auto as_bytes() const noexcept -> array_view<const byte>
 	{
 		static_assert(Enabled, "The value_type of array_view must be standarded layout");
 		return { reinterpret_cast<const byte*>(this->data()), this->bytes() };
 	}
 
 	template <bool Enabled = std::is_standard_layout<std::decay_t<ValueType>>::value>
-	constexpr auto as_writeable_bytes() const noexcept -> array_view<byte>
+	auto as_writeable_bytes() const noexcept -> array_view<byte>
 	{
 		static_assert(Enabled, "The value_type of array_view must be standarded layout");
 		return { reinterpret_cast<byte*>(this->data()), this->bytes() };
@@ -1435,7 +1435,7 @@ public:
 
     // from bytes array
 	template<typename U, bool IsByte = std::is_same<value_type, const byte>::value, typename = std::enable_if_t<IsByte && sizeof...(RestDimensions) == 0>>
-	constexpr auto as_array_view() const noexcept -> array_view<const U, (Base::bounds_type::static_size != dynamic_range ? static_cast<size_t>(Base::bounds_type::static_size) / sizeof(U) : dynamic_range)>
+	constexpr auto as_array_view() const noexcept -> array_view<const U, (Base::bounds_type::static_size != dynamic_range ? static_cast<std::ptrdiff_t>(static_cast<size_t>(Base::bounds_type::static_size) / sizeof(U)) : dynamic_range)>
 	{
 		static_assert(std::is_standard_layout<U>::value && (Base::bounds_type::static_size == dynamic_range || Base::bounds_type::static_size % static_cast<size_type>(sizeof(U)) == 0),
 			"Target type must be standard layout and its size must match the byte array size");
@@ -1444,7 +1444,7 @@ public:
 	}
 
 	template<typename U, bool IsByte = std::is_same<value_type, byte>::value, typename = std::enable_if_t<IsByte && sizeof...(RestDimensions) == 0>>
-	constexpr auto as_array_view() const noexcept -> array_view<U, (Base::bounds_type::static_size != dynamic_range ? static_cast<size_t>(Base::bounds_type::static_size) / sizeof(U) : dynamic_range)>
+	constexpr auto as_array_view() const noexcept -> array_view<U, (Base::bounds_type::static_size != dynamic_range ? static_cast<ptrdiff_t>(static_cast<size_t>(Base::bounds_type::static_size) / sizeof(U)) : dynamic_range)>
 	{
 		static_assert(std::is_standard_layout<U>::value && (Base::bounds_type::static_size == dynamic_range || Base::bounds_type::static_size % static_cast<size_t>(sizeof(U)) == 0),
 			"Target type must be standard layout and its size must match the byte array size");

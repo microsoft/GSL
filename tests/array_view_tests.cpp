@@ -222,12 +222,13 @@ SUITE(array_view_tests)
 #endif
 		}
 	}
-    template <class Bounds> void fn(Bounds& b) { static_assert(Bounds::static_size == 60, "static bounds is wrong size"); }
+	
+	template <class Bounds> void fn(const Bounds& b) { static_assert(Bounds::static_size == 60, "static bounds is wrong size"); }
 	TEST (array_view_reshape_test)
 	{
 		int a[3][4][5];
 		auto av = as_array_view(a);
-        fn(av.bounds());
+        	fn(av.bounds());
 		auto av2 = av.as_array_view(dim<60>());
 		auto av3 = av2.as_array_view(dim<3>(), dim<4>(), dim<5>());
 		auto av4 = av3.as_array_view(dim<4>(), dim<>(3), dim<5>());
