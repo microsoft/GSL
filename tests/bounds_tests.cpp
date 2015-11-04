@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <array_view.h>
+#include <span.h>
 #include <vector>
 
 using namespace std;
@@ -55,7 +55,7 @@ SUITE(bounds_test)
 		auto itr = bounds.begin();
 	
 #ifdef CONFIRM_COMPILATION_ERRORS
-		array_view<int, 4, dynamic_range, 2> av(nullptr, bounds);
+		span<int, 4, dynamic_range, 2> av(nullptr, bounds);
 	
 		auto itr2 = av.cbegin();
 	
