@@ -22,6 +22,16 @@
 #include "span.h"
 #include <cstring>
 
+// VS 2013 workarounds
+#ifdef _MSC_VER
+#if _MSC_VER <= 1800
+
+#pragma push_macro("GSL_MSVC_HAS_TYPE_DEDUCTION_BUG") 
+#define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
+
+#endif // _MSC_VER <= 1800
+#endif // _MSC_VER
+
 namespace gsl
 {
 //
@@ -34,16 +44,16 @@ namespace gsl
 // type system for these types that will not either incur significant runtime costs or
 // (sometimes needlessly) break existing programs when introduced.
 //
-template<std::ptrdiff_t Max = dynamic_range>
+template<std::ptrdiff_t Extent = dynamic_range>
 using czstring = const char*;
 
-template<std::ptrdiff_t Max = dynamic_range>
+template<std::ptrdiff_t Extent = dynamic_range>
 using cwzstring = const wchar_t*;
 
-template<std::ptrdiff_t Max = dynamic_range>
+template<std::ptrdiff_t Extent = dynamic_range>
 using zstring = char*;
 
-template<std::ptrdiff_t Max = dynamic_range>
+template<std::ptrdiff_t Extent = dynamic_range>
 using wzstring = wchar_t*;
 
 //
@@ -134,12 +144,37 @@ basic_string_span<typename std::remove_pointer<typename Cont::pointer>::type, dy
 //
 // to_string() allow (explicit) conversions from string_span to string
 //
-template<class CharT, size_t Extent>
+#ifndef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
+
+template<class CharT, ptrdiff_t Extent>
 std::basic_string<typename std::remove_const<CharT>::type> to_string(basic_string_span<CharT, Extent> view)
+{
+    return{ view.data(), static_cast<size_t>(view.length()) };
+}
+
+#else
+
+std::string to_string(cstring_span<> view)
 {
     return{ view.data(), view.length() };
 }
 
+std::string to_string(string_span<> view)
+{
+    return{ view.data(), view.length() };
+}
+
+std::wstring to_string(cwstring_span<> view)
+{
+    return{ view.data(), view.length() };
+}
+
+std::wstring to_string(wstring_span<> view)
+{
+    return{ view.data(), view.length() };
+}
+
+#endif 
 
 template<class CharT, size_t Extent = dynamic_range>
 class basic_zstring_builder
@@ -177,5 +212,16 @@ using zstring_builder = basic_zstring_builder<char, Max>;
 template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
+
+// VS 2013 workarounds
+#ifdef _MSC_VER
+#if _MSC_VER <= 1800
+
+#pragma pop_macro("GSL_MSVC_HAS_TYPE_DEDUCTION_BUG") 
+#undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
+
+#endif // _MSC_VER <= 1800
+#endif // _MSC_VER
+
 
 #endif // GSL_STRING_SPAN_H
