@@ -154,22 +154,22 @@ std::basic_string<typename std::remove_const<CharT>::type> to_string(basic_strin
 
 #else
 
-std::string to_string(cstring_span<> view)
+inline std::string to_string(cstring_span<> view)
 {
     return{ view.data(), view.length() };
 }
 
-std::string to_string(string_span<> view)
+inline std::string to_string(string_span<> view)
 {
     return{ view.data(), view.length() };
 }
 
-std::wstring to_string(cwstring_span<> view)
+inline std::wstring to_string(cwstring_span<> view)
 {
     return{ view.data(), view.length() };
 }
 
-std::wstring to_string(wstring_span<> view)
+inline std::wstring to_string(wstring_span<> view)
 {
     return{ view.data(), view.length() };
 }
