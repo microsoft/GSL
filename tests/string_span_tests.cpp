@@ -22,6 +22,7 @@
 using namespace std;
 using namespace gsl;
 
+
 SUITE(string_span_tests)
 {
 
@@ -103,6 +104,18 @@ SUITE(string_span_tests)
         string_span<> v2 = v;
         string_span<> v3 = "Hello";
 #endif
+    }
+
+    TEST(TestToString)
+    {
+        auto s = gsl::to_string(cstring_span<>{});
+        CHECK(s.length() == 0);
+
+        char stack_string[] = "Hello";
+        cstring_span<> v = ensure_z(stack_string);
+        auto s2 = gsl::to_string(v);
+        CHECK(s2.length() == v.length());
+        CHECK(s2.length() == 5);
     }
 }
 
