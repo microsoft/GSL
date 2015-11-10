@@ -1,14 +1,14 @@
-# GSL: Guidelines Support Library [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+# GSL: Guidelines Support Library [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL) [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
 This repo contains Microsoft's implementation of GSL.
 
-The library includes types like `array_view<>`, `string_view<>`, `owner<>` and others.
+The library includes types like `span<T>`, `string_span`, `owner<>` and others.
 
 The entire implementation is provided inline in the headers under the [include](./include) directory.
 
-While some types have been broken out into their own headers (e.g. [include/array_view.h](./include/array_view.h)),
+While some types have been broken out into their own headers (e.g. [include/span.h](./include/span.h)),
 it is simplest to just include [gsl.h](./include/gsl.h) and gain access to the entire library.
 
 > NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to
