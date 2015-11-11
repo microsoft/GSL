@@ -111,19 +111,19 @@ public:
         std::copy(values, values + Rank, elems);
     }
 
-#ifdef GSL_MSVC_HAS_VARIADIC_CTOR_BUG           
-    template<typename T, typename... Ts, 
-        typename = std::enable_if_t<((sizeof...(Ts) + 1) == Rank) && 
-        std::is_integral<T>::value && 
-        details::are_integral<Ts...>::value>> 
-    constexpr index(T t, Ts... ds) : index({ static_cast<value_type>(t), static_cast<value_type>(ds)... }) 
-    {} 
-#else 
-    template<typename... Ts, 
-        typename = std::enable_if_t<(sizeof...(Ts) == Rank) && details::are_integral<Ts...>::value>> 
-    constexpr index(Ts... ds) noexcept : elems{ static_cast<value_type>(ds)... } 
-    {} 
-#endif 
+#ifdef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
+    template<typename T, typename... Ts,
+        typename = std::enable_if_t<((sizeof...(Ts) + 1) == Rank) &&
+        std::is_integral<T>::value &&
+        details::are_integral<Ts...>::value>>
+    constexpr index(T t, Ts... ds) : index({ static_cast<value_type>(t), static_cast<value_type>(ds)... })
+    {}
+#else
+    template<typename... Ts,
+        typename = std::enable_if_t<(sizeof...(Ts) == Rank) && details::are_integral<Ts...>::value>>
+    constexpr index(Ts... ds) noexcept : elems{ static_cast<value_type>(ds)... }
+    {}
+#endif
 
     constexpr index(const index& other) noexcept = default;
 
@@ -1039,9 +1039,9 @@ namespace details
 
 } // namespace details
 
-template <typename ArrayView>
+template <typename Span>
 class contiguous_span_iterator;
-template <typename ArrayView>
+template <typename Span>
 class general_span_iterator;
 enum class byte : std::uint8_t {};
 
@@ -1235,21 +1235,21 @@ class strided_span;
 namespace details
 {
     template <typename T, typename = std::true_type>
-    struct ArrayViewTypeTraits
+    struct SpanTypeTraits
     {
         using value_type = T;
         using size_type = size_t;
     };
 
     template <typename Traits>
-    struct ArrayViewTypeTraits<Traits, typename std::is_reference<typename Traits::span_traits &>::type>
+    struct SpanTypeTraits<Traits, typename std::is_reference<typename Traits::span_traits &>::type>
     {
         using value_type = typename Traits::span_traits::value_type;
         using size_type = typename Traits::span_traits::size_type;
     };
 
     template <typename T, std::ptrdiff_t... Ranks>
-    struct ArrayViewArrayTraits {
+    struct SpanArrayTraits {
         using type = span<T, Ranks...>;
         using value_type = T;
         using bounds_type = static_bounds<Ranks...>;
@@ -1257,7 +1257,7 @@ namespace details
         using reference = T&;
     };
     template <typename T, std::ptrdiff_t N, std::ptrdiff_t... Ranks>
-    struct ArrayViewArrayTraits<T[N], Ranks...> : ArrayViewArrayTraits<T, Ranks..., N> {};
+    struct SpanArrayTraits<T[N], Ranks...> : SpanArrayTraits<T, Ranks..., N> {};
 
     template <typename BoundsType>
     BoundsType newBoundsHelperImpl(std::ptrdiff_t totalSize, std::true_type) // dynamic size
@@ -1322,108 +1322,122 @@ namespace details
 
 
 template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-class span : public basic_span <ValueType, static_bounds <FirstDimension, RestDimensions...>>
+class span
 {
-    template <typename ValueType2, std::ptrdiff_t FirstDimension2,
-              std::ptrdiff_t... RestDimensions2>
+    template <typename ValueType2, std::ptrdiff_t FirstDimension2, std::ptrdiff_t... RestDimensions2>
     friend class span;
 
-    using Base = basic_span<ValueType, static_bounds<FirstDimension, RestDimensions...>>;
+public:
+    using BoundsType = static_bounds<FirstDimension, RestDimensions...>;
+    static const size_t rank = BoundsType::rank;
+    using bounds_type = BoundsType;
+    using size_type = typename bounds_type::size_type;
+    using index_type = typename bounds_type::index_type;
+    using value_type = ValueType;
+    using const_value_type = std::add_const_t<value_type>;
+    using pointer = ValueType*;
+    using reference = ValueType&;
+    using iterator = contiguous_span_iterator<span>;
+    using const_span = span<const_value_type, FirstDimension, RestDimensions...>;
+    using const_iterator = contiguous_span_iterator<const_span>;
+    using reverse_iterator = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    using sliced_type = std::conditional_t<rank == 1, value_type, span<value_type, RestDimensions...>>;
+
+private:
+    pointer m_pdata;
+    bounds_type m_bounds;
+
+    friend iterator;
+    friend const_iterator;
 
 public:
-    using typename Base::bounds_type;
-    using typename Base::size_type;
-    using typename Base::pointer;
-    using typename Base::value_type;
-    using typename Base::index_type;
-    using typename Base::iterator;
-    using typename Base::const_iterator;
-    using typename Base::reference;
-    using Base::rank;
 
-public:
-    // basic
-    constexpr span(pointer ptr, size_type size) : Base(ptr, bounds_type{ size })
+    constexpr span(pointer data, bounds_type bound) noexcept
+        : m_pdata(data), m_bounds(std::move(bound))
+    {
+        fail_fast_assert((m_bounds.size() > 0 && data != nullptr) || m_bounds.size() == 0);
+    }
+
+    constexpr span(pointer ptr, size_type size) : span(ptr, bounds_type{ size })
     {}
 
-    constexpr span(pointer ptr, bounds_type bounds) : Base(ptr, std::move(bounds))
+    constexpr span(std::nullptr_t) : span(nullptr, bounds_type{})
     {}
 
-    constexpr span(std::nullptr_t) : Base(nullptr, bounds_type{})
-    {}
-
-    constexpr span(std::nullptr_t, size_type size) : Base(nullptr, bounds_type{})
+    constexpr span(std::nullptr_t, size_type size) : span(nullptr, bounds_type{})
     {
         fail_fast_assert(size == 0);
     }
 
     // default
     template <std::ptrdiff_t DynamicRank = bounds_type::dynamic_rank, typename = std::enable_if_t<DynamicRank != 0>>
-    constexpr span() : Base(nullptr, bounds_type())
+    constexpr span() : span(nullptr, bounds_type())
     {}
 
     // from n-dimensions dynamic array (e.g. new int[m][4]) (precedence will be lower than the 1-dimension pointer)
-    template <typename T, typename Helper = details::ArrayViewArrayTraits<T, dynamic_range>
-        /*typename Dummy = std::enable_if_t<std::is_convertible<Helper::value_type (*)[], typename Base::value_type (*)[]>::value>*/>
-    constexpr span(T* const& data, size_type size) : Base(data, typename Helper::bounds_type{size})
+    template <typename T, typename Helper = details::SpanArrayTraits<T, dynamic_range>
+        /*typename Dummy = std::enable_if_t<std::is_convertible<Helper::value_type (*)[], value_type (*)[]>::value>*/
+    >
+    constexpr span(T* const& data, size_type size) : span(data, typename Helper::bounds_type{size})
     {}
 
     // from n-dimensions static array
-    template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, N>,
-        typename = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value>>
-    constexpr span (T (&arr)[N]) : Base(arr, typename Helper::bounds_type())
+    template <typename T, size_t N, typename Helper = details::SpanArrayTraits<T, N>,
+        typename = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], value_type(*)[]>::value>
+    >
+    constexpr span (T (&arr)[N]) : span(arr, typename Helper::bounds_type())
     {}
 
     // from n-dimensions static array with size
-    template <typename T, size_t N, typename Helper = details::ArrayViewArrayTraits<T, N>,
-        typename = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], typename Base::value_type(*)[]>::value>
+    template <typename T, size_t N, typename Helper = details::SpanArrayTraits<T, N>,
+        typename = std::enable_if_t<std::is_convertible<typename Helper::value_type(*)[], value_type(*)[]>::value>
     >
-    constexpr span(T(&arr)[N], size_type size) : Base(arr, typename Helper::bounds_type{size})
+    constexpr span(T(&arr)[N], size_type size) : span(arr, typename Helper::bounds_type{size})
     {
         fail_fast_assert(size <= N);
     }
 
     // from std array
     template <size_t N, 
-       typename Dummy = std::enable_if_t<std::is_convertible<static_bounds<N>, typename Base::bounds_type>::value>
+       typename Dummy = std::enable_if_t<std::is_convertible<static_bounds<N>, bounds_type>::value>
     >
-    constexpr span (std::array<std::remove_const_t<value_type>, N> & arr) : Base(arr.data(), static_bounds<N>())
+    constexpr span (std::array<std::remove_const_t<value_type>, N> & arr) : span(arr.data(), static_bounds<N>())
     {}
 
     template <size_t N,
-        typename Dummy = std::enable_if_t<std::is_convertible<static_bounds<N>, typename Base::bounds_type>::value
+        typename Dummy = std::enable_if_t<std::is_convertible<static_bounds<N>, bounds_type>::value
         && std::is_const<value_type>::value>
     >
-    constexpr span (const std::array<std::remove_const_t<value_type>, N> & arr) : Base(arr.data(), static_bounds<N>())
+    constexpr span (const std::array<std::remove_const_t<value_type>, N> & arr) : span(arr.data(), static_bounds<N>())
     {}
     
     // from begin, end pointers. We don't provide iterator pair since no way to guarantee the contiguity 
     template <typename Ptr,
         typename Dummy = std::enable_if_t<std::is_convertible<Ptr, pointer>::value
-        && details::LessThan<Base::bounds_type::dynamic_rank, 2>::value>
+        && details::LessThan<bounds_type::dynamic_rank, 2>::value>
     > // remove literal 0 case
-    constexpr span (pointer begin, Ptr end) : Base(begin, details::newBoundsHelper<typename Base::bounds_type>(static_cast<pointer>(end) - begin))
+    constexpr span (pointer begin, Ptr end) : span(begin, details::newBoundsHelper<bounds_type>(static_cast<pointer>(end) - begin))
     {}
 
     // from containers. It must has .size() and .data() two function signatures
     template <typename Cont, typename DataType = typename Cont::value_type,
         typename Dummy = std::enable_if_t<!details::is_span<Cont>::value
-        && std::is_convertible<DataType (*)[], typename Base::value_type (*)[]>::value
+        && std::is_convertible<DataType (*)[], value_type (*)[]>::value
         && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
     >
-    constexpr span (Cont& cont) : Base(static_cast<pointer>(cont.data()), details::newBoundsHelper<typename Base::bounds_type>(cont.size()))
+    constexpr span (Cont& cont) : span(static_cast<pointer>(cont.data()), details::newBoundsHelper<bounds_type>(cont.size()))
     {}
 
     constexpr span(const span &) = default;
 
     // convertible
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-        typename BaseType = basic_span<ValueType, static_bounds<FirstDimension, RestDimensions...>>,
-        typename OtherBaseType = basic_span<OtherValueType, static_bounds<OtherDimensions...>>,
-        typename Dummy = std::enable_if_t<std::is_convertible<OtherBaseType, BaseType>::value>
+        typename OtherBounds = static_bounds<OtherDimensions...>,
+        typename Dummy = std::enable_if_t<std::is_convertible<OtherValueType, ValueType>::value && std::is_convertible<OtherBounds, bounds_type>::value>
     >
-    constexpr span(const span<OtherValueType, OtherDimensions...> &av)
-        : Base(static_cast<const typename span<OtherValueType, OtherDimensions...>::Base&>(av))
+    constexpr span(const span<OtherValueType, OtherDimensions...>& other)
+        : m_pdata(other.m_pdata), m_bounds(other.m_bounds)
     {}
 
     // reshape
@@ -1454,18 +1468,18 @@ public:
 
     // from bytes array
     template<typename U, bool IsByte = std::is_same<value_type, const byte>::value, typename = std::enable_if_t<IsByte && sizeof...(RestDimensions) == 0>>
-    constexpr auto as_span() const noexcept -> span<const U, (Base::bounds_type::static_size != dynamic_range ? static_cast<std::ptrdiff_t>(static_cast<size_t>(Base::bounds_type::static_size) / sizeof(U)) : dynamic_range)>
+    constexpr auto as_span() const noexcept -> span<const U, (bounds_type::static_size != dynamic_range ? static_cast<std::ptrdiff_t>(static_cast<size_t>(bounds_type::static_size) / sizeof(U)) : dynamic_range)>
     {
-        static_assert(std::is_standard_layout<U>::value && (Base::bounds_type::static_size == dynamic_range || Base::bounds_type::static_size % static_cast<size_type>(sizeof(U)) == 0),
+        static_assert(std::is_standard_layout<U>::value && (bounds_type::static_size == dynamic_range || bounds_type::static_size % static_cast<size_type>(sizeof(U)) == 0),
             "Target type must be standard layout and its size must match the byte array size");
         fail_fast_assert((this->bytes() % sizeof(U)) == 0 && (this->bytes() / sizeof(U)) < PTRDIFF_MAX);
         return { reinterpret_cast<const U*>(this->data()), this->bytes() / static_cast<size_type>(sizeof(U)) };
     }
 
     template<typename U, bool IsByte = std::is_same<value_type, byte>::value, typename = std::enable_if_t<IsByte && sizeof...(RestDimensions) == 0>>
-    constexpr auto as_span() const noexcept -> span<U, (Base::bounds_type::static_size != dynamic_range ? static_cast<ptrdiff_t>(static_cast<size_t>(Base::bounds_type::static_size) / sizeof(U)) : dynamic_range)>
+    constexpr auto as_span() const noexcept -> span<U, (bounds_type::static_size != dynamic_range ? static_cast<ptrdiff_t>(static_cast<size_t>(bounds_type::static_size) / sizeof(U)) : dynamic_range)>
     {
-        static_assert(std::is_standard_layout<U>::value && (Base::bounds_type::static_size == dynamic_range || Base::bounds_type::static_size % static_cast<size_t>(sizeof(U)) == 0),
+        static_assert(std::is_standard_layout<U>::value && (bounds_type::static_size == dynamic_range || bounds_type::static_size % static_cast<size_t>(sizeof(U)) == 0),
             "Target type must be standard layout and its size must match the byte array size");
         fail_fast_assert((this->bytes() % sizeof(U)) == 0);
         return { reinterpret_cast<U*>(this->data()), this->bytes() / static_cast<size_type>(sizeof(U)) };
@@ -1539,27 +1553,143 @@ public:
     constexpr strided_span<ValueType, rank> section(index_type origin, index_type extents) const
     {
         size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
-        return{ &this->operator[](origin), size, strided_bounds<rank> {extents, details::make_stride(Base::bounds())} };
+        return{ &this->operator[](origin), size, strided_bounds<rank> {extents, details::make_stride(bounds())} };
     }
     
-        constexpr reference operator[](const index_type& idx) const
+    constexpr reference operator[](const index_type& idx) const
     {
-        return Base::operator[](idx);
+        return m_pdata[m_bounds.linearize(idx)];
     }
     
-        template <bool Enabled = (rank > 1), typename Dummy = std::enable_if_t<Enabled>>
-    constexpr span<ValueType, RestDimensions...> operator[](size_type idx) const
+    template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
+    constexpr Ret operator[](size_type idx) const
     {
-        auto ret = Base::operator[](idx);
-        return{ ret.data(), ret.bounds() };
+        fail_fast_assert(idx < m_bounds.size(), "index is out of bounds of the array");
+        const size_type ridx = idx * m_bounds.stride();
+
+        fail_fast_assert(ridx < m_bounds.total_size(), "index is out of bounds of the underlying data");
+        return Ret{ m_pdata + ridx, m_bounds.slice() };
     }
 
-    using Base::operator==;
-    using Base::operator!=;
-    using Base::operator<;
-    using Base::operator<=;
-    using Base::operator>;
-    using Base::operator>=;
+    constexpr bounds_type bounds() const noexcept
+    {
+        return m_bounds;
+    }
+
+    template <size_t Dim = 0>
+    constexpr size_type extent() const noexcept
+    {
+        static_assert(Dim < rank, "dimension should be less than rank (dimension count starts from 0)");
+        return m_bounds.template extent<Dim>();
+    }
+
+    constexpr size_type size() const noexcept
+    {
+        return m_bounds.size();
+    }
+
+    constexpr pointer data() const noexcept
+    {
+        return m_pdata;
+    }
+
+    constexpr operator bool() const noexcept
+    {
+        return m_pdata != nullptr;
+    }
+
+    constexpr iterator begin() const
+    {
+        return iterator{ this, true };
+    }
+
+    constexpr iterator end() const
+    {
+        return iterator{ this, false };
+    }
+
+    constexpr const_iterator cbegin() const
+    {
+        return const_iterator{ reinterpret_cast<const const_span*>(this), true };
+    }
+
+    constexpr const_iterator cend() const
+    {
+        return const_iterator{ reinterpret_cast<const const_span*>(this), false };
+    }
+
+    constexpr reverse_iterator rbegin() const
+    {
+        return reverse_iterator{ end() };
+    }
+
+    constexpr reverse_iterator rend() const
+    {
+        return reverse_iterator{ begin() };
+    }
+
+    constexpr const_reverse_iterator crbegin() const
+    {
+        return const_reverse_iterator{ cend() };
+    }
+
+    constexpr const_reverse_iterator crend() const
+    {
+        return const_reverse_iterator{ cbegin() };
+    }
+
+    template <typename OtherValueType, std::ptrdiff_t... OtherDimensions, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    constexpr bool operator== (const span<OtherValueType, OtherDimensions...> & other) const noexcept
+    {
+        return m_bounds.size() == other.m_bounds.size() &&
+            (m_pdata == other.m_pdata || std::equal(this->begin(), this->end(), other.begin()));
+    }
+
+    template <typename OtherValueType, std::ptrdiff_t... OtherDimensions, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    constexpr bool operator!= (const span<OtherValueType, OtherDimensions...> & other) const noexcept
+    {
+        return !(*this == other);
+    }
+
+    template <typename OtherValueType, std::ptrdiff_t... OtherDimensions, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    constexpr bool operator< (const span<OtherValueType, OtherDimensions...> & other) const noexcept
+    {
+        return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
+    }
+
+    template <typename OtherValueType, std::ptrdiff_t... OtherDimensions, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    constexpr bool operator<= (const span<OtherValueType, OtherDimensions...> & other) const noexcept
+    {
+        return !(other < *this);
+    }
+
+    template <typename OtherValueType, std::ptrdiff_t... OtherDimensions, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    constexpr bool operator> (const span<OtherValueType, OtherDimensions...> & other) const noexcept
+    {
+        return (other < *this);
+    }
+
+    template <typename OtherValueType, std::ptrdiff_t... OtherDimensions, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+    constexpr bool operator>= (const span<OtherValueType, OtherDimensions...> & other) const noexcept
+    {
+        return !(*this < other);
+    }
+
+private:
+
+    template <typename T>
+    constexpr span(T *data, std::enable_if_t<std::is_same<value_type, std::remove_all_extents_t<T>>::value, bounds_type> bound) noexcept
+        : m_pdata(reinterpret_cast<pointer>(data)), m_bounds(std::move(bound))
+    {
+        fail_fast_assert((m_bounds.size() > 0 && data != nullptr) || m_bounds.size() == 0);
+    }
+
+    template <std::ptrdiff_t... OtherDimensions>
+    constexpr span<value_type, OtherDimensions...> as_span(const static_bounds<OtherDimensions...> &bounds)
+    {
+        details::verifyBoundsReshape(m_bounds, bounds);
+        return{ m_pdata, bounds };
+    }
 };
 
 template <typename T, std::ptrdiff_t... Dimensions>
@@ -1569,13 +1699,13 @@ constexpr auto as_span(T* const& ptr, dim<Dimensions>... args) -> span<std::remo
 }
 
 template <typename T>
-constexpr auto as_span (T* arr, std::ptrdiff_t len) -> typename details::ArrayViewArrayTraits<T, dynamic_range>::type
+constexpr auto as_span (T* arr, std::ptrdiff_t len) -> typename details::SpanArrayTraits<T, dynamic_range>::type
 {
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(arr), len};
 }
 
 template <typename T, size_t N>
-constexpr auto as_span (T (&arr)[N]) -> typename details::ArrayViewArrayTraits<T, N>::type
+constexpr auto as_span (T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
 {
     return {arr};
 }
@@ -1725,26 +1855,26 @@ private:
     }
 };
 
-template <typename ArrayView>
-class contiguous_span_iterator : public std::iterator<std::random_access_iterator_tag, typename ArrayView::value_type>
+template <class Span>
+class contiguous_span_iterator : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
 {
-    using Base = std::iterator<std::random_access_iterator_tag, typename ArrayView::value_type>;
+    using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
 public:
     using typename Base::reference;
     using typename Base::pointer;
     using typename Base::difference_type;
 
 private:
-    template <typename ValueType, typename Bounds>
-    friend class basic_span;
+    template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
+    friend class span;
 
     pointer m_pdata;
-    const ArrayView * m_validator;
+    const Span* m_validator;
     void validateThis() const
     {
         fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size(), "iterator is out of range of the array");
     }
-    contiguous_span_iterator (const ArrayView *container, bool isbegin) :
+    contiguous_span_iterator (const Span* container, bool isbegin) :
         m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {}
 public:
     reference operator*() const noexcept
@@ -1840,16 +1970,16 @@ public:
     }
 };
 
-template <typename ArrayView>
-contiguous_span_iterator<ArrayView> operator+(typename contiguous_span_iterator<ArrayView>::difference_type n, const contiguous_span_iterator<ArrayView>& rhs) noexcept
+template <typename Span>
+contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>::difference_type n, const contiguous_span_iterator<Span>& rhs) noexcept
 {
     return rhs + n;
 }
 
-template <typename ArrayView>
-class general_span_iterator : public std::iterator<std::random_access_iterator_tag, typename ArrayView::value_type>
+template <typename Span>
+class general_span_iterator : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
 {
-    using Base = std::iterator<std::random_access_iterator_tag, typename ArrayView::value_type>;
+    using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
 public:
     using typename Base::reference;
     using typename Base::pointer;
@@ -1859,9 +1989,9 @@ private:
     template <typename ValueType, typename Bounds>
     friend class basic_span;
     
-    const ArrayView * m_container;
-    typename ArrayView::bounds_type::iterator m_itr;
-    general_span_iterator(const ArrayView *container, bool isbegin) :
+    const Span * m_container;
+    typename Span::bounds_type::iterator m_itr;
+    general_span_iterator(const Span *container, bool isbegin) :
         m_container(container), m_itr(isbegin ? m_container->bounds().begin() : m_container->bounds().end())
     {}
 public:
@@ -1956,8 +2086,8 @@ public:
     }
 };
 
-template <typename ArrayView>
-general_span_iterator<ArrayView> operator+(typename general_span_iterator<ArrayView>::difference_type n, const general_span_iterator<ArrayView>& rhs) noexcept
+template <typename Span>
+general_span_iterator<Span> operator+(typename general_span_iterator<Span>::difference_type n, const general_span_iterator<Span>& rhs) noexcept
 {
     return rhs + n;
 }

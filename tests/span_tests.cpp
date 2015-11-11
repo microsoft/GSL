@@ -323,28 +323,29 @@ SUITE(span_tests)
 				CHECK(sav[1] == 2);
 
 #if _MSC_VER > 1800
-				strided_span<const int, 1> sav_c{ {src}, {2, 1} };
-#else                
+				//strided_span<const int, 1> sav_c{ {src}, {2, 1} };
 				strided_span<const int, 1> sav_c{ span<const int>{src}, strided_bounds<1>{2, 1} };
-#endif                
+#else
+				strided_span<const int, 1> sav_c{ span<const int>{src}, strided_bounds<1>{2, 1} };
+#endif
 				CHECK(sav_c.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_c.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_c[1] == 2);
 
 #if _MSC_VER > 1800
 				strided_span<volatile int, 1> sav_v{ {src}, {2, 1} };
-#else                
+#else
 				strided_span<volatile int, 1> sav_v{ span<volatile int>{src}, strided_bounds<1>{2, 1} };
-#endif                
+#endif
 				CHECK(sav_v.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_v.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_v[1] == 2);
 
 #if _MSC_VER > 1800
 				strided_span<const volatile int, 1> sav_cv{ {src}, {2, 1} };
-#else                
+#else
 				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
-#endif                
+#endif
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -363,7 +364,7 @@ SUITE(span_tests)
 				strided_span<const volatile int, 1> sav_cv{ {src}, {2, 1} };
 #else
 				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
-#endif                
+#endif
 				
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
@@ -383,7 +384,7 @@ SUITE(span_tests)
 				strided_span<const volatile int, 1> sav_cv{ {src}, {2, 1} };
 #else
 				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
-#endif                
+#endif
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
