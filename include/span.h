@@ -685,6 +685,8 @@ public:
 
     constexpr strided_bounds(const strided_bounds &) noexcept = default;
 
+    constexpr strided_bounds & operator=(const strided_bounds &) noexcept = default;
+
     constexpr strided_bounds(const value_type(&values)[rank], index_type strides)
         : m_extents(values), m_strides(std::move(strides))
     {}
