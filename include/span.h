@@ -292,6 +292,7 @@ namespace details
         {}
         
         BoundsRanges (const BoundsRanges&) = default;
+        BoundsRanges& operator=(const BoundsRanges&) = default;
         BoundsRanges(const std::ptrdiff_t* const) { }
         BoundsRanges() = default;
 
