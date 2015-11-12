@@ -138,7 +138,7 @@ basic_string_span<T, dynamic_range> ensure_z(T(&sz)[N]) { return ensure_z(&sz[0]
 template<class Cont>
 basic_string_span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_range> ensure_z(Cont& cont)
 {
-    return ensure_z(cont.data(), cont.length());
+    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
 }
 
 //
