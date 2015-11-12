@@ -284,7 +284,7 @@ SUITE(span_tests)
 		CHECK((av_section_2[{0, 1}] == 25));
 		CHECK((av_section_2[{1, 0}] == 34));
 	}
- 
+
 	TEST(strided_span_constructors)
 	{
 		// Check stride constructor
@@ -1406,7 +1406,7 @@ SUITE(span_tests)
 		}
 	}
 
-	TEST(custmized_span_size)
+	TEST(customized_span_size)
 	{
 		double (*arr)[3][4] = new double[100][3][4];
 		span<double, dynamic_range, 3, 4> av1(arr, 10);
