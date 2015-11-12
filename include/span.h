@@ -292,6 +292,7 @@ namespace details
         {}
         
         BoundsRanges (const BoundsRanges&) = default;
+        BoundsRanges& operator=(const BoundsRanges&) = default;
         BoundsRanges(const std::ptrdiff_t* const) { }
         BoundsRanges() = default;
 
@@ -684,6 +685,8 @@ public:
     using mapping_type = generalized_mapping_tag;
 
     constexpr strided_bounds(const strided_bounds &) noexcept = default;
+
+    constexpr strided_bounds & operator=(const strided_bounds &) noexcept = default;
 
     constexpr strided_bounds(const value_type(&values)[rank], index_type strides)
         : m_extents(values), m_strides(std::move(strides))
