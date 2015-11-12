@@ -19,18 +19,18 @@
 #ifndef GSL_SPAN_H
 #define GSL_SPAN_H
 
-#include <new>
-#include <stdexcept>
+#include <algorithm>
+#include <array>
 #include <cstddef>
 #include <cstdint>
+#include <functional>
+#include <iterator>
 #include <limits>
+#include <new>
 #include <numeric>
+#include <stdexcept>
 #include <type_traits>
 #include <utility>
-#include <array>
-#include <iterator>
-#include <algorithm>
-#include <functional>
 #include "fail_fast.h"
 
 #ifdef _MSC_VER
