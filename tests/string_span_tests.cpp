@@ -15,39 +15,40 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <string_view.h>
+#include <string_span.h>
 #include <vector>
 #include <cstdlib>
 
 using namespace std;
 using namespace gsl;
 
-SUITE(string_view_tests)
+
+SUITE(string_span_tests)
 {
 
     TEST(TestLiteralConstruction)
 	{
-        cwstring_view<> v = ensure_z(L"Hello");
+        cwstring_span<> v = ensure_z(L"Hello");
 
         CHECK(5 == v.length());
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        wstring_view<> v2 = ensure0(L"Hello");
+        wstring_span<> v2 = ensure0(L"Hello");
 #endif
 	}
 
     TEST(TestConstructFromStdString)
     {
         std::string s = "Hello there world";
-        cstring_view<> v = s;
-        CHECK(v.length() == s.length());
+        cstring_span<> v = s;
+        CHECK(v.length() == static_cast<cstring_span<>::size_type>(s.length()));
     }
 
     TEST(TestConstructFromStdVector)
     {
         std::vector<char> vec(5, 'h');
-        string_view<> v = vec;
-        CHECK(v.length() == vec.size());
+        string_span<> v = vec;
+        CHECK(v.length() == static_cast<string_span<>::size_type>(vec.size()));
     }
 
 	TEST(TestStackArrayConstruction)
@@ -55,46 +56,67 @@ SUITE(string_view_tests)
         wchar_t stack_string[] = L"Hello";
 
         {
-            cwstring_view<> v = ensure_z(stack_string);
+            cwstring_span<> v = ensure_z(stack_string);
             CHECK(v.length() == 5);
             CHECK(v.used_length() == v.length());
         }
 
         {
-            cwstring_view<> v = stack_string;
+            cwstring_span<> v = stack_string;
             CHECK(v.length() == 6);
             CHECK(v.used_length() == v.length());
         }
 
         {
-            wstring_view<> v = ensure_z(stack_string);
+            wstring_span<> v = ensure_z(stack_string);
             CHECK(v.length() == 5);
             CHECK(v.used_length() == v.length());
         }
 
         {
-            wstring_view<> v = stack_string;
+            wstring_span<> v = stack_string;
             CHECK(v.length() == 6);
             CHECK(v.used_length() == v.length());
         }
 	}
 
+    TEST(TestConstructFromConstCharPointer)
+    {
+        const char* s = "Hello";
+        cstring_span<> v = ensure_z(s);
+        CHECK(v.length() == 5);
+        CHECK(v.used_length() == v.length());
+    }
+
     TEST(TestConversionToConst)
     {
         char stack_string[] = "Hello";
-        string_view<> v = ensure_z(stack_string);
-        cstring_view<> v2 = v; 
+        string_span<> v = ensure_z(stack_string);
+        cstring_span<> v2 = v; 
         CHECK(v.length() == v2.length());
     }
 
     TEST(TestConversionFromConst)
     {
         char stack_string[] = "Hello";
-        cstring_view<> v = ensure_z(stack_string);
+        cstring_span<> v = ensure_z(stack_string);
+	(void)v;
 #ifdef CONFIRM_COMPILATION_ERRORS
-        string_view<> v2 = v;
-        string_view<> v3 = "Hello";
+        string_span<> v2 = v;
+        string_span<> v3 = "Hello";
 #endif
+    }
+
+    TEST(TestToString)
+    {
+        auto s = gsl::to_string(cstring_span<>{});
+        CHECK(s.length() == 0);
+
+        char stack_string[] = "Hello";
+        cstring_span<> v = ensure_z(stack_string);
+        auto s2 = gsl::to_string(v);
+        CHECK(static_cast<cstring_span<>::size_type>(s2.length()) == v.length());
+        CHECK(s2.length() == 5);
     }
 }
 
