@@ -45,6 +45,10 @@
 
 #endif // _MSC_VER
 
+#if defined(__GNUC__) && (__GNUC__ < 5) && !defined(__clang__)
+#define constexpr /* nothing */
+#endif
+
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROWS_FOR_TESTING
 #define noexcept /* nothing */ 

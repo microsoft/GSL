@@ -61,6 +61,10 @@
 
 #endif // _MSC_VER
 
+#if defined(__GNUC__) && (__GNUC__ < 5) && !defined(__clang__)
+#define constexpr /* nothing */
+#endif
+
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROWS_FOR_TESTING
 #define noexcept /* nothing */ 
@@ -228,6 +232,9 @@ private:
 
 #ifndef _MSC_VER
 
+#if defined(__GNUC__) && (__GNUC__ < 5) && !defined(__clang__)
+const std::ptrdiff_t dynamic_range = -1;
+#else
 struct static_bounds_dynamic_range_t
 {
     template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
@@ -263,6 +270,8 @@ constexpr bool operator !=(T left, static_bounds_dynamic_range_t right) noexcept
 }
 
 constexpr static_bounds_dynamic_range_t dynamic_range{};
+#endif
+
 #else
 const std::ptrdiff_t dynamic_range = -1;
 #endif
