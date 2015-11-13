@@ -60,7 +60,7 @@
 
 #endif // _MSC_VER
 
-#if (__GNUC__ < 5) && !defined(__clang__)
+#if defined(__GNUC__) && (__GNUC__ < 5) && !defined(__clang__)
 #define constexpr /* nothing */
 #endif
 
@@ -231,7 +231,7 @@ private:
 
 #ifndef _MSC_VER
 
-#if (__GNUC__ < 5) && !defined(__clang__)
+#if defined(__GNUC__) && (__GNUC__ < 5) && !defined(__clang__)
 const std::ptrdiff_t dynamic_range = -1;
 #else
 struct static_bounds_dynamic_range_t

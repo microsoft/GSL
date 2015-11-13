@@ -45,7 +45,7 @@
 
 #endif // _MSC_VER
 
-#if (__GNUC__ < 5) && !defined(__clang__)
+#if defined(__GNUC__) && (__GNUC__ < 5) && !defined(__clang__)
 #define constexpr /* nothing */
 #endif
 
