@@ -26,6 +26,7 @@ else()
     else()
       message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
     endif()
+    add_compile_options(-Wall -Wno-missing-braces)
 endif()
 
 if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp)

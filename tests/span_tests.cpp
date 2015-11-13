@@ -27,7 +27,6 @@ using namespace gsl;
 
 namespace 
 {
-	void use(int&) {}
 	struct BaseClass {};
 	struct DerivedClass : BaseClass {};
 }
@@ -82,6 +81,7 @@ SUITE(span_tests)
 		span<BaseClass> avb = avd;
 #endif
 		span<const DerivedClass> avcd = avd;
+		(void)avcd;
 	}
 
 	TEST(boundary_checks)
@@ -214,9 +214,11 @@ SUITE(span_tests)
 
 			const std::array<double, 3> arr = {0.0, 0.0, 0.0};
 			auto cv = as_span(arr);
+			(void)cv;
 
 			vector<float> vec(3);
 			auto dv = as_span(vec);
+			(void)dv;
 			
 #ifdef CONFIRM_COMPILATION_ERRORS
 			auto dv2 = as_span(std::move(vec));
@@ -262,6 +264,7 @@ SUITE(span_tests)
 		auto av = as_span(a);
 		auto sub = av.section({15, 0, 0}, gsl::index<3>{2, 2, 2});
 		auto subsub = sub.section({1, 0, 0}, gsl::index<3>{1, 1, 1});
+		(void)subsub;
 	}
 
 	TEST(span_section)
@@ -1417,7 +1420,7 @@ SUITE(span_tests)
 		CHECK_THROW(av1[10][3][4], fail_fast);
 
 		span<const double, dynamic_range, 6, 4> av2 = av1.as_span(dim<>(5), dim<6>(), dim<4>());
-		
+		(void)av2;
 	}
 
 	TEST(span_sub)
@@ -1429,7 +1432,7 @@ SUITE(span_tests)
 			CHECK((av.sub<2,2>().bounds() == static_bounds<2>()));
 			CHECK((av.sub<2,2>().length() == 2));
 			CHECK(av.sub(2,2).length() == 2);
-            CHECK(av.sub(2,3).length() == 3);
+            		CHECK(av.sub(2,3).length() == 3);
 		}
 
 
@@ -1445,16 +1448,16 @@ SUITE(span_tests)
 			CHECK((av.sub<0,5>().bounds() == static_bounds<5>()));
 			CHECK((av.sub<0,5>().length() == 5));
 			CHECK(av.sub(0,5).length() == 5);
-            CHECK_THROW(av.sub(0,6).length(), fail_fast);
-            CHECK_THROW(av.sub(1,5).length(), fail_fast);
+		        CHECK_THROW(av.sub(0,6).length(), fail_fast);
+		        CHECK_THROW(av.sub(1,5).length(), fail_fast);
 		}
 
 		{
 			span<int, 5> av = arr;
 			CHECK((av.sub<5,0>().bounds() == static_bounds<0>()));
-            CHECK((av.sub<5, 0>().length() == 0));
-            CHECK(av.sub(5,0).length() == 0);
-            CHECK_THROW(av.sub(6,0).length(), fail_fast);
+            		CHECK((av.sub<5, 0>().length() == 0));
+            		CHECK(av.sub(5,0).length() == 0);
+            		CHECK_THROW(av.sub(6,0).length(), fail_fast);
 		}
 
 		{
@@ -1462,7 +1465,7 @@ SUITE(span_tests)
 			CHECK((av.sub<0,0>().bounds() == static_bounds<0>()));
 			CHECK((av.sub<0,0>().length() == 0));
 			CHECK(av.sub(0,0).length() == 0);
-            CHECK_THROW((av.sub<1,0>().length()), fail_fast);
+            		CHECK_THROW((av.sub<1,0>().length()), fail_fast);
 		}
 
         {
@@ -1559,9 +1562,11 @@ SUITE(span_tests)
 		// converting to dynamic_range a_v is always ok
 		{
 			span<int, dynamic_range> av = av4;
+			(void)av;
 		}
 		{
 			span<int, dynamic_range> av = arr;
+			(void)av;
 		}
 
 		// initialization or assignment to static span that REDUCES size is NOT ok
@@ -1577,6 +1582,7 @@ SUITE(span_tests)
 		{
 			span<int, dynamic_range> av = arr;
 			span<int, 2> av2 = av;
+			(void)av2;
 		}
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -1588,7 +1594,7 @@ SUITE(span_tests)
 
 		{
 			span<int, dynamic_range> av = arr;
-			auto f = [&]() {span<int, 2, 1> av2 = av.as_span(dim<>(2), dim<>(2));};
+			auto f = [&]() {span<int, 2, 1> av2 = av.as_span(dim<>(2), dim<>(2)); (void)av2; };
 			CHECK_THROW(f(), fail_fast);
 		}
 
@@ -1597,15 +1603,18 @@ SUITE(span_tests)
 		// you can convert statically
 		{
 			span<int, 2> av2 = {arr, 2};
+			(void)av2;
 		}
 		{
 			span<int, 1> av2 = av4.first<1>();
+			(void)av2;
 		}
 			
 		// ...or dynamically
 		{
 			// NB: implicit conversion to span<int,2> from span<int,dynamic_range>
 			span<int, 1> av2 = av4.first(1); 
+			(void)av2;
 		}
 
 		// initialization or assignment to static span that requires size INCREASE is not ok.
@@ -1621,13 +1630,13 @@ SUITE(span_tests)
 		}
 #endif
 		{
-			auto f = [&]() {span<int, 4> av4 = {arr2, 2};};
+			auto f = [&]() {span<int, 4> av4 = {arr2, 2}; (void)av4; };
 			CHECK_THROW(f(), fail_fast);
 		}
 
 		// this should fail - we are trying to assign a small dynamic a_v to a fixed_size larger one
 		span<int, dynamic_range> av = arr2;
-		auto f = [&](){ span<int, 4> av2 = av; };
+		auto f = [&](){ span<int, 4> av2 = av; (void)av2; };
 		CHECK_THROW(f(), fail_fast);
 	}
 

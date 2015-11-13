@@ -100,6 +100,7 @@ SUITE(string_span_tests)
     {
         char stack_string[] = "Hello";
         cstring_span<> v = ensure_z(stack_string);
+	(void)v;
 #ifdef CONFIRM_COMPILATION_ERRORS
         string_span<> v2 = v;
         string_span<> v3 = "Hello";
