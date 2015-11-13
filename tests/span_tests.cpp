@@ -198,6 +198,7 @@ SUITE(span_tests)
 
 			string str = "ttttttttttttttt"; // size = 15
 			auto t = str.data();
+            (void)t;
 			auto av3 = as_span(str);
 			overloaded_func(av3.as_span(dim<>(1), dim<3>(), dim<5>()), 't');
 		}
@@ -223,12 +224,12 @@ SUITE(span_tests)
 		}
 	}
 	
-	template <class Bounds> void fn(const Bounds& b) { static_assert(Bounds::static_size == 60, "static bounds is wrong size"); }
+	template <class Bounds> void fn(const Bounds&) { static_assert(Bounds::static_size == 60, "static bounds is wrong size"); }
 	TEST (span_reshape_test)
 	{
 		int a[3][4][5];
 		auto av = as_span(a);
-        	fn(av.bounds());
+    	fn(av.bounds());
 		auto av2 = av.as_span(dim<60>());
 		auto av3 = av2.as_span(dim<3>(), dim<4>(), dim<5>());
 		auto av4 = av3.as_span(dim<4>(), dim<>(3), dim<5>());
@@ -755,6 +756,7 @@ SUITE(span_tests)
 			CHECK_THROW(empty_av.cbegin()[0], fail_fast);		
 			for (auto& v : empty_av)
 			{
+                (void)v;
 				CHECK(false);
 			}
 		}
@@ -767,6 +769,7 @@ SUITE(span_tests)
 			CHECK_THROW(empty_av.cbegin()[0], fail_fast); 
 			for (auto& v : empty_av)
 			{
+                (void)v;
 				CHECK(false);
 			}
 		}
@@ -782,6 +785,7 @@ SUITE(span_tests)
 
 			for (auto& v : empty_sav)
 			{
+                (void)v;
 				CHECK(false);
 			}
 		}
@@ -796,6 +800,7 @@ SUITE(span_tests)
 
 			for (auto& v : empty_sav)
 			{
+                (void)v;
 				CHECK(false);
 			}
 		}

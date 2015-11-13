@@ -14,6 +14,7 @@ add_definitions(-DGSL_THROWS_FOR_TESTING)
 if(MSVC14 OR MSVC12) # has the support we need
     # remove unnecessary warnings about unchecked iterators
     add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+    add_compile_options(/W4)
 else()
     include(CheckCXXCompilerFlag)
     CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)

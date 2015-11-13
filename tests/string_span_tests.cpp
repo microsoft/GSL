@@ -41,14 +41,14 @@ SUITE(string_span_tests)
     {
         std::string s = "Hello there world";
         cstring_span<> v = s;
-        CHECK(v.length() == s.length());
+        CHECK(v.length() == static_cast<cstring_span<>::size_type>(s.length()));
     }
 
     TEST(TestConstructFromStdVector)
     {
         std::vector<char> vec(5, 'h');
         string_span<> v = vec;
-        CHECK(v.length() == vec.size());
+        CHECK(v.length() == static_cast<string_span<>::size_type>(vec.size()));
     }
 
 	TEST(TestStackArrayConstruction)
@@ -114,7 +114,7 @@ SUITE(string_span_tests)
         char stack_string[] = "Hello";
         cstring_span<> v = ensure_z(stack_string);
         auto s2 = gsl::to_string(v);
-        CHECK(s2.length() == v.length());
+        CHECK(static_cast<cstring_span<>::size_type>(s2.length()) == v.length());
         CHECK(s2.length() == 5);
     }
 }
