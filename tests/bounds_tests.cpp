@@ -32,7 +32,9 @@ SUITE(bounds_test)
 	{
 		for (auto point : static_bounds<dynamic_range, 3, 4 > { 2 })
 		{
-			for (decltype(point)::size_type j = 0; j < decltype(point)::rank; j++)
+			for (decltype(point)::size_type j = 0;
+			     j < static_cast<decltype(point)::size_type>(decltype(point)::rank);
+			     j++)
 			{
 				use(j);
 				use(point[j]);
@@ -44,6 +46,7 @@ SUITE(bounds_test)
 	{
 		static_bounds<3, 4, 5> b;
 		auto a = b.slice();
+		(void)a;           
 		static_bounds<4, dynamic_range, 2> x{ 4 };
 		x.slice().slice();
 	}
@@ -53,7 +56,7 @@ SUITE(bounds_test)
 		static_bounds<4, dynamic_range, 2> bounds{ 3 };
 		
 		auto itr = bounds.begin();
-	
+		(void)itr;	
 #ifdef CONFIRM_COMPILATION_ERRORS
 		span<int, 4, dynamic_range, 2> av(nullptr, bounds);
 	
@@ -70,13 +73,14 @@ SUITE(bounds_test)
 	{
 		static_bounds<7, 4, 2> b1;
 		static_bounds<7, dynamic_range, 2> b2 = b1;
-	
+		(void)b2;	
 #ifdef CONFIRM_COMPILATION_ERRORS
 		static_bounds<7, dynamic_range, 1> b4 = b2; 
 #endif
 	
 		static_bounds<dynamic_range, dynamic_range, dynamic_range> b3 = b1;
 		static_bounds<7, 4, 2> b4 = b3; 
+		(void)b4;
 
 		static_bounds<dynamic_range> b11;
 	
