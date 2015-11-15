@@ -219,7 +219,7 @@ namespace std
 #pragma warning(pop)
 
 #ifndef GSL_THROWS_FOR_TESTING
-#pragma undef noexcept
+#undef noexcept
 #endif // GSL_THROWS_FOR_TESTING
 
 #endif // _MSC_VER <= 1800

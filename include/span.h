@@ -2038,7 +2038,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 #pragma warning(pop)
 
 #ifndef GSL_THROWS_FOR_TESTING
-#pragma undef noexcept
+#undef noexcept
 #endif // GSL_THROWS_FOR_TESTING
 
 #undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
