@@ -39,16 +39,21 @@
 #pragma push_macro("constexpr")
 #define constexpr /* nothing */
 
+// MSVC has the potential of bringing in headers where max is a macro
+#ifdef max
+#pragma push_macro("max")
+#undef max
+#endif 
 
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
 
-#pragma push_macro("GSL_MSVC_HAS_VARIADIC_CTOR_BUG") 
+// needed in span.h
 #define GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
-
 
 // noexcept is not understood 
 #ifndef GSL_THROWS_FOR_TESTING
+#pragma push_macro("noexcept")
 #define noexcept /* nothing */ 
 #endif
 
@@ -63,7 +68,13 @@
 
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROWS_FOR_TESTING
+
+#ifdef _MSC_VER
+#pragma push_macro("noexcept")
+#endif
+
 #define noexcept /* nothing */ 
+
 #endif // GSL_THROWS_FOR_TESTING 
 
 
@@ -2029,28 +2040,38 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 } // namespace gsl
 
+
 #ifdef _MSC_VER
 
 #undef constexpr
 #pragma pop_macro("constexpr")
+
+#ifdef max
+#pragma pop_macro("max")
+#endif
 
 #if _MSC_VER <= 1800
 #pragma warning(pop)
 
 #ifndef GSL_THROWS_FOR_TESTING
 #pragma undef noexcept
+#pragma pop_macro("noexcept")
 #endif // GSL_THROWS_FOR_TESTING
 
 #undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
-#pragma pop_macro("GSL_MSVC_HAS_VARIADIC_CTOR_BUG") 
-
 
 #endif // _MSC_VER <= 1800
 
 #endif // _MSC_VER
 
 #if defined(GSL_THROWS_FOR_TESTING) 
+
 #undef noexcept
+
+#ifdef _MSC_VER
+#pragma pop_macro("noexcept")
+#endif
+
 #endif // GSL_THROWS_FOR_TESTING 
 
 

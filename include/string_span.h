@@ -26,7 +26,6 @@
 #ifdef _MSC_VER
 #if _MSC_VER <= 1800
 
-#pragma push_macro("GSL_MSVC_HAS_TYPE_DEDUCTION_BUG") 
 #define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
 
 #endif // _MSC_VER <= 1800
@@ -217,7 +216,6 @@ using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 #ifdef _MSC_VER
 #if _MSC_VER <= 1800
 
-#pragma pop_macro("GSL_MSVC_HAS_TYPE_DEDUCTION_BUG") 
 #undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
 
 #endif // _MSC_VER <= 1800
