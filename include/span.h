@@ -39,12 +39,6 @@
 #pragma push_macro("constexpr")
 #define constexpr /* nothing */
 
-// MSVC has the potential of bringing in headers where max is a macro
-#ifdef max
-#pragma push_macro("max")
-#undef max
-#endif 
-
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
 
@@ -2045,10 +2039,6 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #undef constexpr
 #pragma pop_macro("constexpr")
-
-#ifdef max
-#pragma pop_macro("max")
-#endif
 
 #if _MSC_VER <= 1800
 #pragma warning(pop)
