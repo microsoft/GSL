@@ -1267,7 +1267,7 @@ public:
         && std::is_convertible<DataType (*)[], value_type (*)[]>::value
         && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
     >
-    constexpr span (Cont& cont) : span(static_cast<pointer>(cont.data()), details::newBoundsHelper<bounds_type>(cont.size()))
+    constexpr span (Cont& cont) : span(static_cast<pointer>(cont.data()), details::newBoundsHelper<bounds_type>(static_cast<size_type>(cont.size())))
     {}
 
     constexpr span(const span &) = default;
