@@ -1610,8 +1610,12 @@ public:
     {}
 
     // from array view
-    template <std::ptrdiff_t... Dimensions, typename Dummy = std::enable_if<sizeof...(Dimensions) == Rank>>
-    constexpr strided_span(span<ValueType, Dimensions...> av, bounds_type bounds) : strided_span(av.data(), av.bounds().total_size(), std::move(bounds))
+    template <typename OtherValueType, std::ptrdiff_t... Dimensions,
+        bool Enabled1 = (sizeof...(Dimensions) == Rank),
+        bool Enabled2 = std::is_convertible<OtherValueType*, ValueType*>::value,
+        typename Dummy = std::enable_if_t<Enabled1 && Enabled2>
+    >
+    constexpr strided_span(span<OtherValueType, Dimensions...> av, bounds_type bounds) : strided_span(av.data(), av.bounds().total_size(), std::move(bounds))
     {}
     
     // convertible
