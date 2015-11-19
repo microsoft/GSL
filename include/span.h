@@ -1434,7 +1434,7 @@ public:
         return m_pdata;
     }
 
-    constexpr operator bool() const noexcept
+    constexpr explicit operator bool() const noexcept
     {
         return m_pdata != nullptr;
     }
@@ -1676,7 +1676,7 @@ public:
         return m_pdata;
     }
 
-    constexpr operator bool() const noexcept
+    constexpr explicit operator bool() const noexcept
     {
         return m_pdata != nullptr;
     }
