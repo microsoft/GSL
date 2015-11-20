@@ -333,7 +333,7 @@ SUITE(span_tests)
 				CHECK(sav_c[1] == 2);
 
 #if _MSC_VER > 1800
-				strided_span<volatile int, 1> sav_v{ {src}, {2, 1} };
+				strided_span<volatile int, 1> sav_v{ src, {2, 1} };
 #else
 				strided_span<volatile int, 1> sav_v{ span<volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
@@ -342,7 +342,7 @@ SUITE(span_tests)
 				CHECK(sav_v[1] == 2);
 
 #if _MSC_VER > 1800
-				strided_span<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 #else
 				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
@@ -361,7 +361,7 @@ SUITE(span_tests)
 				CHECK(sav_c[1] == 2);
 
 #if _MSC_VER > 1800
-				strided_span<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 #else
 				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
@@ -381,7 +381,7 @@ SUITE(span_tests)
 				CHECK(sav_v[1] == 2);
 
 #if _MSC_VER > 1800
-				strided_span<const volatile int, 1> sav_cv{ {src}, {2, 1} };
+				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 #else
 				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
