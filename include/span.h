@@ -1568,6 +1568,14 @@ template <typename Cont>
 constexpr auto as_span(Cont &&arr) -> std::enable_if_t<!details::is_span<std::decay_t<Cont>>::value,
     span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>> = delete;
 
+// from basic_string which doesn't have nonconst .data() member like other contiguous containers
+template <typename CharT, typename Traits, typename Allocator>
+constexpr auto as_span(std::basic_string<CharT, Traits, Allocator> &str) -> span<CharT, dynamic_range>
+{
+    fail_fast_assert(str.size() < PTRDIFF_MAX);
+    return {&str[0], static_cast<std::ptrdiff_t>(str.size())};
+}
+
 template <typename ValueType, size_t Rank>
 class strided_span
 {
