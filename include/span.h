@@ -1275,7 +1275,7 @@ public:
         && std::is_convertible<DataType (*)[], value_type (*)[]>::value
         && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
     >
-    constexpr span (Cont& cont) : span(static_cast<pointer>(cont.data()), details::newBoundsHelper<bounds_type>(cont.size()))
+    constexpr span (Cont& cont) : span(static_cast<pointer>(cont.data()), details::newBoundsHelper<bounds_type>(static_cast<size_type>(cont.size())))
     {}
 
     constexpr span(const span &) = default;
@@ -1443,7 +1443,7 @@ public:
         return m_pdata;
     }
 
-    constexpr operator bool() const noexcept
+    constexpr explicit operator bool() const noexcept
     {
         return m_pdata != nullptr;
     }
@@ -1577,6 +1577,14 @@ template <typename Cont>
 constexpr auto as_span(Cont &&arr) -> std::enable_if_t<!details::is_span<std::decay_t<Cont>>::value,
     span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>> = delete;
 
+// from basic_string which doesn't have nonconst .data() member like other contiguous containers
+template <typename CharT, typename Traits, typename Allocator>
+constexpr auto as_span(std::basic_string<CharT, Traits, Allocator> &str) -> span<CharT, dynamic_range>
+{
+    Expects(str.size() < PTRDIFF_MAX);
+    return {&str[0], static_cast<std::ptrdiff_t>(str.size())};
+}
+
 template <typename ValueType, size_t Rank>
 class strided_span
 {
@@ -1621,8 +1629,12 @@ public:
     {}
 
     // from array view
-    template <std::ptrdiff_t... Dimensions, typename Dummy = std::enable_if<sizeof...(Dimensions) == Rank>>
-    constexpr strided_span(span<ValueType, Dimensions...> av, bounds_type bounds) : strided_span(av.data(), av.bounds().total_size(), std::move(bounds))
+    template <typename OtherValueType, std::ptrdiff_t... Dimensions,
+        bool Enabled1 = (sizeof...(Dimensions) == Rank),
+        bool Enabled2 = std::is_convertible<OtherValueType*, ValueType*>::value,
+        typename Dummy = std::enable_if_t<Enabled1 && Enabled2>
+    >
+    constexpr strided_span(span<OtherValueType, Dimensions...> av, bounds_type bounds) : strided_span(av.data(), av.bounds().total_size(), std::move(bounds))
     {}
     
     // convertible
@@ -1688,7 +1700,7 @@ public:
         return m_pdata;
     }
 
-    constexpr operator bool() const noexcept
+    constexpr explicit operator bool() const noexcept
     {
         return m_pdata != nullptr;
     }
