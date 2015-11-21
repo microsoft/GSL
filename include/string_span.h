@@ -19,6 +19,7 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
+#include "gsl_assert.h"
 #include "span.h"
 #include <cstring>
 
@@ -89,7 +90,7 @@ span<T, dynamic_range> ensure_sentinel(const T* seq, std::ptrdiff_t max = PTRDIF
 {
     auto cur = seq;
     while ((cur - seq) < max && *cur != Sentinel) ++cur;
-    fail_fast_assert(*cur == Sentinel);
+    Ensures(*cur == Sentinel);
     return{ seq, cur - seq };
 }
 
@@ -109,26 +110,26 @@ inline basic_string_span<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_
 inline basic_string_span<char, dynamic_range> ensure_z(char* const& sz, std::ptrdiff_t max)
 {
     auto len = strnlen(sz, max);
-    fail_fast_assert(sz[len] == 0);
+    Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline basic_string_span<const char, dynamic_range> ensure_z(const char* const& sz, std::ptrdiff_t max)
 {
     auto len = strnlen(sz, max);
-    fail_fast_assert(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
+    Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline basic_string_span<wchar_t, dynamic_range> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
     auto len = wcsnlen(sz, max);
-    fail_fast_assert(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
+    Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline basic_string_span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
     auto len = wcsnlen(sz, max);
-    fail_fast_assert(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
+    Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 template<class T, size_t N>

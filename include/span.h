@@ -31,13 +31,18 @@
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
-#include "fail_fast.h"
+#include <cassert>
+#include "gsl_assert.h"
 
 #ifdef _MSC_VER
 
+// turn off some warnings that are noisy about our Expects statements
+#pragma warning(push)
+#pragma warning(disable: 4127) // conditional expression is constant
+
 // No MSVC does constexpr fully yet
 #pragma push_macro("constexpr")
-#define constexpr /* nothing */
+#define constexpr
 
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
@@ -46,7 +51,7 @@
 #define GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
 
 // noexcept is not understood 
-#ifndef GSL_THROWS_FOR_TESTING
+#ifndef GSL_THROWS_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
 #define noexcept /* nothing */ 
 #endif
@@ -60,8 +65,7 @@
 
 #endif // _MSC_VER
 
-// In order to test the library, we need it to throw exceptions that we can catch
-#ifdef GSL_THROWS_FOR_TESTING
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
 
 #ifdef _MSC_VER
 #pragma push_macro("noexcept")
@@ -69,7 +73,7 @@
 
 #define noexcept /* nothing */ 
 
-#endif // GSL_THROWS_FOR_TESTING 
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION 
 
 
 namespace gsl {
@@ -137,14 +141,14 @@ public:
     // Preconditions: component_idx < rank
     constexpr reference operator[](size_t component_idx)
     {
-        fail_fast_assert(component_idx < Rank, "Component index must be less than rank");
+        Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
     // Preconditions: component_idx < rank
     constexpr const_reference operator[](size_t component_idx) const noexcept
     {
-        fail_fast_assert(component_idx < Rank, "Component index must be less than rank");
+        Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
@@ -344,7 +348,7 @@ namespace details
         
             BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
         {
-            fail_fast_assert(0 <= *arr);
+            Expects(0 <= *arr);
         }
 
         BoundsRanges() : m_bound(0) {}
@@ -365,7 +369,7 @@ namespace details
         size_type linearize(const T& arr) const
         { 
             const size_type index = this->Base::totalSize() * arr[Dim];
-            fail_fast_assert(index < m_bound);
+            Expects(index < m_bound);
             return index + this->Base::template linearize<T, Dim + 1>(arr);
         }
         
@@ -419,8 +423,9 @@ namespace details
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
         BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>&other, bool firstLevel = true) : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
-        {
-            fail_fast_assert((firstLevel && totalSize() <= other.totalSize()) || totalSize() == other.totalSize());
+        {            
+            Expects((firstLevel && totalSize() <= other.totalSize()) || totalSize() == other.totalSize());
+            (void)firstLevel;
         }
 
         template <typename T, size_t Dim = 0>
@@ -433,7 +438,7 @@ namespace details
         template <typename T, size_t Dim = 0>
         size_type linearize(const T& arr) const
         {  
-            fail_fast_assert(arr[Dim] < CurrentRange, "Index is out of range");
+            Expects(arr[Dim] < CurrentRange); // Index is out of range
             return this->Base::totalSize() * arr[Dim] + this->Base::template linearize<T, Dim + 1>(arr);
         }
 
@@ -584,8 +589,10 @@ public:
                                                        
     constexpr static_bounds(std::initializer_list<size_type> il) : m_ranges((const std::ptrdiff_t*)il.begin())
     {
-        fail_fast_assert((MyRanges::DynamicNum == 0 && il.size() == 1 && *il.begin() == static_size) || MyRanges::DynamicNum == il.size(), "Size of the initializer list must match the rank of the array");
-        fail_fast_assert(m_ranges.totalSize() <= PTRDIFF_MAX, "Size of the range is larger than the max element of the size type");
+        // Size of the initializer list must match the rank of the array
+        Expects((MyRanges::DynamicNum == 0 && il.size() == 1 && *il.begin() == static_size) || MyRanges::DynamicNum == il.size()); 
+        // Size of the range must be less than the max element of the size type
+        Expects(m_ranges.totalSize() <= PTRDIFF_MAX); 
     }
     
     constexpr static_bounds() = default;
@@ -742,7 +749,7 @@ public:
         size_type ret = 0;
         for (size_t i = 0; i < rank; i++)
         {
-            fail_fast_assert(idx[i] < m_extents[i], "index is out of bounds of the array");
+            Expects(idx[i] < m_extents[i]); // index is out of bounds of the array
             ret += idx[i] * m_strides[i];
         }
         return ret;
@@ -868,7 +875,7 @@ public:
         }
         // If we're here the preconditions were violated
         // "pre: there exists s such that r == ++s"
-        fail_fast_assert(false);
+        Expects(false); 
         return *this;
     }
 
@@ -899,7 +906,8 @@ public:
             curr[i] = linear_idx / stride[i];
             linear_idx = linear_idx % stride[i];
         }
-        fail_fast_assert(!less(curr, index_type{}) && !less(boundary, curr), "index is out of bounds of the array");
+        //index is out of bounds of the array
+        Expects(!less(curr, index_type{}) && !less(boundary, curr));
         return *this;
     }
 
@@ -1038,7 +1046,7 @@ namespace details
         static_assert(is_bounds<BoundsSrc>::value && is_bounds<BoundsDest>::value, "The src type and dest type must be bounds");
         static_assert(std::is_same<typename BoundsSrc::mapping_type, contiguous_mapping_tag>::value, "The source type must be a contiguous bounds");
         static_assert(BoundsDest::static_size == dynamic_range || BoundsSrc::static_size == dynamic_range || BoundsDest::static_size == BoundsSrc::static_size, "The source bounds must have same size as dest bounds");
-        fail_fast_assert(src.size() == dest.size());
+        Expects(src.size() == dest.size());
     }
 
 
@@ -1099,13 +1107,13 @@ namespace details
     template <typename BoundsType>
     BoundsType newBoundsHelperImpl(std::ptrdiff_t totalSize, std::true_type) // dynamic size
     {
-        fail_fast_assert(totalSize <= PTRDIFF_MAX);
+        Expects(totalSize <= PTRDIFF_MAX);
         return BoundsType{totalSize};
     }
     template <typename BoundsType>
     BoundsType newBoundsHelperImpl(std::ptrdiff_t totalSize, std::false_type) // static size
     {
-        fail_fast_assert(BoundsType::static_size == totalSize);
+        Expects(BoundsType::static_size == totalSize);
         return {};
     }
     template <typename BoundsType>
@@ -1192,7 +1200,7 @@ public:
     constexpr span(pointer data, bounds_type bounds) noexcept
         : m_pdata(data), m_bounds(std::move(bounds))
     {
-        fail_fast_assert((m_bounds.size() > 0 && data != nullptr) || m_bounds.size() == 0);
+        Expects((m_bounds.size() > 0 && data != nullptr) || m_bounds.size() == 0);
     }
 
     constexpr span(pointer ptr, size_type size) noexcept
@@ -1206,7 +1214,7 @@ public:
     constexpr span(std::nullptr_t, size_type size) noexcept
         : span(nullptr, bounds_type{})
     {
-        fail_fast_assert(size == 0);
+        Expects(size == 0);
     }
 
     // default
@@ -1236,7 +1244,7 @@ public:
     >
     constexpr span(T(&arr)[N], size_type size) : span(arr, typename Helper::bounds_type{size})
     {
-        fail_fast_assert(size <= N);
+        Expects(size <= N);
     }
 
     // from std array
@@ -1313,7 +1321,7 @@ public:
     {
         static_assert(std::is_standard_layout<U>::value && (bounds_type::static_size == dynamic_range || bounds_type::static_size % static_cast<size_type>(sizeof(U)) == 0),
             "Target type must be standard layout and its size must match the byte array size");
-        fail_fast_assert((this->bytes() % sizeof(U)) == 0 && (this->bytes() / sizeof(U)) < PTRDIFF_MAX);
+        Expects((this->bytes() % sizeof(U)) == 0 && (this->bytes() / sizeof(U)) < PTRDIFF_MAX);
         return { reinterpret_cast<const U*>(this->data()), this->bytes() / static_cast<size_type>(sizeof(U)) };
     }
 
@@ -1322,7 +1330,7 @@ public:
     {
         static_assert(std::is_standard_layout<U>::value && (bounds_type::static_size == dynamic_range || bounds_type::static_size % static_cast<size_t>(sizeof(U)) == 0),
             "Target type must be standard layout and its size must match the byte array size");
-        fail_fast_assert((this->bytes() % sizeof(U)) == 0);
+        Expects((this->bytes() % sizeof(U)) == 0);
         return { reinterpret_cast<U*>(this->data()), this->bytes() / static_cast<size_type>(sizeof(U)) };
     }
 
@@ -1331,13 +1339,13 @@ public:
     constexpr span<ValueType, Count> first() const noexcept
     {
         static_assert(bounds_type::static_size == dynamic_range || Count <= bounds_type::static_size, "Index is out of bound");
-        fail_fast_assert(bounds_type::static_size != dynamic_range || Count <= this->size()); // ensures we only check condition when needed
+        Expects(bounds_type::static_size != dynamic_range || Count <= this->size()); 
         return { this->data(), Count };
     }
 
     constexpr span<ValueType, dynamic_range> first(size_type count) const noexcept
     {
-        fail_fast_assert(count <= this->size());
+        Expects(count <= this->size());
         return { this->data(), count };
     }
 
@@ -1345,13 +1353,13 @@ public:
     constexpr span<ValueType, Count> last() const noexcept
     {
         static_assert(bounds_type::static_size == dynamic_range || Count <= bounds_type::static_size, "Index is out of bound");
-        fail_fast_assert(bounds_type::static_size != dynamic_range || Count <= this->size());
+        Expects(bounds_type::static_size != dynamic_range || Count <= this->size());
         return { this->data() + this->size() - Count, Count };
     }
 
     constexpr span<ValueType, dynamic_range> last(size_type count) const noexcept
     {
-        fail_fast_assert(count <= this->size());
+        Expects(count <= this->size());
         return { this->data() + this->size() - count, count };
     }
 
@@ -1359,13 +1367,13 @@ public:
     constexpr span<ValueType, Count> sub() const noexcept
     {
         static_assert(bounds_type::static_size == dynamic_range || ((Offset == 0 || Offset <= bounds_type::static_size) && Offset + Count <= bounds_type::static_size), "Index is out of bound");
-        fail_fast_assert(bounds_type::static_size != dynamic_range || ((Offset == 0 || Offset <= this->size()) && Offset + Count <= this->size()));
+        Expects(bounds_type::static_size != dynamic_range || ((Offset == 0 || Offset <= this->size()) && Offset + Count <= this->size()));
         return { this->data() + Offset, Count };
     }
 
     constexpr span<ValueType, dynamic_range> sub(size_type offset, size_type count = dynamic_range) const noexcept
     {
-        fail_fast_assert((offset == 0 || offset <= this->size()) && (count == dynamic_range || (offset + count) <= this->size()));
+        Expects((offset == 0 || offset <= this->size()) && (count == dynamic_range || (offset + count) <= this->size()));
         return { this->data() + offset, count == dynamic_range ? this->length() - offset : count };
     }
 
@@ -1405,10 +1413,11 @@ public:
     template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
     constexpr Ret operator[](size_type idx) const noexcept
     {
-        fail_fast_assert(idx < m_bounds.size(), "index is out of bounds of the array");
+        Expects(idx < m_bounds.size()); // index is out of bounds of the array
         const size_type ridx = idx * m_bounds.stride();
 
-        fail_fast_assert(ridx < m_bounds.total_size(), "index is out of bounds of the underlying data");
+        // index is out of bounds of the underlying data
+        Expects(ridx < m_bounds.total_size());
         return Ret{ m_pdata + ridx, m_bounds.slice() };
     }
 
@@ -1560,7 +1569,7 @@ template <typename Cont>
 constexpr auto as_span(Cont &arr) -> std::enable_if_t<!details::is_span<std::decay_t<Cont>>::value,
     span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>>
 {
-    fail_fast_assert(arr.size() < PTRDIFF_MAX);
+    Expects(arr.size() < PTRDIFF_MAX);
     return {arr.data(), static_cast<std::ptrdiff_t>(arr.size())};
 }
 
@@ -1572,7 +1581,7 @@ constexpr auto as_span(Cont &&arr) -> std::enable_if_t<!details::is_span<std::de
 template <typename CharT, typename Traits, typename Allocator>
 constexpr auto as_span(std::basic_string<CharT, Traits, Allocator> &str) -> span<CharT, dynamic_range>
 {
-    fail_fast_assert(str.size() < PTRDIFF_MAX);
+    Expects(str.size() < PTRDIFF_MAX);
     return {&str[0], static_cast<std::ptrdiff_t>(str.size())};
 }
 
@@ -1608,8 +1617,10 @@ public:
     constexpr strided_span(pointer ptr, size_type size, bounds_type bounds)
         : m_pdata(ptr), m_bounds(std::move(bounds))
     {
-        fail_fast_assert((m_bounds.size() > 0 && ptr != nullptr) || m_bounds.size() == 0);
-        fail_fast_assert(this->bounds().total_size() <= size, "Bounds cross data boundaries");
+        Expects((m_bounds.size() > 0 && ptr != nullptr) || m_bounds.size() == 0);
+        // Bounds cross data boundaries
+        Expects(this->bounds().total_size() <= size);
+        (void)size;
     }
 
     // from static array of size N
@@ -1659,10 +1670,11 @@ public:
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
     constexpr Ret operator[](size_type idx) const
     {
-        fail_fast_assert(idx < m_bounds.size(), "index is out of bounds of the array");
+        Expects(idx < m_bounds.size()); // index is out of bounds of the array
         const size_type ridx = idx * m_bounds.stride();
 
-        fail_fast_assert(ridx < m_bounds.total_size(), "index is out of bounds of the underlying data");
+        // index is out of bounds of the underlying data
+        Expects(ridx < m_bounds.total_size());
         return{ m_pdata + ridx, m_bounds.slice().total_size(), m_bounds.slice() };
     }
 
@@ -1773,7 +1785,8 @@ public:
 private:
     static index_type resize_extent(const index_type& extent, std::ptrdiff_t d)
     {
-        fail_fast_assert(extent[Rank - 1] >= d && (extent[Rank-1] % d == 0), "The last dimension of the array needs to contain a multiple of new type elements");
+        // The last dimension of the array needs to contain a multiple of new type elements
+        Expects(extent[Rank - 1] >= d && (extent[Rank - 1] % d == 0));
 
         index_type ret = extent;
         ret[Rank - 1] /= d;
@@ -1784,7 +1797,8 @@ private:
     template <bool Enabled = (Rank == 1), typename Dummy = std::enable_if_t<Enabled>>
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t , void * = 0)
     {
-        fail_fast_assert(strides[Rank - 1] == 1, "Only strided arrays with regular strides can be resized");
+        // Only strided arrays with regular strides can be resized
+        Expects(strides[Rank - 1] == 1);
 
         return strides;
     }
@@ -1792,12 +1806,16 @@ private:
     template <bool Enabled = (Rank > 1), typename Dummy = std::enable_if_t<Enabled>>
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t d)
     {
-        fail_fast_assert(strides[Rank - 1] == 1, "Only strided arrays with regular strides can be resized");
-        fail_fast_assert(strides[Rank - 2] >= d && (strides[Rank - 2] % d == 0), "The strides must have contiguous chunks of memory that can contain a multiple of new type elements");
+        // Only strided arrays with regular strides can be resized
+        Expects(strides[Rank - 1] == 1);
+        // The strides must have contiguous chunks of
+        // memory that can contain a multiple of new type elements
+        Expects(strides[Rank - 2] >= d && (strides[Rank - 2] % d == 0));
 
         for (size_t i = Rank - 1; i > 0; --i)
         {
-            fail_fast_assert((strides[i - 1] >= strides[i]) && (strides[i - 1] % strides[i] == 0), "Only strided arrays with regular strides can be resized");
+            // Only strided arrays with regular strides can be resized
+            Expects((strides[i - 1] >= strides[i]) && (strides[i - 1] % strides[i] == 0));
         }
 
         index_type ret = strides / d;
@@ -1824,7 +1842,9 @@ private:
     const Span* m_validator;
     void validateThis() const
     {
-        fail_fast_assert(m_pdata >= m_validator->m_pdata && m_pdata < m_validator->m_pdata + m_validator->size(), "iterator is out of range of the array");
+        // iterator is out of range of the array
+        Expects(m_pdata >= m_validator->m_pdata &&
+            m_pdata < m_validator->m_pdata + m_validator->size());
     }
     contiguous_span_iterator (const Span* container, bool isbegin) :
         m_pdata(isbegin ? container->m_pdata : container->m_pdata + container->size()), m_validator(container) {}
@@ -1882,7 +1902,7 @@ public:
     }
     difference_type operator-(const contiguous_span_iterator& rhs) const noexcept
     {
-        fail_fast_assert(m_validator == rhs.m_validator);
+        Expects(m_validator == rhs.m_validator);
         return m_pdata - rhs.m_pdata;
     }
     reference operator[](difference_type n) const noexcept
@@ -1891,7 +1911,7 @@ public:
     }
     bool operator==(const contiguous_span_iterator& rhs) const noexcept
     {
-        fail_fast_assert(m_validator == rhs.m_validator);
+        Expects(m_validator == rhs.m_validator);
         return m_pdata == rhs.m_pdata;
     }
     bool operator!=(const contiguous_span_iterator& rhs) const noexcept
@@ -1900,7 +1920,7 @@ public:
     }
     bool operator<(const contiguous_span_iterator& rhs) const noexcept
     {
-        fail_fast_assert(m_validator == rhs.m_validator);
+        Expects(m_validator == rhs.m_validator);
         return m_pdata < rhs.m_pdata;
     }
     bool operator<=(const contiguous_span_iterator& rhs) const noexcept
@@ -1998,7 +2018,7 @@ public:
     }
     difference_type operator-(const general_span_iterator& rhs) const noexcept
     {
-        fail_fast_assert(m_container == rhs.m_container);
+        Expects(m_container == rhs.m_container);
         return m_itr - rhs.m_itr;
     }
     value_type operator[](difference_type n) const noexcept
@@ -2007,7 +2027,7 @@ public:
     }
     bool operator==(const general_span_iterator& rhs) const noexcept
     {
-        fail_fast_assert(m_container == rhs.m_container);
+        Expects(m_container == rhs.m_container);
         return m_itr == rhs.m_itr;
     }
     bool operator !=(const general_span_iterator& rhs) const noexcept
@@ -2016,7 +2036,7 @@ public:
     }
     bool operator<(const general_span_iterator& rhs) const noexcept
     {
-        fail_fast_assert(m_container == rhs.m_container);
+        Expects(m_container == rhs.m_container);
         return m_itr < rhs.m_itr;
     }
     bool operator<=(const general_span_iterator& rhs) const noexcept
@@ -2055,10 +2075,10 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 #if _MSC_VER <= 1800
 #pragma warning(pop)
 
-#ifndef GSL_THROWS_FOR_TESTING
+#ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #undef noexcept
 #pragma pop_macro("noexcept")
-#endif // GSL_THROWS_FOR_TESTING
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 #undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG 
 
@@ -2066,15 +2086,16 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #endif // _MSC_VER
 
-#if defined(GSL_THROWS_FOR_TESTING) 
+#if defined(GSL_THROW_ON_CONTRACT_VIOLATION) 
 
 #undef noexcept
 
 #ifdef _MSC_VER
+#pragma warning(pop)
 #pragma pop_macro("noexcept")
 #endif
 
-#endif // GSL_THROWS_FOR_TESTING 
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION 
 
 
 #endif // GSL_SPAN_H
