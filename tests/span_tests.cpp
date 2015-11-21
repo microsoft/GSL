@@ -204,6 +204,15 @@ SUITE(span_tests)
 		}
 
 		{
+			string str;
+			span<char> strspan = as_span(str);
+			(void)strspan;
+			const string cstr;
+			span<const char> cstrspan = as_span(cstr);
+			(void)cstrspan;
+		}
+
+		{
 			int a[3][4][5];
 			auto av = as_span(a);
 			const int (*b)[4][5];
