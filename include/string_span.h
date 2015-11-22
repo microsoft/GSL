@@ -109,26 +109,26 @@ inline basic_string_span<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_
 // TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation
 inline basic_string_span<char, dynamic_range> ensure_z(char* const& sz, std::ptrdiff_t max)
 {
-    auto len = strnlen(sz, max);
+    auto len = strnlen(sz, static_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline basic_string_span<const char, dynamic_range> ensure_z(const char* const& sz, std::ptrdiff_t max)
 {
-    auto len = strnlen(sz, max);
+    auto len = strnlen(sz, static_cast<size_t>(max));
     Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline basic_string_span<wchar_t, dynamic_range> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = wcsnlen(sz, max);
+    auto len = wcsnlen(sz, static_cast<size_t>(max));
     Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline basic_string_span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = wcsnlen(sz, max);
+    auto len = wcsnlen(sz, static_cast<size_t>(max));
     Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
