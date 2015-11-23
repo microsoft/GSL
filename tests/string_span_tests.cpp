@@ -248,7 +248,7 @@ SUITE(string_span_tests)
             cstring_span<> sp2{ ptr, 3 }; // bad... but can't help there
 
             CHECK(sp1[1] == 'b');
-            CHECK_THROW((sp1[2] == 'c'), fail_fast);
+            CHECK_THROW((void)(sp1[2] == 'c'), fail_fast);
 
             CHECK(sp2[1] == 'b');
             //CHECK_THROW((sp1[2] == 'c'), fail_fast); // buffer overflow
@@ -295,9 +295,12 @@ SUITE(string_span_tests)
 
         // from non-const ptr and length
         {
+            // does not compile with GCC (ISO standard does not allow converting string literals to char*)
+#ifdef CONFIRM_COMPILATION_ERRORS
             char* ptr = "Hello";
             cstring_span<> span{ ptr, 5 };
             CHECK(span.length() == 5);
+#endif
         }
 
         // from const string
@@ -398,9 +401,12 @@ SUITE(string_span_tests)
 
         // from non-const ptr and length
         {
+            // does not compile with GCC (ISO standard does not allows converting string literals to char*)
+#ifdef CONFIRM_COMPILATION_ERRORS
             char* ptr = "Hello";
             string_span<> span{ ptr, 5 };
             CHECK(span.length() == 5);
+#endif
         }
 
         // from const string

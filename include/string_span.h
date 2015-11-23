@@ -86,7 +86,7 @@ using wzstring = wchar_t*;
 //
 // Will fail-fast if sentinel cannot be found before max elements are examined.
 //
-template<class T, const T Sentinel>
+template<typename T, const T Sentinel>
 span<T, dynamic_range> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
 {
     auto cur = seq;
@@ -101,7 +101,7 @@ span<T, dynamic_range> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
 // Will fail fast if a null-terminator cannot be found before
 // the limit of size_type.
 //
-template<class T>
+template<typename T>
 inline span<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_t max = PTRDIFF_MAX)
 {
     return ensure_sentinel<T, 0>(sz, max);
@@ -133,7 +133,7 @@ inline span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std
     Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
-template<class T, size_t N>
+template<typename T, size_t N>
 span<T, dynamic_range> ensure_z(T(&sz)[N]) { return ensure_z(&sz[0], static_cast<std::ptrdiff_t>(N)); }
 
 template<class Cont>
@@ -168,7 +168,7 @@ inline span<const wchar_t, dynamic_range> remove_z(const wchar_t* const& sz, std
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
-template<class T, size_t N>
+template<typename T, size_t N>
 span<T, dynamic_range> remove_z(T(&sz)[N])
 {
     return remove_z(&sz[0], static_cast<std::ptrdiff_t>(N));
@@ -203,7 +203,7 @@ namespace details
 //
 // Note that Extent is always single-dimension only
 //
-template <class CharT, std::ptrdiff_t Extent = dynamic_range>
+template <typename CharT, std::ptrdiff_t Extent = dynamic_range>
 class basic_string_span
 {
     using value_type = CharT;
@@ -237,7 +237,7 @@ public:
     {}
 
     // from nullptr and length
-    constexpr basic_string_span(nullptr_t ptr, size_type length) noexcept
+    constexpr basic_string_span(std::nullptr_t ptr, size_type length) noexcept
         : real(ptr, length)
     {}
 
@@ -250,8 +250,8 @@ public:
     {}
 
     // from non-const pointer to const span
-    template<typename Dummy = std::enable_if_t<std::is_const<value_type>::value>>
-    constexpr basic_string_span(std::remove_const_t<value_type>*& ptr) noexcept
+    template<typename ValueType = std::remove_const_t<value_type>, bool Enabled = std::is_const<value_type>::value, typename Dummy = std::enable_if_t<Enabled>>
+    constexpr basic_string_span(ValueType*& ptr) noexcept
         : real(ensure_z(ptr))
     {}
 
@@ -306,29 +306,29 @@ public:
     template<size_type Count>
     constexpr basic_string_span<value_type, Count> first() const noexcept
     {
-        return{ real.first<Count>() };
+        return{ real.template first<Count>() };
     }
 
     constexpr basic_string_span<value_type, dynamic_range> first(size_type count) const noexcept
     {
-        return{ real.first(count); }
+        return{ real.first(count) };
     }
 
     template<size_type Count>
     constexpr basic_string_span<value_type, Count> last() const noexcept
     {
-        return{ real.last<Count>() };
+        return{ real.template last<Count>() };
     }
 
     constexpr basic_string_span<value_type, dynamic_range> last(size_type count) const noexcept
     {
-        return{ real.last(count); }
+        return{ real.last(count) };
     }
 
     template<size_type Offset, size_type Count>
     constexpr basic_string_span<value_type, Count> sub() const noexcept
     {
-        return{ real.sub<Count>() };
+        return{ real.template sub<Offset, Count>() };
     }
 
     constexpr basic_string_span<value_type, dynamic_range> sub(size_type offset, size_type count = dynamic_range) const noexcept
@@ -442,7 +442,7 @@ using cwstring_span = basic_string_span<const wchar_t, Extent>;
 //
 #ifndef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
 
-template<class CharT, ptrdiff_t Extent>
+template<typename CharT, ptrdiff_t Extent>
 std::basic_string<typename std::remove_const<CharT>::type> to_string(basic_string_span<CharT, Extent> view)
 {
     return{ view.data(), static_cast<size_t>(view.length()) };
@@ -472,7 +472,7 @@ inline std::wstring to_string(wstring_span<> view)
 
 #endif 
 
-template<class CharT, size_t Extent = dynamic_range>
+template<typename CharT, size_t Extent = dynamic_range>
 class basic_zstring_builder
 {
 public:
@@ -509,24 +509,32 @@ template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
 
-
-constexpr bool operator==(const gsl::cstring_span<>& one, const gsl::cstring_span<>& other) noexcept
+/*
+bool operator==(const gsl::cstring_span<>& one, const gsl::cstring_span<>& other) noexcept
 {
     return std::equal(one.begin(), one.end(), other.begin(), other.end());
 }
 
-constexpr bool operator==(const gsl::string_span<>& one, const gsl::string_span<>& other) noexcept
+bool operator==(const gsl::cwstring_span<>& one, const gsl::cwstring_span<>& other) noexcept
+{
+    return std::equal(one.begin(), one.end(), other.begin(), other.end());
+}
+*/
+
+
+template <typename CharT>
+bool operator==(const gsl::basic_string_span<CharT, gsl::dynamic_range>& one, const gsl::basic_string_span<CharT, gsl::dynamic_range>& other) noexcept
 {
     return std::equal(one.begin(), one.end(), other.begin(), other.end());
 }
 
-
-// TODO: ca we make twmplate ops work?
-//template <typename ValueType, std::ptrdiff_t Extent>
-//constexpr bool operator==(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<ValueType, Extent>& other) noexcept
-//{
-//    return std::equal(one.begin(), one.end(), other.begin(), other.end());
-//}
+/*
+template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
+constexpr bool operator==(const gsl::basic_string_span<const ValueType, Extent>& one, const gsl::basic_string_span<const OtherValueType, OtherExtent>& other) noexcept
+{
+    return std::equal(one.begin(), one.end(), other.begin(), other.end());
+}
+*/
 /*
 template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
 constexpr bool operator==(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
