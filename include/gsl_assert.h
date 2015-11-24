@@ -55,9 +55,9 @@ struct fail_fast : public std::runtime_error
 }
 
 #define Expects(cond)  if (!(cond)) \
-    throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ GSL_STRINGIFY(__LINE__));
+    throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
 #define Ensures(cond)  if (!(cond)) \
-    throw gsl::fail_fast("GSL: Postcondition failure at " __FILE__ GSL_STRINGIFY(__LINE__));
+    throw gsl::fail_fast("GSL: Postcondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
 
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
