@@ -20,6 +20,7 @@
 #define GSL_STRING_SPAN_H
 
 #include "gsl_assert.h"
+#include "gsl_util.h"
 #include "span.h"
 #include <cstring>
 
@@ -32,12 +33,12 @@
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
 
-#define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
+#define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 
-// noexcept is not understood 
+// noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
-#define noexcept /* nothing */ 
+#define noexcept /* nothing */
 #endif
 
 #endif // _MSC_VER <= 1800
@@ -50,16 +51,16 @@
 #pragma push_macro("noexcept")
 #endif
 
-#define noexcept /* nothing */ 
+#define noexcept /* nothing */
 
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION 
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 namespace gsl
 {
 //
 // czstring and wzstring
 //
-// These are "tag" typedef's for C-style strings (i.e. null-terminated character arrays) 
+// These are "tag" typedef's for C-style strings (i.e. null-terminated character arrays)
 // that allow static analysis to help find bugs.
 //
 // There are no additional features/semantics that we can find a way to add inside the
@@ -79,7 +80,7 @@ template<std::ptrdiff_t Extent = dynamic_range>
 using wzstring = wchar_t*;
 
 //
-// ensure_sentinel() 
+// ensure_sentinel()
 //
 // Provides a way to obtain an span from a contiguous sequence
 // that ends with a (non-inclusive) sentinel value.
@@ -97,7 +98,7 @@ span<T, dynamic_range> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
 
 
 //
-// ensure_z - creates a string_span for a czstring or cwzstring.
+// ensure_z - creates a span for a czstring or cwzstring.
 // Will fail fast if a null-terminator cannot be found before
 // the limit of size_type.
 //
@@ -118,19 +119,22 @@ inline span<char, dynamic_range> ensure_z(char* const& sz, std::ptrdiff_t max)
 inline span<const char, dynamic_range> ensure_z(const char* const& sz, std::ptrdiff_t max)
 {
     auto len = strnlen(sz, max);
-    Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline span<wchar_t, dynamic_range> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
     auto len = wcsnlen(sz, max);
-    Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
     auto len = wcsnlen(sz, max);
-    Ensures(sz[len] == 0); return{ sz, static_cast<std::ptrdiff_t>(len) };
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 template<typename T, size_t N>
@@ -142,45 +146,7 @@ span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_range> 
     return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
 }
 
-
-// TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation
-inline span<char, dynamic_range> remove_z(char* const& sz, std::ptrdiff_t max)
-{
-    auto len = strnlen(sz, max);
-    return{ sz, static_cast<std::ptrdiff_t>(len) };
-}
-
-inline span<const char, dynamic_range> remove_z(const char* const& sz, std::ptrdiff_t max)
-{
-    auto len = strnlen(sz, max);
-    return{ sz, static_cast<std::ptrdiff_t>(len) };
-}
-
-inline span<wchar_t, dynamic_range> remove_z(wchar_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = wcsnlen(sz, max);
-    return{ sz, static_cast<std::ptrdiff_t>(len) };
-}
-
-inline span<const wchar_t, dynamic_range> remove_z(const wchar_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = wcsnlen(sz, max);
-    return{ sz, static_cast<std::ptrdiff_t>(len) };
-}
-
-template<typename T, size_t N>
-span<T, dynamic_range> remove_z(T(&sz)[N])
-{
-    return remove_z(&sz[0], static_cast<std::ptrdiff_t>(N));
-}
-
-template<class Cont>
-span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_range> remove_z(Cont& cont)
-{
-    return remove_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
-}
-
-template<typename ValueType, std::ptrdiff_t>
+template<typename CharT, std::ptrdiff_t>
 class basic_string_span;
 
 namespace details
@@ -189,14 +155,55 @@ namespace details
     struct is_basic_string_span_oracle : std::false_type
     {};
 
-    template <typename ValueType, std::ptrdiff_t Extent>
-    struct is_basic_string_span_oracle<basic_string_span<ValueType, Extent>> : std::true_type
+    template <typename CharT, std::ptrdiff_t Extent>
+    struct is_basic_string_span_oracle<basic_string_span<CharT, Extent>> : std::true_type
     {};
 
     template <typename T>
     struct is_basic_string_span : is_basic_string_span_oracle<std::remove_cv_t<T>>
     {};
+
+    template <typename T>
+    struct length_func
+    {};
+
+    template <>
+    struct length_func<char>
+    {
+        std::ptrdiff_t operator()(char* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(strnlen(ptr, length));
+        }
+    };
+
+    template <>
+    struct length_func<wchar_t>
+    {
+        std::ptrdiff_t operator()(wchar_t* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, length));
+        }
+    };
+
+    template <>
+    struct length_func<const char>
+    {
+        std::ptrdiff_t operator()(const char* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(strnlen(ptr, length));
+        }
+    };
+
+    template <>
+    struct length_func<const wchar_t>
+    {
+        std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, length));
+        }
+    };
 }
+
 
 //
 // string_span and relatives
@@ -212,85 +219,83 @@ class basic_string_span
     using reference = std::add_lvalue_reference_t<value_type>;
     using const_reference = std::add_lvalue_reference_t<const_value_type>;
     using bounds_type = static_bounds<Extent>;
-    using underlying_type = span<value_type, Extent>;
+    using impl_type = span<value_type, Extent>;
 
 public:
     using size_type = ptrdiff_t;
-    using iterator = typename underlying_type::iterator;
-    using const_iterator = typename underlying_type::const_iterator;
-    using reverse_iterator = typename underlying_type::reverse_iterator;
-    using const_reverse_iterator = typename underlying_type::const_reverse_iterator;
+    using iterator = typename impl_type::iterator;
+    using const_iterator = typename impl_type::const_iterator;
+    using reverse_iterator = typename impl_type::reverse_iterator;
+    using const_reverse_iterator = typename impl_type::const_reverse_iterator;
 
-    // empty
-    constexpr basic_string_span() noexcept
-        : real(nullptr)
-    {}
+    // default (empty)
+    constexpr basic_string_span() = default;
 
     // copy
-    constexpr basic_string_span(const basic_string_span& other) noexcept
-        : real(other.real)
-    {}
+    constexpr basic_string_span(const basic_string_span& other) = default;
 
     // move
-    constexpr basic_string_span(const basic_string_span&& other) noexcept
-        : real(std::move(other.real))
-    {}
+    constexpr basic_string_span(basic_string_span&& other) = default;
+
+    // assign
+    constexpr basic_string_span& operator=(const basic_string_span& other) = default;
+
+    // move assign
+    constexpr basic_string_span& operator=(basic_string_span&& other) = default;
 
     // from nullptr and length
     constexpr basic_string_span(std::nullptr_t ptr, size_type length) noexcept
-        : real(ptr, length)
+        : span_(ptr, length)
     {}
 
     // For pointers and static arrays - if 0-terminated, remove 0 from the view
 
-    // from c string
-    
-    constexpr basic_string_span(pointer& ptr) noexcept
-        : real(ensure_z(ptr))
-    {}
-
-    // from non-const pointer to const span
-    template<typename ValueType = std::remove_const_t<value_type>, bool Enabled = std::is_const<value_type>::value, typename Dummy = std::enable_if_t<Enabled>>
-    constexpr basic_string_span(ValueType*& ptr) noexcept
-        : real(ensure_z(ptr))
-    {}
-
-    // from raw data and length - remove 0 if needed
+    // from raw data and length
     constexpr basic_string_span(pointer ptr, size_type length) noexcept
-        : real(remove_z(ptr, length))
+        : span_(remove_z(ptr, length))
     {}
 
     // from static arrays and string literals
     template<size_t N>
     constexpr basic_string_span(value_type(&arr)[N]) noexcept
-        : real(remove_z(arr))
+        : span_(remove_z(arr))
     {}
 
-    // Those allow 0s in the middle, so we keep them
+    // Those allow 0s within the length, so we do not remove them
 
+    // from string
     constexpr basic_string_span(std::string& s) noexcept
-        : real(&(s.at(0)), static_cast<ptrdiff_t>(s.length()))
+        : span_(&(s.at(0)), narrow_cast<std::ptrdiff_t>(s.length()))
     {}
 
-    // from containers. It must have .size() and .data() function signatures
+    // from containers. Containers must have .size() and .data() function signatures
     template <typename Cont, typename DataType = typename Cont::value_type,
         typename Dummy = std::enable_if_t<!details::is_span<Cont>::value
-        && !details::is_basic_string_span<Cont>::value 
+        && !details::is_basic_string_span<Cont>::value
         && !(!std::is_const<value_type>::value && std::is_const<Cont>::value) // no converting const containers to non-const span
         && std::is_convertible<DataType*, value_type*>::value
         && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
     >
     constexpr basic_string_span(Cont& cont)
-        : real(cont.data(), cont.size())
+        : span_(cont.data(), cont.size())
     {}
+
+    // disallow creation from temporary containers and strings
+    template <typename Cont, typename DataType = typename Cont::value_type,
+        typename Dummy = std::enable_if_t<!details::is_span<Cont>::value
+        && !details::is_basic_string_span<Cont>::value
+        && std::is_convertible<DataType*, value_type*>::value
+        && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value>
+    >
+    basic_string_span(Cont&& cont) = delete;
 
     // from span
     template <typename OtherValueType, std::ptrdiff_t OtherExtent,
         typename OtherBounds = static_bounds<OtherExtent>,
         typename Dummy = std::enable_if_t<std::is_convertible<OtherValueType*, value_type*>::value && std::is_convertible<OtherBounds, bounds_type>::value>
     >
-    constexpr basic_string_span(const span<OtherValueType, OtherExtent>& other) noexcept
-        : real(other)
+    constexpr basic_string_span(span<OtherValueType, OtherExtent> other) noexcept
+        : span_(other)
     {}
 
     // from string_span
@@ -298,131 +303,130 @@ public:
         typename OtherBounds = static_bounds<OtherExtent>,
         typename Dummy = std::enable_if_t<std::is_convertible<OtherValueType*, value_type*>::value && std::is_convertible<OtherBounds, bounds_type>::value>
     >
-    constexpr basic_string_span(const basic_string_span<OtherValueType, OtherExtent>& other) noexcept
-        : real(other.data(), other.length())
+    constexpr basic_string_span(basic_string_span<OtherValueType, OtherExtent> other) noexcept
+        : span_(other.data(), other.length())
     {}
 
-    // section on linear space
+    constexpr bool empty() const noexcept
+    {
+        return length() == 0;
+    }
+
+    // first Count elements
     template<size_type Count>
     constexpr basic_string_span<value_type, Count> first() const noexcept
     {
-        return{ real.template first<Count>() };
+        return{ span_.template first<Count>() };
     }
 
     constexpr basic_string_span<value_type, dynamic_range> first(size_type count) const noexcept
     {
-        return{ real.first(count) };
+        return{ span_.first(count) };
     }
 
+    // last Count elements
     template<size_type Count>
     constexpr basic_string_span<value_type, Count> last() const noexcept
     {
-        return{ real.template last<Count>() };
+        return{ span_.template last<Count>() };
     }
 
     constexpr basic_string_span<value_type, dynamic_range> last(size_type count) const noexcept
     {
-        return{ real.last(count) };
+        return{ span_.last(count) };
     }
 
+    // Count elements starting from Offset
     template<size_type Offset, size_type Count>
     constexpr basic_string_span<value_type, Count> sub() const noexcept
     {
-        return{ real.template sub<Offset, Count>() };
+        return{ span_.template sub<Offset, Count>() };
     }
 
     constexpr basic_string_span<value_type, dynamic_range> sub(size_type offset, size_type count = dynamic_range) const noexcept
     {
-        return{ real.sub(offset, count) };
+        return{ span_.sub(offset, count) };
     }
 
-    constexpr const_reference operator[](size_type idx) const noexcept
+    constexpr reference operator[](size_type idx) const noexcept
     {
-        return real[idx];
-    }
-
-    constexpr reference operator[](size_type idx) noexcept
-    {
-        return real[idx];
+        return span_[idx];
     }
 
     constexpr pointer data() const noexcept
     {
-        return real.data();
+        return span_.data();
     }
 
     constexpr size_type length() const noexcept
     {
-        return real.size();
+        return span_.size();
     }
 
     constexpr size_type size() const noexcept
     {
-        return real.size();
-    }
-
-    constexpr size_type used_length() const noexcept
-    {
-        return length();
+        return span_.size();
     }
 
     constexpr size_type bytes() const noexcept
     {
-        return real.bytes();
-    }
-
-    constexpr size_type used_bytes() const noexcept
-    {
-        return bytes();
-    }
-
-    constexpr explicit operator bool() const noexcept
-    {
-        return real;
+        return span_.bytes();
     }
 
     constexpr iterator begin() const noexcept
     {
-        return real.begin();
+        return span_.begin();
     }
 
     constexpr iterator end() const noexcept
     {
-        return real.end();
+        return span_.end();
     }
 
     constexpr const_iterator cbegin() const noexcept
     {
-        return real.cbegin();
+        return span_.cbegin();
     }
 
     constexpr const_iterator cend() const noexcept
     {
-        real.cend();
+        span_.cend();
     }
 
     constexpr reverse_iterator rbegin() const noexcept
     {
-        return real.rbegin();
+        return span_.rbegin();
     }
 
     constexpr reverse_iterator rend() const noexcept
     {
-        return real.rend();
+        return span_.rend();
     }
 
     constexpr const_reverse_iterator crbegin() const noexcept
     {
-        return real.crbegin();
+        return span_.crbegin();
     }
 
     constexpr const_reverse_iterator crend() const noexcept
     {
-        return real.crend();
+        return span_.crend();
     }
 
 private:
-    span<CharT, Extent> real;
+
+    static impl_type remove_z(pointer const& sz, std::ptrdiff_t max) noexcept
+    {
+        return{ sz, details::length_func<value_type>()(sz, max)};
+    }
+
+    template<size_t N>
+    static impl_type remove_z(value_type(&sz)[N]) noexcept
+    {
+        return remove_z(&sz[0], narrow_cast<std::ptrdiff_t>(N));
+    }
+
+    impl_type span_;
 };
 
 template<std::ptrdiff_t Extent = dynamic_range>
@@ -440,7 +444,7 @@ using cwstring_span = basic_string_span<const wchar_t, Extent>;
 //
 // to_string() allow (explicit) conversions from string_span to string
 //
-#ifndef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG 
+#ifndef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 
 template<typename CharT, ptrdiff_t Extent>
 std::basic_string<typename std::remove_const<CharT>::type> to_string(basic_string_span<CharT, Extent> view)
@@ -470,12 +474,13 @@ inline std::wstring to_string(wstring_span<> view)
     return{ view.data(), view.length() };
 }
 
-#endif 
+#endif
 
 template<typename CharT, size_t Extent = dynamic_range>
 class basic_zstring_builder
 {
 public:
+    using impl_type = span<CharT, Extent>;
     using string_span_type = basic_string_span<CharT, Extent>;
     using value_type = CharT;
     using pointer = CharT*;
@@ -499,7 +504,7 @@ public:
     iterator end() const { return sv_.end(); }
 
 private:
-    string_span_type sv_;
+    impl_type sv_;
 };
 
 template <size_t Max = dynamic_range>
@@ -509,69 +514,36 @@ template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
 
-/*
-bool operator==(const gsl::cstring_span<>& one, const gsl::cstring_span<>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
+bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
     return std::equal(one.begin(), one.end(), other.begin(), other.end());
 }
 
-bool operator==(const gsl::cwstring_span<>& one, const gsl::cwstring_span<>& other) noexcept
-{
-    return std::equal(one.begin(), one.end(), other.begin(), other.end());
-}
-*/
-
-
-template <typename CharT>
-bool operator==(const gsl::basic_string_span<CharT, gsl::dynamic_range>& one, const gsl::basic_string_span<CharT, gsl::dynamic_range>& other) noexcept
-{
-    return std::equal(one.begin(), one.end(), other.begin(), other.end());
-}
-
-/*
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator==(const gsl::basic_string_span<const ValueType, Extent>& one, const gsl::basic_string_span<const OtherValueType, OtherExtent>& other) noexcept
-{
-    return std::equal(one.begin(), one.end(), other.begin(), other.end());
-}
-*/
-/*
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator==(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
-{
-    return std::equal(one.begin(), one.end(), other.begin(), other.end());
-}
-
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator!=(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
-{
-    return !(one == other);
-}
-
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator<(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
+bool operator<(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
     return std::lexicographical_compare(one.begin(), one.end(), other.begin(), other.end());
 }
 
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator<=(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
+bool operator<=(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
     return !(other < one);
 }
 
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator>(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
+bool operator>(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
     return other < one;
 }
 
-template <typename ValueType, std::ptrdiff_t Extent, typename OtherValueType, std::ptrdiff_t OtherExtent, typename Dummy = std::enable_if_t<std::is_same<std::remove_cv_t<ValueType>, std::remove_cv_t<OtherValueType>>::value>>
-constexpr bool operator>=(const gsl::basic_string_span<ValueType, Extent>& one, const gsl::basic_string_span<OtherValueType, OtherExtent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
+bool operator>=(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
     return !(one < other);
 }
-*/
+
 // VS 2013 workarounds
 #ifdef _MSC_VER
 
@@ -592,7 +564,7 @@ constexpr bool operator>=(const gsl::basic_string_span<ValueType, Extent>& one, 
 #endif // _MSC_VER <= 1800
 #endif // _MSC_VER
 
-#if defined(GSL_THROW_ON_CONTRACT_VIOLATION) 
+#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
 #undef noexcept
 
