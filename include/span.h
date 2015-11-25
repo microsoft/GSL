@@ -507,7 +507,7 @@ namespace details
     struct TypeListIndexer
     {
         const TypeChain & obj;
-        TypeListIndexer(const TypeChain & obj) :obj(obj){}
+        TypeListIndexer(const TypeChain & object) :obj(object){}
         template<size_t N>
         const TypeChain & getObj(std::true_type)
         {
@@ -814,8 +814,8 @@ public:
     using index_type = value_type;
     using index_size_type = typename IndexType::value_type;
     template <typename Bounds>
-    explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
-        : boundary(bnd.index_bounds()), curr(std::move(curr))
+    explicit bounds_iterator(const Bounds& bnd, value_type current) noexcept
+        : boundary(bnd.index_bounds()), curr(std::move(current))
     {
         static_assert(is_bounds<Bounds>::value, "Bounds type must be provided");
     }
