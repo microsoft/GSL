@@ -76,23 +76,23 @@ private:
 
 // finally() - convenience function to generate a final_act
 template <class F>
-final_act<F> finally(const F &f)
+inline final_act<F> finally(const F &f)
 noexcept { return final_act<F>(f); }
 
 template <class F>
-final_act<F> finally(F &&f) noexcept
+inline final_act<F> finally(F &&f) noexcept
 { return final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
-constexpr T narrow_cast(U u) noexcept
+inline constexpr T narrow_cast(U u) noexcept
 { return static_cast<T>(u); }
 
 struct narrowing_error : public std::exception {};
 
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template<class T, class U>
-T narrow(U u)
+inline T narrow(U u)
 { T t = narrow_cast<T>(u); if (static_cast<U>(t) != u) throw narrowing_error(); return t; }
 
 //

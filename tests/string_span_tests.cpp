@@ -58,25 +58,21 @@ SUITE(string_span_tests)
         {
             cwstring_span<> v = ensure_z(stack_string);
             CHECK(v.length() == 5);
-            CHECK(v.used_length() == v.length());
         }
 
         {
             cwstring_span<> v = stack_string;
             CHECK(v.length() == 6);
-            CHECK(v.used_length() == v.length());
         }
 
         {
             wstring_span<> v = ensure_z(stack_string);
             CHECK(v.length() == 5);
-            CHECK(v.used_length() == v.length());
         }
 
         {
             wstring_span<> v = stack_string;
             CHECK(v.length() == 6);
-            CHECK(v.used_length() == v.length());
         }
 	}
 
@@ -85,7 +81,6 @@ SUITE(string_span_tests)
         const char* s = "Hello";
         cstring_span<> v = ensure_z(s);
         CHECK(v.length() == 5);
-        CHECK(v.used_length() == v.length());
     }
 
     TEST(TestConversionToConst)
