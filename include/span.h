@@ -840,27 +840,27 @@ public:
     using index_size_type = typename IndexType::value_type;
     template <typename Bounds>
     explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
-        : boundary(bnd.index_bounds()),
-          curr(std::move(curr))
+        : boundary_(bnd.index_bounds()),
+          curr_(std::move(curr))
     {
         static_assert(is_bounds<Bounds>::value, "Bounds type must be provided");
     }
 
-    constexpr reference operator*() const noexcept { return curr; }
+    constexpr reference operator*() const noexcept { return curr_; }
 
-    constexpr pointer operator->() const noexcept { return &curr; }
+    constexpr pointer operator->() const noexcept { return &curr_; }
 
     constexpr bounds_iterator& operator++() noexcept
     {
         for (size_t i = rank; i-- > 0;) {
-            if (curr[i] < boundary[i] - 1) {
-                curr[i]++;
+            if (curr_[i] < boundary_[i] - 1) {
+                curr_[i]++;
                 return *this;
             }
-            curr[i] = 0;
+            curr_[i] = 0;
         }
         // If we're here we've wrapped over - set to past-the-end.
-        curr = boundary;
+        curr_ = boundary_;
         return *this;
     }
 
@@ -873,19 +873,19 @@ public:
 
     constexpr bounds_iterator& operator--() noexcept
     {
-        if (!less(curr, boundary)) {
+        if (!less(curr_, boundary_)) {
             // if at the past-the-end, set to last element
             for (size_t i = 0; i < rank; ++i) {
-                curr[i] = boundary[i] - 1;
+                curr_[i] = boundary_[i] - 1;
             }
             return *this;
         }
         for (size_t i = rank; i-- > 0;) {
-            if (curr[i] >= 1) {
-                curr[i]--;
+            if (curr_[i] >= 1) {
+                curr_[i]--;
                 return *this;
             }
-            curr[i] = boundary[i] - 1;
+            curr_[i] = boundary_[i] - 1;
         }
         // If we're here the preconditions were violated
         // "pre: there exists s such that r == ++s"
@@ -908,18 +908,18 @@ public:
 
     constexpr bounds_iterator& operator+=(difference_type n) noexcept
     {
-        auto linear_idx = linearize(curr) + n;
+        auto linear_idx = linearize(curr_) + n;
         std::remove_const_t<value_type> stride = 0;
         stride[rank - 1] = 1;
         for (size_t i = rank - 1; i-- > 0;) {
-            stride[i] = stride[i + 1] * boundary[i + 1];
+            stride[i] = stride[i + 1] * boundary_[i + 1];
         }
         for (size_t i = 0; i < rank; ++i) {
-            curr[i] = linear_idx / stride[i];
+            curr_[i] = linear_idx / stride[i];
             linear_idx = linear_idx % stride[i];
         }
         // index is out of bounds of the array
-        Expects(!less(curr, index_type{}) && !less(boundary, curr));
+        Expects(!less(curr_, index_type{}) && !less(boundary_, curr_));
         return *this;
     }
 
@@ -933,21 +933,21 @@ public:
 
     constexpr difference_type operator-(const bounds_iterator& rhs) const noexcept
     {
-        return linearize(curr) - linearize(rhs.curr);
+        return linearize(curr_) - linearize(rhs.curr_);
     }
 
     constexpr value_type operator[](difference_type n) const noexcept { return *(*this + n); }
 
     constexpr bool operator==(const bounds_iterator& rhs) const noexcept
     {
-        return curr == rhs.curr;
+        return curr_ == rhs.curr_;
     }
 
     constexpr bool operator!=(const bounds_iterator& rhs) const noexcept { return !(*this == rhs); }
 
     constexpr bool operator<(const bounds_iterator& rhs) const noexcept
     {
-        return less(curr, rhs.curr);
+        return less(curr_, rhs.curr_);
     }
 
     constexpr bool operator<=(const bounds_iterator& rhs) const noexcept { return !(rhs < *this); }
@@ -958,8 +958,8 @@ public:
 
     void swap(bounds_iterator& rhs) noexcept
     {
-        std::swap(boundary, rhs.boundary);
-        std::swap(curr, rhs.curr);
+        std::swap(boundary_, rhs.boundary_);
+        std::swap(curr_, rhs.curr_);
     }
 
 private:
@@ -977,25 +977,25 @@ private:
         // Check if past-the-end
         index_size_type multiplier = 1;
         index_size_type res = 0;
-        if (!less(idx, boundary)) {
+        if (!less(idx, boundary_)) {
             res = 1;
             for (size_t i = rank; i-- > 0;) {
                 res += (idx[i] - 1) * multiplier;
-                multiplier *= boundary[i];
+                multiplier *= boundary_[i];
             }
         }
         else
         {
             for (size_t i = rank; i-- > 0;) {
                 res += idx[i] * multiplier;
-                multiplier *= boundary[i];
+                multiplier *= boundary_[i];
             }
         }
         return res;
     }
 
-    value_type boundary;
-    std::remove_const_t<value_type> curr;
+    value_type boundary_;
+    std::remove_const_t<value_type> curr_;
 };
 
 template <typename IndexType>
