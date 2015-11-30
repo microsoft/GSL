@@ -1606,8 +1606,8 @@ SUITE(span_tests)
 #endif
         {
             auto f = [&]() {
-                span<int, 4> av4 = {arr2, 2};
-                (void) av4;
+                span<int, 4> av9 = {arr2, 2};
+                (void) av9;
             };
             CHECK_THROW(f(), fail_fast);
         }
