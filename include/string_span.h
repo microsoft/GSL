@@ -336,16 +336,16 @@ public:
         return{ span_.last(count) };
     }
 
-    // Count elements starting from Offset
+    // create a subview of Count elements starting from Offset
     template<size_type Offset, size_type Count>
-    constexpr basic_string_span<value_type, Count> sub() const noexcept
+    constexpr basic_string_span<value_type, Count> subspan() const noexcept
     {
-        return{ span_.template sub<Offset, Count>() };
+        return{ span_.template subspan<Offset, Count>() };
     }
 
-    constexpr basic_string_span<value_type, dynamic_range> sub(size_type offset, size_type count = dynamic_range) const noexcept
+    constexpr basic_string_span<value_type, dynamic_range> subspan(size_type offset, size_type count = dynamic_range) const noexcept
     {
-        return{ span_.sub(offset, count) };
+        return{ span_.subspan(offset, count) };
     }
 
     constexpr reference operator[](size_type idx) const noexcept
@@ -358,19 +358,28 @@ public:
         return span_.data();
     }
 
+    // length of the span in elements
     constexpr size_type length() const noexcept
     {
         return span_.size();
     }
 
+    // length of the span in elements
     constexpr size_type size() const noexcept
     {
         return span_.size();
     }
 
-    constexpr size_type bytes() const noexcept
+    // length of the span in bytes
+    constexpr size_type size_bytes() const noexcept
     {
-        return span_.bytes();
+        return span_.size_bytes();
+    }
+
+    // length of the span in bytes
+    constexpr size_type length_bytes() const noexcept
+    {
+        return span_.length_bytes();
     }
 
     constexpr iterator begin() const noexcept
