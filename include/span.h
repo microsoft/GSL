@@ -327,9 +327,9 @@ namespace details
         }
 
         template <typename T, size_t Dim>
-        bool contains(const T&) const
+        size_type contains(const T&) const
         {
-            return false;
+            return -1;
         }
 
         size_type elementNum(size_t) const noexcept { return 0; }
