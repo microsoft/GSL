@@ -51,8 +51,8 @@
 #define GSL_MSVC_HAS_VARIADIC_CTOR_BUG
 #define GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
 
-// noexcept is not understood
-#ifndef GSL_THROWS_ON_CONTRACT_VIOLATION
+// noexcept is not understood 
+#ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
 #define noexcept /* nothing */
 #endif
