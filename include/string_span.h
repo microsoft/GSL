@@ -1,17 +1,17 @@
-/////////////////////////////////////////////////////////////////////////////// 
-// 
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
-// 
-// This code is licensed under the MIT License (MIT). 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-// THE SOFTWARE. 
-// 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -243,17 +243,17 @@ public:
     // move assign
     constexpr basic_string_span& operator=(basic_string_span&& other) = default;
 
+    // from nullptr
+    constexpr basic_string_span(std::nullptr_t ptr) noexcept
+        : span_(ptr)
+    {}
+
     // from nullptr and length
     constexpr basic_string_span(std::nullptr_t ptr, size_type length) noexcept
         : span_(ptr, length)
     {}
 
-    // For pointers and static arrays - if 0-terminated, remove 0 from the view
-
-    // from raw data and length
-    constexpr basic_string_span(pointer ptr, size_type length) noexcept
-        : span_(remove_z(ptr, length))
-    {}
+    // From static arrays - if 0-terminated, remove 0 from the view
 
     // from static arrays and string literals
     template<size_t N>
@@ -262,6 +262,11 @@ public:
     {}
 
     // Those allow 0s within the length, so we do not remove them
+
+    // from raw data and length
+    constexpr basic_string_span(pointer ptr, size_type length) noexcept
+        : span_(ptr, length)
+    {}
 
     // from string
     constexpr basic_string_span(std::string& s) noexcept
@@ -523,32 +528,126 @@ template <size_t Max = dynamic_range>
 using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 }
 
-template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
-bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
+// operator ==
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>
+>
+bool operator==(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
 {
-    return std::equal(one.begin(), one.end(), other.begin(), other.end());
+    gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
+    return std::equal(one.begin(), one.end(), tmp.begin(), tmp.end());
 }
 
-template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
-bool operator<(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename Dummy = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value
+    && !details::is_basic_string_span<T>::value>
+>
+bool operator==(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
 {
+    gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(one);
+    return std::equal(tmp.begin(), tmp.end(), other.begin(), other.end());
+}
+
+// operator !=
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>
+>
+bool operator!=(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
+{
+    return !(one == other);
+}
+
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename Dummy = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value
+    && !details::is_basic_string_span<T>::value>
+>
+bool operator!=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+{
+    return !(one == other);
+}
+
+// operator<
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>
+>
+bool operator<(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
+{
+    gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
     return std::lexicographical_compare(one.begin(), one.end(), other.begin(), other.end());
 }
 
-template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
-bool operator<=(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename Dummy = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value
+    && !details::is_basic_string_span<T>::value>
+>
+bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+{
+    gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(one);
+    return std::lexicographical_compare(tmp.begin(), tmp.end(), other.begin(), other.end());
+}
+
+// operator <=
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>
+>
+bool operator<=(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
 {
     return !(other < one);
 }
 
-template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
-bool operator>(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename Dummy = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value
+    && !details::is_basic_string_span<T>::value>
+>
+bool operator<=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+{
+    return !(other < one);
+}
+
+// operator>
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>
+>
+bool operator>(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
 {
     return other < one;
 }
 
-template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
-bool operator>=(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename Dummy = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value
+    && !details::is_basic_string_span<T>::value>
+>
+bool operator>(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+{
+    return other < one;
+}
+
+// operator >=
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>
+>
+bool operator>=(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
+{
+    return !(one < other);
+}
+
+template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
+    typename Dummy = std::enable_if_t<
+    std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value
+    && !details::is_basic_string_span<T>::value>
+>
+bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
 {
     return !(one < other);
 }
