@@ -552,8 +552,8 @@ bool operator==(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 
 #ifndef _MSC_VER 
 
-// VS allows temp and const containers as convertible to basic_string_span,
-// to the cases below are already by the revious operators
+// VS treats temp and const containers as convertible to basic_string_span,
+// so the cases below are already covered by the previous operators
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
     typename DataType = typename T::value_type,
@@ -606,8 +606,8 @@ bool operator!=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 
 #ifndef _MSC_VER 
 
-// VS allows temp and const containers as convertible to basic_string_span,
-// to the cases below are already by the revious operators
+// VS treats temp and const containers as convertible to basic_string_span,
+// so the cases below are already covered by the previous operators
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
     typename DataType = typename T::value_type,
@@ -660,8 +660,8 @@ bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other) noexce
 
 #ifndef _MSC_VER 
 
-// VS allows temp and const containers as convertible to basic_string_span,
-// to the cases below are already by the revious operators
+// VS treats temp and const containers as convertible to basic_string_span,
+// so the cases below are already covered by the previous operators
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
     typename DataType = typename T::value_type,
@@ -714,8 +714,8 @@ bool operator<=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 
 #ifndef _MSC_VER 
 
-// VS allows temp and const containers as convertible to basic_string_span,
-// to the cases below are already by the revious operators
+// VS treats temp and const containers as convertible to basic_string_span,
+// so the cases below are already covered by the previous operators
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
     typename DataType = typename T::value_type,
@@ -766,8 +766,8 @@ bool operator>(const T& one, gsl::basic_string_span<CharT, Extent> other) noexce
 
 #ifndef _MSC_VER 
 
-// VS allows temp and const containers as convertible to basic_string_span,
-// to the cases below are already by the revious operators
+// VS treats temp and const containers as convertible to basic_string_span,
+// so the cases below are already covered by the previous operators
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
     typename DataType = typename T::value_type,
@@ -818,8 +818,8 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 
 #ifndef _MSC_VER 
 
-// VS allows temp and const containers as convertible to basic_string_span,
-// to the cases below are already by the revious operators
+// VS treats temp and const containers as convertible to basic_string_span,
+// so the cases below are already covered by the previous operators
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
     typename DataType = typename T::value_type,
