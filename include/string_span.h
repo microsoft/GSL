@@ -270,7 +270,7 @@ public:
 
     // from string
     constexpr basic_string_span(std::string& s) noexcept
-        : span_(&(s.at(0)), narrow_cast<std::ptrdiff_t>(s.length()))
+        : span_(const_cast<pointer>(s.data()), narrow_cast<std::ptrdiff_t>(s.length()))
     {}
 
     // from containers. Containers must have .size() and .data() function signatures
