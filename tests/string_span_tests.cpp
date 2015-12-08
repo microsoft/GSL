@@ -14,11 +14,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 #include <UnitTest++/UnitTest++.h>
+#include <cstdlib>
 #include <string_span.h>
 #include <vector>
-#include <cstdlib>
 
 using namespace std;
 using namespace gsl;
@@ -126,6 +125,7 @@ SUITE(string_span_tests)
             const char* ptr = "Hello";
             const std::string str = "Hello";
             const std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
+            gsl::span<const char> sp = ensure_z("Hello");
 
             // comparison to  literal
             CHECK(span == cstring_span<>("Hello"));
@@ -148,6 +148,12 @@ SUITE(string_span_tests)
             // comparison to vector of charaters with no null termination
             CHECK(span == cstring_span<>(vec));
 
+            // comparison to span
+            CHECK(span == cstring_span<>(sp));
+
+            // comparison to string_span
+            CHECK(span == span);
+
             // comparison of the original data to string
             CHECK(span.data() == std::string("Hello"));
         }
@@ -162,6 +168,7 @@ SUITE(string_span_tests)
             char* ptr = ar;
             std::string str = "Hello";
             std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
+            gsl::span<char> sp = ensure_z(ar1);
 
             // comparison to static array with no null termination
             CHECK(span == string_span<>(ar));
@@ -180,52 +187,133 @@ SUITE(string_span_tests)
 
             // comparison to vector of charaters with no null termination
             CHECK(span == string_span<>(vec));
+
+            // comparison to span
+            CHECK(span == string_span<>(sp));
+
+            // comparison to string_span
+            CHECK(span == span);
         }
 
-#ifdef CONFIRM_COMPILATION_ERRORS
+
         {
+            const char ar[] = { 'H', 'e', 'l', 'l', 'o' };
+            const char ar1[] = "Hello";
+            const char ar2[10] = "Hello";
+            const std::string str = "Hello";
+            const std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
+            gsl::span<const char> sp = ensure_z("Hello");
+
             cstring_span<> span = "Hello";
+
+            // const span, const other type
 
             CHECK(span == "Hello");
             CHECK(span == ar);
             CHECK(span == ar1);
             CHECK(span == ar2);
+#ifdef CONFIRM_COMPILATION_ERRORS
+            const char* ptr = "Hello";
             CHECK(span == ptr);
+#endif
             CHECK(span == str);
             CHECK(span == vec);
+            CHECK(span == sp);
+
+            CHECK("Hello" == span);
+            CHECK(ar == span);
+            CHECK(ar1 == span);
+            CHECK(ar2 == span);
+#ifdef CONFIRM_COMPILATION_ERRORS
+            CHECK(ptr == span);
+#endif
+            CHECK(str == span);
+            CHECK(vec == span);
+            CHECK(sp == span);
+
+            // const span, non-const other type
 
             char _ar[] = { 'H', 'e', 'l', 'l', 'o' };
             char _ar1[] = "Hello";
             char _ar2[10] = "Hello";
-            char* _ptr = _ar1;
+            char* _ptr = _ar;
             std::string _str = "Hello";
             std::vector<char> _vec = { 'H', 'e', 'l', 'l', 'o' };
+            gsl::span<char> _sp{ _ar, 5 };
 
             CHECK(span == _ar);
             CHECK(span == _ar1);
             CHECK(span == _ar2);
+#ifdef CONFIRM_COMPILATION_ERRORS
             CHECK(span == _ptr);
+#endif
             CHECK(span == _str);
             CHECK(span == _vec);
+            CHECK(span == _sp);
 
-            string_span<> _span{ _ptr };
+            CHECK(_ar == span);
+            CHECK(_ar1 == span);
+            CHECK(_ar2 == span);
+#ifdef CONFIRM_COMPILATION_ERRORS
+            CHECK(_ptr == span);
+#endif
+            CHECK(_str == span);
+            CHECK(_vec == span);
+            CHECK(_sp == span);
 
+            string_span<> _span{ _ptr, 5 };
+
+            // non-const span, non-const other type
+            
             CHECK(_span == _ar);
             CHECK(_span == _ar1);
             CHECK(_span == _ar2);
+#ifdef CONFIRM_COMPILATION_ERRORS
             CHECK(_span == _ptr);
+#endif
             CHECK(_span == _str);
             CHECK(_span == _vec);
+            CHECK(_span == _sp);
+
+            CHECK(_ar == _span);
+            CHECK(_ar1 == _span);
+            CHECK(_ar2 == _span);
+#ifdef CONFIRM_COMPILATION_ERRORS
+            CHECK(_ptr == _span);
+#endif
+            CHECK(_str == _span);
+            CHECK(_vec == _span);
+            CHECK(_sp == _span);
+
+            // non-const span, const other type
 
             CHECK(_span == "Hello");
             CHECK(_span == ar);
             CHECK(_span == ar1);
             CHECK(_span == ar2);
+#ifdef CONFIRM_COMPILATION_ERRORS
             CHECK(_span == ptr);
+#endif
             CHECK(_span == str);
             CHECK(_span == vec);
-        }
+            CHECK(_span == sp);
+
+            CHECK("Hello" == _span);
+            CHECK(ar == _span);
+            CHECK(ar1 == _span);
+            CHECK(ar2 == _span);
+#ifdef CONFIRM_COMPILATION_ERRORS
+            CHECK(ptr == _span);
 #endif
+            CHECK(str == _span);
+            CHECK(vec == _span);
+            CHECK(sp == _span);
+
+            // two spans
+
+            CHECK(_span == span);
+            CHECK(span == _span);
+        }
 
         {
             std::vector<char> str1 = { 'H', 'e', 'l', 'l', 'o' };
@@ -237,7 +325,6 @@ SUITE(string_span_tests)
             CHECK(span1 == span2);
         }
     }
-
 
     TEST(ComparisonAndImplicitConstructors)
     {
@@ -310,7 +397,7 @@ SUITE(string_span_tests)
             CHECK(span >= string_span<>(vec));
         }
     }
-    TEST(EnzureRemoveZ)
+    TEST(ConstrutorsEnsureZ)
     {
         // remove z from literals
         {
@@ -351,6 +438,18 @@ SUITE(string_span_tests)
         }
 #endif
 
+        // default
+        {
+            cstring_span<> span;
+            CHECK(span.length() == 0);
+        }
+
+        // from nullptr
+        {
+            cstring_span<> span(nullptr);
+            CHECK(span.length() == 0);
+        }
+
         // from string literal
         {
             cstring_span<> span = "Hello";
@@ -378,14 +477,34 @@ SUITE(string_span_tests)
             CHECK(span.length() == 5);
         }
 
-        // from non-const ptr and length
+        // from const ptr and length, include 0
         {
-            // does not compile with GCC (ISO standard does not allow converting string literals to char*)
-#ifdef CONFIRM_COMPILATION_ERRORS
-            char* ptr = "Hello";
+            const char* ptr = "Hello";
+            cstring_span<> span{ ptr, 6 };
+            CHECK(span.length() == 6);
+        }
+
+        // from const ptr and length, 0 inside
+        {
+            const char* ptr = "He\0lo";
             cstring_span<> span{ ptr, 5 };
             CHECK(span.length() == 5);
-#endif
+        }
+
+        // from non-const ptr and length
+        {
+            char ar[] = { 'H', 'e', 'l', 'l', 'o' };
+            char* ptr = ar;
+            cstring_span<> span{ ptr, 5 };
+            CHECK(span.length() == 5);
+        }
+
+        // from non-const ptr and length, 0 inside
+        {
+            char ar[] = { 'H', 'e', '\0', 'l', 'o' };
+            char* ptr = ar;
+            cstring_span<> span{ ptr, 5 };
+            CHECK(span.length() == 5);
         }
 
         // from const string
