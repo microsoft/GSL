@@ -111,28 +111,28 @@ inline span<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_t max = PTRDI
 // TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation
 inline span<char, dynamic_range> ensure_z(char* const& sz, std::ptrdiff_t max)
 {
-    auto len = strnlen(sz, max);
+    auto len = strnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline span<const char, dynamic_range> ensure_z(const char* const& sz, std::ptrdiff_t max)
 {
-    auto len = strnlen(sz, max);
+    auto len = strnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline span<wchar_t, dynamic_range> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = wcsnlen(sz, max);
+    auto len = wcsnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
 inline span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = wcsnlen(sz, max);
+    auto len = wcsnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
@@ -172,7 +172,7 @@ namespace details
     {
         std::ptrdiff_t operator()(char* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(strnlen(ptr, length));
+            return narrow_cast<std::ptrdiff_t>(strnlen(ptr, narrow_cast<size_t>(length)));
         }
     };
 
@@ -181,7 +181,7 @@ namespace details
     {
         std::ptrdiff_t operator()(wchar_t* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, length));
+            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, narrow_cast<size_t>(length)));
         }
     };
 
@@ -190,7 +190,7 @@ namespace details
     {
         std::ptrdiff_t operator()(const char* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(strnlen(ptr, length));
+            return narrow_cast<std::ptrdiff_t>(strnlen(ptr, narrow_cast<size_t>(length)));
         }
     };
 
@@ -199,7 +199,7 @@ namespace details
     {
         std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, length));
+            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, narrow_cast<size_t>(length)));
         }
     };
 }
