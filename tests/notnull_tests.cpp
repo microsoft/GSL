@@ -69,7 +69,8 @@ SUITE(NotNullTests)
 	MyDerived derived;
 	Unrelated unrelated;
 	not_null<Unrelated*> u = &unrelated;
-        not_null<MyDerived*> p = &derived;
+        (void)u;
+	not_null<MyDerived*> p = &derived;
         not_null<MyBase*> q = &base;
 	q = p; // allowed with heterogeneous copy ctor
         CHECK(q == p);
