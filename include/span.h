@@ -45,6 +45,12 @@
 #pragma push_macro("constexpr")
 #define constexpr
 
+// On Windows, if NOMINMAX is not defined, then windows.h defines the macro max
+#ifdef _WIN32
+#pragma push_macro("max")
+#define max max
+#endif
+
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
 
@@ -2195,6 +2201,11 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #undef constexpr
 #pragma pop_macro("constexpr")
+
+#ifdef _WIN32
+#undef max
+#pragma pop_macro("max")
+#endif
 
 #if _MSC_VER <= 1800
 #pragma warning(pop)

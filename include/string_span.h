@@ -235,13 +235,28 @@ public:
     constexpr basic_string_span(const basic_string_span& other) = default;
 
     // move
+#ifdef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
+    constexpr basic_string_span(basic_string_span&& other)
+		: span_(std::move(other.span_))
+	{
+	}
+#else
     constexpr basic_string_span(basic_string_span&& other) = default;
+#endif
 
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) = default;
 
     // move assign
+#ifdef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
+    constexpr basic_string_span& operator=(basic_string_span&& other)
+	{
+		span_ = std::move(other.span_);
+		return *this;
+	}
+#else
     constexpr basic_string_span& operator=(basic_string_span&& other) = default;
+#endif
 
     // from nullptr and length
     constexpr basic_string_span(std::nullptr_t ptr, size_type length) noexcept
@@ -560,8 +575,6 @@ bool operator>=(const gsl::basic_string_span<CharT, Extent>& one, const gsl::bas
 #pragma pop_macro("constexpr")
 
 #if _MSC_VER <= 1800
-
-#pragma warning(pop)
 
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #undef noexcept
