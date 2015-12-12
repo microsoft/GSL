@@ -35,6 +35,7 @@
 
 #define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 #define GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
+#define GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
 
 // noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
@@ -611,7 +612,13 @@ using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
 bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
+#ifdef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
+    if (std::distance(one.begin(), one.end()) != std::distance(other.begin(), other.end()))
+        return false;
+    return std::equal(one.begin(), one.end(), other.begin());
+#else
     return std::equal(one.begin(), one.end(), other.begin(), other.end());
+#endif
 }
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range>
@@ -651,6 +658,7 @@ bool operator>=(const gsl::basic_string_span<CharT, Extent>& one, const gsl::bas
 #pragma pop_macro("noexcept")
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
+#undef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
 #undef GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
 #undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 
