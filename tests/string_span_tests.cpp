@@ -66,7 +66,6 @@ SUITE(string_span_tests)
     TEST(TestConstructFromStdArray)
     {
         std::array<char, 5> arr {"1234"};
-        auto const size = static_cast<cstring_span<>::size_type>(arr.size());
 
         string_span<> v = arr;
         CHECK(v.length() == 5);
