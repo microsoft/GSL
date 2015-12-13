@@ -90,7 +90,7 @@ using wzstring = wchar_t*;
 template <typename T, T Sentinel>
 span<T, dynamic_range> ensure_sentinel(T const* const seq, ptrdiff_t const max = PTRDIFF_MAX)
 {
-    auto const it = std::find(seq, seq + max, Sentinal);
+    auto const it = std::find(seq, seq + max, Sentinel);
     Ensures(*it == Sentinel);
     return{ seq, it - seq };
 }
@@ -108,7 +108,7 @@ namespace details
     }
 
     template <typename T, typename U = std::remove_cv_t<T>>
-    using is_char_t = std::bool_constant<
+    using is_char_t = std::integral_constant<bool,
         std::is_same<char, U>::value || std::is_same<wchar_t, U>::value>;
 
     template <typename T, typename U = std::remove_pointer_t<T>>
