@@ -35,6 +35,7 @@
 
 #define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 #define GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
+#define GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
 
 // noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
@@ -621,7 +622,13 @@ template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T
 bool operator==(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
+#ifdef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
+    if (std::distance(one.begin(), one.end()) != std::distance(tmp.begin(), tmp.end()))
+        return false;
+    return std::equal(one.begin(), one.end(), tmp.begin());
+#else
     return std::equal(one.begin(), one.end(), tmp.begin(), tmp.end());
+#endif
 }
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
@@ -632,7 +639,13 @@ template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T
 bool operator==(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(one);
+#ifdef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
+    if (std::distance(tmp.begin(), tmp.end()) != std::distance(other.begin(), other.end()))
+        return false;
+    return std::equal(tmp.begin(), tmp.end(), other.begin());
+#else
     return std::equal(tmp.begin(), tmp.end(), other.begin(), other.end());
+#endif
 }
 
 #ifndef _MSC_VER 
@@ -946,6 +959,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 #pragma pop_macro("noexcept")
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
+#undef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
 #undef GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
 #undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 
