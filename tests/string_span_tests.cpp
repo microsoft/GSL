@@ -29,7 +29,6 @@ SUITE(string_span_tests)
     TEST(TestLiteralConstruction)
     {
         cwstring_span<> v = ensure_z(L"Hello");
-
         CHECK(5 == v.length());
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -118,6 +117,24 @@ SUITE(string_span_tests)
     {
         {
             cstring_span<> span = "Hello";
+            cstring_span<> span1;
+
+            // comparison to empty span
+            CHECK(span1 != span);
+            CHECK(span != span1);      
+        }
+
+        {
+            cstring_span<> span = "Hello";
+            cstring_span<> span1 = "Hello1";
+
+            // comparison to different span
+            CHECK(span1 != span);
+            CHECK(span != span1);
+        }
+
+        {
+            cstring_span<> span = "Hello";
 
             const char ar[] = { 'H', 'e', 'l', 'l', 'o' };
             const char ar1[] = "Hello";
@@ -153,9 +170,6 @@ SUITE(string_span_tests)
 
             // comparison to string_span
             CHECK(span == span);
-
-            // comparison of the original data to string
-            CHECK(span.data() == std::string("Hello"));
         }
 
         {
@@ -430,6 +444,22 @@ SUITE(string_span_tests)
     TEST(Constructors)
     {
         // creating cstring_span
+
+        // from span of a final extent
+        {
+            span<const char, 6> sp = "Hello";
+            cstring_span<> span = sp;
+            CHECK(span.length() == 6);
+        }
+
+        // from const span of a final extent to non-const string_span
+#ifdef CONFIRM_COMPILATION_ERRORS
+        {
+            span<const char, 6> sp = "Hello";
+            string_span<> span = sp;
+            CHECK(span.length() == 6);
+        }
+#endif
 
         // from string temporary
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -794,7 +824,7 @@ SUITE(string_span_tests)
 
     TEST(Conversion)
     {
-#ifdef CONFIRM_COMPPILATION_ERRORS
+#ifdef CONFIRM_COMPILATION_ERRORS
         cstring_span<> span = "Hello";
         cwstring_span<> wspan{ span };
         CHECK(wspan.length() == 5);
