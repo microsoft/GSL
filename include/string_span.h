@@ -34,6 +34,8 @@
 #if _MSC_VER <= 1800
 
 #define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
+#define GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
+#define GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
 
 // noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
@@ -235,13 +237,28 @@ public:
     constexpr basic_string_span(const basic_string_span& other) = default;
 
     // move
+#ifdef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
+    constexpr basic_string_span(basic_string_span&& other)
+		: span_(std::move(other.span_))
+	{
+	}
+#else
     constexpr basic_string_span(basic_string_span&& other) = default;
+#endif
 
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) = default;
 
     // move assign
+#ifdef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
+    constexpr basic_string_span& operator=(basic_string_span&& other)
+	{
+		span_ = std::move(other.span_);
+		return *this;
+	}
+#else
     constexpr basic_string_span& operator=(basic_string_span&& other) = default;
+#endif
 
     // from nullptr
     constexpr basic_string_span(std::nullptr_t ptr) noexcept
@@ -272,6 +289,74 @@ public:
     constexpr basic_string_span(std::string& s) noexcept
         : span_(const_cast<pointer>(s.data()), narrow_cast<std::ptrdiff_t>(s.length()))
     {}
+
+#ifdef GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
+    template<
+        typename Cont,
+        typename DataType = typename Cont::value_type
+    >
+    constexpr basic_string_span(
+        Cont& cont,
+        std::enable_if_t<
+            !details::is_span<Cont>::value
+            && !details::is_basic_string_span<Cont>::value
+            && !(!std::is_const<value_type>::value && std::is_const<Cont>::value)
+            && std::is_convertible<DataType*, value_type*>::value
+            && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value
+        >* = nullptr
+        )
+    : span_(cont.data(), cont.size())
+    {}
+
+    // disallow creation from temporary containers and strings
+    template<
+        typename Cont,
+        typename DataType = typename Cont::value_type
+    >
+    explicit basic_string_span(
+        Cont&& cont
+        ,
+        std::enable_if_t<
+            !details::is_span<Cont>::value
+            && !details::is_basic_string_span<Cont>::value
+            && std::is_convertible<DataType*, value_type*>::value
+            && std::is_same<std::decay_t<decltype(std::declval<Cont>().size(), *std::declval<Cont>().data())>, DataType>::value
+        >* = nullptr
+        ) = delete;
+
+    // from span
+    template<
+        typename OtherValueType,
+        std::ptrdiff_t... OtherDimensions,
+        typename OtherBounds = static_bounds<OtherDimensions...>
+    >
+    constexpr basic_string_span(
+        span<OtherValueType, OtherDimensions...> other,
+        typename std::enable_if<
+            std::is_convertible<OtherValueType, value_type>::value &&
+            std::is_convertible<OtherBounds, bounds_type>::value
+            >::type* = nullptr
+    ) noexcept
+        : span_(other)
+    {}
+
+    // from string_span
+    template<
+        typename OtherValueType,
+        std::ptrdiff_t OtherExtent,
+        typename OtherBounds = static_bounds<OtherExtent>
+    >
+    constexpr basic_string_span(
+        basic_string_span<OtherValueType, OtherExtent> other,
+        std::enable_if_t<
+            std::is_convertible<OtherValueType*, value_type*>::value
+            && std::is_convertible<OtherBounds, bounds_type>::value
+        >* = nullptr
+        ) noexcept
+        : span_(other.data(), other.length())
+    {}
+
+#else // GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
 
     // from containers. Containers must have .size() and .data() function signatures
     template <typename Cont, typename DataType = typename Cont::value_type,
@@ -311,6 +396,7 @@ public:
     constexpr basic_string_span(basic_string_span<OtherValueType, OtherExtent> other) noexcept
         : span_(other.data(), other.length())
     {}
+#endif // GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
 
     constexpr bool empty() const noexcept
     {
@@ -536,7 +622,13 @@ template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T
 bool operator==(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
+#ifdef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
+    if (std::distance(one.begin(), one.end()) != std::distance(tmp.begin(), tmp.end()))
+        return false;
+    return std::equal(one.begin(), one.end(), tmp.begin());
+#else
     return std::equal(one.begin(), one.end(), tmp.begin(), tmp.end());
+#endif
 }
 
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,
@@ -547,7 +639,13 @@ template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T
 bool operator==(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(one);
+#ifdef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
+    if (std::distance(tmp.begin(), tmp.end()) != std::distance(other.begin(), other.end()))
+        return false;
+    return std::equal(tmp.begin(), tmp.end(), other.begin());
+#else
     return std::equal(tmp.begin(), tmp.end(), other.begin(), other.end());
+#endif
 }
 
 #ifndef _MSC_VER 
@@ -856,13 +954,13 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 
 #if _MSC_VER <= 1800
 
-#pragma warning(pop)
-
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #undef noexcept
 #pragma pop_macro("noexcept")
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
+#undef GSL_MSVC2013_EQUAL_ALGORITHM_IS_NOT_CPP14
+#undef GSL_MSVC2013_ICE_WHEN_USING_DUMMY_TEMPLATE_PARAMETER
 #undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 
 #endif // _MSC_VER <= 1800
