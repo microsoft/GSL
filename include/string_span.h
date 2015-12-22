@@ -23,6 +23,7 @@
 #include "gsl_util.h"
 #include "span.h"
 #include <cstring>
+#include <string>
 
 #ifdef _MSC_VER
 
