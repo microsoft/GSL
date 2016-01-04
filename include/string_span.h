@@ -435,7 +435,7 @@ public:
 
     constexpr const_iterator cend() const noexcept
     {
-        span_.cend();
+        return span_.cend();
     }
 
     constexpr reverse_iterator rbegin() const noexcept
