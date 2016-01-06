@@ -902,7 +902,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 
 #undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 #undef GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
-#define GSL_MSVC_NO_CPP14_STD_EQUAL
+#undef GSL_MSVC_NO_CPP14_STD_EQUAL
 #undef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
 
 #endif // _MSC_VER <= 1800
