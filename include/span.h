@@ -1818,7 +1818,7 @@ public:
         auto d = narrow_cast<size_type>(sizeof(OtherValueType) / sizeof(value_type));
 
         size_type size = this->bounds().total_size() / d;
-        return {(OtherValueType*) this->data(), size,
+        return {const_cast<OtherValueType*>(reinterpret_cast<const OtherValueType*>(this->data())), size,
                 bounds_type{resize_extent(this->bounds().index_bounds(), d),
                             resize_stride(this->bounds().strides(), d)}};
     }
