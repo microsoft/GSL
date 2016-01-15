@@ -125,8 +125,10 @@ public:
         std::copy(values, values + Rank, elems);
     }
 
-    template <typename = std::enable_if_t<Rank == 1>>
-    constexpr index(value_type value) noexcept
+    template <typename ValueType,
+              typename = std::enable_if_t<(Rank == 1) &&
+                                          std::is_convertible<ValueType, value_type>::value>>
+    constexpr index(ValueType value) noexcept
     {
         elems[0] = value;
     }
