@@ -1674,6 +1674,15 @@ SUITE(span_tests)
             }
         }
     }
+
+    TEST(extent_on_empty_span)
+    {
+        std::vector<int> vec = {};
+        auto view = as_span(as_span(vec), dim<>(3), dim<>(0));
+
+        CHECK(view.extent<0>() == 0);
+        CHECK(view.extent<1>() == 0);
+    }
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }

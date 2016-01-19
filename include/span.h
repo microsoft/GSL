@@ -394,7 +394,14 @@ namespace details
 
         size_type totalSize() const noexcept { return m_bound; }
 
-        size_type elementNum() const noexcept { return totalSize() / this->Base::totalSize(); }
+        size_type elementNum() const noexcept
+        {
+            auto ts = totalSize();
+            if (ts == 0u) return ts;
+
+            Expects(this->Base::totalSize() != 0);
+            return ts / this->Base::totalSize();
+        }
 
         size_type elementNum(size_t dim) const noexcept
         {
