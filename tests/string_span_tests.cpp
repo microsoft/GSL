@@ -846,7 +846,7 @@ SUITE(string_span_tests)
         span[last] = '\0';
 
         auto ret = span.subspan(0, 4);
-        return ret;
+        return{ ret };
     }
 
     TEST(zstring)
@@ -903,7 +903,7 @@ SUITE(string_span_tests)
         span[last] = L'\0';
 
         auto ret = span.subspan(0, 4);
-        return ret;
+        return{ ret };
     }
 
     TEST(wzstring)

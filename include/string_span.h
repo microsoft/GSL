@@ -588,16 +588,16 @@ private:
     impl_type span_;
 };
 
-template <size_t Max = dynamic_range>
+template <std::ptrdiff_t Max = dynamic_range>
 using zstring_span = basic_zstring_span<char, Max>;
 
-template <size_t Max = dynamic_range>
+template <std::ptrdiff_t Max = dynamic_range>
 using wzstring_span = basic_zstring_span<wchar_t, Max>;
 
-template <size_t Max = dynamic_range>
+template <std::ptrdiff_t Max = dynamic_range>
 using czstring_span = basic_zstring_span<const char, Max>;
 
-template <size_t Max = dynamic_range>
+template <std::ptrdiff_t Max = dynamic_range>
 using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
 
 } // namespace GSL
