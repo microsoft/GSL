@@ -527,7 +527,7 @@ inline std::wstring to_string(wstring_span<> view)
 
 // zero-terminated string span, used to convert
 // zero-terminated spans to legacy strings
-template<typename CharT, size_t Extent = dynamic_range>
+template<typename CharT, std::ptrdiff_t Extent = dynamic_range>
 class basic_zstring_span
 {
 public:
@@ -544,22 +544,48 @@ public:
     using string_span_type = basic_string_span<value_type, Extent>;
 
     constexpr basic_zstring_span(impl_type span) noexcept
-        : sp_(span)
+        : span_(span)
     {
         // expects a zero-terminated span
         Expects(span[span.size() - 1] == '\0');
     }
 
-    constexpr bool empty() const noexcept { return sp_.size() == 0; }
+    // copy
+    constexpr basic_zstring_span(const basic_zstring_span& other) = default;
 
-    constexpr string_span_type as_string_span() const noexcept { return sp_.first(sp_.size()-1); }
+    // move
+#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+    constexpr basic_zstring_span(basic_zstring_span&& other) = default;
+#else
+    constexpr basic_zstring_span(basic_zstring_span&& other)
+        : span_(std::move(other.span_))
+    {}
+#endif
 
-    constexpr string_span_type ensure_z() const noexcept { return gsl::ensure_z(sp_); }
+    // assign
+    constexpr basic_zstring_span& operator=(const basic_zstring_span& other) = default;
 
-    constexpr const_zstring_type assume_z() const noexcept { return sp_.data(); }
+    // move assign
+#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+    constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
+#else
+    constexpr basic_zstring_span& operator=(basic_zstring_span&& other)
+    {
+        span_ = std::move(other.span_);
+        return *this;
+    }
+#endif
+
+    constexpr bool empty() const noexcept { return span_.size() == 0; }
+
+    constexpr string_span_type as_string_span() const noexcept { return span_.first(span_.size()-1); }
+
+    constexpr string_span_type ensure_z() const noexcept { return gsl::ensure_z(span_); }
+
+    constexpr const_zstring_type assume_z() const noexcept { return span_.data(); }
 
 private:
-    impl_type sp_;
+    impl_type span_;
 };
 
 template <size_t Max = dynamic_range>
