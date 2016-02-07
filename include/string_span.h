@@ -71,17 +71,21 @@ namespace gsl
 // type system for these types that will not either incur significant runtime costs or
 // (sometimes needlessly) break existing programs when introduced.
 //
-template<std::ptrdiff_t Extent = dynamic_range>
-using czstring = const char*;
+
+template<typename CharT, std::ptrdiff_t Extent = dynamic_range>
+using basic_zstring = CharT*;
 
 template<std::ptrdiff_t Extent = dynamic_range>
-using cwzstring = const wchar_t*;
+using czstring = basic_zstring<const char, Extent>;
 
 template<std::ptrdiff_t Extent = dynamic_range>
-using zstring = char*;
+using cwzstring = basic_zstring<const wchar_t, Extent>;
 
 template<std::ptrdiff_t Extent = dynamic_range>
-using wzstring = wchar_t*;
+using zstring = basic_zstring<char, Extent>;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using wzstring = basic_zstring<wchar_t, Extent>;
 
 //
 // ensure_sentinel()
@@ -521,43 +525,82 @@ inline std::wstring to_string(wstring_span<> view)
 
 #endif
 
-template<typename CharT, size_t Extent = dynamic_range>
-class basic_zstring_builder
+// zero-terminated string span, used to convert
+// zero-terminated spans to legacy strings
+template<typename CharT, std::ptrdiff_t Extent = dynamic_range>
+class basic_zstring_span
 {
 public:
-    using impl_type = span<CharT, Extent>;
-    using string_span_type = basic_string_span<CharT, Extent>;
     using value_type = CharT;
-    using pointer = CharT*;
-    using size_type = typename string_span_type::size_type;
-    using iterator = typename string_span_type::iterator;
+    using const_value_type = std::add_const_t<CharT>;
 
-    basic_zstring_builder(CharT* data, size_type length) : sv_(data, length) {}
+    using pointer = std::add_pointer_t<value_type>;
+    using const_pointer = std::add_pointer_t<const_value_type>;
 
-    template<size_t Size>
-    basic_zstring_builder(CharT(&arr)[Size]) : sv_(arr) {}
+    using zstring_type = basic_zstring<value_type, Extent>;
+    using const_zstring_type = basic_zstring<const_value_type, Extent>;
 
-    pointer data() const { return sv_.data(); }
-    string_span_type view() const { return sv_; }
+    using impl_type = span<value_type, Extent>;
+    using string_span_type = basic_string_span<value_type, Extent>;
 
-    size_type length() const { return sv_.length(); }
+    constexpr basic_zstring_span(impl_type span) noexcept
+        : span_(span)
+    {
+        // expects a zero-terminated span
+        Expects(span[span.size() - 1] == '\0');
+    }
 
-    pointer assume0() const { return data(); }
-    string_span_type ensure_z() const { return gsl::ensure_z(sv_); }
+    // copy
+    constexpr basic_zstring_span(const basic_zstring_span& other) = default;
 
-    iterator begin() const { return sv_.begin(); }
-    iterator end() const { return sv_.end(); }
+    // move
+#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+    constexpr basic_zstring_span(basic_zstring_span&& other) = default;
+#else
+    constexpr basic_zstring_span(basic_zstring_span&& other)
+        : span_(std::move(other.span_))
+    {}
+#endif
+
+    // assign
+    constexpr basic_zstring_span& operator=(const basic_zstring_span& other) = default;
+
+    // move assign
+#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+    constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
+#else
+    constexpr basic_zstring_span& operator=(basic_zstring_span&& other)
+    {
+        span_ = std::move(other.span_);
+        return *this;
+    }
+#endif
+
+    constexpr bool empty() const noexcept { return span_.size() == 0; }
+
+    constexpr string_span_type as_string_span() const noexcept { return span_.first(span_.size()-1); }
+
+    constexpr string_span_type ensure_z() const noexcept { return gsl::ensure_z(span_); }
+
+    constexpr const_zstring_type assume_z() const noexcept { return span_.data(); }
 
 private:
-    impl_type sv_;
+    impl_type span_;
 };
 
-template <size_t Max = dynamic_range>
-using zstring_builder = basic_zstring_builder<char, Max>;
+template <std::ptrdiff_t Max = dynamic_range>
+using zstring_span = basic_zstring_span<char, Max>;
 
-template <size_t Max = dynamic_range>
-using wzstring_builder = basic_zstring_builder<wchar_t, Max>;
-}
+template <std::ptrdiff_t Max = dynamic_range>
+using wzstring_span = basic_zstring_span<wchar_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_range>
+using czstring_span = basic_zstring_span<const char, Max>;
+
+template <std::ptrdiff_t Max = dynamic_range>
+using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
+
+} // namespace GSL
 
 // operator ==
 template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_range, typename T,

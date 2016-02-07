@@ -830,6 +830,120 @@ SUITE(string_span_tests)
         CHECK(wspan.length() == 5);
 #endif
     }
+
+    czstring_span<> CreateTempName(string_span<> span)
+    {
+        Expects(span.size() > 1);
+
+        int last = 0;
+        if (span.size() > 4)
+        {
+            span[0] = 't';
+            span[1] = 'm';
+            span[2] = 'p';
+            last = 3;
+        }
+        span[last] = '\0';
+
+        auto ret = span.subspan(0, 4);
+        return{ ret };
+    }
+
+    TEST(zstring)
+    {
+
+        // create zspan from zero terminated string
+        {
+            char buf[1];
+            buf[0] = '\0';
+
+            zstring_span<> zspan({ buf, 1 });
+
+            CHECK(strlen(zspan.assume_z()) == 0);
+            CHECK(zspan.as_string_span().size() == 0);
+            CHECK(zspan.ensure_z().size() == 0);
+        }
+
+        // create zspan from non-zero terminated string
+        {
+            char buf[1];
+            buf[0] = 'a';
+
+            auto workaround_macro = [&]() { zstring_span<> zspan({ buf, 1 }); };
+            CHECK_THROW(workaround_macro(), fail_fast);
+        }
+
+        // usage scenario: create zero-terminated temp file name and pass to a legacy API
+        {
+            char buf[10];
+
+            auto name = CreateTempName({ buf, 10 });
+            if (!name.empty())
+            {
+                czstring<> str = name.assume_z();
+                CHECK(strlen(str) == 3);
+                CHECK(*(str+3) == '\0');
+            }
+        }
+
+    }
+
+    cwzstring_span<> CreateTempNameW(wstring_span<> span)
+    {
+        Expects(span.size() > 1);
+
+        int last = 0;
+        if (span.size() > 4)
+        {
+            span[0] = L't';
+            span[1] = L'm';
+            span[2] = L'p';
+            last = 3;
+        }
+        span[last] = L'\0';
+
+        auto ret = span.subspan(0, 4);
+        return{ ret };
+    }
+
+    TEST(wzstring)
+    {
+
+        // create zspan from zero terminated string
+        {
+            wchar_t buf[1];
+            buf[0] = L'\0';
+
+            wzstring_span<> zspan({ buf, 1 });
+
+            CHECK(wcsnlen(zspan.assume_z(), 1) == 0);
+            CHECK(zspan.as_string_span().size() == 0);
+            CHECK(zspan.ensure_z().size() == 0);
+        }
+
+        // create zspan from non-zero terminated string
+        {
+            wchar_t buf[1];
+            buf[0] = L'a';
+
+            auto workaround_macro = [&]() { wzstring_span<> zspan({ buf, 1 }); };
+            CHECK_THROW(workaround_macro(), fail_fast);
+        }
+
+        // usage scenario: create zero-terminated temp file name and pass to a legacy API
+        {
+            wchar_t buf[10];
+
+            auto name = CreateTempNameW({ buf, 10 });
+            if (!name.empty())
+            {
+                cwzstring<> str = name.assume_z();
+                CHECK(wcsnlen(str, 10) == 3);
+                CHECK(*(str + 3) == L'\0');
+            }
+        }
+
+    }
 }
 
 int main(int, const char *[])
