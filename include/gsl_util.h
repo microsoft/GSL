@@ -1,17 +1,17 @@
-/////////////////////////////////////////////////////////////////////////////// 
-// 
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
-// 
-// This code is licensed under the MIT License (MIT). 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-// THE SOFTWARE. 
-// 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -28,13 +28,13 @@
 
 // No MSVC does constexpr fully yet
 #pragma push_macro("constexpr")
-#define constexpr 
+#define constexpr
 
 // MSVC 2013 workarounds
 #if _MSC_VER <= 1800
-// noexcept is not understood 
+// noexcept is not understood
 #pragma push_macro("noexcept")
-#define noexcept  
+#define noexcept
 
 // turn off some misguided warnings
 #pragma warning(push)
@@ -63,7 +63,7 @@ public:
     final_act(final_act&& other) noexcept
     : f_(std::move(other.f_)), invoke_(other.invoke_)
     { other.invoke_ = false; }
-    
+
     final_act(const final_act&) = delete;
     final_act& operator=(const final_act&) = delete;
 
@@ -93,12 +93,12 @@ struct narrowing_error : public std::exception {};
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template<class T, class U>
 inline T narrow(U u)
-{ T t = narrow_cast<T>(u); if (static_cast<U>(t) != u) throw narrowing_error(); return t; }
+{ T t = narrow_cast<T>(u); if (static_cast<U>(t) != u || (t < T{}) != (u < U{})) throw narrowing_error(); return t; }
 
 //
 // at() - Bounds-checked way of accessing static arrays, std::array, std::vector
 //
-template <class T, size_t N> 
+template <class T, size_t N>
 constexpr T& at(T(&arr)[N], size_t index)
 { Expects(index < N); return arr[index]; }
 
@@ -122,7 +122,7 @@ constexpr typename Cont::value_type& at(Cont& cont, size_t index)
 
 #undef noexcept
 #pragma pop_macro("noexcept")
- 
+
 #pragma warning(pop)
 
 #endif // _MSC_VER <= 1800
