@@ -44,6 +44,7 @@
 
 #define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 #define GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
+#define GSL_MSVC_NO_CPP11_CHAR_TYPES
 #define GSL_MSVC_NO_CPP14_STD_EQUAL
 #define GSL_MSVC_NO_DEFAULT_MOVE_CTOR
 
@@ -94,6 +95,22 @@ using zstring = basic_zstring<char, Extent>;
 
 template <std::ptrdiff_t Extent = dynamic_extent>
 using wzstring = basic_zstring<wchar_t, Extent>;
+
+#ifndef GSL_MSVC_NO_CPP11_CHAR_TYPES
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using cu16zstring = const char16_t*;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using cu32zstring = const char32_t*;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using u16zstring = char16_t*;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using u32zstring = char32_t*;
+
+#endif
 
 //
 // ensure_sentinel()
@@ -152,6 +169,38 @@ inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, st
     Ensures(sz[len] == 0);
     return {sz, static_cast<std::ptrdiff_t>(len)};
 }
+
+#ifndef GSL_MSVC_NO_CPP11_CHAR_TYPES
+
+inline span<char16_t, dynamic_range> ensure_z(char16_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::u16strnlen(sz, narrow_cast<size_t>(max));
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
+}
+
+inline span<const char16_t, dynamic_range> ensure_z(const char16_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::u16strnlen(sz, narrow_cast<size_t>(max));
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
+}
+
+inline span<char32_t, dynamic_range> ensure_z(char32_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::u32strnlen(sz, narrow_cast<size_t>(max));
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
+}
+
+inline span<const char32_t, dynamic_range> ensure_z(const char32_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::u32strnlen(sz, narrow_cast<size_t>(max));
+    Ensures(sz[len] == 0);
+    return{ sz, static_cast<std::ptrdiff_t>(len) };
+}
+
+#endif
 
 template <typename T, size_t N>
 span<T, dynamic_extent> ensure_z(T (&sz)[N])
@@ -226,6 +275,62 @@ namespace details
             return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, narrow_cast<size_t>(length)));
         }
     };
+
+#ifndef GSL_MSVC_NO_CPP11_CHAR_TYPES
+
+    size_t u16strnlen(const char16_t *str, size_t maxlen)
+    {
+        const char16_t* ptr = str;
+        size_t len = 0;
+        for (; *ptr && len < maxlen; ptr++, len++);
+        return len;
+    }
+
+    size_t u32strnlen(const char32_t *str, size_t maxlen)
+    {
+        const char32_t* ptr = str;
+        size_t len = 0;
+        for (; *ptr && len < maxlen; ptr++, len++);
+        return len;
+    }
+
+    template <>
+    struct length_func<char16_t>
+    {
+        std::ptrdiff_t operator()(char16_t* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(u16strnlen(ptr, narrow_cast<size_t>(length)));
+        }
+    };
+
+    template <>
+    struct length_func<const char16_t>
+    {
+        std::ptrdiff_t operator()(const char16_t* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(u16strnlen(ptr, narrow_cast<size_t>(length)));
+        }
+    };
+
+    template <>
+    struct length_func<char32_t>
+    {
+        std::ptrdiff_t operator()(char32_t* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(u32strnlen(ptr, narrow_cast<size_t>(length)));
+        }
+    };
+
+    template <>
+    struct length_func<const char32_t>
+    {
+        std::ptrdiff_t operator()(const char32_t* const ptr, std::ptrdiff_t length) noexcept
+        {
+            return narrow_cast<std::ptrdiff_t>(u32strnlen(ptr, narrow_cast<size_t>(length)));
+        }
+    };
+
+#endif
 }
 
 //
@@ -425,6 +530,22 @@ using wstring_span = basic_string_span<wchar_t, Extent>;
 template <std::ptrdiff_t Extent = dynamic_extent>
 using cwstring_span = basic_string_span<const wchar_t, Extent>;
 
+#ifndef GSL_MSVC_NO_CPP11_CHAR_TYPES
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using u16string_span = basic_string_span<char16_t, Extent>;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using cu16string_span = basic_string_span<const char16_t, Extent>;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using u32string_span = basic_string_span<char32_t, Extent>;
+
+template<std::ptrdiff_t Extent = dynamic_range>
+using cu32string_span = basic_string_span<const char32_t, Extent>;
+
+#endif
+
 //
 // to_string() allow (explicit) conversions from string_span to string
 //
@@ -458,6 +579,30 @@ inline std::wstring to_string(wstring_span<> view)
 {
     return {view.data(), static_cast<size_t>(view.length())};
 }
+
+#ifndef GSL_MSVC_NO_CPP11_CHAR_TYPES
+
+inline std::u16string to_string(cu16string_span<> view)
+{
+    return{ view.data(), static_cast<size_t>(view.length()) };
+}
+
+inline std::u16string to_string(u16string_span<> view)
+{
+    return{ view.data(), static_cast<size_t>(view.length()) };
+}
+
+inline std::u32string to_string(cu32string_span<> view)
+{
+    return{ view.data(), static_cast<size_t>(view.length()) };
+}
+
+inline std::u32string to_string(u32string_span<> view)
+{
+    return{ view.data(), static_cast<size_t>(view.length()) };
+}
+
+#endif
 
 #endif
 
@@ -535,6 +680,24 @@ using czstring_span = basic_zstring_span<const char, Max>;
 
 template <std::ptrdiff_t Max = dynamic_extent>
 using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
+
+#ifndef GSL_MSVC_NO_CPP11_CHAR_TYPES
+
+template <std::ptrdiff_t Max = dynamic_range>
+using u16zstring_span = basic_zstring_span<char16_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_range>
+using u32zstring_span = basic_zstring_span<char32_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_range>
+using cu16zstring_span = basic_zstring_span<const char16_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_range>
+using cu32zstring_span = basic_zstring_span<const char32_t, Max>;
+
+#endif
+
+} // namespace GSL
 
 // operator ==
 template <class CharT, std::ptrdiff_t Extent, class T,
