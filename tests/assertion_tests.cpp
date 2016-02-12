@@ -23,7 +23,7 @@ SUITE(assertion_tests)
 {
     int f(int i)
     {
-        Expects(i > 0 && i < 10);
+        GSL_EXPECTS(i > 0 && i < 10);
         return i;
     }
 
@@ -36,7 +36,7 @@ SUITE(assertion_tests)
     int g(int i)
     {        
         i++;
-        Ensures(i > 0 && i < 10);
+        GSL_ENSURES(i > 0 && i < 10);
         return i;
     }
 

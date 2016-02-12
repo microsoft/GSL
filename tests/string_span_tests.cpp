@@ -833,7 +833,7 @@ SUITE(string_span_tests)
 
     czstring_span<> CreateTempName(string_span<> span)
     {
-        Expects(span.size() > 1);
+        GSL_EXPECTS(span.size() > 1);
 
         int last = 0;
         if (span.size() > 4)
@@ -890,7 +890,7 @@ SUITE(string_span_tests)
 
     cwzstring_span<> CreateTempNameW(wstring_span<> span)
     {
-        Expects(span.size() > 1);
+        GSL_EXPECTS(span.size() > 1);
 
         int last = 0;
         if (span.size() > 4)

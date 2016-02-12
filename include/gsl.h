@@ -19,7 +19,7 @@
 #ifndef GSL_GSL_H
 #define GSL_GSL_H
 
-#include "gsl_assert.h"  // Ensures/Expects
+#include "gsl_assert.h"  // GSL_ENSURES/GSL_EXPECTS
 #include "gsl_util.h"    // finally()/narrow()/narrow_cast()...
 #include "span.h"           // span, strided_span...
 #include "string_span.h"    // zstring, string_span, zstring_builder...
@@ -120,7 +120,7 @@ private:
 
     // we assume that the compiler can hoist/prove away most of the checks inlined from this function
     // if not, we could make them optional via conditional compilation
-    void ensure_invariant() const { Expects(ptr_ != nullptr); }
+    void ensure_invariant() const { GSL_EXPECTS(ptr_ != nullptr); }
 
     // unwanted operators...pointers only point to single objects!
     // TODO ensure all arithmetic ops on this type are unavailable

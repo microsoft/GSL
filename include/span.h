@@ -37,7 +37,7 @@
 
 #ifdef _MSC_VER
 
-// turn off some warnings that are noisy about our Expects statements
+// turn off some warnings that are noisy about our GSL_EXPECTS statements
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
 
@@ -149,14 +149,14 @@ public:
     // Preconditions: component_idx < rank
     constexpr reference operator[](size_t component_idx)
     {
-        Expects(component_idx < Rank); // Component index must be less than rank
+        GSL_EXPECTS(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
     // Preconditions: component_idx < rank
     constexpr const_reference operator[](size_t component_idx) const noexcept
     {
-        Expects(component_idx < Rank); // Component index must be less than rank
+        GSL_EXPECTS(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
@@ -355,7 +355,7 @@ namespace details
         BoundsRanges(const std::ptrdiff_t* const arr)
             : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
         {
-            Expects(0 <= *arr);
+            GSL_EXPECTS(0 <= *arr);
         }
 
         BoundsRanges() : m_bound(0) {}
@@ -379,7 +379,7 @@ namespace details
         size_type linearize(const T& arr) const
         {
             const size_type index = this->Base::totalSize() * arr[Dim];
-            Expects(index < m_bound);
+            GSL_EXPECTS(index < m_bound);
             return index + this->Base::template linearize<T, Dim + 1>(arr);
         }
 
@@ -445,7 +445,7 @@ namespace details
         template <typename T, size_t Dim = 0>
         size_type linearize(const T& arr) const
         {
-            Expects(arr[Dim] < CurrentRange); // Index is out of range
+            GSL_EXPECTS(arr[Dim] < CurrentRange); // Index is out of range
             return this->Base::totalSize() * arr[Dim] +
                    this->Base::template linearize<T, Dim + 1>(arr);
         }
@@ -619,7 +619,7 @@ public:
                   details::BoundsRanges<FirstRange, RestRanges...>>::value>>
     constexpr static_bounds(const static_bounds<Ranges...>& other) : m_ranges(other.m_ranges)
     {
-        Expects((MyRanges::DynamicNum == 0 && details::BoundsRanges<Ranges...>::DynamicNum == 0) ||
+        GSL_EXPECTS((MyRanges::DynamicNum == 0 && details::BoundsRanges<Ranges...>::DynamicNum == 0) ||
                 MyRanges::DynamicNum > 0 || other.m_ranges.totalSize() >= m_ranges.totalSize());
     }
 
@@ -627,10 +627,10 @@ public:
         : m_ranges(static_cast<const std::ptrdiff_t*>(il.begin()))
     {
         // Size of the initializer list must match the rank of the array
-        Expects((MyRanges::DynamicNum == 0 && il.size() == 1 && *il.begin() == static_size) ||
+        GSL_EXPECTS((MyRanges::DynamicNum == 0 && il.size() == 1 && *il.begin() == static_size) ||
                 MyRanges::DynamicNum == il.size());
         // Size of the range must be less than the max element of the size type
-        Expects(m_ranges.totalSize() <= PTRDIFF_MAX);
+        GSL_EXPECTS(m_ranges.totalSize() <= PTRDIFF_MAX);
     }
 
     constexpr static_bounds() = default;
@@ -678,7 +678,7 @@ public:
         static_assert(std::is_integral<IntType>::value,
                       "Dimension parameter must be supplied as an integral type.");
         auto real_dim = narrow_cast<size_t>(dim);
-        Expects(real_dim < rank);
+        GSL_EXPECTS(real_dim < rank);
 
         return m_ranges.elementNum(real_dim);
     }
@@ -779,7 +779,7 @@ public:
     {
         size_type ret = 0;
         for (size_t i = 0; i < rank; i++) {
-            Expects(idx[i] < m_extents[i]); // index is out of bounds of the array
+            GSL_EXPECTS(idx[i] < m_extents[i]); // index is out of bounds of the array
             ret += idx[i] * m_strides[i];
         }
         return ret;
@@ -889,7 +889,7 @@ public:
         }
         // If we're here the preconditions were violated
         // "pre: there exists s such that r == ++s"
-        Expects(false);
+        GSL_EXPECTS(false);
         return *this;
     }
 
@@ -919,7 +919,7 @@ public:
             linear_idx = linear_idx % stride[i];
         }
         // index is out of bounds of the array
-        Expects(!less(curr_, index_type{}) && !less(boundary_, curr_));
+        GSL_EXPECTS(!less(curr_, index_type{}) && !less(boundary_, curr_));
         return *this;
     }
 
@@ -1044,7 +1044,7 @@ namespace details
                           BoundsSrc::static_size == dynamic_range ||
                           BoundsDest::static_size == BoundsSrc::static_size,
                       "The source bounds must have same size as dest bounds");
-        Expects(src.size() == dest.size());
+        GSL_EXPECTS(src.size() == dest.size());
     }
 
 } // namespace details
@@ -1110,13 +1110,13 @@ namespace details
     template <typename BoundsType>
     BoundsType newBoundsHelperImpl(std::ptrdiff_t totalSize, std::true_type) // dynamic size
     {
-        Expects(totalSize >= 0 && totalSize <= PTRDIFF_MAX);
+        GSL_EXPECTS(totalSize >= 0 && totalSize <= PTRDIFF_MAX);
         return BoundsType{totalSize};
     }
     template <typename BoundsType>
     BoundsType newBoundsHelperImpl(std::ptrdiff_t totalSize, std::false_type) // static size
     {
-        Expects(BoundsType::static_size <= totalSize);
+        GSL_EXPECTS(BoundsType::static_size <= totalSize);
         return {};
     }
     template <typename BoundsType>
@@ -1235,7 +1235,7 @@ public:
                           (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
                       "nullptr_t construction of span<T> only possible "
                       "for dynamic or fixed, zero-length spans.");
-        Expects(size == 0);
+        GSL_EXPECTS(size == 0);
     }
 
     // construct from a single element
@@ -1257,7 +1257,7 @@ public:
     constexpr span(pointer data, bounds_type bounds) noexcept : data_(data),
                                                                 bounds_(std::move(bounds))
     {
-        Expects((bounds_.size() > 0 && data != nullptr) || bounds_.size() == 0);
+        GSL_EXPECTS((bounds_.size() > 0 && data != nullptr) || bounds_.size() == 0);
     }
 
     // construct from begin,end pointer pair
@@ -1267,7 +1267,7 @@ public:
     constexpr span(pointer begin, Ptr end)
         : span(begin, details::newBoundsHelper<bounds_type>(static_cast<pointer>(end) - begin))
     {
-        Expects(begin != nullptr && end != nullptr && begin <= static_cast<pointer>(end));
+        GSL_EXPECTS(begin != nullptr && end != nullptr && begin <= static_cast<pointer>(end));
     }
 
     // construct from n-dimensions static array
@@ -1376,14 +1376,14 @@ public:
                           Count <= bounds_type::static_size,
                       "Count is out of bounds.");
 
-        Expects(bounds_type::static_size != dynamic_range || Count <= this->size());
+        GSL_EXPECTS(bounds_type::static_size != dynamic_range || Count <= this->size());
         return {this->data(), Count};
     }
 
     // first() - extract the first count elements into a new span
     constexpr span<ValueType, dynamic_range> first(size_type count) const noexcept
     {
-        Expects(count >= 0 && count <= this->size());
+        GSL_EXPECTS(count >= 0 && count <= this->size());
         return {this->data(), count};
     }
 
@@ -1396,14 +1396,14 @@ public:
                           Count <= bounds_type::static_size,
                       "Count is out of bounds.");
 
-        Expects(bounds_type::static_size != dynamic_range || Count <= this->size());
+        GSL_EXPECTS(bounds_type::static_size != dynamic_range || Count <= this->size());
         return {this->data() + this->size() - Count, Count};
     }
 
     // last() - extract the last count elements into a new span
     constexpr span<ValueType, dynamic_range> last(size_type count) const noexcept
     {
-        Expects(count >= 0 && count <= this->size());
+        GSL_EXPECTS(count >= 0 && count <= this->size());
         return {this->data() + this->size() - count, count};
     }
 
@@ -1418,7 +1418,7 @@ public:
                            Count <= bounds_type::static_size - Offset),
                       "You must describe a sub-range within bounds of the span.");
 
-        Expects(bounds_type::static_size != dynamic_range ||
+        GSL_EXPECTS(bounds_type::static_size != dynamic_range ||
                 (Offset <= this->size() && Count <= this->size() - Offset));
         return {this->data() + Offset, Count};
     }
@@ -1428,7 +1428,7 @@ public:
     constexpr span<ValueType, dynamic_range> subspan(size_type offset,
                                                      size_type count = dynamic_range) const noexcept
     {
-        Expects((offset >= 0 && offset <= this->size()) &&
+        GSL_EXPECTS((offset >= 0 && offset <= this->size()) &&
                 (count == dynamic_range || (count <= this->size() - offset)));
         return {this->data() + offset, count == dynamic_range ? this->length() - offset : count};
     }
@@ -1498,11 +1498,11 @@ public:
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
     constexpr Ret operator[](size_type idx) const noexcept
     {
-        Expects(idx < bounds_.size()); // index is out of bounds of the array
+        GSL_EXPECTS(idx < bounds_.size()); // index is out of bounds of the array
         const size_type ridx = idx * bounds_.stride();
 
         // index is out of bounds of the underlying data
-        Expects(ridx < bounds_.total_size());
+        GSL_EXPECTS(ridx < bounds_.total_size());
         return Ret{data_ + ridx, bounds_.slice()};
     }
 
@@ -1645,7 +1645,7 @@ constexpr auto as_span(span<const byte, Dimensions...> s) noexcept
              ConstByteSpan::bounds_type::static_size % narrow_cast<std::ptrdiff_t>(sizeof(U)) == 0),
         "Target type must be a trivial type and its size must match the byte array size");
 
-    Expects((s.size_bytes() % sizeof(U)) == 0 && (s.size_bytes() / sizeof(U)) < PTRDIFF_MAX);
+    GSL_EXPECTS((s.size_bytes() % sizeof(U)) == 0 && (s.size_bytes() / sizeof(U)) < PTRDIFF_MAX);
     return {reinterpret_cast<const U*>(s.data()),
             s.size_bytes() / narrow_cast<std::ptrdiff_t>(sizeof(U))};
 }
@@ -1669,7 +1669,7 @@ constexpr auto as_span(span<byte, Dimensions...> s) noexcept -> span<
              ByteSpan::bounds_type::static_size % static_cast<std::size_t>(sizeof(U)) == 0),
         "Target type must be a trivial type and its size must match the byte array size");
 
-    Expects((s.size_bytes() % sizeof(U)) == 0);
+    GSL_EXPECTS((s.size_bytes() % sizeof(U)) == 0);
     return {reinterpret_cast<U*>(s.data()),
             s.size_bytes() / narrow_cast<std::ptrdiff_t>(sizeof(U))};
 }
@@ -1721,7 +1721,7 @@ constexpr auto as_span(Cont& arr) -> std::enable_if_t<
     !details::is_span<std::decay_t<Cont>>::value,
     span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>>
 {
-    Expects(arr.size() < PTRDIFF_MAX);
+    GSL_EXPECTS(arr.size() < PTRDIFF_MAX);
     return {arr.data(), narrow_cast<std::ptrdiff_t>(arr.size())};
 }
 
@@ -1735,7 +1735,7 @@ template <typename CharT, typename Traits, typename Allocator>
 constexpr auto as_span(std::basic_string<CharT, Traits, Allocator>& str)
     -> span<CharT, dynamic_range>
 {
-    Expects(str.size() < PTRDIFF_MAX);
+    GSL_EXPECTS(str.size() < PTRDIFF_MAX);
     return {&str[0], narrow_cast<std::ptrdiff_t>(str.size())};
 }
 
@@ -1774,9 +1774,9 @@ public:
     constexpr strided_span(pointer ptr, size_type size, bounds_type bounds)
         : data_(ptr), bounds_(std::move(bounds))
     {
-        Expects((bounds_.size() > 0 && ptr != nullptr) || bounds_.size() == 0);
+        GSL_EXPECTS((bounds_.size() > 0 && ptr != nullptr) || bounds_.size() == 0);
         // Bounds cross data boundaries
-        Expects(this->bounds().total_size() <= size);
+        GSL_EXPECTS(this->bounds().total_size() <= size);
         (void) size;
     }
 
@@ -1838,11 +1838,11 @@ public:
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
     constexpr Ret operator[](size_type idx) const
     {
-        Expects(idx < bounds_.size()); // index is out of bounds of the array
+        GSL_EXPECTS(idx < bounds_.size()); // index is out of bounds of the array
         const size_type ridx = idx * bounds_.stride();
 
         // index is out of bounds of the underlying data
-        Expects(ridx < bounds_.total_size());
+        GSL_EXPECTS(ridx < bounds_.total_size());
         return {data_ + ridx, bounds_.slice().total_size(), bounds_.slice()};
     }
 
@@ -1937,7 +1937,7 @@ private:
     static index_type resize_extent(const index_type& extent, std::ptrdiff_t d)
     {
         // The last dimension of the array needs to contain a multiple of new type elements
-        Expects(extent[Rank - 1] >= d && (extent[Rank - 1] % d == 0));
+        GSL_EXPECTS(extent[Rank - 1] >= d && (extent[Rank - 1] % d == 0));
 
         index_type ret = extent;
         ret[Rank - 1] /= d;
@@ -1949,7 +1949,7 @@ private:
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t, void* = 0)
     {
         // Only strided arrays with regular strides can be resized
-        Expects(strides[Rank - 1] == 1);
+        GSL_EXPECTS(strides[Rank - 1] == 1);
 
         return strides;
     }
@@ -1958,14 +1958,14 @@ private:
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t d)
     {
         // Only strided arrays with regular strides can be resized
-        Expects(strides[Rank - 1] == 1);
+        GSL_EXPECTS(strides[Rank - 1] == 1);
         // The strides must have contiguous chunks of
         // memory that can contain a multiple of new type elements
-        Expects(strides[Rank - 2] >= d && (strides[Rank - 2] % d == 0));
+        GSL_EXPECTS(strides[Rank - 2] >= d && (strides[Rank - 2] % d == 0));
 
         for (size_t i = Rank - 1; i > 0; --i) {
             // Only strided arrays with regular strides can be resized
-            Expects((strides[i - 1] >= strides[i]) && (strides[i - 1] % strides[i] == 0));
+            GSL_EXPECTS((strides[i - 1] >= strides[i]) && (strides[i - 1] % strides[i] == 0));
         }
 
         index_type ret = strides / d;
@@ -1995,7 +1995,7 @@ private:
     void validateThis() const
     {
         // iterator is out of range of the array
-        Expects(data_ >= m_validator->data_ && data_ < m_validator->data_ + m_validator->size());
+        GSL_EXPECTS(data_ >= m_validator->data_ && data_ < m_validator->data_ + m_validator->size());
     }
     contiguous_span_iterator(const Span* container, bool isbegin)
         : data_(isbegin ? container->data_ : container->data_ + container->size())
@@ -2054,19 +2054,19 @@ public:
     contiguous_span_iterator& operator-=(difference_type n) noexcept { return * this += -n; }
     difference_type operator-(const contiguous_span_iterator& rhs) const noexcept
     {
-        Expects(m_validator == rhs.m_validator);
+        GSL_EXPECTS(m_validator == rhs.m_validator);
         return data_ - rhs.data_;
     }
     reference operator[](difference_type n) const noexcept { return *(*this + n); }
     bool operator==(const contiguous_span_iterator& rhs) const noexcept
     {
-        Expects(m_validator == rhs.m_validator);
+        GSL_EXPECTS(m_validator == rhs.m_validator);
         return data_ == rhs.data_;
     }
     bool operator!=(const contiguous_span_iterator& rhs) const noexcept { return !(*this == rhs); }
     bool operator<(const contiguous_span_iterator& rhs) const noexcept
     {
-        Expects(m_validator == rhs.m_validator);
+        GSL_EXPECTS(m_validator == rhs.m_validator);
         return data_ < rhs.data_;
     }
     bool operator<=(const contiguous_span_iterator& rhs) const noexcept { return !(rhs < *this); }
@@ -2153,7 +2153,7 @@ public:
     general_span_iterator& operator-=(difference_type n) noexcept { return * this += -n; }
     difference_type operator-(const general_span_iterator& rhs) const noexcept
     {
-        Expects(m_container == rhs.m_container);
+        GSL_EXPECTS(m_container == rhs.m_container);
         return m_itr - rhs.m_itr;
     }
     value_type operator[](difference_type n) const noexcept
@@ -2163,13 +2163,13 @@ public:
     }
     bool operator==(const general_span_iterator& rhs) const noexcept
     {
-        Expects(m_container == rhs.m_container);
+        GSL_EXPECTS(m_container == rhs.m_container);
         return m_itr == rhs.m_itr;
     }
     bool operator!=(const general_span_iterator& rhs) const noexcept { return !(*this == rhs); }
     bool operator<(const general_span_iterator& rhs) const noexcept
     {
-        Expects(m_container == rhs.m_container);
+        GSL_EXPECTS(m_container == rhs.m_container);
         return m_itr < rhs.m_itr;
     }
     bool operator<=(const general_span_iterator& rhs) const noexcept { return !(rhs < *this); }

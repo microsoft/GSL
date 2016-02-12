@@ -54,25 +54,38 @@ struct fail_fast : public std::runtime_error
 };
 }
 
-#define Expects(cond)  if (!(cond)) \
+#define GSL_EXPECTS(cond)  if (!(cond)) \
     throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
-#define Ensures(cond)  if (!(cond)) \
+#define GSL_ENSURES(cond)  if (!(cond)) \
     throw gsl::fail_fast("GSL: Postcondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
 
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
 
-#define Expects(cond)           if (!(cond)) std::terminate(); 
-#define Ensures(cond)           if (!(cond)) std::terminate();
+#define GSL_EXPECTS(cond)           if (!(cond)) std::terminate(); 
+#define GSL_ENSURES(cond)           if (!(cond)) std::terminate();
 
 
 #elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
 
-#define Expects(cond)           
-#define Ensures(cond)           
+#define GSL_EXPECTS(cond)           
+#define GSL_ENSURES(cond)           
 
 #endif 
 
+// Keep the global macro-namespace clean by default,
+// but offer the dirty solution as well:
+#if defined(GSL_USE_UNPREFIXED_CONTRACTS)
+#define EXPECTS(cond) GSL_EXPECTS(cond)
+#define ENSURES(cond) GSL_ENSURES(cond)
+#endif
+
+// For those who like to live dangerous,
+// offer macros that are not ALL_CAPS:
+#if defined(GSL_USE_UNPREFIXED_AND_LOWERCASE_CONTRACTS)
+#define Expects(cond) GSL_EXPECTS(cond)
+#define Ensures(cond) GSL_ENSURES(cond)
+#endif
 
 #endif // GSL_CONTRACTS_H

@@ -19,7 +19,7 @@
 #ifndef GSL_UTIL_H
 #define GSL_UTIL_H
 
-#include "gsl_assert.h"  // Ensures/Expects
+#include "gsl_assert.h"  // GSL_ENSURES/GSL_EXPECTS
 #include <array>
 #include <utility>
 #include <exception>
@@ -100,15 +100,15 @@ inline T narrow(U u)
 //
 template <class T, size_t N> 
 constexpr T& at(T(&arr)[N], size_t index)
-{ Expects(index < N); return arr[index]; }
+{ GSL_EXPECTS(index < N); return arr[index]; }
 
 template <class T, size_t N>
 constexpr T& at(std::array<T, N>& arr, size_t index)
-{ Expects(index < N); return arr[index]; }
+{ GSL_EXPECTS(index < N); return arr[index]; }
 
 template <class Cont>
 constexpr typename Cont::value_type& at(Cont& cont, size_t index)
-{ Expects(index < cont.size()); return cont[index]; }
+{ GSL_EXPECTS(index < cont.size()); return cont[index]; }
 
 } // namespace gsl
 
