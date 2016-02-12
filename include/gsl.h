@@ -19,23 +19,26 @@
 #ifndef GSL_GSL_H
 #define GSL_GSL_H
 
-#include "gsl_assert.h"  // Ensures/Expects
+#include "gsl_assert.h"  // GSL_ENSURES/GSL_EXPECTS
 #include "gsl_util.h"    // finally()/narrow()/narrow_cast()...
 #include "span.h"           // span, strided_span...
 #include "string_span.h"    // zstring, string_span, zstring_builder...
 #include <memory>
 
+#define GSL_IMPL_CONSTEXPR constexpr
+#define GSL_IMPL_NOEXCEPT noexcept
+
 #ifdef _MSC_VER
 
 // No MSVC does constexpr fully yet
-#pragma push_macro("constexpr")
-#define constexpr 
+#undef GSL_IMPL_CONSTEXPR
+#define GSL_IMPL_CONSTEXPR
 
 // MSVC 2013 workarounds
 #if _MSC_VER <= 1800
-// noexcept is not understood 
-#pragma push_macro("noexcept")
-#define noexcept  
+// noexcept is not understood
+#undef GSL_IMPL_NOEXCEPT
+#define GSL_IMPL_NOEXCEPT
 
 // turn off some misguided warnings
 #pragma warning(push)
@@ -120,7 +123,7 @@ private:
 
     // we assume that the compiler can hoist/prove away most of the checks inlined from this function
     // if not, we could make them optional via conditional compilation
-    void ensure_invariant() const { Expects(ptr_ != nullptr); }
+    void ensure_invariant() const { GSL_EXPECTS(ptr_ != nullptr); }
 
     // unwanted operators...pointers only point to single objects!
     // TODO ensure all arithmetic ops on this type are unavailable
@@ -149,20 +152,12 @@ namespace std
 
 } // namespace std
 
-#ifdef _MSC_VER
 
-#undef constexpr
-#pragma pop_macro("constexpr")
+#undef GSL_IMPL_CONSTEXPR
+#undef GSL_IMPL_NOEXCEPT
 
-#if _MSC_VER <= 1800
-
-#undef noexcept
-#pragma pop_macro("noexcept")
- 
+#if defined(_MSC_VER) and (_MSC_VER <= 1800)
 #pragma warning(pop)
-
 #endif // _MSC_VER <= 1800
-
-#endif // _MSC_VER
 
 #endif // GSL_GSL_H
