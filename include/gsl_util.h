@@ -24,17 +24,20 @@
 #include <utility>
 #include <exception>
 
+#define GSL_IMPL_CONSTEXPR constexpr
+#define GSL_IMPL_NOEXCEPT noexcept
+
 #ifdef _MSC_VER
 
 // No MSVC does constexpr fully yet
-#pragma push_macro("constexpr")
-#define constexpr 
+#undef GSL_IMPL_CONSTEXPR
+#define GSL_IMPL_CONSTEXPR
 
 // MSVC 2013 workarounds
 #if _MSC_VER <= 1800
 // noexcept is not understood 
-#pragma push_macro("noexcept")
-#define noexcept  
+#undef GSL_IMPL_NOEXCEPT
+#define GSL_IMPL_NOEXCEPT
 
 // turn off some misguided warnings
 #pragma warning(push)
@@ -56,18 +59,18 @@ template <class F>
 class final_act
 {
 public:
-    explicit final_act(F f) noexcept
+    explicit final_act(F f) GSL_IMPL_NOEXCEPT
     : f_(std::move(f)), invoke_(true)
     {}
 
-    final_act(final_act&& other) noexcept
+    final_act(final_act&& other) GSL_IMPL_NOEXCEPT
     : f_(std::move(other.f_)), invoke_(other.invoke_)
     { other.invoke_ = false; }
     
     final_act(const final_act&) = delete;
     final_act& operator=(const final_act&) = delete;
 
-    ~final_act() noexcept { if (invoke_) f_(); }
+    ~final_act() GSL_IMPL_NOEXCEPT { if (invoke_) f_(); }
 
 private:
     F f_;
@@ -77,15 +80,15 @@ private:
 // finally() - convenience function to generate a final_act
 template <class F>
 inline final_act<F> finally(const F &f)
-noexcept { return final_act<F>(f); }
+GSL_IMPL_NOEXCEPT { return final_act<F>(f); }
 
 template <class F>
-inline final_act<F> finally(F &&f) noexcept
+inline final_act<F> finally(F &&f) GSL_IMPL_NOEXCEPT
 { return final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template<class T, class U>
-inline constexpr T narrow_cast(U u) noexcept
+inline GSL_IMPL_CONSTEXPR T narrow_cast(U u) GSL_IMPL_NOEXCEPT
 { return static_cast<T>(u); }
 
 struct narrowing_error : public std::exception {};
@@ -99,34 +102,25 @@ inline T narrow(U u)
 // at() - Bounds-checked way of accessing static arrays, std::array, std::vector
 //
 template <class T, size_t N> 
-constexpr T& at(T(&arr)[N], size_t index)
+GSL_IMPL_CONSTEXPR T& at(T(&arr)[N], size_t index)
 { GSL_EXPECTS(index < N); return arr[index]; }
 
 template <class T, size_t N>
-constexpr T& at(std::array<T, N>& arr, size_t index)
+GSL_IMPL_CONSTEXPR T& at(std::array<T, N>& arr, size_t index)
 { GSL_EXPECTS(index < N); return arr[index]; }
 
 template <class Cont>
-constexpr typename Cont::value_type& at(Cont& cont, size_t index)
+GSL_IMPL_CONSTEXPR typename Cont::value_type& at(Cont& cont, size_t index)
 { GSL_EXPECTS(index < cont.size()); return cont[index]; }
 
 } // namespace gsl
 
 
-#ifdef _MSC_VER
+#undef GSL_IMPL_CONSTEXPR
+#undef GSL_IMPL_NOEXCEPT
 
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#if _MSC_VER <= 1800
-
-#undef noexcept
-#pragma pop_macro("noexcept")
- 
+#if defined(_MSC_VER) and (_MSC_VER <= 1800)
 #pragma warning(pop)
-
 #endif // _MSC_VER <= 1800
-
-#endif // _MSC_VER
 
 #endif // GSL_UTIL_H

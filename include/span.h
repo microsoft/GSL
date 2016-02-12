@@ -35,6 +35,9 @@
 #include <type_traits>
 #include <utility>
 
+#define GSL_IMPL_CONSTEXPR constexpr
+#define GSL_IMPL_NOEXCEPT noexcept
+
 #ifdef _MSC_VER
 
 // turn off some warnings that are noisy about our GSL_EXPECTS statements
@@ -42,8 +45,8 @@
 #pragma warning(disable : 4127) // conditional expression is constant
 
 // No MSVC does constexpr fully yet
-#pragma push_macro("constexpr")
-#define constexpr
+#undef GSL_IMPL_CONSTEXPR
+#define GSL_IMPL_CONSTEXPR
 
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
@@ -53,8 +56,8 @@
 
 // noexcept is not understood 
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
-#pragma push_macro("noexcept")
-#define noexcept /* nothing */
+#undef GSL_IMPL_NOEXCEPT
+#define GSL_IMPL_NOEXCEPT /* nothing */
 #endif
 
 // turn off some misguided warnings
@@ -68,11 +71,8 @@
 
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
 
-#ifdef _MSC_VER
-#pragma push_macro("noexcept")
-#endif
-
-#define noexcept /* nothing */
+#undef GSL_IMPL_NOEXCEPT
+#define GSL_IMPL_NOEXCEPT /* nothing */
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
@@ -118,9 +118,9 @@ public:
     using reference = std::add_lvalue_reference_t<value_type>;
     using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 
-    constexpr index() noexcept {}
+    GSL_IMPL_CONSTEXPR index() GSL_IMPL_NOEXCEPT {}
 
-    constexpr index(const value_type (&values)[Rank]) noexcept
+    GSL_IMPL_CONSTEXPR index(const value_type (&values)[Rank]) GSL_IMPL_NOEXCEPT
     {
         std::copy(values, values + Rank, elems);
     }
@@ -130,105 +130,105 @@ public:
         typename T, typename... Ts,
         typename = std::enable_if_t<((sizeof...(Ts) + 1) == Rank) && std::is_integral<T>::value &&
                                     details::are_integral<Ts...>::value>>
-    constexpr index(T t, Ts... ds)
+    GSL_IMPL_CONSTEXPR index(T t, Ts... ds)
         : index({narrow_cast<value_type>(t), narrow_cast<value_type>(ds)...})
     {
     }
 #else
     template <typename... Ts, typename = std::enable_if_t<(sizeof...(Ts) == Rank) &&
                                                           details::are_integral<Ts...>::value>>
-    constexpr index(Ts... ds) noexcept : elems{narrow_cast<value_type>(ds)...}
+    GSL_IMPL_CONSTEXPR index(Ts... ds) GSL_IMPL_NOEXCEPT : elems{narrow_cast<value_type>(ds)...}
     {
     }
 #endif
 
-    constexpr index(const index& other) noexcept = default;
+    GSL_IMPL_CONSTEXPR index(const index& other) GSL_IMPL_NOEXCEPT = default;
 
-    constexpr index& operator=(const index& rhs) noexcept = default;
+    GSL_IMPL_CONSTEXPR index& operator=(const index& rhs) GSL_IMPL_NOEXCEPT = default;
 
     // Preconditions: component_idx < rank
-    constexpr reference operator[](size_t component_idx)
+    GSL_IMPL_CONSTEXPR reference operator[](size_t component_idx)
     {
         GSL_EXPECTS(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
     // Preconditions: component_idx < rank
-    constexpr const_reference operator[](size_t component_idx) const noexcept
+    GSL_IMPL_CONSTEXPR const_reference operator[](size_t component_idx) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
-    constexpr bool operator==(const index& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator==(const index& rhs) const GSL_IMPL_NOEXCEPT
     {
         return std::equal(elems, elems + rank, rhs.elems);
     }
 
-    constexpr bool operator!=(const index& rhs) const noexcept { return !(this == rhs); }
+    GSL_IMPL_CONSTEXPR bool operator!=(const index& rhs) const GSL_IMPL_NOEXCEPT { return !(this == rhs); }
 
-    constexpr index operator+() const noexcept { return *this; }
+    GSL_IMPL_CONSTEXPR index operator+() const GSL_IMPL_NOEXCEPT { return *this; }
 
-    constexpr index operator-() const noexcept
+    GSL_IMPL_CONSTEXPR index operator-() const GSL_IMPL_NOEXCEPT
     {
         index ret = *this;
         std::transform(ret, ret + rank, ret, std::negate<value_type>{});
         return ret;
     }
 
-    constexpr index operator+(const index& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR index operator+(const index& rhs) const GSL_IMPL_NOEXCEPT
     {
         index ret = *this;
         ret += rhs;
         return ret;
     }
 
-    constexpr index operator-(const index& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR index operator-(const index& rhs) const GSL_IMPL_NOEXCEPT
     {
         index ret = *this;
         ret -= rhs;
         return ret;
     }
 
-    constexpr index& operator+=(const index& rhs) noexcept
+    GSL_IMPL_CONSTEXPR index& operator+=(const index& rhs) GSL_IMPL_NOEXCEPT
     {
         std::transform(elems, elems + rank, rhs.elems, elems, std::plus<value_type>{});
         return *this;
     }
 
-    constexpr index& operator-=(const index& rhs) noexcept
+    GSL_IMPL_CONSTEXPR index& operator-=(const index& rhs) GSL_IMPL_NOEXCEPT
     {
         std::transform(elems, elems + rank, rhs.elems, elems, std::minus<value_type>{});
         return *this;
     }
 
-    constexpr index operator*(value_type v) const noexcept
+    GSL_IMPL_CONSTEXPR index operator*(value_type v) const GSL_IMPL_NOEXCEPT
     {
         index ret = *this;
         ret *= v;
         return ret;
     }
 
-    constexpr index operator/(value_type v) const noexcept
+    GSL_IMPL_CONSTEXPR index operator/(value_type v) const GSL_IMPL_NOEXCEPT
     {
         index ret = *this;
         ret /= v;
         return ret;
     }
 
-    friend constexpr index operator*(value_type v, const index& rhs) noexcept
+    friend GSL_IMPL_CONSTEXPR index operator*(value_type v, const index& rhs) GSL_IMPL_NOEXCEPT
     {
         return rhs * v;
     }
 
-    constexpr index& operator*=(value_type v) noexcept
+    GSL_IMPL_CONSTEXPR index& operator*=(value_type v) GSL_IMPL_NOEXCEPT
     {
         std::transform(elems, elems + rank, elems,
                        [v](value_type x) { return std::multiplies<value_type>{}(x, v); });
         return *this;
     }
 
-    constexpr index& operator/=(value_type v) noexcept
+    GSL_IMPL_CONSTEXPR index& operator/=(value_type v) GSL_IMPL_NOEXCEPT
     {
         std::transform(elems, elems + rank, elems,
                        [v](value_type x) { return std::divides<value_type>{}(x, v); });
@@ -244,37 +244,37 @@ private:
 struct static_bounds_dynamic_range_t
 {
     template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
-    constexpr operator T() const noexcept
+    GSL_IMPL_CONSTEXPR operator T() const GSL_IMPL_NOEXCEPT
     {
         return narrow_cast<T>(-1);
     }
 
     template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
-    constexpr bool operator==(T other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator==(T other) const GSL_IMPL_NOEXCEPT
     {
         return narrow_cast<T>(-1) == other;
     }
 
     template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
-    constexpr bool operator!=(T other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator!=(T other) const GSL_IMPL_NOEXCEPT
     {
         return narrow_cast<T>(-1) != other;
     }
 };
 
 template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
-constexpr bool operator==(T left, static_bounds_dynamic_range_t right) noexcept
+GSL_IMPL_CONSTEXPR bool operator==(T left, static_bounds_dynamic_range_t right) GSL_IMPL_NOEXCEPT
 {
     return right == left;
 }
 
 template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
-constexpr bool operator!=(T left, static_bounds_dynamic_range_t right) noexcept
+GSL_IMPL_CONSTEXPR bool operator!=(T left, static_bounds_dynamic_range_t right) GSL_IMPL_NOEXCEPT
 {
     return right != left;
 }
 
-constexpr static_bounds_dynamic_range_t dynamic_range{};
+GSL_IMPL_CONSTEXPR static_bounds_dynamic_range_t dynamic_range{};
 #else
 const std::ptrdiff_t dynamic_range = -1;
 #endif
@@ -332,11 +332,11 @@ namespace details
             return -1;
         }
 
-        size_type elementNum(size_t) const noexcept { return 0; }
+        size_type elementNum(size_t) const GSL_IMPL_NOEXCEPT { return 0; }
 
-        size_type totalSize() const noexcept { return TotalSize; }
+        size_type totalSize() const GSL_IMPL_NOEXCEPT { return TotalSize; }
 
-        bool operator==(const BoundsRanges&) const noexcept { return true; }
+        bool operator==(const BoundsRanges&) const GSL_IMPL_NOEXCEPT { return true; }
     };
 
     template <std::ptrdiff_t... RestRanges>
@@ -392,11 +392,11 @@ namespace details
             return cur < m_bound ? cur + last : -1;
         }
 
-        size_type totalSize() const noexcept { return m_bound; }
+        size_type totalSize() const GSL_IMPL_NOEXCEPT { return m_bound; }
 
-        size_type elementNum() const noexcept { return totalSize() / this->Base::totalSize(); }
+        size_type elementNum() const GSL_IMPL_NOEXCEPT { return totalSize() / this->Base::totalSize(); }
 
-        size_type elementNum(size_t dim) const noexcept
+        size_type elementNum(size_t dim) const GSL_IMPL_NOEXCEPT
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -404,7 +404,7 @@ namespace details
                 return elementNum();
         }
 
-        bool operator==(const BoundsRanges& rhs) const noexcept
+        bool operator==(const BoundsRanges& rhs) const GSL_IMPL_NOEXCEPT
         {
             return m_bound == rhs.m_bound &&
                    static_cast<const Base&>(*this) == static_cast<const Base&>(rhs);
@@ -459,11 +459,11 @@ namespace details
             return this->Base::totalSize() * arr[Dim] + last;
         }
 
-        size_type totalSize() const noexcept { return CurrentRange * this->Base::totalSize(); }
+        size_type totalSize() const GSL_IMPL_NOEXCEPT { return CurrentRange * this->Base::totalSize(); }
 
-        size_type elementNum() const noexcept { return CurrentRange; }
+        size_type elementNum() const GSL_IMPL_NOEXCEPT { return CurrentRange; }
 
-        size_type elementNum(size_t dim) const noexcept
+        size_type elementNum(size_t dim) const GSL_IMPL_NOEXCEPT
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -471,7 +471,7 @@ namespace details
                 return elementNum();
         }
 
-        bool operator==(const BoundsRanges& rhs) const noexcept
+        bool operator==(const BoundsRanges& rhs) const GSL_IMPL_NOEXCEPT
         {
             return static_cast<const Base&>(*this) == static_cast<const Base&>(rhs);
         }
@@ -520,7 +520,7 @@ namespace details
 
     template <size_t Rank, bool Enabled = (Rank > 1),
               typename Ret = std::enable_if_t<Enabled, index<Rank - 1>>>
-    constexpr Ret shift_left(const index<Rank>& other) noexcept
+    GSL_IMPL_CONSTEXPR Ret shift_left(const index<Rank>& other) GSL_IMPL_NOEXCEPT
     {
         Ret ret{};
         for (size_t i = 0; i < Rank - 1; ++i) {
@@ -546,7 +546,7 @@ class static_bounds<FirstRange, RestRanges...>
     using MyRanges = details::BoundsRanges<FirstRange, RestRanges...>;
 
     MyRanges m_ranges;
-    constexpr static_bounds(const MyRanges& range) : m_ranges(range) {}
+    GSL_IMPL_CONSTEXPR static_bounds(const MyRanges& range) : m_ranges(range) {}
 
     template <std::ptrdiff_t... OtherRanges>
     friend class static_bounds;
@@ -565,7 +565,7 @@ public:
     using sliced_type = static_bounds<RestRanges...>;
     using mapping_type = contiguous_mapping_tag;
 
-    constexpr static_bounds(const static_bounds&) = default;
+    GSL_IMPL_CONSTEXPR static_bounds(const static_bounds&) = default;
 
     template <typename SourceType, typename TargetType, size_t Rank>
     struct BoundsRangeConvertible2;
@@ -617,13 +617,13 @@ public:
               typename = std::enable_if_t<details::BoundsRangeConvertible<
                   details::BoundsRanges<Ranges...>,
                   details::BoundsRanges<FirstRange, RestRanges...>>::value>>
-    constexpr static_bounds(const static_bounds<Ranges...>& other) : m_ranges(other.m_ranges)
+    GSL_IMPL_CONSTEXPR static_bounds(const static_bounds<Ranges...>& other) : m_ranges(other.m_ranges)
     {
         GSL_EXPECTS((MyRanges::DynamicNum == 0 && details::BoundsRanges<Ranges...>::DynamicNum == 0) ||
                 MyRanges::DynamicNum > 0 || other.m_ranges.totalSize() >= m_ranges.totalSize());
     }
 
-    constexpr static_bounds(std::initializer_list<size_type> il)
+    GSL_IMPL_CONSTEXPR static_bounds(std::initializer_list<size_type> il)
         : m_ranges(static_cast<const std::ptrdiff_t*>(il.begin()))
     {
         // Size of the initializer list must match the rank of the array
@@ -633,39 +633,39 @@ public:
         GSL_EXPECTS(m_ranges.totalSize() <= PTRDIFF_MAX);
     }
 
-    constexpr static_bounds() = default;
+    GSL_IMPL_CONSTEXPR static_bounds() = default;
 
-    constexpr static_bounds& operator=(const static_bounds& otherBounds)
+    GSL_IMPL_CONSTEXPR static_bounds& operator=(const static_bounds& otherBounds)
     {
         new (&m_ranges) MyRanges(otherBounds.m_ranges);
         return *this;
     }
 
-    constexpr sliced_type slice() const noexcept
+    GSL_IMPL_CONSTEXPR sliced_type slice() const GSL_IMPL_NOEXCEPT
     {
         return sliced_type{static_cast<const details::BoundsRanges<RestRanges...>&>(m_ranges)};
     }
 
-    constexpr size_type stride() const noexcept { return rank > 1 ? slice().size() : 1; }
+    GSL_IMPL_CONSTEXPR size_type stride() const GSL_IMPL_NOEXCEPT { return rank > 1 ? slice().size() : 1; }
 
-    constexpr size_type size() const noexcept { return m_ranges.totalSize(); }
+    GSL_IMPL_CONSTEXPR size_type size() const GSL_IMPL_NOEXCEPT { return m_ranges.totalSize(); }
 
-    constexpr size_type total_size() const noexcept { return m_ranges.totalSize(); }
+    GSL_IMPL_CONSTEXPR size_type total_size() const GSL_IMPL_NOEXCEPT { return m_ranges.totalSize(); }
 
-    constexpr size_type linearize(const index_type& idx) const { return m_ranges.linearize(idx); }
+    GSL_IMPL_CONSTEXPR size_type linearize(const index_type& idx) const { return m_ranges.linearize(idx); }
 
-    constexpr bool contains(const index_type& idx) const noexcept
+    GSL_IMPL_CONSTEXPR bool contains(const index_type& idx) const GSL_IMPL_NOEXCEPT
     {
         return m_ranges.contains(idx) != -1;
     }
 
-    constexpr size_type operator[](size_t index) const noexcept
+    GSL_IMPL_CONSTEXPR size_type operator[](size_t index) const GSL_IMPL_NOEXCEPT
     {
         return m_ranges.elementNum(index);
     }
 
     template <size_t Dim = 0>
-    constexpr size_type extent() const noexcept
+    GSL_IMPL_CONSTEXPR size_type extent() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Dim < rank,
                       "dimension should be less than rank (dimension count starts from 0)");
@@ -673,7 +673,7 @@ public:
     }
 
     template <typename IntType>
-    constexpr size_type extent(IntType dim) const noexcept
+    GSL_IMPL_CONSTEXPR size_type extent(IntType dim) const GSL_IMPL_NOEXCEPT
     {
         static_assert(std::is_integral<IntType>::value,
                       "Dimension parameter must be supplied as an integral type.");
@@ -683,7 +683,7 @@ public:
         return m_ranges.elementNum(real_dim);
     }
 
-    constexpr index_type index_bounds() const noexcept
+    GSL_IMPL_CONSTEXPR index_type index_bounds() const GSL_IMPL_NOEXCEPT
     {
         size_type extents[rank] = {};
         m_ranges.serialize(extents);
@@ -691,20 +691,20 @@ public:
     }
 
     template <std::ptrdiff_t... Ranges>
-    constexpr bool operator==(const static_bounds<Ranges...>& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator==(const static_bounds<Ranges...>& rhs) const GSL_IMPL_NOEXCEPT
     {
         return this->size() == rhs.size();
     }
 
     template <std::ptrdiff_t... Ranges>
-    constexpr bool operator!=(const static_bounds<Ranges...>& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator!=(const static_bounds<Ranges...>& rhs) const GSL_IMPL_NOEXCEPT
     {
         return !(*this == rhs);
     }
 
-    constexpr const_iterator begin() const noexcept { return const_iterator(*this, index_type{}); }
+    GSL_IMPL_CONSTEXPR const_iterator begin() const GSL_IMPL_NOEXCEPT { return const_iterator(*this, index_type{}); }
 
-    constexpr const_iterator end() const noexcept
+    GSL_IMPL_CONSTEXPR const_iterator end() const GSL_IMPL_NOEXCEPT
     {
         return const_iterator(*this, this->index_bounds());
     }
@@ -732,24 +732,24 @@ public:
     using sliced_type = std::conditional_t<rank != 0, strided_bounds<rank - 1>, void>;
     using mapping_type = generalized_mapping_tag;
 
-    constexpr strided_bounds(const strided_bounds&) noexcept = default;
+    GSL_IMPL_CONSTEXPR strided_bounds(const strided_bounds&) GSL_IMPL_NOEXCEPT = default;
 
-    constexpr strided_bounds& operator=(const strided_bounds&) noexcept = default;
+    GSL_IMPL_CONSTEXPR strided_bounds& operator=(const strided_bounds&) GSL_IMPL_NOEXCEPT = default;
 
-    constexpr strided_bounds(const value_type (&values)[rank], index_type strides)
+    GSL_IMPL_CONSTEXPR strided_bounds(const value_type (&values)[rank], index_type strides)
         : m_extents(values), m_strides(std::move(strides))
     {
     }
 
-    constexpr strided_bounds(const index_type& extents, const index_type& strides) noexcept
+    GSL_IMPL_CONSTEXPR strided_bounds(const index_type& extents, const index_type& strides) GSL_IMPL_NOEXCEPT
         : m_extents(extents),
           m_strides(strides)
     {
     }
 
-    constexpr index_type strides() const noexcept { return m_strides; }
+    GSL_IMPL_CONSTEXPR index_type strides() const GSL_IMPL_NOEXCEPT { return m_strides; }
 
-    constexpr size_type total_size() const noexcept
+    GSL_IMPL_CONSTEXPR size_type total_size() const GSL_IMPL_NOEXCEPT
     {
         size_type ret = 0;
         for (size_t i = 0; i < rank; ++i) {
@@ -758,7 +758,7 @@ public:
         return ret + 1;
     }
 
-    constexpr size_type size() const noexcept
+    GSL_IMPL_CONSTEXPR size_type size() const GSL_IMPL_NOEXCEPT
     {
         size_type ret = 1;
         for (size_t i = 0; i < rank; ++i) {
@@ -767,7 +767,7 @@ public:
         return ret;
     }
 
-    constexpr bool contains(const index_type& idx) const noexcept
+    GSL_IMPL_CONSTEXPR bool contains(const index_type& idx) const GSL_IMPL_NOEXCEPT
     {
         for (size_t i = 0; i < rank; ++i) {
             if (idx[i] < 0 || idx[i] >= m_extents[i]) return false;
@@ -775,7 +775,7 @@ public:
         return true;
     }
 
-    constexpr size_type linearize(const index_type& idx) const noexcept
+    GSL_IMPL_CONSTEXPR size_type linearize(const index_type& idx) const GSL_IMPL_NOEXCEPT
     {
         size_type ret = 0;
         for (size_t i = 0; i < rank; i++) {
@@ -785,26 +785,26 @@ public:
         return ret;
     }
 
-    constexpr size_type stride() const noexcept { return m_strides[0]; }
+    GSL_IMPL_CONSTEXPR size_type stride() const GSL_IMPL_NOEXCEPT { return m_strides[0]; }
 
     template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
-    constexpr sliced_type slice() const
+    GSL_IMPL_CONSTEXPR sliced_type slice() const
     {
         return {details::shift_left(m_extents), details::shift_left(m_strides)};
     }
 
     template <size_t Dim = 0>
-    constexpr size_type extent() const noexcept
+    GSL_IMPL_CONSTEXPR size_type extent() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Dim < Rank,
                       "dimension should be less than rank (dimension count starts from 0)");
         return m_extents[Dim];
     }
 
-    constexpr index_type index_bounds() const noexcept { return m_extents; }
-    constexpr const_iterator begin() const noexcept { return const_iterator{*this, index_type{}}; }
+    GSL_IMPL_CONSTEXPR index_type index_bounds() const GSL_IMPL_NOEXCEPT { return m_extents; }
+    GSL_IMPL_CONSTEXPR const_iterator begin() const GSL_IMPL_NOEXCEPT { return const_iterator{*this, index_type{}}; }
 
-    constexpr const_iterator end() const noexcept { return const_iterator{*this, index_bounds()}; }
+    GSL_IMPL_CONSTEXPR const_iterator end() const GSL_IMPL_NOEXCEPT { return const_iterator{*this, index_bounds()}; }
 
 private:
     index_type m_extents;
@@ -839,18 +839,18 @@ public:
     using index_type = value_type;
     using index_size_type = typename IndexType::value_type;
     template <typename Bounds>
-    explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
+    explicit bounds_iterator(const Bounds& bnd, value_type curr) GSL_IMPL_NOEXCEPT
         : boundary_(bnd.index_bounds()),
           curr_(std::move(curr))
     {
         static_assert(is_bounds<Bounds>::value, "Bounds type must be provided");
     }
 
-    constexpr reference operator*() const noexcept { return curr_; }
+    GSL_IMPL_CONSTEXPR reference operator*() const GSL_IMPL_NOEXCEPT { return curr_; }
 
-    constexpr pointer operator->() const noexcept { return &curr_; }
+    GSL_IMPL_CONSTEXPR pointer operator->() const GSL_IMPL_NOEXCEPT { return &curr_; }
 
-    constexpr bounds_iterator& operator++() noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator& operator++() GSL_IMPL_NOEXCEPT
     {
         for (size_t i = rank; i-- > 0;) {
             if (curr_[i] < boundary_[i] - 1) {
@@ -864,14 +864,14 @@ public:
         return *this;
     }
 
-    constexpr bounds_iterator operator++(int) noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator operator++(int) GSL_IMPL_NOEXCEPT
     {
         auto ret = *this;
         ++(*this);
         return ret;
     }
 
-    constexpr bounds_iterator& operator--() noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator& operator--() GSL_IMPL_NOEXCEPT
     {
         if (!less(curr_, boundary_)) {
             // if at the past-the-end, set to last element
@@ -893,20 +893,20 @@ public:
         return *this;
     }
 
-    constexpr bounds_iterator operator--(int) noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator operator--(int) GSL_IMPL_NOEXCEPT
     {
         auto ret = *this;
         --(*this);
         return ret;
     }
 
-    constexpr bounds_iterator operator+(difference_type n) const noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator operator+(difference_type n) const GSL_IMPL_NOEXCEPT
     {
         bounds_iterator ret{*this};
         return ret += n;
     }
 
-    constexpr bounds_iterator& operator+=(difference_type n) noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator& operator+=(difference_type n) GSL_IMPL_NOEXCEPT
     {
         auto linear_idx = linearize(curr_) + n;
         std::remove_const_t<value_type> stride = 0;
@@ -923,47 +923,47 @@ public:
         return *this;
     }
 
-    constexpr bounds_iterator operator-(difference_type n) const noexcept
+    GSL_IMPL_CONSTEXPR bounds_iterator operator-(difference_type n) const GSL_IMPL_NOEXCEPT
     {
         bounds_iterator ret{*this};
         return ret -= n;
     }
 
-    constexpr bounds_iterator& operator-=(difference_type n) noexcept { return * this += -n; }
+    GSL_IMPL_CONSTEXPR bounds_iterator& operator-=(difference_type n) GSL_IMPL_NOEXCEPT { return * this += -n; }
 
-    constexpr difference_type operator-(const bounds_iterator& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR difference_type operator-(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         return linearize(curr_) - linearize(rhs.curr_);
     }
 
-    constexpr value_type operator[](difference_type n) const noexcept { return *(*this + n); }
+    GSL_IMPL_CONSTEXPR value_type operator[](difference_type n) const GSL_IMPL_NOEXCEPT { return *(*this + n); }
 
-    constexpr bool operator==(const bounds_iterator& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator==(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         return curr_ == rhs.curr_;
     }
 
-    constexpr bool operator!=(const bounds_iterator& rhs) const noexcept { return !(*this == rhs); }
+    GSL_IMPL_CONSTEXPR bool operator!=(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(*this == rhs); }
 
-    constexpr bool operator<(const bounds_iterator& rhs) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator<(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         return less(curr_, rhs.curr_);
     }
 
-    constexpr bool operator<=(const bounds_iterator& rhs) const noexcept { return !(rhs < *this); }
+    GSL_IMPL_CONSTEXPR bool operator<=(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(rhs < *this); }
 
-    constexpr bool operator>(const bounds_iterator& rhs) const noexcept { return rhs < *this; }
+    GSL_IMPL_CONSTEXPR bool operator>(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT { return rhs < *this; }
 
-    constexpr bool operator>=(const bounds_iterator& rhs) const noexcept { return !(rhs > *this); }
+    GSL_IMPL_CONSTEXPR bool operator>=(const bounds_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(rhs > *this); }
 
-    void swap(bounds_iterator& rhs) noexcept
+    void swap(bounds_iterator& rhs) GSL_IMPL_NOEXCEPT
     {
         std::swap(boundary_, rhs.boundary_);
         std::swap(curr_, rhs.curr_);
     }
 
 private:
-    constexpr bool less(index_type& one, index_type& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool less(index_type& one, index_type& other) const GSL_IMPL_NOEXCEPT
     {
         for (size_t i = 0; i < rank; ++i) {
             if (one[i] < other[i]) return true;
@@ -971,7 +971,7 @@ private:
         return false;
     }
 
-    constexpr index_size_type linearize(const value_type& idx) const noexcept
+    GSL_IMPL_CONSTEXPR index_size_type linearize(const value_type& idx) const GSL_IMPL_NOEXCEPT
     {
         // TODO: Smarter impl.
         // Check if past-the-end
@@ -1000,7 +1000,7 @@ private:
 
 template <typename IndexType>
 bounds_iterator<IndexType> operator+(typename bounds_iterator<IndexType>::difference_type n,
-                                     const bounds_iterator<IndexType>& rhs) noexcept
+                                     const bounds_iterator<IndexType>& rhs) GSL_IMPL_NOEXCEPT
 {
     return rhs + n;
 }
@@ -1008,20 +1008,20 @@ bounds_iterator<IndexType> operator+(typename bounds_iterator<IndexType>::differ
 namespace details
 {
     template <typename Bounds>
-    constexpr std::enable_if_t<
+    GSL_IMPL_CONSTEXPR std::enable_if_t<
         std::is_same<typename Bounds::mapping_type, generalized_mapping_tag>::value,
         typename Bounds::index_type>
-    make_stride(const Bounds& bnd) noexcept
+    make_stride(const Bounds& bnd) GSL_IMPL_NOEXCEPT
     {
         return bnd.strides();
     }
 
     // Make a stride vector from bounds, assuming contiguous memory.
     template <typename Bounds>
-    constexpr std::enable_if_t<
+    GSL_IMPL_CONSTEXPR std::enable_if_t<
         std::is_same<typename Bounds::mapping_type, contiguous_mapping_tag>::value,
         typename Bounds::index_type>
-    make_stride(const Bounds& bnd) noexcept
+    make_stride(const Bounds& bnd) GSL_IMPL_NOEXCEPT
     {
         auto extents = bnd.index_bounds();
         typename Bounds::size_type stride[Bounds::rank] = {};
@@ -1210,7 +1210,7 @@ private:
 
 public:
     // default constructor - same as constructing from nullptr_t
-    constexpr span() noexcept : span(nullptr, bounds_type{})
+    GSL_IMPL_CONSTEXPR span() GSL_IMPL_NOEXCEPT : span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
                           (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
@@ -1219,7 +1219,7 @@ public:
     }
 
     // construct from nullptr - get an empty span
-    constexpr span(std::nullptr_t) noexcept : span(nullptr, bounds_type{})
+    GSL_IMPL_CONSTEXPR span(std::nullptr_t) GSL_IMPL_NOEXCEPT : span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
                           (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
@@ -1229,7 +1229,7 @@ public:
 
     // construct from nullptr with size of 0 (helps with template function calls)
     template <class IntType, typename = std::enable_if_t<std::is_integral<IntType>::value>>
-    constexpr span(std::nullptr_t, IntType size) noexcept : span(nullptr, bounds_type{})
+    GSL_IMPL_CONSTEXPR span(std::nullptr_t, IntType size) GSL_IMPL_NOEXCEPT : span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
                           (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
@@ -1239,7 +1239,7 @@ public:
     }
 
     // construct from a single element
-    constexpr span(reference data) noexcept : span(&data, bounds_type{1})
+    GSL_IMPL_CONSTEXPR span(reference data) GSL_IMPL_NOEXCEPT : span(&data, bounds_type{1})
     {
         static_assert(bounds_type::dynamic_rank > 0 || bounds_type::static_size == 0 ||
                           bounds_type::static_size == 1,
@@ -1248,13 +1248,13 @@ public:
     }
 
     // prevent constructing from temporaries for single-elements
-    constexpr span(value_type&&) = delete;
+    GSL_IMPL_CONSTEXPR span(value_type&&) = delete;
 
     // construct from pointer + length
-    constexpr span(pointer ptr, size_type size) noexcept : span(ptr, bounds_type{size}) {}
+    GSL_IMPL_CONSTEXPR span(pointer ptr, size_type size) GSL_IMPL_NOEXCEPT : span(ptr, bounds_type{size}) {}
 
     // construct from pointer + length - multidimensional
-    constexpr span(pointer data, bounds_type bounds) noexcept : data_(data),
+    GSL_IMPL_CONSTEXPR span(pointer data, bounds_type bounds) GSL_IMPL_NOEXCEPT : data_(data),
                                                                 bounds_(std::move(bounds))
     {
         GSL_EXPECTS((bounds_.size() > 0 && data != nullptr) || bounds_.size() == 0);
@@ -1264,7 +1264,7 @@ public:
     template <typename Ptr,
               typename = std::enable_if_t<std::is_convertible<Ptr, pointer>::value &&
                                           details::LessThan<bounds_type::dynamic_rank, 2>::value>>
-    constexpr span(pointer begin, Ptr end)
+    GSL_IMPL_CONSTEXPR span(pointer begin, Ptr end)
         : span(begin, details::newBoundsHelper<bounds_type>(static_cast<pointer>(end) - begin))
     {
         GSL_EXPECTS(begin != nullptr && end != nullptr && begin <= static_cast<pointer>(end));
@@ -1272,7 +1272,7 @@ public:
 
     // construct from n-dimensions static array
     template <typename T, size_t N, typename Helper = details::SpanArrayTraits<T, N>>
-    constexpr span(T (&arr)[N])
+    GSL_IMPL_CONSTEXPR span(T (&arr)[N])
         : span(reinterpret_cast<pointer>(arr), bounds_type{typename Helper::bounds_type{}})
     {
         static_assert(
@@ -1285,7 +1285,7 @@ public:
     // construct from n-dimensions dynamic array (e.g. new int[m][4])
     // (precedence will be lower than the 1-dimension pointer)
     template <typename T, typename Helper = details::SpanArrayTraits<T, dynamic_range>>
-    constexpr span(T* const& data, size_type size)
+    GSL_IMPL_CONSTEXPR span(T* const& data, size_type size)
         : span(reinterpret_cast<pointer>(data), typename Helper::bounds_type{size})
     {
         static_assert(
@@ -1295,7 +1295,7 @@ public:
 
     // construct from std::array
     template <typename T, size_t N>
-    constexpr span(std::array<T, N>& arr) : span(arr.data(), bounds_type{static_bounds<N>{}})
+    GSL_IMPL_CONSTEXPR span(std::array<T, N>& arr) : span(arr.data(), bounds_type{static_bounds<N>{}})
     {
         static_assert(
             std::is_convertible<T(*) [], typename std::remove_const_t<value_type>(*) []>::value,
@@ -1306,7 +1306,7 @@ public:
 
     // construct from const std::array
     template <typename T, size_t N>
-    constexpr span(const std::array<std::remove_const_t<value_type>, N>& arr)
+    GSL_IMPL_CONSTEXPR span(const std::array<std::remove_const_t<value_type>, N>& arr)
         : span(arr.data(), static_bounds<N>())
     {
         static_assert(std::is_convertible<T(*) [], std::remove_const_t<value_type>>::value,
@@ -1317,7 +1317,7 @@ public:
 
     // prevent constructing from temporary std::array
     template <typename T, size_t N>
-    constexpr span(std::array<T, N>&& arr) = delete;
+    GSL_IMPL_CONSTEXPR span(std::array<T, N>&& arr) = delete;
 
     // construct from containers
     // future: could use contiguous_iterator_traits to identify only contiguous containers
@@ -1329,7 +1329,7 @@ public:
                   std::is_same<std::decay_t<decltype(std::declval<Cont>().size(),
                                                      *std::declval<Cont>().data())>,
                                DataType>::value>>
-    constexpr span(Cont& cont)
+    GSL_IMPL_CONSTEXPR span(Cont& cont)
         : span(static_cast<pointer>(cont.data()),
                details::newBoundsHelper<bounds_type>(narrow_cast<size_type>(cont.size())))
     {
@@ -1343,33 +1343,33 @@ public:
                   std::is_same<std::decay_t<decltype(std::declval<Cont>().size(),
                                                      *std::declval<Cont>().data())>,
                                DataType>::value>>
-    explicit constexpr span(Cont&& cont) = delete;
+    explicit GSL_IMPL_CONSTEXPR span(Cont&& cont) = delete;
 
     // construct from a convertible span
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename OtherBounds = static_bounds<OtherDimensions...>,
               typename = std::enable_if_t<std::is_convertible<OtherValueType, ValueType>::value &&
                                           std::is_convertible<OtherBounds, bounds_type>::value>>
-    constexpr span(span<OtherValueType, OtherDimensions...> other) noexcept : data_(other.data_),
+    GSL_IMPL_CONSTEXPR span(span<OtherValueType, OtherDimensions...> other) GSL_IMPL_NOEXCEPT : data_(other.data_),
                                                                               bounds_(other.bounds_)
     {
     }
 
 // trivial copy and move
 #ifndef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
-    constexpr span(span&&) = default;
+    GSL_IMPL_CONSTEXPR span(span&&) = default;
 #endif
-    constexpr span(const span&) = default;
+    GSL_IMPL_CONSTEXPR span(const span&) = default;
 
 // trivial assignment
 #ifndef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
-    constexpr span& operator=(span&&) = default;
+    GSL_IMPL_CONSTEXPR span& operator=(span&&) = default;
 #endif
-    constexpr span& operator=(const span&) = default;
+    GSL_IMPL_CONSTEXPR span& operator=(const span&) = default;
 
     // first() - extract the first Count elements into a new span
     template <std::ptrdiff_t Count>
-    constexpr span<ValueType, Count> first() const noexcept
+    GSL_IMPL_CONSTEXPR span<ValueType, Count> first() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Count >= 0, "Count must be >= 0.");
         static_assert(bounds_type::static_size == dynamic_range ||
@@ -1381,7 +1381,7 @@ public:
     }
 
     // first() - extract the first count elements into a new span
-    constexpr span<ValueType, dynamic_range> first(size_type count) const noexcept
+    GSL_IMPL_CONSTEXPR span<ValueType, dynamic_range> first(size_type count) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(count >= 0 && count <= this->size());
         return {this->data(), count};
@@ -1389,7 +1389,7 @@ public:
 
     // last() - extract the last Count elements into a new span
     template <std::ptrdiff_t Count>
-    constexpr span<ValueType, Count> last() const noexcept
+    GSL_IMPL_CONSTEXPR span<ValueType, Count> last() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Count >= 0, "Count must be >= 0.");
         static_assert(bounds_type::static_size == dynamic_range ||
@@ -1401,7 +1401,7 @@ public:
     }
 
     // last() - extract the last count elements into a new span
-    constexpr span<ValueType, dynamic_range> last(size_type count) const noexcept
+    GSL_IMPL_CONSTEXPR span<ValueType, dynamic_range> last(size_type count) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(count >= 0 && count <= this->size());
         return {this->data() + this->size() - count, count};
@@ -1409,7 +1409,7 @@ public:
 
     // subspan() - create a subview of Count elements starting at Offset
     template <std::ptrdiff_t Offset, std::ptrdiff_t Count>
-    constexpr span<ValueType, Count> subspan() const noexcept
+    GSL_IMPL_CONSTEXPR span<ValueType, Count> subspan() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Count >= 0, "Count must be >= 0.");
         static_assert(Offset >= 0, "Offset must be >= 0.");
@@ -1425,8 +1425,8 @@ public:
 
     // subspan() - create a subview of count elements starting at offset
     // supplying dynamic_range for count will consume all available elements from offset
-    constexpr span<ValueType, dynamic_range> subspan(size_type offset,
-                                                     size_type count = dynamic_range) const noexcept
+    GSL_IMPL_CONSTEXPR span<ValueType, dynamic_range> subspan(size_type offset,
+                                                     size_type count = dynamic_range) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS((offset >= 0 && offset <= this->size()) &&
                 (count == dynamic_range || (count <= this->size() - offset)));
@@ -1434,8 +1434,8 @@ public:
     }
 
     // section - creates a non-contiguous, strided span from a contiguous one
-    constexpr strided_span<ValueType, Rank> section(index_type origin, index_type extents) const
-        noexcept
+    GSL_IMPL_CONSTEXPR strided_span<ValueType, Rank> section(index_type origin, index_type extents) const
+        GSL_IMPL_NOEXCEPT
     {
         size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
         return {&this->operator[](origin), size,
@@ -1443,23 +1443,23 @@ public:
     }
 
     // length of the span in elements
-    constexpr size_type size() const noexcept { return bounds_.size(); }
+    GSL_IMPL_CONSTEXPR size_type size() const GSL_IMPL_NOEXCEPT { return bounds_.size(); }
 
     // length of the span in elements
-    constexpr size_type length() const noexcept { return this->size(); }
+    GSL_IMPL_CONSTEXPR size_type length() const GSL_IMPL_NOEXCEPT { return this->size(); }
 
     // length of the span in bytes
-    constexpr size_type size_bytes() const noexcept { return sizeof(value_type) * this->size(); }
+    GSL_IMPL_CONSTEXPR size_type size_bytes() const GSL_IMPL_NOEXCEPT { return sizeof(value_type) * this->size(); }
 
     // length of the span in bytes
-    constexpr size_type length_bytes() const noexcept { return this->size_bytes(); }
+    GSL_IMPL_CONSTEXPR size_type length_bytes() const GSL_IMPL_NOEXCEPT { return this->size_bytes(); }
 
-    constexpr bool empty() const noexcept { return this->size() == 0; }
+    GSL_IMPL_CONSTEXPR bool empty() const GSL_IMPL_NOEXCEPT { return this->size() == 0; }
 
-    static constexpr std::size_t rank() { return Rank; }
+    static GSL_IMPL_CONSTEXPR std::size_t rank() { return Rank; }
 
     template <size_t Dim = 0>
-    constexpr size_type extent() const noexcept
+    GSL_IMPL_CONSTEXPR size_type extent() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Dim < Rank,
                       "Dimension should be less than rank (dimension count starts from 0).");
@@ -1467,36 +1467,36 @@ public:
     }
 
     template <typename IntType>
-    constexpr size_type extent(IntType dim) const noexcept
+    GSL_IMPL_CONSTEXPR size_type extent(IntType dim) const GSL_IMPL_NOEXCEPT
     {
         return bounds_.extent(dim);
     }
 
-    constexpr bounds_type bounds() const noexcept { return bounds_; }
+    GSL_IMPL_CONSTEXPR bounds_type bounds() const GSL_IMPL_NOEXCEPT { return bounds_; }
 
-    constexpr pointer data() const noexcept { return data_; }
+    GSL_IMPL_CONSTEXPR pointer data() const GSL_IMPL_NOEXCEPT { return data_; }
 
     template <typename FirstIndex>
-    constexpr reference operator()(FirstIndex index)
+    GSL_IMPL_CONSTEXPR reference operator()(FirstIndex index)
     {
         return this->operator[](narrow_cast<std::ptrdiff_t>(index));
     }
 
     template <typename FirstIndex, typename... OtherIndices>
-    constexpr reference operator()(FirstIndex index, OtherIndices... indices)
+    GSL_IMPL_CONSTEXPR reference operator()(FirstIndex index, OtherIndices... indices)
     {
         index_type idx = {narrow_cast<std::ptrdiff_t>(index),
                           narrow_cast<std::ptrdiff_t>(indices...)};
         return this->operator[](idx);
     }
 
-    constexpr reference operator[](const index_type& idx) const noexcept
+    GSL_IMPL_CONSTEXPR reference operator[](const index_type& idx) const GSL_IMPL_NOEXCEPT
     {
         return data_[bounds_.linearize(idx)];
     }
 
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
-    constexpr Ret operator[](size_type idx) const noexcept
+    GSL_IMPL_CONSTEXPR Ret operator[](size_type idx) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(idx < bounds_.size()); // index is out of bounds of the array
         const size_type ridx = idx * bounds_.stride();
@@ -1506,30 +1506,30 @@ public:
         return Ret{data_ + ridx, bounds_.slice()};
     }
 
-    constexpr iterator begin() const noexcept { return iterator{this, true}; }
+    GSL_IMPL_CONSTEXPR iterator begin() const GSL_IMPL_NOEXCEPT { return iterator{this, true}; }
 
-    constexpr iterator end() const noexcept { return iterator{this, false}; }
+    GSL_IMPL_CONSTEXPR iterator end() const GSL_IMPL_NOEXCEPT { return iterator{this, false}; }
 
-    constexpr const_iterator cbegin() const noexcept
+    GSL_IMPL_CONSTEXPR const_iterator cbegin() const GSL_IMPL_NOEXCEPT
     {
         return const_iterator{reinterpret_cast<const const_span*>(this), true};
     }
 
-    constexpr const_iterator cend() const noexcept
+    GSL_IMPL_CONSTEXPR const_iterator cend() const GSL_IMPL_NOEXCEPT
     {
         return const_iterator{reinterpret_cast<const const_span*>(this), false};
     }
 
-    constexpr reverse_iterator rbegin() const noexcept { return reverse_iterator{end()}; }
+    GSL_IMPL_CONSTEXPR reverse_iterator rbegin() const GSL_IMPL_NOEXCEPT { return reverse_iterator{end()}; }
 
-    constexpr reverse_iterator rend() const noexcept { return reverse_iterator{begin()}; }
+    GSL_IMPL_CONSTEXPR reverse_iterator rend() const GSL_IMPL_NOEXCEPT { return reverse_iterator{begin()}; }
 
-    constexpr const_reverse_iterator crbegin() const noexcept
+    GSL_IMPL_CONSTEXPR const_reverse_iterator crbegin() const GSL_IMPL_NOEXCEPT
     {
         return const_reverse_iterator{cend()};
     }
 
-    constexpr const_reverse_iterator crend() const noexcept
+    GSL_IMPL_CONSTEXPR const_reverse_iterator crend() const GSL_IMPL_NOEXCEPT
     {
         return const_reverse_iterator{cbegin()};
     }
@@ -1537,7 +1537,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator==(const span<OtherValueType, OtherDimensions...>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator==(const span<OtherValueType, OtherDimensions...>& other) const GSL_IMPL_NOEXCEPT
     {
         return bounds_.size() == other.bounds_.size() &&
                (data_ == other.data_ || std::equal(this->begin(), this->end(), other.begin()));
@@ -1546,7 +1546,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator!=(const span<OtherValueType, OtherDimensions...>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator!=(const span<OtherValueType, OtherDimensions...>& other) const GSL_IMPL_NOEXCEPT
     {
         return !(*this == other);
     }
@@ -1554,7 +1554,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator<(const span<OtherValueType, OtherDimensions...>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator<(const span<OtherValueType, OtherDimensions...>& other) const GSL_IMPL_NOEXCEPT
     {
         return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
     }
@@ -1562,7 +1562,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator<=(const span<OtherValueType, OtherDimensions...>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator<=(const span<OtherValueType, OtherDimensions...>& other) const GSL_IMPL_NOEXCEPT
     {
         return !(other < *this);
     }
@@ -1570,7 +1570,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>(const span<OtherValueType, OtherDimensions...>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator>(const span<OtherValueType, OtherDimensions...>& other) const GSL_IMPL_NOEXCEPT
     {
         return (other < *this);
     }
@@ -1578,7 +1578,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>=(const span<OtherValueType, OtherDimensions...>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator>=(const span<OtherValueType, OtherDimensions...>& other) const GSL_IMPL_NOEXCEPT
     {
         return !(*this < other);
     }
@@ -1592,7 +1592,7 @@ public:
 // DimCount and Enabled here are workarounds for a bug in MSVC 2015
 template <typename SpanType, typename... Dimensions2, size_t DimCount = sizeof...(Dimensions2),
           bool Enabled = (DimCount > 0), typename = std::enable_if_t<Enabled>>
-constexpr span<typename SpanType::value_type, Dimensions2::value...> as_span(SpanType s,
+GSL_IMPL_CONSTEXPR span<typename SpanType::value_type, Dimensions2::value...> as_span(SpanType s,
                                                                              Dimensions2... dims)
 {
     static_assert(details::is_span<SpanType>::value,
@@ -1606,7 +1606,7 @@ constexpr span<typename SpanType::value_type, Dimensions2::value...> as_span(Spa
 
 // convert a span<T> to a span<const byte>
 template <typename U, std::ptrdiff_t... Dimensions>
-span<const byte, dynamic_range> as_bytes(span<U, Dimensions...> s) noexcept
+span<const byte, dynamic_range> as_bytes(span<U, Dimensions...> s) GSL_IMPL_NOEXCEPT
 {
     static_assert(std::is_trivial<std::decay_t<U>>::value,
                   "The value_type of span must be a trivial type.");
@@ -1618,7 +1618,7 @@ span<const byte, dynamic_range> as_bytes(span<U, Dimensions...> s) noexcept
 // on all implementations. It should be considered an experimental extension
 // to the standard GSL interface.
 template <typename U, std::ptrdiff_t... Dimensions>
-span<byte> as_writeable_bytes(span<U, Dimensions...> s) noexcept
+span<byte> as_writeable_bytes(span<U, Dimensions...> s) GSL_IMPL_NOEXCEPT
 {
     static_assert(std::is_trivial<std::decay_t<U>>::value,
                   "The value_type of span must be a trivial type.");
@@ -1630,7 +1630,7 @@ span<byte> as_writeable_bytes(span<U, Dimensions...> s) noexcept
 // on all implementations. It should be considered an experimental extension
 // to the standard GSL interface.
 template <typename U, std::ptrdiff_t... Dimensions>
-constexpr auto as_span(span<const byte, Dimensions...> s) noexcept
+GSL_IMPL_CONSTEXPR auto as_span(span<const byte, Dimensions...> s) GSL_IMPL_NOEXCEPT
     -> span<const U, static_cast<std::ptrdiff_t>(
                          span<const byte, Dimensions...>::bounds_type::static_size != dynamic_range
                              ? (static_cast<size_t>(
@@ -1655,7 +1655,7 @@ constexpr auto as_span(span<const byte, Dimensions...> s) noexcept
 // on all implementations. It should be considered an experimental extension
 // to the standard GSL interface.
 template <typename U, std::ptrdiff_t... Dimensions>
-constexpr auto as_span(span<byte, Dimensions...> s) noexcept -> span<
+GSL_IMPL_CONSTEXPR auto as_span(span<byte, Dimensions...> s) GSL_IMPL_NOEXCEPT -> span<
     U, narrow_cast<std::ptrdiff_t>(
            span<byte, Dimensions...>::bounds_type::static_size != dynamic_range
                ? static_cast<std::size_t>(span<byte, Dimensions...>::bounds_type::static_size) /
@@ -1675,7 +1675,7 @@ constexpr auto as_span(span<byte, Dimensions...> s) noexcept -> span<
 }
 
 template <typename T, std::ptrdiff_t... Dimensions>
-constexpr auto as_span(T* const& ptr, dim<Dimensions>... args)
+GSL_IMPL_CONSTEXPR auto as_span(T* const& ptr, dim<Dimensions>... args)
     -> span<std::remove_all_extents_t<T>, Dimensions...>
 {
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(ptr),
@@ -1683,41 +1683,41 @@ constexpr auto as_span(T* const& ptr, dim<Dimensions>... args)
 }
 
 template <typename T>
-constexpr auto as_span(T* arr, std::ptrdiff_t len) ->
+GSL_IMPL_CONSTEXPR auto as_span(T* arr, std::ptrdiff_t len) ->
     typename details::SpanArrayTraits<T, dynamic_range>::type
 {
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(arr), len};
 }
 
 template <typename T, size_t N>
-constexpr auto as_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
+GSL_IMPL_CONSTEXPR auto as_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
 {
     return {arr};
 }
 
 template <typename T, size_t N>
-constexpr span<const T, N> as_span(const std::array<T, N>& arr)
+GSL_IMPL_CONSTEXPR span<const T, N> as_span(const std::array<T, N>& arr)
 {
     return {arr};
 }
 
 template <typename T, size_t N>
-constexpr span<const T, N> as_span(const std::array<T, N>&&) = delete;
+GSL_IMPL_CONSTEXPR span<const T, N> as_span(const std::array<T, N>&&) = delete;
 
 template <typename T, size_t N>
-constexpr span<T, N> as_span(std::array<T, N>& arr)
+GSL_IMPL_CONSTEXPR span<T, N> as_span(std::array<T, N>& arr)
 {
     return {arr};
 }
 
 template <typename T>
-constexpr span<T, dynamic_range> as_span(T* begin, T* end)
+GSL_IMPL_CONSTEXPR span<T, dynamic_range> as_span(T* begin, T* end)
 {
     return {begin, end};
 }
 
 template <typename Cont>
-constexpr auto as_span(Cont& arr) -> std::enable_if_t<
+GSL_IMPL_CONSTEXPR auto as_span(Cont& arr) -> std::enable_if_t<
     !details::is_span<std::decay_t<Cont>>::value,
     span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>>
 {
@@ -1726,13 +1726,13 @@ constexpr auto as_span(Cont& arr) -> std::enable_if_t<
 }
 
 template <typename Cont>
-constexpr auto as_span(Cont&& arr) -> std::enable_if_t<
+GSL_IMPL_CONSTEXPR auto as_span(Cont&& arr) -> std::enable_if_t<
     !details::is_span<std::decay_t<Cont>>::value,
     span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>> = delete;
 
 // from basic_string which doesn't have nonconst .data() member like other contiguous containers
 template <typename CharT, typename Traits, typename Allocator>
-constexpr auto as_span(std::basic_string<CharT, Traits, Allocator>& str)
+GSL_IMPL_CONSTEXPR auto as_span(std::basic_string<CharT, Traits, Allocator>& str)
     -> span<CharT, dynamic_range>
 {
     GSL_EXPECTS(str.size() < PTRDIFF_MAX);
@@ -1771,7 +1771,7 @@ private:
 
 public:
     // from raw data
-    constexpr strided_span(pointer ptr, size_type size, bounds_type bounds)
+    GSL_IMPL_CONSTEXPR strided_span(pointer ptr, size_type size, bounds_type bounds)
         : data_(ptr), bounds_(std::move(bounds))
     {
         GSL_EXPECTS((bounds_.size() > 0 && ptr != nullptr) || bounds_.size() == 0);
@@ -1782,7 +1782,7 @@ public:
 
     // from static array of size N
     template <size_type N>
-    constexpr strided_span(value_type (&values)[N], bounds_type bounds)
+    GSL_IMPL_CONSTEXPR strided_span(value_type (&values)[N], bounds_type bounds)
         : strided_span(values, N, std::move(bounds))
     {
     }
@@ -1792,7 +1792,7 @@ public:
               bool Enabled1 = (sizeof...(Dimensions) == Rank),
               bool Enabled2 = std::is_convertible<OtherValueType*, ValueType*>::value,
               typename Dummy = std::enable_if_t<Enabled1 && Enabled2>>
-    constexpr strided_span(span<OtherValueType, Dimensions...> av, bounds_type bounds)
+    GSL_IMPL_CONSTEXPR strided_span(span<OtherValueType, Dimensions...> av, bounds_type bounds)
         : strided_span(av.data(), av.bounds().total_size(), std::move(bounds))
     {
     }
@@ -1800,14 +1800,14 @@ public:
     // convertible
     template <typename OtherValueType, typename Dummy = std::enable_if_t<std::is_convertible<
                                            OtherValueType (*)[], value_type (*)[]>::value>>
-    constexpr strided_span(const strided_span<OtherValueType, Rank>& other)
+    GSL_IMPL_CONSTEXPR strided_span(const strided_span<OtherValueType, Rank>& other)
         : data_(other.data_), bounds_(other.bounds_)
     {
     }
 
     // convert from bytes
     template <typename OtherValueType>
-    constexpr strided_span<
+    GSL_IMPL_CONSTEXPR strided_span<
         typename std::enable_if<std::is_same<value_type, const byte>::value, OtherValueType>::type,
         Rank>
     as_strided_span() const
@@ -1823,20 +1823,20 @@ public:
                             resize_stride(this->bounds().strides(), d)}};
     }
 
-    constexpr strided_span section(index_type origin, index_type extents) const
+    GSL_IMPL_CONSTEXPR strided_span section(index_type origin, index_type extents) const
     {
         size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
         return {&this->operator[](origin), size,
                 bounds_type{extents, details::make_stride(bounds())}};
     }
 
-    constexpr reference operator[](const index_type& idx) const
+    GSL_IMPL_CONSTEXPR reference operator[](const index_type& idx) const
     {
         return data_[bounds_.linearize(idx)];
     }
 
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
-    constexpr Ret operator[](size_type idx) const
+    GSL_IMPL_CONSTEXPR Ret operator[](size_type idx) const
     {
         GSL_EXPECTS(idx < bounds_.size()); // index is out of bounds of the array
         const size_type ridx = idx * bounds_.stride();
@@ -1846,48 +1846,48 @@ public:
         return {data_ + ridx, bounds_.slice().total_size(), bounds_.slice()};
     }
 
-    constexpr bounds_type bounds() const noexcept { return bounds_; }
+    GSL_IMPL_CONSTEXPR bounds_type bounds() const GSL_IMPL_NOEXCEPT { return bounds_; }
 
     template <size_t Dim = 0>
-    constexpr size_type extent() const noexcept
+    GSL_IMPL_CONSTEXPR size_type extent() const GSL_IMPL_NOEXCEPT
     {
         static_assert(Dim < Rank,
                       "dimension should be less than Rank (dimension count starts from 0)");
         return bounds_.template extent<Dim>();
     }
 
-    constexpr size_type size() const noexcept { return bounds_.size(); }
+    GSL_IMPL_CONSTEXPR size_type size() const GSL_IMPL_NOEXCEPT { return bounds_.size(); }
 
-    constexpr pointer data() const noexcept { return data_; }
+    GSL_IMPL_CONSTEXPR pointer data() const GSL_IMPL_NOEXCEPT { return data_; }
 
-    constexpr explicit operator bool() const noexcept { return data_ != nullptr; }
+    GSL_IMPL_CONSTEXPR explicit operator bool() const GSL_IMPL_NOEXCEPT { return data_ != nullptr; }
 
-    constexpr iterator begin() const { return iterator{this, true}; }
+    GSL_IMPL_CONSTEXPR iterator begin() const { return iterator{this, true}; }
 
-    constexpr iterator end() const { return iterator{this, false}; }
+    GSL_IMPL_CONSTEXPR iterator end() const { return iterator{this, false}; }
 
-    constexpr const_iterator cbegin() const
+    GSL_IMPL_CONSTEXPR const_iterator cbegin() const
     {
         return const_iterator{reinterpret_cast<const const_strided_span*>(this), true};
     }
 
-    constexpr const_iterator cend() const
+    GSL_IMPL_CONSTEXPR const_iterator cend() const
     {
         return const_iterator{reinterpret_cast<const const_strided_span*>(this), false};
     }
 
-    constexpr reverse_iterator rbegin() const { return reverse_iterator{end()}; }
+    GSL_IMPL_CONSTEXPR reverse_iterator rbegin() const { return reverse_iterator{end()}; }
 
-    constexpr reverse_iterator rend() const { return reverse_iterator{begin()}; }
+    GSL_IMPL_CONSTEXPR reverse_iterator rend() const { return reverse_iterator{begin()}; }
 
-    constexpr const_reverse_iterator crbegin() const { return const_reverse_iterator{cend()}; }
+    GSL_IMPL_CONSTEXPR const_reverse_iterator crbegin() const { return const_reverse_iterator{cend()}; }
 
-    constexpr const_reverse_iterator crend() const { return const_reverse_iterator{cbegin()}; }
+    GSL_IMPL_CONSTEXPR const_reverse_iterator crend() const { return const_reverse_iterator{cbegin()}; }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator==(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator==(const strided_span<OtherValueType, OtherRank>& other) const GSL_IMPL_NOEXCEPT
     {
         return bounds_.size() == other.bounds_.size() &&
                (data_ == other.data_ || std::equal(this->begin(), this->end(), other.begin()));
@@ -1896,7 +1896,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator!=(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator!=(const strided_span<OtherValueType, OtherRank>& other) const GSL_IMPL_NOEXCEPT
     {
         return !(*this == other);
     }
@@ -1904,7 +1904,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator<(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator<(const strided_span<OtherValueType, OtherRank>& other) const GSL_IMPL_NOEXCEPT
     {
         return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
     }
@@ -1912,7 +1912,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator<=(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator<=(const strided_span<OtherValueType, OtherRank>& other) const GSL_IMPL_NOEXCEPT
     {
         return !(other < *this);
     }
@@ -1920,7 +1920,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator>(const strided_span<OtherValueType, OtherRank>& other) const GSL_IMPL_NOEXCEPT
     {
         return (other < *this);
     }
@@ -1928,7 +1928,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>=(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    GSL_IMPL_CONSTEXPR bool operator>=(const strided_span<OtherValueType, OtherRank>& other) const GSL_IMPL_NOEXCEPT
     {
         return !(*this < other);
     }
@@ -2004,75 +2004,75 @@ private:
     }
 
 public:
-    reference operator*() const noexcept
+    reference operator*() const GSL_IMPL_NOEXCEPT
     {
         validateThis();
         return *data_;
     }
-    pointer operator->() const noexcept
+    pointer operator->() const GSL_IMPL_NOEXCEPT
     {
         validateThis();
         return data_;
     }
-    contiguous_span_iterator& operator++() noexcept
+    contiguous_span_iterator& operator++() GSL_IMPL_NOEXCEPT
     {
         ++data_;
         return *this;
     }
-    contiguous_span_iterator operator++(int) noexcept
+    contiguous_span_iterator operator++(int) GSL_IMPL_NOEXCEPT
     {
         auto ret = *this;
         ++(*this);
         return ret;
     }
-    contiguous_span_iterator& operator--() noexcept
+    contiguous_span_iterator& operator--() GSL_IMPL_NOEXCEPT
     {
         --data_;
         return *this;
     }
-    contiguous_span_iterator operator--(int) noexcept
+    contiguous_span_iterator operator--(int) GSL_IMPL_NOEXCEPT
     {
         auto ret = *this;
         --(*this);
         return ret;
     }
-    contiguous_span_iterator operator+(difference_type n) const noexcept
+    contiguous_span_iterator operator+(difference_type n) const GSL_IMPL_NOEXCEPT
     {
         contiguous_span_iterator ret{*this};
         return ret += n;
     }
-    contiguous_span_iterator& operator+=(difference_type n) noexcept
+    contiguous_span_iterator& operator+=(difference_type n) GSL_IMPL_NOEXCEPT
     {
         data_ += n;
         return *this;
     }
-    contiguous_span_iterator operator-(difference_type n) const noexcept
+    contiguous_span_iterator operator-(difference_type n) const GSL_IMPL_NOEXCEPT
     {
         contiguous_span_iterator ret{*this};
         return ret -= n;
     }
-    contiguous_span_iterator& operator-=(difference_type n) noexcept { return * this += -n; }
-    difference_type operator-(const contiguous_span_iterator& rhs) const noexcept
+    contiguous_span_iterator& operator-=(difference_type n) GSL_IMPL_NOEXCEPT { return * this += -n; }
+    difference_type operator-(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(m_validator == rhs.m_validator);
         return data_ - rhs.data_;
     }
-    reference operator[](difference_type n) const noexcept { return *(*this + n); }
-    bool operator==(const contiguous_span_iterator& rhs) const noexcept
+    reference operator[](difference_type n) const GSL_IMPL_NOEXCEPT { return *(*this + n); }
+    bool operator==(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(m_validator == rhs.m_validator);
         return data_ == rhs.data_;
     }
-    bool operator!=(const contiguous_span_iterator& rhs) const noexcept { return !(*this == rhs); }
-    bool operator<(const contiguous_span_iterator& rhs) const noexcept
+    bool operator!=(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(*this == rhs); }
+    bool operator<(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(m_validator == rhs.m_validator);
         return data_ < rhs.data_;
     }
-    bool operator<=(const contiguous_span_iterator& rhs) const noexcept { return !(rhs < *this); }
-    bool operator>(const contiguous_span_iterator& rhs) const noexcept { return rhs < *this; }
-    bool operator>=(const contiguous_span_iterator& rhs) const noexcept { return !(rhs > *this); }
-    void swap(contiguous_span_iterator& rhs) noexcept
+    bool operator<=(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(rhs < *this); }
+    bool operator>(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return rhs < *this; }
+    bool operator>=(const contiguous_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(rhs > *this); }
+    void swap(contiguous_span_iterator& rhs) GSL_IMPL_NOEXCEPT
     {
         std::swap(data_, rhs.data_);
         std::swap(m_validator, rhs.m_validator);
@@ -2081,7 +2081,7 @@ public:
 
 template <typename Span>
 contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>::difference_type n,
-                                         const contiguous_span_iterator<Span>& rhs) noexcept
+                                         const contiguous_span_iterator<Span>& rhs) GSL_IMPL_NOEXCEPT
 {
     return rhs + n;
 }
@@ -2111,71 +2111,71 @@ private:
     }
 
 public:
-    reference operator*() noexcept { return (*m_container)[*m_itr]; }
-    pointer operator->() noexcept { return &(*m_container)[*m_itr]; }
-    general_span_iterator& operator++() noexcept
+    reference operator*() GSL_IMPL_NOEXCEPT { return (*m_container)[*m_itr]; }
+    pointer operator->() GSL_IMPL_NOEXCEPT { return &(*m_container)[*m_itr]; }
+    general_span_iterator& operator++() GSL_IMPL_NOEXCEPT
     {
         ++m_itr;
         return *this;
     }
-    general_span_iterator operator++(int) noexcept
+    general_span_iterator operator++(int) GSL_IMPL_NOEXCEPT
     {
         auto ret = *this;
         ++(*this);
         return ret;
     }
-    general_span_iterator& operator--() noexcept
+    general_span_iterator& operator--() GSL_IMPL_NOEXCEPT
     {
         --m_itr;
         return *this;
     }
-    general_span_iterator operator--(int) noexcept
+    general_span_iterator operator--(int) GSL_IMPL_NOEXCEPT
     {
         auto ret = *this;
         --(*this);
         return ret;
     }
-    general_span_iterator operator+(difference_type n) const noexcept
+    general_span_iterator operator+(difference_type n) const GSL_IMPL_NOEXCEPT
     {
         general_span_iterator ret{*this};
         return ret += n;
     }
-    general_span_iterator& operator+=(difference_type n) noexcept
+    general_span_iterator& operator+=(difference_type n) GSL_IMPL_NOEXCEPT
     {
         m_itr += n;
         return *this;
     }
-    general_span_iterator operator-(difference_type n) const noexcept
+    general_span_iterator operator-(difference_type n) const GSL_IMPL_NOEXCEPT
     {
         general_span_iterator ret{*this};
         return ret -= n;
     }
-    general_span_iterator& operator-=(difference_type n) noexcept { return * this += -n; }
-    difference_type operator-(const general_span_iterator& rhs) const noexcept
+    general_span_iterator& operator-=(difference_type n) GSL_IMPL_NOEXCEPT { return * this += -n; }
+    difference_type operator-(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(m_container == rhs.m_container);
         return m_itr - rhs.m_itr;
     }
-    value_type operator[](difference_type n) const noexcept
+    value_type operator[](difference_type n) const GSL_IMPL_NOEXCEPT
     {
         return (*m_container)[m_itr[n]];
         ;
     }
-    bool operator==(const general_span_iterator& rhs) const noexcept
+    bool operator==(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(m_container == rhs.m_container);
         return m_itr == rhs.m_itr;
     }
-    bool operator!=(const general_span_iterator& rhs) const noexcept { return !(*this == rhs); }
-    bool operator<(const general_span_iterator& rhs) const noexcept
+    bool operator!=(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(*this == rhs); }
+    bool operator<(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT
     {
         GSL_EXPECTS(m_container == rhs.m_container);
         return m_itr < rhs.m_itr;
     }
-    bool operator<=(const general_span_iterator& rhs) const noexcept { return !(rhs < *this); }
-    bool operator>(const general_span_iterator& rhs) const noexcept { return rhs < *this; }
-    bool operator>=(const general_span_iterator& rhs) const noexcept { return !(rhs > *this); }
-    void swap(general_span_iterator& rhs) noexcept
+    bool operator<=(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(rhs < *this); }
+    bool operator>(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return rhs < *this; }
+    bool operator>=(const general_span_iterator& rhs) const GSL_IMPL_NOEXCEPT { return !(rhs > *this); }
+    void swap(general_span_iterator& rhs) GSL_IMPL_NOEXCEPT
     {
         std::swap(m_itr, rhs.m_itr);
         std::swap(m_container, rhs.m_container);
@@ -2184,41 +2184,29 @@ public:
 
 template <typename Span>
 general_span_iterator<Span> operator+(typename general_span_iterator<Span>::difference_type n,
-                                      const general_span_iterator<Span>& rhs) noexcept
+                                      const general_span_iterator<Span>& rhs) GSL_IMPL_NOEXCEPT
 {
     return rhs + n;
 }
 
 } // namespace gsl
 
-#ifdef _MSC_VER
+#undef GSL_IMPL_CONSTEXPR
+#undef GSL_IMPL_NOEXCEPT
 
-#undef constexpr
-#pragma pop_macro("constexpr")
+
+#ifdef _MSC_VER
 
 #if _MSC_VER <= 1800
 #pragma warning(pop)
-
-#ifndef GSL_THROW_ON_CONTRACT_VIOLATION
-#undef noexcept
-#pragma pop_macro("noexcept")
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION
-
 #undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-
 #endif // _MSC_VER <= 1800
 
-#endif // _MSC_VER
 
 #if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
-
-#undef noexcept
-
-#ifdef _MSC_VER
 #pragma warning(pop)
-#pragma pop_macro("noexcept")
-#endif
-
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
+
+#endif // _MSC_VER
 
 #endif // GSL_SPAN_H
