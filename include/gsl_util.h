@@ -22,6 +22,7 @@
 #include "gsl_assert.h"  // Ensures/Expects
 #include <array>
 #include <utility>
+#include <type_traits>
 #include <exception>
 
 #ifdef _MSC_VER
@@ -90,10 +91,24 @@ inline constexpr T narrow_cast(U u) noexcept
 
 struct narrowing_error : public std::exception {};
 
+template<class T, class U>
+struct is_same_signess
+{
+    static const bool value =
+        std::is_signed<T>::value == std::is_signed<U>::value;
+};
+
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template<class T, class U>
 inline T narrow(U u)
-{ T t = narrow_cast<T>(u); if (static_cast<U>(t) != u || (t < T{}) != (u < U{})) throw narrowing_error(); return t; }
+{
+    T t = narrow_cast<T>(u);
+    if (static_cast<U>(t) != u)
+        throw narrowing_error();
+    if (!is_same_signess<T, U>::value && ((t < T{}) != (u < U{})))
+        throw narrowing_error();
+    return t;
+}
 
 //
 // at() - Bounds-checked way of accessing static arrays, std::array, std::vector
