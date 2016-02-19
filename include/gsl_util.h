@@ -40,6 +40,7 @@
 // turn off some misguided warnings
 #pragma warning(push)
 #pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
+#pragma warning(disable: 4127) // conditional expression is constant
 
 #endif // _MSC_VER <= 1800
 
