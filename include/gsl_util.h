@@ -91,12 +91,12 @@ inline constexpr T narrow_cast(U u) noexcept
 
 struct narrowing_error : public std::exception {};
 
-template<class T, class U>
-struct is_same_signess
+namespace details
 {
-    static const bool value =
-        std::is_signed<T>::value == std::is_signed<U>::value;
-};
+    template<class T, class U>
+    struct is_same_signedness : public std::integral_constant<bool, std::is_signed<T>::value == std::is_signed<U>::value>
+    {};
+}
 
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template<class T, class U>
@@ -105,7 +105,7 @@ inline T narrow(U u)
     T t = narrow_cast<T>(u);
     if (static_cast<U>(t) != u)
         throw narrowing_error();
-    if (!is_same_signess<T, U>::value && ((t < T{}) != (u < U{})))
+    if (!details::is_same_signedness<T, U>::value && ((t < T{}) != (u < U{})))
         throw narrowing_error();
     return t;
 }
