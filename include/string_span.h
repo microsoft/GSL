@@ -96,7 +96,7 @@ using wzstring = basic_zstring<wchar_t, Extent>;
 // Will fail-fast if sentinel cannot be found before max elements are examined.
 //
 template<typename T, const T Sentinel>
-span<T, dynamic_range> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
+multi_span<T, dynamic_range> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
 {
     auto cur = seq;
     while ((cur - seq) < max && *cur != Sentinel) ++cur;
@@ -111,34 +111,34 @@ span<T, dynamic_range> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX)
 // the limit of size_type.
 //
 template<typename T>
-inline span<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_t max = PTRDIFF_MAX)
+inline multi_span<T, dynamic_range> ensure_z(T* const & sz, std::ptrdiff_t max = PTRDIFF_MAX)
 {
     return ensure_sentinel<T, 0>(sz, max);
 }
 
 // TODO (neilmac) there is probably a better template-magic way to get the const and non-const overloads to share an implementation
-inline span<char, dynamic_range> ensure_z(char* const& sz, std::ptrdiff_t max)
+inline multi_span<char, dynamic_range> ensure_z(char* const& sz, std::ptrdiff_t max)
 {
     auto len = strnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
-inline span<const char, dynamic_range> ensure_z(const char* const& sz, std::ptrdiff_t max)
+inline multi_span<const char, dynamic_range> ensure_z(const char* const& sz, std::ptrdiff_t max)
 {
     auto len = strnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
-inline span<wchar_t, dynamic_range> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
+inline multi_span<wchar_t, dynamic_range> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
     auto len = wcsnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return{ sz, static_cast<std::ptrdiff_t>(len) };
 }
 
-inline span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
+inline multi_span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
     auto len = wcsnlen(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
@@ -146,10 +146,10 @@ inline span<const wchar_t, dynamic_range> ensure_z(const wchar_t* const& sz, std
 }
 
 template<typename T, size_t N>
-span<T, dynamic_range> ensure_z(T(&sz)[N]) { return ensure_z(&sz[0], static_cast<std::ptrdiff_t>(N)); }
+multi_span<T, dynamic_range> ensure_z(T(&sz)[N]) { return ensure_z(&sz[0], static_cast<std::ptrdiff_t>(N)); }
 
 template<class Cont>
-span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_range> ensure_z(Cont& cont)
+multi_span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_range> ensure_z(Cont& cont)
 {
     return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
 }
@@ -228,7 +228,7 @@ public:
     using reference = std::add_lvalue_reference_t<value_type>;
     using const_reference = std::add_lvalue_reference_t<const_value_type>;
     using bounds_type = static_bounds<Extent>;
-    using impl_type = span<value_type, Extent>;
+    using impl_type = multi_span<value_type, Extent>;
 
     using size_type = ptrdiff_t;
     using iterator = typename impl_type::iterator;
@@ -323,17 +323,17 @@ public:
         std::is_convertible<OtherValueType*, value_type*>::value
         && std::is_convertible<static_bounds<OtherExtent>, bounds_type>::value>
     >
-    constexpr basic_string_span(span<OtherValueType, OtherExtent> other) noexcept
+    constexpr basic_string_span(multi_span<OtherValueType, OtherExtent> other) noexcept
         : span_(other)
     {}
 #else
     // from span
-    constexpr basic_string_span(span<value_type, Extent> other) noexcept
+    constexpr basic_string_span(multi_span<value_type, Extent> other) noexcept
         : span_(other)
     {}
         
     template <typename Dummy = std::enable_if_t<!std::is_same<std::remove_const_t<value_type>, value_type>::value>>
-    constexpr basic_string_span(span<std::remove_const_t<value_type>, Extent> other) noexcept
+    constexpr basic_string_span(multi_span<std::remove_const_t<value_type>, Extent> other) noexcept
         : span_(other)
     {}
 #endif
@@ -540,14 +540,14 @@ public:
     using zstring_type = basic_zstring<value_type, Extent>;
     using const_zstring_type = basic_zstring<const_value_type, Extent>;
 
-    using impl_type = span<value_type, Extent>;
+    using impl_type = multi_span<value_type, Extent>;
     using string_span_type = basic_string_span<value_type, Extent>;
 
-    constexpr basic_zstring_span(impl_type span) noexcept
-        : span_(span)
+    constexpr basic_zstring_span(impl_type multi_span) noexcept
+        : span_(multi_span)
     {
         // expects a zero-terminated span
-        Expects(span[span.size() - 1] == '\0');
+        Expects(multi_span[multi_span.size() - 1] == '\0');
     }
 
     // copy

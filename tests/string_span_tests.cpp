@@ -142,7 +142,7 @@ SUITE(string_span_tests)
             const char* ptr = "Hello";
             const std::string str = "Hello";
             const std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            gsl::span<const char> sp = ensure_z("Hello");
+            gsl::multi_span<const char> sp = ensure_z("Hello");
 
             // comparison to  literal
             CHECK(span == cstring_span<>("Hello"));
@@ -182,7 +182,7 @@ SUITE(string_span_tests)
             char* ptr = ar;
             std::string str = "Hello";
             std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            gsl::span<char> sp = ensure_z(ar1);
+            gsl::multi_span<char> sp = ensure_z(ar1);
 
             // comparison to static array with no null termination
             CHECK(span == string_span<>(ar));
@@ -216,7 +216,7 @@ SUITE(string_span_tests)
             const char ar2[10] = "Hello";
             const std::string str = "Hello";
             const std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            gsl::span<const char> sp = ensure_z("Hello");
+            gsl::multi_span<const char> sp = ensure_z("Hello");
 
             cstring_span<> span = "Hello";
 
@@ -253,7 +253,7 @@ SUITE(string_span_tests)
             char* _ptr = _ar;
             std::string _str = "Hello";
             std::vector<char> _vec = { 'H', 'e', 'l', 'l', 'o' };
-            gsl::span<char> _sp{ _ar, 5 };
+            gsl::multi_span<char> _sp{ _ar, 5 };
 
             CHECK(span == _ar);
             CHECK(span == _ar1);
@@ -447,7 +447,7 @@ SUITE(string_span_tests)
 
         // from span of a final extent
         {
-            span<const char, 6> sp = "Hello";
+            multi_span<const char, 6> sp = "Hello";
             cstring_span<> span = sp;
             CHECK(span.length() == 6);
         }
@@ -455,7 +455,7 @@ SUITE(string_span_tests)
         // from const span of a final extent to non-const string_span
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            span<const char, 6> sp = "Hello";
+            multi_span<const char, 6> sp = "Hello";
             string_span<> span = sp;
             CHECK(span.length() == 6);
         }
@@ -568,7 +568,7 @@ SUITE(string_span_tests)
         // from const span
         {
             std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            const span<const char> inner = vec;
+            const multi_span<const char> inner = vec;
             cstring_span<> span = inner;
             CHECK(span.length() == 5);
         }
@@ -576,7 +576,7 @@ SUITE(string_span_tests)
         // from non-const span
         {
             std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            span<char> inner = vec;
+            multi_span<char> inner = vec;
             cstring_span<> span = inner;
             CHECK(span.length() == 5);
         }
@@ -675,7 +675,7 @@ SUITE(string_span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            const span<const char> inner = vec;
+            const multi_span<const char> inner = vec;
             string_span<> span = inner;
             CHECK(span.length() == 5);
 #endif
@@ -684,7 +684,7 @@ SUITE(string_span_tests)
         // from non-const span
         {
             std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            span<char> inner = vec;
+            multi_span<char> inner = vec;
             string_span<> span = inner;
             CHECK(span.length() == 5);
         }
@@ -693,7 +693,7 @@ SUITE(string_span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             const std::vector<char> vec = { 'H', 'e', 'l', 'l', 'o' };
-            const span<char> inner = vec;
+            const multi_span<char> inner = vec;
             string_span<> span = inner;
             CHECK(span.length() == 5);
 #endif
@@ -769,12 +769,12 @@ SUITE(string_span_tests)
 
         // move span
         {
-            span<const char> span = ensure_z("Hello");
+            multi_span<const char> span = ensure_z("Hello");
             cstring_span<> span1 = std::move(span);
             CHECK(span1.length() == 5);
         }
         {
-            span<const char> span = ensure_z("Hello");
+            multi_span<const char> span = ensure_z("Hello");
             cstring_span<> span2 = move_wrapper(std::move(span));
             CHECK(span2.length() == 5);
         }

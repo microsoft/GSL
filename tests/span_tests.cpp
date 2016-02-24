@@ -43,33 +43,33 @@ SUITE(span_tests)
     TEST(default_constructor)
     {
         {
-            span<int> s;
+            multi_span<int> s;
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int> cs;
+            multi_span<const int> cs;
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
-            span<int, 0> s;
+            multi_span<int, 0> s;
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int, 0> cs;
+            multi_span<const int, 0> cs;
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 1> s;
+            multi_span<int, 1> s;
             CHECK(s.length() == 1 && s.data() == nullptr); // explains why it can't compile
 #endif
         }
 
         {
-            span<int> s{};
+            multi_span<int> s{};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int> cs{};
+            multi_span<const int> cs{};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
     }
@@ -77,41 +77,41 @@ SUITE(span_tests)
     TEST(from_nullptr_constructor)
     {
         {
-            span<int> s = nullptr;
+            multi_span<int> s = nullptr;
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int> cs = nullptr;
+            multi_span<const int> cs = nullptr;
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
-            span<int, 0> s = nullptr;
+            multi_span<int, 0> s = nullptr;
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int, 0> cs = nullptr;
+            multi_span<const int, 0> cs = nullptr;
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 1> s = nullptr;
+            multi_span<int, 1> s = nullptr;
             CHECK(s.length() == 1 && s.data() == nullptr); // explains why it can't compile
 #endif
         }
 
         {
-            span<int> s{nullptr};
+            multi_span<int> s{nullptr};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int> cs{nullptr};
+            multi_span<const int> cs{nullptr};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
-            span<int*> s{nullptr};
+            multi_span<int*> s{nullptr};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int*> cs{nullptr};
+            multi_span<const int*> cs{nullptr};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
     }
@@ -119,49 +119,49 @@ SUITE(span_tests)
     TEST(from_nullptr_length_constructor)
     {
         {
-            span<int> s{nullptr, 0};
+            multi_span<int> s{nullptr, 0};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int> cs{nullptr, 0};
+            multi_span<const int> cs{nullptr, 0};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
-            span<int, 0> s{nullptr, 0};
+            multi_span<int, 0> s{nullptr, 0};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int, 0> cs{nullptr, 0};
+            multi_span<const int, 0> cs{nullptr, 0};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 1> s{nullptr, 0};
+            multi_span<int, 1> s{nullptr, 0};
             CHECK(s.length() == 1 && s.data() == nullptr); // explains why it can't compile
 #endif
         }
 
         {
-            auto workaround_macro = []() { span<int> s{nullptr, 1}; };
+            auto workaround_macro = []() { multi_span<int> s{nullptr, 1}; };
             CHECK_THROW(workaround_macro(), fail_fast);
 
-            auto const_workaround_macro = []() { span<const int> cs{nullptr, 1}; };
+            auto const_workaround_macro = []() { multi_span<const int> cs{nullptr, 1}; };
             CHECK_THROW(const_workaround_macro(), fail_fast);
         }
 
         {
-            auto workaround_macro = []() { span<int, 0> s{nullptr, 1}; };
+            auto workaround_macro = []() { multi_span<int, 0> s{nullptr, 1}; };
             CHECK_THROW(workaround_macro(), fail_fast);
 
-            auto const_workaround_macro = []() { span<const int, 0> s{nullptr, 1}; };
+            auto const_workaround_macro = []() { multi_span<const int, 0> s{nullptr, 1}; };
             CHECK_THROW(const_workaround_macro(), fail_fast);
         }
 
         {
-            span<int*> s{nullptr, 0};
+            multi_span<int*> s{nullptr, 0};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int*> cs{nullptr, 0};
+            multi_span<const int*> cs{nullptr, 0};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
     }
@@ -171,11 +171,11 @@ SUITE(span_tests)
         int i = 5;
 
         {
-            span<int> s = i;
+            multi_span<int> s = i;
             CHECK(s.length() == 1 && s.data() == &i);
             CHECK(s[0] == 5);
 
-            span<const int> cs = i;
+            multi_span<const int> cs = i;
             CHECK(cs.length() == 1 && cs.data() == &i);
             CHECK(cs[0] == 5);
         }
@@ -183,26 +183,26 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             const j = 1;
-            span<int, 0> s = j;
+            multi_span<int, 0> s = j;
 #endif
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 0> s = i;
+            multi_span<int, 0> s = i;
             CHECK(s.length() == 0 && s.data() == &i);
 #endif
         }
 
         {
-            span<int, 1> s = i;
+            multi_span<int, 1> s = i;
             CHECK(s.length() == 1 && s.data() == &i);
             CHECK(s[0] == 5);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 2> s = i;
+            multi_span<int, 2> s = i;
             CHECK(s.length() == 2 && s.data() == &i);
 #endif
         }
@@ -210,7 +210,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_a_temp = []() -> int { return 4; };
-            auto use_a_span = [](span<int> s) { (void) s; };
+            auto use_a_span = [](multi_span<int> s) { (void) s; };
             use_a_span(get_a_temp());
 #endif
         }
@@ -221,26 +221,26 @@ SUITE(span_tests)
         int arr[4] = {1, 2, 3, 4};
 
         {
-            span<int> s{&arr[0], 2};
+            multi_span<int> s{&arr[0], 2};
             CHECK(s.length() == 2 && s.data() == &arr[0]);
             CHECK(s[0] == 1 && s[1] == 2);
         }
 
         {
-            span<int, 2> s{&arr[0], 2};
+            multi_span<int, 2> s{&arr[0], 2};
             CHECK(s.length() == 2 && s.data() == &arr[0]);
             CHECK(s[0] == 1 && s[1] == 2);
         }
 
         {
             int* p = nullptr;
-            span<int> s{p, 0};
+            multi_span<int> s{p, 0};
             CHECK(s.length() == 0 && s.data() == nullptr);
         }
 
         {
             int* p = nullptr;
-            auto workaround_macro = [=]() { span<int> s{p, 2}; };
+            auto workaround_macro = [=]() { multi_span<int> s{p, 2}; };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
     }
@@ -250,47 +250,47 @@ SUITE(span_tests)
         int arr[4] = {1, 2, 3, 4};
 
         {
-            span<int> s{&arr[0], &arr[2]};
+            multi_span<int> s{&arr[0], &arr[2]};
             CHECK(s.length() == 2 && s.data() == &arr[0]);
             CHECK(s[0] == 1 && s[1] == 2);
         }
 
         {
-            span<int, 2> s{&arr[0], &arr[2]};
+            multi_span<int, 2> s{&arr[0], &arr[2]};
             CHECK(s.length() == 2 && s.data() == &arr[0]);
             CHECK(s[0] == 1 && s[1] == 2);
         }
 
         {
-            span<int> s{&arr[0], &arr[0]};
+            multi_span<int> s{&arr[0], &arr[0]};
             CHECK(s.length() == 0 && s.data() == &arr[0]);
         }
 
         {
-            span<int, 0> s{&arr[0], &arr[0]};
+            multi_span<int, 0> s{&arr[0], &arr[0]};
             CHECK(s.length() == 0 && s.data() == &arr[0]);
         }
 
         {
-            auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
+            auto workaround_macro = [&]() { multi_span<int> s{&arr[1], &arr[0]}; };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
 
         {
             int* p = nullptr;
-            auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+            auto workaround_macro = [&]() { multi_span<int> s{&arr[0], p}; };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
 
         {
             int* p = nullptr;
-            auto workaround_macro = [&]() { span<int> s{p, p}; };
+            auto workaround_macro = [&]() { multi_span<int> s{p, p}; };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
 
         {
             int* p = nullptr;
-            auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+            auto workaround_macro = [&]() { multi_span<int> s{&arr[0], p}; };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
     }
@@ -300,64 +300,64 @@ SUITE(span_tests)
         int arr[5] = {1, 2, 3, 4, 5};
 
         {
-            span<int> s{arr};
+            multi_span<int> s{arr};
             CHECK(s.length() == 5 && s.data() == &arr[0]);
         }
 
         {
-            span<int, 5> s{arr};
+            multi_span<int, 5> s{arr};
             CHECK(s.length() == 5 && s.data() == &arr[0]);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 6> s{arr};
+            multi_span<int, 6> s{arr};
 #endif
         }
 
         {
-            span<int, 0> s{arr};
+            multi_span<int, 0> s{arr};
             CHECK(s.length() == 0 && s.data() == &arr[0]);
         }
 
         int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
 
         {
-            span<int> s{arr2d};
+            multi_span<int> s{arr2d};
             CHECK(s.length() == 6 && s.data() == &arr2d[0][0]);
             CHECK(s[0] == 1 && s[5] == 6);
         }
 
         {
-            span<int, 0> s{arr2d};
+            multi_span<int, 0> s{arr2d};
             CHECK(s.length() == 0 && s.data() == &arr2d[0][0]);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 5> s{arr2d};
+            multi_span<int, 5> s{arr2d};
 #endif
         }
 
         {
-            span<int, 6> s{arr2d};
+            multi_span<int, 6> s{arr2d};
             CHECK(s.length() == 6 && s.data() == &arr2d[0][0]);
             CHECK(s[0] == 1 && s[5] == 6);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 7> s{arr2d};
+            multi_span<int, 7> s{arr2d};
 #endif
         }
 
         {
-            span<int[3]> s{arr2d[0]};
+            multi_span<int[3]> s{arr2d[0]};
             CHECK(s.length() == 1 && s.data() == &arr2d[0]);
         }
 
         {
-            span<int, 2, 3> s{arr2d};
+            multi_span<int, 2, 3> s{arr2d};
             CHECK(s.length() == 6 && s.data() == &arr2d[0][0]);
             auto workaround_macro = [&]() { return s[{1, 2}] == 6; };
             CHECK(workaround_macro());
@@ -365,48 +365,48 @@ SUITE(span_tests)
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 3, 3> s{arr2d};
+            multi_span<int, 3, 3> s{arr2d};
 #endif
         }
 
         int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
         {
-            span<int> s{arr3d};
+            multi_span<int> s{arr3d};
             CHECK(s.length() == 12 && s.data() == &arr3d[0][0][0]);
             CHECK(s[0] == 1 && s[11] == 12);
         }
 
         {
-            span<int, 0> s{arr3d};
+            multi_span<int, 0> s{arr3d};
             CHECK(s.length() == 0 && s.data() == &arr3d[0][0][0]);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 11> s{arr3d};
+            multi_span<int, 11> s{arr3d};
 #endif
         }
 
         {
-            span<int, 12> s{arr3d};
+            multi_span<int, 12> s{arr3d};
             CHECK(s.length() == 12 && s.data() == &arr3d[0][0][0]);
             CHECK(s[0] == 1 && s[5] == 6);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 13> s{arr3d};
+            multi_span<int, 13> s{arr3d};
 #endif
         }
 
         {
-            span<int[3][2]> s{arr3d[0]};
+            multi_span<int[3][2]> s{arr3d[0]};
             CHECK(s.length() == 1 && s.data() == &arr3d[0]);
         }
 
         {
-            span<int, 3, 2, 2> s{arr3d};
+            multi_span<int, 3, 2, 2> s{arr3d};
             CHECK(s.length() == 12 && s.data() == &arr3d[0][0][0]);
             auto workaround_macro = [&]() { return s[{2, 1, 0}] == 11; };
             CHECK(workaround_macro());
@@ -414,7 +414,7 @@ SUITE(span_tests)
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 3, 3, 3> s{arr3d};
+            multi_span<int, 3, 3, 3> s{arr3d};
 #endif
         }
     }
@@ -424,23 +424,23 @@ SUITE(span_tests)
         double(*arr)[3][4] = new double[100][3][4];
 
         {
-            span<double, dynamic_range, 3, 4> s(arr, 10);
+            multi_span<double, dynamic_range, 3, 4> s(arr, 10);
             CHECK(s.length() == 120 && s.data() == &arr[0][0][0]);
             CHECK_THROW(s[10][3][4], fail_fast);
         }
 
         {
-            span<double, dynamic_range, 4, 3> s(arr, 10);
+            multi_span<double, dynamic_range, 4, 3> s(arr, 10);
             CHECK(s.length() == 120 && s.data() == &arr[0][0][0]);
         }
 
         {
-            span<double> s(arr, 10);
+            multi_span<double> s(arr, 10);
             CHECK(s.length() == 120 && s.data() == &arr[0][0][0]);
         }
 
         {
-            span<double, dynamic_range, 3, 4> s(arr, 0);
+            multi_span<double, dynamic_range, 3, 4> s(arr, 0);
             CHECK(s.length() == 0 && s.data() == &arr[0][0][0]);
         }
 
@@ -452,54 +452,54 @@ SUITE(span_tests)
         std::array<int, 4> arr = {1, 2, 3, 4};
 
         {
-            span<int> s{arr};
+            multi_span<int> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
 
-            span<const int> cs{arr};
+            multi_span<const int> cs{arr};
             CHECK(cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data());
         }
 
         {
-            span<int, 4> s{arr};
+            multi_span<int, 4> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
 
-            span<const int, 4> cs{arr};
+            multi_span<const int, 4> cs{arr};
             CHECK(cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data());
         }
 
         {
-            span<int, 2> s{arr};
+            multi_span<int, 2> s{arr};
             CHECK(s.size() == 2 && s.data() == arr.data());
 
-            span<const int, 2> cs{arr};
+            multi_span<const int, 2> cs{arr};
             CHECK(cs.size() == 2 && cs.data() == arr.data());
         }
 
         {
-            span<int, 0> s{arr};
+            multi_span<int, 0> s{arr};
             CHECK(s.size() == 0 && s.data() == arr.data());
 
-            span<const int, 0> cs{arr};
+            multi_span<const int, 0> cs{arr};
             CHECK(cs.size() == 0 && cs.data() == arr.data());
         }
 
         // TODO This is currently an unsupported scenario. We will come back to it as we revise
         // the multidimensional interface and what transformations between dimensionality look like
         //{
-        //    span<int, 2, 2> s{arr};
+        //    multi_span<int, 2, 2> s{arr};
         //    CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         //}
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 5> s{arr};
+            multi_span<int, 5> s{arr};
 #endif
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_an_array = []() { return std::array<int, 4>{1, 2, 3, 4}; };
-            auto take_a_span = [](span<int> s) { (void) s; };
+            auto take_a_span = [](multi_span<int> s) { (void) s; };
             // try to take a temporary std::array
             take_a_span(get_an_array());
 #endif
@@ -511,42 +511,42 @@ SUITE(span_tests)
         const std::array<int, 4> arr = {1, 2, 3, 4};
 
         {
-            span<const int> s{arr};
+            multi_span<const int> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         }
 
         {
-            span<const int, 4> s{arr};
+            multi_span<const int, 4> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         }
 
         {
-            span<const int, 2> s{arr};
+            multi_span<const int, 2> s{arr};
             CHECK(s.size() == 2 && s.data() == arr.data());
         }
 
         {
-            span<const int, 0> s{arr};
+            multi_span<const int, 0> s{arr};
             CHECK(s.size() == 0 && s.data() == arr.data());
         }
 
         // TODO This is currently an unsupported scenario. We will come back to it as we revise
         // the multidimensional interface and what transformations between dimensionality look like
         //{
-        //    span<int, 2, 2> s{arr};
+        //    multi_span<int, 2, 2> s{arr};
         //    CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         //}
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<const int, 5> s{arr};
+            multi_span<const int, 5> s{arr};
 #endif
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_an_array = []() -> const std::array<int, 4> { return {1, 2, 3, 4}; };
-            auto take_a_span = [](span<const int> s) { (void) s; };
+            auto take_a_span = [](multi_span<const int> s) { (void) s; };
             // try to take a temporary std::array
             take_a_span(get_an_array());
 #endif
@@ -559,10 +559,10 @@ SUITE(span_tests)
         const std::vector<int> cv = v;
 
         {
-            span<int> s{v};
+            multi_span<int> s{v};
             CHECK(s.size() == narrow_cast<std::ptrdiff_t>(v.size()) && s.data() == v.data());
 
-            span<const int> cs{v};
+            multi_span<const int> cs{v};
             CHECK(cs.size() == narrow_cast<std::ptrdiff_t>(v.size()) && cs.data() == v.data());
         }
 
@@ -571,18 +571,18 @@ SUITE(span_tests)
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<char> s{str};
+            multi_span<char> s{str};
             CHECK(s.size() == narrow_cast<std::ptrdiff_t>(str.size()) && s.data() == str.data());
 #endif
-            span<const char> cs{str};
+            multi_span<const char> cs{str};
             CHECK(cs.size() == narrow_cast<std::ptrdiff_t>(str.size()) && cs.data() == str.data());
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<char> s{cstr};
+            multi_span<char> s{cstr};
 #endif
-            span<const char> cs{cstr};
+            multi_span<const char> cs{cstr};
             CHECK(cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
                   cs.data() == cstr.data());
         }
@@ -590,7 +590,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_vector = []() -> std::vector<int> { return {}; };
-            auto use_span = [](span<int> s) { (void) s; };
+            auto use_span = [](multi_span<int> s) { (void) s; };
             use_span(get_temp_vector());
 #endif
         }
@@ -598,7 +598,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_string = []() -> std::string { return {}; };
-            auto use_span = [](span<char> s) { (void) s; };
+            auto use_span = [](multi_span<char> s) { (void) s; };
             use_span(get_temp_string());
 #endif
         }
@@ -606,7 +606,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_vector = []() -> const std::vector<int> { return {}; };
-            auto use_span = [](span<const char> s) { (void) s; };
+            auto use_span = [](multi_span<const char> s) { (void) s; };
             use_span(get_temp_vector());
 #endif
         }
@@ -614,7 +614,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_string = []() -> const std::string { return {}; };
-            auto use_span = [](span<const char> s) { (void) s; };
+            auto use_span = [](multi_span<const char> s) { (void) s; };
             use_span(get_temp_string());
 #endif
         }
@@ -622,7 +622,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             std::map<int, int> m;
-            span<int> s{m};
+            multi_span<int> s{m};
 #endif
         }
     }
@@ -630,9 +630,9 @@ SUITE(span_tests)
     TEST(from_convertible_span_constructor)
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
-        span<int, 7, 4, 2> av1(nullptr, b1);
+        multi_span<int, 7, 4, 2> av1(nullptr, b1);
 
-        auto f = [&]() { span<int, 7, 4, 2> av1(nullptr); };
+        auto f = [&]() { multi_span<int, 7, 4, 2> av1(nullptr); };
         CHECK_THROW(f(), fail_fast);
 #endif
 
@@ -641,34 +641,34 @@ SUITE(span_tests)
         b12 = b11;
         b11 = b12;
 
-        span<int, dynamic_range> av1 = nullptr;
-        span<int, 7, dynamic_range, 2> av2(av1);
-        span<int, 7, 4, 2> av2(av1);
+        multi_span<int, dynamic_range> av1 = nullptr;
+        multi_span<int, 7, dynamic_range, 2> av2(av1);
+        multi_span<int, 7, 4, 2> av2(av1);
 #endif
 
-        span<DerivedClass> avd;
+        multi_span<DerivedClass> avd;
 #ifdef CONFIRM_COMPILATION_ERRORS
-        span<BaseClass> avb = avd;
+        multi_span<BaseClass> avb = avd;
 #endif
-        span<const DerivedClass> avcd = avd;
+        multi_span<const DerivedClass> avcd = avd;
         (void) avcd;
     }
 
     TEST(copy_move_and_assignment)
     {
-        span<int> s1;
+        multi_span<int> s1;
         CHECK(s1.empty());
 
         int arr[] = {3, 4, 5};
 
-        span<const int> s2 = arr;
+        multi_span<const int> s2 = arr;
         CHECK(s2.length() == 3 && s2.data() == &arr[0]);
 
         s2 = s1;
         CHECK(s2.empty());
 
-        auto get_temp_span = [&]() -> span<int> { return {&arr[1], 2}; };
-        auto use_span = [&](span<const int> s) { CHECK(s.length() == 2 && s.data() == &arr[1]); };
+        auto get_temp_span = [&]() -> multi_span<int> { return {&arr[1], 2}; };
+        auto use_span = [&](multi_span<const int> s) { CHECK(s.length() == 2 && s.data() == &arr[1]); };
         use_span(get_temp_span());
 
         s1 = get_temp_span();
@@ -708,28 +708,28 @@ SUITE(span_tests)
         int arr[5] = {1, 2, 3, 4, 5};
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.first<2>().bounds() == static_bounds<2>()));
             CHECK(av.first<2>().length() == 2);
             CHECK(av.first(2).length() == 2);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.first<0>().bounds() == static_bounds<0>()));
             CHECK(av.first<0>().length() == 0);
             CHECK(av.first(0).length() == 0);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.first<5>().bounds() == static_bounds<5>()));
             CHECK(av.first<5>().length() == 5);
             CHECK(av.first(5).length() == 5);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
             CHECK(av.first<6>().bounds() == static_bounds<6>());
             CHECK(av.first<6>().length() == 6);
@@ -739,7 +739,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, dynamic_range> av;
+            multi_span<int, dynamic_range> av;
             CHECK((av.first<0>().bounds() == static_bounds<0>()));
             CHECK(av.first<0>().length() == 0);
             CHECK(av.first(0).length() == 0);
@@ -751,28 +751,28 @@ SUITE(span_tests)
         int arr[5] = {1, 2, 3, 4, 5};
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.last<2>().bounds() == static_bounds<2>()));
             CHECK(av.last<2>().length() == 2);
             CHECK(av.last(2).length() == 2);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.last<0>().bounds() == static_bounds<0>()));
             CHECK(av.last<0>().length() == 0);
             CHECK(av.last(0).length() == 0);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.last<5>().bounds() == static_bounds<5>()));
             CHECK(av.last<5>().length() == 5);
             CHECK(av.last(5).length() == 5);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
             CHECK((av.last<6>().bounds() == static_bounds<6>()));
             CHECK(av.last<6>().length() == 6);
@@ -781,7 +781,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, dynamic_range> av;
+            multi_span<int, dynamic_range> av;
             CHECK((av.last<0>().bounds() == static_bounds<0>()));
             CHECK(av.last<0>().length() == 0);
             CHECK(av.last(0).length() == 0);
@@ -793,7 +793,7 @@ SUITE(span_tests)
         int arr[5] = {1, 2, 3, 4, 5};
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.subspan<2, 2>().bounds() == static_bounds<2>()));
             CHECK((av.subspan<2, 2>().length() == 2));
             CHECK(av.subspan(2, 2).length() == 2);
@@ -801,14 +801,14 @@ SUITE(span_tests)
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.subspan<0, 0>().bounds() == static_bounds<0>()));
             CHECK((av.subspan<0, 0>().length() == 0));
             CHECK(av.subspan(0, 0).length() == 0);
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.subspan<0, 5>().bounds() == static_bounds<5>()));
             CHECK((av.subspan<0, 5>().length() == 5));
             CHECK(av.subspan(0, 5).length() == 5);
@@ -817,7 +817,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK((av.subspan<5, 0>().bounds() == static_bounds<0>()));
             CHECK((av.subspan<5, 0>().length() == 0));
             CHECK(av.subspan(5, 0).length() == 0);
@@ -825,7 +825,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, dynamic_range> av;
+            multi_span<int, dynamic_range> av;
             CHECK((av.subspan<0, 0>().bounds() == static_bounds<0>()));
             CHECK((av.subspan<0, 0>().length() == 0));
             CHECK(av.subspan(0, 0).length() == 0);
@@ -833,13 +833,13 @@ SUITE(span_tests)
         }
 
         {
-            span<int> av;
+            multi_span<int> av;
             CHECK(av.subspan(0).length() == 0);
             CHECK_THROW(av.subspan(1).length(), fail_fast);
         }
 
         {
-            span<int> av = arr;
+            multi_span<int> av = arr;
             CHECK(av.subspan(0).length() == 5);
             CHECK(av.subspan(1).length() == 4);
             CHECK(av.subspan(4).length() == 1);
@@ -850,7 +850,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, 5> av = arr;
+            multi_span<int, 5> av = arr;
             CHECK(av.subspan(0).length() == 5);
             CHECK(av.subspan(1).length() == 4);
             CHECK(av.subspan(4).length() == 1);
@@ -866,18 +866,18 @@ SUITE(span_tests)
         int arr[2] = {1, 2};
 
         {
-            span<int> s;
+            multi_span<int> s;
             CHECK(s.rank() == 1);
         }
 
         {
-            span<int, 2> s = arr;
+            multi_span<int, 2> s = arr;
             CHECK(s.rank() == 1);
         }
 
         int arr2d[1][1] = {};
         {
-            span<int, 1, 1> s = arr2d;
+            multi_span<int, 1, 1> s = arr2d;
             CHECK(s.rank() == 2);
         }
     }
@@ -885,7 +885,7 @@ SUITE(span_tests)
     TEST(extent)
     {
         {
-            span<int> s;
+            multi_span<int> s;
             CHECK(s.extent() == 0);
             CHECK(s.extent(0) == 0);
             CHECK_THROW(s.extent(1), fail_fast);
@@ -895,7 +895,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, 0> s;
+            multi_span<int, 0> s;
             CHECK(s.extent() == 0);
             CHECK(s.extent(0) == 0);
             CHECK_THROW(s.extent(1), fail_fast);
@@ -904,7 +904,7 @@ SUITE(span_tests)
         {
             int arr2d[1][2] = {};
 
-            span<int, 1, 2> s = arr2d;
+            multi_span<int, 1, 2> s = arr2d;
             CHECK(s.extent() == 1);
             CHECK(s.extent<0>() == 1);
             CHECK(s.extent<1>() == 2);
@@ -916,7 +916,7 @@ SUITE(span_tests)
         {
             int arr2d[1][2] = {};
 
-            span<int, 0, 2> s = arr2d;
+            multi_span<int, 0, 2> s = arr2d;
             CHECK(s.extent() == 0);
             CHECK(s.extent<0>() == 0);
             CHECK(s.extent<1>() == 2);
@@ -931,7 +931,7 @@ SUITE(span_tests)
         int arr[4] = {1, 2, 3, 4};
 
         {
-            span<int> s = arr;
+            multi_span<int> s = arr;
             CHECK(s(0) == 1);
             CHECK_THROW(s(5), fail_fast);
         }
@@ -939,7 +939,7 @@ SUITE(span_tests)
         int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
 
         {
-            span<int, 2, 3> s = arr2d;
+            multi_span<int, 2, 3> s = arr2d;
             CHECK(s(0, 0) == 1);
             CHECK(s(1, 2) == 6);
         }
@@ -950,11 +950,11 @@ SUITE(span_tests)
         {
             int arr[10][2];
             auto s1 = as_span(arr);
-            span<const int, dynamic_range, 2> s2 = s1;
+            multi_span<const int, dynamic_range, 2> s2 = s1;
 
             CHECK(s1 == s2);
 
-            span<int, 20> s3 = as_span(s1, dim<>(20));
+            multi_span<int, 20> s3 = as_span(s1, dim<>(20));
             CHECK(s3 == s2 && s3 == s1);
         }
 
@@ -978,8 +978,8 @@ SUITE(span_tests)
         {
             int arr[] = {2, 1}; // bigger
 
-            span<int> s1 = nullptr;
-            span<int> s2 = arr;
+            multi_span<int> s1 = nullptr;
+            multi_span<int> s2 = arr;
 
             CHECK(s1 != s2);
             CHECK(s2 != s1);
@@ -998,8 +998,8 @@ SUITE(span_tests)
         {
             int arr1[] = {1, 2};
             int arr2[] = {1, 2};
-            span<int> s1 = arr1;
-            span<int> s2 = arr2;
+            multi_span<int> s1 = arr1;
+            multi_span<int> s2 = arr2;
 
             CHECK(s1 == s2);
             CHECK(!(s1 != s2));
@@ -1018,8 +1018,8 @@ SUITE(span_tests)
         {
             int arr[] = {1, 2, 3};
 
-            span<int> s1 = {&arr[0], 2}; // shorter
-            span<int> s2 = arr; // longer
+            multi_span<int> s1 = {&arr[0], 2}; // shorter
+            multi_span<int> s2 = arr; // longer
 
             CHECK(s1 != s2);
             CHECK(s2 != s1);
@@ -1039,8 +1039,8 @@ SUITE(span_tests)
             int arr1[] = {1, 2}; // smaller
             int arr2[] = {2, 1}; // bigger
 
-            span<int> s1 = arr1;
-            span<int> s2 = arr2;
+            multi_span<int> s1 = arr1;
+            multi_span<int> s2 = arr2;
 
             CHECK(s1 != s2);
             CHECK(s2 != s1);
@@ -1086,21 +1086,21 @@ SUITE(span_tests)
         CHECK_THROW((av[{10, 2}]), fail_fast);
     }
 
-    void overloaded_func(span<const int, dynamic_range, 3, 5> exp, int expected_value)
+    void overloaded_func(multi_span<const int, dynamic_range, 3, 5> exp, int expected_value)
     {
         for (auto val : exp) {
             CHECK(val == expected_value);
         }
     }
 
-    void overloaded_func(span<const char, dynamic_range, 3, 5> exp, char expected_value)
+    void overloaded_func(multi_span<const char, dynamic_range, 3, 5> exp, char expected_value)
     {
         for (auto val : exp) {
             CHECK(val == expected_value);
         }
     }
 
-    void fixed_func(span<int, 3, 3, 5> exp, int expected_value)
+    void fixed_func(multi_span<int, 3, 3, 5> exp, int expected_value)
     {
         for (auto val : exp) {
             CHECK(val == expected_value);
@@ -1185,10 +1185,10 @@ SUITE(span_tests)
 
         {
             string str;
-            span<char> strspan = as_span(str);
+            multi_span<char> strspan = as_span(str);
             (void) strspan;
             const string cstr;
-            span<const char> cstrspan = as_span(cstr);
+            multi_span<const char> cstrspan = as_span(cstr);
             (void) cstrspan;
         }
 
@@ -1218,7 +1218,7 @@ SUITE(span_tests)
     TEST(empty_spans)
     {
         {
-            span<int, 0> empty_av(nullptr);
+            multi_span<int, 0> empty_av(nullptr);
 
             CHECK(empty_av.bounds().index_bounds() == index<1>{0});
             CHECK_THROW(empty_av[0], fail_fast);
@@ -1231,7 +1231,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int> empty_av = {};
+            multi_span<int> empty_av = {};
             CHECK(empty_av.bounds().index_bounds() == index<1>{0});
             CHECK_THROW(empty_av[0], fail_fast);
             CHECK_THROW(empty_av.begin()[0], fail_fast);
@@ -1251,7 +1251,7 @@ SUITE(span_tests)
             arr[2 * i + 1] = i;
         }
 
-        span<int, dynamic_range> av(arr, 8);
+        multi_span<int, dynamic_range> av(arr, 8);
 
         ptrdiff_t a[1] = {0};
         index<1> i = a;
@@ -1395,7 +1395,7 @@ SUITE(span_tests)
         }
     }
 
-    void iterate_second_column(span<int, dynamic_range, dynamic_range> av)
+    void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
     {
         auto length = av.size() / 2;
 
@@ -1456,22 +1456,22 @@ SUITE(span_tests)
 
         // static bounds
         {
-            span<int, 4, 2> av = arr;
+            multi_span<int, 4, 2> av = arr;
             iterate_second_column(av);
         }
         // first bound is dynamic
         {
-            span<int, dynamic_range, 2> av = arr;
+            multi_span<int, dynamic_range, 2> av = arr;
             iterate_second_column(av);
         }
         // second bound is dynamic
         {
-            span<int, 4, dynamic_range> av = arr;
+            multi_span<int, 4, dynamic_range> av = arr;
             iterate_second_column(av);
         }
         // both bounds are dynamic
         {
-            span<int, dynamic_range, dynamic_range> av = arr;
+            multi_span<int, dynamic_range, dynamic_range> av = arr;
             iterate_second_column(av);
         }
     }
@@ -1490,17 +1490,17 @@ SUITE(span_tests)
 
         // first bound is dynamic
         {
-            span<int, dynamic_range, 2> av2 = as_span(av, dim<>(height), dim<>(width));
+            multi_span<int, dynamic_range, 2> av2 = as_span(av, dim<>(height), dim<>(width));
             iterate_second_column(av2);
         }
         // second bound is dynamic
         {
-            span<int, 4, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
+            multi_span<int, 4, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
             iterate_second_column(av2);
         }
         // both bounds are dynamic
         {
-            span<int, dynamic_range, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
+            multi_span<int, dynamic_range, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
             iterate_second_column(av2);
         }
 
@@ -1510,7 +1510,7 @@ SUITE(span_tests)
     TEST(span_structure_size)
     {
         double(*arr)[3][4] = new double[100][3][4];
-        span<double, dynamic_range, 3, 4> av1(arr, 10);
+        multi_span<double, dynamic_range, 3, 4> av1(arr, 10);
 
         struct EffectiveStructure
         {
@@ -1521,7 +1521,7 @@ SUITE(span_tests)
 
         CHECK_THROW(av1[10][3][4], fail_fast);
 
-        span<const double, dynamic_range, 6, 4> av2 = as_span(av1, dim<>(5), dim<6>(), dim<4>());
+        multi_span<const double, dynamic_range, 6, 4> av2 = as_span(av1, dim<>(5), dim<6>(), dim<4>());
         (void) av2;
     }
 
@@ -1529,46 +1529,46 @@ SUITE(span_tests)
     {
         int arr[] = {1, 2, 3, 4};
 
-        // converting to an span from an equal size array is ok
-        span<int, 4> av4 = arr;
+        // converting to an multi_span from an equal size array is ok
+        multi_span<int, 4> av4 = arr;
         CHECK(av4.length() == 4);
 
         // converting to dynamic_range a_v is always ok
         {
-            span<int, dynamic_range> av = av4;
+            multi_span<int, dynamic_range> av = av4;
             (void) av;
         }
         {
-            span<int, dynamic_range> av = arr;
+            multi_span<int, dynamic_range> av = arr;
             (void) av;
         }
 
-// initialization or assignment to static span that REDUCES size is NOT ok
+// initialization or assignment to static multi_span that REDUCES size is NOT ok
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            span<int, 2> av2 = arr;
+            multi_span<int, 2> av2 = arr;
         }
         {
-            span<int, 2> av2 = av4;
+            multi_span<int, 2> av2 = av4;
         }
 #endif
 
         {
-            span<int, dynamic_range> av = arr;
-            span<int, 2> av2 = av;
+            multi_span<int, dynamic_range> av = arr;
+            multi_span<int, 2> av2 = av;
             (void) av2;
         }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            span<int, dynamic_range> av = arr;
-            span<int, 2, 1> av2 = av.as_span(dim<2>(), dim<2>());
+            multi_span<int, dynamic_range> av = arr;
+            multi_span<int, 2, 1> av2 = av.as_span(dim<2>(), dim<2>());
         }
 #endif
 
         {
-            span<int, dynamic_range> av = arr;
-            span<int, 2, 1> av2 = as_span(av, dim<>(2), dim<>(2));
+            multi_span<int, dynamic_range> av = arr;
+            multi_span<int, 2, 1> av2 = as_span(av, dim<>(2), dim<>(2));
             auto workaround_macro = [&]() { return av2[{1, 0}] == 2; };
             CHECK(workaround_macro());
         }
@@ -1577,45 +1577,45 @@ SUITE(span_tests)
 
         // you can convert statically
         {
-            span<int, 2> av2 = {arr, 2};
+            multi_span<int, 2> av2 = {arr, 2};
             (void) av2;
         }
         {
-            span<int, 1> av2 = av4.first<1>();
+            multi_span<int, 1> av2 = av4.first<1>();
             (void) av2;
         }
 
         // ...or dynamically
         {
-            // NB: implicit conversion to span<int,2> from span<int,dynamic_range>
-            span<int, 1> av2 = av4.first(1);
+            // NB: implicit conversion to multi_span<int,2> from multi_span<int,dynamic_range>
+            multi_span<int, 1> av2 = av4.first(1);
             (void) av2;
         }
 
-        // initialization or assignment to static span that requires size INCREASE is not ok.
+        // initialization or assignment to static multi_span that requires size INCREASE is not ok.
         int arr2[2] = {1, 2};
 
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            span<int, 4> av4 = arr2;
+            multi_span<int, 4> av4 = arr2;
         }
         {
-            span<int, 2> av2 = arr2;
-            span<int, 4> av4 = av2;
+            multi_span<int, 2> av2 = arr2;
+            multi_span<int, 4> av4 = av2;
         }
 #endif
         {
             auto f = [&]() {
-                span<int, 4> av9 = {arr2, 2};
+                multi_span<int, 4> av9 = {arr2, 2};
                 (void) av9;
             };
             CHECK_THROW(f(), fail_fast);
         }
 
         // this should fail - we are trying to assign a small dynamic a_v to a fixed_size larger one
-        span<int, dynamic_range> av = arr2;
+        multi_span<int, dynamic_range> av = arr2;
         auto f = [&]() {
-            span<int, 4> av2 = av;
+            multi_span<int, 4> av2 = av;
             (void) av2;
         };
         CHECK_THROW(f(), fail_fast);
@@ -1628,13 +1628,13 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             // you should not be able to get writeable bytes for const objects
-            span<const int, dynamic_range> av = a;
+            multi_span<const int, dynamic_range> av = a;
             auto wav = av.as_writeable_bytes();
 #endif
         }
 
         {
-            span<int, dynamic_range> av;
+            multi_span<int, dynamic_range> av;
             auto wav = as_writeable_bytes(av);
             CHECK(wav.length() == av.length());
             CHECK(wav.length() == 0);
@@ -1642,7 +1642,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, dynamic_range> av = a;
+            multi_span<int, dynamic_range> av = a;
             auto wav = as_writeable_bytes(av);
             CHECK(wav.data() == (byte*) &a[0]);
             CHECK(wav.length() == sizeof(a));
@@ -1654,7 +1654,7 @@ SUITE(span_tests)
         int a[] = {1, 2, 3, 4};
 
         {
-            span<int, dynamic_range> av = a;
+            multi_span<int, dynamic_range> av = a;
             auto wav = as_writeable_bytes(av);
             for (auto& b : wav) {
                 b = byte(0);
@@ -1665,7 +1665,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, dynamic_range> av = a;
+            multi_span<int, dynamic_range> av = a;
             for (auto& n : av) {
                 n = 1;
             }
