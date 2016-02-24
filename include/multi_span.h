@@ -16,8 +16,8 @@
 
 #pragma once
 
-#ifndef GSL_SPAN_H
-#define GSL_SPAN_H
+#ifndef GSL_MULTI_SPAN_H
+#define GSL_MULTI_SPAN_H
 
 #include "gsl_assert.h"
 #include "gsl_util.h"
@@ -2221,4 +2221,4 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
-#endif // GSL_SPAN_H
+#endif // GSL_MULTI_SPAN_H
