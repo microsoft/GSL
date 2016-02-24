@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
-#include <span.h>
+#include <multi_span.h>
 
 #include <iostream>
 #include <list>
@@ -37,7 +37,7 @@ struct DerivedClass : BaseClass
 };
 }
 
-SUITE(span_tests)
+SUITE(multi_span_tests)
 {
 
     TEST(default_constructor)

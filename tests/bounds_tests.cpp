@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <span.h>
+#include <multi_span.h>
 #include <vector>
 
 using namespace std;

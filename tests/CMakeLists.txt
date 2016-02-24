@@ -33,7 +33,7 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp)
 endif()
 
 function(add_gsl_test name)
-    add_executable(${name} ${name}.cpp ../include/gsl.h ../include/gsl_assert.h ../include/gsl_util.h ../include/span.h ../include/string_span.h)
+    add_executable(${name} ${name}.cpp ../include/gsl.h ../include/gsl_assert.h ../include/gsl_util.h ../include/multi_span.h ../include/string_span.h)
     target_link_libraries(${name} UnitTest++)
     install(TARGETS ${name}
         RUNTIME DESTINATION bin
@@ -44,7 +44,7 @@ function(add_gsl_test name)
     )
 endfunction()
 
-add_gsl_test(span_tests)
+add_gsl_test(multi_span_tests)
 add_gsl_test(strided_span_tests)
 add_gsl_test(string_span_tests)
 add_gsl_test(at_tests)

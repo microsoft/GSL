@@ -21,7 +21,7 @@
 
 #include "gsl_assert.h"
 #include "gsl_util.h"
-#include "span.h"
+#include "multi_span.h"
 #include <cstring>
 #include <string>
 
