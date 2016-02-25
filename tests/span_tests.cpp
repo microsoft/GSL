@@ -39,7 +39,6 @@ struct DerivedClass : BaseClass
 
 SUITE(span_tests)
 {
-#if 0
     TEST(default_constructor)
     {
         {
@@ -116,6 +115,7 @@ SUITE(span_tests)
         }
     }
 
+#if 0
     TEST(from_nullptr_length_constructor)
     {
         {

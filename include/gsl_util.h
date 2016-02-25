@@ -106,6 +106,7 @@ inline T narrow(U u)
     T t = narrow_cast<T>(u);
     if (static_cast<U>(t) != u)
         throw narrowing_error();
+#pragma warning(suppress:4127) // suppress warning from MSVC compiler about constant in if-test
     if (!details::is_same_signedness<T, U>::value && ((t < T{}) != (u < U{})))
         throw narrowing_error();
     return t;
