@@ -96,13 +96,20 @@ public:
     // [span.cons], span constructors, copy, assignment, and destructor 
     constexpr span() noexcept : data_(nullptr), size_(0)
     { static_assert(extent == dynamic_extent || extent == 0, "Cannot default initialize a fixed-length span."); }
-    constexpr span(nullptr_t) noexcept : span() {}
+
+    constexpr span(nullptr_t) noexcept : span()
+    {}
+
     constexpr span(pointer ptr, index_type count) : data_(ptr), size_(count)
-    { Expects((!ptr && count == 0) || (ptr && count >= 0)); }
-#if 0 // TODO
-    constexpr span(pointer firstElem, pointer lastElem);
+    { Expects(((!ptr && count == 0) || (ptr && count >= 0)) && (extent == dynamic_extent || extent == count)); }
+
+    constexpr span(pointer firstElem, pointer lastElem) : data_(firstElem), size_(std::distance(firstElem, lastElem))
+    { Expects(size_ >= 0 && (extent == dynamic_extent || extent == size_)); }
+    
     template <size_t N>
-    constexpr span(element_type(&arr)[N]);
+    constexpr span(element_type(&arr)[N]) {}
+
+#if 0 // TODO
     template <size_t N>
     constexpr span(array<remove_const_t<element_type>, N>& arr);
     template <size_t N>
@@ -139,11 +146,13 @@ public:
     constexpr index_type size_bytes() const noexcept { return size() * sizeof(element_type); }
     constexpr bool empty() const noexcept { return size() == 0; }
 
-#if 0 // TODO
     // [span.elem], span element access 
-    constexpr reference operator[](index_type idx) const;
-    constexpr reference operator()(index_type idx) const;
-#endif 
+    constexpr reference operator[](index_type idx) const
+    {
+        Expects(idx >= 0 && idx < size_);
+        return data_[idx];
+    }
+    constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
     constexpr pointer data() const noexcept { return data_; }
 #if 0 // TODO
     // [span.iter], span iterator support 

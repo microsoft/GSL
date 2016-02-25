@@ -115,7 +115,6 @@ SUITE(span_tests)
         }
     }
 
-#if 0
     TEST(from_nullptr_length_constructor)
     {
         {
@@ -135,10 +134,8 @@ SUITE(span_tests)
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 1> s{nullptr, 0};
-            CHECK(s.length() == 1 && s.data() == nullptr); // explains why it can't compile
-#endif
+            auto workaround_macro = []() { span<int, 1> s{ nullptr, 0 }; };
+            CHECK_THROW(workaround_macro(), fail_fast); 
         }
 
         {
@@ -163,56 +160,6 @@ SUITE(span_tests)
 
             span<const int*> cs{nullptr, 0};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
-        }
-    }
-
-    TEST(from_element_constructor)
-    {
-        int i = 5;
-
-        {
-            span<int> s = i;
-            CHECK(s.length() == 1 && s.data() == &i);
-            CHECK(s[0] == 5);
-
-            span<const int> cs = i;
-            CHECK(cs.length() == 1 && cs.data() == &i);
-            CHECK(cs[0] == 5);
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            const j = 1;
-            span<int, 0> s = j;
-#endif
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 0> s = i;
-            CHECK(s.length() == 0 && s.data() == &i);
-#endif
-        }
-
-        {
-            span<int, 1> s = i;
-            CHECK(s.length() == 1 && s.data() == &i);
-            CHECK(s[0] == 5);
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 2> s = i;
-            CHECK(s.length() == 2 && s.data() == &i);
-#endif
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            auto get_a_temp = []() -> int { return 4; };
-            auto use_a_span = [](span<int> s) { (void) s; };
-            use_a_span(get_a_temp());
-#endif
         }
     }
 
@@ -271,30 +218,39 @@ SUITE(span_tests)
             CHECK(s.length() == 0 && s.data() == &arr[0]);
         }
 
+        // this will fail the std::distance() precondition, which asserts on MSVC debug builds
+        //{
+        //    auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
+        //    CHECK_THROW(workaround_macro(), fail_fast);
+        //}
+
+        // this will fail the std::distance() precondition, which asserts on MSVC debug builds
+        //{
+        //    int* p = nullptr;
+        //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+        //    CHECK_THROW(workaround_macro(), fail_fast);
+        //}
+
         {
-            auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
-            CHECK_THROW(workaround_macro(), fail_fast);
+            int* p = nullptr;
+            span<int> s{ p, p };
+            CHECK(s.length() == 0 && s.data() == nullptr);
         }
 
         {
             int* p = nullptr;
-            auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-            CHECK_THROW(workaround_macro(), fail_fast);
+            span<int, 0> s{ p, p };
+            CHECK(s.length() == 0 && s.data() == nullptr);
         }
 
-        {
-            int* p = nullptr;
-            auto workaround_macro = [&]() { span<int> s{p, p}; };
-            CHECK_THROW(workaround_macro(), fail_fast);
-        }
-
-        {
-            int* p = nullptr;
-            auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-            CHECK_THROW(workaround_macro(), fail_fast);
-        }
+        // this will fail the std::distance() precondition, which asserts on MSVC debug builds
+        //{
+        //    int* p = nullptr;
+        //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+        //    CHECK_THROW(workaround_macro(), fail_fast);
+        //}
     }
-
+#if 0
     TEST(from_array_constructor)
     {
         int arr[5] = {1, 2, 3, 4, 5};
