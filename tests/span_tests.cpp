@@ -73,6 +73,19 @@ SUITE(span_tests)
         }
     }
 
+    TEST(size_optimization)
+    {
+        {
+            span<int> s;
+            CHECK(sizeof(s) == sizeof(int*) + sizeof(ptrdiff_t));
+        }
+
+        {
+            span<int, 0> s;
+            CHECK(sizeof(s) == sizeof(int*));
+        }
+    }
+
     TEST(from_nullptr_constructor)
     {
         {
@@ -250,7 +263,7 @@ SUITE(span_tests)
         //    CHECK_THROW(workaround_macro(), fail_fast);
         //}
     }
-#if 0
+
     TEST(from_array_constructor)
     {
         int arr[5] = {1, 2, 3, 4, 5};
@@ -265,18 +278,17 @@ SUITE(span_tests)
             CHECK(s.length() == 5 && s.data() == &arr[0]);
         }
 
-        {
+        int arr2d[2][3] = { 1, 2, 3, 4, 5, 6 };
+
 #ifdef CONFIRM_COMPILATION_ERRORS
+        {
             span<int, 6> s{arr};
-#endif
         }
 
         {
             span<int, 0> s{arr};
             CHECK(s.length() == 0 && s.data() == &arr[0]);
         }
-
-        int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
 
         {
             span<int> s{arr2d};
@@ -290,43 +302,17 @@ SUITE(span_tests)
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 5> s{arr2d};
+            span<int, 6> s{ arr2d };
+        }
 #endif
-        }
-
         {
-            span<int, 6> s{arr2d};
-            CHECK(s.length() == 6 && s.data() == &arr2d[0][0]);
-            CHECK(s[0] == 1 && s[5] == 6);
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 7> s{arr2d};
-#endif
-        }
-
-        {
-            span<int[3]> s{arr2d[0]};
+            span<int[3]> s{ arr2d[0] };
             CHECK(s.length() == 1 && s.data() == &arr2d[0]);
-        }
-
-        {
-            span<int, 2, 3> s{arr2d};
-            CHECK(s.length() == 6 && s.data() == &arr2d[0][0]);
-            auto workaround_macro = [&]() { return s[{1, 2}] == 6; };
-            CHECK(workaround_macro());
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 3, 3> s{arr2d};
-#endif
         }
 
         int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
+#ifdef CONFIRM_COMPILATION_ERRORS
         {
             span<int> s{arr3d};
             CHECK(s.length() == 12 && s.data() == &arr3d[0][0][0]);
@@ -339,9 +325,7 @@ SUITE(span_tests)
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             span<int, 11> s{arr3d};
-#endif
         }
 
         {
@@ -349,32 +333,13 @@ SUITE(span_tests)
             CHECK(s.length() == 12 && s.data() == &arr3d[0][0][0]);
             CHECK(s[0] == 1 && s[5] == 6);
         }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 13> s{arr3d};
 #endif
-        }
-
         {
-            span<int[3][2]> s{arr3d[0]};
-            CHECK(s.length() == 1 && s.data() == &arr3d[0]);
-        }
-
-        {
-            span<int, 3, 2, 2> s{arr3d};
-            CHECK(s.length() == 12 && s.data() == &arr3d[0][0][0]);
-            auto workaround_macro = [&]() { return s[{2, 1, 0}] == 11; };
-            CHECK(workaround_macro());
-        }
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            span<int, 3, 3, 3> s{arr3d};
-#endif
+            //span<int[3][2]> s{arr3d[0]};
+            //CHECK(s.length() == 1 && s.data() == &arr3d[0]);
         }
     }
-
+#if 0
     TEST(from_dynamic_array_constructor)
     {
         double(*arr)[3][4] = new double[100][3][4];

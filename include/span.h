@@ -94,20 +94,22 @@ public:
     constexpr static const index_type extent = Extent;
 
     // [span.cons], span constructors, copy, assignment, and destructor 
-    constexpr span() noexcept : data_(nullptr), size_(0)
-    { static_assert(extent == dynamic_extent || extent == 0, "Cannot default initialize a fixed-length span."); }
+    constexpr span() noexcept : storage_(nullptr, extent_type<0>())
+    {}
 
     constexpr span(nullptr_t) noexcept : span()
     {}
 
-    constexpr span(pointer ptr, index_type count) : data_(ptr), size_(count)
-    { Expects(((!ptr && count == 0) || (ptr && count >= 0)) && (extent == dynamic_extent || extent == count)); }
+    constexpr span(pointer ptr, index_type count) : storage_(ptr, count)
+    { Expects(((!ptr && count == 0) || (ptr && count >= 0))); }
 
-    constexpr span(pointer firstElem, pointer lastElem) : data_(firstElem), size_(std::distance(firstElem, lastElem))
-    { Expects(size_ >= 0 && (extent == dynamic_extent || extent == size_)); }
+    constexpr span(pointer firstElem, pointer lastElem)
+        : storage_(firstElem, std::distance(firstElem, lastElem))
+    {}
     
     template <size_t N>
-    constexpr span(element_type(&arr)[N]) {}
+    constexpr span(element_type(&arr)[N]) : storage_(&arr[0], extent_type<N>())
+    {}
 
 #if 0 // TODO
     template <size_t N>
@@ -141,7 +143,7 @@ public:
 #endif
     // [span.obs], span observers 
     constexpr index_type length() const noexcept { return size(); }
-    constexpr index_type size() const noexcept { return size_;  }
+    constexpr index_type size() const noexcept { return storage_.size();  }
     constexpr index_type length_bytes() const noexcept { return size_bytes(); }
     constexpr index_type size_bytes() const noexcept { return size() * sizeof(element_type); }
     constexpr bool empty() const noexcept { return size() == 0; }
@@ -149,11 +151,11 @@ public:
     // [span.elem], span element access 
     constexpr reference operator[](index_type idx) const
     {
-        Expects(idx >= 0 && idx < size_);
-        return data_[idx];
+        Expects(idx >= 0 && idx < storage_.size());
+        return storage_.data()[idx];
     }
     constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
-    constexpr pointer data() const noexcept { return data_; }
+    constexpr pointer data() const noexcept { return storage_.data(); }
 #if 0 // TODO
     // [span.iter], span iterator support 
     iterator begin() const noexcept;
@@ -169,8 +171,70 @@ public:
     const_reverse_iterator crend() const noexcept;
 #endif
 private:
-    pointer data_;
-    index_type size_;
+    template <index_type Extent>
+    class extent_type;
+    
+    template <index_type Extent>
+    class extent_type
+    {
+    public:
+        static_assert(Extent >= 0, "A fixed-size span must be >= 0 in size.");
+
+        constexpr extent_type() noexcept {}
+
+        template <index_type Other>
+        constexpr extent_type(extent_type<Other>) noexcept
+        {
+            static_assert(Other == Extent,
+                "Mismatch between fixed-size extent and size of initializing data.");
+        }
+
+        constexpr extent_type(index_type size)
+        { Expects(size == Extent); }
+
+        constexpr inline index_type size() const noexcept { return Extent; }
+    };
+
+    template <>
+    class extent_type<dynamic_extent>
+    {
+    public:
+        template <index_type Other>
+        explicit constexpr extent_type(extent_type<Other> ext) : size_(ext.size())
+        {}
+
+        explicit constexpr extent_type(index_type size) : size_(size)
+        { Expects(size >= 0); } 
+
+        constexpr inline index_type size() const noexcept
+        { return size_; }
+
+    private:
+        index_type size_;
+    };
+
+    // this implementation detail class lets us take advantage of the 
+    // empty base class optimization to pay for only storage of a single
+    // pointer in the case of fixed-size spans
+    template <class ExtentType>
+    class storage_type : public ExtentType
+    {
+    public:
+        template <class OtherExtentType>
+        storage_type(pointer data, OtherExtentType ext)
+            : ExtentType(ext), data_(data) {}
+
+        //storage_type(pointer data, ExtentType ext)
+        //    : ExtentType(ext), data_(data) {}
+        
+        constexpr inline pointer data() const noexcept
+        { return data_; }
+
+    private:
+        pointer data_;
+    };
+
+    storage_type<extent_type<Extent>> storage_;
 };
 
 
