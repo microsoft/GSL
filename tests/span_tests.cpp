@@ -306,7 +306,7 @@ SUITE(span_tests)
         }
 #endif
         {
-            span<int[3]> s{ arr2d[0] };
+            span<int[3]> s{ &(arr2d[0]), 1 };
             CHECK(s.length() == 1 && s.data() == &arr2d[0]);
         }
 
@@ -335,34 +335,18 @@ SUITE(span_tests)
         }
 #endif
         {
-            //span<int[3][2]> s{arr3d[0]};
-            //CHECK(s.length() == 1 && s.data() == &arr3d[0]);
+            span<int[3][2]> s{&arr3d[0], 1};
+            CHECK(s.length() == 1 && s.data() == &arr3d[0]);
         }
     }
-#if 0
+
     TEST(from_dynamic_array_constructor)
     {
         double(*arr)[3][4] = new double[100][3][4];
 
         {
-            span<double, dynamic_range, 3, 4> s(arr, 10);
-            CHECK(s.length() == 120 && s.data() == &arr[0][0][0]);
-            CHECK_THROW(s[10][3][4], fail_fast);
-        }
-
-        {
-            span<double, dynamic_range, 4, 3> s(arr, 10);
-            CHECK(s.length() == 120 && s.data() == &arr[0][0][0]);
-        }
-
-        {
-            span<double> s(arr, 10);
-            CHECK(s.length() == 120 && s.data() == &arr[0][0][0]);
-        }
-
-        {
-            span<double, dynamic_range, 3, 4> s(arr, 0);
-            CHECK(s.length() == 0 && s.data() == &arr[0][0][0]);
+            span<double> s(&arr[0][0][0], 10);
+            CHECK(s.length() == 10 && s.data() == &arr[0][0][0]);
         }
 
         delete[] arr;
@@ -388,6 +372,7 @@ SUITE(span_tests)
             CHECK(cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data());
         }
 
+#ifdef CONFIRM_COMPILATION_ERRORS
         {
             span<int, 2> s{arr};
             CHECK(s.size() == 2 && s.data() == arr.data());
@@ -404,27 +389,17 @@ SUITE(span_tests)
             CHECK(cs.size() == 0 && cs.data() == arr.data());
         }
 
-        // TODO This is currently an unsupported scenario. We will come back to it as we revise
-        // the multidimensional interface and what transformations between dimensionality look like
-        //{
-        //    span<int, 2, 2> s{arr};
-        //    CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
-        //}
-
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             span<int, 5> s{arr};
-#endif
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             auto get_an_array = []() { return std::array<int, 4>{1, 2, 3, 4}; };
             auto take_a_span = [](span<int> s) { (void) s; };
             // try to take a temporary std::array
             take_a_span(get_an_array());
-#endif
         }
+#endif
     }
 
     TEST(from_const_std_array_constructor)
@@ -440,7 +415,7 @@ SUITE(span_tests)
             span<const int, 4> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         }
-
+#ifdef CONFIRM_COMPILATION_ERRORS
         {
             span<const int, 2> s{arr};
             CHECK(s.size() == 2 && s.data() == arr.data());
@@ -451,29 +426,19 @@ SUITE(span_tests)
             CHECK(s.size() == 0 && s.data() == arr.data());
         }
 
-        // TODO This is currently an unsupported scenario. We will come back to it as we revise
-        // the multidimensional interface and what transformations between dimensionality look like
-        //{
-        //    span<int, 2, 2> s{arr};
-        //    CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
-        //}
-
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             span<const int, 5> s{arr};
-#endif
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             auto get_an_array = []() -> const std::array<int, 4> { return {1, 2, 3, 4}; };
             auto take_a_span = [](span<const int> s) { (void) s; };
             // try to take a temporary std::array
             take_a_span(get_an_array());
-#endif
         }
+#endif
     }
-
+#if 0
     TEST(from_container_constructor)
     {
         std::vector<int> v = {1, 2, 3};

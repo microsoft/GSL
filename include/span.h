@@ -108,14 +108,21 @@ public:
     {}
     
     template <size_t N>
-    constexpr span(element_type(&arr)[N]) : storage_(&arr[0], extent_type<N>())
+    constexpr span(element_type(&arr)[N])
+        : storage_(&arr[0], extent_type<N>())
+    {}
+
+    template <size_t N>
+    constexpr span(std::array<std::remove_const_t<element_type>, N>& arr)
+        : storage_(&arr[0], extent_type<N>())
+    {}
+
+    template <size_t N>
+    constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr)
+        : storage_(&arr[0], extent_type<N>())
     {}
 
 #if 0 // TODO
-    template <size_t N>
-    constexpr span(array<remove_const_t<element_type>, N>& arr);
-    template <size_t N>
-    constexpr span(const array<remove_const_t<element_type>, N>& arr);
     template <class Container>
     constexpr span(Container& cont);
     template <class Container>
