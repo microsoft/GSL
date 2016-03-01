@@ -438,7 +438,7 @@ SUITE(span_tests)
         }
 #endif
     }
-#if 0
+
     TEST(from_container_constructor)
     {
         std::vector<int> v = {1, 2, 3};
@@ -512,7 +512,7 @@ SUITE(span_tests)
 #endif
         }
     }
-
+#if 0
     TEST(from_convertible_span_constructor)
     {
 #ifdef CONFIRM_COMPILATION_ERRORS

@@ -46,7 +46,7 @@ SUITE(string_span_tests)
     TEST(TestConstructFromStdVector)
     {
         std::vector<char> vec(5, 'h');
-        string_span<> v = vec;
+        string_span<> v {vec};
         CHECK(v.length() == static_cast<string_span<>::size_type>(vec.size()));
     }
 

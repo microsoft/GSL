@@ -1156,22 +1156,22 @@ namespace details
     };
 
     template <typename T>
-    struct is_span_oracle : std::false_type
+    struct is_multi_span_oracle : std::false_type
     {
     };
 
     template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-    struct is_span_oracle<multi_span<ValueType, FirstDimension, RestDimensions...>> : std::true_type
+    struct is_multi_span_oracle<multi_span<ValueType, FirstDimension, RestDimensions...>> : std::true_type
     {
     };
 
     template <typename ValueType, std::ptrdiff_t Rank>
-    struct is_span_oracle<strided_span<ValueType, Rank>> : std::true_type
+    struct is_multi_span_oracle<strided_span<ValueType, Rank>> : std::true_type
     {
     };
 
     template <typename T>
-    struct is_span : is_span_oracle<std::remove_cv_t<T>>
+    struct is_multi_span : is_multi_span_oracle<std::remove_cv_t<T>>
     {
     };
 }
@@ -1324,7 +1324,7 @@ public:
     // type-requirements: container must have .size(), operator[] which are value_type compatible
     template <typename Cont, typename DataType = typename Cont::value_type,
               typename = std::enable_if_t<
-                  !details::is_span<Cont>::value &&
+                  !details::is_multi_span<Cont>::value &&
                   std::is_convertible<DataType (*)[], value_type (*)[]>::value &&
                   std::is_same<std::decay_t<decltype(std::declval<Cont>().size(),
                                                      *std::declval<Cont>().data())>,
@@ -1338,7 +1338,7 @@ public:
     // prevent constructing from temporary containers
     template <typename Cont, typename DataType = typename Cont::value_type,
               typename = std::enable_if_t<
-                  !details::is_span<Cont>::value &&
+                  !details::is_multi_span<Cont>::value &&
                   std::is_convertible<DataType (*)[], value_type (*)[]>::value &&
                   std::is_same<std::decay_t<decltype(std::declval<Cont>().size(),
                                                      *std::declval<Cont>().data())>,
@@ -1595,7 +1595,7 @@ template <typename SpanType, typename... Dimensions2, size_t DimCount = sizeof..
 constexpr multi_span<typename SpanType::value_type, Dimensions2::value...> as_span(SpanType s,
                                                                              Dimensions2... dims)
 {
-    static_assert(details::is_span<SpanType>::value,
+    static_assert(details::is_multi_span<SpanType>::value,
                   "Variadic as_span() is for reshaping existing spans.");
     using BoundsType =
         typename multi_span<typename SpanType::value_type, (Dimensions2::value)...>::bounds_type;
@@ -1718,7 +1718,7 @@ constexpr multi_span<T, dynamic_range> as_span(T* begin, T* end)
 
 template <typename Cont>
 constexpr auto as_span(Cont& arr) -> std::enable_if_t<
-    !details::is_span<std::decay_t<Cont>>::value,
+    !details::is_multi_span<std::decay_t<Cont>>::value,
     multi_span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>>
 {
     Expects(arr.size() < PTRDIFF_MAX);
@@ -1727,7 +1727,7 @@ constexpr auto as_span(Cont& arr) -> std::enable_if_t<
 
 template <typename Cont>
 constexpr auto as_span(Cont&& arr) -> std::enable_if_t<
-    !details::is_span<std::decay_t<Cont>>::value,
+    !details::is_multi_span<std::decay_t<Cont>>::value,
     multi_span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>> = delete;
 
 // from basic_string which doesn't have nonconst .data() member like other contiguous containers

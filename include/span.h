@@ -72,12 +72,35 @@
 namespace gsl
 {
 
+template <class ElementType, std::ptrdiff_t Extent = dynamic_extent>
+class span;
+
+
+namespace details
+{
+template <class T>
+struct is_span_oracle : std::false_type
+{
+};
+
+template <class ElementType, std::ptrdiff_t Extent>
+struct is_span_oracle<gsl::span<ElementType, Extent>> : std::true_type
+{
+};
+
+template <class T>
+struct is_span : is_span_oracle<std::remove_cv_t<T>>
+{
+};
+} // namespace details
+
+
 // [views.constants], constants  
 constexpr const std::ptrdiff_t dynamic_extent = -1;
 
 
 // [span], class template span 
-template <class ElementType, std::ptrdiff_t Extent = dynamic_extent>
+template <class ElementType, std::ptrdiff_t Extent>
 class span {
 public:
     // constants and types 
@@ -122,11 +145,25 @@ public:
         : storage_(&arr[0], extent_type<N>())
     {}
 
-#if 0 // TODO
-    template <class Container>
-    constexpr span(Container& cont);
-    template <class Container>
+    // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
+    // on Container to be a contiguous sequence container.
+    template <class Container,
+        class = std::enable_if_t<!details::is_span<Container>::value &&
+        std::is_convertible<Container::pointer, pointer>::value &&
+        std::is_convertible<Container::pointer, decltype(std::declval<Container>().data())>::value>
+    >
+    constexpr span(Container& cont) : span(cont.data(), cont.size()) {}
+
+    // NB: the SFINAE here uses .data() as an incomplete/imperfect proxy for the requirement
+    // on Container to be a contiguous sequence container.
+    template <class Container,
+        class = std::enable_if_t<!details::is_span<Container>::value &&
+        std::is_convertible<Container::pointer, pointer>::value &&
+        std::is_convertible<Container::pointer, decltype(std::declval<Container>().data())>::value>
+    >
     span(const Container&&) = delete;
+    
+#if 0 // TODO
     constexpr span(const span& other) noexcept = default;
     constexpr span(span&& other) noexcept = default;
     template <class OtherElementType, ptrdiff_t OtherExtent>
@@ -231,9 +268,6 @@ private:
         storage_type(pointer data, OtherExtentType ext)
             : ExtentType(ext), data_(data) {}
 
-        //storage_type(pointer data, ExtentType ext)
-        //    : ExtentType(ext), data_(data) {}
-        
         constexpr inline pointer data() const noexcept
         { return data_; }
 
