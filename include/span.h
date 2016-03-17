@@ -92,6 +92,53 @@ template <class T>
 struct is_span : is_span_oracle<std::remove_cv_t<T>>
 {
 };
+
+template <class From, class To>
+struct is_allowed_pointer_conversion
+    : std::integral_constant<bool,
+        std::is_pointer<From>::value &&
+        std::is_pointer<To>::value &&
+        std::is_convertible<From, To>::value
+    >
+{
+};
+
+template <class From, class To>
+struct is_allowed_integral_conversion
+    : std::integral_constant<bool,
+        std::is_integral<From>::value &&
+        std::is_integral<To>::value &&
+        sizeof(From) == sizeof(To) && 
+        alignof(From) == alignof(To) &&
+        std::is_convertible<From, To>::value
+    >
+{
+};
+
+template <class From, class To>
+struct is_allowed_element_type_conversion
+    : std::integral_constant<bool,        
+        std::is_same<From, std::remove_cv_t<To>>::value ||
+        is_allowed_pointer_conversion<From, To>::value ||
+        is_allowed_integral_conversion<From, To>::value
+    >
+{
+};
+
+template <class From>
+struct is_allowed_element_type_conversion<From, char>
+    : std::integral_constant<bool, !std::is_const<From>::value>
+{
+};
+
+template <class From>
+struct is_allowed_element_type_conversion<From, const char>
+    : std::integral_constant<bool, true>
+{
+};
+
+
+
 } // namespace details
 
 
@@ -163,13 +210,29 @@ public:
     >
     span(const Container&&) = delete;
     
-#if 0 // TODO
     constexpr span(const span& other) noexcept = default;
     constexpr span(span&& other) noexcept = default;
-    template <class OtherElementType, ptrdiff_t OtherExtent>
-    constexpr span(const span<OtherElementType, OtherExtent>& other);
-    template <class OtherElementType, ptrdiff_t OtherExtent>
-    constexpr span(span<OtherElementType, OtherExtent>&& other);
+
+    template <class OtherElementType, std::ptrdiff_t OtherExtent,
+        class = std::enable_if_t<!std::is_same<element_type, OtherElementType>::value &&
+            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value
+        >
+    >
+    constexpr span(const span<OtherElementType, OtherExtent>& other)
+        : storage_(reinterpret_cast<pointer>(other.data()), other.length())
+    {}
+
+    template <class OtherElementType, std::ptrdiff_t OtherExtent,
+        class = std::enable_if_t<!std::is_same<element_type, OtherElementType>::value &&
+            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value
+        >
+    >
+    constexpr span(span<OtherElementType, OtherExtent>&& other)
+        : storage_(reinterpret_cast<pointer>(other.data()), other.length())
+    {
+    }
+
+#if 0 // TODO
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
     constexpr span& operator=(span&& other) noexcept = default;

@@ -512,34 +512,44 @@ SUITE(span_tests)
 #endif
         }
     }
-#if 0
+
     TEST(from_convertible_span_constructor)
     {
+        {
+            span<DerivedClass> avd;
+            span<const DerivedClass> avcd = avd;
+            (void)avcd;
+        }
+
+        {
 #ifdef CONFIRM_COMPILATION_ERRORS
-        span<int, 7, 4, 2> av1(nullptr, b1);
-
-        auto f = [&]() { span<int, 7, 4, 2> av1(nullptr); };
-        CHECK_THROW(f(), fail_fast);
+            span<DerivedClass> avd;
+            span<BaseClass> avb = avd;
+            (void) avb;
 #endif
+        }
 
+        {
+            span<int> s;
+            span<unsigned int> s2 = s;
+            (void)s2;
+        }
+
+        {
+            span<int> s;
+            span<const unsigned int> s2 = s;
+            (void)s2;
+        }
+
+        {
 #ifdef CONFIRM_COMPILATION_ERRORS
-        static_bounds<size_t, 7, dynamic_range, 2> b12(b11);
-        b12 = b11;
-        b11 = b12;
-
-        span<int, dynamic_range> av1 = nullptr;
-        span<int, 7, dynamic_range, 2> av2(av1);
-        span<int, 7, 4, 2> av2(av1);
+            span<int> s;
+            span<short> s2 = s;
+            (void)s2;
 #endif
-
-        span<DerivedClass> avd;
-#ifdef CONFIRM_COMPILATION_ERRORS
-        span<BaseClass> avb = avd;
-#endif
-        span<const DerivedClass> avcd = avd;
-        (void) avcd;
+        }
     }
-
+#if 0
     TEST(copy_move_and_assignment)
     {
         span<int> s1;
