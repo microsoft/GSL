@@ -732,7 +732,7 @@ SUITE(span_tests)
             for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
         }
     }
-#if 0
+
     TEST(operator_function_call)
     {
         int arr[4] = {1, 2, 3, 4};
@@ -743,15 +743,15 @@ SUITE(span_tests)
             CHECK_THROW(s(5), fail_fast);
         }
 
-        int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
-
         {
-            span<int, 2, 3> s = arr2d;
-            CHECK(s(0, 0) == 1);
-            CHECK(s(1, 2) == 6);
+            int arr2d[2] = {1, 6};
+            span<int, 2> s = arr2d;
+            CHECK(s(0) == 1);
+            CHECK(s(1) == 6);
+            CHECK_THROW(s(2) ,fail_fast);
         }
     }
-
+#if 0
     TEST(comparison_operators)
     {
         {
@@ -863,6 +863,8 @@ SUITE(span_tests)
             CHECK(!(s1 >= s2));
         }
     }
+
+#if 0
 
     TEST(basics)
     {
