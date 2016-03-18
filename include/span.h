@@ -234,19 +234,50 @@ public:
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
     constexpr span& operator=(span&& other) noexcept = default;
-#if 0 // TODO
 
     // [span.sub], span subviews  
     template <ptrdiff_t Count>
-    constexpr span<element_type, Count> first() const;
+    constexpr span<element_type, Count> first() const
+    {
+        Expects(Count >= 0 && Count <= size());
+        return { data(), Count };
+    }
+
     template <ptrdiff_t Count>
-    constexpr span<element_type, Count> last() const;
+    constexpr span<element_type, Count> last() const
+    {
+        Expects(Count >= 0 && Count <= size());
+        return{ Count == 0 ? data() : data() + (size() - Count), Count };
+    }
+
     template <ptrdiff_t Offset, ptrdiff_t Count = dynamic_extent>
-    constexpr span<element_type, Count> subspan() const;
-    constexpr span<element_type, dynamic_extent> first(index_type count) const;
-    constexpr span<element_type, dynamic_extent> last(index_type count) const;
-    constexpr span<element_type, dynamic_extent> subspan(index_type offset, index_type count = dynamic_extent) const;
-#endif
+    constexpr span<element_type, Count> subspan() const
+    {
+        Expects((Offset == 0 || Offset > 0 && Offset <= size()) &&
+            (Count == dynamic_extent || Count >= 0 && Offset + Count <= size()));
+        return { data() + Offset, Count == dynamic_extent ? size() - Offset : Count };
+    }
+
+    constexpr span<element_type, dynamic_extent> first(index_type count) const
+    {
+        Expects(count >= 0 && count <= size());
+        return { data(), count };
+    }
+
+    constexpr span<element_type, dynamic_extent> last(index_type count) const
+    {
+        Expects(count >= 0 && count <= size());
+        return { count == 0 ? data() : data() + (size() - count), count };
+    }
+
+    constexpr span<element_type, dynamic_extent> subspan(index_type offset,
+        index_type count = dynamic_extent) const
+    {
+        Expects((offset == 0 || offset > 0 && offset <= size()) &&
+            (count == dynamic_extent || count >= 0 && offset + count <= size()));
+        return { data() + offset, count == dynamic_extent ? size() - offset : count };
+    }
+
     // [span.obs], span observers 
     constexpr index_type length() const noexcept { return size(); }
     constexpr index_type size() const noexcept { return storage_.size();  }

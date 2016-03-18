@@ -588,7 +588,6 @@ SUITE(span_tests)
         s1 = get_temp_span();
         CHECK(s1.length() == 2 && s1.data() == &arr[1]);
     }
-#if 0
 
     TEST(first)
     {
@@ -596,21 +595,18 @@ SUITE(span_tests)
 
         {
             span<int, 5> av = arr;
-            CHECK((av.first<2>().bounds() == static_bounds<2>()));
             CHECK(av.first<2>().length() == 2);
             CHECK(av.first(2).length() == 2);
         }
 
         {
             span<int, 5> av = arr;
-            CHECK((av.first<0>().bounds() == static_bounds<0>()));
             CHECK(av.first<0>().length() == 0);
             CHECK(av.first(0).length() == 0);
         }
 
         {
             span<int, 5> av = arr;
-            CHECK((av.first<5>().bounds() == static_bounds<5>()));
             CHECK(av.first<5>().length() == 5);
             CHECK(av.first(5).length() == 5);
         }
@@ -618,7 +614,6 @@ SUITE(span_tests)
         {
             span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-            CHECK(av.first<6>().bounds() == static_bounds<6>());
             CHECK(av.first<6>().length() == 6);
             CHECK(av.first<-1>().length() == -1);
 #endif
@@ -626,8 +621,7 @@ SUITE(span_tests)
         }
 
         {
-            span<int, dynamic_range> av;
-            CHECK((av.first<0>().bounds() == static_bounds<0>()));
+            span<int> av;
             CHECK(av.first<0>().length() == 0);
             CHECK(av.first(0).length() == 0);
         }
@@ -639,21 +633,18 @@ SUITE(span_tests)
 
         {
             span<int, 5> av = arr;
-            CHECK((av.last<2>().bounds() == static_bounds<2>()));
             CHECK(av.last<2>().length() == 2);
             CHECK(av.last(2).length() == 2);
         }
 
         {
             span<int, 5> av = arr;
-            CHECK((av.last<0>().bounds() == static_bounds<0>()));
             CHECK(av.last<0>().length() == 0);
             CHECK(av.last(0).length() == 0);
         }
 
         {
             span<int, 5> av = arr;
-            CHECK((av.last<5>().bounds() == static_bounds<5>()));
             CHECK(av.last<5>().length() == 5);
             CHECK(av.last(5).length() == 5);
         }
@@ -661,15 +652,13 @@ SUITE(span_tests)
         {
             span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-            CHECK((av.last<6>().bounds() == static_bounds<6>()));
             CHECK(av.last<6>().length() == 6);
 #endif
             CHECK_THROW(av.last(6).length(), fail_fast);
         }
 
         {
-            span<int, dynamic_range> av;
-            CHECK((av.last<0>().bounds() == static_bounds<0>()));
+            span<int> av;
             CHECK(av.last<0>().length() == 0);
             CHECK(av.last(0).length() == 0);
         }
@@ -681,7 +670,6 @@ SUITE(span_tests)
 
         {
             span<int, 5> av = arr;
-            CHECK((av.subspan<2, 2>().bounds() == static_bounds<2>()));
             CHECK((av.subspan<2, 2>().length() == 2));
             CHECK(av.subspan(2, 2).length() == 2);
             CHECK(av.subspan(2, 3).length() == 3);
@@ -689,14 +677,12 @@ SUITE(span_tests)
 
         {
             span<int, 5> av = arr;
-            CHECK((av.subspan<0, 0>().bounds() == static_bounds<0>()));
             CHECK((av.subspan<0, 0>().length() == 0));
             CHECK(av.subspan(0, 0).length() == 0);
         }
 
         {
             span<int, 5> av = arr;
-            CHECK((av.subspan<0, 5>().bounds() == static_bounds<5>()));
             CHECK((av.subspan<0, 5>().length() == 5));
             CHECK(av.subspan(0, 5).length() == 5);
             CHECK_THROW(av.subspan(0, 6).length(), fail_fast);
@@ -705,15 +691,14 @@ SUITE(span_tests)
 
         {
             span<int, 5> av = arr;
-            CHECK((av.subspan<5, 0>().bounds() == static_bounds<0>()));
-            CHECK((av.subspan<5, 0>().length() == 0));
+            CHECK((av.subspan<4, 0>().length() == 0));
+            CHECK(av.subspan(4, 0).length() == 0);
             CHECK(av.subspan(5, 0).length() == 0);
             CHECK_THROW(av.subspan(6, 0).length(), fail_fast);
         }
 
         {
-            span<int, dynamic_range> av;
-            CHECK((av.subspan<0, 0>().bounds() == static_bounds<0>()));
+            span<int> av;
             CHECK((av.subspan<0, 0>().length() == 0));
             CHECK(av.subspan(0, 0).length() == 0);
             CHECK_THROW((av.subspan<1, 0>().length()), fail_fast);
@@ -747,72 +732,7 @@ SUITE(span_tests)
             for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
         }
     }
-
-    TEST(rank)
-    {
-        int arr[2] = {1, 2};
-
-        {
-            span<int> s;
-            CHECK(s.rank() == 1);
-        }
-
-        {
-            span<int, 2> s = arr;
-            CHECK(s.rank() == 1);
-        }
-
-        int arr2d[1][1] = {};
-        {
-            span<int, 1, 1> s = arr2d;
-            CHECK(s.rank() == 2);
-        }
-    }
-
-    TEST(extent)
-    {
-        {
-            span<int> s;
-            CHECK(s.extent() == 0);
-            CHECK(s.extent(0) == 0);
-            CHECK_THROW(s.extent(1), fail_fast);
-#ifdef CONFIRM_COMPILATION_ERRORS
-            CHECK(s.extent<1>() == 0);
-#endif
-        }
-
-        {
-            span<int, 0> s;
-            CHECK(s.extent() == 0);
-            CHECK(s.extent(0) == 0);
-            CHECK_THROW(s.extent(1), fail_fast);
-        }
-
-        {
-            int arr2d[1][2] = {};
-
-            span<int, 1, 2> s = arr2d;
-            CHECK(s.extent() == 1);
-            CHECK(s.extent<0>() == 1);
-            CHECK(s.extent<1>() == 2);
-            CHECK(s.extent(0) == 1);
-            CHECK(s.extent(1) == 2);
-            CHECK_THROW(s.extent(3), fail_fast);
-        }
-
-        {
-            int arr2d[1][2] = {};
-
-            span<int, 0, 2> s = arr2d;
-            CHECK(s.extent() == 0);
-            CHECK(s.extent<0>() == 0);
-            CHECK(s.extent<1>() == 2);
-            CHECK(s.extent(0) == 0);
-            CHECK(s.extent(1) == 2);
-            CHECK_THROW(s.extent(3), fail_fast);
-        }
-    }
-
+#if 0
     TEST(operator_function_call)
     {
         int arr[4] = {1, 2, 3, 4};
