@@ -394,12 +394,18 @@ SUITE(span_tests)
         }
 
         {
-            auto get_an_array = []() { return std::array<int, 4>{1, 2, 3, 4}; };
-            auto take_a_span = [](span<int> s) { (void) s; };
+            auto get_an_array = []()->std::array<int, 4> { return{1, 2, 3, 4}; };
+            auto take_a_span = [](span<int> s) { (void)s; };
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
 #endif
+        {
+            auto get_an_array = []() -> std::array<int, 4> { return { 1, 2, 3, 4 }; };
+            auto take_a_span = [](span<const int> s) { (void)s; };
+            // try to take a temporary std::array
+            take_a_span(get_an_array());
+        }
     }
 
     TEST(from_const_std_array_constructor)
@@ -482,11 +488,23 @@ SUITE(span_tests)
         }
 
         {
+            auto get_temp_vector = []() -> std::vector<int> { return{}; };
+            auto use_span = [](span<const int> s) { (void)s; };
+            use_span(get_temp_vector());
+        }
+
+        {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            auto get_temp_string = []() -> std::string { return {}; };
-            auto use_span = [](span<char> s) { (void) s; };
+            auto get_temp_string = []() -> std::string { return{}; };
+            auto use_span = [](span<char> s) { (void)s; };
             use_span(get_temp_string());
 #endif
+        }
+
+        {
+            auto get_temp_string = []() -> std::string { return {}; };
+            auto use_span = [](span<const char> s) { (void) s; };
+            use_span(get_temp_string());
         }
 
         {
@@ -549,7 +567,7 @@ SUITE(span_tests)
 #endif
         }
     }
-#if 0
+
     TEST(copy_move_and_assignment)
     {
         span<int> s1;
@@ -570,34 +588,7 @@ SUITE(span_tests)
         s1 = get_temp_span();
         CHECK(s1.length() == 2 && s1.data() == &arr[1]);
     }
-
-    template <class Bounds>
-    void fn(const Bounds&)
-    {
-        static_assert(Bounds::static_size == 60, "static bounds is wrong size");
-    }
-    TEST(as_span_reshape)
-    {
-        int a[3][4][5];
-        auto av = as_span(a);
-        fn(av.bounds());
-        auto av2 = as_span(av, dim<60>());
-        auto av3 = as_span(av2, dim<3>(), dim<4>(), dim<5>());
-        auto av4 = as_span(av3, dim<4>(), dim<>(3), dim<5>());
-        auto av5 = as_span(av4, dim<3>(), dim<4>(), dim<5>());
-        auto av6 = as_span(av5, dim<12>(), dim<>(5));
-
-        fill(av6.begin(), av6.end(), 1);
-
-        auto av7 = as_bytes(av6);
-
-        auto av8 = as_span<int>(av7);
-
-        CHECK(av8.size() == av6.size());
-        for (auto i = 0; i < av8.size(); i++) {
-            CHECK(av8[i] == 1);
-        }
-    }
+#if 0
 
     TEST(first)
     {

@@ -2159,8 +2159,8 @@ public:
     value_type operator[](difference_type n) const noexcept
     {
         return (*m_container)[m_itr[n]];
-        ;
     }
+
     bool operator==(const general_span_iterator& rhs) const noexcept
     {
         Expects(m_container == rhs.m_container);

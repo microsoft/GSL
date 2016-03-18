@@ -187,7 +187,7 @@ public:
         : storage_(&arr[0], extent_type<N>())
     {}
 
-    template <size_t N>
+    template <size_t N, class = std::enable_if_t<is_const<element_type>::value>>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr)
         : storage_(&arr[0], extent_type<N>())
     {}
@@ -201,15 +201,14 @@ public:
     >
     constexpr span(Container& cont) : span(cont.data(), cont.size()) {}
 
-    // NB: the SFINAE here uses .data() as an incomplete/imperfect proxy for the requirement
-    // on Container to be a contiguous sequence container.
     template <class Container,
-        class = std::enable_if_t<!details::is_span<Container>::value &&
+    class = std::enable_if_t<std::is_const<element_type>::value &&
+        !details::is_span<Container>::value &&
         std::is_convertible<Container::pointer, pointer>::value &&
         std::is_convertible<Container::pointer, decltype(std::declval<Container>().data())>::value>
     >
-    span(const Container&&) = delete;
-    
+    constexpr span(const Container& cont) : span(cont.data(), cont.size()) {}
+
     constexpr span(const span& other) noexcept = default;
     constexpr span(span&& other) noexcept = default;
 
@@ -232,10 +231,10 @@ public:
     {
     }
 
-#if 0 // TODO
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
     constexpr span& operator=(span&& other) noexcept = default;
+#if 0 // TODO
 
     // [span.sub], span subviews  
     template <ptrdiff_t Count>
