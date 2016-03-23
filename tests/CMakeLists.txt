@@ -28,8 +28,8 @@ else()
     endif()
 endif()
 
-if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp)
-  message(FATAL_ERROR "Could not find unittest-cpp enlistment. Please run 'git clone https://github.com/Microsoft/unittest-cpp.git unittest-cpp' in the tests directory")
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/tests)
+    execute_process(COMMAND git submodule update --init --recursive WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
 function(add_gsl_test name)
