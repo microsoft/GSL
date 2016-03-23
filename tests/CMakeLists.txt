@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 2.8.7)
 
 project(GSLTests CXX)
 
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/tests)
+    execute_process(COMMAND git submodule update --init WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
+
 add_subdirectory(unittest-cpp)
 
 include_directories(
@@ -26,10 +30,6 @@ else()
     else()
       message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
     endif()
-endif()
-
-if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/tests)
-    execute_process(COMMAND git submodule update --init --recursive WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
 function(add_gsl_test name)
