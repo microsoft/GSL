@@ -56,7 +56,6 @@ install:
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
-  - git clone --depth 1 https://github.com/Microsoft/unittest-cpp tests/unittest-cpp
   - cmake -H. -Bb -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_INSTALL_PREFIX=$PWD/o -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   - cmake --build b
 
