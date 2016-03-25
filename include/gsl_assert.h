@@ -20,6 +20,7 @@
 #define GSL_CONTRACTS_H
 
 #include <exception>
+#include <stdexcept>
 
 //
 // There are three configuration options for this GSL implementation's behavior
@@ -42,10 +43,6 @@
 // GSL.assert: assertions
 //
 
-#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
-
-#include <stdexcept>
-
 namespace gsl
 {
 struct fail_fast : public std::runtime_error 
@@ -53,6 +50,8 @@ struct fail_fast : public std::runtime_error
 	explicit fail_fast(char const* const message) : std::runtime_error(message) {}   
 };
 }
+
+#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
 #define Expects(cond)  if (!(cond)) \
     throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
