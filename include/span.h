@@ -1218,10 +1218,6 @@ public:
     // default constructor - same as constructing from nullptr_t
     constexpr span() noexcept : span(nullptr, bounds_type{})
     {
-        static_assert(bounds_type::dynamic_rank != 0 ||
-                          (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
-                      "Default construction of span<T> only possible "
-                      "for dynamic or fixed, zero-length spans.");
     }
 
     // construct from nullptr - get an empty span
@@ -1983,14 +1979,13 @@ private:
 
 template <class Span>
 class contiguous_span_iterator
-    : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
 {
-    using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
-
 public:
-    using typename Base::reference;
-    using typename Base::pointer;
-    using typename Base::difference_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using value_type = typename std::remove_cv<typename Span::value_type>::type;
+    using reference = typename Span::value_type&;
+    using pointer = typename Span::value_type*;
+    using difference_type = std::ptrdiff_t;
 
 private:
     template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
@@ -2000,6 +1995,7 @@ private:
     const Span* m_validator;
     void validateThis() const
     {
+        Expects(m_validator);
         // iterator is out of range of the array
         Expects(data_ >= m_validator->data_ && data_ < m_validator->data_ + m_validator->size());
     }
@@ -2010,6 +2006,11 @@ private:
     }
 
 public:
+    contiguous_span_iterator()
+        : data_()
+        , m_validator()
+    {
+    }
     reference operator*() const noexcept
     {
         validateThis();
@@ -2022,6 +2023,7 @@ public:
     }
     contiguous_span_iterator& operator++() noexcept
     {
+        Expects(m_validator && m_validator->data_ <= data_ && data_ < m_validator->data_ + m_validator->size());
         ++data_;
         return *this;
     }
@@ -2033,6 +2035,7 @@ public:
     }
     contiguous_span_iterator& operator--() noexcept
     {
+        Expects(m_validator && m_validator->data_ < data_ && data_ <= m_validator->data_ + m_validator->size());
         --data_;
         return *this;
     }
@@ -2049,6 +2052,7 @@ public:
     }
     contiguous_span_iterator& operator+=(difference_type n) noexcept
     {
+        Expects(m_validator && m_validator->data_ <= data_ + n && data_ + n <= m_validator->data_ + m_validator->size());
         data_ += n;
         return *this;
     }
@@ -2094,15 +2098,13 @@ contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>
 
 template <typename Span>
 class general_span_iterator
-    : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
 {
-    using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
-
 public:
-    using typename Base::reference;
-    using typename Base::pointer;
-    using typename Base::difference_type;
-    using typename Base::value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using value_type = typename std::remove_cv_t<typename Span::value_type>;
+    using reference = typename Span::value_type&;
+    using pointer = typename Span::value_type*;
+    using difference_type = std::ptrdiff_t;
 
 private:
     template <typename ValueType, size_t Rank>
@@ -2117,6 +2119,11 @@ private:
     }
 
 public:
+    general_span_iterator()
+        : m_container()
+        , m_itr()
+    {
+    }
     reference operator*() noexcept { return (*m_container)[*m_itr]; }
     pointer operator->() noexcept { return &(*m_container)[*m_itr]; }
     general_span_iterator& operator++() noexcept
