@@ -31,6 +31,14 @@
 #pragma push_macro("constexpr")
 #define constexpr /* nothing */
 
+#pragma warning(push)
+
+// blanket turn off warnings from CppCoreCheck for now
+// so people aren't annoyed by them when running the tool.
+// more targeted suppressions will be added in a future update to the GSL
+#pragma warning(disable: 26481 26482 26483 26485 26490 26491 26492 26493 26495)
+
+
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
 
@@ -930,12 +938,14 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 }
 #endif
 
-// VS 2013 workarounds
 #ifdef _MSC_VER
+
+#pragma warning(pop)
 
 #undef constexpr
 #pragma pop_macro("constexpr")
 
+// VS 2013 workarounds
 #if _MSC_VER <= 1800
 
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION

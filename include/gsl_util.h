@@ -31,6 +31,9 @@
 #pragma push_macro("constexpr")
 #define constexpr
 
+#pragma warning(push)
+#pragma warning(disable: 4127) // conditional expression is constant
+
 // MSVC 2013 workarounds
 #if _MSC_VER <= 1800
 // noexcept is not understood
@@ -40,7 +43,6 @@
 // turn off some misguided warnings
 #pragma warning(push)
 #pragma warning(disable: 4351) // warns about newly introduced aggregate initializer behavior
-#pragma warning(disable: 4127) // conditional expression is constant
 
 #endif // _MSC_VER <= 1800
 
@@ -130,6 +132,8 @@ constexpr typename Cont::value_type& at(Cont& cont, size_t index)
 
 
 #ifdef _MSC_VER
+
+#pragma warning(pop)
 
 #undef constexpr
 #pragma pop_macro("constexpr")
