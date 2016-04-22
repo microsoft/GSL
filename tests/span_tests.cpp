@@ -1210,7 +1210,7 @@ SUITE(span_tests)
             (void) dv;
 
             auto av2 = as_span(av.begin(), av.end());
-			CHECK(av2 == av);
+            CHECK(av2 == av);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto dv2 = as_span(std::move(vec));
