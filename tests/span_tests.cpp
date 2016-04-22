@@ -1193,7 +1193,7 @@ SUITE(span_tests)
         }
 
         {
-            int a[3][4][5];
+			int a[3][4][5] = {};
             auto av = as_span(a);
             const int(*b)[4][5];
             b = a;
@@ -1208,6 +1208,9 @@ SUITE(span_tests)
             vector<float> vec(3);
             auto dv = as_span(vec);
             (void) dv;
+
+			auto av2 = as_span(av.begin(), av.end());
+			CHECK(av2 == av);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto dv2 = as_span(std::move(vec));

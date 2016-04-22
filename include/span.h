@@ -1688,6 +1688,12 @@ constexpr auto as_span(T* const& ptr, dim<Dimensions>... args)
             details::static_as_span_helper<static_bounds<Dimensions...>>(args..., details::Sep{})};
 }
 
+template<typename Span>
+constexpr Span as_span(contiguous_span_iterator<Span> start, contiguous_span_iterator<Span> last)
+{
+	return { &*start, static_cast<typename Span::size_type>(last - start)};
+}
+
 template <typename T>
 constexpr auto as_span(T* arr, std::ptrdiff_t len) ->
     typename details::SpanArrayTraits<T, dynamic_range>::type
