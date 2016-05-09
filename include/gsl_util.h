@@ -128,6 +128,10 @@ template <class Cont>
 constexpr typename Cont::value_type& at(Cont& cont, size_t index)
 { Expects(index < cont.size()); return cont[index]; }
 
+template <class T>
+constexpr const T& at(std::initializer_list<T> cont, size_t index)
+{ Expects(index < cont.size()); return *(cont.begin() + index); }
+
 } // namespace gsl
 
 
