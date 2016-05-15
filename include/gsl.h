@@ -78,44 +78,47 @@ class not_null
 {
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
-    not_null(T t) : ptr_(t) { ensure_invariant(); }
+    using element_type = typename std::pointer_traits<T>::element_type;
+    using pointer = typename std::pointer_traits<T>::pointer;
+    using const_pointer = std::add_const_t<pointer>;
+
+    not_null(const T& t) : ptr_(t) { ensure_invariant(); }
+    not_null(T&& t) : ptr_(std::move(t)) { ensure_invariant(); }
+
     not_null& operator=(const T& t) { ptr_ = t; ensure_invariant(); return *this; }
 
     not_null(const not_null &other) = default;
     not_null& operator=(const not_null &other) = default;
 
-    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    not_null(const not_null<U> &other)
-    {
-        *this = other;
-    }
-
-    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    not_null& operator=(const not_null<U> &other)
-    {
-        ptr_ = other.get();
-        return *this;
-    }
-
     // prevents compilation when someone attempts to assign a nullptr 
     not_null(std::nullptr_t) = delete;
     not_null(int) = delete;
-    not_null<T>& operator=(std::nullptr_t) = delete;
-	not_null<T>& operator=(int) = delete;
+    not_null& operator=(std::nullptr_t) = delete;
+    not_null& operator=(int) = delete;
     
-    T get() const {
+    std::add_lvalue_reference_t<const_pointer>  get() const {
 #ifdef _MSC_VER
         __assume(ptr_ != nullptr);
 #endif
         return ptr_;
     } // the assume() should help the optimizer
 
-    operator T() const {  return get(); }
-    T operator->() const { return get(); }
+    operator std::add_lvalue_reference_t<const_pointer> () const {  return get(); }
 
-	bool operator==(const T& rhs) const { return ptr_ == rhs; }
-	bool operator!=(const T& rhs) const { return !(*this == rhs); }
+    std::add_lvalue_reference_t<element_type>
+    operator *() const { return *get(); }
+
+    std::add_pointer_t<element_type>
+    operator->() const { return std::addressof(*get()); }
+
+    bool operator==(const T& rhs) const { return ptr_ == rhs; }
+    bool operator!=(const T& rhs) const { return !(*this == rhs); }
+
+    template<class U>
+    bool operator==(const not_null<U>& rhs) const { return ptr_ == rhs.ptr_; }
+
 private:
+    template<class U> friend class not_null;    // for comparisons: not_null<A> == not_null<B>
     T ptr_;
 
     // we assume that the compiler can hoist/prove away most of the checks inlined from this function
