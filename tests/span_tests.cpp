@@ -801,23 +801,30 @@ SUITE(span_tests)
         }
     }
 
-#if 0
     TEST(comparison_operators)
     {
         {
-            int arr[10][2];
-            auto s1 = as_span(arr);
-            span<const int, dynamic_range, 2> s2 = s1;
-
+            span<int> s1 = nullptr;
+            span<int> s2 = nullptr;
             CHECK(s1 == s2);
-
-            span<int, 20> s3 = as_span(s1, dim<>(20));
-            CHECK(s3 == s2 && s3 == s1);
+            CHECK(!(s1 != s2));
+            CHECK(!(s1 < s2));
+            CHECK(s1 <= s2);
+            CHECK(!(s1 > s2));
+            CHECK(s1 >= s2);
+            CHECK(s2 == s1);
+            CHECK(!(s2 != s1));
+            CHECK(!(s2 < s1));
+            CHECK(s2 <= s1);
+            CHECK(!(s2 > s1));
+            CHECK(s2 >= s1);
         }
 
         {
-            auto s1 = nullptr;
-            auto s2 = nullptr;
+            int arr[] = {2, 1};
+            span<int> s1 = arr;
+            span<int> s2 = arr;
+
             CHECK(s1 == s2);
             CHECK(!(s1 != s2));
             CHECK(!(s1 < s2));
@@ -914,6 +921,7 @@ SUITE(span_tests)
         }
     }
 
+#if 0
     TEST(fixed_size_conversions)
     {
         int arr[] = {1, 2, 3, 4};

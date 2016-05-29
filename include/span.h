@@ -481,26 +481,30 @@ private:
 };
 
 
-#if 0 // TODO
 // [span.comparison], span comparison operators 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator==(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) const noexcept;
+constexpr bool operator==(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+{ return std::equal(l.begin(), l.end(), r.begin(), r.end()); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator!=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) const noexcept;
+constexpr bool operator!=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+{ return !(l == r); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator<(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) const noexcept;
+constexpr bool operator<(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+{ return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end()); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator<=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) const noexcept;
+constexpr bool operator<=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+{ return !(l > r); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator>(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) const noexcept;
+constexpr bool operator>(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+{ return r < l; }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator>=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) const noexcept;
-#endif
+constexpr bool operator>=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+{ return !(l < r); }
 
 
 #if 0 // TODO
