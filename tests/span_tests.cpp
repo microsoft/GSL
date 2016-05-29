@@ -751,6 +751,56 @@ SUITE(span_tests)
             CHECK_THROW(s(2) ,fail_fast);
         }
     }
+
+    TEST(iterator)
+    {
+        span<int>::iterator it1;
+        span<int>::iterator it2;
+        CHECK(it1 == it2);
+    }
+
+    TEST(begin_end)
+    {
+        {
+            int a[] = { 1, 2, 3, 4 };
+            span<int> s = a;
+
+            span<int>::iterator it = s.begin();
+            auto first = it;
+            CHECK(it == first);
+            CHECK(*it == 1);
+
+            span<int>::iterator beyond = s.end();
+            CHECK(it != beyond);
+            CHECK_THROW(*beyond, fail_fast);
+
+            CHECK(beyond - first == 4);
+            CHECK(first - first == 0);
+            CHECK(beyond - beyond == 0);
+            
+            ++it;
+            CHECK(it - first == 1);
+            CHECK(*it == 2);
+            *it = 22;
+            CHECK(*it == 22);
+            CHECK(beyond - it == 3);
+
+            it = first;
+            CHECK(it == first);
+            while (it != s.end())
+            {
+                *it = 5;
+                ++it;
+            }
+
+            CHECK(it == beyond);
+            CHECK(it - beyond == 0);
+
+            for (auto& n : s)
+                CHECK(n == 5);
+        }
+    }
+
 #if 0
     TEST(comparison_operators)
     {
@@ -862,476 +912,6 @@ SUITE(span_tests)
             CHECK(s2 >= s1);
             CHECK(!(s1 >= s2));
         }
-    }
-
-#if 0
-
-    TEST(basics)
-    {
-        auto ptr = as_span(new int[10], 10);
-        fill(ptr.begin(), ptr.end(), 99);
-        for (int num : ptr) {
-            CHECK(num == 99);
-        }
-
-        delete[] ptr.data();
-    }
-
-    TEST(bounds_checks)
-    {
-        int arr[10][2];
-        auto av = as_span(arr);
-
-        fill(begin(av), end(av), 0);
-
-        av[2][0] = 1;
-        av[1][1] = 3;
-
-        // out of bounds
-        CHECK_THROW(av[1][3] = 3, fail_fast);
-        CHECK_THROW((av[{1, 3}] = 3), fail_fast);
-
-        CHECK_THROW(av[10][2], fail_fast);
-        CHECK_THROW((av[{10, 2}]), fail_fast);
-    }
-
-    void overloaded_func(span<const int, dynamic_range, 3, 5> exp, int expected_value)
-    {
-        for (auto val : exp) {
-            CHECK(val == expected_value);
-        }
-    }
-
-    void overloaded_func(span<const char, dynamic_range, 3, 5> exp, char expected_value)
-    {
-        for (auto val : exp) {
-            CHECK(val == expected_value);
-        }
-    }
-
-    void fixed_func(span<int, 3, 3, 5> exp, int expected_value)
-    {
-        for (auto val : exp) {
-            CHECK(val == expected_value);
-        }
-    }
-
-    TEST(span_parameter_test)
-    {
-        auto data = new int[4][3][5];
-
-        auto av = as_span(data, 4);
-
-        CHECK(av.size() == 60);
-
-        fill(av.begin(), av.end(), 34);
-
-        int count = 0;
-        for_each(av.rbegin(), av.rend(), [&](int val) { count += val; });
-        CHECK(count == 34 * 60);
-        overloaded_func(av, 34);
-
-        overloaded_func(as_span(av, dim<>(4), dim<>(3), dim<>(5)), 34);
-
-        // fixed_func(av, 34);
-        delete[] data;
-    }
-
-    TEST(md_access)
-    {
-        auto width = 5, height = 20;
-
-        auto imgSize = width * height;
-        auto image_ptr = new int[imgSize][3];
-
-        // size check will be done
-        auto image_view =
-            as_span(as_span(image_ptr, imgSize), dim<>(height), dim<>(width), dim<3>());
-
-        iota(image_view.begin(), image_view.end(), 1);
-
-        int expected = 0;
-        for (auto i = 0; i < height; i++) {
-            for (auto j = 0; j < width; j++) {
-                CHECK(expected + 1 == image_view[i][j][0]);
-                CHECK(expected + 2 == image_view[i][j][1]);
-                CHECK(expected + 3 == image_view[i][j][2]);
-
-                auto val = image_view[{i, j, 0}];
-                CHECK(expected + 1 == val);
-                val = image_view[{i, j, 1}];
-                CHECK(expected + 2 == val);
-                val = image_view[{i, j, 2}];
-                CHECK(expected + 3 == val);
-
-                expected += 3;
-            }
-        }
-    }
-
-    TEST(as_span)
-    {
-        {
-            int* arr = new int[150];
-
-            auto av = as_span(arr, dim<10>(), dim<>(3), dim<5>());
-
-            fill(av.begin(), av.end(), 24);
-            overloaded_func(av, 24);
-
-            delete[] arr;
-
-            array<int, 15> stdarr{0};
-            auto av2 = as_span(stdarr);
-            overloaded_func(as_span(av2, dim<>(1), dim<3>(), dim<5>()), 0);
-
-            string str = "ttttttttttttttt"; // size = 15
-            auto t = str.data();
-            (void) t;
-            auto av3 = as_span(str);
-            overloaded_func(as_span(av3, dim<>(1), dim<3>(), dim<5>()), 't');
-        }
-
-        {
-            string str;
-            span<char> strspan = as_span(str);
-            (void) strspan;
-            const string cstr;
-            span<const char> cstrspan = as_span(cstr);
-            (void) cstrspan;
-        }
-
-        {
-            int a[3][4][5];
-            auto av = as_span(a);
-            const int(*b)[4][5];
-            b = a;
-            auto bv = as_span(b, 3);
-
-            CHECK(av == bv);
-
-            const std::array<double, 3> arr = {0.0, 0.0, 0.0};
-            auto cv = as_span(arr);
-            (void) cv;
-
-            vector<float> vec(3);
-            auto dv = as_span(vec);
-            (void) dv;
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-            auto dv2 = as_span(std::move(vec));
-#endif
-        }
-    }
-
-    TEST(empty_spans)
-    {
-        {
-            span<int, 0> empty_av(nullptr);
-
-            CHECK(empty_av.bounds().index_bounds() == index<1>{0});
-            CHECK_THROW(empty_av[0], fail_fast);
-            CHECK_THROW(empty_av.begin()[0], fail_fast);
-            CHECK_THROW(empty_av.cbegin()[0], fail_fast);
-            for (auto& v : empty_av) {
-                (void) v;
-                CHECK(false);
-            }
-        }
-
-        {
-            span<int> empty_av = {};
-            CHECK(empty_av.bounds().index_bounds() == index<1>{0});
-            CHECK_THROW(empty_av[0], fail_fast);
-            CHECK_THROW(empty_av.begin()[0], fail_fast);
-            CHECK_THROW(empty_av.cbegin()[0], fail_fast);
-            for (auto& v : empty_av) {
-                (void) v;
-                CHECK(false);
-            }
-        }
-    }
-
-    TEST(index_constructor)
-    {
-        auto arr = new int[8];
-        for (int i = 0; i < 4; ++i) {
-            arr[2 * i] = 4 + i;
-            arr[2 * i + 1] = i;
-        }
-
-        span<int, dynamic_range> av(arr, 8);
-
-        ptrdiff_t a[1] = {0};
-        index<1> i = a;
-
-        CHECK(av[i] == 4);
-
-        auto av2 = as_span(av, dim<4>(), dim<>(2));
-        ptrdiff_t a2[2] = {0, 1};
-        index<2> i2 = a2;
-
-        CHECK(av2[i2] == 0);
-        CHECK(av2[0][i] == 4);
-
-        delete[] arr;
-    }
-
-    TEST(index_constructors)
-    {
-        {
-            // components of the same type
-            index<3> i1(0, 1, 2);
-            CHECK(i1[0] == 0);
-
-            // components of different types
-            size_t c0 = 0;
-            size_t c1 = 1;
-            index<3> i2(c0, c1, 2);
-            CHECK(i2[0] == 0);
-
-            // from array
-            index<3> i3 = {0, 1, 2};
-            CHECK(i3[0] == 0);
-
-            // from other index of the same size type
-            index<3> i4 = i3;
-            CHECK(i4[0] == 0);
-
-            // default
-            index<3> i7;
-            CHECK(i7[0] == 0);
-
-            // default
-            index<3> i9 = {};
-            CHECK(i9[0] == 0);
-        }
-
-        {
-            // components of the same type
-            index<1> i1(0);
-            CHECK(i1[0] == 0);
-
-            // components of different types
-            size_t c0 = 0;
-            index<1> i2(c0);
-            CHECK(i2[0] == 0);
-
-            // from array
-            index<1> i3 = {0};
-            CHECK(i3[0] == 0);
-
-            // from int
-            index<1> i4 = 0;
-            CHECK(i4[0] == 0);
-
-            // from other index of the same size type
-            index<1> i5 = i3;
-            CHECK(i5[0] == 0);
-
-            // default
-            index<1> i8;
-            CHECK(i8[0] == 0);
-
-            // default
-            index<1> i9 = {};
-            CHECK(i9[0] == 0);
-        }
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            index<3> i1(0, 1);
-            index<3> i2(0, 1, 2, 3);
-            index<3> i3 = {0};
-            index<3> i4 = {0, 1, 2, 3};
-            index<1> i5 = {0, 1};
-        }
-#endif
-    }
-
-    TEST(index_operations)
-    {
-        ptrdiff_t a[3] = {0, 1, 2};
-        ptrdiff_t b[3] = {3, 4, 5};
-        index<3> i = a;
-        index<3> j = b;
-
-        CHECK(i[0] == 0);
-        CHECK(i[1] == 1);
-        CHECK(i[2] == 2);
-
-        {
-            index<3> k = i + j;
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 3);
-            CHECK(k[1] == 5);
-            CHECK(k[2] == 7);
-        }
-
-        {
-            index<3> k = i * 3;
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 0);
-            CHECK(k[1] == 3);
-            CHECK(k[2] == 6);
-        }
-
-        {
-            index<3> k = 3 * i;
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 0);
-            CHECK(k[1] == 3);
-            CHECK(k[2] == 6);
-        }
-
-        {
-            index<2> k = details::shift_left(i);
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 1);
-            CHECK(k[1] == 2);
-        }
-    }
-
-    void iterate_second_column(span<int, dynamic_range, dynamic_range> av)
-    {
-        auto length = av.size() / 2;
-
-        // view to the second column
-        auto section = av.section({0, 1}, {length, 1});
-
-        CHECK(section.size() == length);
-        for (auto i = 0; i < section.size(); ++i) {
-            CHECK(section[i][0] == av[i][1]);
-        }
-
-        for (auto i = 0; i < section.size(); ++i) {
-            auto idx = index<2>{i, 0}; // avoid braces inside the CHECK macro
-            CHECK(section[idx] == av[i][1]);
-        }
-
-        CHECK(section.bounds().index_bounds()[0] == length);
-        CHECK(section.bounds().index_bounds()[1] == 1);
-        for (auto i = 0; i < section.bounds().index_bounds()[0]; ++i) {
-            for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j) {
-                auto idx = index<2>{i, j}; // avoid braces inside the CHECK macro
-                CHECK(section[idx] == av[i][1]);
-            }
-        }
-
-        size_t check_sum = 0;
-        for (auto i = 0; i < length; ++i) {
-            check_sum += av[i][1];
-        }
-
-        {
-            auto idx = 0;
-            size_t sum = 0;
-            for (auto num : section) {
-                CHECK(num == av[idx][1]);
-                sum += num;
-                idx++;
-            }
-
-            CHECK(sum == check_sum);
-        }
-        {
-            size_t idx = length - 1;
-            size_t sum = 0;
-            for (auto iter = section.rbegin(); iter != section.rend(); ++iter) {
-                CHECK(*iter == av[idx][1]);
-                sum += *iter;
-                idx--;
-            }
-
-            CHECK(sum == check_sum);
-        }
-    }
-
-    TEST(span_section_iteration)
-    {
-        int arr[4][2] = {{4, 0}, {5, 1}, {6, 2}, {7, 3}};
-
-        // static bounds
-        {
-            span<int, 4, 2> av = arr;
-            iterate_second_column(av);
-        }
-        // first bound is dynamic
-        {
-            span<int, dynamic_range, 2> av = arr;
-            iterate_second_column(av);
-        }
-        // second bound is dynamic
-        {
-            span<int, 4, dynamic_range> av = arr;
-            iterate_second_column(av);
-        }
-        // both bounds are dynamic
-        {
-            span<int, dynamic_range, dynamic_range> av = arr;
-            iterate_second_column(av);
-        }
-    }
-
-    TEST(dynamic_span_section_iteration)
-    {
-        auto height = 4, width = 2;
-        auto size = height * width;
-
-        auto arr = new int[size];
-        for (auto i = 0; i < size; ++i) {
-            arr[i] = i;
-        }
-
-        auto av = as_span(arr, size);
-
-        // first bound is dynamic
-        {
-            span<int, dynamic_range, 2> av2 = as_span(av, dim<>(height), dim<>(width));
-            iterate_second_column(av2);
-        }
-        // second bound is dynamic
-        {
-            span<int, 4, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
-            iterate_second_column(av2);
-        }
-        // both bounds are dynamic
-        {
-            span<int, dynamic_range, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
-            iterate_second_column(av2);
-        }
-
-        delete[] arr;
-    }
-
-    TEST(span_structure_size)
-    {
-        double(*arr)[3][4] = new double[100][3][4];
-        span<double, dynamic_range, 3, 4> av1(arr, 10);
-
-        struct EffectiveStructure
-        {
-            double* v1;
-            ptrdiff_t v2;
-        };
-        CHECK(sizeof(av1) == sizeof(EffectiveStructure));
-
-        CHECK_THROW(av1[10][3][4], fail_fast);
-
-        span<const double, dynamic_range, 6, 4> av2 = as_span(av1, dim<>(5), dim<6>(), dim<4>());
-        (void) av2;
     }
 
     TEST(fixed_size_conversions)
@@ -1458,31 +1038,6 @@ SUITE(span_tests)
         }
     }
 
-    TEST(iterator)
-    {
-        int a[] = {1, 2, 3, 4};
-
-        {
-            span<int, dynamic_range> av = a;
-            auto wav = as_writeable_bytes(av);
-            for (auto& b : wav) {
-                b = byte(0);
-            }
-            for (size_t i = 0; i < 4; ++i) {
-                CHECK(a[i] == 0);
-            }
-        }
-
-        {
-            span<int, dynamic_range> av = a;
-            for (auto& n : av) {
-                n = 1;
-            }
-            for (size_t i = 0; i < 4; ++i) {
-                CHECK(a[i] == 1);
-            }
-        }
-    }
 #endif    
 }
 

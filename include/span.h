@@ -137,6 +137,126 @@ struct is_allowed_element_type_conversion<From, const char>
 {
 };
 
+template <class Span>
+class span_iterator
+    : public std::iterator<std::random_access_iterator_tag, typename Span::element_type>
+{
+    using Base = std::iterator<std::random_access_iterator_tag, typename Span::element_type>;
+
+public:
+    using typename Base::reference;
+    using typename Base::pointer;
+    using typename Base::difference_type;
+
+    span_iterator() : span_iterator(nullptr, 0) {}
+    span_iterator(const Span* span, typename Span::index_type index) : span_(span), index_(index)
+    {
+        Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
+    }
+
+    reference operator*() const { Expects(span_); return (*span_)[index_]; }
+    pointer operator->() const { Expects(span_); return &((*span_)[index_]); }
+
+    span_iterator& operator++() noexcept
+    {
+        Expects(span_ && index_ >= 0 && index_ < span_->length());
+        ++index_;
+        return *this;
+    }
+
+    span_iterator operator++(int) noexcept
+    {
+        auto ret = *this;
+        ++(*this);
+        return ret;
+    }
+
+    span_iterator& operator--() noexcept
+    {
+        Expects(span_ && index > 0 && index_ <= span_->length());
+        --index_;
+        return *this;
+    }
+
+    span_iterator operator--(int) noexcept
+    {
+        auto ret = *this;
+        --(*this);
+        return ret;
+    }
+
+    span_iterator operator+(difference_type n) const noexcept
+    {
+        auto ret{*this};
+        return ret += n;
+    }
+    
+    span_iterator& operator+=(difference_type n) noexcept
+    {
+        index_ += n;
+        Expects(span_ && index_ >= 0 && index_ <= span_->length());
+        return *this;
+    }
+
+    span_iterator operator-(difference_type n) const noexcept
+    {
+        auto ret{*this};
+        return ret -= n;
+    }
+
+    span_iterator& operator-=(difference_type n) noexcept
+    {
+        return *this += -n;
+    }
+
+    difference_type operator-(const span_iterator& rhs) const noexcept
+    {
+        Expects(span_ == rhs.span_);
+        return index_ - rhs.index_;
+    }
+
+    reference operator[](difference_type n) const noexcept
+    { return *(*this + n); }
+
+    bool operator==(const span_iterator& rhs) const noexcept
+    { return span_ == rhs.span_ && index_ == rhs.index_; }
+
+    bool operator!=(const span_iterator& rhs) const noexcept { return !(*this == rhs); }
+
+    bool operator<(const span_iterator& rhs) const noexcept
+    {
+        Expects(span_ == rhs.span_);
+        return index_ < rhs.index_;
+    }
+
+    bool operator<=(const span_iterator& rhs) const noexcept { return !(rhs < *this); }
+    
+    bool operator>(const span_iterator& rhs) const noexcept { return rhs < *this; }
+    
+    bool operator>=(const span_iterator& rhs) const noexcept { return !(rhs > *this); }
+
+    void swap(span_iterator& rhs) noexcept
+    {
+        std::swap(index_, rhs.index_);
+        std::swap(m_span, rhs.m_span);
+    }
+
+private:
+    const Span* span_;
+    ptrdiff_t index_;
+};
+
+template <typename Span>
+span_iterator<Span> operator+(typename span_iterator<Span>::difference_type n,
+    const span_iterator<Span>& rhs) noexcept
+{ return rhs + n; }
+
+template <typename Span>
+span_iterator<Span> operator-(typename span_iterator<Span>::difference_type n,
+    const span_iterator<Span>& rhs) noexcept
+{
+    return rhs - n;
+}
 
 
 } // namespace details
@@ -155,12 +275,10 @@ public:
     using index_type = std::ptrdiff_t;
     using pointer = element_type*;
     using reference = element_type&;
-#if 0  // TODO
-    using iterator = /*implementation-defined */;
-    using const_iterator = /* implementation-defined */;
+
+    using iterator = details::span_iterator<span<ElementType, Extent>>;
     using reverse_iterator = std::reverse_iterator<iterator>;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-#endif 
+
     constexpr static const index_type extent = Extent;
 
     // [span.cons], span constructors, copy, assignment, and destructor 
@@ -228,8 +346,7 @@ public:
     >
     constexpr span(span<OtherElementType, OtherExtent>&& other)
         : storage_(reinterpret_cast<pointer>(other.data()), other.length())
-    {
-    }
+    {}
 
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
@@ -293,20 +410,14 @@ public:
     }
     constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
     constexpr pointer data() const noexcept { return storage_.data(); }
-#if 0 // TODO
+
     // [span.iter], span iterator support 
-    iterator begin() const noexcept;
-    iterator end() const noexcept;
+    iterator begin() const noexcept { return {this, 0}; }
+    iterator end() const noexcept { return {this, length()}; }
  
-    const_iterator cbegin() const noexcept;
-    const_iterator cend() const noexcept;
+    reverse_iterator rbegin() const noexcept { return {this, length()}; }
+    reverse_iterator rend() const noexcept { return {this, 0}; }
 
-    reverse_iterator rbegin() const noexcept;
-    reverse_iterator rend() const noexcept;
-
-    const_reverse_iterator crbegin() const noexcept;
-    const_reverse_iterator crend() const noexcept;
-#endif
 private:
     template <index_type Extent>
     class extent_type;
