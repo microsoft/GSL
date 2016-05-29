@@ -254,9 +254,7 @@ span_iterator<Span> operator+(typename span_iterator<Span>::difference_type n,
 template <typename Span>
 span_iterator<Span> operator-(typename span_iterator<Span>::difference_type n,
     const span_iterator<Span>& rhs) noexcept
-{
-    return rhs - n;
-}
+{ return rhs - n; }
 
 
 } // namespace details
@@ -289,7 +287,7 @@ public:
     {}
 
     constexpr span(pointer ptr, index_type count) : storage_(ptr, count)
-    { Expects(((!ptr && count == 0) || (ptr && count >= 0))); }
+    { Expects((!ptr && count == 0) || (ptr && count >= 0)); }
 
     constexpr span(pointer firstElem, pointer lastElem)
         : storage_(firstElem, std::distance(firstElem, lastElem))
