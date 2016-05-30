@@ -21,6 +21,7 @@
 
 #include "gsl_assert.h"
 #include "gsl_util.h"
+#include "byte.h"
 #include <array>
 #include <limits>
 #include <iterator>
@@ -126,13 +127,13 @@ struct is_allowed_element_type_conversion
 };
 
 template <class From>
-struct is_allowed_element_type_conversion<From, char>
+struct is_allowed_element_type_conversion<From, byte>
     : std::integral_constant<bool, !std::is_const<From>::value>
 {
 };
 
 template <class From>
-struct is_allowed_element_type_conversion<From, const char>
+struct is_allowed_element_type_conversion<From, const byte>
     : std::integral_constant<bool, true>
 {
 };
@@ -507,14 +508,33 @@ constexpr bool operator>=(const span<ElementType, Extent>& l, const span<Element
 { return !(l < r); }
 
 
-#if 0 // TODO
+namespace details
+{
+    // if we only supported compilers with good constexpr support then
+    // this pair of classes could collapse down to a constexpr function
+
+    // we should use a narrow_cast<> to go to size_t, but older compilers may not see it as constexpr
+    // and so will fail compilation of the template
+    template <class ElementType, ptrdiff_t Extent>
+    struct calculate_byte_size :
+        std::integral_constant<std::ptrdiff_t, static_cast<ptrdiff_t>(sizeof(ElementType) * static_cast<size_t>(Extent))>
+    {};
+
+    template <class ElementType>
+    struct calculate_byte_size<ElementType, dynamic_extent> :
+        std::integral_constant<std::ptrdiff_t, dynamic_extent>
+    {};
+}
+
+
 // [span.objectrep], views of object representation 
 template <class ElementType, ptrdiff_t Extent>
-constexpr span<const char, ((Extent == dynamic_extent) ? dynamic_extent : (sizeof(ElementType) * Extent))> as_bytes(span<ElementType, Extent> s) noexcept;
+constexpr span<const byte, details::calculate_byte_size<ElementType, Extent>::value> as_bytes(span<ElementType, Extent> s) noexcept
+{ return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()}; }
 
-template <class ElementType, ptrdiff_t Extent>
-constexpr span<char, ((Extent == dynamic_extent) ? dynamic_extent : (sizeof(ElementType) * Extent))> as_writeable_bytes(span<ElementType, Extent>) noexcept;
-#endif
+template <class ElementType, ptrdiff_t Extent, class = std::enable_if_t<!std::is_const<ElementType>::value>>
+constexpr span<byte, details::calculate_byte_size<ElementType, Extent>::value> as_writeable_bytes(span<ElementType, Extent> s) noexcept
+{ return {reinterpret_cast<byte*>(s.data()), s.size_bytes()}; }
 
 } // namespace gsl
 

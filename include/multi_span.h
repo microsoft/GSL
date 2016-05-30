@@ -21,6 +21,7 @@
 
 #include "gsl_assert.h"
 #include "gsl_util.h"
+#include "byte.h"
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -1053,9 +1054,6 @@ template <typename Span>
 class contiguous_span_iterator;
 template <typename Span>
 class general_span_iterator;
-enum class byte : std::uint8_t
-{
-};
 
 template <std::ptrdiff_t DimSize = dynamic_range>
 struct dim

@@ -921,6 +921,69 @@ SUITE(span_tests)
         }
     }
 
+    TEST(as_bytes)
+    {
+        int a[] = {1, 2, 3, 4};
+
+        {
+            span<const int> s = a;
+            CHECK(s.length() == 4);
+            span<const byte> bs = as_bytes(s);
+            CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+            CHECK(bs.length() == s.length_bytes());
+        }
+
+        {
+            span<int> s;
+            auto bs = as_bytes(s);
+            CHECK(bs.length() == s.length());
+            CHECK(bs.length() == 0);
+            CHECK(bs.size_bytes() == 0);
+            CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+            CHECK(bs.data() == nullptr);
+        }
+
+        {
+            span<int> s = a;
+            auto bs = as_bytes(s);
+            CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+            CHECK(bs.length() == s.length_bytes());
+        }
+    }
+
+    TEST(as_writeable_bytes)
+    {
+        int a[] = {1, 2, 3, 4};
+
+        {
+#ifdef CONFIRM_COMPILATION_ERRORS
+            // you should not be able to get writeable bytes for const objects
+            span<const int> s = a;
+            CHECK(s.length() == 4);
+            span<const byte> bs = as_writeable_bytes(s);
+            CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
+            CHECK(bs.length() == s.length_bytes());
+#endif
+        }
+
+        {
+            span<int> s;
+            auto bs = as_writeable_bytes(s);
+            CHECK(bs.length() == s.length());
+            CHECK(bs.length() == 0);
+            CHECK(bs.size_bytes() == 0);
+            CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
+            CHECK(bs.data() == nullptr);
+        }
+
+        {
+            span<int> s = a;
+            auto bs = as_writeable_bytes(s);
+            CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
+            CHECK(bs.length() == s.length_bytes());
+        }
+    }
+
 #if 0
     TEST(fixed_size_conversions)
     {
@@ -1016,34 +1079,6 @@ SUITE(span_tests)
             (void) av2;
         };
         CHECK_THROW(f(), fail_fast);
-    }
-
-    TEST(as_writeable_bytes)
-    {
-        int a[] = {1, 2, 3, 4};
-
-        {
-#ifdef CONFIRM_COMPILATION_ERRORS
-            // you should not be able to get writeable bytes for const objects
-            span<const int, dynamic_range> av = a;
-            auto wav = av.as_writeable_bytes();
-#endif
-        }
-
-        {
-            span<int, dynamic_range> av;
-            auto wav = as_writeable_bytes(av);
-            CHECK(wav.length() == av.length());
-            CHECK(wav.length() == 0);
-            CHECK(wav.size_bytes() == 0);
-        }
-
-        {
-            span<int, dynamic_range> av = a;
-            auto wav = as_writeable_bytes(av);
-            CHECK(wav.data() == (byte*) &a[0]);
-            CHECK(wav.length() == sizeof(a));
-        }
     }
 
 #endif    
