@@ -78,13 +78,20 @@ private:
     bool invoke_;
 };
 
+// C++17 [[nodiscard]] attribute for legacy compilers.
+#if _MSC_VER
+#define GSL_NODISCARD _Check_return_
+#else
+#define GSL_NODISCARD __attribute__((warn_unused_result))
+#endif
+
 // finally() - convenience function to generate a final_act
 template <class F>
-inline final_act<F> finally(const F &f)
+GSL_NODISCARD inline final_act<F> finally(const F &f)
 noexcept { return final_act<F>(f); }
 
 template <class F>
-inline final_act<F> finally(F &&f) noexcept
+GSL_NODISCARD inline final_act<F> finally(F &&f) noexcept
 { return final_act<F>(std::forward<F>(f)); }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
