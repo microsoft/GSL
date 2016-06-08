@@ -39,15 +39,38 @@ SUITE(string_span_tests)
     TEST(TestConstructFromStdString)
     {
         std::string s = "Hello there world";
+        auto const len = static_cast<cstring_span<>::size_type>(s.length());
+
         cstring_span<> v = s;
-        CHECK(v.length() == static_cast<cstring_span<>::size_type>(s.length()));
+        CHECK(v.length() == len);
+
+        s.back() = 0;
+        v = ensure_z(s);
+        CHECK(v.length() == len - 1);
     }
 
     TEST(TestConstructFromStdVector)
     {
         std::vector<char> vec(5, 'h');
+        auto const size = static_cast<cstring_span<>::size_type>(vec.size());
+
         string_span<> v = vec;
-        CHECK(v.length() == static_cast<string_span<>::size_type>(vec.size()));
+        CHECK(v.length() == size);
+
+        vec.back() = 0;
+        v = ensure_z(vec);
+        CHECK(v.length() == size - 1);
+    }
+
+    TEST(TestConstructFromStdArray)
+    {
+        std::array<char, 5> arr {"1234"};
+
+        string_span<> v = arr;
+        CHECK(v.length() == 5);
+
+        v = ensure_z(arr);
+        CHECK(v.length() == 4);
     }
 
     TEST(TestStackArrayConstruction)
@@ -278,7 +301,7 @@ SUITE(string_span_tests)
             string_span<> _span{ _ptr, 5 };
 
             // non-const span, non-const other type
-            
+
             CHECK(_span == _ar);
             CHECK(_span == _ar1);
             CHECK(_span == _ar2);
