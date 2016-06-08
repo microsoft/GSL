@@ -101,7 +101,7 @@ public:
     not_null(std::nullptr_t) = delete;
     not_null(int) = delete;
     not_null<T>& operator=(std::nullptr_t) = delete;
-	not_null<T>& operator=(int) = delete;
+    not_null<T>& operator=(int) = delete;
     
     T get() const {
 #ifdef _MSC_VER
@@ -113,8 +113,8 @@ public:
     operator T() const {  return get(); }
     T operator->() const { return get(); }
 
-	bool operator==(const T& rhs) const { return ptr_ == rhs; }
-	bool operator!=(const T& rhs) const { return !(*this == rhs); }
+    bool operator==(const T& rhs) const { return ptr_ == rhs; }
+    bool operator!=(const T& rhs) const { return !(*this == rhs); }
 private:
     T ptr_;
 

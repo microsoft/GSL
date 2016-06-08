@@ -255,7 +255,7 @@ public:
     constexpr basic_string_span(basic_string_span&& other) = default;
 #else
     constexpr basic_string_span(basic_string_span&& other)
-    	: span_(std::move(other.span_))
+        : span_(std::move(other.span_))
     {}
 #endif
 
