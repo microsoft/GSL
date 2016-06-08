@@ -134,6 +134,9 @@ private:
     not_null<T>& operator-=(size_t) = delete;
 };
 
+template<class T, class U> not_null<T> static_pointer_cast(not_null<U> const & ptr) { return not_null<T>{static_cast<T>(ptr.get())}; }
+template<class T, class U> not_null<T> const_pointer_cast(not_null<U> const & ptr) { return not_null<T>{const_cast<T>(ptr.get())}; }
+
 } // namespace gsl
 
 namespace std
