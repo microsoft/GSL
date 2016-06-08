@@ -78,7 +78,8 @@ class not_null
 {
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 public:
-    not_null(T t) : ptr_(t) { ensure_invariant(); }
+    not_null(const T &t) : ptr_(t) { ensure_invariant(); }
+    not_null(T &&t) : ptr_(std::forward<T>(t)) { ensure_invariant(); }
     not_null& operator=(const T& t) { ptr_ = t; ensure_invariant(); return *this; }
 
     not_null(const not_null &other) = default;
