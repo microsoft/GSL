@@ -395,14 +395,14 @@ SUITE(span_tests)
 
         {
             auto get_an_array = []()->std::array<int, 4> { return{1, 2, 3, 4}; };
-            auto take_a_span = [](span<int> s) { (void)s; };
+            auto take_a_span = [](span<int> s) { static_cast<void>(s); };
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
 #endif
         {
             auto get_an_array = []() -> std::array<int, 4> { return { 1, 2, 3, 4 }; };
-            auto take_a_span = [](span<const int> s) { (void)s; };
+            auto take_a_span = [](span<const int> s) { static_cast<void>(s); };
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
@@ -438,7 +438,7 @@ SUITE(span_tests)
 
         {
             auto get_an_array = []() -> const std::array<int, 4> { return {1, 2, 3, 4}; };
-            auto take_a_span = [](span<const int> s) { (void) s; };
+            auto take_a_span = [](span<const int> s) { static_cast<void>(s); };
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
@@ -482,35 +482,35 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_vector = []() -> std::vector<int> { return {}; };
-            auto use_span = [](span<int> s) { (void) s; };
+            auto use_span = [](span<int> s) { static_cast<void>(s); };
             use_span(get_temp_vector());
 #endif
         }
 
         {
             auto get_temp_vector = []() -> std::vector<int> { return{}; };
-            auto use_span = [](span<const int> s) { (void)s; };
+            auto use_span = [](span<const int> s) { static_cast<void>(s); };
             use_span(get_temp_vector());
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_string = []() -> std::string { return{}; };
-            auto use_span = [](span<char> s) { (void)s; };
+            auto use_span = [](span<char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
 #endif
         }
 
         {
             auto get_temp_string = []() -> std::string { return {}; };
-            auto use_span = [](span<const char> s) { (void) s; };
+            auto use_span = [](span<const char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_vector = []() -> const std::vector<int> { return {}; };
-            auto use_span = [](span<const char> s) { (void) s; };
+            auto use_span = [](span<const char> s) { static_cast<void>(s); };
             use_span(get_temp_vector());
 #endif
         }
@@ -518,7 +518,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_string = []() -> const std::string { return {}; };
-            auto use_span = [](span<const char> s) { (void) s; };
+            auto use_span = [](span<const char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
 #endif
         }
@@ -536,34 +536,34 @@ SUITE(span_tests)
         {
             span<DerivedClass> avd;
             span<const DerivedClass> avcd = avd;
-            (void)avcd;
+            static_cast<void>(avcd);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             span<DerivedClass> avd;
             span<BaseClass> avb = avd;
-            (void) avb;
+            static_cast<void>(avb);
 #endif
         }
 
         {
             span<int> s;
             span<unsigned int> s2 = s;
-            (void)s2;
+            static_cast<void>(s2);
         }
 
         {
             span<int> s;
             span<const unsigned int> s2 = s;
-            (void)s2;
+            static_cast<void>(s2);
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             span<int> s;
             span<short> s2 = s;
-            (void)s2;
+            static_cast<void>(s2);
 #endif
         }
     }
@@ -984,72 +984,59 @@ SUITE(span_tests)
         }
     }
 
-#if 0
     TEST(fixed_size_conversions)
     {
         int arr[] = {1, 2, 3, 4};
 
         // converting to an span from an equal size array is ok
-        span<int, 4> av4 = arr;
-        CHECK(av4.length() == 4);
+        span<int, 4> s4 = arr;
+        CHECK(s4.length() == 4);
 
-        // converting to dynamic_range a_v is always ok
+        // converting to dynamic_range is always ok
         {
-            span<int, dynamic_range> av = av4;
-            (void) av;
-        }
-        {
-            span<int, dynamic_range> av = arr;
-            (void) av;
+            span<int> s = s4;
+            CHECK(s.length() == s4.length());
+            static_cast<void>(s);
         }
 
 // initialization or assignment to static span that REDUCES size is NOT ok
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            span<int, 2> av2 = arr;
+            span<int, 2> s = arr;
         }
         {
-            span<int, 2> av2 = av4;
-        }
-#endif
-
-        {
-            span<int, dynamic_range> av = arr;
-            span<int, 2> av2 = av;
-            (void) av2;
-        }
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            span<int, dynamic_range> av = arr;
-            span<int, 2, 1> av2 = av.as_span(dim<2>(), dim<2>());
+            span<int, 2> s2 = s4;
+            static_cast<void>(s2);
         }
 #endif
 
+        // even when done dynamically
         {
-            span<int, dynamic_range> av = arr;
-            span<int, 2, 1> av2 = as_span(av, dim<>(2), dim<>(2));
-            auto workaround_macro = [&]() { return av2[{1, 0}] == 2; };
-            CHECK(workaround_macro());
+            span<int> s = arr;
+            auto f = [&]() {
+                span<int, 2> s2 = s;
+                static_cast<void>(s2);
+            };
+            CHECK_THROW(f(), fail_fast);
         }
 
         // but doing so explicitly is ok
 
         // you can convert statically
         {
-            span<int, 2> av2 = {arr, 2};
-            (void) av2;
+            span<int, 2> s2 = {arr, 2};
+            static_cast<void>(s2);
         }
         {
-            span<int, 1> av2 = av4.first<1>();
-            (void) av2;
+            span<int, 1> s1 = s4.first<1>();
+            static_cast<void>(s1);
         }
 
         // ...or dynamically
         {
-            // NB: implicit conversion to span<int,2> from span<int,dynamic_range>
-            span<int, 1> av2 = av4.first(1);
-            (void) av2;
+            // NB: implicit conversion to span<int,1> from span<int>
+            span<int, 1> s1 = s4.first(1);
+            static_cast<void>(s1);
         }
 
         // initialization or assignment to static span that requires size INCREASE is not ok.
@@ -1057,31 +1044,29 @@ SUITE(span_tests)
 
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            span<int, 4> av4 = arr2;
+            span<int, 4> s3 = arr2;
         }
         {
-            span<int, 2> av2 = arr2;
-            span<int, 4> av4 = av2;
+            span<int, 2> s2 = arr2;
+            span<int, 4> s4a = s2;
         }
 #endif
         {
             auto f = [&]() {
-                span<int, 4> av9 = {arr2, 2};
-                (void) av9;
-            };
+                span<int, 4> s4 = {arr2, 2};
+                static_cast<void>(s4);
+            };                     
             CHECK_THROW(f(), fail_fast);
         }
 
-        // this should fail - we are trying to assign a small dynamic a_v to a fixed_size larger one
-        span<int, dynamic_range> av = arr2;
+        // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
+        span<int> av = arr2;
         auto f = [&]() {
-            span<int, 4> av2 = av;
-            (void) av2;
+            span<int, 4> s4 = av;
+            static_cast<void>(s4);            
         };
         CHECK_THROW(f(), fail_fast);
     }
-
-#endif    
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
