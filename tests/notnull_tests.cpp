@@ -61,6 +61,31 @@ SUITE(NotNullTests)
       CHECK(p.get() == &i);
 
       not_null<std::shared_ptr<int>> x(std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+
+
+      struct Some {
+          Some(int i)
+              : member(i)
+          {}
+
+          int member;
+      };
+
+      Some obj{123};
+
+      not_null<Some*> p1{&obj};
+      CHECK(p1.get() == &obj);            // check state using 'get()'
+      CHECK(p1 == &obj);                  // check state using 'operator const_pointer&()'
+      CHECK(&*p1 == &obj);                // check state using 'operatr *()'
+      CHECK(&p1->member == &obj.member);  // check state using 'operatr ->()"
+
+      auto tmp = std::make_unique<Some>(456);
+      auto raw = tmp.get();
+      not_null<std::unique_ptr<Some>> p2{std::move(tmp)};
+      CHECK(p2.get().get() == raw);                                         // check state using 'get()'
+      CHECK(static_cast<const std::unique_ptr<Some>&>(p2).get() == raw);    // check state using 'operator const_pointer&()'
+      CHECK(&*p2 == raw);                                                   // check state using 'operatr *()'
+      CHECK(&p2->member == &raw->member);                                   // check state using 'operatr ->()'
     }
 
     TEST(TestNotNullCasting)
@@ -94,6 +119,31 @@ SUITE(NotNullTests)
 
         int* q = nullptr;
         CHECK_THROW(p = q, fail_fast);
+    }
+
+    TEST(TestNotNullTypeQualifiers)
+    {
+        struct Some {
+            bool isConst()
+            {
+                return false;
+            }
+
+            bool isConst() const
+            {
+                return true;
+            }
+        };
+
+        Some obj;
+
+        not_null<Some*> p1{&obj};
+        CHECK(!(*p1).isConst());            // check the 'operator *' return type qualifiers
+        CHECK(!p1->isConst());              // check the 'operator ->' return type qualifiers
+
+        not_null<const Some*> p2{&obj};
+        CHECK((*p2).isConst());             // check the 'operator *' return type qualifiers
+        CHECK(p2->isConst());               // check the 'operator ->' return type qualifiers
     }
 }
 
