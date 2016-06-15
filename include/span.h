@@ -388,7 +388,7 @@ public:
     constexpr span<element_type, Count> last() const
     {
         Expects(Count >= 0 && Count <= size());
-        return{ Count == 0 ? data() : data() + (size() - Count), Count };
+        return{ data() + (size() - Count), Count };
     }
 
     template <ptrdiff_t Offset, ptrdiff_t Count = dynamic_extent>
@@ -408,7 +408,7 @@ public:
     constexpr span<element_type, dynamic_extent> last(index_type count) const
     {
         Expects(count >= 0 && count <= size());
-        return { count == 0 ? data() : data() + (size() - count), count };
+        return { data() + (size() - count), count };
     }
 
     constexpr span<element_type, dynamic_extent> subspan(index_type offset,
