@@ -400,6 +400,7 @@ SUITE(span_tests)
             take_a_span(get_an_array());
         }
 #endif
+
         {
             auto get_an_array = []() -> std::array<int, 4> { return { 1, 2, 3, 4 }; };
             auto take_a_span = [](span<const int> s) { static_cast<void>(s); };
@@ -441,6 +442,40 @@ SUITE(span_tests)
             auto take_a_span = [](span<const int> s) { static_cast<void>(s); };
             // try to take a temporary std::array
             take_a_span(get_an_array());
+        }
+#endif
+    }
+
+    TEST(from_std_array_const_constructor)
+    {
+        std::array<const int, 4> arr = {1, 2, 3, 4};
+
+        {
+            span<const int> s{arr};
+            CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
+        }
+
+        {
+            span<const int, 4> s{arr};
+            CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
+        }
+#ifdef CONFIRM_COMPILATION_ERRORS
+        {
+            span<const int, 2> s{arr};
+            CHECK(s.size() == 2 && s.data() == arr.data());
+        }
+
+        {
+            span<const int, 0> s{arr};
+            CHECK(s.size() == 0 && s.data() == arr.data());
+        }
+
+        {
+            span<const int, 5> s{arr};
+        }
+
+        {
+            span<int, 4> s{arr};
         }
 #endif
     }

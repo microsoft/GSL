@@ -318,6 +318,11 @@ public:
     {}
 
     template <size_t N>
+    constexpr span(std::array<element_type, N>& arr)
+        : storage_(&arr[0], extent_type<N>())
+    {}
+
+    template <size_t N, class = std::enable_if_t<is_const<element_type>::value>>
     constexpr span(std::array<std::remove_const_t<element_type>, N>& arr)
         : storage_(&arr[0], extent_type<N>())
     {}
