@@ -140,10 +140,12 @@ SUITE(NotNullTests)
         not_null<Some*> p1{&obj};
         CHECK(!(*p1).isConst());            // check the 'operator *' return type qualifiers
         CHECK(!p1->isConst());              // check the 'operator ->' return type qualifiers
+        CHECK(!p1.get()->isConst());        // check the 'get()' return type qualifiers
 
         not_null<const Some*> p2{&obj};
         CHECK((*p2).isConst());             // check the 'operator *' return type qualifiers
         CHECK(p2->isConst());               // check the 'operator ->' return type qualifiers
+        CHECK(p2.get()->isConst());         // check the 'get()' return type qualifiers
     }
 }
 
