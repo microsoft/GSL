@@ -85,10 +85,18 @@ public:
     not_null(const T& t) : ptr_(t) { ensure_invariant(); }
     not_null(T&& t) : ptr_(std::move(t)) { ensure_invariant(); }
 
-    not_null& operator=(const T& t) { ptr_ = t; ensure_invariant(); return *this; }
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    not_null(const not_null<U> &other)
+    {
+        *this = other;
+    }
 
-    not_null(const not_null &other) = default;
-    not_null& operator=(const not_null &other) = default;
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    not_null& operator=(const not_null<U> &other)
+    {
+        ptr_ = other.get();
+        return *this;
+    }
 
     // prevents compilation when someone attempts to assign a nullptr 
     not_null(std::nullptr_t) = delete;
@@ -115,10 +123,12 @@ public:
     bool operator!=(const T& rhs) const { return !(*this == rhs); }
 
     template<class U>
-    bool operator==(const not_null<U>& rhs) const { return ptr_ == rhs.ptr_; }
+    bool operator==(const not_null<U>& rhs) const { return ptr_ == rhs.get(); }
+
+    template<class U>
+    bool operator!=(const not_null<U>& rhs) const { return !(*this == rhs); }
 
 private:
-    template<class U> friend class not_null;    // for comparisons: not_null<A> == not_null<B>
     T ptr_;
 
     // we assume that the compiler can hoist/prove away most of the checks inlined from this function

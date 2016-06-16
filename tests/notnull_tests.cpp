@@ -121,6 +121,25 @@ SUITE(NotNullTests)
         CHECK_THROW(p = q, fail_fast);
     }
 
+    TEST(TestTestNotNullComparison)
+    {
+        MyBase obj1;
+        MyDerived obj2;
+
+        not_null<MyBase*> a{&obj1};
+        not_null<MyDerived*> b{&obj2};
+        CHECK(a != b);
+        CHECK(b != a);
+        CHECK(!(a == b));
+        CHECK(!(b == a));
+
+        a = b;
+        CHECK(!(a != b));
+        CHECK(!(b != a));
+        CHECK(a == b);
+        CHECK(b == a);
+    }
+
     TEST(TestNotNullTypeQualifiers)
     {
         struct Some {
