@@ -119,15 +119,6 @@ public:
     std::add_pointer_t<element_type>
     operator->() const { return std::addressof(*get()); }
 
-    bool operator==(const T& rhs) const { return ptr_ == rhs; }
-    bool operator!=(const T& rhs) const { return !(*this == rhs); }
-
-    template<class U>
-    bool operator==(const not_null<U>& rhs) const { return ptr_ == rhs.get(); }
-
-    template<class U>
-    bool operator!=(const not_null<U>& rhs) const { return !(*this == rhs); }
-
 private:
     T ptr_;
 

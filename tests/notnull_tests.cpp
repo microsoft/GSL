@@ -129,15 +129,29 @@ SUITE(NotNullTests)
         not_null<MyBase*> a{&obj1};
         not_null<MyDerived*> b{&obj2};
         CHECK(a != b);
-        CHECK(b != a);
         CHECK(!(a == b));
+        CHECK(a == &obj1);
+        CHECK(a != &obj2);
+        CHECK(!(a == &obj2));
+
+        CHECK(b != a);
         CHECK(!(b == a));
+        CHECK(b == &obj2);
+        CHECK(b != &obj1);
+        CHECK(!(b == &obj1));
 
         a = b;
-        CHECK(!(a != b));
-        CHECK(!(b != a));
         CHECK(a == b);
+        CHECK(!(a != b));
+        CHECK(a == &obj2);
+        CHECK(a != &obj1);
+        CHECK(!(a == &obj1));
+
         CHECK(b == a);
+        CHECK(!(b != a));
+        CHECK(b == &obj2);
+        CHECK(b != &obj1);
+        CHECK(!(b == &obj1));
     }
 
     TEST(TestNotNullTypeQualifiers)
