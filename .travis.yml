@@ -5,27 +5,29 @@ sudo: false
 
 matrix:
   include:
-    - env: COMPILER=clang++-3.6 BUILD_TYPE=Debug CLANG=1
-      compiler: clang
-      addons: &clang36
-        apt:
-          packages:
-            - clang-3.6
-            - cmake
-            - g++-5
-          sources: &sources
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
-            - kalakris-cmake
-    - env: COMPILER=clang++-3.6 BUILD_TYPE=Release CLANG=1
-      compiler: clang
-      addons: *clang36
+#    - env: COMPILER=clang++-3.6 BUILD_TYPE=Debug CLANG=1
+#      compiler: clang
+#      addons: &clang36
+#        apt:
+#          packages:
+#            - clang-3.6
+#            - cmake
+#            - g++-5
+#          sources: &sources
+#            - ubuntu-toolchain-r-test
+#            - llvm-toolchain-precise-3.6
+#            - kalakris-cmake
+#    - env: COMPILER=clang++-3.6 BUILD_TYPE=Release CLANG=1
+#      compiler: clang
+#      addons: *clang36
     - env: COMPILER=g++-5 BUILD_TYPE=Debug
       compiler: gcc
       addons: &gcc5
         apt:
           packages: g++-5
-          sources: *sources
+          sources:
+            - ubuntu-toolchain-r-test
+            - kalakris-cmake
     - env: COMPILER=g++-5 BUILD_TYPE=Release
       compiler: gcc
       addons: *gcc5
