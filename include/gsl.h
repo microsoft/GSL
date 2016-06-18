@@ -83,7 +83,10 @@ public:
     using const_pointer = std::add_const_t<pointer>;
 
     not_null(const T& t) : ptr_(t) { ensure_invariant(); }
+    not_null& operator=(const T& t) {ptr_ = t; ensure_invariant(); return *this; }
+
     not_null(T&& t) : ptr_(std::move(t)) { ensure_invariant(); }
+    not_null& operator=(T&& t) {ptr_ = std::move(t); ensure_invariant(); return *this; }
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
     not_null(const not_null<U> &other)

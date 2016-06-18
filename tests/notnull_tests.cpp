@@ -73,12 +73,14 @@ SUITE(NotNullTests)
 
       Some obj{123};
 
+      // not_null(const T&)
       not_null<Some*> p1{&obj};
       CHECK(p1.get() == &obj);            // check state using 'get()'
       CHECK(p1 == &obj);                  // check state using 'operator const_pointer&()'
       CHECK(&*p1 == &obj);                // check state using 'operatr *()'
       CHECK(&p1->member == &obj.member);  // check state using 'operatr ->()"
 
+      // not_null(T&&)
       auto tmp = std::make_unique<Some>(456);
       auto raw = tmp.get();
       not_null<std::unique_ptr<Some>> p2{std::move(tmp)};
@@ -119,6 +121,35 @@ SUITE(NotNullTests)
 
         int* q = nullptr;
         CHECK_THROW(p = q, fail_fast);
+
+        MyBase obj1;
+        MyDerived obj2;
+
+        // operator=(const T&)
+        not_null<MyBase*> p1{&obj1};
+        p1 = &obj2;
+        CHECK(p1.get() == &obj2);
+
+        MyDerived *n = nullptr;
+        CHECK_THROW(p1 = n, fail_fast);
+
+        // operator=(T&&)
+        auto tmp = std::make_unique<MyDerived>();
+        auto raw = tmp.get();
+        not_null<std::unique_ptr<MyBase>> p2{std::make_unique<MyBase>()};
+
+        p2 = std::move(tmp);
+        CHECK(p2.get().get() == raw);
+
+        tmp = nullptr;
+        CHECK_THROW(p2 = std::move(tmp), fail_fast);
+
+        // operator=(const not_null<U>&)
+        not_null<MyBase*> p3{&obj1};
+        not_null<MyDerived*> p4{&obj2};
+
+        p3 = p4;
+        CHECK(p3.get() == p4.get());
     }
 
     TEST(TestTestNotNullComparison)
