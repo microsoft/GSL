@@ -164,96 +164,96 @@ public:
     using typename Base::pointer;
     using typename Base::difference_type;
 
-    span_iterator() : span_iterator(nullptr, 0) {}
-    span_iterator(const Span* span, typename Span::index_type index) : span_(span), index_(index)
+    constexpr span_iterator() : span_iterator(nullptr, 0) {}
+    constexpr span_iterator(const Span* span, typename Span::index_type index) : span_(span), index_(index)
     {
         Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
     }
 
-    reference operator*() const { Expects(span_); return (*span_)[index_]; }
-    pointer operator->() const { Expects(span_); return &((*span_)[index_]); }
+    constexpr reference operator*() const { Expects(span_); return (*span_)[index_]; }
+    constexpr pointer operator->() const { Expects(span_); return &((*span_)[index_]); }
 
-    span_iterator& operator++() noexcept
+    constexpr span_iterator& operator++() noexcept
     {
         Expects(span_ && index_ >= 0 && index_ < span_->length());
         ++index_;
         return *this;
     }
 
-    span_iterator operator++(int) noexcept
+    constexpr span_iterator operator++(int) noexcept
     {
         auto ret = *this;
         ++(*this);
         return ret;
     }
 
-    span_iterator& operator--() noexcept
+    constexpr span_iterator& operator--() noexcept
     {
         Expects(span_ && index > 0 && index_ <= span_->length());
         --index_;
         return *this;
     }
 
-    span_iterator operator--(int) noexcept
+    constexpr span_iterator operator--(int) noexcept
     {
         auto ret = *this;
         --(*this);
         return ret;
     }
 
-    span_iterator operator+(difference_type n) const noexcept
+    constexpr span_iterator operator+(difference_type n) const noexcept
     {
         auto ret{*this};
         return ret += n;
     }
 
-    span_iterator& operator+=(difference_type n) noexcept
+    constexpr span_iterator& operator+=(difference_type n) noexcept
     {
         index_ += n;
         Expects(span_ && index_ >= 0 && index_ <= span_->length());
         return *this;
     }
 
-    span_iterator operator-(difference_type n) const noexcept
+    constexpr span_iterator operator-(difference_type n) const noexcept
     {
         auto ret{*this};
         return ret -= n;
     }
 
-    span_iterator& operator-=(difference_type n) noexcept
+    constexpr span_iterator& operator-=(difference_type n) noexcept
     {
         return *this += -n;
     }
 
-    difference_type operator-(const span_iterator& rhs) const noexcept
+    constexpr difference_type operator-(const span_iterator& rhs) const noexcept
     {
         Expects(span_ == rhs.span_);
         return index_ - rhs.index_;
     }
 
-    reference operator[](difference_type n) const noexcept
+    constexpr reference operator[](difference_type n) const noexcept
     {
         return *(*this + n);
     }
 
-    bool operator==(const span_iterator& rhs) const noexcept
+    constexpr bool operator==(const span_iterator& rhs) const noexcept
     {
         return span_ == rhs.span_ && index_ == rhs.index_;
     }
 
-    bool operator!=(const span_iterator& rhs) const noexcept { return !(*this == rhs); }
+    constexpr bool operator!=(const span_iterator& rhs) const noexcept { return !(*this == rhs); }
 
-    bool operator<(const span_iterator& rhs) const noexcept
+    constexpr bool operator<(const span_iterator& rhs) const noexcept
     {
         Expects(span_ == rhs.span_);
         return index_ < rhs.index_;
     }
 
-    bool operator<=(const span_iterator& rhs) const noexcept { return !(rhs < *this); }
+    constexpr bool operator<=(const span_iterator& rhs) const noexcept { return !(rhs < *this); }
 
-    bool operator>(const span_iterator& rhs) const noexcept { return rhs < *this; }
+    constexpr bool operator>(const span_iterator& rhs) const noexcept { return rhs < *this; }
 
-    bool operator>=(const span_iterator& rhs) const noexcept { return !(rhs > *this); }
+    constexpr bool operator>=(const span_iterator& rhs) const noexcept { return !(rhs > *this); }
 
     void swap(span_iterator& rhs) noexcept
     {
@@ -267,14 +267,14 @@ private:
 };
 
 template <typename Span>
-span_iterator<Span> operator+(typename span_iterator<Span>::difference_type n,
+constexpr span_iterator<Span> operator+(typename span_iterator<Span>::difference_type n,
     const span_iterator<Span>& rhs) noexcept
 {
     return rhs + n;
 }
 
 template <typename Span>
-span_iterator<Span> operator-(typename span_iterator<Span>::difference_type n,
+constexpr span_iterator<Span> operator-(typename span_iterator<Span>::difference_type n,
     const span_iterator<Span>& rhs) noexcept
 {
     return rhs - n;
@@ -313,7 +313,7 @@ public:
     {}
     
     template <size_t N>
-    constexpr span(element_type(&arr)[N])
+    constexpr span(element_type(&arr)[N]) noexcept
         : storage_(&arr[0], extent_type<N>())
     {}
 
@@ -496,7 +496,7 @@ private:
     {
     public:
         template <class OtherExtentType>
-        storage_type(pointer data, OtherExtentType ext)
+        constexpr storage_type(pointer data, OtherExtentType ext)
             : ExtentType(ext), data_(data) {}
 
         constexpr inline pointer data() const noexcept
@@ -512,27 +512,27 @@ private:
 
 // [span.comparison], span comparison operators 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator==(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+constexpr bool operator==(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) 
 { return std::equal(l.begin(), l.end(), r.begin(), r.end()); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator!=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+constexpr bool operator!=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) 
 { return !(l == r); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator<(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+constexpr bool operator<(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) 
 { return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end()); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator<=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+constexpr bool operator<=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) 
 { return !(l > r); }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator>(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+constexpr bool operator>(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) 
 { return r < l; }
 
 template <class ElementType, ptrdiff_t Extent>
-constexpr bool operator>=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) noexcept
+constexpr bool operator>=(const span<ElementType, Extent>& l, const span<ElementType, Extent>& r) 
 { return !(l < r); }
 
 
@@ -557,11 +557,11 @@ namespace details
 
 // [span.objectrep], views of object representation 
 template <class ElementType, ptrdiff_t Extent>
-constexpr span<const byte, details::calculate_byte_size<ElementType, Extent>::value> as_bytes(span<ElementType, Extent> s) noexcept
+span<const byte, details::calculate_byte_size<ElementType, Extent>::value> as_bytes(span<ElementType, Extent> s) noexcept
 { return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()}; }
 
 template <class ElementType, ptrdiff_t Extent, class = std::enable_if_t<!std::is_const<ElementType>::value>>
-constexpr span<byte, details::calculate_byte_size<ElementType, Extent>::value> as_writeable_bytes(span<ElementType, Extent> s) noexcept
+span<byte, details::calculate_byte_size<ElementType, Extent>::value> as_writeable_bytes(span<ElementType, Extent> s) noexcept 
 { return {reinterpret_cast<byte*>(s.data()), s.size_bytes()}; }
 
 } // namespace gsl
