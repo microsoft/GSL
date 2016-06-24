@@ -1674,6 +1674,17 @@ SUITE(span_tests)
             }
         }
     }
+
+    TEST(index_by_enum)
+    {
+        enum
+        {
+            zero
+        };
+
+        index<1> i_int(0);
+        index<1> i_enum(zero);
+    }
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }

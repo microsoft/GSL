@@ -57,7 +57,7 @@
 #define GSL_MSVC_HAS_VARIADIC_CTOR_BUG
 #define GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
 
-// noexcept is not understood 
+// noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
 #define noexcept /* nothing */
@@ -129,6 +129,15 @@ public:
     constexpr index(const value_type (&values)[Rank]) noexcept
     {
         std::copy(values, values + Rank, elems);
+    }
+
+    template <typename ValueType,
+              typename = std::enable_if_t<(Rank == 1) &&
+                                          std::is_convertible<ValueType, value_type>::value &&
+                                          !std::is_integral<ValueType>::value>>
+    constexpr index(ValueType value) noexcept
+    {
+        elems[0] = value;
     }
 
 #ifdef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
