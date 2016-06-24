@@ -2092,6 +2092,13 @@ contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>
     return rhs + n;
 }
 
+
+template<typename Span>
+constexpr Span as_span(contiguous_span_iterator<Span> start, contiguous_span_iterator<Span> last)
+{
+    return { &*start, static_cast<typename Span::size_type>(last - start) };
+}
+
 template <typename Span>
 class general_span_iterator
     : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
