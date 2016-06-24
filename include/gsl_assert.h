@@ -47,7 +47,7 @@ namespace gsl
 {
 struct fail_fast : public std::runtime_error 
 {
-	explicit fail_fast(char const* const message) : std::runtime_error(message) {}   
+    explicit fail_fast(char const* const message) : std::runtime_error(message) {}
 };
 }
 
