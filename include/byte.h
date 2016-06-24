@@ -23,10 +23,48 @@ namespace gsl
 {
     // This is a simple definition for now that allows
     // use of byte within span<> to be standards-compliant
-    //
-    // Ultimately a small language change would allow a more
-    // robust definition (see WG21 proposal P0257 for details).
-    using byte = unsigned char;
+    enum class byte : unsigned char {};
+
+    template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+    constexpr byte& operator<<=(byte& b, IntegerType shift) noexcept
+    { return b = byte(static_cast<unsigned char>(b) << shift); }
+
+    template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+    constexpr byte operator<<(byte b, IntegerType shift) noexcept
+    { return byte(static_cast<unsigned char>(b) << shift); }
+
+    template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+    constexpr byte& operator>>=(byte& b, IntegerType shift) noexcept
+    { return b = byte(static_cast<unsigned char>(b) >> shift); }
+
+    template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+    constexpr byte operator>> (byte b, IntegerType shift) noexcept
+    { return byte(static_cast<unsigned char>(b) >> shift); }
+
+    constexpr byte& operator|=(byte& l, byte r) noexcept
+    { return l = byte(static_cast<unsigned char>(l) | static_cast<unsigned char>(r)); }
+
+    constexpr byte operator|(byte l, byte r) noexcept
+    { return byte(static_cast<unsigned char>(l) + static_cast<unsigned char>(r)); }
+
+    constexpr byte& operator&=(byte& l, byte r) noexcept
+    { return l = byte(static_cast<unsigned char>(l) & static_cast<unsigned char>(r)); }
+
+    constexpr byte operator&(byte l, byte r) noexcept
+    { return byte(static_cast<unsigned char>(l) & static_cast<unsigned char>(r)); }
+
+    constexpr byte& operator^=(byte& l, byte r) noexcept
+    { return l = byte(static_cast<unsigned char>(l) ^ static_cast<unsigned char>(r)); }
+    
+    constexpr byte operator^(byte l, byte r) noexcept
+    { return byte(static_cast<unsigned char>(l) ^ static_cast<unsigned char>(r)); }
+    
+    constexpr byte operator~(byte b) noexcept
+    { return byte(~static_cast<unsigned char>(b)); }
+
+    template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+    constexpr IntegerType to_integer(byte b) noexcept { return {b}; }
+
     
 } // namespace gsl
 
