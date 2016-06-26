@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
-#include <byte.h>
+#include <gsl_byte.h>
 
 #include <iostream>
 #include <list>

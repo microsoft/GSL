@@ -21,7 +21,7 @@
 
 #include "gsl_assert.h"
 #include "gsl_util.h"
-#include "byte.h"
+#include "gsl_byte.h"
 #include <algorithm>
 #include <array>
 #include <cassert>
