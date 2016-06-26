@@ -47,7 +47,7 @@ namespace gsl
 {
 struct fail_fast
 {
-    virtual char const* what() const = 0;
+    virtual char const* what() const noexcept = 0;
 };
 
 namespace details
@@ -56,7 +56,7 @@ namespace details
     struct contract_violation : public E, public fail_fast
     {
         explicit contract_violation(char const* const message) : E(message) {}
-        virtual char const* what() const override
+        virtual char const* what() const noexcept override
         {
             return E::what();
         }
