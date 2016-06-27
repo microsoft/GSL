@@ -22,6 +22,18 @@
 #include <exception>
 #include <stdexcept>
 
+#ifdef _MSC_VER
+
+// MSVC 2013 workarounds
+#if _MSC_VER <= 1800
+// noexcept is not understood
+#pragma push_macro("noexcept")
+#define noexcept
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
+
 //
 // There are three configuration options for this GSL implementation's behavior
 // when pre/post conditions on the GSL types are violated:
@@ -85,6 +97,18 @@ namespace details
 #define Ensures(cond)           
 
 #endif 
+
+
+#ifdef _MSC_VER
+
+#if _MSC_VER <= 1800
+
+#undef noexcept
+#pragma pop_macro("noexcept")
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
 
 
 #endif // GSL_CONTRACTS_H
