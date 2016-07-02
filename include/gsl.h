@@ -113,6 +113,18 @@ public:
     operator T() const { return get(); }
     T operator->() const { return get(); }
 
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    bool operator==(const not_null<U>& rhs) const
+    {
+        return ptr_ == rhs.get();
+    }
+
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    bool operator != (const not_null<U>& rhs) const
+    {
+        return !(*this == rhs.get());
+    }
+
     bool operator==(const T& rhs) const { return ptr_ == rhs; }
     bool operator!=(const T& rhs) const { return !(*this == rhs); }
 
