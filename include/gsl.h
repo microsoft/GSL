@@ -101,8 +101,8 @@ public:
     not_null(std::nullptr_t) = delete;
     not_null(int) = delete;
     not_null<T>& operator=(std::nullptr_t) = delete;
-	not_null<T>& operator=(int) = delete;
-    
+    not_null<T>& operator=(int) = delete;
+
     T get() const {
 #ifdef _MSC_VER
         __assume(ptr_ != nullptr);
@@ -110,11 +110,28 @@ public:
         return ptr_;
     } // the assume() should help the optimizer
 
-    operator T() const {  return get(); }
+    operator T() const { return get(); }
     T operator->() const { return get(); }
 
-	bool operator==(const T& rhs) const { return ptr_ == rhs; }
-	bool operator!=(const T& rhs) const { return !(*this == rhs); }
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    bool operator==(const not_null<U>& rhs) const
+    {
+        return ptr_ == rhs.get();
+    }
+
+    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    bool operator!=(const not_null<U>& rhs) const
+    {
+        return !(*this == rhs.get());
+    }
+
+    bool operator==(const T& rhs) const { return ptr_ == rhs; }
+    bool operator!=(const T& rhs) const { return !(*this == rhs); }
+
+    constexpr bool operator==(std::nullptr_t) const { return false; }
+    constexpr bool operator!=(std::nullptr_t) const { return true; }
+
+    constexpr operator bool() const { return true; }
 private:
     T ptr_;
 
