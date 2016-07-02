@@ -120,7 +120,7 @@ public:
     }
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    bool operator != (const not_null<U>& rhs) const
+    bool operator!=(const not_null<U>& rhs) const
     {
         return !(*this == rhs.get());
     }
