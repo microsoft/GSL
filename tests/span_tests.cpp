@@ -794,6 +794,15 @@ SUITE(span_tests)
         CHECK(it1 == it2);
     }
 
+    TEST(const_iterator)
+    {
+        span<int>::const_iterator it1;
+        span<int>::const_iterator it2;
+        CHECK(it1 == it2);
+
+        
+    }
+
     TEST(begin_end)
     {
         {

@@ -87,6 +87,7 @@ SUITE(byte_tests)
         CHECK(a == byte(0x0F));
     }
 }
+
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }

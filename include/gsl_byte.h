@@ -19,6 +19,23 @@
 #ifndef GSL_BYTE_H
 #define GSL_BYTE_H
 
+#ifdef _MSC_VER
+
+// MSVC 2013 workarounds
+#if _MSC_VER <= 1800
+
+// constexpr is not understood
+#pragma push_macro("constexpr")
+#define constexpr 
+
+// noexcept is not understood 
+#pragma push_macro("noexcept")
+#define noexcept  
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
+
 namespace gsl
 {
     // This is a simple definition for now that allows
@@ -67,5 +84,20 @@ namespace gsl
 
     
 } // namespace gsl
+
+
+#ifdef _MSC_VER
+
+#if _MSC_VER <= 1800
+
+#undef constexpr
+#pragma pop_macro("constexpr")
+
+#undef noexcept
+#pragma pop_macro("noexcept")
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
 
 #endif // GSL_BYTE_H
