@@ -212,8 +212,8 @@ public:
 
     constexpr const_span_iterator& operator+=(difference_type n) noexcept
     {
+        Expects(span_ && (index_ + n) >= 0 && (index_ + n) <= span_->length());
         index_ += n;
-        Expects(span_ && index_ >= 0 && index_ <= span_->length());
         return *this;
     }
 
