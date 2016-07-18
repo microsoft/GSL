@@ -799,8 +799,6 @@ SUITE(span_tests)
         span<int>::const_iterator it1;
         span<int>::const_iterator it2;
         CHECK(it1 == it2);
-
-        
     }
 
     TEST(begin_end)
@@ -809,12 +807,12 @@ SUITE(span_tests)
             int a[] = { 1, 2, 3, 4 };
             span<int> s = a;
 
-            span<int>::iterator it = s.begin();
+            auto it = s.begin();
             auto first = it;
             CHECK(it == first);
             CHECK(*it == 1);
 
-            span<int>::iterator beyond = s.end();
+            auto beyond = s.end();
             CHECK(it != beyond);
             CHECK_THROW(*beyond, fail_fast);
 
@@ -832,6 +830,132 @@ SUITE(span_tests)
             it = first;
             CHECK(it == first);
             while (it != s.end())
+            {
+                *it = 5;
+                ++it;
+            }
+
+            CHECK(it == beyond);
+            CHECK(it - beyond == 0);
+
+            for (auto& n : s)
+                CHECK(n == 5);
+        }
+    }
+
+    TEST(cbegin_cend)
+    {
+        {
+            int a[] = {1, 2, 3, 4};
+            span<int> s = a;
+
+            auto it = s.cbegin();
+            auto first = it;
+            CHECK(it == first);
+            CHECK(*it == 1);
+
+            auto beyond = s.cend();
+            CHECK(it != beyond);
+            CHECK_THROW(*beyond, fail_fast);
+
+            CHECK(beyond - first == 4);
+            CHECK(first - first == 0);
+            CHECK(beyond - beyond == 0);
+
+            ++it;
+            CHECK(it - first == 1);
+            CHECK(*it == 2);
+            *it = 22;
+            CHECK(*it == 22);
+            CHECK(beyond - it == 3);
+
+            it = first;
+            CHECK(it == first);
+            while (it != s.cend())
+            {
+                *it = 5;
+                ++it;
+            }
+
+            CHECK(it == beyond);
+            CHECK(it - beyond == 0);
+
+            for (auto& n : s)
+                CHECK(n == 5);
+        }
+    }
+
+    TEST(rbegin_rend)
+    {
+        {
+            int a[] = {1, 2, 3, 4};
+            span<int> s = a;
+
+            auto it = s.rbegin();
+            auto first = it;
+            CHECK(it == first);
+            CHECK(*it == 4);
+
+            auto beyond = s.rend();
+            CHECK(it != beyond);
+            CHECK_THROW(*beyond, fail_fast);
+
+            CHECK(beyond - first == 4);
+            CHECK(first - first == 0);
+            CHECK(beyond - beyond == 0);
+
+            ++it;
+            CHECK(it - first == 1);
+            CHECK(*it == 3);
+            *it = 22;
+            CHECK(*it == 22);
+            CHECK(beyond - it == 3);
+
+            it = first;
+            CHECK(it == first);
+            while (it != s.rend())
+            {
+                *it = 5;
+                ++it;
+            }
+
+            CHECK(it == beyond);
+            CHECK(it - beyond == 0);
+
+            for (auto& n : s)
+                CHECK(n == 5);
+        }
+    }
+
+    TEST(crbegin_crend)
+    {
+        {
+            int a[] = {1, 2, 3, 4};
+            span<int> s = a;
+
+            auto it = s.crbegin();
+            auto first = it;
+            CHECK(it == first);
+            CHECK(*it == 4);
+
+            auto beyond = s.crend();
+            CHECK(it != beyond);
+            CHECK_THROW(*beyond, fail_fast);
+
+            CHECK(beyond - first == 4);
+            CHECK(first - first == 0);
+            CHECK(beyond - beyond == 0);
+
+            ++it;
+            CHECK(it - first == 1);
+            CHECK(*it == 3);
+            *it = 22;
+            CHECK(*it == 22);
+            CHECK(beyond - it == 3);
+
+            it = first;
+            CHECK(it == first);
+            while (it != s.crend())
             {
                 *it = 5;
                 ++it;

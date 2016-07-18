@@ -192,7 +192,7 @@ public:
 
     constexpr const_span_iterator& operator--() noexcept
     {
-        Expects(span_ && index > 0 && index_ <= span_->length());
+        Expects(span_ && index_ > 0 && index_ <= span_->length());
         --index_;
         return *this;
     }
@@ -366,7 +366,7 @@ public:
     using reference = element_type&;
 
     using iterator = details::span_iterator<span<ElementType, Extent>>;
-    using const_iterator = details::span_iterator<span>;
+    using const_iterator = details::const_span_iterator<span>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -512,13 +512,17 @@ public:
     // [span.iter], span iterator support 
     iterator begin() const noexcept { return {this, 0}; }
     iterator end() const noexcept { return {this, length()}; }
+
+    const_iterator cbegin() const noexcept { return {this, 0}; }
+    const_iterator cend() const noexcept { return {this, length()}; }
  
-    reverse_iterator rbegin() const noexcept { return {this, length()}; }
-    reverse_iterator rend() const noexcept { return {this, 0}; }
+    reverse_iterator rbegin() const noexcept { return reverse_iterator{{this, length()}}; }
+    reverse_iterator rend() const noexcept { return reverse_iterator{{this, 0}}; }
+
+    const_reverse_iterator crbegin() const noexcept { return reverse_iterator{{this, length()}}; }
+    const_reverse_iterator crend() const noexcept { return reverse_iterator{{this, 0}}; }
 
 private:
-    constexpr static const bool is_span_type = true;
-
     template <index_type Extent>
     class extent_type;
     
