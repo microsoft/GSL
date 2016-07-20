@@ -392,17 +392,17 @@ public:
     {}
 
     template <size_t N>
-    constexpr span(std::array<element_type, N>& arr)
+    constexpr span(std::array<element_type, N>& arr) noexcept
         : storage_(&arr[0], extent_type<N>())
     {}
 
     template <size_t N, class = std::enable_if_t<is_const<element_type>::value>>
-    constexpr span(std::array<std::remove_const_t<element_type>, N>& arr)
+    constexpr span(std::array<std::remove_const_t<element_type>, N>& arr) noexcept
         : storage_(&arr[0], extent_type<N>())
     {}
 
     template <size_t N, class = std::enable_if_t<is_const<element_type>::value>>
-    constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr)
+    constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
         : storage_(&arr[0], extent_type<N>())
     {}
 
@@ -504,7 +504,7 @@ public:
     constexpr reference operator[](index_type idx) const
     {
         Expects(idx >= 0 && idx < storage_.size());
-        return storage_.data()[idx];
+        return data()[idx];
     }
     constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
     constexpr pointer data() const noexcept { return storage_.data(); }
