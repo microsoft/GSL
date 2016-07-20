@@ -40,7 +40,7 @@ of your GSL source.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 
-1. Create a directory to contain the build outputs for a particular architecture (we name it c:\GSL\vs14-x86 in this example).
+1. Create a directory to contain the build outputs for a particular architecture (we name it c:\GSL\build-x86 in this example).
 
         cd GSL
         md build-x86
