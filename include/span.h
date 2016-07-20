@@ -286,8 +286,8 @@ public:
     constexpr span_iterator() : base_type() {}
     constexpr span_iterator(const Span* span, typename Span::index_type index) : base_type(span, index) {}
 
-    constexpr reference operator*() const { return reinterpret_cast<reference>(base_type::operator*()); }
-    constexpr pointer operator->() const { return reinterpret_cast<pointer>(base_type::operator->()); }
+    constexpr reference operator*() const { return const_cast<reference>(base_type::operator*()); }
+    constexpr pointer operator->() const { return const_cast<pointer>(base_type::operator->()); }
 
     constexpr span_iterator& operator++() noexcept { base_type::operator++(); return *this; }
 
