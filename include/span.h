@@ -380,7 +380,7 @@ public:
     {}
 
     constexpr span(pointer ptr, index_type count) : storage_(ptr, count)
-    { Expects((!ptr && count == 0) || (ptr && count >= 0)); }
+    {}
 
     constexpr span(pointer firstElem, pointer lastElem)
         : storage_(firstElem, std::distance(firstElem, lastElem))
@@ -575,7 +575,8 @@ private:
     public:
         template <class OtherExtentType>
         constexpr storage_type(pointer data, OtherExtentType ext)
-            : ExtentType(ext), data_(data) {}
+            : ExtentType(ext), data_(data)
+        { Expects((!data && size() == 0) || (data && size() >= 0)); }
 
         constexpr inline pointer data() const noexcept
         { return data_; }
