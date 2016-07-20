@@ -131,23 +131,23 @@ SUITE(span_tests)
     TEST(from_nullptr_length_constructor)
     {
         {
-            span<int> s{nullptr, 0};
+            span<int> s{nullptr, static_cast<span<int>::index_type>(0)};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int> cs{nullptr, 0};
+            span<const int> cs{nullptr, static_cast<span<int>::index_type>(0)};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
-            span<int, 0> s{nullptr, 0};
+            span<int, 0> s{nullptr, static_cast<span<int>::index_type>(0)};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int, 0> cs{nullptr, 0};
+            span<const int, 0> cs{nullptr, static_cast<span<int>::index_type>(0)};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
 
         {
-            auto workaround_macro = []() { span<int, 1> s{ nullptr, 0 }; };
+            auto workaround_macro = []() { span<int, 1> s{ nullptr, static_cast<span<int>::index_type>(0) }; };
             CHECK_THROW(workaround_macro(), fail_fast); 
         }
 
@@ -168,10 +168,10 @@ SUITE(span_tests)
         }
 
         {
-            span<int*> s{nullptr, 0};
+            span<int*> s{nullptr, static_cast<span<int>::index_type>(0)};
             CHECK(s.length() == 0 && s.data() == nullptr);
 
-            span<const int*> cs{nullptr, 0};
+            span<const int*> cs{nullptr, static_cast<span<int>::index_type>(0)};
             CHECK(cs.length() == 0 && cs.data() == nullptr);
         }
     }
@@ -194,7 +194,7 @@ SUITE(span_tests)
 
         {
             int* p = nullptr;
-            span<int> s{p, 0};
+            span<int> s{p, static_cast<span<int>::index_type>(0)};
             CHECK(s.length() == 0 && s.data() == nullptr);
         }
 
