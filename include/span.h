@@ -220,7 +220,7 @@ namespace details
 
         constexpr const_span_iterator operator+(difference_type n) const noexcept
         {
-            auto ret{*this};
+            auto ret = *this;
             return ret += n;
         }
 
@@ -233,7 +233,7 @@ namespace details
 
         constexpr const_span_iterator operator-(difference_type n) const noexcept
         {
-            auto ret{*this};
+            auto ret = *this;
             return ret -= n;
         }
 
@@ -650,7 +650,7 @@ private:
         template <class OtherExtentType>
         constexpr storage_type(pointer data, OtherExtentType ext) : ExtentType(ext), data_(data)
         {
-            Expects((!data && size() == 0) || (data && size() >= 0));
+            Expects((!data && ExtentType::size() == 0) || (data && ExtentType::size() >= 0));
         }
 
         constexpr inline pointer data() const noexcept { return data_; }
