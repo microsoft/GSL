@@ -362,21 +362,19 @@ public:
     {
     }
 
-    // first Count elements
     template <index_type Count>
     constexpr basic_string_span<element_type, Count> first() const
     {
         return {span_.template first<Count>()};
     }
 
-    constexpr basic_string_span<index_type, dynamic_extent> first(index_type count) const
+    constexpr basic_string_span<element_type, dynamic_extent> first(index_type count) const
     {
         return {span_.first(count)};
     }
 
-    // last Count elements
     template <index_type Count>
-    constexpr basic_string_span<index_type, Count> last() const
+    constexpr basic_string_span<element_type, Count> last() const
     {
         return {span_.template last<Count>()};
     }
