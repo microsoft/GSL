@@ -285,25 +285,27 @@ public:
     constexpr basic_string_span(element_type (&arr)[N]) : span_(remove_z(arr))
     {
     }
-    
-    template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    constexpr basic_string_span(std::array<ArrayElementType, N>& arr) noexcept
-    : span_(arr) {}
 
     template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    constexpr basic_string_span(const std::array<ArrayElementType, N>& arr) noexcept
-    : span_(arr) {}
+    constexpr basic_string_span(std::array<ArrayElementType, N>& arr) noexcept : span_(arr)
+    {
+    }
+
+    template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
+    constexpr basic_string_span(const std::array<ArrayElementType, N>& arr) noexcept : span_(arr)
+    {
+    }
 
     // Container signature should work for basic_string after C++17 version exists
     template <class Traits, class Allocator>
     constexpr basic_string_span(std::basic_string<element_type, Traits, Allocator>& str)
-    : span_(&str[0], str.length())
+        : span_(&str[0], str.length())
     {
     }
 
     template <class Traits, class Allocator>
     constexpr basic_string_span(const std::basic_string<element_type, Traits, Allocator>& str)
-    : span_(&str[0], str.length())
+        : span_(&str[0], str.length())
     {
     }
 
@@ -313,7 +315,8 @@ public:
                   !details::is_basic_string_span<Container>::value &&
                   !details::is_span<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
-                  std::is_convertible<typename Container::pointer, decltype(std::declval<Container>().data())>::value>>
+                  std::is_convertible<typename Container::pointer,
+                                      decltype(std::declval<Container>().data())>::value>>
     constexpr basic_string_span(Container& cont) : span_(cont)
     {
     }
@@ -323,7 +326,8 @@ public:
                   !details::is_basic_string_span<Container>::value &&
                   !details::is_span<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
-                  std::is_convertible<typename Container::pointer, decltype(std::declval<Container>().data())>::value>>
+                  std::is_convertible<typename Container::pointer,
+                                      decltype(std::declval<Container>().data())>::value>>
     constexpr basic_string_span(const Container& cont) : span_(cont)
     {
     }
@@ -342,53 +346,54 @@ public:
 
     template <typename = std::enable_if_t<
                   !std::is_same<std::remove_const_t<element_type>, value_type>::value>>
-    constexpr basic_string_span(const span<std::remove_const_t<element_type>, Extent>& other) 
+    constexpr basic_string_span(const span<std::remove_const_t<element_type>, Extent>& other)
         : span_(other)
     {
     }
 #endif
 
     // from string_span
-    template <class OtherValueType, std::ptrdiff_t OtherExtent,
-              class = std::enable_if_t<std::is_convertible<
-                  typename basic_string_span<OtherValueType, OtherExtent>::impl_type, impl_type>::value>>
-    constexpr basic_string_span(basic_string_span<OtherValueType, OtherExtent> other) 
+    template <
+        class OtherValueType, std::ptrdiff_t OtherExtent,
+        class = std::enable_if_t<std::is_convertible<
+            typename basic_string_span<OtherValueType, OtherExtent>::impl_type, impl_type>::value>>
+    constexpr basic_string_span(basic_string_span<OtherValueType, OtherExtent> other)
         : span_(other.data(), other.length())
     {
     }
 
     // first Count elements
     template <index_type Count>
-    constexpr basic_string_span<element_type, Count> first() const 
+    constexpr basic_string_span<element_type, Count> first() const
     {
         return {span_.template first<Count>()};
     }
 
-    constexpr basic_string_span<index_type, dynamic_extent> first(index_type count) const 
+    constexpr basic_string_span<index_type, dynamic_extent> first(index_type count) const
     {
         return {span_.first(count)};
     }
 
     // last Count elements
     template <index_type Count>
-    constexpr basic_string_span<index_type, Count> last() const 
+    constexpr basic_string_span<index_type, Count> last() const
     {
         return {span_.template last<Count>()};
     }
 
-    constexpr basic_string_span<element_type, dynamic_extent> last(index_type count) const 
+    constexpr basic_string_span<element_type, dynamic_extent> last(index_type count) const
     {
         return {span_.last(count)};
     }
 
     template <index_type Offset, index_type Count>
-    constexpr basic_string_span<element_type, Count> subspan() const 
+    constexpr basic_string_span<element_type, Count> subspan() const
     {
         return {span_.template subspan<Offset, Count>()};
     }
 
     constexpr basic_string_span<element_type, dynamic_extent>
-    subspan(index_type offset, index_type count = dynamic_extent) const 
+    subspan(index_type offset, index_type count = dynamic_extent) const
     {
         return {span_.subspan(offset, count)};
     }
@@ -406,10 +411,10 @@ public:
 
     constexpr iterator begin() const noexcept { return span_.begin(); }
     constexpr iterator end() const noexcept { return span_.end(); }
-    
+
     constexpr const_iterator cbegin() const noexcept { return span_.cbegin(); }
     constexpr const_iterator cend() const noexcept { return span_.cend(); }
-    
+
     constexpr reverse_iterator rbegin() const noexcept { return span_.rbegin(); }
     constexpr reverse_iterator rend() const noexcept { return span_.rend(); }
 
@@ -417,13 +422,13 @@ public:
     constexpr const_reverse_iterator crend() const noexcept { return span_.crend(); }
 
 private:
-    static impl_type remove_z(pointer const& sz, std::ptrdiff_t max) 
+    static impl_type remove_z(pointer const& sz, std::ptrdiff_t max)
     {
         return {sz, details::length_func<element_type>()(sz, max)};
     }
 
     template <size_t N>
-    static impl_type remove_z(element_type (&sz)[N]) 
+    static impl_type remove_z(element_type (&sz)[N])
     {
         return remove_z(&sz[0], narrow_cast<std::ptrdiff_t>(N));
     }
@@ -556,8 +561,9 @@ using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
 
 // operator ==
 template <class CharT, std::ptrdiff_t Extent, class T,
-          class = std::enable_if_t<details::is_basic_string_span<T>::value || std::is_convertible<
-              T, gsl::basic_string_span<std::add_const_t<CharT>>>::value>>
+          class = std::enable_if_t<
+              details::is_basic_string_span<T>::value ||
+              std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>>>::value>>
 bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const T& other) noexcept
 {
     gsl::basic_string_span<std::add_const_t<CharT>> tmp(other);
@@ -568,11 +574,10 @@ bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const T& other
 #endif
 }
 
-template <
-    class CharT, std::ptrdiff_t Extent, class T,
-    class = std::enable_if_t<!details::is_basic_string_span<T>::value && 
-        std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>>>::value 
-        >>
+template <class CharT, std::ptrdiff_t Extent, class T,
+          class = std::enable_if_t<
+              !details::is_basic_string_span<T>::value &&
+              std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>>>::value>>
 bool operator==(const T& one, const gsl::basic_string_span<CharT, Extent>& other) noexcept
 {
     gsl::basic_string_span<std::add_const_t<CharT>> tmp(one);

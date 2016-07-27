@@ -740,7 +740,8 @@ public:
     }
 
     constexpr strided_bounds(const index_type& extents, const index_type& strides) noexcept
-        : m_extents(extents), m_strides(strides)
+        : m_extents(extents),
+          m_strides(strides)
     {
     }
 
@@ -837,7 +838,8 @@ public:
     using index_size_type = typename IndexType::value_type;
     template <typename Bounds>
     explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
-        : boundary_(bnd.index_bounds()), curr_(std::move(curr))
+        : boundary_(bnd.index_bounds()),
+          curr_(std::move(curr))
     {
         static_assert(is_bounds<Bounds>::value, "Bounds type must be provided");
     }
@@ -1132,7 +1134,7 @@ namespace details
     template <typename T, typename Arg, typename... Args>
     std::enable_if_t<
         !std::is_same<Arg, dim<dynamic_range>>::value && !std::is_same<Arg, Sep>::value, T>
-    static_as_span_helper(Arg, Args... args)
+        static_as_span_helper(Arg, Args... args)
     {
         return static_as_span_helper<T>(args...);
     }
@@ -1250,8 +1252,8 @@ public:
     }
 
     // construct from pointer + length - multidimensional
-    constexpr multi_span(pointer data, bounds_type bounds) noexcept
-        : data_(data), bounds_(std::move(bounds))
+    constexpr multi_span(pointer data, bounds_type bounds) noexcept : data_(data),
+                                                                      bounds_(std::move(bounds))
     {
         Expects((bounds_.size() > 0 && data != nullptr) || bounds_.size() == 0);
     }
@@ -1347,7 +1349,8 @@ public:
               typename = std::enable_if_t<std::is_convertible<OtherValueType, ValueType>::value &&
                                           std::is_convertible<OtherBounds, bounds_type>::value>>
     constexpr multi_span(multi_span<OtherValueType, OtherDimensions...> other) noexcept
-        : data_(other.data_), bounds_(other.bounds_)
+        : data_(other.data_),
+          bounds_(other.bounds_)
     {
     }
 

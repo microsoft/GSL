@@ -120,30 +120,33 @@ namespace details
 
     template <class From, class To>
     struct is_allowed_pointer_conversion
-        : public std::integral_constant<bool, std::is_pointer<From>::value && std::is_pointer<To>::value &&
-                             std::is_convertible<From, To>::value>
+        : public std::integral_constant<bool, std::is_pointer<From>::value &&
+                                                  std::is_pointer<To>::value &&
+                                                  std::is_convertible<From, To>::value>
     {
     };
 
     template <class From, class To>
     struct is_allowed_integral_conversion
-        : public std::integral_constant<bool, std::is_integral<From>::value && std::is_integral<To>::value &&
-                             sizeof(From) == sizeof(To) && alignof(From) == alignof(To) &&
-                             std::is_convertible<From, To>::value>
+        : public std::integral_constant<
+              bool, std::is_integral<From>::value && std::is_integral<To>::value &&
+                        sizeof(From) == sizeof(To) && alignof(From) == alignof(To) &&
+                        std::is_convertible<From, To>::value>
     {
     };
 
     template <std::ptrdiff_t From, std::ptrdiff_t To>
     struct is_allowed_extent_conversion
-        : public std::integral_constant<bool, From == To || From == gsl::dynamic_extent || To == gsl::dynamic_extent>
+        : public std::integral_constant<bool, From == To || From == gsl::dynamic_extent ||
+                                                  To == gsl::dynamic_extent>
     {
     };
 
     template <class From, class To>
     struct is_allowed_element_type_conversion
         : public std::integral_constant<bool, std::is_same<From, std::remove_cv_t<To>>::value ||
-                             is_allowed_pointer_conversion<From, To>::value ||
-                             is_allowed_integral_conversion<From, To>::value>
+                                                  is_allowed_pointer_conversion<From, To>::value ||
+                                                  is_allowed_integral_conversion<From, To>::value>
     {
     };
 
@@ -392,9 +395,7 @@ namespace details
 
         void swap(span_iterator& rhs) noexcept { base_type::swap(rhs); }
     private:
-        constexpr span_iterator(const base_type& base) : base_type(base)
-        {
-        }
+        constexpr span_iterator(const base_type& base) : base_type(base) {}
     };
 
     template <typename Span>
@@ -431,7 +432,7 @@ namespace details
     class extent_type
     {
     public:
-	using index_type = std::ptrdiff_t;
+        using index_type = std::ptrdiff_t;
 
         static_assert(Ext >= 0, "A fixed-size span must be >= 0 in size.");
 
@@ -454,7 +455,7 @@ namespace details
     class extent_type<dynamic_extent>
     {
     public:
-	using index_type = std::ptrdiff_t;
+        using index_type = std::ptrdiff_t;
 
         template <index_type Other>
         explicit constexpr extent_type(extent_type<Other> ext) : size_(ext.size())
@@ -504,7 +505,7 @@ public:
     constexpr span(element_type (&arr)[N]) noexcept : storage_(&arr[0], details::extent_type<N>())
     {
     }
-    
+
     template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     constexpr span(std::array<ArrayElementType, N>& arr) noexcept
         : storage_(&arr[0], details::extent_type<N>())
@@ -521,8 +522,7 @@ public:
     // on Container to be a contiguous sequence container.
     template <class Container,
               class = std::enable_if_t<
-                  !details::is_span<Container>::value &&
-                  !details::is_std_array<Container>::value && 
+                  !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
@@ -549,7 +549,8 @@ public:
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(const span<OtherElementType, OtherExtent>& other)
-        : storage_(reinterpret_cast<pointer>(other.data()), details::extent_type<OtherExtent>(other.size()))
+        : storage_(reinterpret_cast<pointer>(other.data()),
+                   details::extent_type<OtherExtent>(other.size()))
     {
     }
 
@@ -559,7 +560,8 @@ public:
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(span<OtherElementType, OtherExtent>&& other)
-        : storage_(reinterpret_cast<pointer>(other.data()), details::extent_type<OtherExtent>(other.size()))
+        : storage_(reinterpret_cast<pointer>(other.data()),
+                   details::extent_type<OtherExtent>(other.size()))
     {
     }
 
@@ -664,7 +666,8 @@ private:
 
 // [span.comparison], span comparison operators
 template <class ElementType, std::ptrdiff_t FirstExtent, std::ptrdiff_t SecondExtent>
-constexpr bool operator==(const span<ElementType, FirstExtent>& l, const span<ElementType, SecondExtent>& r)
+constexpr bool operator==(const span<ElementType, FirstExtent>& l,
+                          const span<ElementType, SecondExtent>& r)
 {
     return std::equal(l.begin(), l.end(), r.begin(), r.end());
 }
@@ -711,7 +714,7 @@ namespace details
     struct calculate_byte_size
         : std::integral_constant<std::ptrdiff_t,
                                  static_cast<std::ptrdiff_t>(sizeof(ElementType) *
-                                                        static_cast<std::size_t>(Extent))>
+                                                             static_cast<std::size_t>(Extent))>
     {
     };
 
