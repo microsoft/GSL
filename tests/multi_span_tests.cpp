@@ -680,22 +680,22 @@ SUITE(multi_span_tests)
     {
         static_assert(Bounds::static_size == 60, "static bounds is wrong size");
     }
-    TEST(as_span_reshape)
+    TEST(as_multi_span_reshape)
     {
         int a[3][4][5];
-        auto av = as_span(a);
+        auto av = as_multi_span(a);
         fn(av.bounds());
-        auto av2 = as_span(av, dim<60>());
-        auto av3 = as_span(av2, dim<3>(), dim<4>(), dim<5>());
-        auto av4 = as_span(av3, dim<4>(), dim<>(3), dim<5>());
-        auto av5 = as_span(av4, dim<3>(), dim<4>(), dim<5>());
-        auto av6 = as_span(av5, dim<12>(), dim<>(5));
+        auto av2 = as_multi_span(av, dim<60>());
+        auto av3 = as_multi_span(av2, dim<3>(), dim<4>(), dim<5>());
+        auto av4 = as_multi_span(av3, dim<4>(), dim<>(3), dim<5>());
+        auto av5 = as_multi_span(av4, dim<3>(), dim<4>(), dim<5>());
+        auto av6 = as_multi_span(av5, dim<12>(), dim<>(5));
 
         fill(av6.begin(), av6.end(), 1);
 
         auto av7 = as_bytes(av6);
 
-        auto av8 = as_span<int>(av7);
+        auto av8 = as_multi_span<int>(av7);
 
         CHECK(av8.size() == av6.size());
         for (auto i = 0; i < av8.size(); i++) {
@@ -949,12 +949,12 @@ SUITE(multi_span_tests)
     {
         {
             int arr[10][2];
-            auto s1 = as_span(arr);
+            auto s1 = as_multi_span(arr);
             multi_span<const int, dynamic_range, 2> s2 = s1;
 
             CHECK(s1 == s2);
 
-            multi_span<int, 20> s3 = as_span(s1, dim<>(20));
+            multi_span<int, 20> s3 = as_multi_span(s1, dim<>(20));
             CHECK(s3 == s2 && s3 == s1);
         }
 
@@ -1059,7 +1059,7 @@ SUITE(multi_span_tests)
 
     TEST(basics)
     {
-        auto ptr = as_span(new int[10], 10);
+        auto ptr = as_multi_span(new int[10], 10);
         fill(ptr.begin(), ptr.end(), 99);
         for (int num : ptr) {
             CHECK(num == 99);
@@ -1071,7 +1071,7 @@ SUITE(multi_span_tests)
     TEST(bounds_checks)
     {
         int arr[10][2];
-        auto av = as_span(arr);
+        auto av = as_multi_span(arr);
 
         fill(begin(av), end(av), 0);
 
@@ -1111,7 +1111,7 @@ SUITE(multi_span_tests)
     {
         auto data = new int[4][3][5];
 
-        auto av = as_span(data, 4);
+        auto av = as_multi_span(data, 4);
 
         CHECK(av.size() == 60);
 
@@ -1122,7 +1122,7 @@ SUITE(multi_span_tests)
         CHECK(count == 34 * 60);
         overloaded_func(av, 34);
 
-        overloaded_func(as_span(av, dim<>(4), dim<>(3), dim<>(5)), 34);
+        overloaded_func(as_multi_span(av, dim<>(4), dim<>(3), dim<>(5)), 34);
 
         // fixed_func(av, 34);
         delete[] data;
@@ -1137,7 +1137,7 @@ SUITE(multi_span_tests)
 
         // size check will be done
         auto image_view =
-            as_span(as_span(image_ptr, imgSize), dim<>(height), dim<>(width), dim<3>());
+            as_multi_span(as_multi_span(image_ptr, imgSize), dim<>(height), dim<>(width), dim<3>());
 
         iota(image_view.begin(), image_view.end(), 1);
 
@@ -1160,12 +1160,12 @@ SUITE(multi_span_tests)
         }
     }
 
-    TEST(as_span)
+    TEST(as_multi_span)
     {
         {
             int* arr = new int[150];
 
-            auto av = as_span(arr, dim<10>(), dim<>(3), dim<5>());
+            auto av = as_multi_span(arr, dim<10>(), dim<>(3), dim<5>());
 
             fill(av.begin(), av.end(), 24);
             overloaded_func(av, 24);
@@ -1173,44 +1173,44 @@ SUITE(multi_span_tests)
             delete[] arr;
 
             array<int, 15> stdarr{0};
-            auto av2 = as_span(stdarr);
-            overloaded_func(as_span(av2, dim<>(1), dim<3>(), dim<5>()), 0);
+            auto av2 = as_multi_span(stdarr);
+            overloaded_func(as_multi_span(av2, dim<>(1), dim<3>(), dim<5>()), 0);
 
             string str = "ttttttttttttttt"; // size = 15
             auto t = str.data();
             (void) t;
-            auto av3 = as_span(str);
-            overloaded_func(as_span(av3, dim<>(1), dim<3>(), dim<5>()), 't');
+            auto av3 = as_multi_span(str);
+            overloaded_func(as_multi_span(av3, dim<>(1), dim<3>(), dim<5>()), 't');
         }
 
         {
             string str;
-            multi_span<char> strspan = as_span(str);
+            multi_span<char> strspan = as_multi_span(str);
             (void) strspan;
             const string cstr;
-            multi_span<const char> cstrspan = as_span(cstr);
+            multi_span<const char> cstrspan = as_multi_span(cstr);
             (void) cstrspan;
         }
 
         {
             int a[3][4][5];
-            auto av = as_span(a);
+            auto av = as_multi_span(a);
             const int(*b)[4][5];
             b = a;
-            auto bv = as_span(b, 3);
+            auto bv = as_multi_span(b, 3);
 
             CHECK(av == bv);
 
             const std::array<double, 3> arr = {0.0, 0.0, 0.0};
-            auto cv = as_span(arr);
+            auto cv = as_multi_span(arr);
             (void) cv;
 
             vector<float> vec(3);
-            auto dv = as_span(vec);
+            auto dv = as_multi_span(vec);
             (void) dv;
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-            auto dv2 = as_span(std::move(vec));
+            auto dv2 = as_multi_span(std::move(vec));
 #endif
         }
     }
@@ -1258,7 +1258,7 @@ SUITE(multi_span_tests)
 
         CHECK(av[i] == 4);
 
-        auto av2 = as_span(av, dim<4>(), dim<>(2));
+        auto av2 = as_multi_span(av, dim<4>(), dim<>(2));
         ptrdiff_t a2[2] = {0, 1};
         index<2> i2 = a2;
 
@@ -1486,21 +1486,21 @@ SUITE(multi_span_tests)
             arr[i] = i;
         }
 
-        auto av = as_span(arr, size);
+        auto av = as_multi_span(arr, size);
 
         // first bound is dynamic
         {
-            multi_span<int, dynamic_range, 2> av2 = as_span(av, dim<>(height), dim<>(width));
+            multi_span<int, dynamic_range, 2> av2 = as_multi_span(av, dim<>(height), dim<>(width));
             iterate_second_column(av2);
         }
         // second bound is dynamic
         {
-            multi_span<int, 4, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
+            multi_span<int, 4, dynamic_range> av2 = as_multi_span(av, dim<>(height), dim<>(width));
             iterate_second_column(av2);
         }
         // both bounds are dynamic
         {
-            multi_span<int, dynamic_range, dynamic_range> av2 = as_span(av, dim<>(height), dim<>(width));
+            multi_span<int, dynamic_range, dynamic_range> av2 = as_multi_span(av, dim<>(height), dim<>(width));
             iterate_second_column(av2);
         }
 
@@ -1521,7 +1521,7 @@ SUITE(multi_span_tests)
 
         CHECK_THROW(av1[10][3][4], fail_fast);
 
-        multi_span<const double, dynamic_range, 6, 4> av2 = as_span(av1, dim<>(5), dim<6>(), dim<4>());
+        multi_span<const double, dynamic_range, 6, 4> av2 = as_multi_span(av1, dim<>(5), dim<6>(), dim<4>());
         (void) av2;
     }
 
@@ -1562,13 +1562,13 @@ SUITE(multi_span_tests)
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
             multi_span<int, dynamic_range> av = arr;
-            multi_span<int, 2, 1> av2 = av.as_span(dim<2>(), dim<2>());
+            multi_span<int, 2, 1> av2 = av.as_multi_span(dim<2>(), dim<2>());
         }
 #endif
 
         {
             multi_span<int, dynamic_range> av = arr;
-            multi_span<int, 2, 1> av2 = as_span(av, dim<>(2), dim<>(2));
+            multi_span<int, 2, 1> av2 = as_multi_span(av, dim<>(2), dim<>(2));
             auto workaround_macro = [&]() { return av2[{1, 0}] == 2; };
             CHECK(workaround_macro());
         }

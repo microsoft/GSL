@@ -39,7 +39,7 @@ SUITE(strided_span_tests)
 	{
 		int a[30][4][5];
 		
-		auto av = as_span(a);
+		auto av = as_multi_span(a);
 		auto sub = av.section({15, 0, 0}, gsl::index<3>{2, 2, 2});
 		auto subsub = sub.section({1, 0, 0}, gsl::index<3>{1, 1, 1});
 		(void)subsub;
@@ -49,7 +49,7 @@ SUITE(strided_span_tests)
 	{
 		std::vector<int> data(5 * 10);
 		std::iota(begin(data), end(data), 0);
-        const multi_span<int, 5, 10> av = as_span(multi_span<int>{data}, dim<5>(), dim<10>());
+        const multi_span<int, 5, 10> av = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
 		strided_span<int, 2> av_section_1 = av.section({ 1, 2 }, { 3, 4 });
 		CHECK((av_section_1[{0, 0}] == 12));
@@ -258,7 +258,7 @@ SUITE(strided_span_tests)
 	{
 		std::vector<int> data(5 * 10);
 		std::iota(begin(data), end(data), 0);
-        const multi_span<int, 5, 10> src = as_span(multi_span<int>{data}, dim<5>(), dim<10>());
+        const multi_span<int, 5, 10> src = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
 		const strided_span<int, 2> sav{ src, {{5, 10}, {10, 1}} };
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -413,18 +413,18 @@ SUITE(strided_span_tests)
 			strided_span<int, 1> sav2{ arr, { 1,1,1 } };
 			strided_span<int, 1> sav3{ av, { 1 } };
 			strided_span<int, 1> sav4{ av, { 1,1,1 } };
-			strided_span<int, 2> sav5{ av.as_span(dim<2>(), dim<2>()), { 1 } };
-			strided_span<int, 2> sav6{ av.as_span(dim<2>(), dim<2>()), { 1,1,1 } };
-			strided_span<int, 2> sav7{ av.as_span(dim<2>(), dim<2>()), { { 1,1 },{ 1,1 },{ 1,1 } } };
+			strided_span<int, 2> sav5{ av.as_multi_span(dim<2>(), dim<2>()), { 1 } };
+			strided_span<int, 2> sav6{ av.as_multi_span(dim<2>(), dim<2>()), { 1,1,1 } };
+			strided_span<int, 2> sav7{ av.as_multi_span(dim<2>(), dim<2>()), { { 1,1 },{ 1,1 },{ 1,1 } } };
 
 			index<1> index{ 0, 1 };
 			strided_span<int, 1> sav8{ arr,{ 1,{ 1,1 } } };
 			strided_span<int, 1> sav9{ arr,{ { 1,1 },{ 1,1 } } };
 			strided_span<int, 1> sav10{ av,{ 1,{ 1,1 } } };
 			strided_span<int, 1> sav11{ av,{ { 1,1 },{ 1,1 } } };
-			strided_span<int, 2> sav12{ av.as_span(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
-			strided_span<int, 2> sav13{ av.as_span(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
-			strided_span<int, 2> sav14{ av.as_span(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
+			strided_span<int, 2> sav12{ av.as_multi_span(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
+			strided_span<int, 2> sav13{ av.as_multi_span(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
+			strided_span<int, 2> sav14{ av.as_multi_span(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
 		}
 #endif
 	}
@@ -463,7 +463,7 @@ SUITE(strided_span_tests)
 		// retype strided array with regular strides - from multi_span
 		{
 			strided_bounds<2> bounds{ { 2, bytes.size() / 4 }, { bytes.size() / 2, 1 } };
-			multi_span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			strided_span<int, 2> sav3 = sav2.as_strided_span<int>();
 			CHECK(sav3[0][0] == 0);
@@ -475,7 +475,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - last dimension of the array is too small
 		{
 			strided_bounds<2> bounds{ { 4,2 },{ 4, 1 } };
-			multi_span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -483,7 +483,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - strides are too small
 		{
 			strided_bounds<2> bounds{ { 4,2 },{ 2, 1 } };
-			multi_span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -491,7 +491,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - last dimension does not divide by the new typesize
 		{
 			strided_bounds<2> bounds{ { 2,6 },{ 4, 1 } };
-			multi_span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -499,7 +499,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - strides does not divide by the new typesize
 		{
 			strided_bounds<2> bounds{ { 2, 1 },{ 6, 1 } };
-			multi_span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -606,7 +606,7 @@ SUITE(strided_span_tests)
             arr[2 * i + 1] = i;
         }
 
-        auto av = as_span(arr, 8);
+        auto av = as_multi_span(arr, 8);
         iterate_every_other_element(av);
 
         delete[] arr;
@@ -670,22 +670,22 @@ SUITE(strided_span_tests)
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<3>(), dim<4>(), dim<2>());
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<3>(), dim<4>(), dim<2>());
             iterate_second_slice(av);
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<>(3), dim<4>(), dim<2>());
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<>(3), dim<4>(), dim<2>());
             iterate_second_slice(av);
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<3>(), dim<>(4), dim<2>());
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<3>(), dim<>(4), dim<2>());
             iterate_second_slice(av);
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<3>(), dim<4>(), dim<>(2));
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<3>(), dim<4>(), dim<>(2));
             iterate_second_slice(av);
         }
         delete[] arr;
@@ -704,7 +704,7 @@ SUITE(strided_span_tests)
         auto d1 = sizeof(int) * 12 / d2;
 
         // convert to 4x12 array of bytes
-        auto av = as_span(as_bytes(as_span(arr, 4)), dim<>(d1), dim<>(d2));
+        auto av = as_multi_span(as_bytes(as_multi_span(arr, 4)), dim<>(d1), dim<>(d2));
 
         CHECK(av.bounds().index_bounds()[0] == 4);
         CHECK(av.bounds().index_bounds()[1] == 12);
