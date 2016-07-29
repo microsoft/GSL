@@ -24,6 +24,7 @@
 #include "span.h"
 #include <cstring>
 #include <string>
+#include <cstdint>
 
 #ifdef _MSC_VER
 
@@ -313,7 +314,6 @@ public:
     template <class Container,
               class = std::enable_if_t<
                   !details::is_basic_string_span<Container>::value &&
-                  !details::is_span<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
@@ -324,33 +324,12 @@ public:
     template <class Container,
               class = std::enable_if_t<
                   !details::is_basic_string_span<Container>::value &&
-                  !details::is_span<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
     constexpr basic_string_span(const Container& cont) : span_(cont)
     {
     }
-
-#ifndef GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
-    // from span
-    template <typename OtherValueType, std::ptrdiff_t OtherExtent,
-              typename Dummy = std::enable_if_t<
-                  std::is_convertible<span<OtherValueType, OtherExtent>, impl_type>::value>>
-    constexpr basic_string_span(const span<OtherValueType, OtherExtent>& other) : span_(other)
-    {
-    }
-#else
-    // from span
-    constexpr basic_string_span(span<element_type, Extent> other) : span_(other) {}
-
-    template <typename = std::enable_if_t<
-                  !std::is_same<std::remove_const_t<element_type>, value_type>::value>>
-    constexpr basic_string_span(const span<std::remove_const_t<element_type>, Extent>& other)
-        : span_(other)
-    {
-    }
-#endif
 
     // from string_span
     template <

@@ -103,7 +103,7 @@ SUITE(utils_tests)
 
         CHECK(narrow<uint32_t>(int32_t(0)) == 0);
         CHECK(narrow<uint32_t>(int32_t(1)) == 1);
-        CHECK(narrow<uint32_t>(int32_max) == int32_max);
+        CHECK(narrow<uint32_t>(int32_max) == static_cast<uint32_t>(int32_max));
 
         CHECK_THROW(narrow<uint32_t>(int32_t(-1)), narrowing_error);
         CHECK_THROW(narrow<uint32_t>(int32_min), narrowing_error);

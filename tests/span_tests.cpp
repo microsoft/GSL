@@ -839,7 +839,9 @@ SUITE(span_tests)
             CHECK(it - beyond == 0);
 
             for (auto& n : s)
+            {
                 CHECK(n == 5);
+            }
         }
     }
 
@@ -881,7 +883,9 @@ SUITE(span_tests)
             CHECK(it - beyond == 0);
 
             for (auto& n : s)
+            {
                 CHECK(n == 5);
+            }
         }
     }
 
@@ -923,7 +927,9 @@ SUITE(span_tests)
             CHECK(it - beyond == 0);
 
             for (auto& n : s)
+            {
                 CHECK(n == 5);
+            }
         }
     }
 
@@ -965,7 +971,9 @@ SUITE(span_tests)
             CHECK(it - beyond == 0);
 
             for (auto& n : s)
+            {
                 CHECK(n == 5);
+            }
         }
     }
 

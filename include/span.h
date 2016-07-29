@@ -49,13 +49,17 @@
 #if _MSC_VER <= 1800
 
 #define GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-#define GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
+#define GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+#define GSL_MSVC_NO_CPP14_STD_EQUAL
 
 // noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
 #define noexcept /* nothing */
 #endif
+
+#pragma push_macro("alignof")
+#define alignof __alignof
 
 // turn off some misguided warnings
 #pragma warning(push)
@@ -541,7 +545,11 @@ public:
     }
 
     constexpr span(const span& other) noexcept = default;
+#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr span(span&& other) noexcept = default;
+#else
+    constexpr span(span&& other) noexcept : storage_(std::move(other.storage_)) {}
+#endif
 
     template <
         class OtherElementType, std::ptrdiff_t OtherExtent,
@@ -567,8 +575,12 @@ public:
 
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
-    constexpr span& operator=(span&& other) noexcept = default;
 
+#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+    constexpr span& operator=(span&& other) noexcept = default;
+#else
+    constexpr span& operator=(span&& other) noexcept { storage_ = std::move(other.storage_); return *this; }
+#endif
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>
     constexpr span<element_type, Count> first() const
@@ -669,7 +681,11 @@ template <class ElementType, std::ptrdiff_t FirstExtent, std::ptrdiff_t SecondEx
 constexpr bool operator==(const span<ElementType, FirstExtent>& l,
                           const span<ElementType, SecondExtent>& r)
 {
+#ifdef GSL_MSVC_NO_CPP14_STD_EQUAL
+    return (l.size() == r.size()) && std::equal(l.begin(), l.end(), r.begin());
+#else
     return std::equal(l.begin(), l.end(), r.begin(), r.end());
+#endif
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
@@ -755,6 +771,8 @@ as_writeable_bytes(span<ElementType, Extent> s) noexcept
 #undef noexcept
 #pragma pop_macro("noexcept")
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
+
+#pragma pop_macro("alignof")
 
 #undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
 

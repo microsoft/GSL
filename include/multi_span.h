@@ -1594,12 +1594,13 @@ public:
 // Free functions for manipulating spans
 //
 
+
 // reshape a multi_span into a different dimensionality
 // DimCount and Enabled here are workarounds for a bug in MSVC 2015
 template <typename SpanType, typename... Dimensions2, size_t DimCount = sizeof...(Dimensions2),
-          bool Enabled = (DimCount > 0), typename = std::enable_if_t<Enabled>>
-constexpr multi_span<typename SpanType::value_type, Dimensions2::value...>
-as_multi_span(SpanType s, Dimensions2... dims)
+          bool Enabled = (DimCount > 0), typename = std::enable_if_t<Enabled> >
+constexpr auto
+as_multi_span(SpanType s, Dimensions2... dims) -> multi_span<typename SpanType::value_type, Dimensions2::value...>
 {
     static_assert(details::is_multi_span<SpanType>::value,
                   "Variadic as_multi_span() is for reshaping existing spans.");
