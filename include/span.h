@@ -579,7 +579,11 @@ public:
 #ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr span& operator=(span&& other) noexcept = default;
 #else
-    constexpr span& operator=(span&& other) noexcept { storage_ = std::move(other.storage_); return *this; }
+    constexpr span& operator=(span&& other) noexcept
+    {
+        storage_ = std::move(other.storage_);
+        return *this;
+    }
 #endif
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>

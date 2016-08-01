@@ -22,9 +22,9 @@
 #include "gsl_assert.h"
 #include "gsl_util.h"
 #include "span.h"
+#include <cstdint>
 #include <cstring>
 #include <string>
-#include <cstdint>
 
 #ifdef _MSC_VER
 
