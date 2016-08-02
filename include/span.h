@@ -302,7 +302,7 @@ namespace details
     };
 
     template <class Span>
-    class span_iterator 
+    class span_iterator
     {
     public:
         using iterator_category = std::random_access_iterator_tag;
@@ -378,10 +378,7 @@ namespace details
             return ret -= n;
         }
 
-        constexpr span_iterator& operator-=(difference_type n) noexcept
-        {
-            return *this += -n;
-        }
+        constexpr span_iterator& operator-=(difference_type n) noexcept { return *this += -n; }
 
         constexpr difference_type operator-(const span_iterator& rhs) const noexcept
         {
@@ -515,7 +512,7 @@ public:
     using reference = element_type&;
 
     using iterator = details::span_iterator<span<ElementType, Extent>>;
-    using const_iterator = details::const_span_iterator<span<ElementType,Extent>>;
+    using const_iterator = details::const_span_iterator<span<ElementType, Extent>>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
