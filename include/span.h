@@ -1,3 +1,4 @@
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2015 Microsoft Corporation. All rights reserved.
@@ -191,6 +192,7 @@ namespace details
             Expects(span_);
             return (*span_)[index_];
         }
+
         constexpr pointer operator->() const
         {
             Expects(span_);
@@ -300,10 +302,8 @@ namespace details
     };
 
     template <class Span>
-    class span_iterator : public const_span_iterator<Span>
+    class span_iterator 
     {
-        using base_type = const_span_iterator<Span>;
-
     public:
         using iterator_category = std::random_access_iterator_tag;
         using value_type = typename Span::element_type;
@@ -312,67 +312,88 @@ namespace details
         using pointer = value_type*;
         using reference = value_type&;
 
-        constexpr span_iterator() : base_type() {}
+        constexpr span_iterator() : span_iterator(nullptr, 0) {}
         constexpr span_iterator(const Span* span, typename Span::index_type index)
-            : base_type(span, index)
+            : span_(span), index_(index)
         {
+            Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
         }
 
         constexpr reference operator*() const
         {
-            return const_cast<reference>(base_type::operator*());
+            Expects(span_);
+            return (*span_)[index_];
         }
+
         constexpr pointer operator->() const
         {
-            return const_cast<pointer>(base_type::operator->());
+            Expects(span_);
+            return &((*span_)[index_]);
         }
 
         constexpr span_iterator& operator++() noexcept
         {
-            base_type::operator++();
+            Expects(span_ && index_ >= 0 && index_ < span_->length());
+            ++index_;
             return *this;
         }
 
-        constexpr span_iterator operator++(int) noexcept { return base_type::operator++(1); }
+        constexpr span_iterator operator++(int) noexcept
+        {
+            auto ret = *this;
+            ++(*this);
+            return ret;
+        }
 
         constexpr span_iterator& operator--() noexcept
         {
-            base_type::operator--();
+            Expects(span_ && index_ > 0 && index_ <= span_->length());
+            --index_;
             return *this;
         }
 
-        constexpr span_iterator operator--(int) noexcept { return base_type::operator--(1); }
+        constexpr span_iterator operator--(int) noexcept
+        {
+            auto ret = *this;
+            --(*this);
+            return ret;
+        }
 
         constexpr span_iterator operator+(difference_type n) const noexcept
         {
-            return {base_type::operator+(n)};
+            auto ret = *this;
+            return ret += n;
         }
 
         constexpr span_iterator& operator+=(difference_type n) noexcept
         {
-            return {base_type::operator+=(n)};
+            Expects(span_ && (index_ + n) >= 0 && (index_ + n) <= span_->length());
+            index_ += n;
+            return *this;
         }
 
         constexpr span_iterator operator-(difference_type n) const noexcept
         {
-            return base_type::operator-(n);
+            auto ret = *this;
+            return ret -= n;
         }
 
         constexpr span_iterator& operator-=(difference_type n) noexcept
         {
-            return base_type::operator-=(n);
+            return *this += -n;
         }
 
         constexpr difference_type operator-(const span_iterator& rhs) const noexcept
         {
-            return base_type::operator-(rhs);
+            Expects(span_ == rhs.span_);
+            return index_ - rhs.index_;
         }
 
         constexpr reference operator[](difference_type n) const noexcept { return *(*this + n); }
 
         constexpr bool operator==(const span_iterator& rhs) const noexcept
         {
-            return base_type::operator==(rhs);
+            return span_ == rhs.span_ && index_ == rhs.index_;
         }
 
         constexpr bool operator!=(const span_iterator& rhs) const noexcept
@@ -382,7 +403,8 @@ namespace details
 
         constexpr bool operator<(const span_iterator& rhs) const noexcept
         {
-            return base_type::operator<(rhs);
+            Expects(span_ == rhs.span_);
+            return index_ < rhs.index_;
         }
 
         constexpr bool operator<=(const span_iterator& rhs) const noexcept
@@ -397,9 +419,15 @@ namespace details
             return !(rhs > *this);
         }
 
-        void swap(span_iterator& rhs) noexcept { base_type::swap(rhs); }
+        void swap(span_iterator& rhs) noexcept
+        {
+            std::swap(index_, rhs.index_);
+            std::swap(span_, rhs.span_);
+        }
+
     private:
-        constexpr span_iterator(const base_type& base) : base_type(base) {}
+        const Span* span_;
+        std::ptrdiff_t index_;
     };
 
     template <typename Span>
@@ -487,7 +515,7 @@ public:
     using reference = element_type&;
 
     using iterator = details::span_iterator<span<ElementType, Extent>>;
-    using const_iterator = details::const_span_iterator<span>;
+    using const_iterator = details::const_span_iterator<span<ElementType,Extent>>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -651,11 +679,11 @@ public:
     const_iterator cbegin() const noexcept { return {this, 0}; }
     const_iterator cend() const noexcept { return {this, length()}; }
 
-    reverse_iterator rbegin() const noexcept { return reverse_iterator{{this, length()}}; }
-    reverse_iterator rend() const noexcept { return reverse_iterator{{this, 0}}; }
+    reverse_iterator rbegin() const noexcept { return reverse_iterator{end()}; }
+    reverse_iterator rend() const noexcept { return reverse_iterator{begin()}; }
 
-    const_reverse_iterator crbegin() const noexcept { return reverse_iterator{{this, length()}}; }
-    const_reverse_iterator crend() const noexcept { return reverse_iterator{{this, 0}}; }
+    const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator{cend()}; }
+    const_reverse_iterator crend() const noexcept { return const_reverse_iterator{cbegin()}; }
 
 private:
     // this implementation detail class lets us take advantage of the
