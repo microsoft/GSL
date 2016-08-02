@@ -16,6 +16,6 @@ AllowShortLoopsOnASingleLine: true
 
 PointerAlignment: Left
 AlignConsecutiveAssignments: false
-AlignTrailingComments: false
+AlignTrailingComments: true
 
 SpaceAfterCStyleCast: true
