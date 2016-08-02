@@ -2221,10 +2221,13 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 #undef noexcept
 
 #ifdef _MSC_VER
-#pragma warning(pop)
 #pragma pop_macro("noexcept")
 #endif
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif // GSL_SPAN_H
