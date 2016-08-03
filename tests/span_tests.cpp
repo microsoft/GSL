@@ -15,14 +15,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
-#include <span.h>
-
 #include <iostream>
 #include <list>
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
+#include "../gsl/span.h"
 
 using namespace std;
 using namespace gsl;

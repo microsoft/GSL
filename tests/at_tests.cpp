@@ -15,9 +15,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <gsl.h>
 #include <vector>
 #include <initializer_list>
+#include "../gsl/gsl.h"
 
 using namespace std;
 using namespace gsl;

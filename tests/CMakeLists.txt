@@ -9,7 +9,7 @@ endif()
 add_subdirectory(unittest-cpp)
 
 include_directories(
-    ../include
+    ../gsl
     ./unittest-cpp
 )
 
@@ -33,7 +33,7 @@ else()
 endif()
 
 function(add_gsl_test name)
-    add_executable(${name} ${name}.cpp ../include/gsl.h ../include/gsl_assert.h ../include/gsl_util.h ../include/multi_span.h ../include/span.h ../include/string_span.h)
+    add_executable(${name} ${name}.cpp ../gsl/gsl.h ../gsl/gsl_assert.h ../gsl/gsl_util.h ../gsl/multi_span.h ../gsl/span.h ../gsl/string_span.h)
     target_link_libraries(${name} UnitTest++)
     install(TARGETS ${name}
         RUNTIME DESTINATION bin

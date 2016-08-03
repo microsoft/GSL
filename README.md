@@ -6,10 +6,10 @@ This repo contains Microsoft's implementation of GSL.
 
 The library includes types like `span<T>`, `string_span`, `owner<>` and others.
 
-The entire implementation is provided inline in the headers under the [include](./include) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2013 and 2015.
+The entire implementation is provided inline in the headers under the [gsl](./gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2013 and 2015.
 
-While some types have been broken out into their own headers (e.g. [include/span.h](./include/span.h)),
-it is simplest to just include [gsl.h](./include/gsl.h) and gain access to the entire library.
+While some types have been broken out into their own headers (e.g. [gsl/span.h](./gsl/span.h)),
+it is simplest to just include [gsl.h](./gsl/gsl.h) and gain access to the entire library.
 
 > NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to
 other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information about contributing.
@@ -66,5 +66,23 @@ All tests should pass - indicating your platform is fully supported and you are 
 ## Using the libraries
 As the types are entirely implemented inline in headers, there are no linking requirements.
 
-Just place the contents of the [include](./include) directory within your source tree so it is available
-to your compiler, then include the appropriate headers in your program, and away you go!
+You can copy the [gsl](./gsl) directory into your source tree so it is available
+to your compiler, then include the appropriate headers in your program.
+
+Alternatively set your compiler's *include path* flag to point to the GSL development folder (`c:\GSL` in the example above) or installation folder (after running the install). Eg.
+
+MSVC++
+
+    /I c:\GSL
+
+GCC/clang
+
+    -I$HOME/dev/GSL
+    
+
+Include the library using:
+
+    #include <gsl/gsl.h>
+    
+
+

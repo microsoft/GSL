@@ -19,12 +19,12 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
-#include "gsl_assert.h"
-#include "gsl_util.h"
-#include "span.h"
 #include <cstdint>
 #include <cstring>
 #include <string>
+#include "../gsl/gsl_assert.h"
+#include "../gsl/gsl_util.h"
+#include "../gsl/span.h"
 
 #ifdef _MSC_VER
 
