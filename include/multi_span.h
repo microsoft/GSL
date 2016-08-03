@@ -1053,17 +1053,27 @@ template <typename Span>
 class general_span_iterator;
 
 template <std::ptrdiff_t DimSize = dynamic_range>
-struct dim
+struct dim_t
 {
     static const std::ptrdiff_t value = DimSize;
 };
 template <>
-struct dim<dynamic_range>
+struct dim_t<dynamic_range>
 {
     static const std::ptrdiff_t value = dynamic_range;
     const std::ptrdiff_t dvalue;
-    dim(std::ptrdiff_t size) : dvalue(size) {}
+    dim_t(std::ptrdiff_t size) : dvalue(size) {}
 };
+
+template <std::ptrdiff_t N>
+constexpr std::enable_if_t<(N >= 0),dim_t<N>> dim() noexcept {
+    return dim_t<N>();
+}
+
+template <std::ptrdiff_t N = dynamic_range>
+constexpr std::enable_if_t<N == dynamic_range,dim_t<N>> dim(std::ptrdiff_t n) noexcept {
+    return dim_t<>(n);
+}
 
 template <typename ValueType, std::ptrdiff_t FirstDimension = dynamic_range,
           std::ptrdiff_t... RestDimensions>
@@ -1133,13 +1143,13 @@ namespace details
     }
     template <typename T, typename Arg, typename... Args>
     std::enable_if_t<
-        !std::is_same<Arg, dim<dynamic_range>>::value && !std::is_same<Arg, Sep>::value, T>
+        !std::is_same<Arg, dim_t<dynamic_range>>::value && !std::is_same<Arg, Sep>::value, T>
         static_as_multi_span_helper(Arg, Args... args)
     {
         return static_as_multi_span_helper<T>(args...);
     }
     template <typename T, typename... Args>
-    T static_as_multi_span_helper(dim<dynamic_range> val, Args... args)
+    T static_as_multi_span_helper(dim_t<dynamic_range> val, Args... args)
     {
         return static_as_multi_span_helper<T>(args..., val.dvalue);
     }
@@ -1682,7 +1692,7 @@ constexpr auto as_multi_span(multi_span<byte, Dimensions...> s) noexcept
 }
 
 template <typename T, std::ptrdiff_t... Dimensions>
-constexpr auto as_multi_span(T* const& ptr, dim<Dimensions>... args)
+constexpr auto as_multi_span(T* const& ptr, dim_t<Dimensions>... args)
     -> multi_span<std::remove_all_extents_t<T>, Dimensions...>
 {
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(ptr),
