@@ -14,6 +14,9 @@ it is simplest to just include [gsl.h](./include/gsl.h) and gain access to the e
 > NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to
 other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information about contributing.
 
+# Project Code of Conduct
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 # Quick Start
 ## Supported Platforms
 The test suite that exercises GSL has been built and passes successfully on the following platforms:

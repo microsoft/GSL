@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <span.h>
+#include <multi_span.h>
 #include <vector>
 
 using namespace std;
@@ -58,7 +58,7 @@ SUITE(bounds_test)
 		auto itr = bounds.begin();
 		(void)itr;	
 #ifdef CONFIRM_COMPILATION_ERRORS
-		span<int, 4, dynamic_range, 2> av(nullptr, bounds);
+		multi_span<int, 4, dynamic_range, 2> av(nullptr, bounds);
 	
 		auto itr2 = av.cbegin();
 	
