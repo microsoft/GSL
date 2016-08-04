@@ -23,7 +23,7 @@
 #include <exception>
 #include <type_traits>
 #include <utility>
-#include "../gsl/gsl_assert.h" // Ensures/Expects
+#include "gsl_assert.h" // Ensures/Expects
 
 #ifdef _MSC_VER
 

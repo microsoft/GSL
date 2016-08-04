@@ -32,9 +32,9 @@
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
-#include "../gsl/gsl_assert.h"
-#include "../gsl/gsl_byte.h"
-#include "../gsl/gsl_util.h"
+#include "gsl_assert.h"
+#include "gsl_byte.h"
+#include "gsl_util.h"
 
 #ifdef _MSC_VER
 

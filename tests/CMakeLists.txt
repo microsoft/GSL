@@ -9,7 +9,7 @@ endif()
 add_subdirectory(unittest-cpp)
 
 include_directories(
-    ../gsl
+    ..
     ./unittest-cpp
 )
 

@@ -15,9 +15,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
+#include <gsl/string_span.h>
 #include <cstdlib>
 #include <vector>
-#include "../gsl/string_span.h"
 
 using namespace std;
 using namespace gsl;
