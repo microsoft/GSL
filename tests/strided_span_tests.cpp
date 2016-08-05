@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <span.h>
+#include <multi_span.h>
 
 #include <string>
 #include <vector>
@@ -39,7 +39,7 @@ SUITE(strided_span_tests)
 	{
 		int a[30][4][5];
 		
-		auto av = as_span(a);
+		auto av = as_multi_span(a);
 		auto sub = av.section({15, 0, 0}, gsl::index<3>{2, 2, 2});
 		auto subsub = sub.section({1, 0, 0}, gsl::index<3>{1, 1, 1});
 		(void)subsub;
@@ -49,7 +49,7 @@ SUITE(strided_span_tests)
 	{
 		std::vector<int> data(5 * 10);
 		std::iota(begin(data), end(data), 0);
-        const span<int, 5, 10> av = as_span(span<int>{data}, dim<5>(), dim<10>());
+        const multi_span<int, 5, 10> av = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
 		strided_span<int, 2> av_section_1 = av.section({ 1, 2 }, { 3, 4 });
 		CHECK((av_section_1[{0, 0}] == 12));
@@ -87,13 +87,13 @@ SUITE(strided_span_tests)
 			CHECK((sav3[{0, 0}] == 1 && sav3[{0, 1}] == 3 && sav3[{1, 0}] == 7));
 		}
 
-		// Check span constructor
+		// Check multi_span constructor
 		{
 			int arr[] = { 1, 2 };
 
 			// From non-cv-qualified source
 			{
-				const span<int> src = arr;
+				const multi_span<int> src = arr;
 
 				strided_span<int, 1> sav{ src, {2, 1} };
 				CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
@@ -102,9 +102,9 @@ SUITE(strided_span_tests)
 
 #if _MSC_VER > 1800
 				//strided_span<const int, 1> sav_c{ {src}, {2, 1} };
-				strided_span<const int, 1> sav_c{ span<const int>{src}, strided_bounds<1>{2, 1} };
+				strided_span<const int, 1> sav_c{ multi_span<const int>{src}, strided_bounds<1>{2, 1} };
 #else
-				strided_span<const int, 1> sav_c{ span<const int>{src}, strided_bounds<1>{2, 1} };
+				strided_span<const int, 1> sav_c{ multi_span<const int>{src}, strided_bounds<1>{2, 1} };
 #endif
 				CHECK(sav_c.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_c.bounds().strides() == index<1>{ 1 });
@@ -113,7 +113,7 @@ SUITE(strided_span_tests)
 #if _MSC_VER > 1800
 				strided_span<volatile int, 1> sav_v{ src, {2, 1} };
 #else
-				strided_span<volatile int, 1> sav_v{ span<volatile int>{src}, strided_bounds<1>{2, 1} };
+				strided_span<volatile int, 1> sav_v{ multi_span<volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
 				CHECK(sav_v.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_v.bounds().strides() == index<1>{ 1 });
@@ -122,7 +122,7 @@ SUITE(strided_span_tests)
 #if _MSC_VER > 1800
 				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 #else
-				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
+				strided_span<const volatile int, 1> sav_cv{ multi_span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
@@ -131,7 +131,7 @@ SUITE(strided_span_tests)
 
 			// From const-qualified source
 			{
-				const span<const int> src{ arr };
+				const multi_span<const int> src{ arr };
 
 				strided_span<const int, 1> sav_c{ src, {2, 1} };
 				CHECK(sav_c.bounds().index_bounds() == index<1>{ 2 });
@@ -141,7 +141,7 @@ SUITE(strided_span_tests)
 #if _MSC_VER > 1800
 				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 #else
-				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
+				strided_span<const volatile int, 1> sav_cv{ multi_span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
 				
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
@@ -151,7 +151,7 @@ SUITE(strided_span_tests)
 
 			// From volatile-qualified source
 			{
-				const span<volatile int> src{ arr };
+				const multi_span<volatile int> src{ arr };
 
 				strided_span<volatile int, 1> sav_v{ src, {2, 1} };
 				CHECK(sav_v.bounds().index_bounds() == index<1>{ 2 });
@@ -161,7 +161,7 @@ SUITE(strided_span_tests)
 #if _MSC_VER > 1800
 				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 #else
-				strided_span<const volatile int, 1> sav_cv{ span<const volatile int>{src}, strided_bounds<1>{2, 1} };
+				strided_span<const volatile int, 1> sav_cv{ multi_span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
@@ -170,7 +170,7 @@ SUITE(strided_span_tests)
 
 			// From cv-qualified source
 			{
-				const span<const volatile int> src{ arr };
+				const multi_span<const volatile int> src{ arr };
 
 				strided_span<const volatile int, 1> sav_cv{ src, {2, 1} };
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
@@ -183,11 +183,11 @@ SUITE(strided_span_tests)
 		{
 			int arr[2] = { 4, 5 };
 
-			const span<int, 2> av(arr, 2);
-			span<const int, 2> av2{ av };
+			const multi_span<int, 2> av(arr, 2);
+			multi_span<const int, 2> av2{ av };
 			CHECK(av2[1] == 5);
 
-			static_assert(std::is_convertible<const span<int, 2>, span<const int, 2>>::value, "ctor is not implicit!");
+			static_assert(std::is_convertible<const multi_span<int, 2>, multi_span<const int, 2>>::value, "ctor is not implicit!");
 		
 			const strided_span<int, 1> src{ arr, {2, 1} };
 			strided_span<const int, 1> sav{ src };
@@ -258,13 +258,13 @@ SUITE(strided_span_tests)
 	{
 		std::vector<int> data(5 * 10);
 		std::iota(begin(data), end(data), 0);
-        const span<int, 5, 10> src = as_span(span<int>{data}, dim<5>(), dim<10>());
+        const multi_span<int, 5, 10> src = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
 		const strided_span<int, 2> sav{ src, {{5, 10}, {10, 1}} };
 #ifdef CONFIRM_COMPILATION_ERRORS
 		const strided_span<const int, 2> csav{ {src},{ { 5, 10 },{ 10, 1 } } };
 #endif
-		const strided_span<const int, 2> csav{ span<const int, 5, 10>{ src }, { { 5, 10 },{ 10, 1 } } };
+		const strided_span<const int, 2> csav{ multi_span<const int, 5, 10>{ src }, { { 5, 10 },{ 10, 1 } } };
 
 		strided_span<int, 1> sav_sl = sav[2];
 		CHECK(sav_sl[0] == 20);
@@ -317,7 +317,7 @@ SUITE(strided_span_tests)
 	TEST(strided_span_bounds)
 	{
 		int arr[] = { 0, 1, 2, 3 };
-		span<int> av(arr);
+		multi_span<int> av(arr);
 
 		{
 			// incorrect sections
@@ -413,18 +413,18 @@ SUITE(strided_span_tests)
 			strided_span<int, 1> sav2{ arr, { 1,1,1 } };
 			strided_span<int, 1> sav3{ av, { 1 } };
 			strided_span<int, 1> sav4{ av, { 1,1,1 } };
-			strided_span<int, 2> sav5{ av.as_span(dim<2>(), dim<2>()), { 1 } };
-			strided_span<int, 2> sav6{ av.as_span(dim<2>(), dim<2>()), { 1,1,1 } };
-			strided_span<int, 2> sav7{ av.as_span(dim<2>(), dim<2>()), { { 1,1 },{ 1,1 },{ 1,1 } } };
+			strided_span<int, 2> sav5{ av.as_multi_span(dim<2>(), dim<2>()), { 1 } };
+			strided_span<int, 2> sav6{ av.as_multi_span(dim<2>(), dim<2>()), { 1,1,1 } };
+			strided_span<int, 2> sav7{ av.as_multi_span(dim<2>(), dim<2>()), { { 1,1 },{ 1,1 },{ 1,1 } } };
 
 			index<1> index{ 0, 1 };
 			strided_span<int, 1> sav8{ arr,{ 1,{ 1,1 } } };
 			strided_span<int, 1> sav9{ arr,{ { 1,1 },{ 1,1 } } };
 			strided_span<int, 1> sav10{ av,{ 1,{ 1,1 } } };
 			strided_span<int, 1> sav11{ av,{ { 1,1 },{ 1,1 } } };
-			strided_span<int, 2> sav12{ av.as_span(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
-			strided_span<int, 2> sav13{ av.as_span(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
-			strided_span<int, 2> sav14{ av.as_span(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
+			strided_span<int, 2> sav12{ av.as_multi_span(dim<2>(), dim<2>()),{ { 1 },{ 1 } } };
+			strided_span<int, 2> sav13{ av.as_multi_span(dim<2>(), dim<2>()),{ { 1 },{ 1,1,1 } } };
+			strided_span<int, 2> sav14{ av.as_multi_span(dim<2>(), dim<2>()),{ { 1,1,1 },{ 1 } } };
 		}
 #endif
 	}
@@ -432,7 +432,7 @@ SUITE(strided_span_tests)
 	TEST(strided_span_type_conversion)
 	{
 		int arr[] = { 0, 1, 2, 3 };
-		span<int> av(arr);
+		multi_span<int> av(arr);
 
 		{
 			strided_span<int, 1> sav{ av.data(), av.size(), { av.size() / 2, 2 } };
@@ -447,7 +447,7 @@ SUITE(strided_span_tests)
 #endif
 		}
 
-		span<const byte, dynamic_range> bytes = as_bytes(av);
+		multi_span<const byte, dynamic_range> bytes = as_bytes(av);
 
 		// retype strided array with regular strides - from raw data
 		{
@@ -460,10 +460,10 @@ SUITE(strided_span_tests)
 			CHECK_THROW(sav3[0][1], fail_fast);
 		}
 
-		// retype strided array with regular strides - from span
+		// retype strided array with regular strides - from multi_span
 		{
 			strided_bounds<2> bounds{ { 2, bytes.size() / 4 }, { bytes.size() / 2, 1 } };
-			span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			strided_span<int, 2> sav3 = sav2.as_strided_span<int>();
 			CHECK(sav3[0][0] == 0);
@@ -475,7 +475,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - last dimension of the array is too small
 		{
 			strided_bounds<2> bounds{ { 4,2 },{ 4, 1 } };
-			span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -483,7 +483,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - strides are too small
 		{
 			strided_bounds<2> bounds{ { 4,2 },{ 2, 1 } };
-			span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -491,7 +491,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - last dimension does not divide by the new typesize
 		{
 			strided_bounds<2> bounds{ { 2,6 },{ 4, 1 } };
-			span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -499,7 +499,7 @@ SUITE(strided_span_tests)
 		// retype strided array with not enough elements - strides does not divide by the new typesize
 		{
 			strided_bounds<2> bounds{ { 2, 1 },{ 6, 1 } };
-			span<const byte, 2, dynamic_range> bytes2 = as_span(bytes, dim<2>(), dim<>(bytes.size() / 2));
+			multi_span<const byte, 2, dynamic_range> bytes2 = as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
 			strided_span<const byte, 2> sav2{ bytes2, bounds };
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
@@ -511,7 +511,7 @@ SUITE(strided_span_tests)
 			CHECK_THROW(sav2.as_strided_span<int>(), fail_fast);
 		}
 
-		// retype strided array with irregular strides - from span
+		// retype strided array with irregular strides - from multi_span
 		{
 			strided_bounds<1> bounds{ bytes.size() / 2, 2 };
 			strided_span<const byte, 1> sav2{ bytes, bounds };
@@ -522,7 +522,7 @@ SUITE(strided_span_tests)
 	TEST(empty_strided_spans)
 	{
 		{
-			span<int, 0> empty_av(nullptr);
+			multi_span<int, 0> empty_av(nullptr);
 			strided_span<int, 1> empty_sav{ empty_av, { 0, 1 } };
 
 			CHECK(empty_sav.bounds().index_bounds() == index<1>{ 0 });
@@ -553,7 +553,7 @@ SUITE(strided_span_tests)
 		}
 	}
 
-    void iterate_every_other_element(span<int, dynamic_range> av)
+    void iterate_every_other_element(multi_span<int, dynamic_range> av)
     {
         // pick every other element
 
@@ -586,13 +586,13 @@ SUITE(strided_span_tests)
 
         // static bounds
         {
-            span<int, 8> av(arr, 8);
+            multi_span<int, 8> av(arr, 8);
             iterate_every_other_element(av);
         }
 
         // dynamic bounds
         {
-            span<int, dynamic_range> av(arr, 8);
+            multi_span<int, dynamic_range> av(arr, 8);
             iterate_every_other_element(av);
         }
     }
@@ -606,13 +606,13 @@ SUITE(strided_span_tests)
             arr[2 * i + 1] = i;
         }
 
-        auto av = as_span(arr, 8);
+        auto av = as_multi_span(arr, 8);
         iterate_every_other_element(av);
 
         delete[] arr;
     }
 
-    void iterate_second_slice(span<int, dynamic_range, dynamic_range, dynamic_range> av)
+    void iterate_second_slice(multi_span<int, dynamic_range, dynamic_range, dynamic_range> av)
     {
         int expected[6] = {2,3,10,11,18,19};
         auto section = av.section({0,1,0}, {3,1,2});
@@ -653,7 +653,7 @@ SUITE(strided_span_tests)
         }
 
         {
-            span<int, 3, 4, 2> av = arr;
+            multi_span<int, 3, 4, 2> av = arr;
             iterate_second_slice(av);
         }
     }
@@ -670,22 +670,22 @@ SUITE(strided_span_tests)
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<3>(), dim<4>(), dim<2>());
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<3>(), dim<4>(), dim<2>());
             iterate_second_slice(av);
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<>(3), dim<4>(), dim<2>());
+            auto av = as_multi_span(as_multi_span(arr, 24), dim(3), dim<4>(), dim<2>());
             iterate_second_slice(av);
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<3>(), dim<>(4), dim<2>());
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<3>(), dim(4), dim<2>());
             iterate_second_slice(av);
         }
 
         {
-            auto av = as_span(as_span(arr, 24), dim<3>(), dim<4>(), dim<>(2));
+            auto av = as_multi_span(as_multi_span(arr, 24), dim<3>(), dim<4>(), dim(2));
             iterate_second_slice(av);
         }
         delete[] arr;
@@ -693,7 +693,7 @@ SUITE(strided_span_tests)
 
     TEST(strided_span_conversion)
     {
-        // get an span of 'c' values from the list of X's
+        // get an multi_span of 'c' values from the list of X's
 
         struct X { int a; int b; int c; };
 
@@ -704,7 +704,7 @@ SUITE(strided_span_tests)
         auto d1 = sizeof(int) * 12 / d2;
 
         // convert to 4x12 array of bytes
-        auto av = as_span(as_bytes(as_span(arr, 4)), dim<>(d1), dim<>(d2));
+        auto av = as_multi_span(as_bytes(as_multi_span(arr, 4)), dim(d1), dim(d2));
 
         CHECK(av.bounds().index_bounds()[0] == 4);
         CHECK(av.bounds().index_bounds()[1] == 12);
