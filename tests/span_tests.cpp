@@ -876,6 +876,19 @@ SUITE(span_tests)
             int a[] = { 1, 2, 3, 4 };
             span<int> s = a;
 
+            span<int>::iterator it = s.begin();
+            span<int>::iterator it2 = std::begin(s);
+            CHECK(it == it2);
+
+            it = s.end();
+            it2 = std::end(s);
+            CHECK(it == it2);
+        }
+
+        {
+            int a[] = { 1, 2, 3, 4 };
+            span<int> s = a;
+
             auto it = s.begin();
             auto first = it;
             CHECK(it == first);
@@ -916,6 +929,19 @@ SUITE(span_tests)
 
     TEST(cbegin_cend)
     {
+        {
+            int a[] = { 1, 2, 3, 4 };
+            span<int> s = a;
+
+            span<int>::const_iterator cit = s.cbegin();
+            span<int>::const_iterator cit2 = std::cbegin(s);
+            CHECK(cit == cit2);
+
+            cit = s.cend();
+            cit2 = std::cend(s);
+            CHECK(cit == cit2);
+        }
+
         {
             int a[] = {1, 2, 3, 4};
             span<int> s = a;
