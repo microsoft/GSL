@@ -831,7 +831,6 @@ SUITE(span_tests)
             span<int>::iterator it = s.begin();
             auto it2 = it + 1;
             span<int>::const_iterator cit = s.cbegin();
-            auto cit2 = s.cbegin();
 
             CHECK(it == cit);
             CHECK(cit == it);

@@ -1066,12 +1066,14 @@ struct dim_t<dynamic_range>
 };
 
 template <std::ptrdiff_t N>
-constexpr std::enable_if_t<(N >= 0),dim_t<N>> dim() noexcept {
+constexpr std::enable_if_t<(N >= 0), dim_t<N>> dim() noexcept
+{
     return dim_t<N>();
 }
 
 template <std::ptrdiff_t N = dynamic_range>
-constexpr std::enable_if_t<N == dynamic_range,dim_t<N>> dim(std::ptrdiff_t n) noexcept {
+constexpr std::enable_if_t<N == dynamic_range, dim_t<N>> dim(std::ptrdiff_t n) noexcept
+{
     return dim_t<>(n);
 }
 

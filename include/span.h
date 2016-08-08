@@ -171,14 +171,16 @@ namespace details
     {
     public:
         using iterator_category = std::random_access_iterator_tag;
-        using value_type = std::conditional_t<IsConst, std::add_const_t<typename Span::element_type>, typename Span::element_type>;
+        using value_type =
+            std::conditional_t<IsConst, std::add_const_t<typename Span::element_type>,
+                               typename Span::element_type>;
         using difference_type = typename Span::index_type;
 
         using pointer = std::add_pointer_t<value_type>;
         using reference = std::add_lvalue_reference_t<value_type>;
 
         constexpr span_iterator() : span_iterator(nullptr, 0) noexcept {}
-        
+
         constexpr span_iterator(const Span* span, typename Span::index_type index)
             : span_(span), index_(index)
         {
@@ -187,7 +189,9 @@ namespace details
 
         friend class span_iterator<Span, true>;
         constexpr span_iterator(const span_iterator<Span, false>& other) noexcept
-            : span_iterator(other.span_, other.index_) {}
+            : span_iterator(other.span_, other.index_)
+        {
+        }
 
         constexpr reference operator*() const
         {
@@ -248,10 +252,7 @@ namespace details
             return ret -= n;
         }
 
-        constexpr span_iterator& operator-=(difference_type n) noexcept
-        {
-            return *this += -n;
-        }
+        constexpr span_iterator& operator-=(difference_type n) noexcept { return *this += -n; }
 
         constexpr difference_type operator-(const span_iterator& rhs) const noexcept
         {
@@ -261,12 +262,14 @@ namespace details
 
         constexpr reference operator[](difference_type n) const noexcept { return *(*this + n); }
 
-        constexpr friend bool operator==(const span_iterator& lhs, const span_iterator& rhs) noexcept
+        constexpr friend bool operator==(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
             return lhs.span_ == rhs.span_ && lhs.index_ == rhs.index_;
         }
 
-        constexpr friend bool operator!=(const span_iterator& lhs, const span_iterator& rhs) noexcept
+        constexpr friend bool operator!=(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
             return !(lhs == rhs);
         }
@@ -277,7 +280,8 @@ namespace details
             return lhs.index_ < rhs.index_;
         }
 
-        constexpr friend bool operator<=(const span_iterator& lhs, const span_iterator& rhs) noexcept
+        constexpr friend bool operator<=(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
             return !(rhs < lhs);
         }
@@ -287,7 +291,8 @@ namespace details
             return rhs < lhs;
         }
 
-        constexpr friend bool operator>=(const span_iterator& lhs, const span_iterator& rhs) noexcept
+        constexpr friend bool operator>=(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
             return !(rhs > lhs);
         }
