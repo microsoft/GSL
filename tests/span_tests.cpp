@@ -787,18 +787,88 @@ SUITE(span_tests)
         }
     }
 
-    TEST(iterator)
+    TEST(iterator_default_init)
     {
         span<int>::iterator it1;
         span<int>::iterator it2;
         CHECK(it1 == it2);
     }
 
-    TEST(const_iterator)
+    TEST(const_iterator_default_init)
     {
         span<int>::const_iterator it1;
         span<int>::const_iterator it2;
         CHECK(it1 == it2);
+    }
+
+    TEST(iterator_conversions)
+    {
+        span<int>::iterator badIt;
+        span<int>::const_iterator badConstIt;
+        CHECK(badIt == badConstIt);
+
+        int a[] = { 1, 2, 3, 4 };
+        span<int> s = a;
+
+        auto it = s.begin();
+        auto cit = s.cbegin();
+
+        CHECK(it == cit);
+        CHECK(cit == it);
+
+        span<int>::const_iterator cit2 = it;
+        CHECK(cit2 == cit);
+
+        span<int>::const_iterator cit3 = it + 4;
+        CHECK(cit3 == s.cend());
+    }
+
+    TEST(iterator_comparisons)
+    {
+        int a[] = { 1, 2, 3, 4 };
+        {
+            span<int> s = a;
+            span<int>::iterator it = s.begin();
+            auto it2 = it + 1;
+            span<int>::const_iterator cit = s.cbegin();
+            auto cit2 = s.cbegin();
+
+            CHECK(it == cit);
+            CHECK(cit == it);
+            CHECK(it == it);
+            CHECK(cit == cit);
+            CHECK(cit == s.begin());
+            CHECK(s.begin() == cit);
+            CHECK(s.cbegin() == cit);
+            CHECK(it == s.begin());
+            CHECK(s.begin() == it);
+
+            CHECK(it != it2);
+            CHECK(it2 != it);
+            CHECK(it != s.end());
+            CHECK(it2 != s.end());
+            CHECK(s.end() != it);
+            CHECK(it2 != cit);
+            CHECK(cit != it2);
+
+            CHECK(it < it2);
+            CHECK(it <= it2);
+            CHECK(it2 <= s.end());
+            CHECK(it < s.end());
+            CHECK(it <= cit);
+            CHECK(cit <= it);
+            CHECK(cit < it2);
+            CHECK(cit <= it2);
+            CHECK(cit < s.end());
+            CHECK(cit <= s.end());
+
+            CHECK(it2 > it);
+            CHECK(it2 >= it);
+            CHECK(s.end() > it2);
+            CHECK(s.end() >= it2);
+            CHECK(it2 > cit);
+            CHECK(it2 >= cit);
+        }
     }
 
     TEST(begin_end)
@@ -867,25 +937,21 @@ SUITE(span_tests)
             ++it;
             CHECK(it - first == 1);
             CHECK(*it == 2);
-            *it = 22;
-            CHECK(*it == 22);
             CHECK(beyond - it == 3);
 
+            int last = 0;
             it = first;
             CHECK(it == first);
             while (it != s.cend())
             {
-                *it = 5;
+                CHECK(*it == last + 1);
+
+                last = *it;
                 ++it;
             }
 
             CHECK(it == beyond);
             CHECK(it - beyond == 0);
-
-            for (auto& n : s)
-            {
-                CHECK(n == 5);
-            }
         }
     }
 
@@ -955,25 +1021,21 @@ SUITE(span_tests)
             ++it;
             CHECK(it - first == 1);
             CHECK(*it == 3);
-            *it = 22;
-            CHECK(*it == 22);
             CHECK(beyond - it == 3);
 
             it = first;
             CHECK(it == first);
+            int last = 5;
             while (it != s.crend())
             {
-                *it = 5;
+                CHECK(*it == last - 1);
+                last = *it;
+
                 ++it;
             }
 
             CHECK(it == beyond);
             CHECK(it - beyond == 0);
-
-            for (auto& n : s)
-            {
-                CHECK(n == 5);
-            }
         }
     }
 
