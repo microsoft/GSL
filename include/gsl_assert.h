@@ -22,6 +22,18 @@
 #include <exception>
 #include <stdexcept>
 
+#ifdef _MSC_VER
+
+// MSVC 2013 workarounds
+#if _MSC_VER <= 1800
+// noexcept is not understood
+#pragma push_macro("noexcept")
+#define noexcept
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
+
 //
 // There are three configuration options for this GSL implementation's behavior
 // when pre/post conditions on the GSL types are violated:
@@ -44,21 +56,33 @@
 
 namespace gsl
 {
-struct fail_fast : public std::runtime_error
+struct fail_fast
 {
-    explicit fail_fast(char const* const message) : std::runtime_error(message) {}
+    virtual char const* what() const noexcept = 0;
 };
+
+namespace details
+{
+    template<typename E>
+    struct contract_violation : public E, public fail_fast
+    {
+        explicit contract_violation(char const* const message) : E(message) {}
+        virtual char const* what() const noexcept override
+        {
+            return E::what();
+        }
+    };
+}
 }
 
 #if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
 #define Expects(cond)                                                                              \
     if (!(cond))                                                                                   \
-        throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
+        throw gsl::details::contract_violation<std::logic_error>("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
 #define Ensures(cond)                                                                              \
     if (!(cond))                                                                                   \
-        throw gsl::fail_fast("GSL: Postcondition failure at " __FILE__                             \
-                             ": " GSL_STRINGIFY(__LINE__));
+        throw gsl::details::contract_violation<std::runtime_error>("GSL: Postcondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
@@ -73,5 +97,17 @@ struct fail_fast : public std::runtime_error
 #define Ensures(cond)
 
 #endif
+
+#ifdef _MSC_VER
+
+#if _MSC_VER <= 1800
+
+#undef noexcept
+#pragma pop_macro("noexcept")
+
+#endif // _MSC_VER <= 1800
+
+#endif // _MSC_VER
+
 
 #endif // GSL_CONTRACTS_H

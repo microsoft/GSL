@@ -31,6 +31,19 @@ SUITE(assertion_tests)
     {
         CHECK(f(2) == 2);
         CHECK_THROW(f(10), fail_fast);
+        try { f(10); }
+        catch (fail_fast const& e) {
+            cstring_span<> prefix = ensure_z("GSL: Precondition failure");
+            cstring_span<> what = ensure_z(e.what()).first(prefix.length());
+            CHECK(prefix == what);
+        }
+        CHECK_THROW(f(10), std::logic_error);
+        try { f(10); }
+        catch (std::logic_error const& e) {
+            cstring_span<> prefix = ensure_z("GSL: Precondition failure");
+            cstring_span<> what = ensure_z(e.what()).first(prefix.length());
+            CHECK(prefix == what);
+        }
     }
 
     int g(int i)
@@ -44,7 +57,20 @@ SUITE(assertion_tests)
     {
         CHECK(g(2) == 3);
         CHECK_THROW(g(9), fail_fast);
-    }
+        try { g(9); }
+        catch (fail_fast const& e) {
+            cstring_span<> prefix = ensure_z("GSL: Postcondition failure");
+            cstring_span<> what = ensure_z(e.what()).first(prefix.length());
+            CHECK(prefix == what);
+        }
+        CHECK_THROW(g(9), std::runtime_error);
+        try { g(9); }
+        catch (std::runtime_error const& e) {
+            cstring_span<> prefix = ensure_z("GSL: Postcondition failure");
+            cstring_span<> what = ensure_z(e.what()).first(prefix.length());
+            CHECK(prefix == what);
+        }
+   }
 }
 
 int main(int, const char *[])
