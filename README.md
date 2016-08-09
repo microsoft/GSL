@@ -9,7 +9,7 @@ The library includes types like `span<T>`, `string_span`, `owner<>` and others.
 The entire implementation is provided inline in the headers under the [gsl](./gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2013 and 2015.
 
 While some types have been broken out into their own headers (e.g. [gsl/span.h](./gsl/span.h)),
-it is simplest to just include [gsl/gsl.h](./gsl/gsl.h) and gain access to the entire library.
+it is simplest to just include [gsl.h](./gsl/gsl.h) and gain access to the entire library.
 
 > NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to
 other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information about contributing.
