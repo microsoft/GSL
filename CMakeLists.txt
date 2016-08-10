@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 2.8.7)
 project(GSL CXX)
 
 set(GSL_HEADERS
-    "gsl/gsl.h"
-    "gsl/gsl_assert.h"
-    "gsl/span.h"
-    "gsl/string_span.h"
+    "gsl/gsl"
+    "gsl/gsl_assert"
+    "gsl/span"
+    "gsl/string_span"
 )
 
 include_directories(

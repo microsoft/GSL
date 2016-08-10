@@ -16,7 +16,7 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <cstdlib>
-#include <gsl/string_span.h>
+#include <gsl/string_span>
 #include <vector>
 #include <map>
 

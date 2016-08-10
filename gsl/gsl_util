@@ -19,7 +19,7 @@
 #ifndef GSL_UTIL_H
 #define GSL_UTIL_H
 
-#include "gsl_assert.h" // Ensures/Expects
+#include "gsl_assert" // Ensures/Expects
 #include <array>
 #include <exception>
 #include <type_traits>

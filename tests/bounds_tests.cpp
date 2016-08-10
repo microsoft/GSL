@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <gsl/multi_span.h>
+#include <gsl/multi_span>
 #include <vector>
 
 using namespace std;

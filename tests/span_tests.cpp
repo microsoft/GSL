@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
-#include <gsl/span.h>
+#include <gsl/span>
 
 #include <iostream>
 #include <list>
