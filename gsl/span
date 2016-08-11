@@ -20,9 +20,9 @@
 #ifndef GSL_SPAN_H
 #define GSL_SPAN_H
 
-#include "gsl_assert.h"
-#include "gsl_byte.h"
-#include "gsl_util.h"
+#include "gsl_assert"
+#include "gsl_byte"
+#include "gsl_util"
 #include <array>
 #include <iterator>
 #include <limits>
@@ -681,10 +681,13 @@ as_writeable_bytes(span<ElementType, Extent> s) noexcept
 #undef noexcept
 
 #ifdef _MSC_VER
-#pragma warning(pop)
 #pragma pop_macro("noexcept")
 #endif
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif // GSL_SPAN_H

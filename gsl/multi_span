@@ -19,9 +19,9 @@
 #ifndef GSL_MULTI_SPAN_H
 #define GSL_MULTI_SPAN_H
 
-#include "gsl_assert.h"
-#include "gsl_byte.h"
-#include "gsl_util.h"
+#include "gsl_assert"
+#include "gsl_byte"
+#include "gsl_util"
 #include <algorithm>
 #include <array>
 #include <cassert>

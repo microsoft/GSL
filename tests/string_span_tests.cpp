@@ -16,8 +16,9 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <cstdlib>
-#include <string_span.h>
+#include <gsl/string_span>
 #include <vector>
+#include <map>
 
 using namespace std;
 using namespace gsl;
@@ -942,7 +943,13 @@ SUITE(string_span_tests)
                 CHECK(*(str + 3) == L'\0');
             }
         }
+    }
 
+    TEST(Issue305)
+    {
+        std::map<gsl::cstring_span<>, int> foo = { { "foo", 0 },{ "bar", 1 } };
+        CHECK(foo["foo"] == 0);
+        CHECK(foo["bar"] == 1);
     }
 }
 
