@@ -23,6 +23,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <regex>
 
 using namespace std;
 using namespace gsl;
@@ -1329,6 +1330,29 @@ SUITE(span_tests)
             static_cast<void>(s4);            
         };
         CHECK_THROW(f(), fail_fast);
+    }
+
+    TEST(interop_with_std_regex)
+    {
+        char lat[] = { '1', '2', '3', '4', '5', '6', 'E', 'F', 'G' };
+        span<char> s = lat;
+        auto f_it = s.begin() + 7;
+
+        std::match_results<span<char>::iterator> match;
+
+        std::regex_match(s.begin(), s.end(), match, std::regex(".*"));
+        CHECK(match.ready());
+        CHECK(!match.empty());
+        CHECK(match[0].matched);
+        CHECK(match[0].first == s.begin());
+        CHECK(match[0].second == s.end());
+
+        std::regex_search(s.begin(), s.end(), match, std::regex("F"));
+        CHECK(match.ready());
+        CHECK(!match.empty());
+        CHECK(match[0].matched);
+        CHECK(match[0].first == f_it);
+        CHECK(match[0].second == (f_it + 1));
     }
 }
 
