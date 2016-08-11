@@ -166,157 +166,31 @@ namespace details
     {
     };
 
-    template <class Span>
-    class const_span_iterator
-    {
-    public:
-        using iterator_category = std::random_access_iterator_tag;
-        using value_type = typename Span::element_type;
-        using difference_type = std::ptrdiff_t;
-
-        using const_pointer = std::add_const_t<value_type*>;
-        using pointer = const_pointer;
-
-        using const_reference = std::add_const_t<value_type&>;
-        using reference = const_reference;
-
-        constexpr const_span_iterator() : const_span_iterator(nullptr, 0) {}
-        constexpr const_span_iterator(const Span* span, typename Span::index_type index)
-            : span_(span), index_(index)
-        {
-            Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
-        }
-
-        constexpr reference operator*() const
-        {
-            Expects(span_);
-            return (*span_)[index_];
-        }
-
-        constexpr pointer operator->() const
-        {
-            Expects(span_);
-            return &((*span_)[index_]);
-        }
-
-        constexpr const_span_iterator& operator++() noexcept
-        {
-            Expects(span_ && index_ >= 0 && index_ < span_->length());
-            ++index_;
-            return *this;
-        }
-
-        constexpr const_span_iterator operator++(int) noexcept
-        {
-            auto ret = *this;
-            ++(*this);
-            return ret;
-        }
-
-        constexpr const_span_iterator& operator--() noexcept
-        {
-            Expects(span_ && index_ > 0 && index_ <= span_->length());
-            --index_;
-            return *this;
-        }
-
-        constexpr const_span_iterator operator--(int) noexcept
-        {
-            auto ret = *this;
-            --(*this);
-            return ret;
-        }
-
-        constexpr const_span_iterator operator+(difference_type n) const noexcept
-        {
-            auto ret = *this;
-            return ret += n;
-        }
-
-        constexpr const_span_iterator& operator+=(difference_type n) noexcept
-        {
-            Expects(span_ && (index_ + n) >= 0 && (index_ + n) <= span_->length());
-            index_ += n;
-            return *this;
-        }
-
-        constexpr const_span_iterator operator-(difference_type n) const noexcept
-        {
-            auto ret = *this;
-            return ret -= n;
-        }
-
-        constexpr const_span_iterator& operator-=(difference_type n) noexcept
-        {
-            return *this += -n;
-        }
-
-        constexpr difference_type operator-(const const_span_iterator& rhs) const noexcept
-        {
-            Expects(span_ == rhs.span_);
-            return index_ - rhs.index_;
-        }
-
-        constexpr reference operator[](difference_type n) const noexcept { return *(*this + n); }
-
-        constexpr bool operator==(const const_span_iterator& rhs) const noexcept
-        {
-            return span_ == rhs.span_ && index_ == rhs.index_;
-        }
-
-        constexpr bool operator!=(const const_span_iterator& rhs) const noexcept
-        {
-            return !(*this == rhs);
-        }
-
-        constexpr bool operator<(const const_span_iterator& rhs) const noexcept
-        {
-            Expects(span_ == rhs.span_);
-            return index_ < rhs.index_;
-        }
-
-        constexpr bool operator<=(const const_span_iterator& rhs) const noexcept
-        {
-            return !(rhs < *this);
-        }
-
-        constexpr bool operator>(const const_span_iterator& rhs) const noexcept
-        {
-            return rhs < *this;
-        }
-
-        constexpr bool operator>=(const const_span_iterator& rhs) const noexcept
-        {
-            return !(rhs > *this);
-        }
-
-        void swap(const_span_iterator& rhs) noexcept
-        {
-            std::swap(index_, rhs.index_);
-            std::swap(span_, rhs.span_);
-        }
-
-    private:
-        const Span* span_;
-        std::ptrdiff_t index_;
-    };
-
-    template <class Span>
+    template <class Span, bool IsConst>
     class span_iterator
     {
     public:
         using iterator_category = std::random_access_iterator_tag;
-        using value_type = typename Span::element_type;
-        using difference_type = std::ptrdiff_t;
+        using value_type =
+            std::conditional_t<IsConst, std::add_const_t<typename Span::element_type>,
+                               typename Span::element_type>;
+        using difference_type = typename Span::index_type;
 
-        using pointer = value_type*;
-        using reference = value_type&;
+        using pointer = std::add_pointer_t<value_type>;
+        using reference = std::add_lvalue_reference_t<value_type>;
 
-        constexpr span_iterator() : span_iterator(nullptr, 0) {}
+        constexpr span_iterator() : span_iterator(nullptr, 0) noexcept {}
+
         constexpr span_iterator(const Span* span, typename Span::index_type index)
             : span_(span), index_(index)
         {
             Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
+        }
+
+        friend class span_iterator<Span, true>;
+        constexpr span_iterator(const span_iterator<Span, false>& other) noexcept
+            : span_iterator(other.span_, other.index_)
+        {
         }
 
         constexpr reference operator*() const
@@ -388,32 +262,39 @@ namespace details
 
         constexpr reference operator[](difference_type n) const noexcept { return *(*this + n); }
 
-        constexpr bool operator==(const span_iterator& rhs) const noexcept
+        constexpr friend bool operator==(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
-            return span_ == rhs.span_ && index_ == rhs.index_;
+            return lhs.span_ == rhs.span_ && lhs.index_ == rhs.index_;
         }
 
-        constexpr bool operator!=(const span_iterator& rhs) const noexcept
+        constexpr friend bool operator!=(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
-            return !(*this == rhs);
+            return !(lhs == rhs);
         }
 
-        constexpr bool operator<(const span_iterator& rhs) const noexcept
+        constexpr friend bool operator<(const span_iterator& lhs, const span_iterator& rhs) noexcept
         {
-            Expects(span_ == rhs.span_);
-            return index_ < rhs.index_;
+            Expects(lhs.span_ == rhs.span_);
+            return lhs.index_ < rhs.index_;
         }
 
-        constexpr bool operator<=(const span_iterator& rhs) const noexcept
+        constexpr friend bool operator<=(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
         {
-            return !(rhs < *this);
+            return !(rhs < lhs);
         }
 
-        constexpr bool operator>(const span_iterator& rhs) const noexcept { return rhs < *this; }
-
-        constexpr bool operator>=(const span_iterator& rhs) const noexcept
+        constexpr friend bool operator>(const span_iterator& lhs, const span_iterator& rhs) noexcept
         {
-            return !(rhs > *this);
+            return rhs < lhs;
+        }
+
+        constexpr friend bool operator>=(const span_iterator& lhs,
+                                         const span_iterator& rhs) noexcept
+        {
+            return !(rhs > lhs);
         }
 
         void swap(span_iterator& rhs) noexcept
@@ -422,37 +303,23 @@ namespace details
             std::swap(span_, rhs.span_);
         }
 
-    private:
+    protected:
         const Span* span_;
         std::ptrdiff_t index_;
     };
 
-    template <typename Span>
-    constexpr const_span_iterator<Span>
-    operator+(typename const_span_iterator<Span>::difference_type n,
-              const const_span_iterator<Span>& rhs) noexcept
+    template <class Span, bool IsConst>
+    constexpr span_iterator<Span, IsConst>
+    operator+(typename span_iterator<Span, IsConst>::difference_type n,
+              const span_iterator<Span, IsConst>& rhs) noexcept
     {
         return rhs + n;
     }
 
-    template <typename Span>
-    constexpr const_span_iterator<Span>
-    operator-(typename const_span_iterator<Span>::difference_type n,
-              const const_span_iterator<Span>& rhs) noexcept
-    {
-        return rhs - n;
-    }
-
-    template <typename Span>
-    constexpr span_iterator<Span> operator+(typename span_iterator<Span>::difference_type n,
-                                            const span_iterator<Span>& rhs) noexcept
-    {
-        return rhs + n;
-    }
-
-    template <typename Span>
-    constexpr span_iterator<Span> operator-(typename span_iterator<Span>::difference_type n,
-                                            const span_iterator<Span>& rhs) noexcept
+    template <class Span, bool IsConst>
+    constexpr span_iterator<Span, IsConst>
+    operator-(typename span_iterator<Span, IsConst>::difference_type n,
+              const span_iterator<Span, IsConst>& rhs) noexcept
     {
         return rhs - n;
     }
@@ -511,8 +378,8 @@ public:
     using pointer = element_type*;
     using reference = element_type&;
 
-    using iterator = details::span_iterator<span<ElementType, Extent>>;
-    using const_iterator = details::const_span_iterator<span<ElementType, Extent>>;
+    using iterator = details::span_iterator<span<ElementType, Extent>, false>;
+    using const_iterator = details::span_iterator<span<ElementType, Extent>, true>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
