@@ -179,7 +179,7 @@ namespace details
         using pointer = std::add_pointer_t<value_type>;
         using reference = std::add_lvalue_reference_t<value_type>;
 
-        constexpr span_iterator() : span_iterator(nullptr, 0) noexcept {}
+        constexpr span_iterator() noexcept : span_iterator(nullptr, 0) {}
 
         constexpr span_iterator(const Span* span, typename Span::index_type index)
             : span_(span), index_(index)
