@@ -1354,6 +1354,13 @@ SUITE(span_tests)
         CHECK(match[0].first == f_it);
         CHECK(match[0].second == (f_it + 1));
     }
+
+    TEST(interop_with_gsl_at)
+    {
+        int arr[5] = {1, 2, 3, 4, 5};
+        span<int> s{arr};
+        CHECK(at(s,0) == 1 && at(s,1) == 2);
+    }
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
