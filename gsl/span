@@ -653,6 +653,14 @@ as_writeable_bytes(span<ElementType, Extent> s) noexcept
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
+// Specialization of gsl::at for span
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr ElementType& at(const span<ElementType ,Extent>& s, size_t index)
+{
+    // No bounds checking here because it is done in span::operator[] called below
+    return s[index];
+}
+
 } // namespace gsl
 
 #ifdef _MSC_VER
