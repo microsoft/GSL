@@ -5,6 +5,9 @@ project(GSL CXX)
 set(GSL_HEADERS
     "gsl/gsl"
     "gsl/gsl_assert"
+    "gsl/gsl_byte"
+    "gsl/gsl_util"
+    "gsl/multi_span"
     "gsl/span"
     "gsl/string_span"
 )
