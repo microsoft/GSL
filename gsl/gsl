@@ -30,13 +30,13 @@
 
 // No MSVC does constexpr fully yet
 #pragma push_macro("constexpr")
-#define constexpr
+#define constexpr /*constexpr*/
 
 // MSVC 2013 workarounds
 #if _MSC_VER <= 1800
 // noexcept is not understood
 #pragma push_macro("noexcept")
-#define noexcept
+#define noexcept /*noexcept*/
 
 // turn off some misguided warnings
 #pragma warning(push)

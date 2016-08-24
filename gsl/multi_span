@@ -44,7 +44,7 @@
 
 // No MSVC does constexpr fully yet
 #pragma push_macro("constexpr")
-#define constexpr
+#define constexpr /*constexpr*/
 
 // VS 2013 workarounds
 #if _MSC_VER <= 1800
@@ -55,7 +55,7 @@
 // noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
-#define noexcept /* nothing */
+#define noexcept /*noexcept*/
 #endif
 
 // turn off some misguided warnings
@@ -73,7 +73,7 @@
 #pragma push_macro("noexcept")
 #endif
 
-#define noexcept /* nothing */
+#define noexcept /*noexcept*/
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
