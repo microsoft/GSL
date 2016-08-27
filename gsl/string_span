@@ -30,7 +30,7 @@
 
 // No MSVC does constexpr fully yet
 #pragma push_macro("constexpr")
-#define constexpr /* nothing */
+#define constexpr /*constexpr*/
 
 #pragma warning(push)
 
@@ -50,7 +50,7 @@
 // noexcept is not understood
 #ifndef GSL_THROW_ON_CONTRACT_VIOLATION
 #pragma push_macro("noexcept")
-#define noexcept /* nothing */
+#define noexcept /*noexcept*/
 #endif
 
 #endif // _MSC_VER <= 1800
@@ -67,7 +67,7 @@
 #pragma push_macro("noexcept")
 #endif
 
-#define noexcept /* nothing */
+#define noexcept /*noexcept*/
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 

@@ -26,11 +26,11 @@
 
 // constexpr is not understood
 #pragma push_macro("constexpr")
-#define constexpr
+#define constexpr /*constexpr*/
 
 // noexcept is not understood
 #pragma push_macro("noexcept")
-#define noexcept
+#define noexcept /*noexcept*/
 
 #endif // _MSC_VER <= 1800
 
