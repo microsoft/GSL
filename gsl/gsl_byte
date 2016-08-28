@@ -106,6 +106,12 @@ constexpr IntegerType to_integer(byte b) noexcept
     return {b};
 }
 
+constexpr byte to_byte(unsigned char i) noexcept
+{
+    return static_cast<byte>(i);
+}
+
+
 } // namespace gsl
 
 #ifdef _MSC_VER
