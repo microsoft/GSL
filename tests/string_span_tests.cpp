@@ -114,6 +114,18 @@ SUITE(string_span_tests)
         CHECK(s2.length() == 5);
     }
 
+    TEST(TestToBasicString)
+    {
+        auto s = gsl::to_basic_string<char,std::char_traits<char>,::std::allocator<char>>(cstring_span<>{});
+        CHECK(s.length() == 0);
+
+        char stack_string[] = "Hello";
+        cstring_span<> v = ensure_z(stack_string);
+        auto s2 = gsl::to_basic_string<char,std::char_traits<char>,::std::allocator<char>>(v);
+        CHECK(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
+        CHECK(s2.length() == 5);
+    }
+    
     TEST(EqualityAndImplicitConstructors)
     {
         {
