@@ -22,8 +22,10 @@
 #include <exception>
 #include <stdexcept>
 
+#if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 #if defined(GSL_MESSAGE_ON_CONTRACT_VIOLATION)
 #include <iostream>
+#endif
 #endif
 
 //
