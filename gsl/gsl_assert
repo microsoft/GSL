@@ -22,6 +22,10 @@
 #include <exception>
 #include <stdexcept>
 
+#if defined(GSL_MESSAGE_ON_CONTRACT_VIOLATION)
+#include <iostream>
+#endif
+
 //
 // There are three configuration options for this GSL implementation's behavior
 // when pre/post conditions on the GSL types are violated:
@@ -29,6 +33,10 @@
 // 1. GSL_TERMINATE_ON_CONTRACT_VIOLATION: std::terminate will be called (default)
 // 2. GSL_THROW_ON_CONTRACT_VIOLATION: a gsl::fail_fast exception will be thrown
 // 3. GSL_UNENFORCED_ON_CONTRACT_VIOLATION: nothing happens
+//
+// If GSL_TERMINATE_ON_CONTRACT_VIOLATION is defined, then
+// GSL_MESSAGE_ON_CONTRACT_VIOLATION may be defined as well for a message
+// printout with the relevant filename and line number.
 //
 #if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) ^ defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION) ^    \
       defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION))
@@ -62,10 +70,25 @@ struct fail_fast : public std::runtime_error
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
+#if defined(GSL_MESSAGE_ON_CONTRACT_VIOLATION)
+#define Expects(cond)                                                                              \
+    if (!(cond)) {                                                                                 \
+        std::cerr << "GSL: Precondition failure at "                                               \
+                     __FILE__ ": " GSL_STRINGIFY(__LINE__) "\n";                                   \
+        std::terminate();                                                                          \
+    }
+#define Ensures(cond)                                                                              \
+    if (!(cond)) {                                                                                 \
+        std::cerr << "GSL: Postcondition failure at "                                              \
+                     __FILE__ ": " GSL_STRINGIFY(__LINE__) "\n";                                   \
+        std::terminate();                                                                          \
+    }
+#else
 #define Expects(cond)                                                                              \
     if (!(cond)) std::terminate();
 #define Ensures(cond)                                                                              \
     if (!(cond)) std::terminate();
+#endif
 
 #elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
 
