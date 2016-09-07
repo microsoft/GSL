@@ -486,6 +486,16 @@ inline std::wstring to_string(wstring_span<> view)
 
 #endif
 
+template <typename CharT,
+	  typename Traits = typename std::char_traits<CharT>,
+	  typename Allocator = std::allocator<CharT>,
+	  typename gCharT,
+	  std::ptrdiff_t Extent>
+std::basic_string<CharT, Traits, Allocator> to_basic_string(basic_string_span<gCharT, Extent> view)
+{
+  return {view.data(), static_cast<size_t>(view.length())};
+}
+  
 // zero-terminated string span, used to convert
 // zero-terminated spans to legacy strings
 template <typename CharT, std::ptrdiff_t Extent = dynamic_extent>

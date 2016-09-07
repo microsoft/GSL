@@ -75,7 +75,7 @@ constexpr byte& operator|=(byte& l, byte r) noexcept
 
 constexpr byte operator|(byte l, byte r) noexcept
 {
-    return byte(static_cast<unsigned char>(l) + static_cast<unsigned char>(r));
+    return byte(static_cast<unsigned char>(l) | static_cast<unsigned char>(r));
 }
 
 constexpr byte& operator&=(byte& l, byte r) noexcept
