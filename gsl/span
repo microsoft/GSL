@@ -123,23 +123,6 @@ namespace details
     {
     };
 
-    template <class From, class To>
-    struct is_allowed_pointer_conversion
-        : public std::integral_constant<bool, std::is_pointer<From>::value &&
-                                                  std::is_pointer<To>::value &&
-                                                  std::is_convertible<From, To>::value>
-    {
-    };
-
-    template <class From, class To>
-    struct is_allowed_integral_conversion
-        : public std::integral_constant<
-              bool, std::is_integral<From>::value && std::is_integral<To>::value &&
-                        sizeof(From) == sizeof(To) && alignof(From) == alignof(To) &&
-                        std::is_convertible<From, To>::value>
-    {
-    };
-
     template <std::ptrdiff_t From, std::ptrdiff_t To>
     struct is_allowed_extent_conversion
         : public std::integral_constant<bool, From == To || From == gsl::dynamic_extent ||
@@ -150,19 +133,7 @@ namespace details
     template <class From, class To>
     struct is_allowed_element_type_conversion
         : public std::integral_constant<bool, std::is_same<From, std::remove_cv_t<To>>::value ||
-                                                  is_allowed_pointer_conversion<From, To>::value ||
-                                                  is_allowed_integral_conversion<From, To>::value>
-    {
-    };
-
-    template <class From>
-    struct is_allowed_element_type_conversion<From, byte>
-        : public std::integral_constant<bool, !std::is_const<From>::value>
-    {
-    };
-
-    template <class From>
-    struct is_allowed_element_type_conversion<From, const byte> : public std::true_type
+                                              std::is_convertible<From(*)[], To(*)[]>::value>
     {
     };
 
