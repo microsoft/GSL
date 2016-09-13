@@ -43,6 +43,16 @@ SUITE(byte_tests)
             byte b = byte(12);
             CHECK(static_cast<unsigned char>(b) == 12);
         }
+        
+        {
+            byte b = to_byte<12>();
+            CHECK(static_cast<unsigned char>(b) == 12);
+        }
+        {
+            unsigned char uc = 12;
+            byte b = to_byte(uc);
+            CHECK(static_cast<unsigned char>(b) == 12);
+        }
 
         // waiting for C++17 enum class direct initializer support
         //{
@@ -53,38 +63,38 @@ SUITE(byte_tests)
 
     TEST(bitwise_operations)
     {
-        byte b = byte(0xFF);
+        byte b = to_byte<0xFF>();
 
-        byte a = byte(0x00);
-        CHECK((b | a) == byte(0xFF));
-        CHECK(a == byte(0x00));
+        byte a = to_byte<0x00>();
+        CHECK((b | a) == to_byte<0xFF>());
+        CHECK(a == to_byte<0x00>());
 
         a |= b;
-        CHECK(a == byte(0xFF));
+        CHECK(a == to_byte<0xFF>());
 
-        a = byte(0x01);
-        CHECK((b & a) == byte(0x01));
+        a = to_byte<0x01>();
+        CHECK((b & a) == to_byte<0x01>());
 
         a &= b;
-        CHECK(a == byte(0x01));
+        CHECK(a == to_byte<0x01>());
 
-        CHECK((b ^ a) == byte(0xFE));
+        CHECK((b ^ a) == to_byte<0xFE>());
         
-        CHECK(a == byte(0x01));
+        CHECK(a == to_byte<0x01>());
         a ^= b;
-        CHECK(a == byte(0xFE));
+        CHECK(a == to_byte<0xFE>());
 
-        a = byte(0x01);
-        CHECK(~a == byte(0xFE));
+        a = to_byte<0x01>();
+        CHECK(~a == to_byte<0xFE>());
 
-        a = byte(0xFF);
-        CHECK((a << 4) == byte(0xF0));
-        CHECK((a >> 4) == byte(0x0F));
+        a = to_byte<0xFF>();
+        CHECK((a << 4) == to_byte<0xF0>());
+        CHECK((a >> 4) == to_byte<0x0F>());
 
         a <<= 4;
-        CHECK(a == byte(0xF0));
+        CHECK(a == to_byte<0xF0>());
         a >>= 4;
-        CHECK(a == byte(0x0F));
+        CHECK(a == to_byte<0x0F>());
     }
 }
 
