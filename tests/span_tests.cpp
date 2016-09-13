@@ -423,6 +423,7 @@ SUITE(span_tests)
             span<const int, 4> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         }
+
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
             span<const int, 2> s{arr};
@@ -437,6 +438,7 @@ SUITE(span_tests)
         {
             span<const int, 5> s{arr};
         }
+#endif
 
         {
             auto get_an_array = []() -> const std::array<int, 4> { return {1, 2, 3, 4}; };
@@ -444,7 +446,6 @@ SUITE(span_tests)
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
-#endif
     }
 
     TEST(from_std_array_const_constructor)
@@ -460,6 +461,7 @@ SUITE(span_tests)
             span<const int, 4> s{arr};
             CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
         }
+
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
             span<const int, 2> s{arr};
@@ -509,7 +511,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             span<char> s{cstr};
-#endif
+#endif                                                          
             span<const char> cs{cstr};
             CHECK(cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
                   cs.data() == cstr.data());
@@ -520,7 +522,7 @@ SUITE(span_tests)
             auto get_temp_vector = []() -> std::vector<int> { return {}; };
             auto use_span = [](span<int> s) { static_cast<void>(s); };
             use_span(get_temp_vector());
-#endif
+#endif                      
         }
 
         {
@@ -534,7 +536,7 @@ SUITE(span_tests)
             auto get_temp_string = []() -> std::string { return{}; };
             auto use_span = [](span<char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
-#endif
+#endif                         
         }
 
         {
@@ -552,11 +554,9 @@ SUITE(span_tests)
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             auto get_temp_string = []() -> const std::string { return {}; };
             auto use_span = [](span<const char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
-#endif
         }
 
         {
@@ -583,6 +583,7 @@ SUITE(span_tests)
 #endif
         }
 
+#ifdef CONFIRM_COMPILATION_ERRORS
         {
             span<int> s;
             span<unsigned int> s2 = s;
@@ -596,12 +597,11 @@ SUITE(span_tests)
         }
 
         {
-#ifdef CONFIRM_COMPILATION_ERRORS
             span<int> s;
             span<short> s2 = s;
             static_cast<void>(s2);
-#endif
         }
+#endif
     }
 
     TEST(copy_move_and_assignment)
@@ -689,7 +689,7 @@ SUITE(span_tests)
             span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
             CHECK(av.last<6>().length() == 6);
-#endif
+#endif    
             CHECK_THROW(av.last(6).length(), fail_fast);
         }
 
