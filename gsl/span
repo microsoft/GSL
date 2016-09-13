@@ -420,7 +420,7 @@ public:
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(const span<OtherElementType, OtherExtent>& other)
-        : storage_(reinterpret_cast<pointer>(other.data()),
+        : storage_(static_cast<pointer>(other.data()),
                    details::extent_type<OtherExtent>(other.size()))
     {
     }
@@ -431,7 +431,7 @@ public:
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(span<OtherElementType, OtherExtent>&& other)
-        : storage_(reinterpret_cast<pointer>(other.data()),
+        : storage_(static_cast<pointer>(other.data()),
                    details::extent_type<OtherExtent>(other.size()))
     {
     }
