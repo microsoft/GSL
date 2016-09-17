@@ -96,6 +96,24 @@ SUITE(byte_tests)
         a >>= 4;
         CHECK(a == to_byte<0x0F>());
     }
+
+    TEST(to_integer)
+    {
+        byte b = to_byte<0x12>();
+
+        CHECK(0x12 == gsl::to_integer<char>(b));
+        CHECK(0x12 == gsl::to_integer<short>(b));
+        CHECK(0x12 == gsl::to_integer<long>(b));
+        CHECK(0x12 == gsl::to_integer<long long>(b));
+
+        CHECK(0x12 == gsl::to_integer<unsigned char>(b));
+        CHECK(0x12 == gsl::to_integer<unsigned short>(b));
+        CHECK(0x12 == gsl::to_integer<unsigned long>(b));
+        CHECK(0x12 == gsl::to_integer<unsigned long long>(b));
+
+//      CHECK(0x12 == gsl::to_integer<float>(b));   // expect compile-time error
+//      CHECK(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
+    }
 }
 
 }
