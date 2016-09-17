@@ -959,8 +959,8 @@ SUITE(multi_span_tests)
         }
 
         {
-            auto s1 = nullptr;
-            auto s2 = nullptr;
+            multi_span<int> s1 = nullptr;
+            multi_span<int> s2 = nullptr;
             CHECK(s1 == s2);
             CHECK(!(s1 != s2));
             CHECK(!(s1 < s2));
