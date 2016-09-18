@@ -43,7 +43,7 @@ SUITE(byte_tests)
             byte b = byte(12);
             CHECK(static_cast<unsigned char>(b) == 12);
         }
-        
+
         {
             byte b = to_byte<12>();
             CHECK(static_cast<unsigned char>(b) == 12);
@@ -59,6 +59,20 @@ SUITE(byte_tests)
         //    byte b { 14 };
         //    CHECK(static_cast<unsigned char>(b) == 14);
         //}
+    }
+
+    int modify_both(gsl::byte * b, int* i)
+    {
+        *i = 10;
+        *b = to_byte<5>();
+        return *i;
+    }
+
+    TEST(aliasing)
+    {
+        int i{0};
+        int res = modify_both(reinterpret_cast<byte*>(&i), &i);
+        CHECK(res == i);
     }
 
     TEST(bitwise_operations)
