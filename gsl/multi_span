@@ -443,7 +443,7 @@ namespace details
         template <typename T, size_t Dim = 0>
         size_type linearize(const T& arr) const
         {
-            Expects(arr[Dim] < CurrentRange); // Index is out of range
+            Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
             return this->Base::totalSize() * arr[Dim] +
                    this->Base::template linearize<T, Dim + 1>(arr);
         }
@@ -1510,7 +1510,7 @@ public:
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
     constexpr Ret operator[](size_type idx) const noexcept
     {
-        Expects(idx < bounds_.size()); // index is out of bounds of the array
+        Expects(idx >= 0 && idx < bounds_.size()); // index is out of bounds of the array
         const size_type ridx = idx * bounds_.stride();
 
         // index is out of bounds of the underlying data
