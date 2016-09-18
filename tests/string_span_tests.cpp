@@ -16,8 +16,9 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <cstdlib>
-#include <string_span.h>
+#include <gsl/string_span>
 #include <vector>
+#include <map>
 
 using namespace std;
 using namespace gsl;
@@ -40,14 +41,14 @@ SUITE(string_span_tests)
     {
         std::string s = "Hello there world";
         cstring_span<> v = s;
-        CHECK(v.length() == static_cast<cstring_span<>::size_type>(s.length()));
+        CHECK(v.length() == static_cast<cstring_span<>::index_type>(s.length()));
     }
 
     TEST(TestConstructFromStdVector)
     {
         std::vector<char> vec(5, 'h');
-        string_span<> v = vec;
-        CHECK(v.length() == static_cast<string_span<>::size_type>(vec.size()));
+        string_span<> v {vec};
+        CHECK(v.length() == static_cast<string_span<>::index_type>(vec.size()));
     }
 
     TEST(TestStackArrayConstruction)
@@ -109,10 +110,22 @@ SUITE(string_span_tests)
         char stack_string[] = "Hello";
         cstring_span<> v = ensure_z(stack_string);
         auto s2 = gsl::to_string(v);
-        CHECK(static_cast<cstring_span<>::size_type>(s2.length()) == v.length());
+        CHECK(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
         CHECK(s2.length() == 5);
     }
 
+    TEST(TestToBasicString)
+    {
+        auto s = gsl::to_basic_string<char,std::char_traits<char>,::std::allocator<char>>(cstring_span<>{});
+        CHECK(s.length() == 0);
+
+        char stack_string[] = "Hello";
+        cstring_span<> v = ensure_z(stack_string);
+        auto s2 = gsl::to_basic_string<char,std::char_traits<char>,::std::allocator<char>>(v);
+        CHECK(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
+        CHECK(s2.length() == 5);
+    }
+    
     TEST(EqualityAndImplicitConstructors)
     {
         {
@@ -746,7 +759,7 @@ SUITE(string_span_tests)
     T create() { return T{}; }
 
     template <class T>
-    void use(basic_string_span<T, gsl::dynamic_range> s) {}
+    void use(basic_string_span<T, gsl::dynamic_extent> s) {}
 
     TEST(MoveConstructors)
     {
@@ -942,7 +955,13 @@ SUITE(string_span_tests)
                 CHECK(*(str + 3) == L'\0');
             }
         }
+    }
 
+    TEST(Issue305)
+    {
+        std::map<gsl::cstring_span<>, int> foo = { { "foo", 0 },{ "bar", 1 } };
+        CHECK(foo["foo"] == 0);
+        CHECK(foo["bar"] == 1);
     }
 }
 

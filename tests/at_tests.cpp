@@ -15,8 +15,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h> 
-#include <gsl.h>
+#include <gsl/gsl>
 #include <vector>
+#include <initializer_list>
 
 using namespace std;
 using namespace gsl;
@@ -46,6 +47,16 @@ SUITE(at_tests)
     TEST(StdVector)
     {
         std::vector<int> a = { 1, 2, 3, 4 };
+
+        for (int i = 0; i < 4; ++i)
+            CHECK(at(a, i) == i+1);
+
+        CHECK_THROW(at(a, 4), fail_fast);
+    }
+
+    TEST(InitializerList)
+    {
+        std::initializer_list<int> a = { 1, 2, 3, 4 };
 
         for (int i = 0; i < 4; ++i)
             CHECK(at(a, i) == i+1);
