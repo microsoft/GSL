@@ -1084,6 +1084,12 @@ SUITE(multi_span_tests)
 
         CHECK_THROW(av[10][2], fail_fast);
         CHECK_THROW((av[{10, 2}]), fail_fast);
+
+        CHECK_THROW(av[-1][0], fail_fast);
+        CHECK_THROW((av[{-1, 0}]), fail_fast);
+
+        CHECK_THROW(av[0][-1], fail_fast);
+        CHECK_THROW((av[{0, -1}]), fail_fast);
     }
 
     void overloaded_func(multi_span<const int, dynamic_range, 3, 5> exp, int expected_value)
