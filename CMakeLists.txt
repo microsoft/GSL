@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(GSL CXX)
 
@@ -12,9 +12,9 @@ set(GSL_HEADERS
     "gsl/string_span"
 )
 
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
+add_library(${PROJECT_NAME} INTERFACE)
+
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 install(FILES ${GSL_HEADERS}
     DESTINATION include/gsl
