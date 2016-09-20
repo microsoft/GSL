@@ -111,10 +111,15 @@ inline constexpr byte to_byte() noexcept
 // use of byte within span<> to be standards-compliant
 struct byte {
     unsigned char v;
+
     explicit operator unsigned char&() { return v; }
     explicit operator const unsigned char&() const { return v; }
     friend bool operator==(byte l, byte r) { return l.v == r.v; }
     friend bool operator!=(byte l, byte r) { return l.v != r.v; }
+    friend bool operator<(byte l, byte r) { return l.v < r.v; }
+    friend bool operator<=(byte l, byte r) { return l.v <= r.v; }
+    friend bool operator>(byte l, byte r) { return l.v > r.v; }
+    friend bool operator>=(byte l, byte r) { return l.v >= r.v; }
 };
 
 template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
