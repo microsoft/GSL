@@ -21,6 +21,11 @@
 
 #ifdef _MSC_VER
 
+#pragma warning(push)
+
+// don't warn about function style casts in byte related operators
+#pragma warning(disable : 26493)
+
 // MSVC 2013 workarounds
 #if _MSC_VER <= 1800
 
@@ -148,6 +153,8 @@ inline constexpr byte to_byte() noexcept
 #pragma pop_macro("noexcept")
 
 #endif // _MSC_VER <= 1800
+
+#pragma warning(pop)
 
 #endif // _MSC_VER
 
