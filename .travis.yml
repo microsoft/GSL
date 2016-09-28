@@ -1,6 +1,7 @@
 # Based on https://github.com/ldionne/hana/blob/master/.travis.yml
 
 language: cpp
+dist: trusty
 sudo: false
 
 matrix:
@@ -15,7 +16,7 @@ matrix:
             - g++-5
           sources: &sources
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
+            - llvm-toolchain-trusty-3.6
             - kalakris-cmake
     - env: COMPILER=clang++-3.6 BUILD_TYPE=Release CLANG=1
       compiler: clang
