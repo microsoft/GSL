@@ -308,8 +308,6 @@ namespace details
         {
         }
 
-        BoundsRanges(const BoundsRanges&) = default;
-        BoundsRanges& operator=(const BoundsRanges&) = default;
         BoundsRanges(const std::ptrdiff_t* const) {}
         BoundsRanges() = default;
 
@@ -346,9 +344,9 @@ namespace details
         static const size_t DynamicNum = Base::DynamicNum + 1;
         static const size_type CurrentRange = dynamic_range;
         static const size_type TotalSize = dynamic_range;
-        const size_type m_bound;
-
-        BoundsRanges(const BoundsRanges&) = default;
+    private:
+        size_type m_bound;
+    public:
 
         BoundsRanges(const std::ptrdiff_t* const arr)
             : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
@@ -419,8 +417,6 @@ namespace details
         static const size_type CurrentRange = CurRange;
         static const size_type TotalSize =
             Base::TotalSize == dynamic_range ? dynamic_range : CurrentRange * Base::TotalSize;
-
-        BoundsRanges(const BoundsRanges&) = default;
 
         BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) {}
         BoundsRanges() = default;
@@ -632,12 +628,6 @@ public:
     }
 
     constexpr static_bounds() = default;
-
-    constexpr static_bounds& operator=(const static_bounds& otherBounds)
-    {
-        new (&m_ranges) MyRanges(otherBounds.m_ranges);
-        return *this;
-    }
 
     constexpr sliced_type slice() const noexcept
     {
