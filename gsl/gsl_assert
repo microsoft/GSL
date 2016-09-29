@@ -38,6 +38,14 @@
 #define GSL_STRINGIFY_DETAIL(x) #x
 #define GSL_STRINGIFY(x) GSL_STRINGIFY_DETAIL(x)
 
+#if defined(__clang__) || defined(__GNUC__)
+#define GSL_LIKELY(x) __builtin_expect (!!(x), 1)
+#define GSL_UNLIKELY(x) __builtin_expect (!!(x), 0)
+#else
+#define GSL_LIKELY(x) (x)
+#define GSL_UNLIKELY(x) (x)
+#endif
+
 //
 // GSL.assert: assertions
 //
@@ -53,19 +61,19 @@ struct fail_fast : public std::runtime_error
 #if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
 #define Expects(cond)                                                                              \
-    if (!(cond))                                                                                   \
+    if (GSL_UNLIKELY(!(cond)))                                                                     \
         throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
 #define Ensures(cond)                                                                              \
-    if (!(cond))                                                                                   \
+    if (GSL_UNLIKELY(!(cond)))                                                                     \
         throw gsl::fail_fast("GSL: Postcondition failure at " __FILE__                             \
                              ": " GSL_STRINGIFY(__LINE__));
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
 #define Expects(cond)                                                                              \
-    if (!(cond)) std::terminate();
+    if (GSL_UNLIKELY(!(cond))) std::terminate();
 #define Ensures(cond)                                                                              \
-    if (!(cond)) std::terminate();
+    if (GSL_UNLIKELY(!(cond))) std::terminate();
 
 #elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
 
