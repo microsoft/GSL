@@ -118,6 +118,24 @@ namespace details
         return len;
 #endif
     }
+
+    inline std::size_t wstring_length(const wchar_t *str, std::size_t n)
+    {
+#ifdef GSL_PLATFORM_HAS_STRNLEN
+        return wcsnlen(str, n);
+#else
+        if (str == nullptr || n == 0)
+            return 0;
+
+        std::size_t len = 0;
+        span<const wchar_t> str_span{str, n};
+
+        while (len < n && str_span[len])
+            len++;
+
+        return len;
+#endif
+    }
 }
 
 //
@@ -166,14 +184,14 @@ inline span<const char, dynamic_extent> ensure_z(const char* const& sz, std::ptr
 
 inline span<wchar_t, dynamic_extent> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = wcsnlen(sz, narrow_cast<size_t>(max));
+    auto len = details::wstring_length(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return {sz, static_cast<std::ptrdiff_t>(len)};
 }
 
 inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = wcsnlen(sz, narrow_cast<size_t>(max));
+    auto len = details::wstring_length(sz, narrow_cast<size_t>(max));
     Ensures(sz[len] == 0);
     return {sz, static_cast<std::ptrdiff_t>(len)};
 }
@@ -230,7 +248,7 @@ namespace details
     {
         std::ptrdiff_t operator()(wchar_t* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, narrow_cast<size_t>(length)));
+            return narrow_cast<std::ptrdiff_t>(details::wstring_length(ptr, narrow_cast<size_t>(length)));
         }
     };
 
@@ -248,7 +266,7 @@ namespace details
     {
         std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(wcsnlen(ptr, narrow_cast<size_t>(length)));
+            return narrow_cast<std::ptrdiff_t>(details::wstring_length(ptr, narrow_cast<size_t>(length)));
         }
     };
 }

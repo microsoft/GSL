@@ -132,8 +132,7 @@ namespace details
 
     template <class From, class To>
     struct is_allowed_element_type_conversion
-        : public std::integral_constant<bool, std::is_same<From, std::remove_cv_t<To>>::value ||
-                                              std::is_convertible<From(*)[], To(*)[]>::value>
+        : public std::integral_constant<bool, std::is_convertible<From (*)[], To (*)[]>::value>
     {
     };
 
@@ -420,8 +419,7 @@ public:
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(const span<OtherElementType, OtherExtent>& other)
-        : storage_(static_cast<pointer>(other.data()),
-                   details::extent_type<OtherExtent>(other.size()))
+        : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
     {
     }
 
@@ -431,8 +429,7 @@ public:
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(span<OtherElementType, OtherExtent>&& other)
-        : storage_(static_cast<pointer>(other.data()),
-                   details::extent_type<OtherExtent>(other.size()))
+        : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
     {
     }
 
@@ -626,7 +623,7 @@ as_writeable_bytes(span<ElementType, Extent> s) noexcept
 
 // Specialization of gsl::at for span
 template <class ElementType, std::ptrdiff_t Extent>
-constexpr ElementType& at(const span<ElementType ,Extent>& s, size_t index)
+constexpr ElementType& at(const span<ElementType, Extent>& s, size_t index)
 {
     // No bounds checking here because it is done in span::operator[] called below
     return s[index];
