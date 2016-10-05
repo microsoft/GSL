@@ -392,7 +392,7 @@ public:
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
-    constexpr span(Container& cont) : span(cont.data(), cont.size())
+    constexpr span(Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
     {
     }
 
@@ -402,7 +402,7 @@ public:
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
-    constexpr span(const Container& cont) : span(cont.data(), cont.size())
+    constexpr span(const Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
     {
     }
 
