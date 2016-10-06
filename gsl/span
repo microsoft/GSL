@@ -347,6 +347,8 @@ public:
     using index_type = std::ptrdiff_t;
     using pointer = element_type*;
     using reference = element_type&;
+    using size_type = index_type;
+    using difference_type = index_type;
 
     using iterator = details::span_iterator<span<ElementType, Extent>, false>;
     using const_iterator = details::span_iterator<span<ElementType, Extent>, true>;
