@@ -55,7 +55,7 @@
 #ifdef _MSC_VER
     #define GSL_USE_BYTE_TYPE GSL_BYTE_TYPE_ENUM
 #else
-    #define GSL_USE_BYTE_TYPE GSL_BYTE_TYPE_STRUCT
+    #define GSL_USE_BYTE_TYPE GSL_BYTE_TYPE_ENUM
 #endif
 
 #endif
