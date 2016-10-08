@@ -19,7 +19,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 # Quick Start
 ## Supported Platforms
-The test suite that exercises GSL has been built and passes successfully on the following platforms:
+The test suite that exercises GSL has been built and passes successfully on the following platforms:<sup>1)</sup>
 
 * Windows using Visual Studio 2013
 * Windows using Visual Studio 2015
@@ -33,6 +33,8 @@ The test suite that exercises GSL has been built and passes successfully on the 
 
 > If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
 contributing any changes that were necessary back to this project to benefit the wider community.
+
+<sup>1)</sup> For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
 
 ## Building the tests
 To build the tests, you will require the following:
