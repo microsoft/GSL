@@ -163,6 +163,8 @@ namespace details
         {
         }
 
+        constexpr span_iterator<Span, IsConst>& operator=(const span_iterator<Span, IsConst>&) noexcept = default;
+
         constexpr reference operator*() const
         {
             Expects(span_);
