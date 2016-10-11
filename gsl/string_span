@@ -56,10 +56,6 @@
 #endif // _MSC_VER <= 1800
 #endif // _MSC_VER
 
-#ifndef __CYGWIN__
-#define GSL_PLATFORM_HAS_STRNLEN
-#endif
-
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
 
@@ -103,9 +99,6 @@ namespace details
 {
     inline std::size_t string_length(const char *str, std::size_t n)
     {
-#ifdef GSL_PLATFORM_HAS_STRNLEN
-        return strnlen(str, n);
-#else
         if (str == nullptr || n == 0)
             return 0;
 
@@ -116,14 +109,10 @@ namespace details
             len++;
 
         return len;
-#endif
     }
 
     inline std::size_t wstring_length(const wchar_t *str, std::size_t n)
     {
-#ifdef GSL_PLATFORM_HAS_STRNLEN
-        return wcsnlen(str, n);
-#else
         if (str == nullptr || n == 0)
             return 0;
 
@@ -134,7 +123,6 @@ namespace details
             len++;
 
         return len;
-#endif
     }
 }
 
