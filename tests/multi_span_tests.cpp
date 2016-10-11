@@ -1663,7 +1663,7 @@ SUITE(multi_span_tests)
             multi_span<int, dynamic_range> av = a;
             auto wav = as_writeable_bytes(av);
             for (auto& b : wav) {
-                b = byte(0);
+                b = to_byte<0>();
             }
             for (size_t i = 0; i < 4; ++i) {
                 CHECK(a[i] == 0);

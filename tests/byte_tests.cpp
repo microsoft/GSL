@@ -34,6 +34,17 @@ SUITE(byte_tests)
 {
     TEST(construction)
     {
+#if GSL_USE_BYTE_TYPE == GSL_BYTE_TYPE_STRUCT
+        {
+            byte b{ 4 };
+            CHECK(static_cast<unsigned char>(b) == 4);
+        }
+
+        {
+            byte b = byte{ 12 };
+            CHECK(static_cast<unsigned char>(b) == 12);
+        }
+#else
         {
             byte b = static_cast<byte>(4);
             CHECK(static_cast<unsigned char>(b) == 4);
@@ -43,7 +54,8 @@ SUITE(byte_tests)
             byte b = byte(12);
             CHECK(static_cast<unsigned char>(b) == 12);
         }
-        
+#endif
+
         {
             byte b = to_byte<12>();
             CHECK(static_cast<unsigned char>(b) == 12);
@@ -61,35 +73,72 @@ SUITE(byte_tests)
         //}
     }
 
+    int modify_both(gsl::byte * b, int* i)
+    {
+        *i = 10;
+        *b = to_byte<5>();
+        return *i;
+    }
+
+    TEST(aliasing)
+    {
+        int i{ 0 };
+        int res = modify_both(reinterpret_cast<byte*>(&i), &i);
+        CHECK(res == i);
+    }
+
     TEST(bitwise_operations)
     {
         byte b = to_byte<0xFF>();
-
         byte a = to_byte<0x00>();
+
+#if GSL_USE_BYTE_TYPE == GSL_BYTE_TYPE_UCHAR
+        CHECK(static_cast<byte>(b | a) == to_byte<0xFF>());
+#else
         CHECK((b | a) == to_byte<0xFF>());
+#endif
+
         CHECK(a == to_byte<0x00>());
 
         a |= b;
         CHECK(a == to_byte<0xFF>());
 
         a = to_byte<0x01>();
+
+#if GSL_USE_BYTE_TYPE == GSL_BYTE_TYPE_UCHAR
+        CHECK(static_cast<byte>(b & a) == to_byte<0x01>());
+#else
         CHECK((b & a) == to_byte<0x01>());
+#endif
 
         a &= b;
         CHECK(a == to_byte<0x01>());
 
+#if GSL_USE_BYTE_TYPE == GSL_BYTE_TYPE_UCHAR
+        CHECK(static_cast<byte>(b ^ a) == to_byte<0xFE>());
+#else
         CHECK((b ^ a) == to_byte<0xFE>());
-        
+#endif
         CHECK(a == to_byte<0x01>());
+
         a ^= b;
         CHECK(a == to_byte<0xFE>());
 
         a = to_byte<0x01>();
+#if GSL_USE_BYTE_TYPE == GSL_BYTE_TYPE_UCHAR
+        CHECK(static_cast<byte>(~a) == to_byte<0xFE>());
+#else
         CHECK(~a == to_byte<0xFE>());
+#endif
 
         a = to_byte<0xFF>();
+#if GSL_USE_BYTE_TYPE == GSL_BYTE_TYPE_UCHAR
+        CHECK(static_cast<byte>(a << 4) == to_byte<0xF0>());
+        CHECK(static_cast<byte>(a >> 4) == to_byte<0x0F>());
+#else
         CHECK((a << 4) == to_byte<0xF0>());
         CHECK((a >> 4) == to_byte<0x0F>());
+#endif
 
         a <<= 4;
         CHECK(a == to_byte<0xF0>());
@@ -115,7 +164,5 @@ SUITE(byte_tests)
 //      CHECK(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
     }
 }
-
 }
-
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
