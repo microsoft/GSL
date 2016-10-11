@@ -35,9 +35,6 @@ endif()
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp ../gsl/gsl ../gsl/gsl_assert ../gsl/gsl_util ../gsl/multi_span ../gsl/span ../gsl/string_span)
     target_link_libraries(${name} UnitTest++)
-    install(TARGETS ${name}
-        RUNTIME DESTINATION bin
-    )
     add_test(
       ${name}
       ${name}
