@@ -97,28 +97,28 @@ using wzstring = basic_zstring<wchar_t, Extent>;
 
 namespace details
 {
-    inline std::size_t string_length(const char *str, std::size_t n)
+    inline std::ptrdiff_t string_length(const char *str, std::ptrdiff_t n)
     {
-        if (str == nullptr || n == 0)
+        if (str == nullptr || n <= 0)
             return 0;
 
-        std::size_t len = 0;
         span<const char> str_span{str, n};
 
+        std::ptrdiff_t len = 0;
         while (len < n && str_span[len])
             len++;
 
         return len;
     }
 
-    inline std::size_t wstring_length(const wchar_t *str, std::size_t n)
+    inline std::ptrdiff_t wstring_length(const wchar_t *str, std::ptrdiff_t n)
     {
-        if (str == nullptr || n == 0)
+        if (str == nullptr || n <= 0)
             return 0;
 
-        std::size_t len = 0;
         span<const wchar_t> str_span{str, n};
 
+        std::ptrdiff_t len = 0;
         while (len < n && str_span[len])
             len++;
 
@@ -158,30 +158,30 @@ inline span<T, dynamic_extent> ensure_z(T* const& sz, std::ptrdiff_t max = PTRDI
 // overloads to share an implementation
 inline span<char, dynamic_extent> ensure_z(char* const& sz, std::ptrdiff_t max)
 {
-    auto len = details::string_length(sz, narrow_cast<size_t>(max));
+    auto len = details::string_length(sz, max);
     Ensures(sz[len] == 0);
-    return {sz, static_cast<std::ptrdiff_t>(len)};
+    return {sz, len};
 }
 
 inline span<const char, dynamic_extent> ensure_z(const char* const& sz, std::ptrdiff_t max)
 {
-    auto len = details::string_length(sz, narrow_cast<size_t>(max));
+    auto len = details::string_length(sz, max);
     Ensures(sz[len] == 0);
-    return {sz, static_cast<std::ptrdiff_t>(len)};
+    return {sz, len};
 }
 
 inline span<wchar_t, dynamic_extent> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = details::wstring_length(sz, narrow_cast<size_t>(max));
+    auto len = details::wstring_length(sz, max);
     Ensures(sz[len] == 0);
-    return {sz, static_cast<std::ptrdiff_t>(len)};
+    return {sz, len};
 }
 
 inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
 {
-    auto len = details::wstring_length(sz, narrow_cast<size_t>(max));
+    auto len = details::wstring_length(sz, max);
     Ensures(sz[len] == 0);
-    return {sz, static_cast<std::ptrdiff_t>(len)};
+    return {sz, len};
 }
 
 template <typename T, size_t N>
@@ -227,7 +227,7 @@ namespace details
     {
         std::ptrdiff_t operator()(char* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(details::string_length(ptr, narrow_cast<size_t>(length)));
+            return details::string_length(ptr, length);
         }
     };
 
@@ -236,7 +236,7 @@ namespace details
     {
         std::ptrdiff_t operator()(wchar_t* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(details::wstring_length(ptr, narrow_cast<size_t>(length)));
+            return details::wstring_length(ptr, length);
         }
     };
 
@@ -245,7 +245,7 @@ namespace details
     {
         std::ptrdiff_t operator()(const char* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(details::string_length(ptr, narrow_cast<size_t>(length)));
+            return details::string_length(ptr, length);
         }
     };
 
@@ -254,7 +254,7 @@ namespace details
     {
         std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) noexcept
         {
-            return narrow_cast<std::ptrdiff_t>(details::wstring_length(ptr, narrow_cast<size_t>(length)));
+            return details::wstring_length(ptr, length);
         }
     };
 }
