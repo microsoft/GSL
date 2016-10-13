@@ -126,11 +126,7 @@ SUITE(byte_tests)
     {
         int i{ 0 };
         int res = modify_both(reinterpret_cast<byte&>(i), i);
-#ifdef GSL_CHECK_BYTE_ALIASING
         CHECK(res == i);
-#else
-        (void)res;
-#endif
     }
 }
 
