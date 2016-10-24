@@ -68,10 +68,10 @@ SUITE(NotNullTests)
         MyBase base;
 	MyDerived derived;
 	Unrelated unrelated;
-	not_null<Unrelated*> u = &unrelated;
+	not_null<Unrelated*> u(&unrelated);
         (void)u;
-	not_null<MyDerived*> p = &derived;
-        not_null<MyBase*> q = &base;
+	not_null<MyDerived*> p(&derived);
+        not_null<MyBase*> q(&base);
 	q = p; // allowed with heterogeneous copy ctor
         CHECK(q == p);
 
@@ -80,20 +80,20 @@ SUITE(NotNullTests)
 	p = q; // not possible to implicitly convert MyBase* to MyDerived*
 
         not_null<Unrelated*> r = p;
-        not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
+        not_null<Unrelated*> s(reinterpret_cast<Unrelated*>(p));
 #endif
-        not_null<Unrelated*> t = reinterpret_cast<Unrelated*>(p.get());
+        not_null<Unrelated*> t(reinterpret_cast<Unrelated*>(p.get()));
         CHECK((void*)p.get() == (void*)t.get());
     }
 
     TEST(TestNotNullAssignment)
     {
         int i = 12;
-        not_null<int*> p = &i; 
+        not_null<int*> p(&i); 
         CHECK(helper(p));
 
         int* q = nullptr;
-        CHECK_THROW(p = q, fail_fast);
+        CHECK_THROW(p = not_null<int*>(q), fail_fast);
     }
 }
 
