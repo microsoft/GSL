@@ -29,6 +29,7 @@
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
+#include <memory>
 
 #ifdef _MSC_VER
 
@@ -385,6 +386,12 @@ public:
         : storage_(&arr[0], details::extent_type<N>())
     {
     }
+
+    template<class ArrayElementType = std::add_pointer<element_type>>
+    constexpr span(const std::unique_ptr<ArrayElementType>& ptr, index_type count) : storage_(ptr.get(), count) {}
+
+    constexpr span(const std::unique_ptr<ElementType>& ptr) : storage_(ptr.get(), ptr.get() ? 1 : 0) {}
+    constexpr span(const std::shared_ptr<ElementType>& ptr) : storage_(ptr.get(), ptr.get() ? 1 : 0) {}
 
     // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
     // on Container to be a contiguous sequence container.
