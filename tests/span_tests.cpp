@@ -769,6 +769,25 @@ SUITE(span_tests)
         }
     }
 
+    TEST(at_call)
+    {
+        int arr[4] = {1, 2, 3, 4};
+
+        {
+            span<int> s = arr;
+            CHECK(s.at(0) == 1);
+            CHECK_THROW(s.at(5), fail_fast);
+        }
+
+        {
+            int arr2d[2] = {1, 6};
+            span<int, 2> s = arr2d;
+            CHECK(s.at(0) == 1);
+            CHECK(s.at(1) == 6);
+            CHECK_THROW(s.at(2) ,fail_fast);
+        }
+    }
+
     TEST(operator_function_call)
     {
         int arr[4] = {1, 2, 3, 4};
