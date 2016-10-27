@@ -554,7 +554,8 @@ public:
 
     constexpr string_span_type as_string_span() const noexcept
     {
-        return span_.first(span_.size() - 1);
+        auto sz = span_.size();
+        return span_.first(sz <= 0 ? 0 : sz - 1);
     }
 
     constexpr string_span_type ensure_z() const noexcept { return gsl::ensure_z(span_); }
