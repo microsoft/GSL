@@ -31,6 +31,7 @@ SUITE(at_tests)
         for (int i = 0; i < 4; ++i)
             CHECK(at(a, i) == i+1);
 
+        CHECK_THROW(at(a, -1), fail_fast);
         CHECK_THROW(at(a, 4), fail_fast);
     }
 
@@ -41,6 +42,7 @@ SUITE(at_tests)
         for (int i = 0; i < 4; ++i)
             CHECK(at(a, i) == i+1);
 
+        CHECK_THROW(at(a, -1), fail_fast);
         CHECK_THROW(at(a, 4), fail_fast);
     }
 
@@ -51,6 +53,7 @@ SUITE(at_tests)
         for (int i = 0; i < 4; ++i)
             CHECK(at(a, i) == i+1);
 
+        CHECK_THROW(at(a, -1), fail_fast);
         CHECK_THROW(at(a, 4), fail_fast);
     }
 
@@ -61,6 +64,7 @@ SUITE(at_tests)
         for (int i = 0; i < 4; ++i)
             CHECK(at(a, i) == i+1);
 
+        CHECK_THROW(at(a, -1), fail_fast);
         CHECK_THROW(at(a, 4), fail_fast);
     }
 }
