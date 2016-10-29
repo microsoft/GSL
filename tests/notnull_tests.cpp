@@ -83,7 +83,7 @@ SUITE(NotNullTests)
         not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
         not_null<Unrelated*> t = reinterpret_cast<Unrelated*>(p.get());
-        CHECK((void*)p.get() == (void*)t.get());
+        CHECK(reinterpret_cast<void*>(p.get()) == reinterpret_cast<void*>(t.get()));
     }
 
     TEST(TestNotNullAssignment)

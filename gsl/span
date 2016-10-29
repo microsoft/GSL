@@ -494,7 +494,7 @@ public:
     constexpr index_type length() const noexcept { return size(); }
     constexpr index_type size() const noexcept { return storage_.size(); }
     constexpr index_type length_bytes() const noexcept { return size_bytes(); }
-    constexpr index_type size_bytes() const noexcept { return size() * sizeof(element_type); }
+    constexpr index_type size_bytes() const noexcept { return size() * narrow_cast<index_type>(sizeof(element_type)); }
     constexpr bool empty() const noexcept { return size() == 0; }
 
     // [span.elem], span element access

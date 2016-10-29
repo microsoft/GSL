@@ -1336,8 +1336,8 @@ SUITE(span_tests)
 #endif
         {
             auto f = [&]() {
-                span<int, 4> s4 = {arr2, 2};
-                static_cast<void>(s4);
+                span<int, 4> _s4 = {arr2, 2};
+                static_cast<void>(_s4);
             };                     
             CHECK_THROW(f(), fail_fast);
         }
@@ -1345,8 +1345,8 @@ SUITE(span_tests)
         // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
         span<int> av = arr2;
         auto f = [&]() {
-            span<int, 4> s4 = av;
-            static_cast<void>(s4);            
+            span<int, 4> _s4 = av;
+            static_cast<void>(_s4);            
         };
         CHECK_THROW(f(), fail_fast);
     }
