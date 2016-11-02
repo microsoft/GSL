@@ -204,6 +204,24 @@ SUITE(span_tests)
             auto workaround_macro = [=]() { span<int> s{p, 2}; };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
+
+        {
+            auto s = make_span(&arr[0], 2);
+            CHECK(s.length() == 2 && s.data() == &arr[0]);
+            CHECK(s[0] == 1 && s[1] == 2);
+        }
+
+        {
+            int* p = nullptr;
+            auto s = make_span(p, static_cast<span<int>::index_type>(0));
+            CHECK(s.length() == 0 && s.data() == nullptr);
+        }
+
+        {
+            int* p = nullptr;
+            auto workaround_macro = [=]() { make_span(p, 2); };
+            CHECK_THROW(workaround_macro(), fail_fast);
+        }
     }
 
     TEST(from_pointer_pointer_constructor)
@@ -263,6 +281,23 @@ SUITE(span_tests)
         //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
         //    CHECK_THROW(workaround_macro(), fail_fast);
         //}
+
+        {
+            auto s = make_span(&arr[0], &arr[2]);
+            CHECK(s.length() == 2 && s.data() == &arr[0]);
+            CHECK(s[0] == 1 && s[1] == 2);
+        }
+
+        {
+            auto s = make_span(&arr[0], &arr[0]);
+            CHECK(s.length() == 0 && s.data() == &arr[0]);
+        }
+
+        {
+            int* p = nullptr;
+            auto s = make_span(p, p);
+            CHECK(s.length() == 0 && s.data() == nullptr);
+        }
     }
 
     TEST(from_array_constructor)
@@ -339,6 +374,21 @@ SUITE(span_tests)
             span<int[3][2]> s{&arr3d[0], 1};
             CHECK(s.length() == 1 && s.data() == &arr3d[0]);
         }
+
+        {
+            auto s = make_span(arr);
+            CHECK(s.length() == 5 && s.data() == &arr[0]);
+        }
+
+        {
+            auto s = make_span(&(arr2d[0]), 1);
+            CHECK(s.length() == 1 && s.data() == &arr2d[0]);
+        }
+
+        {
+            auto s = make_span(&arr3d[0], 1);
+            CHECK(s.length() == 1 && s.data() == &arr3d[0]);
+        }
     }
 
     TEST(from_dynamic_array_constructor)
@@ -347,6 +397,11 @@ SUITE(span_tests)
 
         {
             span<double> s(&arr[0][0][0], 10);
+            CHECK(s.length() == 10 && s.data() == &arr[0][0][0]);
+        }
+
+        {
+            auto s = make_span(&arr[0][0][0], 10);
             CHECK(s.length() == 10 && s.data() == &arr[0][0][0]);
         }
 
@@ -408,6 +463,11 @@ SUITE(span_tests)
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
+
+        {
+            auto s = make_span(arr);
+            CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
+        }
     }
 
     TEST(from_const_std_array_constructor)
@@ -446,6 +506,11 @@ SUITE(span_tests)
             // try to take a temporary std::array
             take_a_span(get_an_array());
         }
+
+        {
+            auto s = make_span(arr);
+            CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
+        }
     }
 
     TEST(from_std_array_const_constructor)
@@ -481,6 +546,11 @@ SUITE(span_tests)
             span<int, 4> s{arr};
         }
 #endif
+
+        {
+            auto s = make_span(arr);
+            CHECK(s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data());
+        }
     }
 
     TEST(from_unique_pointer_construction)
@@ -493,6 +563,12 @@ SUITE(span_tests)
                 CHECK(s.length() == 1 && s.data() == ptr.get());
                 CHECK(s[0] == 4);
             }
+
+            {
+                auto s = make_span(ptr);
+                CHECK(s.length() == 1 && s.data() == ptr.get());
+                CHECK(s[0] == 4);
+            }
         }
 
         {
@@ -500,6 +576,11 @@ SUITE(span_tests)
 
             {
                 span<int> s{ptr};
+                CHECK(s.length() == 0 && s.data() == nullptr);
+            }
+
+            {
+                auto s = make_span(ptr);
                 CHECK(s.length() == 0 && s.data() == nullptr);
             }
         }
@@ -515,13 +596,24 @@ SUITE(span_tests)
                 CHECK(s.length() == 4 && s.data() == arr.get());
                 CHECK(s[0] == 1 && s[1] == 2);
             }
+
+            {
+                auto s = make_span(arr, 4);
+                CHECK(s.length() == 4 && s.data() == arr.get());
+                CHECK(s[0] == 1 && s[1] == 2);
+            }
         }
 
         {
-            auto ptr = std::unique_ptr<int[]>{nullptr};
+            auto arr = std::unique_ptr<int[]>{nullptr};
 
             {
-                span<int> s{ptr, 0};
+                span<int> s{arr, 0};
+                CHECK(s.length() == 0 && s.data() == nullptr);
+            }
+
+            {
+                auto s = make_span(arr, 0);
                 CHECK(s.length() == 0 && s.data() == nullptr);
             }
         }
@@ -537,6 +629,12 @@ SUITE(span_tests)
                 CHECK(s.length() == 1 && s.data() == ptr.get());
                 CHECK(s[0] == 4);
             }
+
+            {
+                auto s = make_span(ptr);
+                CHECK(s.length() == 1 && s.data() == ptr.get());
+                CHECK(s[0] == 4);
+            }
         }
 
         {
@@ -544,6 +642,11 @@ SUITE(span_tests)
 
             {
                 span<int> s{ptr};
+                CHECK(s.length() == 0 && s.data() == nullptr);
+            }
+
+            {
+                auto s = make_span(ptr);
                 CHECK(s.length() == 0 && s.data() == nullptr);
             }
         }
@@ -630,6 +733,14 @@ SUITE(span_tests)
             std::map<int, int> m;
             span<int> s{m};
 #endif
+        }
+
+        {
+            auto s = make_span(v);
+            CHECK(s.size() == narrow_cast<std::ptrdiff_t>(v.size()) && s.data() == v.data());
+
+            auto cs = make_span(cv);
+            CHECK(cs.size() == narrow_cast<std::ptrdiff_t>(cv.size()) && cs.data() == cv.data());
         }
     }
 

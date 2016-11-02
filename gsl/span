@@ -632,6 +632,45 @@ as_writeable_bytes(span<ElementType, Extent> s) noexcept
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
+//
+// make_span() - Utility functions for creating spans
+//
+template <class ElementType>
+span<ElementType>
+make_span(ElementType* ptr, typename span<ElementType>::index_type count)
+{ return span<ElementType>(ptr, count); }
+
+template <class ElementType>
+span<ElementType>
+make_span(ElementType* firstElem, ElementType* lastElem)
+{ return span<ElementType>(firstElem, lastElem); }
+
+template <class ElementType, size_t N>
+span<ElementType>
+make_span(ElementType (&arr)[N])
+{ return span<ElementType>(arr); }
+
+template <class Container>
+span<typename Container::value_type>
+make_span(Container &cont)
+{ return span<typename Container::value_type>(cont); }
+
+template <class Container>
+span<const typename Container::value_type>
+make_span(const Container &cont)
+{ return span<const typename Container::value_type>(cont); }
+
+template <class Ptr>
+span<typename Ptr::element_type>
+make_span(Ptr& cont, std::ptrdiff_t count)
+{ return span<typename Ptr::element_type>(cont, count); }
+
+template <class Ptr>
+span<typename Ptr::element_type>
+make_span(Ptr& cont)
+{ return span<typename Ptr::element_type>(cont); }
+
+
 // Specialization of gsl::at for span
 template <class ElementType, std::ptrdiff_t Extent>
 constexpr ElementType& at(const span<ElementType, Extent>& s, std::ptrdiff_t index)
