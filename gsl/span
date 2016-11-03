@@ -177,7 +177,7 @@ namespace details
             return &((*span_)[index_]);
         }
 
-        constexpr span_iterator& operator++() noexcept
+        constexpr span_iterator& operator++()
         {
             Expects(span_ && index_ >= 0 && index_ < span_->length());
             ++index_;
@@ -191,7 +191,7 @@ namespace details
             return ret;
         }
 
-        constexpr span_iterator& operator--() noexcept
+        constexpr span_iterator& operator--()
         {
             Expects(span_ && index_ > 0 && index_ <= span_->length());
             --index_;
@@ -211,7 +211,7 @@ namespace details
             return ret += n;
         }
 
-        constexpr span_iterator& operator+=(difference_type n) noexcept
+        constexpr span_iterator& operator+=(difference_type n)
         {
             Expects(span_ && (index_ + n) >= 0 && (index_ + n) <= span_->length());
             index_ += n;
@@ -226,7 +226,7 @@ namespace details
 
         constexpr span_iterator& operator-=(difference_type n) noexcept { return *this += -n; }
 
-        constexpr difference_type operator-(const span_iterator& rhs) const noexcept
+        constexpr difference_type operator-(const span_iterator& rhs) const
         {
             Expects(span_ == rhs.span_);
             return index_ - rhs.index_;
@@ -246,7 +246,7 @@ namespace details
             return !(lhs == rhs);
         }
 
-        constexpr friend bool operator<(const span_iterator& lhs, const span_iterator& rhs) noexcept
+        constexpr friend bool operator<(const span_iterator& lhs, const span_iterator& rhs)
         {
             Expects(lhs.span_ == rhs.span_);
             return lhs.index_ < rhs.index_;
@@ -307,7 +307,7 @@ namespace details
         constexpr extent_type() noexcept {}
 
         template <index_type Other>
-        constexpr extent_type(extent_type<Other> ext) noexcept
+        constexpr extent_type(extent_type<Other> ext) 
         {
             static_assert(Other == Ext || Other == dynamic_extent,
                           "Mismatch between fixed-size extent and size of initializing data.");
