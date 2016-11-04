@@ -23,6 +23,7 @@ The test suite that exercises GSL has been built and passes successfully on the 
 
 * Windows using Visual Studio 2013
 * Windows using Visual Studio 2015
+* Windows using Visual Studio "15"
 * Windows using Clang/LLVM 3.6
 * Windows using GCC 5.1
 * GNU/Linux using Clang/LLVM 3.6
