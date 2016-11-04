@@ -15,10 +15,10 @@ include_directories(
 
 add_definitions(-DGSL_THROW_ON_CONTRACT_VIOLATION)
 
-if(MSVC14 OR MSVC12) # has the support we need
+if(MSVC) # has the support we need
     # remove unnecessary warnings about unchecked iterators
     add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-    add_compile_options(/W4)
+    add_compile_options(/EHsc /W4)
 else()
     include(CheckCXXCompilerFlag)
     CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
