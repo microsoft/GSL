@@ -483,6 +483,72 @@ SUITE(span_tests)
 #endif
     }
 
+    TEST(from_unique_pointer_construction)
+    {
+        {
+            auto ptr = std::make_unique<int>(4);
+
+            {
+                span<int> s{ptr};
+                CHECK(s.length() == 1 && s.data() == ptr.get());
+                CHECK(s[0] == 4);
+            }
+        }
+
+        {
+            auto ptr = std::unique_ptr<int>{nullptr};
+
+            {
+                span<int> s{ptr};
+                CHECK(s.length() == 0 && s.data() == nullptr);
+            }
+        }
+
+        {
+            auto arr = std::make_unique<int[]>(4);
+
+            for (auto i = 0; i < 4; i++)
+                arr[i] = i + 1;
+
+            {
+                span<int> s{arr, 4};
+                CHECK(s.length() == 4 && s.data() == arr.get());
+                CHECK(s[0] == 1 && s[1] == 2);
+            }
+        }
+
+        {
+            auto ptr = std::unique_ptr<int[]>{nullptr};
+
+            {
+                span<int> s{ptr, 0};
+                CHECK(s.length() == 0 && s.data() == nullptr);
+            }
+        }
+    }
+
+    TEST(from_shared_pointer_construction)
+    {
+        {
+            auto ptr = std::make_shared<int>(4);
+
+            {
+                span<int> s{ptr};
+                CHECK(s.length() == 1 && s.data() == ptr.get());
+                CHECK(s[0] == 4);
+            }
+        }
+
+        {
+            auto ptr = std::shared_ptr<int>{nullptr};
+
+            {
+                span<int> s{ptr};
+                CHECK(s.length() == 0 && s.data() == nullptr);
+            }
+        }
+    }
+
     TEST(from_container_constructor)
     {
         std::vector<int> v = {1, 2, 3};
