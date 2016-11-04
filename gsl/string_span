@@ -331,7 +331,7 @@ public:
     // Container signature should work for basic_string after C++17 version exists
     template <class Traits, class Allocator>
     constexpr basic_string_span(std::basic_string<element_type, Traits, Allocator>& str)
-        : span_(&str[0], str.length())
+        : span_(&str[0], narrow_cast<std::ptrdiff_t>(str.length()))
     {
     }
 

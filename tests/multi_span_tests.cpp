@@ -1427,14 +1427,14 @@ SUITE(multi_span_tests)
             }
         }
 
-        size_t check_sum = 0;
+        auto check_sum = 0;
         for (auto i = 0; i < length; ++i) {
             check_sum += av[i][1];
         }
 
         {
             auto idx = 0;
-            size_t sum = 0;
+            auto sum = 0;
             for (auto num : section) {
                 CHECK(num == av[idx][1]);
                 sum += num;
@@ -1444,8 +1444,8 @@ SUITE(multi_span_tests)
             CHECK(sum == check_sum);
         }
         {
-            size_t idx = length - 1;
-            size_t sum = 0;
+            auto idx = length - 1;
+            auto sum = 0;
             for (auto iter = section.rbegin(); iter != section.rend(); ++iter) {
                 CHECK(*iter == av[idx][1]);
                 sum += *iter;
@@ -1650,7 +1650,7 @@ SUITE(multi_span_tests)
         {
             multi_span<int, dynamic_range> av = a;
             auto wav = as_writeable_bytes(av);
-            CHECK(wav.data() == (byte*) &a[0]);
+            CHECK(wav.data() == reinterpret_cast<byte*>(&a[0]));
             CHECK(wav.length() == sizeof(a));
         }
     }

@@ -1451,7 +1451,7 @@ public:
     constexpr size_type length() const noexcept { return this->size(); }
 
     // length of the multi_span in bytes
-    constexpr size_type size_bytes() const noexcept { return sizeof(value_type) * this->size(); }
+    constexpr size_type size_bytes() const noexcept { return narrow_cast<size_type>(sizeof(value_type)) * this->size(); }
 
     // length of the multi_span in bytes
     constexpr size_type length_bytes() const noexcept { return this->size_bytes(); }
@@ -1653,7 +1653,8 @@ constexpr auto as_multi_span(multi_span<const byte, Dimensions...> s) noexcept -
              ConstByteSpan::bounds_type::static_size % narrow_cast<std::ptrdiff_t>(sizeof(U)) == 0),
         "Target type must be a trivial type and its size must match the byte array size");
 
-    Expects((s.size_bytes() % sizeof(U)) == 0 && (s.size_bytes() / sizeof(U)) < PTRDIFF_MAX);
+    Expects((s.size_bytes() % narrow_cast<std::ptrdiff_t>(sizeof(U))) == 0 && 
+            (s.size_bytes() / narrow_cast<std::ptrdiff_t>(sizeof(U))) < PTRDIFF_MAX);
     return {reinterpret_cast<const U*>(s.data()),
             s.size_bytes() / narrow_cast<std::ptrdiff_t>(sizeof(U))};
 }

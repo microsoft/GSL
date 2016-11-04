@@ -701,7 +701,7 @@ SUITE(strided_span_tests)
 
         int s = sizeof(int) / sizeof(byte);
         auto d2 = 3 * s;
-        auto d1 = sizeof(int) * 12 / d2;
+        auto d1 = narrow_cast<int>(sizeof(int)) * 12 / d2;
 
         // convert to 4x12 array of bytes
         auto av = as_multi_span(as_bytes(as_multi_span(arr, 4)), dim(d1), dim(d2));

@@ -19,7 +19,7 @@
 #include <vector>
 
 using namespace std;
-using namespace gsl;;
+using namespace gsl;
 
 namespace 
 {
@@ -37,7 +37,7 @@ SUITE(bounds_test)
 			     j++)
 			{
 				use(j);
-				use(point[j]);
+				use(point[static_cast<size_t>(j)]);
 			}
 		}
 	}

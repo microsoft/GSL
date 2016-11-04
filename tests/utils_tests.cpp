@@ -67,7 +67,7 @@ SUITE(utils_tests)
     }
 
     int j = 0;
-    void g() { j += 1; };
+    void g() { j += 1; }
     TEST(finally_function_ptr)
     {
         j = 0;
