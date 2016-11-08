@@ -44,11 +44,36 @@ SUITE(string_span_tests)
         CHECK(v.length() == static_cast<cstring_span<>::index_type>(s.length()));
     }
 
+    TEST(TestConstructFromStdArray)
+    {
+        {
+            std::array<char, 5> arr{'h', 'e', 'l', 'l', 'o'};
+            string_span<> v {arr};
+            CHECK(v.length() == static_cast<string_span<>::index_type>(arr.size()));
+        }
+
+        // Note: with std::array trailing terminator is NOT stripped:
+        {
+            std::array<char, 6> arr{'h', 'e', 'l', 'l', 'o', '\0'};
+            string_span<> v {arr};
+            CHECK(v.length() == static_cast<string_span<>::index_type>(arr.size()));
+        }
+    }
+
     TEST(TestConstructFromStdVector)
     {
-        std::vector<char> vec(5, 'h');
-        string_span<> v {vec};
-        CHECK(v.length() == static_cast<string_span<>::index_type>(vec.size()));
+        {
+            std::vector<char> vec(5, 'h');
+            string_span<> v {vec};
+            CHECK(v.length() == static_cast<string_span<>::index_type>(vec.size()));
+        }
+
+        // Note: with std::vector trailing terminator is NOT stripped:
+        {
+            std::vector<char> vec{'h', 'e', 'l', 'l', 'o', '\0'};
+            string_span<> v {vec};
+            CHECK(v.length() == static_cast<string_span<>::index_type>(vec.size()));
+        }
     }
 
     TEST(TestStackArrayConstruction)
@@ -125,7 +150,7 @@ SUITE(string_span_tests)
         CHECK(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
         CHECK(s2.length() == 5);
     }
-    
+
     TEST(EqualityAndImplicitConstructors)
     {
         {
@@ -134,7 +159,7 @@ SUITE(string_span_tests)
 
             // comparison to empty span
             CHECK(span1 != span);
-            CHECK(span != span1);      
+            CHECK(span != span1);
         }
 
         {
@@ -291,7 +316,7 @@ SUITE(string_span_tests)
             string_span<> _span{ _ptr, 5 };
 
             // non-const span, non-const other type
-            
+
             CHECK(_span == _ar);
             CHECK(_span == _ar1);
             CHECK(_span == _ar2);
