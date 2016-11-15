@@ -507,8 +507,8 @@ SUITE(span_tests)
         {
             auto arr = std::make_unique<int[]>(4);
 
-            for (auto i = 0; i < 4; i++)
-                arr[i] = i + 1;
+            for (auto i = 0U; i < 4; i++)
+                arr[i] = gsl::narrow_cast<int>(i + 1);
 
             {
                 span<int> s{arr, 4};
