@@ -941,7 +941,16 @@ SUITE(multi_span_tests)
         {
             multi_span<int, 2, 3> s = arr2d;
             CHECK(s(0, 0) == 1);
+            CHECK(s(0, 1) == 2);
             CHECK(s(1, 2) == 6);
+        }
+
+        int arr3d[2][2][2] = {1, 2, 3, 4, 5, 6, 7, 8};
+
+        {
+            multi_span<int, 2, 2, 2> s = arr3d;
+            CHECK(s(0, 0, 0) == 1);
+            CHECK(s(1, 1, 1) == 8);
         }
     }
 

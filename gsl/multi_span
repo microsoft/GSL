@@ -1488,7 +1488,7 @@ public:
     constexpr reference operator()(FirstIndex index, OtherIndices... indices)
     {
         index_type idx = {narrow_cast<std::ptrdiff_t>(index),
-                          narrow_cast<std::ptrdiff_t>(indices...)};
+                          narrow_cast<std::ptrdiff_t>(indices)...};
         return this->operator[](idx);
     }
 
