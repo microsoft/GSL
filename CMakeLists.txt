@@ -10,6 +10,7 @@ set(GSL_HEADERS
     "gsl/multi_span"
     "gsl/span"
     "gsl/string_span"
+    "gsl/gsl_algorithm"
 )
 
 include_directories(

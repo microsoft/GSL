@@ -52,3 +52,5 @@ add_gsl_test(assertion_tests)
 add_gsl_test(utils_tests)
 add_gsl_test(owner_tests)
 add_gsl_test(byte_tests)
+add_gsl_test(algorithm_tests)
+
