@@ -670,6 +670,19 @@ span<typename Ptr::element_type>
 make_span(Ptr& cont)
 { return span<typename Ptr::element_type>(cont); }
 
+template <class T, class = std::enable_if_t<std::is_pod<T>::value>>
+span<const byte, sizeof(T)>
+as_bytes(const T& e) noexcept
+{
+    return{ reinterpret_cast<const byte*>(&e),sizeof(T) };
+}
+
+template <class T, class = std::enable_if_t<std::is_trivially_copyable<T>::value>>
+span<byte, sizeof(T)>
+as_writeable_bytes(T& e) noexcept
+{
+    return{ reinterpret_cast<byte*>(&e),sizeof(T) };
+}
 
 // Specialization of gsl::at for span
 template <class ElementType, std::ptrdiff_t Extent>
