@@ -37,9 +37,21 @@
 namespace gsl
 {
 
-template <class SrcElementType, std::ptrdiff_t SrcExtent,
+namespace details_copy
+{
+    template <class T, std::ptrdiff_t src, std::ptrdiff_t dest>
+    struct return_type
+    {
+        using type = span<T, (src == dynamic_extent || dest == dynamic_extent) ? dynamic_extent : dest - src>;
+    };
+
+    template <class T, std::ptrdiff_t src, std::ptrdiff_t dest>
+    using return_t = typename return_type<T, src, dest>::type;
+}
+
+template <class SrcElementType,  std::ptrdiff_t SrcExtent,
           class DestElementType, std::ptrdiff_t DestExtent>
-void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent> dest)
+auto copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent> dest) -> details_copy::return_t<DestElementType, SrcExtent, DestExtent>
 {
     static_assert(std::is_assignable<decltype(*dest.data()), decltype(*src.data())>::value,
                   "Elements of source span can not be assigned to elements of destination span");
@@ -48,6 +60,7 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
 
     Expects(dest.size() >= src.size());
     std::copy_n(src.data(), src.size(), dest.data());
+    return dest.subspan(src.size());
 }
 
 } // namespace gsl
