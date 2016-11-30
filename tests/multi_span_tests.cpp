@@ -1660,7 +1660,7 @@ SUITE(multi_span_tests)
             multi_span<int, dynamic_range> av = a;
             auto wav = as_writeable_bytes(av);
             CHECK(wav.data() == reinterpret_cast<byte*>(&a[0]));
-            CHECK(wav.length() == sizeof(a));
+            CHECK(static_cast<std::size_t>(wav.length()) == sizeof(a));
         }
     }
 
