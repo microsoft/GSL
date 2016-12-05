@@ -126,6 +126,32 @@ bool binary_search(span<SrcElementType, SrcExtent> rng, const T& value, Compare 
     return std::binary_search(rng.data(), rng.data() + rng.size(), value, comp);
 }
 
+// sort
+template <class SrcElementType, std::ptrdiff_t SrcExtent>
+void sort(span<SrcElementType, SrcExtent> rng)
+{
+    std::sort(rng.data(), rng.data() + rng.size());
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
+void sort(span<SrcElementType, SrcExtent> rng, Compare comp)
+{
+    std::sort(rng.data(), rng.data() + rng.size(), comp);
+}
+
+// stable sort
+template <class SrcElementType, std::ptrdiff_t SrcExtent>
+void stable_sort(span<SrcElementType, SrcExtent> rng)
+{
+    std::stable_sort(rng.data(), rng.data() + rng.size());
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
+void stable_sort(span<SrcElementType, SrcExtent> rng, Compare comp)
+{
+    std::stable_sort(rng.data(), rng.data() + rng.size(), comp);
+}
+
 } // namespace gsl
 
 #ifdef _MSC_VER
