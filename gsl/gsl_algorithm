@@ -45,7 +45,8 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
 {
     static_assert(std::is_assignable<decltype(*dest.data()), decltype(*src.data())>::value,
                   "Elements of source span can not be assigned to elements of destination span");
-    static_assert(SrcExtent == dynamic_extent || DestExtent == dynamic_extent || (SrcExtent <= DestExtent),
+    static_assert(SrcExtent == dynamic_extent || DestExtent == dynamic_extent ||
+                      (SrcExtent <= DestExtent),
                   "Source range is longer than target range");
 
     Expects(dest.size() >= src.size());
@@ -150,6 +151,21 @@ template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
 void stable_sort(span<SrcElementType, SrcExtent> rng, Compare comp)
 {
     std::stable_sort(rng.data(), rng.data() + rng.size(), comp);
+}
+
+// nth_element
+template <class SrcElementType, std::ptrdiff_t SrcExtent>
+void nth_element(span<SrcElementType, SrcExtent> rng,
+	typename span<SrcElementType, SrcExtent>::index_type nth)
+{
+	std::nth_element(rng.data(), &rng[nth], rng.data() + rng.size());
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
+void nth_element(span<SrcElementType, SrcExtent> rng,
+	typename span<SrcElementType, SrcExtent>::index_type nth, Compare comp)
+{
+	std::nth_element(rng.data(), &rng[nth], rng.data() + rng.size(), comp);
 }
 
 } // namespace gsl
