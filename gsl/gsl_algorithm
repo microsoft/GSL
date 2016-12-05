@@ -83,7 +83,35 @@ auto find_if_not(const span<SrcElementType, SrcExtent>& rng, UnaryPredicate p) -
     return details_algo::toIt(rng, ptr);
 }
 
+// lower_bound
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+auto lower_bound(const span<SrcElementType, SrcExtent>& rng, const T& value) -> decltype(rng.begin())
+{
+    auto* ptr = std::lower_bound(rng.data(), rng.data() + rng.size(), value);
+    return details_algo::toIt(rng, ptr);
+}
 
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T, class Compare>
+auto lower_bound(const span<SrcElementType, SrcExtent>& rng, const T& value, Compare comp) -> decltype(rng.begin())
+{
+    auto* ptr = std::lower_bound(rng.data(), rng.data() + rng.size(), value, comp);
+    return details_algo::toIt(rng, ptr);
+}
+
+// upper_bound
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+auto upper_bound(const span<SrcElementType, SrcExtent>& rng, const T& value) -> decltype(rng.begin())
+{
+    auto* ptr = std::upper_bound(rng.data(), rng.data() + rng.size(), value);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T, class Compare>
+auto upper_bound(const span<SrcElementType, SrcExtent>& rng, const T& value, Compare comp) -> decltype(rng.begin())
+{
+    auto* ptr = std::upper_bound(rng.data(), rng.data() + rng.size(), value, comp);
+    return details_algo::toIt(rng, ptr);
+}
 
 } // namespace gsl
 
