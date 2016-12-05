@@ -113,6 +113,19 @@ auto upper_bound(const span<SrcElementType, SrcExtent>& rng, const T& value, Com
     return details_algo::toIt(rng, ptr);
 }
 
+// binary_search
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+bool binary_search(span<SrcElementType, SrcExtent> rng, const T& value)
+{
+    return std::binary_search(rng.data(), rng.data() + rng.size(), value);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T, class Compare>
+bool binary_search(span<SrcElementType, SrcExtent> rng, const T& value, Compare comp)
+{
+    return std::binary_search(rng.data(), rng.data() + rng.size(), value, comp);
+}
+
 } // namespace gsl
 
 #ifdef _MSC_VER
