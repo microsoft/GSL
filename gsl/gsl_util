@@ -93,7 +93,7 @@ inline final_act<F> finally(F&& f) noexcept
 }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
-#if _MSC_VER <= 1800
+#if defined(_MSC_VER) && _MSC_VER <= 1800
 template <class T, class U>
 inline constexpr T narrow_cast(U u) noexcept
 {
