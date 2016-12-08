@@ -308,7 +308,7 @@ namespace details
         constexpr extent_type() noexcept {}
 
         template <index_type Other>
-        constexpr extent_type(extent_type<Other> ext) 
+        constexpr extent_type(extent_type<Other> ext)
         {
             static_assert(Other == Ext || Other == dynamic_extent,
                           "Mismatch between fixed-size extent and size of initializing data.");
@@ -632,6 +632,22 @@ as_writeable_bytes(span<ElementType, Extent> s) noexcept
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
+
+template <class T, class = std::enable_if_t<std::is_pod<T>::value>>
+span<const byte, sizeof(T)>
+as_bytes(const T& e) noexcept
+{
+    return {reinterpret_cast<const byte*>(&e), sizeof(e)};
+}
+
+template <class T, class = std::enable_if_t<std::is_pod<T>::value>>
+span<byte, sizeof(T)>
+as_writeable_bytes(T& e) noexcept
+{
+    static_assert(!std::is_const<T>::value,"Can't create a span of writeable bytes over a const object");
+    return {reinterpret_cast<byte*>(&e), sizeof(e)};
+}
+
 //
 // make_span() - Utility functions for creating spans
 //
@@ -670,19 +686,6 @@ span<typename Ptr::element_type>
 make_span(Ptr& cont)
 { return span<typename Ptr::element_type>(cont); }
 
-template <class T, class = std::enable_if_t<std::is_pod<T>::value>>
-span<const byte, sizeof(T)>
-as_bytes(const T& e) noexcept
-{
-    return{ reinterpret_cast<const byte*>(&e),sizeof(T) };
-}
-
-template <class T, class = std::enable_if_t<std::is_trivially_copyable<T>::value>>
-span<byte, sizeof(T)>
-as_writeable_bytes(T& e) noexcept
-{
-    return{ reinterpret_cast<byte*>(&e),sizeof(T) };
-}
 
 // Specialization of gsl::at for span
 template <class ElementType, std::ptrdiff_t Extent>
