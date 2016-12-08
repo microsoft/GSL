@@ -149,7 +149,7 @@ SUITE(span_tests)
 
         {
             auto workaround_macro = []() { span<int, 1> s{ nullptr, static_cast<span<int>::index_type>(0) }; };
-            CHECK_THROW(workaround_macro(), fail_fast); 
+            CHECK_THROW(workaround_macro(), fail_fast);
         }
 
         {
@@ -680,7 +680,7 @@ SUITE(span_tests)
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
             span<char> s{cstr};
-#endif                                                          
+#endif
             span<const char> cs{cstr};
             CHECK(cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
                   cs.data() == cstr.data());
@@ -691,7 +691,7 @@ SUITE(span_tests)
             auto get_temp_vector = []() -> std::vector<int> { return {}; };
             auto use_span = [](span<int> s) { static_cast<void>(s); };
             use_span(get_temp_vector());
-#endif                      
+#endif
         }
 
         {
@@ -705,7 +705,7 @@ SUITE(span_tests)
             auto get_temp_string = []() -> std::string { return{}; };
             auto use_span = [](span<char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
-#endif                         
+#endif
         }
 
         {
@@ -866,7 +866,7 @@ SUITE(span_tests)
             span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
             CHECK(av.last<6>().length() == 6);
-#endif    
+#endif
             CHECK_THROW(av.last(6).length(), fail_fast);
         }
 
@@ -1098,7 +1098,7 @@ SUITE(span_tests)
             CHECK(beyond - first == 4);
             CHECK(first - first == 0);
             CHECK(beyond - beyond == 0);
-            
+
             ++it;
             CHECK(it - first == 1);
             CHECK(*it == 2);
@@ -1478,9 +1478,10 @@ SUITE(span_tests)
             MyTC_t dst{ 1 };
             auto src_b = as_bytes(src);
             auto dst_b = as_writeable_bytes(dst);
-            std::copy(src_b.begin(), src_b.end(), dst_b.begin());
-            CHECK(std::equal(src_b.begin(), src_b.end(), dst_b.begin()));
-            CHECK(src == dst);
+        }
+        {
+            const std::array<int, 4> data{ 1, 2, 3, 4 };
+            auto raw = as_writeable_bytes(data);
         }
 #endif
     }
@@ -1556,7 +1557,7 @@ SUITE(span_tests)
             auto f = [&]() {
                 span<int, 4> _s4 = {arr2, 2};
                 static_cast<void>(_s4);
-            };                     
+            };
             CHECK_THROW(f(), fail_fast);
         }
 
@@ -1564,7 +1565,7 @@ SUITE(span_tests)
         span<int> av = arr2;
         auto f = [&]() {
             span<int, 4> _s4 = av;
-            static_cast<void>(_s4);            
+            static_cast<void>(_s4);
         };
         CHECK_THROW(f(), fail_fast);
     }
