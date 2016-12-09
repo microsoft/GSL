@@ -140,13 +140,14 @@ namespace details
     template <class Span, bool IsConst>
     class span_iterator
     {
+        using element_type_ = typename Span::element_type;
     public:
         using iterator_category = std::random_access_iterator_tag;
-        using value_type = std::remove_const_t<typename Span::element_type>;
+        using value_type = std::remove_const_t<element_type_>;
         using difference_type = typename Span::index_type;
 
         using reference =
-            std::conditional_t<IsConst, const value_type, value_type> &;
+            std::conditional_t<IsConst, const element_type_, element_type_> &;
         using pointer = std::add_pointer_t<reference>;
 
         constexpr span_iterator() noexcept : span_iterator(nullptr, 0) {}
