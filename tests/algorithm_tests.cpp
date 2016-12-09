@@ -16,6 +16,7 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <gsl/gsl_algorithm>
+#include <iostream>
 
 #include <array>
 
@@ -204,6 +205,55 @@ SUITE(copy_tests)
         copy(src_span_static, dst_span_static);
 #endif
     }
+
+	TEST(algos)
+	{
+		std::array<int, 7> data1{ 3,7,1,1,5,2,3 };
+		auto data2 = data1;
+		gsl::span<int> span1(data1);
+		gsl::span<int> span2(data2);
+
+		// find
+		auto pred = [](int i) -> bool { return i == 1; };
+		auto cmp = [](int l, int r) -> bool { return l > r; };
+		auto val = 5;
+		auto pos = 3;
+		CHECK(find			(span1, val) == std::find(span1.begin(), span1.end(), val));
+		CHECK(find_if		(span1, pred) == std::find_if	 (span1.begin(), span1.end(), pred));
+		CHECK(find_if_not	(span1, pred) == std::find_if_not(span1.begin(), span1.end(), pred));
+
+		sort(span1);
+		std::sort(span2.begin(), span2.end());
+		CHECK(span1 == span2);
+		CHECK(binary_search(span1, val) == std::binary_search(span1.begin(), span1.end(), val));
+
+		CHECK(lower_bound(span1, val) == std::lower_bound(span1.begin(), span1.end(), val));
+		CHECK(lower_bound(span1, val, cmp) == std::lower_bound(span1.begin(), span1.end(), val, cmp));
+
+		CHECK(upper_bound(span1, val) == std::upper_bound(span1.begin(), span1.end(), val));
+		CHECK(upper_bound(span1, val, cmp) == std::upper_bound(span1.begin(), span1.end(), val, cmp));
+
+		sort(span1, cmp);
+		std::sort(span2.begin(), span2.end(), cmp);
+		CHECK(span1 == span2);
+		CHECK(binary_search(span1, val, cmp) == std::binary_search(span1.begin(), span1.end(), val, cmp));
+
+		stable_sort(span1);
+		std::stable_sort(span2.begin(), span2.end());
+		CHECK(span1 == span2);
+
+		stable_sort(span1,cmp);
+		std::stable_sort(span2.begin(), span2.end(), cmp);
+		CHECK(span1 == span2);
+
+		nth_element(span1, pos);
+		std::nth_element(span2.begin(), span2.begin() + pos, span2.end());
+		CHECK(span1[pos] == span2[pos]);
+
+		nth_element(span1, pos, cmp);
+		std::nth_element(span2.begin(), span2.begin() + pos, span2.end(), cmp);
+		CHECK(span1[pos] == span2[pos]);
+	}
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
