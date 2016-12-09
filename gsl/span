@@ -146,7 +146,7 @@ namespace details
         using difference_type = typename Span::index_type;
 
         using reference =
-            std::conditional_t<IsConst, const value_type, value_type>> &;
+            std::conditional_t<IsConst, const value_type, value_type> &;
         using pointer = std::add_pointer_t<reference>;
 
         constexpr span_iterator() noexcept : span_iterator(nullptr, 0) {}
