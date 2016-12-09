@@ -52,6 +52,39 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
     std::copy_n(src.data(), src.size(), dest.data());
 }
 
+namespace details_algo
+{
+    template <class ElementType, std::ptrdiff_t SrcExtent>
+    auto toIt(const span<ElementType, SrcExtent>& rng, const ElementType* ptr) -> decltype(rng.begin())
+    {
+        return rng.begin() + (ptr - rng.data());
+    }
+}
+
+// find
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+auto find(const span<SrcElementType, SrcExtent>& rng, const T& value) -> decltype(rng.begin())
+{
+    auto* ptr = std::find(rng.data(), rng.data() + rng.size(), value);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class UnaryPredicate>
+auto find_if(const span<SrcElementType, SrcExtent>& rng, UnaryPredicate p) -> decltype(rng.begin())
+{
+    auto* ptr = std::find_if(rng.data(), rng.data() + rng.size(), p);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class UnaryPredicate>
+auto find_if_not(const span<SrcElementType, SrcExtent>& rng, UnaryPredicate p) -> decltype(rng.begin())
+{
+    auto* ptr = std::find_if_not(rng.data(), rng.data() + rng.size(), p);
+    return details_algo::toIt(rng, ptr);
+}
+
+
+
 } // namespace gsl
 
 #ifdef _MSC_VER
