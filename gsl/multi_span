@@ -74,7 +74,6 @@
 #endif
 
 #define noexcept /*noexcept*/
-
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 namespace gsl
@@ -2199,34 +2198,35 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 } // namespace gsl
 
-#ifdef _MSC_VER
-
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#if _MSC_VER <= 1800
-#pragma warning(pop)
-
-#ifndef GSL_THROW_ON_CONTRACT_VIOLATION
-#undef noexcept
-#pragma pop_macro("noexcept")
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION
-
-#undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-
-#endif // _MSC_VER <= 1800
-
-#endif // _MSC_VER
-
-#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
 
 #undef noexcept
 
 #ifdef _MSC_VER
-#pragma warning(pop)
 #pragma pop_macro("noexcept")
 #endif
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
+
+#ifdef _MSC_VER
+
+#if _MSC_VER <= 1800
+
+#ifndef GSL_THROW_ON_CONTRACT_VIOLATION
+#undef noexcept
+#pragma pop_macro("noexcept")
+#endif
+
+#undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
+#undef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
+#pragma warning(pop)
+  
+#endif // _MSC_VER <= 1800
+
+#undef constexpr
+#pragma pop_macro("constexpr")
+#pragma warning(pop)
+
+#endif // _MSC_VER
 
 #endif // GSL_MULTI_SPAN_H
