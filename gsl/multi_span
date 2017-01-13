@@ -87,7 +87,7 @@ namespace details
     template <typename SizeType>
     struct SizeTypeTraits
     {
-        static const SizeType max_value = std::numeric_limits<SizeType>::max();
+        static const SizeType max_value = (std::numeric_limits<SizeType>::max)();
     };
 
     template <typename... Ts>
