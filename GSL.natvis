@@ -15,4 +15,17 @@
         </Expand>
     </Type>
 
+    <!-- These types are from the span header. -->
+    <Type Name="gsl::span&lt;*, *&gt;">
+        <!-- This uses conditionals to work for both fixed and dynamic sized spans. -->
+        <DisplayString>{{ extent = { (extent == gsl::dynamic_extent) ? (storage_.size_) : (extent) } }}</DisplayString>
+        <Expand>
+            <ArrayItems>
+                <!-- Unfortunately we have to repeat this because we are not allowed to call functions (they could have side-effects). -->
+                <Size>(extent == gsl::dynamic_extent) ? (storage_.size_) : (extent)</Size>
+                <ValuePointer>storage_.data_</ValuePointer>
+            </ArrayItems>
+        </Expand>
+    </Type>
+    
 </AutoVisualizer>  
