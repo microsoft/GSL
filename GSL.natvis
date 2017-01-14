@@ -5,4 +5,14 @@
         <!-- na hides the address, otherwise it would appear as 0x.... "Message" -->
         <DisplayString>{_Data._What,nasb}</DisplayString>
     </Type>
+
+    <!-- These types are from the gsl_util header. -->
+    <Type Name="gsl::final_act&lt;*&gt;">
+        <DisplayString>{{ invoke = {invoke_}, action = {f_} }}</DisplayString>
+        <Expand>
+            <Item Name="[invoke]">invoke_</Item>
+            <Item Name="[callback]">f_</Item>
+        </Expand>
+    </Type>
+
 </AutoVisualizer>  
