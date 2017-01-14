@@ -19,9 +19,9 @@ include_directories(
 
 # Natvis works only on Visual Studio 2010 and newer.
 if (MSVC)
-    # It also requires CMake >= 3.7 to support installation.
+    # It also requires CMake >= 3.7 to support NatVis files.
 	if (CMAKE_VERSION VERSION_LESS "3.7")
-	    message(WARNING "Your CMake version is too old to automatically install NatVis support. Please update to CMake >= 3.7 to be able to automatically install .natvis files.")
+	    message(WARNING "Your CMake version is too old to automatically install NatVis. Please update to CMake >= 3.7 to be able to automatically install .natvis files.")
 	else()
         set(GSL_NATVIS
             "GSL.natvis")
