@@ -1,3 +1,0 @@
-# .natvis files are not properly detected by GitHub as .xml, so we override it here.
-# See https://github.com/github/linguist#overrides
-GSL.natvis linguist-language=XML

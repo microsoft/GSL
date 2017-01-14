@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    This will make GitHub and some editors recognize this code as XML: 
+    vim: syntax=xml
+-->
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
     <!-- These types are from the gsl_assert header. -->
     <Type Name="gsl::fail_fast">
