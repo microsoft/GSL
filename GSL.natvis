@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">  
-	<Type Name="gsl::fail_fast">
-		<!-- na hides the address, otherwise it would appear as 0x.... "Message" -->
-		<DisplayString>{_Data._What,na}</DisplayString>
-	</Type>
+    <Type Name="gsl::fail_fast">
+        <!-- na hides the address, otherwise it would appear as 0x.... "Message" -->
+        <DisplayString>{_Data._What,na}</DisplayString>
+    </Type>
 </AutoVisualizer>  
