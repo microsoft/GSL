@@ -19,6 +19,8 @@
 #ifndef GSL_BYTE_H
 #define GSL_BYTE_H
 
+#include <type_traits>
+
 #ifdef _MSC_VER
 
 #pragma warning(push)
