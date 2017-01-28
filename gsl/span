@@ -359,7 +359,10 @@ public:
     constexpr static const index_type extent = Extent;
 
     // [span.cons], span constructors, copy, assignment, and destructor
-    template <bool Unused = false, class = std::enable_if_t<(Unused || Extent <= 0)>>
+    template <bool Dependent = false,
+        // "Dependent" is needed to make "std::enable_if_t<Dependent || Extent <= 0>" SFINAE,
+        // since "std::enable_if_t<Extent <= 0>" is ill-formed when Extent is greater than 0.
+        class = std::enable_if_t<(Dependent || Extent <= 0)>>
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>()) {}
 
     constexpr span(std::nullptr_t) noexcept : span() {}
