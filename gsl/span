@@ -308,7 +308,7 @@ namespace details
         constexpr extent_type() noexcept {}
 
         template <index_type Other>
-        constexpr extent_type(extent_type<Other> ext) 
+        constexpr extent_type(extent_type<Other> ext)
         {
             static_assert(Other == Ext || Other == dynamic_extent,
                           "Mismatch between fixed-size extent and size of initializing data.");
@@ -359,6 +359,10 @@ public:
     constexpr static const index_type extent = Extent;
 
     // [span.cons], span constructors, copy, assignment, and destructor
+    template <bool Dependent = false,
+        // "Dependent" is needed to make "std::enable_if_t<Dependent || Extent <= 0>" SFINAE,
+        // since "std::enable_if_t<Extent <= 0>" is ill-formed when Extent is greater than 0.
+        class = std::enable_if_t<(Dependent || Extent <= 0)>>
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>()) {}
 
     constexpr span(std::nullptr_t) noexcept : span() {}
