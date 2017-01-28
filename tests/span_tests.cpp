@@ -1444,6 +1444,48 @@ SUITE(span_tests)
         }
     }
 
+    struct MyTriviallyCopyableType {
+        MyTriviallyCopyableType(int i) :a(i), b(static_cast<char>(i)), c(i) {}
+        int a;
+        char b;
+        double c;
+        friend bool operator==(MyTriviallyCopyableType& l, MyTriviallyCopyableType& r) { return l.a == r.a && l.b == r.b && l.c == r.c; }
+    };
+
+    TEST(pod_as_bytes)
+    {
+        {
+            double src{ 10.5 };
+            double dst{};
+            auto src_b = as_bytes(src);
+            auto dst_b = as_writeable_bytes(dst);
+            std::copy(src_b.begin(), src_b.end(), dst_b.begin());
+            CHECK(std::equal(src_b.begin(), src_b.end(), dst_b.begin()));
+            CHECK(src == dst);
+        }
+        {
+            std::array<int, 10> src{ 1,2,3,4,5,6,7,8,9,10 };
+            std::array<int, 10> dst{};
+            auto src_b = as_bytes(src);
+            auto dst_b = as_writeable_bytes(dst);
+            std::copy(src_b.begin(), src_b.end(), dst_b.begin());
+            CHECK(std::equal(src_b.begin(), src_b.end(), dst_b.begin()));
+            CHECK(src == dst);
+        }
+#ifdef CONFIRM_COMPILATION_ERRORS
+        {
+            MyTC_t src{ 5 };
+            MyTC_t dst{ 1 };
+            auto src_b = as_bytes(src);
+            auto dst_b = as_writeable_bytes(dst);
+        }
+        {
+            const std::array<int, 4> data{ 1, 2, 3, 4 };
+            auto raw = as_writeable_bytes(data);
+        }
+#endif
+    }
+
     TEST(fixed_size_conversions)
     {
         int arr[] = {1, 2, 3, 4};
