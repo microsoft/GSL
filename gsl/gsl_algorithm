@@ -45,11 +45,127 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
 {
     static_assert(std::is_assignable<decltype(*dest.data()), decltype(*src.data())>::value,
                   "Elements of source span can not be assigned to elements of destination span");
-    static_assert(SrcExtent == dynamic_extent || DestExtent == dynamic_extent || (SrcExtent <= DestExtent),
+    static_assert(SrcExtent == dynamic_extent || DestExtent == dynamic_extent ||
+                      (SrcExtent <= DestExtent),
                   "Source range is longer than target range");
 
     Expects(dest.size() >= src.size());
     std::copy_n(src.data(), src.size(), dest.data());
+}
+
+namespace details_algo
+{
+    template <class ElementType, std::ptrdiff_t SrcExtent>
+    auto toIt(const span<ElementType, SrcExtent>& rng, const ElementType* ptr) -> decltype(rng.begin())
+    {
+        return rng.begin() + (ptr - rng.data());
+    }
+}
+
+// find
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+auto find(const span<SrcElementType, SrcExtent>& rng, const T& value) -> decltype(rng.begin())
+{
+    auto* ptr = std::find(rng.data(), rng.data() + rng.size(), value);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class UnaryPredicate>
+auto find_if(const span<SrcElementType, SrcExtent>& rng, UnaryPredicate p) -> decltype(rng.begin())
+{
+    auto* ptr = std::find_if(rng.data(), rng.data() + rng.size(), p);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class UnaryPredicate>
+auto find_if_not(const span<SrcElementType, SrcExtent>& rng, UnaryPredicate p) -> decltype(rng.begin())
+{
+    auto* ptr = std::find_if_not(rng.data(), rng.data() + rng.size(), p);
+    return details_algo::toIt(rng, ptr);
+}
+
+// lower_bound
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+auto lower_bound(const span<SrcElementType, SrcExtent>& rng, const T& value) -> decltype(rng.begin())
+{
+    auto* ptr = std::lower_bound(rng.data(), rng.data() + rng.size(), value);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T, class Compare>
+auto lower_bound(const span<SrcElementType, SrcExtent>& rng, const T& value, Compare comp) -> decltype(rng.begin())
+{
+    auto* ptr = std::lower_bound(rng.data(), rng.data() + rng.size(), value, comp);
+    return details_algo::toIt(rng, ptr);
+}
+
+// upper_bound
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+auto upper_bound(const span<SrcElementType, SrcExtent>& rng, const T& value) -> decltype(rng.begin())
+{
+    auto* ptr = std::upper_bound(rng.data(), rng.data() + rng.size(), value);
+    return details_algo::toIt(rng, ptr);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T, class Compare>
+auto upper_bound(const span<SrcElementType, SrcExtent>& rng, const T& value, Compare comp) -> decltype(rng.begin())
+{
+    auto* ptr = std::upper_bound(rng.data(), rng.data() + rng.size(), value, comp);
+    return details_algo::toIt(rng, ptr);
+}
+
+// binary_search
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T>
+bool binary_search(span<SrcElementType, SrcExtent> rng, const T& value)
+{
+    return std::binary_search(rng.data(), rng.data() + rng.size(), value);
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class T, class Compare>
+bool binary_search(span<SrcElementType, SrcExtent> rng, const T& value, Compare comp)
+{
+    return std::binary_search(rng.data(), rng.data() + rng.size(), value, comp);
+}
+
+// sort
+template <class SrcElementType, std::ptrdiff_t SrcExtent>
+void sort(span<SrcElementType, SrcExtent> rng)
+{
+    std::sort(rng.data(), rng.data() + rng.size());
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
+void sort(span<SrcElementType, SrcExtent> rng, Compare comp)
+{
+    std::sort(rng.data(), rng.data() + rng.size(), comp);
+}
+
+// stable sort
+template <class SrcElementType, std::ptrdiff_t SrcExtent>
+void stable_sort(span<SrcElementType, SrcExtent> rng)
+{
+    std::stable_sort(rng.data(), rng.data() + rng.size());
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
+void stable_sort(span<SrcElementType, SrcExtent> rng, Compare comp)
+{
+    std::stable_sort(rng.data(), rng.data() + rng.size(), comp);
+}
+
+// nth_element
+template <class SrcElementType, std::ptrdiff_t SrcExtent>
+void nth_element(span<SrcElementType, SrcExtent> rng,
+	typename span<SrcElementType, SrcExtent>::index_type nth)
+{
+	std::nth_element(rng.data(), &rng[nth], rng.data() + rng.size());
+}
+
+template <class SrcElementType, std::ptrdiff_t SrcExtent, class Compare>
+void nth_element(span<SrcElementType, SrcExtent> rng,
+	typename span<SrcElementType, SrcExtent>::index_type nth, Compare comp)
+{
+	std::nth_element(rng.data(), &rng[nth], rng.data() + rng.size(), comp);
 }
 
 } // namespace gsl

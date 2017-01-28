@@ -33,7 +33,7 @@ else()
 endif()
 
 function(add_gsl_test name)
-    add_executable(${name} ${name}.cpp ../gsl/gsl ../gsl/gsl_assert ../gsl/gsl_util ../gsl/multi_span ../gsl/span ../gsl/string_span)
+    add_executable(${name} ${name}.cpp ../gsl/gsl ../gsl/gsl_assert ../gsl/gsl_util ../gsl/multi_span ../gsl/span ../gsl/string_span ../gsl/gsl_algorithm)
     target_link_libraries(${name} UnitTest++)
     add_test(
       ${name}
