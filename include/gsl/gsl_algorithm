@@ -19,21 +19,19 @@
 #ifndef GSL_ALGORITHM_H
 #define GSL_ALGORITHM_H
 
-#include "span"
+#include <gsl/span>
 #include <algorithm>
 
 #ifdef _MSC_VER
+ #pragma warning(push)
 
-#pragma warning(push)
+ // turn off some warnings that are noisy about our Expects statements
+ #pragma warning(disable : 4127) // conditional expression is constant
 
-// turn off some warnings that are noisy about our Expects statements
-#pragma warning(disable : 4127) // conditional expression is constant
-
-// blanket turn off warnings from CppCoreCheck for now
-// so people aren't annoyed by them when running the tool.
-// more targeted suppressions will be added in a future update to the GSL
-#pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
-
+ // blanket turn off warnings from CppCoreCheck for now
+ // so people aren't annoyed by them when running the tool.
+ // more targeted suppressions will be added in a future update to the GSL
+ #pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
 #endif // _MSC_VER
 
 namespace gsl
@@ -55,7 +53,7 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
 } // namespace gsl
 
 #ifdef _MSC_VER
-#pragma warning(pop)
+ #pragma warning(pop)
 #endif // _MSC_VER
 
 #endif // GSL_ALGORITHM_H

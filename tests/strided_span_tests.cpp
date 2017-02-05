@@ -1,20 +1,20 @@
-/////////////////////////////////////////////////////////////////////////////// 
-// 
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
-// 
-// This code is licensed under the MIT License (MIT). 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-// THE SOFTWARE. 
-// 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h> 
+#include <UnitTest++/UnitTest++.h>
 #include <gsl/multi_span>
 
 #include <string>
@@ -27,7 +27,7 @@
 using namespace std;
 using namespace gsl;
 
-namespace 
+namespace
 {
 	struct BaseClass {};
 	struct DerivedClass : BaseClass {};
@@ -38,7 +38,7 @@ SUITE(strided_span_tests)
 	TEST (span_section_test)
 	{
 		int a[30][4][5];
-		
+
 		auto av = as_multi_span(a);
 		auto sub = av.section({15, 0, 0}, gsl::index<3>{2, 2, 2});
 		auto subsub = sub.section({1, 0, 0}, gsl::index<3>{1, 1, 1});
@@ -143,7 +143,7 @@ SUITE(strided_span_tests)
 #else
 				strided_span<const volatile int, 1> sav_cv{ multi_span<const volatile int>{src}, strided_bounds<1>{2, 1} };
 #endif
-				
+
 				CHECK(sav_cv.bounds().index_bounds() == index<1>{ 2 });
 				CHECK(sav_cv.bounds().strides() == index<1>{ 1 });
 				CHECK(sav_cv[1] == 2);
@@ -188,13 +188,13 @@ SUITE(strided_span_tests)
 			CHECK(av2[1] == 5);
 
 			static_assert(std::is_convertible<const multi_span<int, 2>, multi_span<const int, 2>>::value, "ctor is not implicit!");
-		
+
 			const strided_span<int, 1> src{ arr, {2, 1} };
 			strided_span<const int, 1> sav{ src };
 			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
 			CHECK(sav.bounds().stride() == 1);
 			CHECK(sav[1] == 5);
-			
+
 			static_assert(std::is_convertible<const strided_span<int, 1>, strided_span<const int, 1>>::value, "ctor is not implicit!");
 		}
 
@@ -203,7 +203,7 @@ SUITE(strided_span_tests)
 			int arr1[2] = { 3, 4 };
 			const strided_span<int, 1> src1{ arr1, {2, 1} };
 			strided_span<int, 1> sav1{ src1 };
- 
+
 			CHECK(sav1.bounds().index_bounds() == index<1>{ 2 });
 			CHECK(sav1.bounds().stride() == 1);
 			CHECK(sav1[0] == 3);
@@ -229,7 +229,7 @@ SUITE(strided_span_tests)
 			CHECK(sav[0] == 1);
 			CHECK(&sav_ref == &sav);
 		}
-		
+
 		// Check copy assignment operator
 		{
 			int arr1[2] = { 3, 4 };
@@ -304,7 +304,7 @@ SUITE(strided_span_tests)
 		CHECK(cm_sl[1] == 11);
 		CHECK(cm_sl[2] == 12);
 
-		// Section 
+		// Section
 		strided_span<int, 2> cm_sec = cm_sav.section( { 2, 1 }, { 3, 2 });
 
 		CHECK((cm_sec.bounds().index_bounds() == index<2>{3, 2}));
@@ -321,11 +321,11 @@ SUITE(strided_span_tests)
 
 		{
 			// incorrect sections
-			
+
 			CHECK_THROW(av.section(0, 0)[0], fail_fast);
 			CHECK_THROW(av.section(1, 0)[0], fail_fast);
 			CHECK_THROW(av.section(1, 1)[1], fail_fast);
-			
+
 			CHECK_THROW(av.section(2, 5), fail_fast);
 			CHECK_THROW(av.section(5, 2), fail_fast);
 			CHECK_THROW(av.section(5, 0), fail_fast);
@@ -354,7 +354,7 @@ SUITE(strided_span_tests)
 		}
 
 		{
-			// strided array ctor with matching strided bounds 
+			// strided array ctor with matching strided bounds
 			strided_span<int, 1> sav{ arr,{ 4, 1 } };
 			CHECK(sav.bounds().index_bounds() == index<1>{ 4 });
 			CHECK(sav[3] == 3);
@@ -362,7 +362,7 @@ SUITE(strided_span_tests)
 		}
 
 		{
-			// strided array ctor with smaller strided bounds 
+			// strided array ctor with smaller strided bounds
 			strided_span<int, 1> sav{ arr,{ 2, 1 } };
 			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
 			CHECK(sav[1] == 1);
@@ -370,7 +370,7 @@ SUITE(strided_span_tests)
 		}
 
 		{
-			// strided array ctor with fitting irregular bounds 
+			// strided array ctor with fitting irregular bounds
 			strided_span<int, 1> sav{ arr,{ 2, 3 } };
 			CHECK(sav.bounds().index_bounds() == index<1>{ 2 });
 			CHECK(sav[0] == 0);
@@ -663,7 +663,7 @@ SUITE(strided_span_tests)
         auto height = 12, width = 2;
         auto size = height * width;
 
-        auto arr = new int[size];
+        auto arr = new int[static_cast<std::size_t>(size)];
         for (auto i = 0; i < size; ++i)
         {
             arr[i] = i;
@@ -713,12 +713,12 @@ SUITE(strided_span_tests)
         auto section = av.section({0, 2 * s}, {4, s}); // { { arr[0].c[0], arr[0].c[1], arr[0].c[2], arr[0].c[3] } , { arr[1].c[0], ... } , ... }
 
                                                        // convert to array 4x1 array of integers
-        auto cs = section.as_strided_span<int>(); // { { arr[0].c }, {arr[1].c } , ... } 
+        auto cs = section.as_strided_span<int>(); // { { arr[0].c }, {arr[1].c } , ... }
 
         CHECK(cs.bounds().index_bounds()[0] == 4);
         CHECK(cs.bounds().index_bounds()[1] == 1);
 
-        // transpose to 1x4 array 
+        // transpose to 1x4 array
         strided_bounds<2> reverse_bounds{
             {cs.bounds().index_bounds()[1] , cs.bounds().index_bounds()[0]},
             {cs.bounds().strides()[1], cs.bounds().strides()[0]}

@@ -22,25 +22,21 @@
 #include <type_traits>
 
 #ifdef _MSC_VER
+ #pragma warning(push)
 
-#pragma warning(push)
+ // don't warn about function style casts in byte related operators
+ #pragma warning(disable : 26493)
 
-// don't warn about function style casts in byte related operators
-#pragma warning(disable : 26493)
+ // MSVC 2013 workarounds
+ #if _MSC_VER <= 1800
+  // constexpr is not understood
+  #pragma push_macro("constexpr")
+  #define constexpr inline
 
-// MSVC 2013 workarounds
-#if _MSC_VER <= 1800
-
-// constexpr is not understood
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-// noexcept is not understood
-#pragma push_macro("noexcept")
-#define noexcept /*noexcept*/
-
-#endif // _MSC_VER <= 1800
-
+  // noexcept is not understood
+  #pragma push_macro("noexcept")
+  #define noexcept /*noexcept*/
+ #endif // _MSC_VER <= 1800
 #endif // _MSC_VER
 
 namespace gsl
@@ -145,19 +141,15 @@ inline constexpr byte to_byte() noexcept
 } // namespace gsl
 
 #ifdef _MSC_VER
+ #if _MSC_VER <= 1800
+  #undef constexpr
+  #pragma pop_macro("constexpr")
 
-#if _MSC_VER <= 1800
+  #undef noexcept
+  #pragma pop_macro("noexcept")
+ #endif // _MSC_VER <= 1800
 
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#undef noexcept
-#pragma pop_macro("noexcept")
-
-#endif // _MSC_VER <= 1800
-
-#pragma warning(pop)
-
+ #pragma warning(pop)
 #endif // _MSC_VER
 
 #endif // GSL_BYTE_H

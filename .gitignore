@@ -11,3 +11,5 @@ tests/*tests.dir
 Testing/Temporary/*.*
 CMakeCache.txt
 *.suo
+.vs/
+.vscode/
