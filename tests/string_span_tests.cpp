@@ -125,7 +125,7 @@ SUITE(string_span_tests)
         CHECK(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
         CHECK(s2.length() == 5);
     }
-    
+
     TEST(EqualityAndImplicitConstructors)
     {
         {
@@ -134,7 +134,7 @@ SUITE(string_span_tests)
 
             // comparison to empty span
             CHECK(span1 != span);
-            CHECK(span != span1);      
+            CHECK(span != span1);
         }
 
         {
@@ -291,7 +291,7 @@ SUITE(string_span_tests)
             string_span<> _span{ _ptr, 5 };
 
             // non-const span, non-const other type
-            
+
             CHECK(_span == _ar);
             CHECK(_span == _ar1);
             CHECK(_span == _ar2);
@@ -759,7 +759,7 @@ SUITE(string_span_tests)
     T create() { return T{}; }
 
     template <class T>
-    void use(basic_string_span<T, gsl::dynamic_extent> s) {}
+    void use(basic_string_span<T, gsl::dynamic_extent>) {}
 
     TEST(MoveConstructors)
     {

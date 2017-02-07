@@ -1148,7 +1148,7 @@ SUITE(multi_span_tests)
         auto width = 5, height = 20;
 
         auto imgSize = width * height;
-        auto image_ptr = new int[imgSize][3];
+        auto image_ptr = new int[static_cast<std::size_t>(imgSize)][3];
 
         // size check will be done
         auto image_view =
@@ -1496,7 +1496,7 @@ SUITE(multi_span_tests)
         auto height = 4, width = 2;
         auto size = height * width;
 
-        auto arr = new int[size];
+        auto arr = new int[static_cast<std::size_t>(size)];
         for (auto i = 0; i < size; ++i) {
             arr[i] = i;
         }
