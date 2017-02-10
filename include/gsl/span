@@ -104,7 +104,7 @@ namespace details
     {
     };
 
-    template <class ElementType, size_t Extent>
+    template <class ElementType, std::size_t Extent>
     struct is_std_array_oracle<std::array<ElementType, Extent>> : std::true_type
     {
     };
@@ -364,18 +364,18 @@ public:
     {
     }
 
-    template <size_t N>
+    template <std::size_t N>
     constexpr span(element_type (&arr)[N]) GSL_NOEXCEPT : storage_(&arr[0], details::extent_type<N>())
     {
     }
 
-    template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
+    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     constexpr span(std::array<ArrayElementType, N>& arr) GSL_NOEXCEPT
         : storage_(&arr[0], details::extent_type<N>())
     {
     }
 
-    template <size_t N>
+    template <std::size_t N>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) GSL_NOEXCEPT
         : storage_(&arr[0], details::extent_type<N>())
     {
@@ -592,7 +592,7 @@ namespace details
     // if we only supported compilers with good constexpr support then
     // this pair of classes could collapse down to a constexpr function
 
-    // we should use a narrow_cast<> to go to size_t, but older compilers may not see it as
+    // we should use a narrow_cast<> to go to std::size_t, but older compilers may not see it as
     // constexpr
     // and so will fail compilation of the template
     template <class ElementType, std::ptrdiff_t Extent>
@@ -639,7 +639,7 @@ span<ElementType>
 make_span(ElementType* firstElem, ElementType* lastElem)
 { return span<ElementType>(firstElem, lastElem); }
 
-template <class ElementType, size_t N>
+template <class ElementType, std::size_t N>
 span<ElementType>
 make_span(ElementType (&arr)[N])
 { return span<ElementType>(arr); }

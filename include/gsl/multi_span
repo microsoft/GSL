@@ -94,16 +94,16 @@ namespace details
     };
 }
 
-template <size_t Rank>
+template <std::size_t Rank>
 class index final
 {
     static_assert(Rank > 0, "Rank must be greater than 0!");
 
-    template <size_t OtherRank>
+    template <std::size_t OtherRank>
     friend class index;
 
 public:
-    static const size_t rank = Rank;
+    static const std::size_t rank = Rank;
     using value_type = std::ptrdiff_t;
     using size_type = value_type;
     using reference = std::add_lvalue_reference_t<value_type>;
@@ -138,14 +138,14 @@ public:
     constexpr index& operator=(const index& rhs) GSL_NOEXCEPT = default;
 
     // Preconditions: component_idx < rank
-    constexpr reference operator[](size_t component_idx)
+    constexpr reference operator[](std::size_t component_idx)
     {
         Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
     // Preconditions: component_idx < rank
-    constexpr const_reference operator[](size_t component_idx) const GSL_NOEXCEPT
+    constexpr const_reference operator[](std::size_t component_idx) const GSL_NOEXCEPT
     {
         Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
@@ -311,24 +311,24 @@ namespace details
         BoundsRanges(const std::ptrdiff_t* const) {}
         BoundsRanges() = default;
 
-        template <typename T, size_t Dim>
+        template <typename T, std::size_t Dim>
         void serialize(T&) const
         {
         }
 
-        template <typename T, size_t Dim>
+        template <typename T, std::size_t Dim>
         size_type linearize(const T&) const
         {
             return 0;
         }
 
-        template <typename T, size_t Dim>
+        template <typename T, std::size_t Dim>
         size_type contains(const T&) const
         {
             return -1;
         }
 
-        size_type elementNum(size_t) const GSL_NOEXCEPT { return 0; }
+        size_type elementNum(std::size_t) const GSL_NOEXCEPT { return 0; }
 
         size_type totalSize() const GSL_NOEXCEPT { return TotalSize; }
 
@@ -340,8 +340,8 @@ namespace details
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
-        static const size_t Depth = Base::Depth + 1;
-        static const size_t DynamicNum = Base::DynamicNum + 1;
+        static const std::size_t Depth = Base::Depth + 1;
+        static const std::size_t DynamicNum = Base::DynamicNum + 1;
         static const size_type CurrentRange = dynamic_range;
         static const size_type TotalSize = dynamic_range;
     private:
@@ -364,14 +364,14 @@ namespace details
         {
         }
 
-        template <typename T, size_t Dim = 0>
+        template <typename T, std::size_t Dim = 0>
         void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
         }
 
-        template <typename T, size_t Dim = 0>
+        template <typename T, std::size_t Dim = 0>
         size_type linearize(const T& arr) const
         {
             const size_type index = this->Base::totalSize() * arr[Dim];
@@ -379,7 +379,7 @@ namespace details
             return index + this->Base::template linearize<T, Dim + 1>(arr);
         }
 
-        template <typename T, size_t Dim = 0>
+        template <typename T, std::size_t Dim = 0>
         size_type contains(const T& arr) const
         {
             const ptrdiff_t last = this->Base::template contains<T, Dim + 1>(arr);
@@ -392,7 +392,7 @@ namespace details
 
         size_type elementNum() const GSL_NOEXCEPT { return totalSize() / this->Base::totalSize(); }
 
-        size_type elementNum(size_t dim) const GSL_NOEXCEPT
+        size_type elementNum(std::size_t dim) const GSL_NOEXCEPT
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -412,8 +412,8 @@ namespace details
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
-        static const size_t Depth = Base::Depth + 1;
-        static const size_t DynamicNum = Base::DynamicNum;
+        static const std::size_t Depth = Base::Depth + 1;
+        static const std::size_t DynamicNum = Base::DynamicNum;
         static const size_type CurrentRange = CurRange;
         static const size_type TotalSize =
             Base::TotalSize == dynamic_range ? dynamic_range : CurrentRange * Base::TotalSize;
@@ -429,14 +429,14 @@ namespace details
             (void) firstLevel;
         }
 
-        template <typename T, size_t Dim = 0>
+        template <typename T, std::size_t Dim = 0>
         void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
         }
 
-        template <typename T, size_t Dim = 0>
+        template <typename T, std::size_t Dim = 0>
         size_type linearize(const T& arr) const
         {
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
@@ -444,7 +444,7 @@ namespace details
                    this->Base::template linearize<T, Dim + 1>(arr);
         }
 
-        template <typename T, size_t Dim = 0>
+        template <typename T, std::size_t Dim = 0>
         size_type contains(const T& arr) const
         {
             if (arr[Dim] >= CurrentRange) return -1;
@@ -457,7 +457,7 @@ namespace details
 
         size_type elementNum() const GSL_NOEXCEPT { return CurrentRange; }
 
-        size_type elementNum(size_t dim) const GSL_NOEXCEPT
+        size_type elementNum(std::size_t dim) const GSL_NOEXCEPT
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -486,20 +486,20 @@ namespace details
         const TypeChain& obj_;
         TypeListIndexer(const TypeChain& obj) : obj_(obj) {}
 
-        template <size_t N>
+        template <std::size_t N>
         const TypeChain& getObj(std::true_type)
         {
             return obj_;
         }
 
-        template <size_t N, typename MyChain = TypeChain, typename MyBase = typename MyChain::Base>
+        template <std::size_t N, typename MyChain = TypeChain, typename MyBase = typename MyChain::Base>
         auto getObj(std::false_type)
             -> decltype(TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>())
         {
             return TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>();
         }
 
-        template <size_t N>
+        template <std::size_t N>
         auto get() -> decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
         {
             return getObj<N - 1>(std::integral_constant<bool, N == 0>());
@@ -512,12 +512,12 @@ namespace details
         return TypeListIndexer<TypeChain>(obj);
     }
 
-    template <size_t Rank, bool Enabled = (Rank > 1),
+    template <std::size_t Rank, bool Enabled = (Rank > 1),
               typename Ret = std::enable_if_t<Enabled, index<Rank - 1>>>
     inline constexpr Ret shift_left(const index<Rank>& other) GSL_NOEXCEPT
     {
         Ret ret{};
-        for (size_t i = 0; i < Rank - 1; ++i) {
+        for (std::size_t i = 0; i < Rank - 1; ++i) {
             ret[i] = other[i + 1];
         }
         return ret;
@@ -546,8 +546,8 @@ class static_bounds<FirstRange, RestRanges...>
     friend class static_bounds;
 
 public:
-    static const size_t rank = MyRanges::Depth;
-    static const size_t dynamic_rank = MyRanges::DynamicNum;
+    static const std::size_t rank = MyRanges::Depth;
+    static const std::size_t dynamic_rank = MyRanges::DynamicNum;
     static const std::ptrdiff_t static_size = MyRanges::TotalSize;
 
     using size_type = std::ptrdiff_t;
@@ -561,18 +561,18 @@ public:
 
     constexpr static_bounds(const static_bounds&) = default;
 
-    template <typename SourceType, typename TargetType, size_t Rank>
+    template <typename SourceType, typename TargetType, std::size_t Rank>
     struct BoundsRangeConvertible2;
 
-    template <size_t Rank, typename SourceType, typename TargetType,
+    template <std::size_t Rank, typename SourceType, typename TargetType,
               typename Ret = BoundsRangeConvertible2<typename SourceType::Base,
                                                      typename TargetType::Base, Rank>>
     static auto helpBoundsRangeConvertible(SourceType, TargetType, std::true_type) -> Ret;
 
-    template <size_t Rank, typename SourceType, typename TargetType>
+    template <std::size_t Rank, typename SourceType, typename TargetType>
     static auto helpBoundsRangeConvertible(SourceType, TargetType, ...) -> std::false_type;
 
-    template <typename SourceType, typename TargetType, size_t Rank>
+    template <typename SourceType, typename TargetType, std::size_t Rank>
     struct BoundsRangeConvertible2
         : decltype(helpBoundsRangeConvertible<Rank - 1>(
               SourceType(), TargetType(),
@@ -647,12 +647,12 @@ public:
         return m_ranges.contains(idx) != -1;
     }
 
-    constexpr size_type operator[](size_t index) const GSL_NOEXCEPT
+    constexpr size_type operator[](std::size_t index) const GSL_NOEXCEPT
     {
         return m_ranges.elementNum(index);
     }
 
-    template <size_t Dim = 0>
+    template <std::size_t Dim = 0>
     constexpr size_type extent() const GSL_NOEXCEPT
     {
         static_assert(Dim < rank,
@@ -665,7 +665,7 @@ public:
     {
         static_assert(std::is_integral<IntType>::value,
                       "Dimension parameter must be supplied as an integral type.");
-        auto real_dim = narrow_cast<size_t>(dim);
+        auto real_dim = narrow_cast<std::size_t>(dim);
         Expects(real_dim < rank);
 
         return m_ranges.elementNum(real_dim);
@@ -698,14 +698,14 @@ public:
     }
 };
 
-template <size_t Rank>
+template <std::size_t Rank>
 class strided_bounds
 {
-    template <size_t OtherRank>
+    template <std::size_t OtherRank>
     friend class strided_bounds;
 
 public:
-    static const size_t rank = Rank;
+    static const std::size_t rank = Rank;
     using value_type = std::ptrdiff_t;
     using reference = std::add_lvalue_reference_t<value_type>;
     using const_reference = std::add_const_t<reference>;
@@ -740,7 +740,7 @@ public:
     constexpr size_type total_size() const GSL_NOEXCEPT
     {
         size_type ret = 0;
-        for (size_t i = 0; i < rank; ++i) {
+        for (std::size_t i = 0; i < rank; ++i) {
             ret += (m_extents[i] - 1) * m_strides[i];
         }
         return ret + 1;
@@ -749,7 +749,7 @@ public:
     constexpr size_type size() const GSL_NOEXCEPT
     {
         size_type ret = 1;
-        for (size_t i = 0; i < rank; ++i) {
+        for (std::size_t i = 0; i < rank; ++i) {
             ret *= m_extents[i];
         }
         return ret;
@@ -757,7 +757,7 @@ public:
 
     constexpr bool contains(const index_type& idx) const GSL_NOEXCEPT
     {
-        for (size_t i = 0; i < rank; ++i) {
+        for (std::size_t i = 0; i < rank; ++i) {
             if (idx[i] < 0 || idx[i] >= m_extents[i]) return false;
         }
         return true;
@@ -766,7 +766,7 @@ public:
     constexpr size_type linearize(const index_type& idx) const GSL_NOEXCEPT
     {
         size_type ret = 0;
-        for (size_t i = 0; i < rank; i++) {
+        for (std::size_t i = 0; i < rank; i++) {
             Expects(idx[i] < m_extents[i]); // index is out of bounds of the array
             ret += idx[i] * m_strides[i];
         }
@@ -781,7 +781,7 @@ public:
         return {details::shift_left(m_extents), details::shift_left(m_strides)};
     }
 
-    template <size_t Dim = 0>
+    template <std::size_t Dim = 0>
     constexpr size_type extent() const GSL_NOEXCEPT
     {
         static_assert(Dim < Rank,
@@ -807,7 +807,7 @@ template <std::ptrdiff_t... Ranges>
 struct is_bounds<static_bounds<Ranges...>> : std::integral_constant<bool, true>
 {
 };
-template <size_t Rank>
+template <std::size_t Rank>
 struct is_bounds<strided_bounds<Rank>> : std::integral_constant<bool, true>
 {
 };
@@ -819,7 +819,7 @@ private:
     using Base = std::iterator<std::random_access_iterator_tag, IndexType>;
 
 public:
-    static const size_t rank = IndexType::rank;
+    static const std::size_t rank = IndexType::rank;
     using typename Base::reference;
     using typename Base::pointer;
     using typename Base::difference_type;
@@ -840,7 +840,7 @@ public:
 
     constexpr bounds_iterator& operator++() GSL_NOEXCEPT
     {
-        for (size_t i = rank; i-- > 0;) {
+        for (std::size_t i = rank; i-- > 0;) {
             if (curr_[i] < boundary_[i] - 1) {
                 curr_[i]++;
                 return *this;
@@ -863,12 +863,12 @@ public:
     {
         if (!less(curr_, boundary_)) {
             // if at the past-the-end, set to last element
-            for (size_t i = 0; i < rank; ++i) {
+            for (std::size_t i = 0; i < rank; ++i) {
                 curr_[i] = boundary_[i] - 1;
             }
             return *this;
         }
-        for (size_t i = rank; i-- > 0;) {
+        for (std::size_t i = rank; i-- > 0;) {
             if (curr_[i] >= 1) {
                 curr_[i]--;
                 return *this;
@@ -899,10 +899,10 @@ public:
         auto linear_idx = linearize(curr_) + n;
         std::remove_const_t<value_type> stride = 0;
         stride[rank - 1] = 1;
-        for (size_t i = rank - 1; i-- > 0;) {
+        for (std::size_t i = rank - 1; i-- > 0;) {
             stride[i] = stride[i + 1] * boundary_[i + 1];
         }
-        for (size_t i = 0; i < rank; ++i) {
+        for (std::size_t i = 0; i < rank; ++i) {
             curr_[i] = linear_idx / stride[i];
             linear_idx = linear_idx % stride[i];
         }
@@ -953,7 +953,7 @@ public:
 private:
     constexpr bool less(index_type& one, index_type& other) const GSL_NOEXCEPT
     {
-        for (size_t i = 0; i < rank; ++i) {
+        for (std::size_t i = 0; i < rank; ++i) {
             if (one[i] < other[i]) return true;
         }
         return false;
@@ -967,14 +967,14 @@ private:
         index_size_type res = 0;
         if (!less(idx, boundary_)) {
             res = 1;
-            for (size_t i = rank; i-- > 0;) {
+            for (std::size_t i = rank; i-- > 0;) {
                 res += (idx[i] - 1) * multiplier;
                 multiplier *= boundary_[i];
             }
         }
         else
         {
-            for (size_t i = rank; i-- > 0;) {
+            for (std::size_t i = rank; i-- > 0;) {
                 res += idx[i] * multiplier;
                 multiplier *= boundary_[i];
             }
@@ -1015,7 +1015,7 @@ namespace details
         typename Bounds::size_type stride[Bounds::rank] = {};
 
         stride[Bounds::rank - 1] = 1;
-        for (size_t i = 1; i < Bounds::rank; ++i) {
+        for (std::size_t i = 1; i < Bounds::rank; ++i) {
             stride[Bounds::rank - i - 1] = stride[Bounds::rank - i] * extents[Bounds::rank - i];
         }
         return {stride};
@@ -1071,7 +1071,7 @@ template <typename ValueType, std::ptrdiff_t FirstDimension = dynamic_range,
           std::ptrdiff_t... RestDimensions>
 class multi_span;
 
-template <typename ValueType, size_t Rank>
+template <typename ValueType, std::size_t Rank>
 class strided_span;
 
 namespace details
@@ -1080,7 +1080,7 @@ namespace details
     struct SpanTypeTraits
     {
         using value_type = T;
-        using size_type = size_t;
+        using size_type = std::size_t;
     };
 
     template <typename Traits>
@@ -1184,7 +1184,7 @@ class multi_span
 
 public:
     using bounds_type = static_bounds<FirstDimension, RestDimensions...>;
-    static const size_t Rank = bounds_type::rank;
+    static const std::size_t Rank = bounds_type::rank;
     using size_type = typename bounds_type::size_type;
     using index_type = typename bounds_type::index_type;
     using value_type = ValueType;
@@ -1272,7 +1272,7 @@ public:
     }
 
     // construct from n-dimensions static array
-    template <typename T, size_t N, typename Helper = details::SpanArrayTraits<T, N>>
+    template <typename T, std::size_t N, typename Helper = details::SpanArrayTraits<T, N>>
     constexpr multi_span(T (&arr)[N])
         : multi_span(reinterpret_cast<pointer>(arr), bounds_type{typename Helper::bounds_type{}})
     {
@@ -1293,7 +1293,7 @@ public:
     }
 
     // construct from std::array
-    template <typename T, size_t N>
+    template <typename T, std::size_t N>
     constexpr multi_span(std::array<T, N>& arr)
         : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
     {
@@ -1305,7 +1305,7 @@ public:
     }
 
     // construct from const std::array
-    template <typename T, size_t N>
+    template <typename T, std::size_t N>
     constexpr multi_span(const std::array<std::remove_const_t<value_type>, N>& arr)
         : multi_span(arr.data(), static_bounds<N>())
     {
@@ -1316,7 +1316,7 @@ public:
     }
 
     // prevent constructing from temporary std::array
-    template <typename T, size_t N>
+    template <typename T, std::size_t N>
     constexpr multi_span(std::array<T, N>&& arr) = delete;
 
     // construct from containers
@@ -1460,7 +1460,7 @@ public:
 
     static constexpr std::size_t rank() { return Rank; }
 
-    template <size_t Dim = 0>
+    template <std::size_t Dim = 0>
     constexpr size_type extent() const GSL_NOEXCEPT
     {
         static_assert(Dim < Rank,
@@ -1598,7 +1598,7 @@ public:
 
 // reshape a multi_span into a different dimensionality
 // DimCount and Enabled here are workarounds for a bug in MSVC 2015
-template <typename SpanType, typename... Dimensions2, size_t DimCount = sizeof...(Dimensions2),
+template <typename SpanType, typename... Dimensions2, std::size_t DimCount = sizeof...(Dimensions2),
           bool Enabled = (DimCount > 0), typename = std::enable_if_t<Enabled>>
 inline constexpr auto as_multi_span(SpanType s, Dimensions2... dims)
     -> multi_span<typename SpanType::value_type, Dimensions2::value...>
@@ -1641,7 +1641,7 @@ template <typename U, std::ptrdiff_t... Dimensions>
 inline constexpr auto as_multi_span(multi_span<const byte, Dimensions...> s) GSL_NOEXCEPT -> multi_span<
     const U, static_cast<std::ptrdiff_t>(
                  multi_span<const byte, Dimensions...>::bounds_type::static_size != dynamic_range
-                     ? (static_cast<size_t>(
+                     ? (static_cast<std::size_t>(
                             multi_span<const byte, Dimensions...>::bounds_type::static_size) /
                         sizeof(U))
                      : dynamic_range)>
@@ -1700,22 +1700,22 @@ inline constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(arr), len};
 }
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 inline constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
 {
     return {arr};
 }
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 inline constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>& arr)
 {
     return {arr};
 }
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 inline constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>&&) = delete;
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 inline constexpr multi_span<T, N> as_multi_span(std::array<T, N>& arr)
 {
     return {arr};
@@ -1752,7 +1752,7 @@ inline constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>&
 
 // strided_span is an extension that is not strictly part of the GSL at this time.
 // It is kept here while the multidimensional interface is still being defined.
-template <typename ValueType, size_t Rank>
+template <typename ValueType, std::size_t Rank>
 class strided_span
 {
 public:
@@ -1777,7 +1777,7 @@ private:
 
     friend iterator;
     friend const_iterator;
-    template <typename OtherValueType, size_t OtherRank>
+    template <typename OtherValueType, std::size_t OtherRank>
     friend class strided_span;
 
 public:
@@ -1859,7 +1859,7 @@ public:
 
     constexpr bounds_type bounds() const GSL_NOEXCEPT { return bounds_; }
 
-    template <size_t Dim = 0>
+    template <std::size_t Dim = 0>
     constexpr size_type extent() const GSL_NOEXCEPT
     {
         static_assert(Dim < Rank,
@@ -1974,7 +1974,7 @@ private:
         // memory that can contain a multiple of new type elements
         Expects(strides[Rank - 2] >= d && (strides[Rank - 2] % d == 0));
 
-        for (size_t i = Rank - 1; i > 0; --i) {
+        for (std::size_t i = Rank - 1; i > 0; --i) {
             // Only strided arrays with regular strides can be resized
             Expects((strides[i - 1] >= strides[i]) && (strides[i - 1] % strides[i] == 0));
         }
@@ -2110,7 +2110,7 @@ public:
     using typename Base::value_type;
 
 private:
-    template <typename ValueType, size_t Rank>
+    template <typename ValueType, std::size_t Rank>
     friend class strided_span;
 
     const Span* m_container;

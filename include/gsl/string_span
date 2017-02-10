@@ -176,7 +176,7 @@ inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, st
     return {sz, len};
 }
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 span<T, dynamic_extent> ensure_z(T (&sz)[N])
 {
     return ensure_z(&sz[0], static_cast<std::ptrdiff_t>(N));
@@ -305,17 +305,17 @@ public:
 
     // From static arrays - if 0-terminated, remove 0 from the view
     // All other containers allow 0s within the length, so we do not remove them
-    template <size_t N>
+    template <std::size_t N>
     constexpr basic_string_span(element_type (&arr)[N]) : span_(remove_z(arr))
     {
     }
 
-    template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
+    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     constexpr basic_string_span(std::array<ArrayElementType, N>& arr) GSL_NOEXCEPT : span_(arr)
     {
     }
 
-    template <size_t N, class ArrayElementType = std::remove_const_t<element_type>>
+    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     constexpr basic_string_span(const std::array<ArrayElementType, N>& arr) GSL_NOEXCEPT : span_(arr)
     {
     }
@@ -427,7 +427,7 @@ private:
         return {sz, details::length_func<element_type>()(sz, max)};
     }
 
-    template <size_t N>
+    template <std::size_t N>
     static impl_type remove_z(element_type (&sz)[N])
     {
         return remove_z(&sz[0], narrow_cast<std::ptrdiff_t>(N));
@@ -457,29 +457,29 @@ template <typename CharT, std::ptrdiff_t Extent>
 std::basic_string<typename std::remove_const<CharT>::type>
 to_string(basic_string_span<CharT, Extent> view)
 {
-    return {view.data(), static_cast<size_t>(view.length())};
+    return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 #else
 
 inline std::string to_string(cstring_span<> view)
 {
-    return {view.data(), static_cast<size_t>(view.length())};
+    return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 inline std::string to_string(string_span<> view)
 {
-    return {view.data(), static_cast<size_t>(view.length())};
+    return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 inline std::wstring to_string(cwstring_span<> view)
 {
-    return {view.data(), static_cast<size_t>(view.length())};
+    return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 inline std::wstring to_string(wstring_span<> view)
 {
-    return {view.data(), static_cast<size_t>(view.length())};
+    return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 #endif
@@ -491,7 +491,7 @@ template <typename CharT,
 	  std::ptrdiff_t Extent>
 std::basic_string<CharT, Traits, Allocator> to_basic_string(basic_string_span<gCharT, Extent> view)
 {
-  return {view.data(), static_cast<size_t>(view.length())};
+  return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 // zero-terminated string span, used to convert

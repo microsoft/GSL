@@ -129,18 +129,18 @@ inline T narrow(U u)
 //
 // at() - Bounds-checked way of accessing static arrays, std::array, std::vector
 //
-template <class T, size_t N>
+template <class T, std::size_t N>
 inline constexpr T& at(T (&arr)[N], std::ptrdiff_t index)
 {
     Expects(index >= 0 && index < narrow_cast<std::ptrdiff_t>(N));
-    return arr[static_cast<size_t>(index)];
+    return arr[static_cast<std::size_t>(index)];
 }
 
-template <class T, size_t N>
+template <class T, std::size_t N>
 inline constexpr T& at(std::array<T, N>& arr, std::ptrdiff_t index)
 {
     Expects(index >= 0 && index < narrow_cast<std::ptrdiff_t>(N));
-    return arr[static_cast<size_t>(index)];
+    return arr[static_cast<std::size_t>(index)];
 }
 
 template <class Cont>
