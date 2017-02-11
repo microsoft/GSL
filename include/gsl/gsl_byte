@@ -31,7 +31,7 @@
  #if _MSC_VER <= 1800
   // constexpr is not understood
   #pragma push_macro("constexpr")
-  #define constexpr inline
+  #define constexpr /*constexpr*/
 
   // noexcept is not understood
   #pragma push_macro("noexcept")
