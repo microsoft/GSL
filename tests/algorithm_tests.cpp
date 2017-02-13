@@ -100,11 +100,11 @@ SUITE(copy_tests)
     {
         // dynamic source and destination span
         {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<char, 10> dst{};
+            std::array<short, 5> src{1, 2, 3, 4, 5};
+            std::array<int, 10> dst{};
 
-            span<int> src_span(src);
-            span<char> dst_span(dst);
+            span<short> src_span(src);
+            span<int> dst_span(dst);
 
             copy(src_span, dst_span);
             copy(src_span, dst_span.subspan(src_span.size()));
@@ -117,11 +117,11 @@ SUITE(copy_tests)
 
         // static source and dynamic destination span
         {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<char, 10> dst{};
+            std::array<short, 5> src{1, 2, 3, 4, 5};
+            std::array<int, 10> dst{};
 
-            span<int, 5> src_span(src);
-            span<char> dst_span(dst);
+            span<short, 5> src_span(src);
+            span<int> dst_span(dst);
 
             copy(src_span, dst_span);
             copy(src_span, dst_span.subspan(src_span.size()));
@@ -134,11 +134,11 @@ SUITE(copy_tests)
 
         // dynamic source and static destination span
         {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<char, 10> dst{};
+            std::array<short, 5> src{1, 2, 3, 4, 5};
+            std::array<int, 10> dst{};
 
-            span<int> src_span(src);
-            span<char, 10> dst_span(dst);
+            span<short> src_span(src);
+            span<int, 10> dst_span(dst);
 
             copy(src_span, dst_span);
             copy(src_span, dst_span.subspan(src_span.size()));
@@ -151,11 +151,11 @@ SUITE(copy_tests)
 
         // static source and destination span
         {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<char, 10> dst{};
+            std::array<short, 5> src{1, 2, 3, 4, 5};
+            std::array<int, 10> dst{};
 
-            span<int, 5> src_span(src);
-            span<char, 10> dst_span(dst);
+            span<short, 5> src_span(src);
+            span<int, 10> dst_span(dst);
 
             copy(src_span, dst_span);
             copy(src_span, dst_span.subspan(src_span.size()));
@@ -206,4 +206,4 @@ SUITE(copy_tests)
     }
 }
 
-int main(int, const char* []) { return UnitTest::RunAllTests(); }
+int main() { return UnitTest::RunAllTests(); }
