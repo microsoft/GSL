@@ -69,18 +69,18 @@ All tests should pass - indicating your platform is fully supported and you are 
 ## Using the libraries
 As the types are entirely implemented inline in headers, there are no linking requirements.
 
-You can copy the [gsl](./gsl) directory into your source tree so it is available
+You can copy the [gsl](./include/gsl) directory into your source tree so it is available
 to your compiler, then include the appropriate headers in your program.
 
-Alternatively set your compiler's *include path* flag to point to the GSL development folder (`c:\GSL` in the example above) or installation folder (after running the install). Eg.
+Alternatively set your compiler's *include path* flag to point to the GSL development folder (`c:\GSL\include` in the example above) or installation folder (after running the install). Eg.
 
 MSVC++
 
-    /I c:\GSL
+    /I c:\GSL\include
 
 GCC/clang
 
-    -I$HOME/dev/GSL
+    -I$HOME/dev/GSL/include
 
 Include the library using:
 
