@@ -217,7 +217,7 @@ namespace details
     template <>
     struct length_func<char>
     {
-        std::ptrdiff_t operator()(char* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
+        std::ptrdiff_t operator()(const char* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
         {
             return details::string_length(ptr, length);
         }
@@ -226,7 +226,7 @@ namespace details
     template <>
     struct length_func<wchar_t>
     {
-        std::ptrdiff_t operator()(wchar_t* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
+        std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
         {
             return details::wstring_length(ptr, length);
         }
