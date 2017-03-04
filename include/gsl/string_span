@@ -850,3 +850,5 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 #endif // _MSC_VER
 
 #endif // GSL_STRING_SPAN_H
+
+// vim: set filetype=cpp:

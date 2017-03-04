@@ -2219,3 +2219,5 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 #endif // _MSC_VER
 
 #endif // GSL_MULTI_SPAN_H
+
+// vim: set filetype=cpp:

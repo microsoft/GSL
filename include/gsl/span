@@ -699,3 +699,5 @@ inline constexpr ElementType& at(const span<ElementType, Extent>& s, std::ptrdif
 #endif // _MSC_VER
 
 #endif // GSL_SPAN_H
+
+// vim: set filetype=cpp:
