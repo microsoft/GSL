@@ -56,7 +56,7 @@ inline constexpr byte& operator<<=(byte& b, IntegerType shift) noexcept
 template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
 inline constexpr byte operator<<(byte b, IntegerType shift) noexcept
 {
-    return byte(static_cast<unsigned char>(b) << shift);
+    return b <<= shift;
 }
 
 template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
@@ -68,7 +68,7 @@ inline constexpr byte& operator>>=(byte& b, IntegerType shift) noexcept
 template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
 inline constexpr byte operator>>(byte b, IntegerType shift) noexcept
 {
-    return byte(static_cast<unsigned char>(b) >> shift);
+    return b >>= shift;
 }
 
 inline constexpr byte& operator|=(byte& l, byte r) noexcept
@@ -78,7 +78,7 @@ inline constexpr byte& operator|=(byte& l, byte r) noexcept
 
 inline constexpr byte operator|(byte l, byte r) noexcept
 {
-    return byte(static_cast<unsigned char>(l) | static_cast<unsigned char>(r));
+    return l |= r;
 }
 
 inline constexpr byte& operator&=(byte& l, byte r) noexcept
@@ -88,7 +88,7 @@ inline constexpr byte& operator&=(byte& l, byte r) noexcept
 
 inline constexpr byte operator&(byte l, byte r) noexcept
 {
-    return byte(static_cast<unsigned char>(l) & static_cast<unsigned char>(r));
+    return l &= r;
 }
 
 inline constexpr byte& operator^=(byte& l, byte r) noexcept
@@ -98,7 +98,7 @@ inline constexpr byte& operator^=(byte& l, byte r) noexcept
 
 inline constexpr byte operator^(byte l, byte r) noexcept
 {
-    return byte(static_cast<unsigned char>(l) ^ static_cast<unsigned char>(r));
+    return l ^= r;
 }
 
 inline constexpr byte operator~(byte b) noexcept { return byte(~static_cast<unsigned char>(b)); }
