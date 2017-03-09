@@ -109,6 +109,13 @@ private:
     T ptr_;
 };
 
+template <class T>
+std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
+{
+    os << val.get();
+    return os;
+}
+
 // more unwanted operators
 template <class T, class U>
 std::ptrdiff_t operator-(const not_null<T>&, const not_null<U>&) = delete;
