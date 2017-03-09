@@ -19,7 +19,9 @@
 #ifndef GSL_GSL_H
 #define GSL_GSL_H
 
+#if defined(__clang__) || defined(__GNUC__)
 #pragma GCC system_header
+#endif
 
 #include <gsl/gsl_assert>  // Ensures/Expects
 #include <gsl/gsl_util>    // finally()/narrow()/narrow_cast()...
