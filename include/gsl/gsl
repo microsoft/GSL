@@ -25,6 +25,7 @@
 #include <gsl/span>        // span
 #include <gsl/string_span> // zstring, string_span, zstring_builder...
 #include <memory>
+#include <iostream>
 
 #if defined(_MSC_VER) && _MSC_VER < 1910
  #pragma push_macro("constexpr")
