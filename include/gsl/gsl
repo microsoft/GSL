@@ -19,6 +19,8 @@
 #ifndef GSL_GSL_H
 #define GSL_GSL_H
 
+#pragma GCC system_header
+
 #include <gsl/gsl_assert>  // Ensures/Expects
 #include <gsl/gsl_util>    // finally()/narrow()/narrow_cast()...
 #include <gsl/multi_span>  // multi_span, strided_span...
