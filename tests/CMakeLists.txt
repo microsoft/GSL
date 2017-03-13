@@ -6,7 +6,7 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/tests)
     execute_process(COMMAND git submodule update --init WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
-add_subdirectory(unittest-cpp)
+add_subdirectory(unittest-cpp EXCLUDE_FROM_ALL)
 
 include_directories(
     ../include
