@@ -92,7 +92,7 @@ SUITE(utils_tests)
     TEST(narrow)
     {
         int n = 120;
-        char c = narrow<char>(n);
+        const char c = narrow<char>(n);
         CHECK(c == 120);
 
         n = 300;
