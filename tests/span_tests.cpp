@@ -930,7 +930,7 @@ SUITE(span_tests)
             CHECK(av.subspan(4).length() == 1);
             CHECK(av.subspan(5).length() == 0);
             CHECK_THROW(av.subspan(6).length(), fail_fast);
-            auto av2 = av.subspan(1);
+            const auto av2 = av.subspan(1);
             for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
         }
 
@@ -941,7 +941,7 @@ SUITE(span_tests)
             CHECK(av.subspan(4).length() == 1);
             CHECK(av.subspan(5).length() == 0);
             CHECK_THROW(av.subspan(6).length(), fail_fast);
-            auto av2 = av.subspan(1);
+            const auto av2 = av.subspan(1);
             for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
         }
     }
@@ -1117,7 +1117,7 @@ SUITE(span_tests)
             CHECK(it == beyond);
             CHECK(it - beyond == 0);
 
-            for (auto& n : s)
+            for (const auto& n : s)
             {
                 CHECK(n == 5);
             }
@@ -1214,7 +1214,7 @@ SUITE(span_tests)
             CHECK(it == beyond);
             CHECK(it - beyond == 0);
 
-            for (auto& n : s)
+            for (const auto& n : s)
             {
                 CHECK(n == 5);
             }
@@ -1386,16 +1386,16 @@ SUITE(span_tests)
         int a[] = {1, 2, 3, 4};
 
         {
-            span<const int> s = a;
+            const span<const int> s = a;
             CHECK(s.length() == 4);
-            span<const byte> bs = as_bytes(s);
+            const span<const byte> bs = as_bytes(s);
             CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
             CHECK(bs.length() == s.length_bytes());
         }
 
         {
             span<int> s;
-            auto bs = as_bytes(s);
+            const auto bs = as_bytes(s);
             CHECK(bs.length() == s.length());
             CHECK(bs.length() == 0);
             CHECK(bs.size_bytes() == 0);
@@ -1405,7 +1405,7 @@ SUITE(span_tests)
 
         {
             span<int> s = a;
-            auto bs = as_bytes(s);
+            const auto bs = as_bytes(s);
             CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
             CHECK(bs.length() == s.length_bytes());
         }
@@ -1428,7 +1428,7 @@ SUITE(span_tests)
 
         {
             span<int> s;
-            auto bs = as_writeable_bytes(s);
+            const auto bs = as_writeable_bytes(s);
             CHECK(bs.length() == s.length());
             CHECK(bs.length() == 0);
             CHECK(bs.size_bytes() == 0);
@@ -1438,7 +1438,7 @@ SUITE(span_tests)
 
         {
             span<int> s = a;
-            auto bs = as_writeable_bytes(s);
+            const auto bs = as_writeable_bytes(s);
             CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
             CHECK(bs.length() == s.length_bytes());
         }
@@ -1484,11 +1484,11 @@ SUITE(span_tests)
 
         // you can convert statically
         {
-            span<int, 2> s2 = {arr, 2};
+            const span<int, 2> s2 = {arr, 2};
             static_cast<void>(s2);
         }
         {
-            span<int, 1> s1 = s4.first<1>();
+            const span<int, 1> s1 = s4.first<1>();
             static_cast<void>(s1);
         }
 
@@ -1532,7 +1532,7 @@ SUITE(span_tests)
     {
         char lat[] = { '1', '2', '3', '4', '5', '6', 'E', 'F', 'G' };
         span<char> s = lat;
-        auto f_it = s.begin() + 7;
+        const auto f_it = s.begin() + 7;
 
         std::match_results<span<char>::iterator> match;
 
