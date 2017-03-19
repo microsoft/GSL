@@ -17,6 +17,7 @@
 #include <UnitTest++/UnitTest++.h>
 #include <cstdlib>
 #include <gsl/string_span>
+#include <gsl/gsl> //owner
 #include <vector>
 #include <map>
 
@@ -441,7 +442,7 @@ SUITE(string_span_tests)
 
         // ensure z on c strings
         {
-            char* ptr = new char[3];
+            gsl::owner<char*> ptr = new char[3];
 
             ptr[0] = 'a';
             ptr[1] = 'b';
