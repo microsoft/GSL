@@ -30,20 +30,36 @@
 // 2. GSL_THROW_ON_CONTRACT_VIOLATION: a gsl::fail_fast exception will be thrown
 // 3. GSL_UNENFORCED_ON_CONTRACT_VIOLATION: nothing happens
 //
-#if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) || defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION) ||    \
+#if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) || defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION) ||  \
       defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION))
-#define GSL_TERMINATE_ON_CONTRACT_VIOLATION
+ #define GSL_TERMINATE_ON_CONTRACT_VIOLATION
 #endif
 
 #define GSL_STRINGIFY_DETAIL(x) #x
 #define GSL_STRINGIFY(x) GSL_STRINGIFY_DETAIL(x)
 
 #if defined(__clang__) || defined(__GNUC__)
-#define GSL_LIKELY(x) __builtin_expect (!!(x), 1)
-#define GSL_UNLIKELY(x) __builtin_expect (!!(x), 0)
+ #define GSL_LIKELY(x) __builtin_expect (!!(x), 1)
+ #define GSL_UNLIKELY(x) __builtin_expect (!!(x), 0)
 #else
-#define GSL_LIKELY(x) (x)
-#define GSL_UNLIKELY(x) (x)
+ #define GSL_LIKELY(x) (!!(x))
+ #define GSL_UNLIKELY(x) (!!(x))
+#endif
+
+//
+// GSL_ASSUME(cond)
+//
+// Tell the optimizer that the predicate cond must hold. It is unspecified
+// whether or not cond is actually evaluated.
+//
+#ifdef _MSC_VER
+ #define GSL_ASSUME(cond) __assume(cond)
+#elif defined(__clang__)
+ #define GSL_ASSUME(cond) __builtin_assume(cond)
+#elif defined(__GNUC__)
+ #define GSL_ASSUME(cond) ((cond) ? static_cast<void>(0) : __builtin_unreachable())
+#else
+ #define GSL_ASSUME(cond) static_cast<void>(!!(cond))
 #endif
 
 //
@@ -60,26 +76,22 @@ struct fail_fast : public std::runtime_error
 
 #if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
-#define Expects(cond)                                                                              \
-    if (GSL_UNLIKELY(!(cond)))                                                                     \
-        throw gsl::fail_fast("GSL: Precondition failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__));
-#define Ensures(cond)                                                                              \
-    if (GSL_UNLIKELY(!(cond)))                                                                     \
-        throw gsl::fail_fast("GSL: Postcondition failure at " __FILE__                             \
-                             ": " GSL_STRINGIFY(__LINE__));
+ #define GSL_CONTRACT_CHECK(type, cond)                                                            \
+    (GSL_LIKELY(cond) ? static_cast<void>(0) :                                                     \
+        throw gsl::fail_fast("GSL: " type " failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__)))
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
-#define Expects(cond)                                                                              \
-    if (GSL_UNLIKELY(!(cond))) std::terminate();
-#define Ensures(cond)                                                                              \
-    if (GSL_UNLIKELY(!(cond))) std::terminate();
+ #define GSL_CONTRACT_CHECK(type, cond)                                                            \
+    (GSL_LIKELY(cond) ? static_cast<void>(0) : std::terminate())
 
 #elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
 
-#define Expects(cond)
-#define Ensures(cond)
+ #define GSL_CONTRACT_CHECK(type, cond) GSL_ASSUME(cond)
 
 #endif
+
+#define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
+#define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
 
 #endif // GSL_CONTRACTS_H
