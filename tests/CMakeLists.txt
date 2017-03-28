@@ -101,3 +101,62 @@ add_gsl_test(utils_tests)
 add_gsl_test(owner_tests)
 add_gsl_test(byte_tests)
 add_gsl_test(algorithm_tests)
+
+# this interface adds compile options to how the tests are run
+# please try to keep entries ordered =)
+add_library(gsl_tests_config_noexcept INTERFACE)
+target_compile_options(gsl_tests_config_noexcept INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:
+        /D_HAS_EXCEPTIONS=0
+        /W4
+        /WX
+    >
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        -fno-strict-aliasing
+        -fno-exceptions
+        -Wall
+        -Wcast-align
+        -Wconversion
+        -Wctor-dtor-privacy
+        -Werror
+        -Wextra
+        -Wno-missing-braces
+        -Wnon-virtual-dtor
+        -Wold-style-cast
+        -Woverloaded-virtual
+        -Wpedantic
+        -Wshadow
+        -Wsign-conversion
+    >
+)
+
+# set definitions for tests
+target_compile_definitions(gsl_tests_config_noexcept INTERFACE
+    GSL_TERMINATE_ON_CONTRACT_VIOLATION
+)
+
+# create the main executable for each test. this reduces the compile time
+# of each test by pre-compiling catch.
+add_library(test_noexcept STATIC test_noexcept.cpp)
+target_link_libraries(test_noexcept
+    GSL
+    gsl_tests_config_noexcept
+)
+set_property(TARGET test_noexcept PROPERTY FOLDER "GSL_tests_noexcept")
+
+function(add_gsl_test_noexcept name)
+    add_executable(${name} ${name}.cpp)
+    target_link_libraries(${name}
+        GSL
+        test_noexcept
+        gsl_tests_config_noexcept
+    )
+    add_test(
+      ${name}
+      ${name}
+    )
+    # group all tests under GSL_tests_noexcept
+    set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests_noexcept")
+endfunction()
+
+add_gsl_test_noexcept(no_exception_tests)
