@@ -17,6 +17,7 @@
 #include <UnitTest++/UnitTest++.h> 
 #include <gsl/gsl>
 #include <vector>
+#include <memory>
 
 using namespace gsl;
 
@@ -94,6 +95,70 @@ SUITE(NotNullTests)
 
         int* q = nullptr;
         CHECK_THROW(p = q, fail_fast);
+    }
+
+    TEST(TestNotNullRawPointerComparison)
+    {
+        int x = 1;
+        const int y = 2;
+        auto p1 = &x;
+        auto p2 = &y;
+
+        using NotNull1 = not_null<decltype(p1)>;
+        using NotNull2 = not_null<decltype(p2)>;
+
+        CHECK((NotNull1(p1) == NotNull1(p1)) == true);
+        CHECK((NotNull1(p1) == NotNull2(p2)) == false);
+
+        CHECK((NotNull1(p1) != NotNull1(p1)) == false);
+        CHECK((NotNull1(p1) != NotNull2(p2)) == true);
+
+        CHECK((NotNull1(p1) < NotNull1(p1)) == false);
+        CHECK((NotNull1(p1) < NotNull2(p2)) == (p1 < p2));
+        CHECK((NotNull2(p2) < NotNull1(p1)) == (p2 < p1));
+
+        CHECK((NotNull1(p1) > NotNull1(p1)) == false);
+        CHECK((NotNull1(p1) > NotNull2(p2)) == (p1 > p2));
+        CHECK((NotNull2(p2) > NotNull1(p1)) == (p2 > p1));
+
+        CHECK((NotNull1(p1) <= NotNull1(p1)) == true);
+        CHECK((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
+        CHECK((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
+
+        CHECK((NotNull1(p1) >= NotNull1(p1)) == true);
+        CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
+        CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
+    }
+
+    TEST(TestNotNullSharedPtrComparison)
+    {
+        auto sp1 = std::make_shared<int>(1);
+        auto sp2 = std::make_shared<const int>(3);
+
+        using NotNullSp1 = not_null<decltype(sp1)>;
+        using NotNullSp2 = not_null<decltype(sp2)>;
+
+        CHECK((NotNullSp1(sp1) == NotNullSp1(sp1)) == true);
+        CHECK((NotNullSp1(sp1) == NotNullSp2(sp2)) == false);
+
+        CHECK((NotNullSp1(sp1) != NotNullSp1(sp1)) == false);
+        CHECK((NotNullSp1(sp1) != NotNullSp2(sp2)) == true);
+
+        CHECK((NotNullSp1(sp1) < NotNullSp1(sp1)) == false);
+        CHECK((NotNullSp1(sp1) < NotNullSp2(sp2)) == (sp1 < sp2));
+        CHECK((NotNullSp2(sp2) < NotNullSp1(sp1)) == (sp2 < sp1));
+
+        CHECK((NotNullSp1(sp1) > NotNullSp1(sp1)) == false);
+        CHECK((NotNullSp1(sp1) > NotNullSp2(sp2)) == (sp1 > sp2));
+        CHECK((NotNullSp2(sp2) > NotNullSp1(sp1)) == (sp2 > sp1));
+
+        CHECK((NotNullSp1(sp1) <= NotNullSp1(sp1)) == true);
+        CHECK((NotNullSp1(sp1) <= NotNullSp2(sp2)) == (sp1 <= sp2));
+        CHECK((NotNullSp2(sp2) <= NotNullSp1(sp1)) == (sp2 <= sp1));
+
+        CHECK((NotNullSp1(sp1) >= NotNullSp1(sp1)) == true);
+        CHECK((NotNullSp1(sp1) >= NotNullSp2(sp2)) == (sp1 >= sp2));
+        CHECK((NotNullSp2(sp2) >= NotNullSp1(sp1)) == (sp2 >= sp1));
     }
 }
 
