@@ -21,7 +21,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 ## Supported Platforms
 The test suite that exercises GSL has been built and passes successfully on the following platforms:<sup>1)</sup>
 
-* Windows using Visual Studio 2013
 * Windows using Visual Studio 2015
 * Windows using Visual Studio 2017
 * Windows using Clang/LLVM 3.6
