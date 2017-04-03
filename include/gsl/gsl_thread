@@ -38,16 +38,46 @@ namespace gsl
 
 class detached_thread
 {
+	friend void swap(detached_thread& t1, detached_thread& t2) noexcept;
+
 public:
+	detached_thread() noexcept = default;
+
 	detached_thread(detached_thread const&) = delete;
+	detached_thread(detached_thread&& other): t(std::move(other.t)) {}
+
+	detached_thread(std::thread const&) = delete;
+	detached_thread(std::thread&& other) noexcept: t(std::move(other)) { t.detach(); }
+
+	detached_thread& operator=(detached_thread const&) = delete;
+	detached_thread& operator=(detached_thread&& other) noexcept { t = std::move(other.t); return *this; }
+
+	detached_thread& operator=(std::thread const&) = delete;
+	detached_thread& operator=(std::thread&& other) noexcept { t = std::move(other); t.detach(); return *this; }
 
 	template<typename Callable, typename... Args>
 	explicit detached_thread(Callable&& f, Args&&... args)
 	: t(std::forward<Callable>(f), std::forward<Args>(args)...) { t.detach(); }
 
+	bool joinable() const { return t.joinable(); }
+
+	std::thread::id get_id() const noexcept { return t.get_id(); }
+
+	std::thread::native_handle_type native_handle() { return t.native_handle(); }
+
+	void join() { t.join(); }
+
+	void swap(detached_thread& other) noexcept { using std::swap; swap(t, other.t); }
+
 private:
 	std::thread t;
 };
+
+void swap(detached_thread& t1, detached_thread& t2) noexcept
+{
+	using std::swap;
+	swap(t1.t, t2.t);
+}
 
 class raii_thread
 {
