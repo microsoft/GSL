@@ -1,75 +1,114 @@
-/////////////////////////////////////////////////////////////////////////////// 
-// 
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
-// 
-// This code is licensed under the MIT License (MIT). 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-// THE SOFTWARE. 
-// 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h> 
+#include <UnitTest++/UnitTest++.h>
 #include <gsl/gsl>
 #include <vector>
 #include <initializer_list>
 
-using namespace std;
-using namespace gsl;
+using gsl::fail_fast;
 
 SUITE(at_tests)
 {
     TEST(static_array)
     {
-        int a[] = { 1, 2, 3, 4 };
+        int a[4] = { 1, 2, 3, 4 };
+        const int (&c_a)[4] = a;
 
-        for (int i = 0; i < 4; ++i)
-            CHECK(at(a, i) == i+1);
+        for (int i = 0; i < 4; ++i) {
+            CHECK(&gsl::at(a, i) == &a[i]);
+            CHECK(&gsl::at(c_a, i) == &a[i]);
+        }
 
-        CHECK_THROW(at(a, -1), fail_fast);
-        CHECK_THROW(at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(a, -1), fail_fast);
+        CHECK_THROW(gsl::at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(c_a, -1), fail_fast);
+        CHECK_THROW(gsl::at(c_a, 4), fail_fast);
     }
 
     TEST(std_array)
     {
-        std::array<int,4> a = { 1, 2, 3, 4 };
+        std::array<int, 4> a = { 1, 2, 3, 4 };
+        const std::array<int, 4>& c_a = a;
 
-        for (int i = 0; i < 4; ++i)
-            CHECK(at(a, i) == i+1);
+        for (int i = 0; i < 4; ++i) {
+            CHECK(&gsl::at(a, i) == &a[i]);
+            CHECK(&gsl::at(c_a, i) == &a[i]);
+        }
 
-        CHECK_THROW(at(a, -1), fail_fast);
-        CHECK_THROW(at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(a, -1), fail_fast);
+        CHECK_THROW(gsl::at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(c_a, -1), fail_fast);
+        CHECK_THROW(gsl::at(c_a, 4), fail_fast);
     }
 
     TEST(StdVector)
     {
         std::vector<int> a = { 1, 2, 3, 4 };
+        const std::vector<int>& c_a = a;
 
-        for (int i = 0; i < 4; ++i)
-            CHECK(at(a, i) == i+1);
+        for (int i = 0; i < 4; ++i) {
+            CHECK(&gsl::at(a, i) == &a[i]);
+            CHECK(&gsl::at(c_a, i) == &a[i]);
+        }
 
-        CHECK_THROW(at(a, -1), fail_fast);
-        CHECK_THROW(at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(a, -1), fail_fast);
+        CHECK_THROW(gsl::at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(c_a, -1), fail_fast);
+        CHECK_THROW(gsl::at(c_a, 4), fail_fast);
     }
 
     TEST(InitializerList)
     {
         std::initializer_list<int> a = { 1, 2, 3, 4 };
 
-        for (int i = 0; i < 4; ++i)
-            CHECK(at(a, i) == i+1);
+        for (int i = 0; i < 4; ++i) {
+            CHECK(gsl::at(a, i) == i+1);
+            CHECK(gsl::at({1,2,3,4}, i) == i+1);
+        }
 
-        CHECK_THROW(at(a, -1), fail_fast);
-        CHECK_THROW(at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at(a, -1), fail_fast);
+        CHECK_THROW(gsl::at(a, 4), fail_fast);
+        CHECK_THROW(gsl::at({1,2,3,4}, -1), fail_fast);
+        CHECK_THROW(gsl::at({1,2,3,4}, 4), fail_fast);
     }
 }
 
-int main(int, const char *[])
+#if !defined(_MSC_VER) || (defined(__clang__) || _MSC_VER >= 1910)
+static constexpr bool test_constexpr()
+{
+    int a1[4] = { 1, 2, 3, 4 };
+    const int (&c_a1)[4] = a1;
+    std::array<int,4> a2 = { 1, 2, 3, 4 };
+    const std::array<int, 4>& c_a2 = a2;
+
+    for (int i = 0; i < 4; ++i) {
+        if (&gsl::at(a1, i) != &a1[i]) return false;
+        if (&gsl::at(c_a1, i) != &a1[i]) return false;
+        if (&gsl::at(c_a2, i) != &c_a2[i]) return false;
+        if (gsl::at({1,2,3,4}, i) != i+1) return false;
+    }
+
+    return true;
+}
+
+static_assert(test_constexpr(), "FAIL");
+#endif
+
+int main()
 {
     return UnitTest::RunAllTests();
 }
