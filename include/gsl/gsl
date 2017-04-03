@@ -118,37 +118,37 @@ std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
 }
 
 template <class T, class U>
-bool operator==(const not_null<T>& lhs, const not_null<U>& rhs)
+auto operator==(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() == rhs.get())
 {
     return lhs.get() == rhs.get();
 }
 
 template <class T, class U>
-bool operator!=(const not_null<T>& lhs, const not_null<U>& rhs)
+auto operator!=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() != rhs.get())
 {
     return lhs.get() != rhs.get();
 }
 
 template <class T, class U>
-bool operator<(const not_null<T>& lhs, const not_null<U>& rhs)
+auto operator<(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() < rhs.get())
 {
     return lhs.get() < rhs.get();
 }
 
 template <class T, class U>
-bool operator<=(const not_null<T>& lhs, const not_null<U>& rhs)
+auto operator<=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() <= rhs.get())
 {
     return lhs.get() <= rhs.get();
 }
 
 template <class T, class U>
-bool operator>(const not_null<T>& lhs, const not_null<U>& rhs)
+auto operator>(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() > rhs.get())
 {
     return lhs.get() > rhs.get();
 }
 
 template <class T, class U>
-bool operator>=(const not_null<T>& lhs, const not_null<U>& rhs)
+auto operator>=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() >= rhs.get())
 {
     return lhs.get() >= rhs.get();
 }
