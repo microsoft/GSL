@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // This code is licensed under the MIT License (MIT).
 //
@@ -15,98 +15,191 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
-#include <mutex>
-#include <random>
-#include <string>
+
+#include <atomic>
+#include <chrono>
+#include <thread>
 
 #include <gsl/gsl_assert>
 #include <gsl/gsl_thread>
 
-namespace
-{
+using std::chrono::steady_clock;
+using std::this_thread::sleep_for;
 
-inline
-int random_number(int from, int to)
+const auto t_100ms = std::chrono::milliseconds(100);
+
+SUITE(raii_thread_tests)
 {
-	static std::mutex mtx;
-	static std::mt19937 mt{std::random_device{}()};
-	std::lock_guard<std::mutex> lock(mtx);
-	return std::uniform_int_distribution<int>{from, to}(mt);
+    TEST(raii_thread_same_scope_clock_test)
+    {
+        auto start_time = steady_clock::now();
+
+        gsl::raii_thread t{[&]{ sleep_for(t_100ms); }};
+
+        auto end_time = steady_clock::now();
+
+        CHECK(end_time - start_time < t_100ms);
+    }
+
+    TEST(raii_thread_different_scope_clock_test)
+    {
+        auto start_time = steady_clock::now();
+
+        {
+            gsl::raii_thread t{[&]{ sleep_for(t_100ms); }};
+        }
+
+        auto end_time = steady_clock::now();
+
+        CHECK(end_time - start_time >= t_100ms);
+    }
+
+    TEST(raii_thread_ctor_test)
+    {
+        auto start_time = steady_clock::now();
+
+        gsl::raii_thread t1{[&]{ sleep_for(t_100ms); }};
+
+        {
+            gsl::raii_thread t2{std::move(t1)};
+        }
+
+        auto end_time = steady_clock::now();
+
+        CHECK(end_time - start_time >= t_100ms);
+    }
+
+    TEST(raii_thread_assign_test)
+    {
+        auto start_time = steady_clock::now();
+
+        gsl::raii_thread t1{[&]{ sleep_for(t_100ms); }};
+
+        {
+            gsl::raii_thread t2;
+            t2 = std::move(t1);
+        }
+
+        auto end_time = steady_clock::now();
+
+        CHECK(end_time - start_time >= t_100ms);
+    }
+
+    TEST(raii_thread_std_thread_ctor_test)
+    {
+        auto start_time = steady_clock::now();
+
+        std::thread t1{[&]{ sleep_for(t_100ms); }};
+
+        {
+            gsl::raii_thread t2{std::move(t1)};
+        }
+
+        auto end_time = steady_clock::now();
+
+        CHECK(end_time - start_time >= t_100ms);
+    }
+
+    TEST(raii_thread_std_thread_assign_test)
+    {
+        auto start_time = steady_clock::now();
+
+        std::thread t1{[&]{ sleep_for(t_100ms); }};
+
+        {
+            gsl::raii_thread t2;
+            t2 = std::move(t1);
+        }
+
+        auto end_time = steady_clock::now();
+
+        CHECK(end_time - start_time >= t_100ms);
+    }
+
+    TEST(raii_thread_swap_test)
+    {
+        gsl::raii_thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::raii_thread t2{[&]{ sleep_for(t_100ms); }};
+
+        auto id1 = t1.get_id();
+        auto id2 = t2.get_id();
+
+        std::swap(t1, t2);
+
+        CHECK(t1.get_id() == id2);
+        CHECK(t2.get_id() == id1);
+
+        t1.swap(t2);
+
+        CHECK(t1.get_id() == id1);
+        CHECK(t2.get_id() == id2);
+    }
 }
 
-SUITE(thread_tests)
+SUITE(detached_thread_tests)
 {
-	class scope_test_fixture
-	{
-	public:
-		scope_test_fixture(): v1(fill( 0, 49)), v2(fill(50, 99)), v3(fill( 0, 99)) {}
+    TEST(detached_thread_out_of_scope_test)
+    {
+        std::atomic_bool b{false};
 
-		std::mutex mtx;
-		const std::vector<int> v1;
-		const std::vector<int> v2;
-		const std::vector<int> v3;
+        {
+            gsl::detached_thread t{[&]{ sleep_for(t_100ms); b = true; }};
+        }
 
-	private:
-		std::vector<int> fill(int from, int to)
-		{
-			Ensures(from < to);
-			std::vector<int> v(std::size_t(to - from));
-			std::iota(std::begin(v), std::end(v), from);
-			return v;
-		}
-	};
+        CHECK(b == false);
+        sleep_for(t_100ms * 2);
+        CHECK(b == true);
+    }
 
-	TEST(same_scope)
-	{
-		scope_test_fixture fixture;
+    TEST(detached_thread_temporary_test)
+    {
+        std::atomic_bool b{false};
 
-		std::vector<int> v;
+        gsl::detached_thread{[&]{ sleep_for(t_100ms); b = true; }};
 
-		gsl::raii_thread t1{[&]{
-			for(auto i: fixture.v1)
-			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(random_number(0, 1)));
-				std::lock_guard<std::mutex> lock{fixture.mtx};
-				v.push_back(i);
-			}
-		}};
+        CHECK(b == false);
+        sleep_for(t_100ms * 2);
+        CHECK(b == true);
+    }
 
-		for(auto i: fixture.v2)
-		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(random_number(0, 1)));
-			std::lock_guard<std::mutex> lock{fixture.mtx};
-			v.push_back(i);
-		}
+    TEST(detached_thread_ctor_std_thread_test)
+    {
+        std::thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::detached_thread t2{std::move(t1)};
+    }
 
-		CHECK(v != fixture.v3);
-	}
+    TEST(detached_thread_assign_std_thread_test)
+    {
+        std::thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::detached_thread t2;
+        t2 = std::move(t1);
+    }
 
-	TEST(different_scope)
-	{
-		scope_test_fixture fixture;
+    TEST(detached_thread_temporary_assign_std_thread_test)
+    {
+        std::thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::detached_thread{std::move(t1)};
+    }
 
-		std::vector<int> v;
+    TEST(detached_thread_swap_test)
+    {
+        gsl::detached_thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::detached_thread t2{[&]{ sleep_for(t_100ms); }};
 
-		{
-			gsl::raii_thread t1{[&]{
-				for(auto i: fixture.v1)
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(random_number(0, 1)));
-					std::lock_guard<std::mutex> lock{fixture.mtx};
-					v.push_back(i);
-				}
-			}};
-		}
+        auto id1 = t1.get_id();
+        auto id2 = t2.get_id();
 
-		for(auto i: fixture.v2)
-		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(random_number(0, 1)));
-			std::lock_guard<std::mutex> lock{fixture.mtx};
-			v.push_back(i);
-		}
+        std::swap(t1, t2);
 
-		CHECK(v == fixture.v3);
-	}
+        CHECK(t1.get_id() == id2);
+        CHECK(t2.get_id() == id1);
+
+        t1.swap(t2);
+
+        CHECK(t1.get_id() == id1);
+        CHECK(t2.get_id() == id2);
+    }
 }
 
-int main(int, const char* []) { return UnitTest::RunAllTests(); }
+int main() { return UnitTest::RunAllTests(); }
+
