@@ -45,8 +45,8 @@ SUITE(at_tests)
         const std::array<int, 4>& c_a = a;
 
         for (int i = 0; i < 4; ++i) {
-            CHECK(&gsl::at(a, i) == &a[i]);
-            CHECK(&gsl::at(c_a, i) == &a[i]);
+            CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+            CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
         }
 
         CHECK_THROW(gsl::at(a, -1), fail_fast);
@@ -61,8 +61,8 @@ SUITE(at_tests)
         const std::vector<int>& c_a = a;
 
         for (int i = 0; i < 4; ++i) {
-            CHECK(&gsl::at(a, i) == &a[i]);
-            CHECK(&gsl::at(c_a, i) == &a[i]);
+            CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+            CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
         }
 
         CHECK_THROW(gsl::at(a, -1), fail_fast);
@@ -87,7 +87,7 @@ SUITE(at_tests)
     }
 }
 
-#if !defined(_MSC_VER) || (defined(__clang__) || _MSC_VER >= 1910)
+#if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
 static constexpr bool test_constexpr()
 {
     int a1[4] = { 1, 2, 3, 4 };
@@ -98,7 +98,9 @@ static constexpr bool test_constexpr()
     for (int i = 0; i < 4; ++i) {
         if (&gsl::at(a1, i) != &a1[i]) return false;
         if (&gsl::at(c_a1, i) != &a1[i]) return false;
-        if (&gsl::at(c_a2, i) != &c_a2[i]) return false;
+        // requires C++17:
+        // if (&gsl::at(a2, i) != &a2[static_cast<std::size_t>(i)]) return false;
+        if (&gsl::at(c_a2, i) != &c_a2[static_cast<std::size_t>(i)]) return false;
         if (gsl::at({1,2,3,4}, i) != i+1) return false;
     }
 
