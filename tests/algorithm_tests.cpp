@@ -25,147 +25,165 @@ using namespace gsl;
 SUITE(copy_tests)
 {
 
-    TEST(same_type)
+    // dynamic source and destination span
+    TEST(same_type_dd)
     {
-        // dynamic source and destination span
-        {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
+        std::array<int, 5> src{1, 2, 3, 4, 5};
+        std::array<int, 10> dst{};
 
-            span<int> src_span(src);
-            span<int> dst_span(dst);
+        span<int> src_span(src);
+        span<int> dst_span(dst);
 
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
+        dst_span = copy(src_span, dst_span);
+        dst_span = copy(src_span, dst_span);
+        CHECK_THROW(copy(src_span, dst_span), fail_fast);
 
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
-        }
-
-        // static source and dynamic destination span
-        {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
-
-            span<int, 5> src_span(src);
-            span<int> dst_span(dst);
-
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
-
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
-        }
-
-        // dynamic source and static destination span
-        {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
-
-            span<int> src_span(src);
-            span<int, 10> dst_span(dst);
-
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
-
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
-        }
-
-        // static source and destination span
-        {
-            std::array<int, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
-
-            span<int, 5> src_span(src);
-            span<int, 10> dst_span(dst);
-
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
-
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
         }
     }
 
-    TEST(compatible_type)
+    // static source and dynamic destination span
+    TEST(same_type_sd)
     {
-        // dynamic source and destination span
-        {
-            std::array<short, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
+        std::array<int, 5> src{1, 2, 3, 4, 5};
+        std::array<int, 10> dst{};
 
-            span<short> src_span(src);
-            span<int> dst_span(dst);
+        span<int, 5> src_span(src);
+        span<int> dst_span(dst);
 
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
+        dst_span = copy(src_span, dst_span);
+        dst_span = copy(src_span, dst_span);
+        CHECK_THROW(copy(src_span, dst_span), fail_fast);
 
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
-        }
-
-        // static source and dynamic destination span
-        {
-            std::array<short, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
-
-            span<short, 5> src_span(src);
-            span<int> dst_span(dst);
-
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
-
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
-        }
-
-        // dynamic source and static destination span
-        {
-            std::array<short, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
-
-            span<short> src_span(src);
-            span<int, 10> dst_span(dst);
-
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
-
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
-        }
-
-        // static source and destination span
-        {
-            std::array<short, 5> src{1, 2, 3, 4, 5};
-            std::array<int, 10> dst{};
-
-            span<short, 5> src_span(src);
-            span<int, 10> dst_span(dst);
-
-            copy(src_span, dst_span);
-            copy(src_span, dst_span.subspan(src_span.size()));
-
-            for (std::size_t i = 0; i < src.size(); ++i) {
-                CHECK(dst[i] == src[i]);
-                CHECK(dst[i + src.size()] == src[i]);
-            }
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
         }
     }
+
+    // dynamic source and static destination span
+    TEST(same_type_ds)
+    {
+        std::array<int, 5> src{1, 2, 3, 4, 5};
+        std::array<int, 10> dst{};
+
+        span<int> src_span(src);
+        span<int, 10> dst_span(dst);
+
+        auto dst_span2 = copy(src_span, dst_span);
+             dst_span2 = copy(src_span, dst_span2);
+        CHECK_THROW(copy(src_span, dst_span2), fail_fast);
+
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
+        }
+    }
+
+    // static source and destination span
+    TEST(same_type_ss)
+    {
+        std::array<int, 5> src{1, 2, 3, 4, 5};
+        std::array<int, 10> dst{};
+
+        span<int, 5> src_span(src);
+        span<int, 10> dst_span(dst);
+
+        auto dst_span2 = copy(src_span, dst_span);
+        auto dst_span3 = copy(src_span, dst_span2);
+#ifdef CONFIRM_COMPILATION_ERRORS
+        CHECK_THROW(copy(src_span, dst_span3), fail_fast);
+#endif
+
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
+        }
+    }
+
+    // dynamic source and destination span
+    TEST(compatible_type_dd)
+    {
+        // dynamic source and destination span
+        std::array<short, 5> src{1, 2, 3, 4, 5};
+        std::array<int, 10> dst{};
+
+        span<short> src_span(src);
+        span<int> dst_span(dst);
+
+        dst_span = copy(src_span, dst_span);
+        dst_span = copy(src_span, dst_span);
+        CHECK_THROW(copy(src_span, dst_span), fail_fast);
+
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
+        }
+    }
+
+    // static source and dynamic destination span
+    TEST(compatible_type_sd)
+    {
+        std::array<short, 5> src{ 1, 2, 3, 4, 5 };
+        std::array<int, 10> dst{};
+
+        span<short, 5> src_span(src);
+        span<int> dst_span(dst);
+
+
+        dst_span = copy(src_span, dst_span);
+        dst_span = copy(src_span, dst_span);
+        CHECK_THROW(copy(src_span, dst_span), fail_fast);
+
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
+        }
+    }
+
+    // dynamic source and static destination span
+    TEST(compatible_type_ds)
+    {
+        std::array<short, 5> src{ 1, 2, 3, 4, 5 };
+        std::array<int, 10> dst{};
+
+        span<short> src_span(src);
+        span<int, 10> dst_span(dst);
+
+        auto dst_span2 = copy(src_span, dst_span);
+             dst_span2 = copy(src_span, dst_span2);
+        CHECK_THROW(copy(src_span, dst_span2), fail_fast);
+
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
+        }
+    }
+
+    // static source and destination span
+    TEST(compatible_type_ss)
+    {
+        std::array<short, 5> src{ 1, 2, 3, 4, 5 };
+        std::array<int, 10> dst{};
+
+        span<short, 5> src_span(src);
+        span<int, 10> dst_span(dst);
+
+        auto dst_span2 = copy(src_span, dst_span);
+        auto dst_span3 = copy(src_span, dst_span2);
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        CHECK_THROW(copy(src_span, dst_span3), fail_fast);
+#endif
+
+        for (std::size_t i = 0; i < src.size(); ++i) {
+            CHECK(dst[i] == src[i]);
+            CHECK(dst[i + src.size()] == src[i]);
+        }
+    }
+
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     TEST(incompatible_type)
