@@ -199,6 +199,23 @@ SUITE(detached_thread_tests)
         CHECK(t1.get_id() == id1);
         CHECK(t2.get_id() == id2);
     }
+
+    TEST(detached_thread_ctor_from_detached_std_thread)
+    {
+        std::thread t{[&]{ sleep_for(t_100ms); }};
+        t.detach();
+        gsl::detached_thread{std::move(t)};
+        sleep_for(t_100ms * 2);
+    }
+
+    TEST(detached_thread_assign_from_detached_std_thread)
+    {
+        std::thread t1{[&]{ sleep_for(t_100ms); }};
+        t1.detach();
+        gsl::detached_thread t2;
+        t2 = std::move(t1);
+        sleep_for(t_100ms * 2);
+    }
 }
 
 int main() { return UnitTest::RunAllTests(); }
