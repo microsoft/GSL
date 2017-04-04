@@ -127,31 +127,25 @@ inline T narrow(U u)
 }
 
 //
-// at() - Bounds-checked way of accessing static arrays, std::array, std::vector
+// at() - Bounds-checked way of accessing builtin arrays, std::array, std::vector
 //
 template <class T, std::size_t N>
-inline constexpr T& at(T (&arr)[N], std::ptrdiff_t index)
-{
-    Expects(index >= 0 && index < narrow_cast<std::ptrdiff_t>(N));
-    return arr[static_cast<std::size_t>(index)];
-}
-
-template <class T, std::size_t N>
-inline constexpr T& at(std::array<T, N>& arr, std::ptrdiff_t index)
+inline constexpr T& at(T (&arr)[N], const std::ptrdiff_t index)
 {
     Expects(index >= 0 && index < narrow_cast<std::ptrdiff_t>(N));
     return arr[static_cast<std::size_t>(index)];
 }
 
 template <class Cont>
-inline constexpr typename Cont::value_type& at(Cont& cont, std::ptrdiff_t index)
+inline constexpr auto at(Cont& cont, const std::ptrdiff_t index) -> decltype(cont[cont.size()])
 {
     Expects(index >= 0 && index < narrow_cast<std::ptrdiff_t>(cont.size()));
-    return cont[static_cast<typename Cont::size_type>(index)];
+    using size_type = decltype(cont.size());
+    return cont[static_cast<size_type>(index)];
 }
 
 template <class T>
-inline constexpr const T& at(std::initializer_list<T> cont, std::ptrdiff_t index)
+inline constexpr T at(const std::initializer_list<T> cont, const std::ptrdiff_t index)
 {
     Expects(index >= 0 && index < narrow_cast<std::ptrdiff_t>(cont.size()));
     return *(cont.begin() + index);
