@@ -35,22 +35,22 @@ SUITE(byte_tests)
     TEST(construction)
     {
         {
-            byte b = static_cast<byte>(4);
+            const byte b = static_cast<byte>(4);
             CHECK(static_cast<unsigned char>(b) == 4);
         }
 
         {
-            byte b = byte(12);
+            const byte b = byte(12);
             CHECK(static_cast<unsigned char>(b) == 12);
         }
 
         {
-            byte b = to_byte<12>();
+            const byte b = to_byte<12>();
             CHECK(static_cast<unsigned char>(b) == 12);
         }
         {
-            unsigned char uc = 12;
-            byte b = to_byte(uc);
+            const unsigned char uc = 12;
+            const byte b = to_byte(uc);
             CHECK(static_cast<unsigned char>(b) == 12);
         }
 
@@ -63,7 +63,7 @@ SUITE(byte_tests)
 
     TEST(bitwise_operations)
     {
-        byte b = to_byte<0xFF>();
+        const byte b = to_byte<0xFF>();
 
         byte a = to_byte<0x00>();
         CHECK((b | a) == to_byte<0xFF>());
@@ -79,7 +79,7 @@ SUITE(byte_tests)
         CHECK(a == to_byte<0x01>());
 
         CHECK((b ^ a) == to_byte<0xFE>());
-        
+
         CHECK(a == to_byte<0x01>());
         a ^= b;
         CHECK(a == to_byte<0xFE>());
@@ -99,7 +99,7 @@ SUITE(byte_tests)
 
     TEST(to_integer)
     {
-        byte b = to_byte<0x12>();
+        const byte b = to_byte<0x12>();
 
         CHECK(0x12 == gsl::to_integer<char>(b));
         CHECK(0x12 == gsl::to_integer<short>(b));
@@ -125,7 +125,7 @@ SUITE(byte_tests)
     TEST(aliasing)
     {
         int i{ 0 };
-        int res = modify_both(reinterpret_cast<byte&>(i), i);
+        const int res = modify_both(reinterpret_cast<byte&>(i), i);
         CHECK(res == i);
     }
 }

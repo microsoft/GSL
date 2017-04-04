@@ -45,7 +45,7 @@ SUITE(bounds_test)
 	TEST(bounds_basic)
 	{
 		static_bounds<3, 4, 5> b;
-		auto a = b.slice();
+		const auto a = b.slice();
 		(void)a;
 		static_bounds<4, dynamic_range, 2> x{ 4 };
 		x.slice().slice();
@@ -55,7 +55,7 @@ SUITE(bounds_test)
 	{
 		static_bounds<4, dynamic_range, 2> bounds{ 3 };
 
-		auto itr = bounds.begin();
+		const auto itr = bounds.begin();
 		(void)itr;
 #ifdef CONFIRM_COMPILATION_ERRORS
 		multi_span<int, 4, dynamic_range, 2> av(nullptr, bounds);

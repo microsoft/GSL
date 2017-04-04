@@ -577,7 +577,7 @@ template <class CharT, std::ptrdiff_t Extent, class T,
               std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>>>::value>>
 bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const T& other) GSL_NOEXCEPT
 {
-    gsl::basic_string_span<std::add_const_t<CharT>> tmp(other);
+    const gsl::basic_string_span<std::add_const_t<CharT>> tmp(other);
 #ifdef GSL_MSVC_NO_CPP14_STD_EQUAL
     return (one.size() == tmp.size()) && std::equal(one.begin(), one.end(), tmp.begin());
 #else
@@ -624,7 +624,7 @@ template <typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename 
               T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value>>
 bool operator<(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_NOEXCEPT
 {
-    gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
+    const gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
     return std::lexicographical_compare(one.begin(), one.end(), tmp.begin(), tmp.end());
 }
 
