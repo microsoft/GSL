@@ -180,11 +180,8 @@ SUITE(NotNullTests)
 
     TEST(TestNotNullSharedPtrComparison)
     {
-        int ints[2] = {42, 43};
-        auto emptyDeleter = [](const int*){};
-
-        shared_ptr<int> sp1(&ints[0], emptyDeleter);
-        shared_ptr<const int> sp2(&ints[1], emptyDeleter);
+        auto sp1 = std::make_shared<int>(42);
+        auto sp2 = std::make_shared<const int>(43);
 
         using NotNullSp1 = not_null<decltype(sp1)>;
         using NotNullSp2 = not_null<decltype(sp2)>;
