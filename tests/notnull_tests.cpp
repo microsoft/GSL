@@ -148,10 +148,9 @@ SUITE(NotNullTests)
 
     TEST(TestNotNullRawPointerComparison)
     {
-        int x = 1;
-        const int y = 2;
-        auto p1 = &x;
-        auto p2 = &y;
+        int ints[2] = {42, 43};
+        int* p1 = &ints[0];
+        const int* p2 = &ints[1];
 
         using NotNull1 = not_null<decltype(p1)>;
         using NotNull2 = not_null<decltype(p2)>;
@@ -181,8 +180,11 @@ SUITE(NotNullTests)
 
     TEST(TestNotNullSharedPtrComparison)
     {
-        auto sp1 = std::make_shared<int>(1);
-        auto sp2 = std::make_shared<const int>(3);
+        int ints[2] = {42, 43};
+        auto emptyDeleter = [](const int*){};
+
+        shared_ptr<int> sp1(&ints[0], emptyDeleter);
+        shared_ptr<const int> sp2(&ints[1], emptyDeleter);
 
         using NotNullSp1 = not_null<decltype(sp1)>;
         using NotNullSp2 = not_null<decltype(sp2)>;
@@ -210,39 +212,37 @@ SUITE(NotNullTests)
         CHECK((NotNullSp2(sp2) >= NotNullSp1(sp1)) == (sp2 >= sp1));
     }
 
-	TEST(TestNotNullCustomPtrComparison)
-	{
-		int i = 42;
-		CustomPtr<int> p1(&i);
-		const int ci = 42;
-		CustomPtr<const int> p2(&ci);
+    TEST(TestNotNullCustomPtrComparison)
+    {
+        int ints[2] = { 42, 43 };
+        CustomPtr<int> p1(&ints[0]);
+        CustomPtr<const int> p2(&ints[1]);
 
-		using NotNull1 = not_null<decltype(p1)>;
-		using NotNull2 = not_null<decltype(p2)>;
+        using NotNull1 = not_null<decltype(p1)>;
+        using NotNull2 = not_null<decltype(p2)>;
 
-		CHECK((NotNull1(p1) == NotNull1(p1)) == "true");
-		CHECK((NotNull1(p1) == NotNull2(p2)) == "false");
+        CHECK((NotNull1(p1) == NotNull1(p1)) == "true");
+        CHECK((NotNull1(p1) == NotNull2(p2)) == "false");
 
-		CHECK((NotNull1(p1) != NotNull1(p1)) == "false");
-		CHECK((NotNull1(p1) != NotNull2(p2)) == "true");
+        CHECK((NotNull1(p1) != NotNull1(p1)) == "false");
+        CHECK((NotNull1(p1) != NotNull2(p2)) == "true");
 
-		CHECK((NotNull1(p1) < NotNull1(p1)) == "false");
-		CHECK((NotNull1(p1) < NotNull2(p2)) == (p1 < p2));
-		CHECK((NotNull2(p2) < NotNull1(p1)) == (p2 < p1));
+        CHECK((NotNull1(p1) < NotNull1(p1)) == "false");
+        CHECK((NotNull1(p1) < NotNull2(p2)) == (p1 < p2));
+        CHECK((NotNull2(p2) < NotNull1(p1)) == (p2 < p1));
 
-		CHECK((NotNull1(p1) > NotNull1(p1)) == "false");
-		CHECK((NotNull1(p1) > NotNull2(p2)) == (p1 > p2));
-		CHECK((NotNull2(p2) > NotNull1(p1)) == (p2 > p1));
+        CHECK((NotNull1(p1) > NotNull1(p1)) == "false");
+        CHECK((NotNull1(p1) > NotNull2(p2)) == (p1 > p2));
+        CHECK((NotNull2(p2) > NotNull1(p1)) == (p2 > p1));
 
-		CHECK((NotNull1(p1) <= NotNull1(p1)) == "true");
-		CHECK((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
-		CHECK((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
+        CHECK((NotNull1(p1) <= NotNull1(p1)) == "true");
+        CHECK((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
+        CHECK((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
 
-		CHECK((NotNull1(p1) >= NotNull1(p1)) == "true");
-		CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
-		CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
-
-	}
+        CHECK((NotNull1(p1) >= NotNull1(p1)) == "true");
+        CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
+        CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
+    }
 }
 
 int main(int, const char *[])
