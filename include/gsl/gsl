@@ -117,6 +117,42 @@ std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
     return os;
 }
 
+template <class T, class U>
+auto operator==(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() == rhs.get())
+{
+    return lhs.get() == rhs.get();
+}
+
+template <class T, class U>
+auto operator!=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() != rhs.get())
+{
+    return lhs.get() != rhs.get();
+}
+
+template <class T, class U>
+auto operator<(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() < rhs.get())
+{
+    return lhs.get() < rhs.get();
+}
+
+template <class T, class U>
+auto operator<=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() <= rhs.get())
+{
+    return lhs.get() <= rhs.get();
+}
+
+template <class T, class U>
+auto operator>(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() > rhs.get())
+{
+    return lhs.get() > rhs.get();
+}
+
+template <class T, class U>
+auto operator>=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() >= rhs.get())
+{
+    return lhs.get() >= rhs.get();
+}
+
 // more unwanted operators
 template <class T, class U>
 std::ptrdiff_t operator-(const not_null<T>&, const not_null<U>&) = delete;
