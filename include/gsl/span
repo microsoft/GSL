@@ -133,7 +133,7 @@ namespace details
         using element_type_ = typename Span::element_type;
     public:
         using iterator_category = std::random_access_iterator_tag;
-        using value_type = std::remove_const_t<element_type_>;
+        using value_type = std::remove_cv_t<element_type_>;
         using difference_type = typename Span::index_type;
 
         using reference =
@@ -337,6 +337,7 @@ class span
 public:
     // constants and types
     using element_type = ElementType;
+    using value_type = std::remove_cv_t<ElementType>;    
     using index_type = std::ptrdiff_t;
     using pointer = element_type*;
     using reference = element_type&;
@@ -345,6 +346,8 @@ public:
     using const_iterator = details::span_iterator<span<ElementType, Extent>, true>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+    using size_type = index_type;
 
     constexpr static const index_type extent = Extent;
 
