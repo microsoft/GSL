@@ -24,24 +24,25 @@
 #include <gsl/multi_span>  // multi_span, strided_span...
 #include <gsl/span>        // span
 #include <gsl/string_span> // zstring, string_span, zstring_builder...
-#include <memory>
+
 #include <iostream>
+#include <memory>
 
 #if defined(_MSC_VER) && _MSC_VER < 1910
- #pragma push_macro("constexpr")
- #define constexpr /*constexpr*/
+#pragma push_macro("constexpr")
+#define constexpr /*constexpr*/
 
- // MSVC 2013 workarounds
- #if _MSC_VER <= 1800
-  // noexcept is not understood
-  #pragma push_macro("noexcept")
-  #define noexcept /*noexcept*/
+// MSVC 2013 workarounds
+#if _MSC_VER <= 1800
+// noexcept is not understood
+#pragma push_macro("noexcept")
+#define noexcept /*noexcept*/
 
-  // turn off some misguided warnings
-  #pragma warning(push)
-  #pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
- #endif // _MSC_VER <= 1800
-#endif // defined(_MSC_VER) && _MSC_VER < 1910
+// turn off some misguided warnings
+#pragma warning(push)
+#pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
+#endif                          // _MSC_VER <= 1800
+#endif                          // defined(_MSC_VER) && _MSC_VER < 1910
 
 namespace gsl
 {
@@ -76,10 +77,15 @@ public:
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr not_null(U&& u) : ptr_(std::forward<U>(u)) { Expects(ptr_ != nullptr); }
+    constexpr not_null(U&& u) : ptr_(std::forward<U>(u))
+    {
+        Expects(ptr_ != nullptr);
+    }
 
     template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr not_null(const not_null<U>& other) : not_null(other.get()) {}
+    constexpr not_null(const not_null<U>& other) : not_null(other.get())
+    {
+    }
 
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
@@ -157,7 +163,7 @@ auto operator>=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.
 template <class T, class U>
 std::ptrdiff_t operator-(const not_null<T>&, const not_null<U>&) = delete;
 template <class T>
-not_null<T> operator-(const not_null<T>&, std::ptrdiff_t)  = delete;
+not_null<T> operator-(const not_null<T>&, std::ptrdiff_t) = delete;
 template <class T>
 not_null<T> operator+(const not_null<T>&, std::ptrdiff_t) = delete;
 template <class T>
@@ -176,15 +182,15 @@ struct hash<gsl::not_null<T>>
 } // namespace std
 
 #if defined(_MSC_VER) && _MSC_VER < 1910
- #undef constexpr
- #pragma pop_macro("constexpr")
+#undef constexpr
+#pragma pop_macro("constexpr")
 
- #if _MSC_VER <= 1800
-  #undef noexcept
-  #pragma pop_macro("noexcept")
+#if _MSC_VER <= 1800
+#undef noexcept
+#pragma pop_macro("noexcept")
 
-  #pragma warning(pop)
- #endif // _MSC_VER <= 1800
+#pragma warning(pop)
+#endif // _MSC_VER <= 1800
 #endif // defined(_MSC_VER) && _MSC_VER < 1910
 
 #endif // GSL_GSL_H

@@ -15,6 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
+
 #include <gsl/gsl_algorithm>
 
 #include <array>
@@ -179,8 +180,8 @@ SUITE(copy_tests)
         span<int*, 4> dst_span_static(dst);
 
         // every line should produce a compilation error
-        copy(src_span_dyn,    dst_span_dyn);
-        copy(src_span_dyn,    dst_span_static);
+        copy(src_span_dyn, dst_span_dyn);
+        copy(src_span_dyn, dst_span_static);
         copy(src_span_static, dst_span_dyn);
         copy(src_span_static, dst_span_static);
     }
@@ -196,9 +197,9 @@ SUITE(copy_tests)
         span<int> dst_span_dyn(dst);
         span<int, 4> dst_span_static(dst);
 
-        CHECK_THROW(copy(src_span_dyn,    dst_span_dyn),    fail_fast);
-        CHECK_THROW(copy(src_span_dyn,    dst_span_static), fail_fast);
-        CHECK_THROW(copy(src_span_static, dst_span_dyn),    fail_fast);
+        CHECK_THROW(copy(src_span_dyn, dst_span_dyn), fail_fast);
+        CHECK_THROW(copy(src_span_dyn, dst_span_static), fail_fast);
+        CHECK_THROW(copy(src_span_static, dst_span_dyn), fail_fast);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
         copy(src_span_static, dst_span_static);
