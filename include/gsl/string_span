@@ -22,41 +22,42 @@
 #include <gsl/gsl_assert>
 #include <gsl/gsl_util>
 #include <gsl/span>
+
 #include <cstdint>
 #include <cstring>
 #include <string>
 
 #ifdef _MSC_VER
- #pragma warning(push)
+#pragma warning(push)
 
- // blanket turn off warnings from CppCoreCheck for now
- // so people aren't annoyed by them when running the tool.
- // more targeted suppressions will be added in a future update to the GSL
- #pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
+// blanket turn off warnings from CppCoreCheck for now
+// so people aren't annoyed by them when running the tool.
+// more targeted suppressions will be added in a future update to the GSL
+#pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
 
- #if _MSC_VER < 1910
-  #pragma push_macro("constexpr")
-  #define constexpr /*constexpr*/
+#if _MSC_VER < 1910
+#pragma push_macro("constexpr")
+#define constexpr /*constexpr*/
 
-  // VS 2013 workarounds
-  #if _MSC_VER <= 1800
-   #define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
-   #define GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
-   #define GSL_MSVC_NO_CPP14_STD_EQUAL
-   #define GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+// VS 2013 workarounds
+#if _MSC_VER <= 1800
+#define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
+#define GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
+#define GSL_MSVC_NO_CPP14_STD_EQUAL
+#define GSL_MSVC_NO_DEFAULT_MOVE_CTOR
 
-   // noexcept is not understood
-   #pragma push_macro("noexcept")
-   #define noexcept /*noexcept*/
-  #endif // _MSC_VER <= 1800
- #endif // _MSC_VER < 1910
-#endif // _MSC_VER
+// noexcept is not understood
+#pragma push_macro("noexcept")
+#define noexcept /*noexcept*/
+#endif           // _MSC_VER <= 1800
+#endif           // _MSC_VER < 1910
+#endif           // _MSC_VER
 
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
- #define GSL_NOEXCEPT /*noexcept*/
+#define GSL_NOEXCEPT /*noexcept*/
 #else
- #define GSL_NOEXCEPT noexcept
+#define GSL_NOEXCEPT noexcept
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 namespace gsl
@@ -89,30 +90,26 @@ using wzstring = basic_zstring<wchar_t, Extent>;
 
 namespace details
 {
-    inline std::ptrdiff_t string_length(const char *str, std::ptrdiff_t n)
+    inline std::ptrdiff_t string_length(const char* str, std::ptrdiff_t n)
     {
-        if (str == nullptr || n <= 0)
-            return 0;
+        if (str == nullptr || n <= 0) return 0;
 
         span<const char> str_span{str, n};
 
         std::ptrdiff_t len = 0;
-        while (len < n && str_span[len])
-            len++;
+        while (len < n && str_span[len]) len++;
 
         return len;
     }
 
-    inline std::ptrdiff_t wstring_length(const wchar_t *str, std::ptrdiff_t n)
+    inline std::ptrdiff_t wstring_length(const wchar_t* str, std::ptrdiff_t n)
     {
-        if (str == nullptr || n <= 0)
-            return 0;
+        if (str == nullptr || n <= 0) return 0;
 
         span<const wchar_t> str_span{str, n};
 
         std::ptrdiff_t len = 0;
-        while (len < n && str_span[len])
-            len++;
+        while (len < n && str_span[len]) len++;
 
         return len;
     }
@@ -316,7 +313,8 @@ public:
     }
 
     template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    constexpr basic_string_span(const std::array<ArrayElementType, N>& arr) GSL_NOEXCEPT : span_(arr)
+    constexpr basic_string_span(const std::array<ArrayElementType, N>& arr) GSL_NOEXCEPT
+        : span_(arr)
     {
     }
 
@@ -484,14 +482,11 @@ inline std::wstring to_string(wstring_span<> view)
 
 #endif
 
-template <typename CharT,
-	  typename Traits = typename std::char_traits<CharT>,
-	  typename Allocator = std::allocator<CharT>,
-	  typename gCharT,
-	  std::ptrdiff_t Extent>
+template <typename CharT, typename Traits = typename std::char_traits<CharT>,
+          typename Allocator = std::allocator<CharT>, typename gCharT, std::ptrdiff_t Extent>
 std::basic_string<CharT, Traits, Allocator> to_basic_string(basic_string_span<gCharT, Extent> view)
 {
-  return {view.data(), static_cast<std::size_t>(view.length())};
+    return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
 // zero-terminated string span, used to convert
@@ -830,23 +825,23 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 #undef GSL_NOEXCEPT
 
 #ifdef _MSC_VER
- #pragma warning(pop)
+#pragma warning(pop)
 
- #if _MSC_VER < 1910
-  #undef constexpr
-  #pragma pop_macro("constexpr")
+#if _MSC_VER < 1910
+#undef constexpr
+#pragma pop_macro("constexpr")
 
-  // VS 2013 workarounds
-  #if _MSC_VER <= 1800
-   #undef noexcept
-   #pragma pop_macro("noexcept")
+// VS 2013 workarounds
+#if _MSC_VER <= 1800
+#undef noexcept
+#pragma pop_macro("noexcept")
 
-   #undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
-   #undef GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
-   #undef GSL_MSVC_NO_CPP14_STD_EQUAL
-   #undef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
-  #endif // _MSC_VER <= 1800
- #endif // _MSC_VER < 1910
+#undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
+#undef GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
+#undef GSL_MSVC_NO_CPP14_STD_EQUAL
+#undef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
+#endif // _MSC_VER <= 1800
+#endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
 #endif // GSL_STRING_SPAN_H

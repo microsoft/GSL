@@ -15,6 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
+
 #include <gsl/multi_span>
 
 #include <iostream>
@@ -668,7 +669,9 @@ SUITE(multi_span_tests)
         CHECK(s2.empty());
 
         auto get_temp_span = [&]() -> multi_span<int> { return {&arr[1], 2}; };
-        auto use_span = [&](multi_span<const int> s) { CHECK(s.length() == 2 && s.data() == &arr[1]); };
+        auto use_span = [&](multi_span<const int> s) {
+            CHECK(s.length() == 2 && s.data() == &arr[1]);
+        };
         use_span(get_temp_span());
 
         s1 = get_temp_span();
@@ -1028,7 +1031,7 @@ SUITE(multi_span_tests)
             int arr[] = {1, 2, 3};
 
             multi_span<int> s1 = {&arr[0], 2}; // shorter
-            multi_span<int> s2 = arr; // longer
+            multi_span<int> s2 = arr;          // longer
 
             CHECK(s1 != s2);
             CHECK(s2 != s1);
@@ -1283,412 +1286,411 @@ SUITE(multi_span_tests)
         delete[] arr;
     }
 
-    TEST(index_constructors)
-    {
-        {
-            // components of the same type
-            index<3> i1(0, 1, 2);
-            CHECK(i1[0] == 0);
+    TEST(index_constructors){{// components of the same type
+                              index<3> i1(0, 1, 2);
+    CHECK(i1[0] == 0);
 
-            // components of different types
-            std::size_t c0 = 0;
-            std::size_t c1 = 1;
-            index<3> i2(c0, c1, 2);
-            CHECK(i2[0] == 0);
+    // components of different types
+    std::size_t c0 = 0;
+    std::size_t c1 = 1;
+    index<3> i2(c0, c1, 2);
+    CHECK(i2[0] == 0);
 
-            // from array
-            index<3> i3 = {0, 1, 2};
-            CHECK(i3[0] == 0);
+    // from array
+    index<3> i3 = {0, 1, 2};
+    CHECK(i3[0] == 0);
 
-            // from other index of the same size type
-            index<3> i4 = i3;
-            CHECK(i4[0] == 0);
+    // from other index of the same size type
+    index<3> i4 = i3;
+    CHECK(i4[0] == 0);
 
-            // default
-            index<3> i7;
-            CHECK(i7[0] == 0);
+    // default
+    index<3> i7;
+    CHECK(i7[0] == 0);
 
-            // default
-            index<3> i9 = {};
-            CHECK(i9[0] == 0);
-        }
+    // default
+    index<3> i9 = {};
+    CHECK(i9[0] == 0);
+}
 
-        {
-            // components of the same type
-            index<1> i1(0);
-            CHECK(i1[0] == 0);
+{
+    // components of the same type
+    index<1> i1(0);
+    CHECK(i1[0] == 0);
 
-            // components of different types
-            std::size_t c0 = 0;
-            index<1> i2(c0);
-            CHECK(i2[0] == 0);
+    // components of different types
+    std::size_t c0 = 0;
+    index<1> i2(c0);
+    CHECK(i2[0] == 0);
 
-            // from array
-            index<1> i3 = {0};
-            CHECK(i3[0] == 0);
+    // from array
+    index<1> i3 = {0};
+    CHECK(i3[0] == 0);
 
-            // from int
-            index<1> i4 = 0;
-            CHECK(i4[0] == 0);
+    // from int
+    index<1> i4 = 0;
+    CHECK(i4[0] == 0);
 
-            // from other index of the same size type
-            index<1> i5 = i3;
-            CHECK(i5[0] == 0);
+    // from other index of the same size type
+    index<1> i5 = i3;
+    CHECK(i5[0] == 0);
 
-            // default
-            index<1> i8;
-            CHECK(i8[0] == 0);
+    // default
+    index<1> i8;
+    CHECK(i8[0] == 0);
 
-            // default
-            index<1> i9 = {};
-            CHECK(i9[0] == 0);
-        }
+    // default
+    index<1> i9 = {};
+    CHECK(i9[0] == 0);
+}
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            index<3> i1(0, 1);
-            index<3> i2(0, 1, 2, 3);
-            index<3> i3 = {0};
-            index<3> i4 = {0, 1, 2, 3};
-            index<1> i5 = {0, 1};
-        }
+{
+    index<3> i1(0, 1);
+    index<3> i2(0, 1, 2, 3);
+    index<3> i3 = {0};
+    index<3> i4 = {0, 1, 2, 3};
+    index<1> i5 = {0, 1};
+}
 #endif
-    }
+}
 
-    TEST(index_operations)
+TEST(index_operations)
+{
+    ptrdiff_t a[3] = {0, 1, 2};
+    ptrdiff_t b[3] = {3, 4, 5};
+    index<3> i = a;
+    index<3> j = b;
+
+    CHECK(i[0] == 0);
+    CHECK(i[1] == 1);
+    CHECK(i[2] == 2);
+
     {
-        ptrdiff_t a[3] = {0, 1, 2};
-        ptrdiff_t b[3] = {3, 4, 5};
-        index<3> i = a;
-        index<3> j = b;
+        index<3> k = i + j;
 
         CHECK(i[0] == 0);
         CHECK(i[1] == 1);
         CHECK(i[2] == 2);
-
-        {
-            index<3> k = i + j;
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 3);
-            CHECK(k[1] == 5);
-            CHECK(k[2] == 7);
-        }
-
-        {
-            index<3> k = i * 3;
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 0);
-            CHECK(k[1] == 3);
-            CHECK(k[2] == 6);
-        }
-
-        {
-            index<3> k = 3 * i;
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 0);
-            CHECK(k[1] == 3);
-            CHECK(k[2] == 6);
-        }
-
-        {
-            index<2> k = details::shift_left(i);
-
-            CHECK(i[0] == 0);
-            CHECK(i[1] == 1);
-            CHECK(i[2] == 2);
-            CHECK(k[0] == 1);
-            CHECK(k[1] == 2);
-        }
+        CHECK(k[0] == 3);
+        CHECK(k[1] == 5);
+        CHECK(k[2] == 7);
     }
 
-    void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
     {
-        auto length = av.size() / 2;
+        index<3> k = i * 3;
 
-        // view to the second column
-        auto section = av.section({0, 1}, {length, 1});
+        CHECK(i[0] == 0);
+        CHECK(i[1] == 1);
+        CHECK(i[2] == 2);
+        CHECK(k[0] == 0);
+        CHECK(k[1] == 3);
+        CHECK(k[2] == 6);
+    }
 
-        CHECK(section.size() == length);
-        for (auto i = 0; i < section.size(); ++i) {
-            CHECK(section[i][0] == av[i][1]);
-        }
+    {
+        index<3> k = 3 * i;
 
-        for (auto i = 0; i < section.size(); ++i) {
-            auto idx = index<2>{i, 0}; // avoid braces inside the CHECK macro
+        CHECK(i[0] == 0);
+        CHECK(i[1] == 1);
+        CHECK(i[2] == 2);
+        CHECK(k[0] == 0);
+        CHECK(k[1] == 3);
+        CHECK(k[2] == 6);
+    }
+
+    {
+        index<2> k = details::shift_left(i);
+
+        CHECK(i[0] == 0);
+        CHECK(i[1] == 1);
+        CHECK(i[2] == 2);
+        CHECK(k[0] == 1);
+        CHECK(k[1] == 2);
+    }
+}
+
+void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
+{
+    auto length = av.size() / 2;
+
+    // view to the second column
+    auto section = av.section({0, 1}, {length, 1});
+
+    CHECK(section.size() == length);
+    for (auto i = 0; i < section.size(); ++i) {
+        CHECK(section[i][0] == av[i][1]);
+    }
+
+    for (auto i = 0; i < section.size(); ++i) {
+        auto idx = index<2>{i, 0}; // avoid braces inside the CHECK macro
+        CHECK(section[idx] == av[i][1]);
+    }
+
+    CHECK(section.bounds().index_bounds()[0] == length);
+    CHECK(section.bounds().index_bounds()[1] == 1);
+    for (auto i = 0; i < section.bounds().index_bounds()[0]; ++i) {
+        for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j) {
+            auto idx = index<2>{i, j}; // avoid braces inside the CHECK macro
             CHECK(section[idx] == av[i][1]);
         }
-
-        CHECK(section.bounds().index_bounds()[0] == length);
-        CHECK(section.bounds().index_bounds()[1] == 1);
-        for (auto i = 0; i < section.bounds().index_bounds()[0]; ++i) {
-            for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j) {
-                auto idx = index<2>{i, j}; // avoid braces inside the CHECK macro
-                CHECK(section[idx] == av[i][1]);
-            }
-        }
-
-        auto check_sum = 0;
-        for (auto i = 0; i < length; ++i) {
-            check_sum += av[i][1];
-        }
-
-        {
-            auto idx = 0;
-            auto sum = 0;
-            for (auto num : section) {
-                CHECK(num == av[idx][1]);
-                sum += num;
-                idx++;
-            }
-
-            CHECK(sum == check_sum);
-        }
-        {
-            auto idx = length - 1;
-            auto sum = 0;
-            for (auto iter = section.rbegin(); iter != section.rend(); ++iter) {
-                CHECK(*iter == av[idx][1]);
-                sum += *iter;
-                idx--;
-            }
-
-            CHECK(sum == check_sum);
-        }
     }
 
-    TEST(span_section_iteration)
-    {
-        int arr[4][2] = {{4, 0}, {5, 1}, {6, 2}, {7, 3}};
-
-        // static bounds
-        {
-            multi_span<int, 4, 2> av = arr;
-            iterate_second_column(av);
-        }
-        // first bound is dynamic
-        {
-            multi_span<int, dynamic_range, 2> av = arr;
-            iterate_second_column(av);
-        }
-        // second bound is dynamic
-        {
-            multi_span<int, 4, dynamic_range> av = arr;
-            iterate_second_column(av);
-        }
-        // both bounds are dynamic
-        {
-            multi_span<int, dynamic_range, dynamic_range> av = arr;
-            iterate_second_column(av);
-        }
+    auto check_sum = 0;
+    for (auto i = 0; i < length; ++i) {
+        check_sum += av[i][1];
     }
 
-    TEST(dynamic_span_section_iteration)
     {
-        auto height = 4, width = 2;
-        auto size = height * width;
-
-        auto arr = new int[static_cast<std::size_t>(size)];
-        for (auto i = 0; i < size; ++i) {
-            arr[i] = i;
+        auto idx = 0;
+        auto sum = 0;
+        for (auto num : section) {
+            CHECK(num == av[idx][1]);
+            sum += num;
+            idx++;
         }
 
-        auto av = as_multi_span(arr, size);
-
-        // first bound is dynamic
-        {
-            multi_span<int, dynamic_range, 2> av2 = as_multi_span(av, dim(height), dim(width));
-            iterate_second_column(av2);
-        }
-        // second bound is dynamic
-        {
-            multi_span<int, 4, dynamic_range> av2 = as_multi_span(av, dim(height), dim(width));
-            iterate_second_column(av2);
-        }
-        // both bounds are dynamic
-        {
-            multi_span<int, dynamic_range, dynamic_range> av2 = as_multi_span(av, dim(height), dim(width));
-            iterate_second_column(av2);
+        CHECK(sum == check_sum);
+    }
+    {
+        auto idx = length - 1;
+        auto sum = 0;
+        for (auto iter = section.rbegin(); iter != section.rend(); ++iter) {
+            CHECK(*iter == av[idx][1]);
+            sum += *iter;
+            idx--;
         }
 
-        delete[] arr;
+        CHECK(sum == check_sum);
+    }
+}
+
+TEST(span_section_iteration)
+{
+    int arr[4][2] = {{4, 0}, {5, 1}, {6, 2}, {7, 3}};
+
+    // static bounds
+    {
+        multi_span<int, 4, 2> av = arr;
+        iterate_second_column(av);
+    }
+    // first bound is dynamic
+    {
+        multi_span<int, dynamic_range, 2> av = arr;
+        iterate_second_column(av);
+    }
+    // second bound is dynamic
+    {
+        multi_span<int, 4, dynamic_range> av = arr;
+        iterate_second_column(av);
+    }
+    // both bounds are dynamic
+    {
+        multi_span<int, dynamic_range, dynamic_range> av = arr;
+        iterate_second_column(av);
+    }
+}
+
+TEST(dynamic_span_section_iteration)
+{
+    auto height = 4, width = 2;
+    auto size = height * width;
+
+    auto arr = new int[static_cast<std::size_t>(size)];
+    for (auto i = 0; i < size; ++i) {
+        arr[i] = i;
     }
 
-    TEST(span_structure_size)
+    auto av = as_multi_span(arr, size);
+
+    // first bound is dynamic
     {
-        double(*arr)[3][4] = new double[100][3][4];
-        multi_span<double, dynamic_range, 3, 4> av1(arr, 10);
-
-        struct EffectiveStructure
-        {
-            double* v1;
-            ptrdiff_t v2;
-        };
-        CHECK(sizeof(av1) == sizeof(EffectiveStructure));
-
-        CHECK_THROW(av1[10][3][4], fail_fast);
-
-        multi_span<const double, dynamic_range, 6, 4> av2 = as_multi_span(av1, dim(5), dim<6>(), dim<4>());
-        (void) av2;
+        multi_span<int, dynamic_range, 2> av2 = as_multi_span(av, dim(height), dim(width));
+        iterate_second_column(av2);
+    }
+    // second bound is dynamic
+    {
+        multi_span<int, 4, dynamic_range> av2 = as_multi_span(av, dim(height), dim(width));
+        iterate_second_column(av2);
+    }
+    // both bounds are dynamic
+    {
+        multi_span<int, dynamic_range, dynamic_range> av2 =
+            as_multi_span(av, dim(height), dim(width));
+        iterate_second_column(av2);
     }
 
-    TEST(fixed_size_conversions)
+    delete[] arr;
+}
+
+TEST(span_structure_size)
+{
+    double(*arr)[3][4] = new double[100][3][4];
+    multi_span<double, dynamic_range, 3, 4> av1(arr, 10);
+
+    struct EffectiveStructure
     {
-        int arr[] = {1, 2, 3, 4};
+        double* v1;
+        ptrdiff_t v2;
+    };
+    CHECK(sizeof(av1) == sizeof(EffectiveStructure));
 
-        // converting to an multi_span from an equal size array is ok
-        multi_span<int, 4> av4 = arr;
-        CHECK(av4.length() == 4);
+    CHECK_THROW(av1[10][3][4], fail_fast);
 
-        // converting to dynamic_range a_v is always ok
-        {
-            multi_span<int, dynamic_range> av = av4;
-            (void) av;
-        }
-        {
-            multi_span<int, dynamic_range> av = arr;
-            (void) av;
-        }
+    multi_span<const double, dynamic_range, 6, 4> av2 =
+        as_multi_span(av1, dim(5), dim<6>(), dim<4>());
+    (void) av2;
+}
+
+TEST(fixed_size_conversions)
+{
+    int arr[] = {1, 2, 3, 4};
+
+    // converting to an multi_span from an equal size array is ok
+    multi_span<int, 4> av4 = arr;
+    CHECK(av4.length() == 4);
+
+    // converting to dynamic_range a_v is always ok
+    {
+        multi_span<int, dynamic_range> av = av4;
+        (void) av;
+    }
+    {
+        multi_span<int, dynamic_range> av = arr;
+        (void) av;
+    }
 
 // initialization or assignment to static multi_span that REDUCES size is NOT ok
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            multi_span<int, 2> av2 = arr;
-        }
-        {
-            multi_span<int, 2> av2 = av4;
-        }
+    {
+        multi_span<int, 2> av2 = arr;
+    }
+    {
+        multi_span<int, 2> av2 = av4;
+    }
 #endif
 
-        {
-            multi_span<int, dynamic_range> av = arr;
-            multi_span<int, 2> av2 = av;
-            (void) av2;
-        }
+    {
+        multi_span<int, dynamic_range> av = arr;
+        multi_span<int, 2> av2 = av;
+        (void) av2;
+    }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            multi_span<int, dynamic_range> av = arr;
-            multi_span<int, 2, 1> av2 = av.as_multi_span(dim<2>(), dim<2>());
-        }
+    {
+        multi_span<int, dynamic_range> av = arr;
+        multi_span<int, 2, 1> av2 = av.as_multi_span(dim<2>(), dim<2>());
+    }
 #endif
 
-        {
-            multi_span<int, dynamic_range> av = arr;
-            multi_span<int, 2, 1> av2 = as_multi_span(av, dim(2), dim(2));
-            auto workaround_macro = [&]() { return av2[{1, 0}] == 2; };
-            CHECK(workaround_macro());
-        }
+    {
+        multi_span<int, dynamic_range> av = arr;
+        multi_span<int, 2, 1> av2 = as_multi_span(av, dim(2), dim(2));
+        auto workaround_macro = [&]() { return av2[{1, 0}] == 2; };
+        CHECK(workaround_macro());
+    }
 
-        // but doing so explicitly is ok
+    // but doing so explicitly is ok
 
-        // you can convert statically
-        {
-            multi_span<int, 2> av2 = {arr, 2};
-            (void) av2;
-        }
-        {
-            multi_span<int, 1> av2 = av4.first<1>();
-            (void) av2;
-        }
+    // you can convert statically
+    {
+        multi_span<int, 2> av2 = {arr, 2};
+        (void) av2;
+    }
+    {
+        multi_span<int, 1> av2 = av4.first<1>();
+        (void) av2;
+    }
 
-        // ...or dynamically
-        {
-            // NB: implicit conversion to multi_span<int,2> from multi_span<int,dynamic_range>
-            multi_span<int, 1> av2 = av4.first(1);
-            (void) av2;
-        }
+    // ...or dynamically
+    {
+        // NB: implicit conversion to multi_span<int,2> from multi_span<int,dynamic_range>
+        multi_span<int, 1> av2 = av4.first(1);
+        (void) av2;
+    }
 
-        // initialization or assignment to static multi_span that requires size INCREASE is not ok.
-        int arr2[2] = {1, 2};
+    // initialization or assignment to static multi_span that requires size INCREASE is not ok.
+    int arr2[2] = {1, 2};
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            multi_span<int, 4> av4 = arr2;
-        }
-        {
-            multi_span<int, 2> av2 = arr2;
-            multi_span<int, 4> av4 = av2;
-        }
+    {
+        multi_span<int, 4> av4 = arr2;
+    }
+    {
+        multi_span<int, 2> av2 = arr2;
+        multi_span<int, 4> av4 = av2;
+    }
 #endif
-        {
-            auto f = [&]() {
-                multi_span<int, 4> av9 = {arr2, 2};
-                (void) av9;
-            };
-            CHECK_THROW(f(), fail_fast);
-        }
-
-        // this should fail - we are trying to assign a small dynamic a_v to a fixed_size larger one
-        multi_span<int, dynamic_range> av = arr2;
+    {
         auto f = [&]() {
-            multi_span<int, 4> av2 = av;
-            (void) av2;
+            multi_span<int, 4> av9 = {arr2, 2};
+            (void) av9;
         };
         CHECK_THROW(f(), fail_fast);
     }
 
-    TEST(as_writeable_bytes)
-    {
-        int a[] = {1, 2, 3, 4};
+    // this should fail - we are trying to assign a small dynamic a_v to a fixed_size larger one
+    multi_span<int, dynamic_range> av = arr2;
+    auto f = [&]() {
+        multi_span<int, 4> av2 = av;
+        (void) av2;
+    };
+    CHECK_THROW(f(), fail_fast);
+}
 
-        {
+TEST(as_writeable_bytes)
+{
+    int a[] = {1, 2, 3, 4};
+
+    {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            // you should not be able to get writeable bytes for const objects
-            multi_span<const int, dynamic_range> av = a;
-            auto wav = av.as_writeable_bytes();
+        // you should not be able to get writeable bytes for const objects
+        multi_span<const int, dynamic_range> av = a;
+        auto wav = av.as_writeable_bytes();
 #endif
-        }
-
-        {
-            multi_span<int, dynamic_range> av;
-            auto wav = as_writeable_bytes(av);
-            CHECK(wav.length() == av.length());
-            CHECK(wav.length() == 0);
-            CHECK(wav.size_bytes() == 0);
-        }
-
-        {
-            multi_span<int, dynamic_range> av = a;
-            auto wav = as_writeable_bytes(av);
-            CHECK(wav.data() == reinterpret_cast<byte*>(&a[0]));
-            CHECK(static_cast<std::size_t>(wav.length()) == sizeof(a));
-        }
     }
 
-    TEST(iterator)
     {
-        int a[] = {1, 2, 3, 4};
+        multi_span<int, dynamic_range> av;
+        auto wav = as_writeable_bytes(av);
+        CHECK(wav.length() == av.length());
+        CHECK(wav.length() == 0);
+        CHECK(wav.size_bytes() == 0);
+    }
 
-        {
-            multi_span<int, dynamic_range> av = a;
-            auto wav = as_writeable_bytes(av);
-            for (auto& b : wav) {
-                b = byte(0);
-            }
-            for (std::size_t i = 0; i < 4; ++i) {
-                CHECK(a[i] == 0);
-            }
+    {
+        multi_span<int, dynamic_range> av = a;
+        auto wav = as_writeable_bytes(av);
+        CHECK(wav.data() == reinterpret_cast<byte*>(&a[0]));
+        CHECK(static_cast<std::size_t>(wav.length()) == sizeof(a));
+    }
+}
+
+TEST(iterator)
+{
+    int a[] = {1, 2, 3, 4};
+
+    {
+        multi_span<int, dynamic_range> av = a;
+        auto wav = as_writeable_bytes(av);
+        for (auto& b : wav) {
+            b = byte(0);
         }
-
-        {
-            multi_span<int, dynamic_range> av = a;
-            for (auto& n : av) {
-                n = 1;
-            }
-            for (std::size_t i = 0; i < 4; ++i) {
-                CHECK(a[i] == 1);
-            }
+        for (std::size_t i = 0; i < 4; ++i) {
+            CHECK(a[i] == 0);
         }
     }
+
+    {
+        multi_span<int, dynamic_range> av = a;
+        for (auto& n : av) {
+            n = 1;
+        }
+        for (std::size_t i = 0; i < 4; ++i) {
+            CHECK(a[i] == 1);
+        }
+    }
+}
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }

@@ -15,15 +15,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
+
 #include <gsl/span>
 
 #include <iostream>
 #include <list>
 #include <map>
 #include <memory>
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
 
 using namespace std;
 using namespace gsl;
@@ -148,7 +149,9 @@ SUITE(span_tests)
         }
 
         {
-            auto workaround_macro = []() { span<int, 1> s{ nullptr, static_cast<span<int>::index_type>(0) }; };
+            auto workaround_macro = []() {
+                span<int, 1> s{nullptr, static_cast<span<int>::index_type>(0)};
+            };
             CHECK_THROW(workaround_macro(), fail_fast);
         }
 
@@ -265,13 +268,13 @@ SUITE(span_tests)
 
         {
             int* p = nullptr;
-            span<int> s{ p, p };
+            span<int> s{p, p};
             CHECK(s.length() == 0 && s.data() == nullptr);
         }
 
         {
             int* p = nullptr;
-            span<int, 0> s{ p, p };
+            span<int, 0> s{p, p};
             CHECK(s.length() == 0 && s.data() == nullptr);
         }
 
@@ -314,7 +317,7 @@ SUITE(span_tests)
             CHECK(s.length() == 5 && s.data() == &arr[0]);
         }
 
-        int arr2d[2][3] = { 1, 2, 3, 4, 5, 6 };
+        int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
 
 #ifdef CONFIRM_COMPILATION_ERRORS
         {
@@ -338,11 +341,11 @@ SUITE(span_tests)
         }
 
         {
-            span<int, 6> s{ arr2d };
+            span<int, 6> s{arr2d};
         }
 #endif
         {
-            span<int[3]> s{ &(arr2d[0]), 1 };
+            span<int[3]> s{&(arr2d[0]), 1};
             CHECK(s.length() == 1 && s.data() == &arr2d[0]);
         }
 
@@ -450,7 +453,7 @@ SUITE(span_tests)
         }
 
         {
-            auto get_an_array = []()->std::array<int, 4> { return{1, 2, 3, 4}; };
+            auto get_an_array = []() -> std::array<int, 4> { return {1, 2, 3, 4}; };
             auto take_a_span = [](span<int> s) { static_cast<void>(s); };
             // try to take a temporary std::array
             take_a_span(get_an_array());
@@ -458,7 +461,7 @@ SUITE(span_tests)
 #endif
 
         {
-            auto get_an_array = []() -> std::array<int, 4> { return { 1, 2, 3, 4 }; };
+            auto get_an_array = []() -> std::array<int, 4> { return {1, 2, 3, 4}; };
             auto take_a_span = [](span<const int> s) { static_cast<void>(s); };
             // try to take a temporary std::array
             take_a_span(get_an_array());
@@ -588,8 +591,7 @@ SUITE(span_tests)
         {
             auto arr = std::make_unique<int[]>(4);
 
-            for (auto i = 0U; i < 4; i++)
-                arr[i] = gsl::narrow_cast<int>(i + 1);
+            for (auto i = 0U; i < 4; i++) arr[i] = gsl::narrow_cast<int>(i + 1);
 
             {
                 span<int> s{arr, 4};
@@ -695,14 +697,14 @@ SUITE(span_tests)
         }
 
         {
-            auto get_temp_vector = []() -> std::vector<int> { return{}; };
+            auto get_temp_vector = []() -> std::vector<int> { return {}; };
             auto use_span = [](span<const int> s) { static_cast<void>(s); };
             use_span(get_temp_vector());
         }
 
         {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            auto get_temp_string = []() -> std::string { return{}; };
+            auto get_temp_string = []() -> std::string { return {}; };
             auto use_span = [](span<char> s) { static_cast<void>(s); };
             use_span(get_temp_string());
 #endif
@@ -744,826 +746,817 @@ SUITE(span_tests)
         }
     }
 
-    TEST(from_convertible_span_constructor)
-    {
-        {
-            span<DerivedClass> avd;
-            span<const DerivedClass> avcd = avd;
-            static_cast<void>(avcd);
-        }
+    TEST(from_convertible_span_constructor){{span<DerivedClass> avd;
+    span<const DerivedClass> avcd = avd;
+    static_cast<void>(avcd);
+}
 
-        {
+{
 #ifdef CONFIRM_COMPILATION_ERRORS
-            span<DerivedClass> avd;
-            span<BaseClass> avb = avd;
-            static_cast<void>(avb);
+    span<DerivedClass> avd;
+    span<BaseClass> avb = avd;
+    static_cast<void>(avb);
 #endif
-        }
+}
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            span<int> s;
-            span<unsigned int> s2 = s;
-            static_cast<void>(s2);
-        }
+{
+    span<int> s;
+    span<unsigned int> s2 = s;
+    static_cast<void>(s2);
+}
 
-        {
-            span<int> s;
-            span<const unsigned int> s2 = s;
-            static_cast<void>(s2);
-        }
+{
+    span<int> s;
+    span<const unsigned int> s2 = s;
+    static_cast<void>(s2);
+}
 
-        {
-            span<int> s;
-            span<short> s2 = s;
-            static_cast<void>(s2);
-        }
+{
+    span<int> s;
+    span<short> s2 = s;
+    static_cast<void>(s2);
+}
 #endif
+}
+
+TEST(copy_move_and_assignment)
+{
+    span<int> s1;
+    CHECK(s1.empty());
+
+    int arr[] = {3, 4, 5};
+
+    span<const int> s2 = arr;
+    CHECK(s2.length() == 3 && s2.data() == &arr[0]);
+
+    s2 = s1;
+    CHECK(s2.empty());
+
+    auto get_temp_span = [&]() -> span<int> { return {&arr[1], 2}; };
+    auto use_span = [&](span<const int> s) { CHECK(s.length() == 2 && s.data() == &arr[1]); };
+    use_span(get_temp_span());
+
+    s1 = get_temp_span();
+    CHECK(s1.length() == 2 && s1.data() == &arr[1]);
+}
+
+TEST(first)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+
+    {
+        span<int, 5> av = arr;
+        CHECK(av.first<2>().length() == 2);
+        CHECK(av.first(2).length() == 2);
     }
 
-    TEST(copy_move_and_assignment)
     {
-        span<int> s1;
-        CHECK(s1.empty());
-
-        int arr[] = {3, 4, 5};
-
-        span<const int> s2 = arr;
-        CHECK(s2.length() == 3 && s2.data() == &arr[0]);
-
-        s2 = s1;
-        CHECK(s2.empty());
-
-        auto get_temp_span = [&]() -> span<int> { return {&arr[1], 2}; };
-        auto use_span = [&](span<const int> s) { CHECK(s.length() == 2 && s.data() == &arr[1]); };
-        use_span(get_temp_span());
-
-        s1 = get_temp_span();
-        CHECK(s1.length() == 2 && s1.data() == &arr[1]);
+        span<int, 5> av = arr;
+        CHECK(av.first<0>().length() == 0);
+        CHECK(av.first(0).length() == 0);
     }
 
-    TEST(first)
     {
-        int arr[5] = {1, 2, 3, 4, 5};
+        span<int, 5> av = arr;
+        CHECK(av.first<5>().length() == 5);
+        CHECK(av.first(5).length() == 5);
+    }
 
-        {
-            span<int, 5> av = arr;
-            CHECK(av.first<2>().length() == 2);
-            CHECK(av.first(2).length() == 2);
-        }
-
-        {
-            span<int, 5> av = arr;
-            CHECK(av.first<0>().length() == 0);
-            CHECK(av.first(0).length() == 0);
-        }
-
-        {
-            span<int, 5> av = arr;
-            CHECK(av.first<5>().length() == 5);
-            CHECK(av.first(5).length() == 5);
-        }
-
-        {
-            span<int, 5> av = arr;
+    {
+        span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-            CHECK(av.first<6>().length() == 6);
-            CHECK(av.first<-1>().length() == -1);
+        CHECK(av.first<6>().length() == 6);
+        CHECK(av.first<-1>().length() == -1);
 #endif
-            CHECK_THROW(av.first(6).length(), fail_fast);
-        }
-
-        {
-            span<int> av;
-            CHECK(av.first<0>().length() == 0);
-            CHECK(av.first(0).length() == 0);
-        }
+        CHECK_THROW(av.first(6).length(), fail_fast);
     }
 
-    TEST(last)
     {
-        int arr[5] = {1, 2, 3, 4, 5};
+        span<int> av;
+        CHECK(av.first<0>().length() == 0);
+        CHECK(av.first(0).length() == 0);
+    }
+}
 
-        {
-            span<int, 5> av = arr;
-            CHECK(av.last<2>().length() == 2);
-            CHECK(av.last(2).length() == 2);
-        }
+TEST(last)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
 
-        {
-            span<int, 5> av = arr;
-            CHECK(av.last<0>().length() == 0);
-            CHECK(av.last(0).length() == 0);
-        }
+    {
+        span<int, 5> av = arr;
+        CHECK(av.last<2>().length() == 2);
+        CHECK(av.last(2).length() == 2);
+    }
 
-        {
-            span<int, 5> av = arr;
-            CHECK(av.last<5>().length() == 5);
-            CHECK(av.last(5).length() == 5);
-        }
+    {
+        span<int, 5> av = arr;
+        CHECK(av.last<0>().length() == 0);
+        CHECK(av.last(0).length() == 0);
+    }
 
-        {
-            span<int, 5> av = arr;
+    {
+        span<int, 5> av = arr;
+        CHECK(av.last<5>().length() == 5);
+        CHECK(av.last(5).length() == 5);
+    }
+
+    {
+        span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-            CHECK(av.last<6>().length() == 6);
+        CHECK(av.last<6>().length() == 6);
 #endif
-            CHECK_THROW(av.last(6).length(), fail_fast);
-        }
-
-        {
-            span<int> av;
-            CHECK(av.last<0>().length() == 0);
-            CHECK(av.last(0).length() == 0);
-        }
+        CHECK_THROW(av.last(6).length(), fail_fast);
     }
 
-    TEST(subspan)
     {
-        int arr[5] = {1, 2, 3, 4, 5};
+        span<int> av;
+        CHECK(av.last<0>().length() == 0);
+        CHECK(av.last(0).length() == 0);
+    }
+}
 
-        {
-            span<int, 5> av = arr;
-            CHECK((av.subspan<2, 2>().length() == 2));
-            CHECK(av.subspan(2, 2).length() == 2);
-            CHECK(av.subspan(2, 3).length() == 3);
-        }
+TEST(subspan)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
 
-        {
-            span<int, 5> av = arr;
-            CHECK((av.subspan<0, 0>().length() == 0));
-            CHECK(av.subspan(0, 0).length() == 0);
-        }
-
-        {
-            span<int, 5> av = arr;
-            CHECK((av.subspan<0, 5>().length() == 5));
-            CHECK(av.subspan(0, 5).length() == 5);
-            CHECK_THROW(av.subspan(0, 6).length(), fail_fast);
-            CHECK_THROW(av.subspan(1, 5).length(), fail_fast);
-        }
-
-        {
-            span<int, 5> av = arr;
-            CHECK((av.subspan<4, 0>().length() == 0));
-            CHECK(av.subspan(4, 0).length() == 0);
-            CHECK(av.subspan(5, 0).length() == 0);
-            CHECK_THROW(av.subspan(6, 0).length(), fail_fast);
-        }
-
-        {
-            span<int> av;
-            CHECK((av.subspan<0, 0>().length() == 0));
-            CHECK(av.subspan(0, 0).length() == 0);
-            CHECK_THROW((av.subspan<1, 0>().length()), fail_fast);
-        }
-
-        {
-            span<int> av;
-            CHECK(av.subspan(0).length() == 0);
-            CHECK_THROW(av.subspan(1).length(), fail_fast);
-        }
-
-        {
-            span<int> av = arr;
-            CHECK(av.subspan(0).length() == 5);
-            CHECK(av.subspan(1).length() == 4);
-            CHECK(av.subspan(4).length() == 1);
-            CHECK(av.subspan(5).length() == 0);
-            CHECK_THROW(av.subspan(6).length(), fail_fast);
-            const auto av2 = av.subspan(1);
-            for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
-        }
-
-        {
-            span<int, 5> av = arr;
-            CHECK(av.subspan(0).length() == 5);
-            CHECK(av.subspan(1).length() == 4);
-            CHECK(av.subspan(4).length() == 1);
-            CHECK(av.subspan(5).length() == 0);
-            CHECK_THROW(av.subspan(6).length(), fail_fast);
-            const auto av2 = av.subspan(1);
-            for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
-        }
+    {
+        span<int, 5> av = arr;
+        CHECK((av.subspan<2, 2>().length() == 2));
+        CHECK(av.subspan(2, 2).length() == 2);
+        CHECK(av.subspan(2, 3).length() == 3);
     }
 
-    TEST(at_call)
     {
-        int arr[4] = {1, 2, 3, 4};
-
-        {
-            span<int> s = arr;
-            CHECK(s.at(0) == 1);
-            CHECK_THROW(s.at(5), fail_fast);
-        }
-
-        {
-            int arr2d[2] = {1, 6};
-            span<int, 2> s = arr2d;
-            CHECK(s.at(0) == 1);
-            CHECK(s.at(1) == 6);
-            CHECK_THROW(s.at(2) ,fail_fast);
-        }
+        span<int, 5> av = arr;
+        CHECK((av.subspan<0, 0>().length() == 0));
+        CHECK(av.subspan(0, 0).length() == 0);
     }
 
-    TEST(operator_function_call)
     {
-        int arr[4] = {1, 2, 3, 4};
-
-        {
-            span<int> s = arr;
-            CHECK(s(0) == 1);
-            CHECK_THROW(s(5), fail_fast);
-        }
-
-        {
-            int arr2d[2] = {1, 6};
-            span<int, 2> s = arr2d;
-            CHECK(s(0) == 1);
-            CHECK(s(1) == 6);
-            CHECK_THROW(s(2) ,fail_fast);
-        }
+        span<int, 5> av = arr;
+        CHECK((av.subspan<0, 5>().length() == 5));
+        CHECK(av.subspan(0, 5).length() == 5);
+        CHECK_THROW(av.subspan(0, 6).length(), fail_fast);
+        CHECK_THROW(av.subspan(1, 5).length(), fail_fast);
     }
 
-    TEST(iterator_default_init)
     {
-        span<int>::iterator it1;
-        span<int>::iterator it2;
-        CHECK(it1 == it2);
+        span<int, 5> av = arr;
+        CHECK((av.subspan<4, 0>().length() == 0));
+        CHECK(av.subspan(4, 0).length() == 0);
+        CHECK(av.subspan(5, 0).length() == 0);
+        CHECK_THROW(av.subspan(6, 0).length(), fail_fast);
     }
 
-    TEST(const_iterator_default_init)
     {
-        span<int>::const_iterator it1;
-        span<int>::const_iterator it2;
-        CHECK(it1 == it2);
+        span<int> av;
+        CHECK((av.subspan<0, 0>().length() == 0));
+        CHECK(av.subspan(0, 0).length() == 0);
+        CHECK_THROW((av.subspan<1, 0>().length()), fail_fast);
     }
 
-    TEST(iterator_conversions)
     {
-        span<int>::iterator badIt;
-        span<int>::const_iterator badConstIt;
-        CHECK(badIt == badConstIt);
+        span<int> av;
+        CHECK(av.subspan(0).length() == 0);
+        CHECK_THROW(av.subspan(1).length(), fail_fast);
+    }
 
-        int a[] = { 1, 2, 3, 4 };
+    {
+        span<int> av = arr;
+        CHECK(av.subspan(0).length() == 5);
+        CHECK(av.subspan(1).length() == 4);
+        CHECK(av.subspan(4).length() == 1);
+        CHECK(av.subspan(5).length() == 0);
+        CHECK_THROW(av.subspan(6).length(), fail_fast);
+        const auto av2 = av.subspan(1);
+        for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
+    }
+
+    {
+        span<int, 5> av = arr;
+        CHECK(av.subspan(0).length() == 5);
+        CHECK(av.subspan(1).length() == 4);
+        CHECK(av.subspan(4).length() == 1);
+        CHECK(av.subspan(5).length() == 0);
+        CHECK_THROW(av.subspan(6).length(), fail_fast);
+        const auto av2 = av.subspan(1);
+        for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
+    }
+}
+
+TEST(at_call)
+{
+    int arr[4] = {1, 2, 3, 4};
+
+    {
+        span<int> s = arr;
+        CHECK(s.at(0) == 1);
+        CHECK_THROW(s.at(5), fail_fast);
+    }
+
+    {
+        int arr2d[2] = {1, 6};
+        span<int, 2> s = arr2d;
+        CHECK(s.at(0) == 1);
+        CHECK(s.at(1) == 6);
+        CHECK_THROW(s.at(2), fail_fast);
+    }
+}
+
+TEST(operator_function_call)
+{
+    int arr[4] = {1, 2, 3, 4};
+
+    {
+        span<int> s = arr;
+        CHECK(s(0) == 1);
+        CHECK_THROW(s(5), fail_fast);
+    }
+
+    {
+        int arr2d[2] = {1, 6};
+        span<int, 2> s = arr2d;
+        CHECK(s(0) == 1);
+        CHECK(s(1) == 6);
+        CHECK_THROW(s(2), fail_fast);
+    }
+}
+
+TEST(iterator_default_init)
+{
+    span<int>::iterator it1;
+    span<int>::iterator it2;
+    CHECK(it1 == it2);
+}
+
+TEST(const_iterator_default_init)
+{
+    span<int>::const_iterator it1;
+    span<int>::const_iterator it2;
+    CHECK(it1 == it2);
+}
+
+TEST(iterator_conversions)
+{
+    span<int>::iterator badIt;
+    span<int>::const_iterator badConstIt;
+    CHECK(badIt == badConstIt);
+
+    int a[] = {1, 2, 3, 4};
+    span<int> s = a;
+
+    auto it = s.begin();
+    auto cit = s.cbegin();
+
+    CHECK(it == cit);
+    CHECK(cit == it);
+
+    span<int>::const_iterator cit2 = it;
+    CHECK(cit2 == cit);
+
+    span<int>::const_iterator cit3 = it + 4;
+    CHECK(cit3 == s.cend());
+}
+
+TEST(iterator_comparisons)
+{
+    int a[] = {1, 2, 3, 4};
+    {
         span<int> s = a;
-
-        auto it = s.begin();
-        auto cit = s.cbegin();
+        span<int>::iterator it = s.begin();
+        auto it2 = it + 1;
+        span<int>::const_iterator cit = s.cbegin();
 
         CHECK(it == cit);
         CHECK(cit == it);
+        CHECK(it == it);
+        CHECK(cit == cit);
+        CHECK(cit == s.begin());
+        CHECK(s.begin() == cit);
+        CHECK(s.cbegin() == cit);
+        CHECK(it == s.begin());
+        CHECK(s.begin() == it);
 
-        span<int>::const_iterator cit2 = it;
-        CHECK(cit2 == cit);
+        CHECK(it != it2);
+        CHECK(it2 != it);
+        CHECK(it != s.end());
+        CHECK(it2 != s.end());
+        CHECK(s.end() != it);
+        CHECK(it2 != cit);
+        CHECK(cit != it2);
 
-        span<int>::const_iterator cit3 = it + 4;
-        CHECK(cit3 == s.cend());
+        CHECK(it < it2);
+        CHECK(it <= it2);
+        CHECK(it2 <= s.end());
+        CHECK(it < s.end());
+        CHECK(it <= cit);
+        CHECK(cit <= it);
+        CHECK(cit < it2);
+        CHECK(cit <= it2);
+        CHECK(cit < s.end());
+        CHECK(cit <= s.end());
+
+        CHECK(it2 > it);
+        CHECK(it2 >= it);
+        CHECK(s.end() > it2);
+        CHECK(s.end() >= it2);
+        CHECK(it2 > cit);
+        CHECK(it2 >= cit);
     }
+}
 
-    TEST(iterator_comparisons)
-    {
-        int a[] = { 1, 2, 3, 4 };
-        {
-            span<int> s = a;
-            span<int>::iterator it = s.begin();
-            auto it2 = it + 1;
-            span<int>::const_iterator cit = s.cbegin();
-
-            CHECK(it == cit);
-            CHECK(cit == it);
-            CHECK(it == it);
-            CHECK(cit == cit);
-            CHECK(cit == s.begin());
-            CHECK(s.begin() == cit);
-            CHECK(s.cbegin() == cit);
-            CHECK(it == s.begin());
-            CHECK(s.begin() == it);
-
-            CHECK(it != it2);
-            CHECK(it2 != it);
-            CHECK(it != s.end());
-            CHECK(it2 != s.end());
-            CHECK(s.end() != it);
-            CHECK(it2 != cit);
-            CHECK(cit != it2);
-
-            CHECK(it < it2);
-            CHECK(it <= it2);
-            CHECK(it2 <= s.end());
-            CHECK(it < s.end());
-            CHECK(it <= cit);
-            CHECK(cit <= it);
-            CHECK(cit < it2);
-            CHECK(cit <= it2);
-            CHECK(cit < s.end());
-            CHECK(cit <= s.end());
-
-            CHECK(it2 > it);
-            CHECK(it2 >= it);
-            CHECK(s.end() > it2);
-            CHECK(s.end() >= it2);
-            CHECK(it2 > cit);
-            CHECK(it2 >= cit);
-        }
-    }
-
-    TEST(begin_end)
-    {
-        {
-            int a[] = { 1, 2, 3, 4 };
-            span<int> s = a;
-
-            span<int>::iterator it = s.begin();
-            span<int>::iterator it2 = std::begin(s);
-            CHECK(it == it2);
-
-            it = s.end();
-            it2 = std::end(s);
-            CHECK(it == it2);
-        }
-
-        {
-            int a[] = { 1, 2, 3, 4 };
-            span<int> s = a;
-
-            auto it = s.begin();
-            auto first = it;
-            CHECK(it == first);
-            CHECK(*it == 1);
-
-            auto beyond = s.end();
-            CHECK(it != beyond);
-            CHECK_THROW(*beyond, fail_fast);
-
-            CHECK(beyond - first == 4);
-            CHECK(first - first == 0);
-            CHECK(beyond - beyond == 0);
-
-            ++it;
-            CHECK(it - first == 1);
-            CHECK(*it == 2);
-            *it = 22;
-            CHECK(*it == 22);
-            CHECK(beyond - it == 3);
-
-            it = first;
-            CHECK(it == first);
-            while (it != s.end())
-            {
-                *it = 5;
-                ++it;
-            }
-
-            CHECK(it == beyond);
-            CHECK(it - beyond == 0);
-
-            for (const auto& n : s)
-            {
-                CHECK(n == 5);
-            }
-        }
-    }
-
-    TEST(cbegin_cend)
-    {
-        {
-            int a[] = { 1, 2, 3, 4 };
-            span<int> s = a;
-
-            span<int>::const_iterator cit = s.cbegin();
-            span<int>::const_iterator cit2 = std::cbegin(s);
-            CHECK(cit == cit2);
-
-            cit = s.cend();
-            cit2 = std::cend(s);
-            CHECK(cit == cit2);
-        }
-
-        {
-            int a[] = {1, 2, 3, 4};
-            span<int> s = a;
-
-            auto it = s.cbegin();
-            auto first = it;
-            CHECK(it == first);
-            CHECK(*it == 1);
-
-            auto beyond = s.cend();
-            CHECK(it != beyond);
-            CHECK_THROW(*beyond, fail_fast);
-
-            CHECK(beyond - first == 4);
-            CHECK(first - first == 0);
-            CHECK(beyond - beyond == 0);
-
-            ++it;
-            CHECK(it - first == 1);
-            CHECK(*it == 2);
-            CHECK(beyond - it == 3);
-
-            int last = 0;
-            it = first;
-            CHECK(it == first);
-            while (it != s.cend())
-            {
-                CHECK(*it == last + 1);
-
-                last = *it;
-                ++it;
-            }
-
-            CHECK(it == beyond);
-            CHECK(it - beyond == 0);
-        }
-    }
-
-    TEST(rbegin_rend)
-    {
-        {
-            int a[] = {1, 2, 3, 4};
-            span<int> s = a;
-
-            auto it = s.rbegin();
-            auto first = it;
-            CHECK(it == first);
-            CHECK(*it == 4);
-
-            auto beyond = s.rend();
-            CHECK(it != beyond);
-            CHECK_THROW(*beyond, fail_fast);
-
-            CHECK(beyond - first == 4);
-            CHECK(first - first == 0);
-            CHECK(beyond - beyond == 0);
-
-            ++it;
-            CHECK(it - first == 1);
-            CHECK(*it == 3);
-            *it = 22;
-            CHECK(*it == 22);
-            CHECK(beyond - it == 3);
-
-            it = first;
-            CHECK(it == first);
-            while (it != s.rend())
-            {
-                *it = 5;
-                ++it;
-            }
-
-            CHECK(it == beyond);
-            CHECK(it - beyond == 0);
-
-            for (const auto& n : s)
-            {
-                CHECK(n == 5);
-            }
-        }
-    }
-
-    TEST(crbegin_crend)
-    {
-        {
-            int a[] = {1, 2, 3, 4};
-            span<int> s = a;
-
-            auto it = s.crbegin();
-            auto first = it;
-            CHECK(it == first);
-            CHECK(*it == 4);
-
-            auto beyond = s.crend();
-            CHECK(it != beyond);
-            CHECK_THROW(*beyond, fail_fast);
-
-            CHECK(beyond - first == 4);
-            CHECK(first - first == 0);
-            CHECK(beyond - beyond == 0);
-
-            ++it;
-            CHECK(it - first == 1);
-            CHECK(*it == 3);
-            CHECK(beyond - it == 3);
-
-            it = first;
-            CHECK(it == first);
-            int last = 5;
-            while (it != s.crend())
-            {
-                CHECK(*it == last - 1);
-                last = *it;
-
-                ++it;
-            }
-
-            CHECK(it == beyond);
-            CHECK(it - beyond == 0);
-        }
-    }
-
-    TEST(comparison_operators)
-    {
-        {
-            span<int> s1 = nullptr;
-            span<int> s2 = nullptr;
-            CHECK(s1 == s2);
-            CHECK(!(s1 != s2));
-            CHECK(!(s1 < s2));
-            CHECK(s1 <= s2);
-            CHECK(!(s1 > s2));
-            CHECK(s1 >= s2);
-            CHECK(s2 == s1);
-            CHECK(!(s2 != s1));
-            CHECK(!(s2 < s1));
-            CHECK(s2 <= s1);
-            CHECK(!(s2 > s1));
-            CHECK(s2 >= s1);
-        }
-
-        {
-            int arr[] = {2, 1};
-            span<int> s1 = arr;
-            span<int> s2 = arr;
-
-            CHECK(s1 == s2);
-            CHECK(!(s1 != s2));
-            CHECK(!(s1 < s2));
-            CHECK(s1 <= s2);
-            CHECK(!(s1 > s2));
-            CHECK(s1 >= s2);
-            CHECK(s2 == s1);
-            CHECK(!(s2 != s1));
-            CHECK(!(s2 < s1));
-            CHECK(s2 <= s1);
-            CHECK(!(s2 > s1));
-            CHECK(s2 >= s1);
-        }
-
-        {
-            int arr[] = {2, 1}; // bigger
-
-            span<int> s1 = nullptr;
-            span<int> s2 = arr;
-
-            CHECK(s1 != s2);
-            CHECK(s2 != s1);
-            CHECK(!(s1 == s2));
-            CHECK(!(s2 == s1));
-            CHECK(s1 < s2);
-            CHECK(!(s2 < s1));
-            CHECK(s1 <= s2);
-            CHECK(!(s2 <= s1));
-            CHECK(s2 > s1);
-            CHECK(!(s1 > s2));
-            CHECK(s2 >= s1);
-            CHECK(!(s1 >= s2));
-        }
-
-        {
-            int arr1[] = {1, 2};
-            int arr2[] = {1, 2};
-            span<int> s1 = arr1;
-            span<int> s2 = arr2;
-
-            CHECK(s1 == s2);
-            CHECK(!(s1 != s2));
-            CHECK(!(s1 < s2));
-            CHECK(s1 <= s2);
-            CHECK(!(s1 > s2));
-            CHECK(s1 >= s2);
-            CHECK(s2 == s1);
-            CHECK(!(s2 != s1));
-            CHECK(!(s2 < s1));
-            CHECK(s2 <= s1);
-            CHECK(!(s2 > s1));
-            CHECK(s2 >= s1);
-        }
-
-        {
-            int arr[] = {1, 2, 3};
-
-            span<int> s1 = {&arr[0], 2}; // shorter
-            span<int> s2 = arr; // longer
-
-            CHECK(s1 != s2);
-            CHECK(s2 != s1);
-            CHECK(!(s1 == s2));
-            CHECK(!(s2 == s1));
-            CHECK(s1 < s2);
-            CHECK(!(s2 < s1));
-            CHECK(s1 <= s2);
-            CHECK(!(s2 <= s1));
-            CHECK(s2 > s1);
-            CHECK(!(s1 > s2));
-            CHECK(s2 >= s1);
-            CHECK(!(s1 >= s2));
-        }
-
-        {
-            int arr1[] = {1, 2}; // smaller
-            int arr2[] = {2, 1}; // bigger
-
-            span<int> s1 = arr1;
-            span<int> s2 = arr2;
-
-            CHECK(s1 != s2);
-            CHECK(s2 != s1);
-            CHECK(!(s1 == s2));
-            CHECK(!(s2 == s1));
-            CHECK(s1 < s2);
-            CHECK(!(s2 < s1));
-            CHECK(s1 <= s2);
-            CHECK(!(s2 <= s1));
-            CHECK(s2 > s1);
-            CHECK(!(s1 > s2));
-            CHECK(s2 >= s1);
-            CHECK(!(s1 >= s2));
-        }
-    }
-
-    TEST(as_bytes)
+TEST(begin_end)
+{
     {
         int a[] = {1, 2, 3, 4};
+        span<int> s = a;
 
-        {
-            const span<const int> s = a;
-            CHECK(s.length() == 4);
-            const span<const byte> bs = as_bytes(s);
-            CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
-            CHECK(bs.length() == s.length_bytes());
-        }
+        span<int>::iterator it = s.begin();
+        span<int>::iterator it2 = std::begin(s);
+        CHECK(it == it2);
 
-        {
-            span<int> s;
-            const auto bs = as_bytes(s);
-            CHECK(bs.length() == s.length());
-            CHECK(bs.length() == 0);
-            CHECK(bs.size_bytes() == 0);
-            CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
-            CHECK(bs.data() == nullptr);
-        }
-
-        {
-            span<int> s = a;
-            const auto bs = as_bytes(s);
-            CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
-            CHECK(bs.length() == s.length_bytes());
-        }
+        it = s.end();
+        it2 = std::end(s);
+        CHECK(it == it2);
     }
 
-    TEST(as_writeable_bytes)
     {
         int a[] = {1, 2, 3, 4};
+        span<int> s = a;
 
-        {
+        auto it = s.begin();
+        auto first = it;
+        CHECK(it == first);
+        CHECK(*it == 1);
+
+        auto beyond = s.end();
+        CHECK(it != beyond);
+        CHECK_THROW(*beyond, fail_fast);
+
+        CHECK(beyond - first == 4);
+        CHECK(first - first == 0);
+        CHECK(beyond - beyond == 0);
+
+        ++it;
+        CHECK(it - first == 1);
+        CHECK(*it == 2);
+        *it = 22;
+        CHECK(*it == 22);
+        CHECK(beyond - it == 3);
+
+        it = first;
+        CHECK(it == first);
+        while (it != s.end()) {
+            *it = 5;
+            ++it;
+        }
+
+        CHECK(it == beyond);
+        CHECK(it - beyond == 0);
+
+        for (const auto& n : s) {
+            CHECK(n == 5);
+        }
+    }
+}
+
+TEST(cbegin_cend)
+{
+    {
+        int a[] = {1, 2, 3, 4};
+        span<int> s = a;
+
+        span<int>::const_iterator cit = s.cbegin();
+        span<int>::const_iterator cit2 = std::cbegin(s);
+        CHECK(cit == cit2);
+
+        cit = s.cend();
+        cit2 = std::cend(s);
+        CHECK(cit == cit2);
+    }
+
+    {
+        int a[] = {1, 2, 3, 4};
+        span<int> s = a;
+
+        auto it = s.cbegin();
+        auto first = it;
+        CHECK(it == first);
+        CHECK(*it == 1);
+
+        auto beyond = s.cend();
+        CHECK(it != beyond);
+        CHECK_THROW(*beyond, fail_fast);
+
+        CHECK(beyond - first == 4);
+        CHECK(first - first == 0);
+        CHECK(beyond - beyond == 0);
+
+        ++it;
+        CHECK(it - first == 1);
+        CHECK(*it == 2);
+        CHECK(beyond - it == 3);
+
+        int last = 0;
+        it = first;
+        CHECK(it == first);
+        while (it != s.cend()) {
+            CHECK(*it == last + 1);
+
+            last = *it;
+            ++it;
+        }
+
+        CHECK(it == beyond);
+        CHECK(it - beyond == 0);
+    }
+}
+
+TEST(rbegin_rend)
+{
+    {
+        int a[] = {1, 2, 3, 4};
+        span<int> s = a;
+
+        auto it = s.rbegin();
+        auto first = it;
+        CHECK(it == first);
+        CHECK(*it == 4);
+
+        auto beyond = s.rend();
+        CHECK(it != beyond);
+        CHECK_THROW(*beyond, fail_fast);
+
+        CHECK(beyond - first == 4);
+        CHECK(first - first == 0);
+        CHECK(beyond - beyond == 0);
+
+        ++it;
+        CHECK(it - first == 1);
+        CHECK(*it == 3);
+        *it = 22;
+        CHECK(*it == 22);
+        CHECK(beyond - it == 3);
+
+        it = first;
+        CHECK(it == first);
+        while (it != s.rend()) {
+            *it = 5;
+            ++it;
+        }
+
+        CHECK(it == beyond);
+        CHECK(it - beyond == 0);
+
+        for (const auto& n : s) {
+            CHECK(n == 5);
+        }
+    }
+}
+
+TEST(crbegin_crend)
+{
+    {
+        int a[] = {1, 2, 3, 4};
+        span<int> s = a;
+
+        auto it = s.crbegin();
+        auto first = it;
+        CHECK(it == first);
+        CHECK(*it == 4);
+
+        auto beyond = s.crend();
+        CHECK(it != beyond);
+        CHECK_THROW(*beyond, fail_fast);
+
+        CHECK(beyond - first == 4);
+        CHECK(first - first == 0);
+        CHECK(beyond - beyond == 0);
+
+        ++it;
+        CHECK(it - first == 1);
+        CHECK(*it == 3);
+        CHECK(beyond - it == 3);
+
+        it = first;
+        CHECK(it == first);
+        int last = 5;
+        while (it != s.crend()) {
+            CHECK(*it == last - 1);
+            last = *it;
+
+            ++it;
+        }
+
+        CHECK(it == beyond);
+        CHECK(it - beyond == 0);
+    }
+}
+
+TEST(comparison_operators)
+{
+    {
+        span<int> s1 = nullptr;
+        span<int> s2 = nullptr;
+        CHECK(s1 == s2);
+        CHECK(!(s1 != s2));
+        CHECK(!(s1 < s2));
+        CHECK(s1 <= s2);
+        CHECK(!(s1 > s2));
+        CHECK(s1 >= s2);
+        CHECK(s2 == s1);
+        CHECK(!(s2 != s1));
+        CHECK(!(s2 < s1));
+        CHECK(s2 <= s1);
+        CHECK(!(s2 > s1));
+        CHECK(s2 >= s1);
+    }
+
+    {
+        int arr[] = {2, 1};
+        span<int> s1 = arr;
+        span<int> s2 = arr;
+
+        CHECK(s1 == s2);
+        CHECK(!(s1 != s2));
+        CHECK(!(s1 < s2));
+        CHECK(s1 <= s2);
+        CHECK(!(s1 > s2));
+        CHECK(s1 >= s2);
+        CHECK(s2 == s1);
+        CHECK(!(s2 != s1));
+        CHECK(!(s2 < s1));
+        CHECK(s2 <= s1);
+        CHECK(!(s2 > s1));
+        CHECK(s2 >= s1);
+    }
+
+    {
+        int arr[] = {2, 1}; // bigger
+
+        span<int> s1 = nullptr;
+        span<int> s2 = arr;
+
+        CHECK(s1 != s2);
+        CHECK(s2 != s1);
+        CHECK(!(s1 == s2));
+        CHECK(!(s2 == s1));
+        CHECK(s1 < s2);
+        CHECK(!(s2 < s1));
+        CHECK(s1 <= s2);
+        CHECK(!(s2 <= s1));
+        CHECK(s2 > s1);
+        CHECK(!(s1 > s2));
+        CHECK(s2 >= s1);
+        CHECK(!(s1 >= s2));
+    }
+
+    {
+        int arr1[] = {1, 2};
+        int arr2[] = {1, 2};
+        span<int> s1 = arr1;
+        span<int> s2 = arr2;
+
+        CHECK(s1 == s2);
+        CHECK(!(s1 != s2));
+        CHECK(!(s1 < s2));
+        CHECK(s1 <= s2);
+        CHECK(!(s1 > s2));
+        CHECK(s1 >= s2);
+        CHECK(s2 == s1);
+        CHECK(!(s2 != s1));
+        CHECK(!(s2 < s1));
+        CHECK(s2 <= s1);
+        CHECK(!(s2 > s1));
+        CHECK(s2 >= s1);
+    }
+
+    {
+        int arr[] = {1, 2, 3};
+
+        span<int> s1 = {&arr[0], 2}; // shorter
+        span<int> s2 = arr;          // longer
+
+        CHECK(s1 != s2);
+        CHECK(s2 != s1);
+        CHECK(!(s1 == s2));
+        CHECK(!(s2 == s1));
+        CHECK(s1 < s2);
+        CHECK(!(s2 < s1));
+        CHECK(s1 <= s2);
+        CHECK(!(s2 <= s1));
+        CHECK(s2 > s1);
+        CHECK(!(s1 > s2));
+        CHECK(s2 >= s1);
+        CHECK(!(s1 >= s2));
+    }
+
+    {
+        int arr1[] = {1, 2}; // smaller
+        int arr2[] = {2, 1}; // bigger
+
+        span<int> s1 = arr1;
+        span<int> s2 = arr2;
+
+        CHECK(s1 != s2);
+        CHECK(s2 != s1);
+        CHECK(!(s1 == s2));
+        CHECK(!(s2 == s1));
+        CHECK(s1 < s2);
+        CHECK(!(s2 < s1));
+        CHECK(s1 <= s2);
+        CHECK(!(s2 <= s1));
+        CHECK(s2 > s1);
+        CHECK(!(s1 > s2));
+        CHECK(s2 >= s1);
+        CHECK(!(s1 >= s2));
+    }
+}
+
+TEST(as_bytes)
+{
+    int a[] = {1, 2, 3, 4};
+
+    {
+        const span<const int> s = a;
+        CHECK(s.length() == 4);
+        const span<const byte> bs = as_bytes(s);
+        CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+        CHECK(bs.length() == s.length_bytes());
+    }
+
+    {
+        span<int> s;
+        const auto bs = as_bytes(s);
+        CHECK(bs.length() == s.length());
+        CHECK(bs.length() == 0);
+        CHECK(bs.size_bytes() == 0);
+        CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+        CHECK(bs.data() == nullptr);
+    }
+
+    {
+        span<int> s = a;
+        const auto bs = as_bytes(s);
+        CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+        CHECK(bs.length() == s.length_bytes());
+    }
+}
+
+TEST(as_writeable_bytes)
+{
+    int a[] = {1, 2, 3, 4};
+
+    {
 #ifdef CONFIRM_COMPILATION_ERRORS
-            // you should not be able to get writeable bytes for const objects
-            span<const int> s = a;
-            CHECK(s.length() == 4);
-            span<const byte> bs = as_writeable_bytes(s);
-            CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
-            CHECK(bs.length() == s.length_bytes());
+        // you should not be able to get writeable bytes for const objects
+        span<const int> s = a;
+        CHECK(s.length() == 4);
+        span<const byte> bs = as_writeable_bytes(s);
+        CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
+        CHECK(bs.length() == s.length_bytes());
 #endif
-        }
-
-        {
-            span<int> s;
-            const auto bs = as_writeable_bytes(s);
-            CHECK(bs.length() == s.length());
-            CHECK(bs.length() == 0);
-            CHECK(bs.size_bytes() == 0);
-            CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
-            CHECK(bs.data() == nullptr);
-        }
-
-        {
-            span<int> s = a;
-            const auto bs = as_writeable_bytes(s);
-            CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
-            CHECK(bs.length() == s.length_bytes());
-        }
     }
 
-    TEST(fixed_size_conversions)
     {
-        int arr[] = {1, 2, 3, 4};
+        span<int> s;
+        const auto bs = as_writeable_bytes(s);
+        CHECK(bs.length() == s.length());
+        CHECK(bs.length() == 0);
+        CHECK(bs.size_bytes() == 0);
+        CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
+        CHECK(bs.data() == nullptr);
+    }
 
-        // converting to an span from an equal size array is ok
-        span<int, 4> s4 = arr;
-        CHECK(s4.length() == 4);
+    {
+        span<int> s = a;
+        const auto bs = as_writeable_bytes(s);
+        CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
+        CHECK(bs.length() == s.length_bytes());
+    }
+}
 
-        // converting to dynamic_range is always ok
-        {
-            span<int> s = s4;
-            CHECK(s.length() == s4.length());
-            static_cast<void>(s);
-        }
+TEST(fixed_size_conversions)
+{
+    int arr[] = {1, 2, 3, 4};
+
+    // converting to an span from an equal size array is ok
+    span<int, 4> s4 = arr;
+    CHECK(s4.length() == 4);
+
+    // converting to dynamic_range is always ok
+    {
+        span<int> s = s4;
+        CHECK(s.length() == s4.length());
+        static_cast<void>(s);
+    }
 
 // initialization or assignment to static span that REDUCES size is NOT ok
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            span<int, 2> s = arr;
-        }
-        {
-            span<int, 2> s2 = s4;
-            static_cast<void>(s2);
-        }
+    {
+        span<int, 2> s = arr;
+    }
+    {
+        span<int, 2> s2 = s4;
+        static_cast<void>(s2);
+    }
 #endif
 
-        // even when done dynamically
-        {
-            span<int> s = arr;
-            auto f = [&]() {
-                span<int, 2> s2 = s;
-                static_cast<void>(s2);
-            };
-            CHECK_THROW(f(), fail_fast);
-        }
-
-        // but doing so explicitly is ok
-
-        // you can convert statically
-        {
-            const span<int, 2> s2 = {arr, 2};
+    // even when done dynamically
+    {
+        span<int> s = arr;
+        auto f = [&]() {
+            span<int, 2> s2 = s;
             static_cast<void>(s2);
-        }
-        {
-            const span<int, 1> s1 = s4.first<1>();
-            static_cast<void>(s1);
-        }
+        };
+        CHECK_THROW(f(), fail_fast);
+    }
 
-        // ...or dynamically
-        {
-            // NB: implicit conversion to span<int,1> from span<int>
-            span<int, 1> s1 = s4.first(1);
-            static_cast<void>(s1);
-        }
+    // but doing so explicitly is ok
 
-        // initialization or assignment to static span that requires size INCREASE is not ok.
-        int arr2[2] = {1, 2};
+    // you can convert statically
+    {
+        const span<int, 2> s2 = {arr, 2};
+        static_cast<void>(s2);
+    }
+    {
+        const span<int, 1> s1 = s4.first<1>();
+        static_cast<void>(s1);
+    }
+
+    // ...or dynamically
+    {
+        // NB: implicit conversion to span<int,1> from span<int>
+        span<int, 1> s1 = s4.first(1);
+        static_cast<void>(s1);
+    }
+
+    // initialization or assignment to static span that requires size INCREASE is not ok.
+    int arr2[2] = {1, 2};
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        {
-            span<int, 4> s3 = arr2;
-        }
-        {
-            span<int, 2> s2 = arr2;
-            span<int, 4> s4a = s2;
-        }
+    {
+        span<int, 4> s3 = arr2;
+    }
+    {
+        span<int, 2> s2 = arr2;
+        span<int, 4> s4a = s2;
+    }
 #endif
-        {
-            auto f = [&]() {
-                span<int, 4> _s4 = {arr2, 2};
-                static_cast<void>(_s4);
-            };
-            CHECK_THROW(f(), fail_fast);
-        }
-
-        // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
-        span<int> av = arr2;
+    {
         auto f = [&]() {
-            span<int, 4> _s4 = av;
+            span<int, 4> _s4 = {arr2, 2};
             static_cast<void>(_s4);
         };
         CHECK_THROW(f(), fail_fast);
     }
 
-    TEST(interop_with_std_regex)
-    {
-        char lat[] = { '1', '2', '3', '4', '5', '6', 'E', 'F', 'G' };
-        span<char> s = lat;
-        const auto f_it = s.begin() + 7;
+    // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
+    span<int> av = arr2;
+    auto f = [&]() {
+        span<int, 4> _s4 = av;
+        static_cast<void>(_s4);
+    };
+    CHECK_THROW(f(), fail_fast);
+}
 
-        std::match_results<span<char>::iterator> match;
+TEST(interop_with_std_regex)
+{
+    char lat[] = {'1', '2', '3', '4', '5', '6', 'E', 'F', 'G'};
+    span<char> s = lat;
+    const auto f_it = s.begin() + 7;
 
-        std::regex_match(s.begin(), s.end(), match, std::regex(".*"));
-        CHECK(match.ready());
-        CHECK(!match.empty());
-        CHECK(match[0].matched);
-        CHECK(match[0].first == s.begin());
-        CHECK(match[0].second == s.end());
+    std::match_results<span<char>::iterator> match;
 
-        std::regex_search(s.begin(), s.end(), match, std::regex("F"));
-        CHECK(match.ready());
-        CHECK(!match.empty());
-        CHECK(match[0].matched);
-        CHECK(match[0].first == f_it);
-        CHECK(match[0].second == (f_it + 1));
-    }
+    std::regex_match(s.begin(), s.end(), match, std::regex(".*"));
+    CHECK(match.ready());
+    CHECK(!match.empty());
+    CHECK(match[0].matched);
+    CHECK(match[0].first == s.begin());
+    CHECK(match[0].second == s.end());
 
-    TEST(interop_with_gsl_at)
-    {
-        int arr[5] = {1, 2, 3, 4, 5};
-        span<int> s{arr};
-        CHECK(at(s,0) == 1 && at(s,1) == 2);
-    }
+    std::regex_search(s.begin(), s.end(), match, std::regex("F"));
+    CHECK(match.ready());
+    CHECK(!match.empty());
+    CHECK(match[0].matched);
+    CHECK(match[0].first == f_it);
+    CHECK(match[0].second == (f_it + 1));
+}
 
-    TEST(default_constructible)
-    {
-        CHECK((std::is_default_constructible<span<int>>::value));
-        CHECK((std::is_default_constructible<span<int, 0>>::value));
-        CHECK((!std::is_default_constructible<span<int, 42>>::value));
-    }
+TEST(interop_with_gsl_at)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+    span<int> s{arr};
+    CHECK(at(s, 0) == 1 && at(s, 1) == 2);
+}
+
+TEST(default_constructible)
+{
+    CHECK((std::is_default_constructible<span<int>>::value));
+    CHECK((std::is_default_constructible<span<int, 0>>::value));
+    CHECK((!std::is_default_constructible<span<int, 42>>::value));
+}
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
