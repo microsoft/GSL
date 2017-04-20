@@ -9,32 +9,20 @@ endif()
 add_subdirectory(unittest-cpp)
 
 include_directories(
-    ../include
     ./unittest-cpp
 )
 
 add_definitions(-DGSL_THROW_ON_CONTRACT_VIOLATION)
 
 if(MSVC) # has the support we need
-    # remove unnecessary warnings about unchecked iterators
-    add_definitions(-D_SCL_SECURE_NO_WARNINGS)
     add_compile_options(/EHsc /W4 /WX)
 else()
-    include(CheckCXXCompilerFlag)
-    CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
-    CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-    if(COMPILER_SUPPORTS_CXX14)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing -std=c++14 -Werror -Wall -Wextra -Wpedantic -Wno-missing-braces -Wconversion -Wsign-conversion -Wctor-dtor-privacy -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual")
-    elseif(COMPILER_SUPPORTS_CXX11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing -std=c++11 -Werror -Wall -Wextra -Wpedantic -Wno-missing-braces -Wconversion -Wsign-conversion -Wctor-dtor-privacy -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual")
-    else()
-      message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-    endif()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing -Werror -Wall -Wextra -Wpedantic -Wno-missing-braces -Wconversion -Wsign-conversion -Wctor-dtor-privacy -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual")
 endif()
 
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
-    target_link_libraries(${name} UnitTest++)
+    target_link_libraries(${name} UnitTest++ GSL)
     add_test(
       ${name}
       ${name}
