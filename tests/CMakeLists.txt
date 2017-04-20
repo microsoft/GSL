@@ -2,8 +2,12 @@ cmake_minimum_required(VERSION 2.8.7)
 
 project(GSLTests CXX)
 
-if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/tests)
-    execute_process(COMMAND git submodule update --init WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/CMakeLists.txt)
+    find_package(Git)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} submodule update --init
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    )
 endif()
 
 add_subdirectory(unittest-cpp)
