@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.8.7)
 
 project(GSLTests CXX)
 
+# will make visual studio generated project group files
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/CMakeLists.txt)
     find_package(Git)
     execute_process(
@@ -31,6 +34,8 @@ function(add_gsl_test name)
       ${name}
       ${name}
     )
+    # group all tests under GSL_tests
+    set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests")
 endfunction()
 
 add_gsl_test(span_tests)
