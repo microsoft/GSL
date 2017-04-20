@@ -15,21 +15,51 @@ endif()
 
 add_subdirectory(unittest-cpp)
 
-include_directories(
+# this interface adds compile options to how the tests are run
+# please try to keep entries ordered =)
+add_library(gsl_tests_config INTERFACE)
+target_compile_options(gsl_tests_config INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:
+        /EHsc
+        /W4
+        /WX
+    >
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        -fno-strict-aliasing
+        -Wall
+        -Wcast-align
+        -Wconversion
+        -Wctor-dtor-privacy
+        -Werror
+        -Wextra
+        -Wno-missing-braces
+        -Wnon-virtual-dtor
+        -Wold-style-cast
+        -Woverloaded-virtual
+        -Wpedantic
+        -Wshadow
+        -Wsign-conversion
+    >
+)
+
+# set test to include the unittest-cpp headers
+# this shiuld be removed when UnitTest++ has the proper headers
+target_include_directories(gsl_tests_config INTERFACE
     ./unittest-cpp
 )
 
-add_definitions(-DGSL_THROW_ON_CONTRACT_VIOLATION)
-
-if(MSVC) # has the support we need
-    add_compile_options(/EHsc /W4 /WX)
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing -Werror -Wall -Wextra -Wpedantic -Wno-missing-braces -Wconversion -Wsign-conversion -Wctor-dtor-privacy -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual")
-endif()
+# set definitions for tests
+target_compile_definitions(gsl_tests_config INTERFACE
+    GSL_THROW_ON_CONTRACT_VIOLATION
+)
 
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
-    target_link_libraries(${name} UnitTest++ GSL)
+    target_link_libraries(${name}
+        UnitTest++
+        GSL
+        gsl_tests_config
+    )
     add_test(
       ${name}
       ${name}
