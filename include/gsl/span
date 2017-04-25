@@ -669,9 +669,9 @@ span<ElementType> make_span(ElementType* firstElem, ElementType* lastElem)
 }
 
 template <class ElementType, std::size_t N>
-span<ElementType> make_span(ElementType (&arr)[N])
+span<ElementType, N> make_span(ElementType (&arr)[N])
 {
-    return span<ElementType>(arr);
+    return span<ElementType, N>(arr);
 }
 
 template <class Container>
