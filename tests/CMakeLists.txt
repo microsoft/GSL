@@ -6,7 +6,7 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/tests)
     execute_process(COMMAND git submodule update --init WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
-add_subdirectory(unittest-cpp)
+add_subdirectory(unittest-cpp EXCLUDE_FROM_ALL)
 
 include_directories(
     ../include
@@ -34,7 +34,7 @@ endif()
 
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
-    target_link_libraries(${name} UnitTest++)
+    target_link_libraries(${name} UnitTest++ cppgsl)
     add_test(
       ${name}
       ${name}
