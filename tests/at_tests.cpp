@@ -14,7 +14,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h>
+#include <catch/catch.hpp>
 
 #include <gsl/gsl>
 
@@ -23,70 +23,67 @@
 
 using gsl::fail_fast;
 
-SUITE(at_tests)
+TEST_CASE("static_array")
 {
-    TEST(static_array)
-    {
-        int a[4] = {1, 2, 3, 4};
-        const int(&c_a)[4] = a;
+    int a[4] = {1, 2, 3, 4};
+    const int(&c_a)[4] = a;
 
-        for (int i = 0; i < 4; ++i) {
-            CHECK(&gsl::at(a, i) == &a[i]);
-            CHECK(&gsl::at(c_a, i) == &a[i]);
-        }
-
-        CHECK_THROW(gsl::at(a, -1), fail_fast);
-        CHECK_THROW(gsl::at(a, 4), fail_fast);
-        CHECK_THROW(gsl::at(c_a, -1), fail_fast);
-        CHECK_THROW(gsl::at(c_a, 4), fail_fast);
+    for (int i = 0; i < 4; ++i) {
+        CHECK(&gsl::at(a, i) == &a[i]);
+        CHECK(&gsl::at(c_a, i) == &a[i]);
     }
 
-    TEST(std_array)
-    {
-        std::array<int, 4> a = {1, 2, 3, 4};
-        const std::array<int, 4>& c_a = a;
+    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
+    CHECK_THROWS_AS(gsl::at(c_a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
+}
 
-        for (int i = 0; i < 4; ++i) {
-            CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
-            CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
-        }
+TEST_CASE("std_array")
+{
+    std::array<int, 4> a = {1, 2, 3, 4};
+    const std::array<int, 4>& c_a = a;
 
-        CHECK_THROW(gsl::at(a, -1), fail_fast);
-        CHECK_THROW(gsl::at(a, 4), fail_fast);
-        CHECK_THROW(gsl::at(c_a, -1), fail_fast);
-        CHECK_THROW(gsl::at(c_a, 4), fail_fast);
+    for (int i = 0; i < 4; ++i) {
+        CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+        CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    TEST(StdVector)
-    {
-        std::vector<int> a = {1, 2, 3, 4};
-        const std::vector<int>& c_a = a;
+    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
+    CHECK_THROWS_AS(gsl::at(c_a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
+}
 
-        for (int i = 0; i < 4; ++i) {
-            CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
-            CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
-        }
+TEST_CASE("StdVector")
+{
+    std::vector<int> a = {1, 2, 3, 4};
+    const std::vector<int>& c_a = a;
 
-        CHECK_THROW(gsl::at(a, -1), fail_fast);
-        CHECK_THROW(gsl::at(a, 4), fail_fast);
-        CHECK_THROW(gsl::at(c_a, -1), fail_fast);
-        CHECK_THROW(gsl::at(c_a, 4), fail_fast);
+    for (int i = 0; i < 4; ++i) {
+        CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+        CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    TEST(InitializerList)
-    {
-        std::initializer_list<int> a = {1, 2, 3, 4};
+    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
+    CHECK_THROWS_AS(gsl::at(c_a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
+}
 
-        for (int i = 0; i < 4; ++i) {
-            CHECK(gsl::at(a, i) == i + 1);
-            CHECK(gsl::at({1, 2, 3, 4}, i) == i + 1);
-        }
+TEST_CASE("InitializerList")
+{
+    std::initializer_list<int> a = {1, 2, 3, 4};
 
-        CHECK_THROW(gsl::at(a, -1), fail_fast);
-        CHECK_THROW(gsl::at(a, 4), fail_fast);
-        CHECK_THROW(gsl::at({1, 2, 3, 4}, -1), fail_fast);
-        CHECK_THROW(gsl::at({1, 2, 3, 4}, 4), fail_fast);
+    for (int i = 0; i < 4; ++i) {
+        CHECK(gsl::at(a, i) == i + 1);
+        CHECK(gsl::at({1, 2, 3, 4}, i) == i + 1);
     }
+
+    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
+    CHECK_THROWS_AS(gsl::at({1, 2, 3, 4}, -1), fail_fast);
+    CHECK_THROWS_AS(gsl::at({1, 2, 3, 4}, 4), fail_fast);
 }
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
@@ -111,5 +108,3 @@ static constexpr bool test_constexpr()
 
 static_assert(test_constexpr(), "FAIL");
 #endif
-
-int main() { return UnitTest::RunAllTests(); }

@@ -13,16 +13,15 @@ image:
   - Visual Studio 2017
 
 cache:
-  - C:\cmake-3.7.2-win32-x86
+  - C:\cmake-3.8.0-win32-x86
 
 install:
-  - git clone --quiet --depth=1 https://github.com/Microsoft/unittest-cpp.git tests/unittest-cpp
   - ps: |
-      if (![IO.File]::Exists("C:\cmake-3.7.2-win32-x86\bin\cmake.exe")) {
-        Start-FileDownload 'https://cmake.org/files/v3.7/cmake-3.7.2-win32-x86.zip'
-        7z x -y cmake-3.7.2-win32-x86.zip -oC:\
+      if (![IO.File]::Exists("C:\cmake-3.8.0-win32-x86\bin\cmake.exe")) {
+        Start-FileDownload 'https://cmake.org/files/v3.8/cmake-3.8.0-win32-x86.zip'
+        7z x -y cmake-3.8.0-win32-x86.zip -oC:\
       }
-      $env:PATH="C:\cmake-3.7.2-win32-x86\bin;$env:PATH"
+      $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
 
 before_build:
   - ps: |

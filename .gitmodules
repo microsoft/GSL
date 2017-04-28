@@ -1,3 +1,0 @@
-[submodule "tests/unittest-cpp"]
-	path = tests/unittest-cpp
-	url = https://github.com/unittest-cpp/unittest-cpp.git
