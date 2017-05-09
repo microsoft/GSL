@@ -42,6 +42,12 @@ target_compile_options(gsl_tests_config INTERFACE
     >
 )
 
+target_link_libraries(gsl_tests_config INTERFACE
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        -pthread
+    >
+)
+
 # set test to include the unittest-cpp headers
 # this shiuld be removed when UnitTest++ has the proper headers
 target_include_directories(gsl_tests_config INTERFACE
@@ -80,3 +86,4 @@ add_gsl_test(utils_tests)
 add_gsl_test(owner_tests)
 add_gsl_test(byte_tests)
 add_gsl_test(algorithm_tests)
+add_gsl_test(thread_tests)
