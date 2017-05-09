@@ -15,6 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <UnitTest++/UnitTest++.h>
+
 #include <gsl/gsl_byte>
 
 #include <iostream>
@@ -111,11 +112,11 @@ SUITE(byte_tests)
         CHECK(0x12 == gsl::to_integer<unsigned long>(b));
         CHECK(0x12 == gsl::to_integer<unsigned long long>(b));
 
-//      CHECK(0x12 == gsl::to_integer<float>(b));   // expect compile-time error
-//      CHECK(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
+        //      CHECK(0x12 == gsl::to_integer<float>(b));   // expect compile-time error
+        //      CHECK(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
     }
 
-    int modify_both(gsl::byte& b, int& i)
+    int modify_both(gsl::byte & b, int& i)
     {
         i = 10;
         b = to_byte<5>();
@@ -124,12 +125,11 @@ SUITE(byte_tests)
 
     TEST(aliasing)
     {
-        int i{ 0 };
+        int i{0};
         const int res = modify_both(reinterpret_cast<byte&>(i), i);
         CHECK(res == i);
     }
 }
-
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }

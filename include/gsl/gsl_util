@@ -20,28 +20,29 @@
 #define GSL_UTIL_H
 
 #include <gsl/gsl_assert> // Ensures/Expects
+
 #include <array>
 #include <exception>
 #include <type_traits>
 #include <utility>
 
 #if defined(_MSC_VER)
- #pragma warning(push)
- #pragma warning(disable : 4127) // conditional expression is constant
+#pragma warning(push)
+#pragma warning(disable : 4127) // conditional expression is constant
 
- #if _MSC_VER < 1910
-  #pragma push_macro("constexpr")
-  #define constexpr /*constexpr*/
-  // MSVC 2013 workarounds
-  #if _MSC_VER <= 1800
-   // noexcept is not understood
-   #pragma push_macro("noexcept")
-   #define noexcept /*noexcept*/
-   // turn off some misguided warnings
-   #pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
-  #endif // _MSC_VER <= 1800
- #endif // _MSC_VER < 1910
-#endif // _MSC_VER
+#if _MSC_VER < 1910
+#pragma push_macro("constexpr")
+#define constexpr /*constexpr*/
+// MSVC 2013 workarounds
+#if _MSC_VER <= 1800
+// noexcept is not understood
+#pragma push_macro("noexcept")
+#define noexcept /*noexcept*/
+// turn off some misguided warnings
+#pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
+#endif                          // _MSC_VER <= 1800
+#endif                          // _MSC_VER < 1910
+#endif                          // _MSC_VER
 
 namespace gsl
 {
@@ -154,16 +155,16 @@ inline constexpr T at(const std::initializer_list<T> cont, const std::ptrdiff_t 
 } // namespace gsl
 
 #if defined(_MSC_VER)
- #if _MSC_VER < 1910
-  #undef constexpr
-  #pragma pop_macro("constexpr")
+#if _MSC_VER < 1910
+#undef constexpr
+#pragma pop_macro("constexpr")
 
-  #if _MSC_VER <= 1800
-   #undef noexcept
-   #pragma pop_macro("noexcept")
-  #endif // _MSC_VER <= 1800
- #endif // _MSC_VER < 1910
- #pragma warning(pop)
+#if _MSC_VER <= 1800
+#undef noexcept
+#pragma pop_macro("noexcept")
+#endif // _MSC_VER <= 1800
+#endif // _MSC_VER < 1910
+#pragma warning(pop)
 #endif // _MSC_VER
 
 #endif // GSL_UTIL_H
