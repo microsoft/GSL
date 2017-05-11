@@ -35,12 +35,8 @@ target_compile_definitions(GSL INTERFACE
 
 # add include folders to the library and targets that consume it
 target_include_directories(GSL INTERFACE
-    $<BUILD_INTERFACE:
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    >
-    $<INSTALL_INTERFACE:
-        include
-    >
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 # add natvis file to the library so it will automatically be loaded into Visual Studio
@@ -48,11 +44,30 @@ add_custom_target(GSL-sources SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
 )
 
+# Check for system dir install
+set(SYSTEM_DIR_INSTALL FALSE)
+if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+    set(SYSTEM_DIR_INSTALL TRUE)
+endif()
+
+# Installation paths
+if(UNIX AND SYSTEM_DIR_INSTALL)
+    # Install into the system (/usr/bin or /usr/local/bin)
+    set(INSTALL_ROOT      "share/GSL")       # /usr/[local]/share/<project>
+    set(INSTALL_CMAKE     "share/GSL/cmake") # /usr/[local]/share/<project>/cmake
+    set(INSTALL_INCLUDE   "include")         # /usr/[local]/include
+else()
+    # Install into local directory
+    set(INSTALL_ROOT      ".")                      # ./
+    set(INSTALL_CMAKE     "cmake")                  # ./cmake
+    set(INSTALL_INCLUDE   "include")                # ./include
+endif()
+
 export(TARGETS GSL NAMESPACE GSL:: FILE ${PROJECT_BINARY_DIR}/cmake/GSL/GSL-export.cmake)
 
 install(
-    DIRECTORY include/gsl
-    DESTINATION include
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/gsl
+    DESTINATION ${INSTALL_INCLUDE}
 )
 
 install(TARGETS GSL
@@ -61,8 +76,10 @@ install(TARGETS GSL
 
 install(EXPORT GSL-export
     NAMESPACE   GSL::
-    DESTINATION share/GSL/cmake/GSL
+    DESTINATION ${INSTALL_CMAKE}/GSL
 )
+
+install(FILES GSLConfig.cmake DESTINATION ${INSTALL_ROOT})
 
 enable_testing()
 add_subdirectory(tests)
