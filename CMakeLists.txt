@@ -38,16 +38,30 @@ target_include_directories(GSL INTERFACE
     $<BUILD_INTERFACE:
         ${CMAKE_CURRENT_SOURCE_DIR}/include
     >
+    $<INSTALL_INTERFACE:
+        include
+    >
 )
 
 # add natvis file to the library so it will automatically be loaded into Visual Studio
-target_sources(GSL INTERFACE 
+add_custom_target(GSL-sources SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
 )
+
+export(TARGETS GSL NAMESPACE GSL:: FILE ${PROJECT_BINARY_DIR}/cmake/GSL/GSL-export.cmake)
 
 install(
     DIRECTORY include/gsl
     DESTINATION include
+)
+
+install(TARGETS GSL
+    EXPORT  "GSL-export"
+)
+
+install(EXPORT GSL-export
+    NAMESPACE   GSL::
+    DESTINATION share/GSL/cmake/GSL
 )
 
 enable_testing()
