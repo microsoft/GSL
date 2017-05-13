@@ -57,9 +57,6 @@ using std::shared_ptr;
 template <class T, typename = std::enable_if_t<std::is_pointer<T>::value>>
 using owner = T;
 
-template <class T>
-using owner_ptr = T*;
-
 //
 // not_null
 //
