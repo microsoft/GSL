@@ -20,6 +20,8 @@
 
 #include <functional>
 
+#include <memory>
+
 using namespace gsl;
 
 SUITE(owner_tests)
@@ -39,7 +41,8 @@ SUITE(owner_tests)
     {
         #ifdef CONFIRM_COMPILATION_ERRORS
         {
-            owner<int> integer = 10;
+            owner<int> integerTest = 10;
+            owner<std::shared_ptr<int>> sharedPtrTest(new int(10));
         }
         #endif
     }
