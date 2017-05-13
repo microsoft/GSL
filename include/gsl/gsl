@@ -27,6 +27,7 @@
 
 #include <iostream>
 #include <memory>
+#include <type_traits>
 
 #if defined(_MSC_VER) && _MSC_VER < 1910
 #pragma push_macro("constexpr")
@@ -53,8 +54,11 @@ namespace gsl
 using std::unique_ptr;
 using std::shared_ptr;
 
-template <class T>
+template <class T, typename = std::enable_if_t<std::is_pointer<T>::value>>
 using owner = T;
+
+template <class T>
+using owner_ptr = T*;
 
 //
 // not_null

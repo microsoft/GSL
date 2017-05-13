@@ -34,6 +34,15 @@ SUITE(owner_tests)
         CHECK(*p == 121);
         delete p;
     }
+
+    TEST(check_pointer_constraint)
+    {
+        #ifdef CONFIRM_COMPILATION_ERRORS
+        {
+            owner<int> integer = 10;
+        }
+        #endif
+    }
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
