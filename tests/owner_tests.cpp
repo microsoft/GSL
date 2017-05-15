@@ -20,6 +20,8 @@
 
 #include <functional>
 
+#include <memory>
+
 using namespace gsl;
 
 SUITE(owner_tests)
@@ -33,6 +35,16 @@ SUITE(owner_tests)
         f(p);
         CHECK(*p == 121);
         delete p;
+    }
+
+    TEST(check_pointer_constraint)
+    {
+        #ifdef CONFIRM_COMPILATION_ERRORS
+        {
+            owner<int> integerTest = 10;
+            owner<std::shared_ptr<int>> sharedPtrTest(new int(10));
+        }
+        #endif
     }
 }
 
