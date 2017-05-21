@@ -36,40 +36,40 @@
 namespace gsl
 {
 
-class raii_thread
+class joining_thread
 {
-    friend void swap(raii_thread& t1, raii_thread& t2) noexcept;
+    friend void swap(joining_thread& t1, joining_thread& t2) noexcept;
 
 public:
-    raii_thread() noexcept = default;
+    joining_thread() noexcept = default;
 
-    raii_thread(raii_thread const&) = delete;
-    raii_thread(raii_thread&& other) : t(std::move(other.t)) {}
+    joining_thread(joining_thread const&) = delete;
+    joining_thread(joining_thread&& other) : t(std::move(other.t)) {}
 
-    raii_thread(std::thread const&) = delete;
-    raii_thread(std::thread&& other) noexcept : t(std::move(other)) {}
+    joining_thread(std::thread const&) = delete;
+    joining_thread(std::thread&& other) noexcept : t(std::move(other)) {}
 
-    raii_thread& operator=(raii_thread const&) = delete;
-    raii_thread& operator=(raii_thread&& other) noexcept
+    joining_thread& operator=(joining_thread const&) = delete;
+    joining_thread& operator=(joining_thread&& other) noexcept
     {
         t = std::move(other.t);
         return *this;
     }
 
-    raii_thread& operator=(std::thread const&) = delete;
-    raii_thread& operator=(std::thread&& other) noexcept
+    joining_thread& operator=(std::thread const&) = delete;
+    joining_thread& operator=(std::thread&& other) noexcept
     {
         t = std::move(other);
         return *this;
     }
 
     template <typename Callable, typename... Args>
-    explicit raii_thread(Callable&& f, Args&&... args)
+    explicit joining_thread(Callable&& f, Args&&... args)
         : t(std::forward<Callable>(f), std::forward<Args>(args)...)
     {
     }
 
-    ~raii_thread() { if (t.joinable()) t.join(); }
+    ~joining_thread() { if (t.joinable()) t.join(); }
 
     bool joinable() const { return t.joinable(); }
 
@@ -79,7 +79,7 @@ public:
 
     void join() { t.join(); }
 
-    void swap(raii_thread& other) noexcept
+    void swap(joining_thread& other) noexcept
     {
         using std::swap;
         swap(t, other.t);
@@ -89,7 +89,7 @@ private:
     std::thread t;
 };
 
-void swap(raii_thread& t1, raii_thread& t2) noexcept
+void swap(joining_thread& t1, joining_thread& t2) noexcept
 {
     using std::swap;
     swap(t1.t, t2.t);

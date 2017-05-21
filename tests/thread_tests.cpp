@@ -34,7 +34,7 @@ SUITE(raii_thread_tests)
     {
         auto start_time = steady_clock::now();
 
-        gsl::raii_thread t{[&]{ sleep_for(t_100ms); }};
+        gsl::joining_thread t{[&]{ sleep_for(t_100ms); }};
 
         auto end_time = steady_clock::now();
 
@@ -46,7 +46,7 @@ SUITE(raii_thread_tests)
         auto start_time = steady_clock::now();
 
         {
-            gsl::raii_thread t{[&]{ sleep_for(t_100ms); }};
+            gsl::joining_thread t{[&]{ sleep_for(t_100ms); }};
         }
 
         auto end_time = steady_clock::now();
@@ -58,10 +58,10 @@ SUITE(raii_thread_tests)
     {
         auto start_time = steady_clock::now();
 
-        gsl::raii_thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::joining_thread t1{[&]{ sleep_for(t_100ms); }};
 
         {
-            gsl::raii_thread t2{std::move(t1)};
+            gsl::joining_thread t2{std::move(t1)};
         }
 
         auto end_time = steady_clock::now();
@@ -73,10 +73,10 @@ SUITE(raii_thread_tests)
     {
         auto start_time = steady_clock::now();
 
-        gsl::raii_thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::joining_thread t1{[&]{ sleep_for(t_100ms); }};
 
         {
-            gsl::raii_thread t2;
+            gsl::joining_thread t2;
             t2 = std::move(t1);
         }
 
@@ -92,7 +92,7 @@ SUITE(raii_thread_tests)
         std::thread t1{[&]{ sleep_for(t_100ms); }};
 
         {
-            gsl::raii_thread t2{std::move(t1)};
+            gsl::joining_thread t2{std::move(t1)};
         }
 
         auto end_time = steady_clock::now();
@@ -107,7 +107,7 @@ SUITE(raii_thread_tests)
         std::thread t1{[&]{ sleep_for(t_100ms); }};
 
         {
-            gsl::raii_thread t2;
+            gsl::joining_thread t2;
             t2 = std::move(t1);
         }
 
@@ -118,8 +118,8 @@ SUITE(raii_thread_tests)
 
     TEST(raii_thread_swap_test)
     {
-        gsl::raii_thread t1{[&]{ sleep_for(t_100ms); }};
-        gsl::raii_thread t2{[&]{ sleep_for(t_100ms); }};
+        gsl::joining_thread t1{[&]{ sleep_for(t_100ms); }};
+        gsl::joining_thread t2{[&]{ sleep_for(t_100ms); }};
 
         auto id1 = t1.get_id();
         auto id2 = t2.get_id();
