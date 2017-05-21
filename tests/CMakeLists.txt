@@ -53,6 +53,12 @@ target_compile_options(gsl_tests_config INTERFACE
     >
 )
 
+target_link_libraries(gsl_tests_config INTERFACE
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        -pthread
+    >
+)
+
 # for tests to find the catch header
 target_include_directories(gsl_tests_config INTERFACE
     ${CMAKE_BINARY_DIR}/external/include
@@ -101,3 +107,4 @@ add_gsl_test(utils_tests)
 add_gsl_test(owner_tests)
 add_gsl_test(byte_tests)
 add_gsl_test(algorithm_tests)
+add_gsl_test(thread_tests)
