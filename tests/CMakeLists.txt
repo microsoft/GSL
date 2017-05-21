@@ -37,6 +37,7 @@ target_compile_options(gsl_tests_config INTERFACE
     >
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
         -fno-strict-aliasing
+        -pthread
         -Wall
         -Wcast-align
         -Wconversion
@@ -54,7 +55,7 @@ target_compile_options(gsl_tests_config INTERFACE
 )
 
 target_link_libraries(gsl_tests_config INTERFACE
-    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+    $<$<CXX_COMPILER_ID:GNU>:
         -pthread
     >
 )
