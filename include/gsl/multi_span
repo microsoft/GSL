@@ -76,12 +76,6 @@ namespace gsl
 */
 namespace details
 {
-    template <typename SizeType>
-    struct SizeTypeTraits
-    {
-        static const SizeType max_value = (std::numeric_limits<SizeType>::max)();
-    };
-
     template <typename... Ts>
     class are_integral : public std::integral_constant<bool, true>
     {
