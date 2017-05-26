@@ -250,6 +250,21 @@ SUITE(NotNullTests)
         CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
         CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
     }
+
+     TEST(TestNotNullDereferenceOperator)
+     {
+        auto sp1 = std::make_shared<int>(42);
+
+        using NotNullSp1 = not_null<decltype(sp1)>;
+
+        CHECK(*NotNullSp1(sp1) == *sp1);
+
+        int ints[1] = {42};
+        CustomPtr<int> p1(&ints[0]);
+
+        using NotNull1 = not_null<decltype(p1)>;
+        CHECK(*NotNull1(p1) == 42);
+    }
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
