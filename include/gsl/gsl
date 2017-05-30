@@ -98,6 +98,7 @@ public:
 
     constexpr operator T() const { return get(); }
     constexpr T operator->() const { return get(); }
+    constexpr auto operator*() const { return *get(); } 
 
     // prevents compilation when someone attempts to assign a null pointer constant
     not_null(std::nullptr_t) = delete;
