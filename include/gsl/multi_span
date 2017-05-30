@@ -1993,7 +1993,7 @@ private:
     }
 
     template <bool Enabled = (Rank == 1), typename Dummy = std::enable_if_t<Enabled>>
-    static index_type resize_stride(const index_type& strides, std::ptrdiff_t, void* = 0)
+    static index_type resize_stride(const index_type& strides, std::ptrdiff_t, void* = nullptr)
     {
         // Only strided arrays with regular strides can be resized
         Expects(strides[Rank - 1] == 1);
