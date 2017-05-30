@@ -152,3 +152,5 @@ inline constexpr byte to_byte() noexcept
 #endif // _MSC_VER
 
 #endif // GSL_BYTE_H
+
+// vim: set filetype=cpp:

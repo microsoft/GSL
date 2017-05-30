@@ -168,3 +168,5 @@ inline constexpr T at(const std::initializer_list<T> cont, const std::ptrdiff_t 
 #endif // _MSC_VER
 
 #endif // GSL_UTIL_H
+
+// vim: set filetype=cpp:

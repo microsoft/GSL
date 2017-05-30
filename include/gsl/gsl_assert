@@ -95,3 +95,5 @@ struct fail_fast : public std::logic_error
 #define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
 
 #endif // GSL_CONTRACTS_H
+
+// vim: set filetype=cpp:

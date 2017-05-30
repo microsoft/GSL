@@ -59,3 +59,5 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
 #endif // _MSC_VER
 
 #endif // GSL_ALGORITHM_H
+
+// vim: set filetype=cpp:

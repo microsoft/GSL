@@ -194,3 +194,5 @@ struct hash<gsl::not_null<T>>
 #endif // defined(_MSC_VER) && _MSC_VER < 1910
 
 #endif // GSL_GSL_H
+
+// vim: set filetype=cpp:
