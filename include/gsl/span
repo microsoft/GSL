@@ -143,8 +143,8 @@ namespace details
 
         span_iterator() = default;
 
-        constexpr span_iterator(const Span* span, typename Span::index_type index)
-            : span_(span), index_(index) GSL_NOEXCEPT
+        constexpr span_iterator(const Span* span, typename Span::index_type index) GSL_NOEXCEPT
+            : span_(span), index_(index)
         {
             Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
         }
