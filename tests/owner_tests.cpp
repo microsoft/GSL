@@ -14,7 +14,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h>
+#include <catch/catch.hpp>
 
 #include <gsl/gsl>
 
@@ -22,18 +22,13 @@
 
 using namespace gsl;
 
-SUITE(owner_tests)
+void f(int* i) { *i += 1; }
+
+TEST_CASE("basic_test")
 {
-    void f(int* i) { *i += 1; }
-
-    TEST(basic_test)
-    {
-        owner<int*> p = new int(120);
-        CHECK(*p == 120);
-        f(p);
-        CHECK(*p == 121);
-        delete p;
-    }
+    owner<int*> p = new int(120);
+    CHECK(*p == 120);
+    f(p);
+    CHECK(*p == 121);
+    delete p;
 }
-
-int main(int, const char* []) { return UnitTest::RunAllTests(); }

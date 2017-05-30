@@ -41,8 +41,6 @@ contributing any changes that were necessary back to this project to benefit the
 To build the tests, you will require the following:
 
 * [CMake](http://cmake.org), version 2.8.7 or later to be installed and in your PATH.
-* [UnitTest-cpp](https://github.com/Microsoft/unittest-cpp), to be cloned under the [tests/unittest-cpp](./tests/unittest-cpp) directory
-of your GSL source.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 
@@ -56,11 +54,11 @@ These steps assume the source code of this repository has been cloned into a dir
 
         cmake -G "Visual Studio 14 2015" c:\GSL
 
-3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).    
+3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).
 
         cmake --build . --config Debug
 
-4. Run the test suite.    
+4. Run the test suite.
 
         ctest -C Debug
 
