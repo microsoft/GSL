@@ -95,6 +95,16 @@ std::string operator>=(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
                                                                                           : "false";
 }
 
+struct NonCopyableNonMovable
+{
+    NonCopyableNonMovable() = default;
+    NonCopyableNonMovable(const NonCopyableNonMovable&) = delete;
+    NonCopyableNonMovable& operator=(const NonCopyableNonMovable&) = delete;
+    NonCopyableNonMovable(NonCopyableNonMovable&&) = delete;
+    NonCopyableNonMovable& operator=(NonCopyableNonMovable&&) = delete;
+};
+
+
 SUITE(NotNullTests)
 {
 
@@ -253,18 +263,23 @@ SUITE(NotNullTests)
 
      TEST(TestNotNullDereferenceOperator)
      {
-        auto sp1 = std::make_shared<int>(42);
+        {
+            auto sp1 = std::make_shared<NonCopyableNonMovable>();
 
-        using NotNullSp1 = not_null<decltype(sp1)>;
-
-        CHECK(*NotNullSp1(sp1) == *sp1);
+            using NotNullSp1 = not_null<decltype(sp1)>;
+            //TypeId of not_null dereference must be equal to the typeId of wrapped pointer dereference
+            CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1))); 
+            CHECK(std::addressof(*NotNullSp1(sp1)) == std::addressof(*sp1));
+        }
 
         int ints[1] = {42};
         CustomPtr<int> p1(&ints[0]);
 
         using NotNull1 = not_null<decltype(p1)>;
         CHECK(*NotNull1(p1) == 42);
-    }
+        *NotNull1(p1) = 43;
+        CHECK(ints[0] == 43);
+     }
 }
 
 int main(int, const char* []) { return UnitTest::RunAllTests(); }
