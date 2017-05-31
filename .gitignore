@@ -13,3 +13,4 @@ CMakeCache.txt
 *.suo
 .vs/
 .vscode/
+build
