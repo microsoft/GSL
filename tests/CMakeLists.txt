@@ -21,6 +21,7 @@ add_library(gsl_tests_config INTERFACE)
 target_compile_options(gsl_tests_config INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:
         /EHsc
+        /std:c++latest
         /W4
         /WX
     >
