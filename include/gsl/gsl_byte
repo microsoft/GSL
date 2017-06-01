@@ -52,15 +52,15 @@
 #else // _MSC_VER
 
 // this tests if we are under GCC or Clang with enough -std:c++1z power to get us std::byte
-#if defined(__cplusplus) && (__cplusplus > 201703L)
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
 
 #define GSL_USE_STD_BYTE 1
 
-#else // defined(__cplusplus) && (__cplusplus > 201703L)
+#else // defined(__cplusplus) && (__cplusplus >= 201703L)
 
 #define GSL_USE_STD_BYTE 0
 
-#endif //defined(__cplusplus) && (__cplusplus > 201703L)
+#endif //defined(__cplusplus) && (__cplusplus >= 201703L)
 
 #endif           // _MSC_VER
 
