@@ -38,15 +38,29 @@
 #define noexcept /*noexcept*/
 #endif           // _MSC_VER <= 1800
 
-#if _HAS_STD_BYTE 
+// this tests if we are under MSVC and the standard lib has std::byte and it is enabled
+#if _MSC_VER >= 1911 && (!defined(_HAS_STD_BYTE) || _HAS_STD_BYTE) 
 
 #define GSL_USE_STD_BYTE 1
 
-#else
+#else // _MSC_VER >= 1911 && (!defined(_HAS_STD_BYTE) || _HAS_STD_BYTE) 
 
 #define GSL_USE_STD_BYTE 0
 
-#endif // _HAS_STD_BYTE
+#endif // _MSC_VER >= 1911 && (!defined(_HAS_STD_BYTE) || _HAS_STD_BYTE) 
+
+#else // _MSC_VER
+
+// this tests if we are under GCC or Clang with enough -std:c++1z power to get us std::byte
+#if defined(__cplusplus) && (__cplusplus > 201703L)
+
+#define GSL_USE_STD_BYTE 1
+
+#else // defined(__cplusplus) && (__cplusplus > 201703L)
+
+#define GSL_USE_STD_BYTE 0
+
+#endif //defined(__cplusplus) && (__cplusplus > 201703L)
 
 #endif           // _MSC_VER
 
@@ -56,7 +70,7 @@ namespace gsl
 
 #include <cstddef>
 
-using byte = std::byte;
+using std::byte;
 using std::to_integer;
 
 #else // GSL_USE_STD_BYTE
