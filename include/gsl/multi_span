@@ -1186,8 +1186,11 @@ namespace details
         : std::true_type
     {
     };
-
+#if defined(_MSC_VER)
     template <typename ValueType, std::ptrdiff_t Rank>
+#else
+    template <typename ValueType, std::size_t Rank>
+#endif
     struct is_multi_span_oracle<strided_span<ValueType, Rank>> : std::true_type
     {
     };
@@ -1298,7 +1301,11 @@ public:
     }
 
     // construct from n-dimensions static array
+#ifdef _MSC_VER
     template <typename T, std::size_t N, typename Helper = details::SpanArrayTraits<T, N>>
+#else
+    template <typename T, std::size_t N, typename Helper = details::SpanArrayTraits<T, narrow_cast<std::ptrdiff_t>(N)>>
+#endif
     constexpr multi_span(T (&arr)[N])
         : multi_span(reinterpret_cast<pointer>(arr), bounds_type{typename Helper::bounds_type{}})
     {
@@ -1321,24 +1328,42 @@ public:
     // construct from std::array
     template <typename T, std::size_t N>
     constexpr multi_span(std::array<T, N>& arr)
+#ifdef _MSC_VER
         : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
+#else
+        : multi_span(arr.data(), bounds_type{static_bounds<narrow_cast<std::ptrdiff_t>(N)>{}})
+#endif
     {
         static_assert(
             std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
             "Cannot convert from source type to target multi_span type.");
+#ifdef _MSC_VER
         static_assert(std::is_convertible<static_bounds<N>, bounds_type>::value,
                       "You cannot construct a multi_span from a std::array of smaller size.");
+#else
+        static_assert(std::is_convertible<static_bounds<narrow_cast<std::ptrdiff_t>(N)>, bounds_type>::value,
+                      "You cannot construct a multi_span from a std::array of smaller size.");
+#endif
     }
 
     // construct from const std::array
     template <typename T, std::size_t N>
     constexpr multi_span(const std::array<T, N>& arr)
+#ifdef _MSC_VER
         : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
+#else
+        : multi_span(arr.data(), bounds_type{static_bounds<narrow_cast<std::ptrdiff_t>(N)>{}})
+#endif
     {
         static_assert(std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
                       "Cannot convert from source type to target multi_span type.");
+#ifdef _MSC_VER
         static_assert(std::is_convertible<static_bounds<N>, bounds_type>::value,
                       "You cannot construct a multi_span from a std::array of smaller size.");
+#else
+        static_assert(std::is_convertible<static_bounds<narrow_cast<std::ptrdiff_t>(N)>, bounds_type>::value,
+                      "You cannot construct a multi_span from a std::array of smaller size.");
+#endif
     }
 
     // prevent constructing from temporary std::array
@@ -1730,22 +1755,34 @@ inline constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
 }
 
 template <typename T, std::size_t N>
+#ifdef _MSC_VER
 inline constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
+#else
+inline constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, narrow_cast<std::ptrdiff_t>(N)>::type
+#endif
 {
     return {arr};
 }
 
 template <typename T, std::size_t N>
+#if defined(_MSC_VER)
 inline constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>& arr)
+#else
+inline constexpr multi_span<const T, narrow_cast<std::ptrdiff_t>(N)> as_multi_span(const std::array<T, N>& arr)
+#endif
 {
     return {arr};
 }
 
 template <typename T, std::size_t N>
-inline constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>&&) = delete;
+inline constexpr multi_span<const T, narrow_cast<std::ptrdiff_t>(N)> as_multi_span(const std::array<T, N>&&) = delete;
 
 template <typename T, std::size_t N>
+#if defined(_MSC_VER)
 inline constexpr multi_span<T, N> as_multi_span(std::array<T, N>& arr)
+#else
+inline constexpr multi_span<T, narrow_cast<std::ptrdiff_t>(N)> as_multi_span(std::array<T, N>& arr)
+#endif
 {
     return {arr};
 }
@@ -1925,7 +1962,7 @@ public:
 
     constexpr const_reverse_iterator crend() const { return const_reverse_iterator{cbegin()}; }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1935,7 +1972,7 @@ public:
                (data_ == other.data_ || std::equal(this->begin(), this->end(), other.begin()));
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1944,7 +1981,7 @@ public:
         return !(*this == other);
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1953,7 +1990,7 @@ public:
         return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1962,7 +1999,7 @@ public:
         return !(other < *this);
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1971,7 +2008,7 @@ public:
         return (other < *this);
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename Dummy = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
