@@ -1332,10 +1332,10 @@ public:
 
     // construct from const std::array
     template <typename T, std::size_t N>
-    constexpr multi_span(const std::array<std::remove_const_t<value_type>, N>& arr)
-        : multi_span(arr.data(), static_bounds<N>())
+    constexpr multi_span(const std::array<T, N>& arr)
+        : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
     {
-        static_assert(std::is_convertible<T(*)[], std::remove_const_t<value_type>>::value,
+        static_assert(std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
                       "Cannot convert from source type to target multi_span type.");
         static_assert(std::is_convertible<static_bounds<N>, bounds_type>::value,
                       "You cannot construct a multi_span from a std::array of smaller size.");
