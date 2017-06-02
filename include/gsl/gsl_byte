@@ -55,6 +55,7 @@
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
 #define GSL_USE_STD_BYTE 1
+#include <cstddef>
 
 #else // defined(__cplusplus) && (__cplusplus >= 201703L)
 
@@ -68,7 +69,6 @@ namespace gsl
 {
 #if GSL_USE_STD_BYTE
 
-#include <cstddef>
 
 using std::byte;
 using std::to_integer;
