@@ -1,0 +1,169 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#ifndef GSL_THREAD_H
+#define GSL_THREAD_H
+
+#include <thread>
+
+#ifdef _MSC_VER
+#pragma warning(push)
+
+// turn off some warnings that are noisy about our Expects statements
+#pragma warning(disable : 4127) // conditional expression is constant
+
+// blanket turn off warnings from CppCoreCheck for now
+// so people aren't annoyed by them when running the tool.
+// more targeted suppressions will be added in a future update to the GSL
+#pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
+#endif // _MSC_VER
+
+namespace gsl
+{
+
+class detached_thread
+{
+    friend void swap(detached_thread& t1, detached_thread& t2) noexcept;
+
+public:
+    detached_thread() noexcept = default;
+
+    detached_thread(detached_thread const&) = delete;
+    detached_thread(detached_thread&& other) : t(std::move(other.t)) {}
+
+    detached_thread(std::thread const&) = delete;
+    detached_thread(std::thread&& other) noexcept : t(std::move(other))
+    {
+        if (t.joinable()) t.detach();
+    }
+
+    detached_thread& operator=(detached_thread const&) = delete;
+    detached_thread& operator=(detached_thread&& other) noexcept
+    {
+        t = std::move(other.t);
+        return *this;
+    }
+
+    detached_thread& operator=(std::thread const&) = delete;
+    detached_thread& operator=(std::thread&& other) noexcept
+    {
+        t = std::move(other);
+        if (t.joinable()) t.detach();
+        return *this;
+    }
+
+    template <typename Callable, typename... Args>
+    explicit detached_thread(Callable&& f, Args&&... args)
+        : t(std::forward<Callable>(f), std::forward<Args>(args)...)
+    {
+        t.detach();
+    }
+
+    bool joinable() const { return t.joinable(); }
+
+    std::thread::id get_id() const noexcept { return t.get_id(); }
+
+    std::thread::native_handle_type native_handle() { return t.native_handle(); }
+
+    void join() { t.join(); }
+
+    void swap(detached_thread& other) noexcept
+    {
+        using std::swap;
+        swap(t, other.t);
+    }
+
+private:
+    std::thread t;
+};
+
+void swap(detached_thread& t1, detached_thread& t2) noexcept
+{
+    using std::swap;
+    swap(t1.t, t2.t);
+}
+
+class raii_thread
+{
+    friend void swap(raii_thread& t1, raii_thread& t2) noexcept;
+
+public:
+    raii_thread() noexcept = default;
+
+    raii_thread(raii_thread const&) = delete;
+    raii_thread(raii_thread&& other) : t(std::move(other.t)) {}
+
+    raii_thread(std::thread const&) = delete;
+    raii_thread(std::thread&& other) noexcept : t(std::move(other)) {}
+
+    raii_thread& operator=(raii_thread const&) = delete;
+    raii_thread& operator=(raii_thread&& other) noexcept
+    {
+        t = std::move(other.t);
+        return *this;
+    }
+
+    raii_thread& operator=(std::thread const&) = delete;
+    raii_thread& operator=(std::thread&& other) noexcept
+    {
+        t = std::move(other);
+        return *this;
+    }
+
+    template <typename Callable, typename... Args>
+    explicit raii_thread(Callable&& f, Args&&... args)
+        : t(std::forward<Callable>(f), std::forward<Args>(args)...)
+    {
+    }
+
+    ~raii_thread()
+    {
+        if (t.joinable()) t.join();
+    }
+
+    bool joinable() const { return t.joinable(); }
+
+    std::thread::id get_id() const noexcept { return t.get_id(); }
+
+    std::thread::native_handle_type native_handle() { return t.native_handle(); }
+
+    void join() { t.join(); }
+
+    void swap(raii_thread& other) noexcept
+    {
+        using std::swap;
+        swap(t, other.t);
+    }
+
+private:
+    std::thread t;
+};
+
+void swap(raii_thread& t1, raii_thread& t2) noexcept
+{
+    using std::swap;
+    swap(t1.t, t2.t);
+}
+
+} // namespace gsl
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif // _MSC_VER
+
+#endif // GSL_THREAD_H
