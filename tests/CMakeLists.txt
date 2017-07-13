@@ -5,15 +5,21 @@ project(GSLTests CXX)
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest-cpp/CMakeLists.txt)
-    find_package(Git)
-    execute_process(
-        COMMAND ${GIT_EXECUTABLE} submodule update --init
-        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-    )
-endif()
+list(APPEND CATCH_CMAKE_ARGS
+    "-DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}"
+    "-DNO_SELFTEST=true"
+)
 
-add_subdirectory(unittest-cpp)
+# add catch
+ExternalProject_Add(
+    catch
+    PREFIX ${CMAKE_BINARY_DIR}/catch
+    GIT_REPOSITORY https://github.com/philsquared/Catch.git
+    GIT_TAG v1.9.6    
+    CMAKE_ARGS ${CATCH_CMAKE_ARGS}
+    LOG_DOWNLOAD 1
+    UPDATE_DISCONNECTED 1
+)
 
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
@@ -42,24 +48,29 @@ target_compile_options(gsl_tests_config INTERFACE
     >
 )
 
-# set test to include the unittest-cpp headers
-# this shiuld be removed when UnitTest++ has the proper headers
-target_include_directories(gsl_tests_config INTERFACE
-    ./unittest-cpp
-)
-
 # set definitions for tests
 target_compile_definitions(gsl_tests_config INTERFACE
     GSL_THROW_ON_CONTRACT_VIOLATION
 )
 
+# create the main executable for each test. this reduces the compile time
+# of each test by pre-compiling catch.
+add_library(test_catch STATIC test.cpp)
+target_link_libraries(test_catch
+    GSL
+    gsl_tests_config
+)
+add_dependencies(test_catch catch)
+set_property(TARGET test_catch PROPERTY FOLDER "GSL_tests")
+
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
     target_link_libraries(${name}
-        UnitTest++
         GSL
+        test_catch
         gsl_tests_config
     )
+    add_dependencies(${name} catch)
     add_test(
       ${name}
       ${name}

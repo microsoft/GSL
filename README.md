@@ -17,6 +17,9 @@ other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more inform
 # Project Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
+# Usage of Third Party Libraries
+This project makes use of the [Catch](https://github.com/philsquared/catch) testing library. Please see the [ThirdPartyNotices.txt](./ThirdPartyNotices.txt) file for details regarding the licensing of Catch.
+
 # Quick Start
 ## Supported Platforms
 The test suite that exercises GSL has been built and passes successfully on the following platforms:<sup>1)</sup>
@@ -40,9 +43,7 @@ contributing any changes that were necessary back to this project to benefit the
 ## Building the tests
 To build the tests, you will require the following:
 
-* [CMake](http://cmake.org), version 2.8.7 or later to be installed and in your PATH.
-* [UnitTest-cpp](https://github.com/Microsoft/unittest-cpp), to be cloned under the [tests/unittest-cpp](./tests/unittest-cpp) directory
-of your GSL source.
+* [CMake](http://cmake.org), version 3.1.3 or later to be installed and in your PATH.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 
@@ -56,11 +57,11 @@ These steps assume the source code of this repository has been cloned into a dir
 
         cmake -G "Visual Studio 14 2015" c:\GSL
 
-3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).    
+3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).
 
         cmake --build . --config Debug
 
-4. Run the test suite.    
+4. Run the test suite.
 
         ctest -C Debug
 
