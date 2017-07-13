@@ -10,7 +10,7 @@ cache:
     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2/install
     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.7.1/install
     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.8.1/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.9.0/install
+    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.9.1/install
 
 matrix:
   include:
@@ -61,6 +61,19 @@ matrix:
     - env: CLANG_VERSION=3.8 BUILD_TYPE=Release
       os: linux
       addons: *clang38
+    - env: CLANG_VERSION=3.9 BUILD_TYPE=Debug
+      os: linux
+      addons: &clang39
+        apt:
+          packages:
+            - clang-3.9
+            - g++-5
+          sources: &sources
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.9
+    - env: CLANG_VERSION=3.9 BUILD_TYPE=Release
+      os: linux
+      addons: *clang39
     - env: GCC_VERSION=5 BUILD_TYPE=Debug
       os: linux
       addons: &gcc5
@@ -110,7 +123,7 @@ install:
       if [[ "$CLANG_VERSION" == "3.6" ]]; then LLVM_VERSION="3.6.2"; fi
       if [[ "$CLANG_VERSION" == "3.7" ]]; then LLVM_VERSION="3.7.1"; fi
       if [[ "$CLANG_VERSION" == "3.8" ]]; then LLVM_VERSION="3.8.1"; fi
-      if [[ "$CLANG_VERSION" == "3.9" ]]; then LLVM_VERSION="3.9.0"; fi
+      if [[ "$CLANG_VERSION" == "3.9" ]]; then LLVM_VERSION="3.9.1"; fi
       LLVM_ROOT="${DEPS_DIR}/llvm-${LLVM_VERSION}"
       LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
       LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"

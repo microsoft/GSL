@@ -41,6 +41,7 @@
 // turn off some warnings that are noisy about our Expects statements
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
+#pragma warning(disable : 4702) // unreachable code
 
 #if _MSC_VER < 1910
 #pragma push_macro("constexpr")
