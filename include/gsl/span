@@ -1,4 +1,3 @@
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2015 Microsoft Corporation. All rights reserved.
@@ -48,23 +47,6 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-// VS 2013 workarounds
-#if _MSC_VER <= 1800
-#define GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-#define GSL_MSVC_NO_DEFAULT_MOVE_CTOR
-#define GSL_MSVC_NO_CPP14_STD_EQUAL
-
-// noexcept is not understood
-#pragma push_macro("noexcept")
-#define noexcept /*noexcept*/
-
-#pragma push_macro("alignof")
-#define alignof __alignof
-
-// turn off some misguided warnings
-#pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
-#pragma warning(disable : 4512) // warns that assignment op could not be generated
-#endif                          // _MSC_VER <= 1800
 #endif                          // _MSC_VER < 1910
 #endif                          // _MSC_VER
 
@@ -423,11 +405,7 @@ public:
     }
 
     constexpr span(const span& other) GSL_NOEXCEPT = default;
-#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr span(span&& other) GSL_NOEXCEPT = default;
-#else
-    constexpr span(span&& other) GSL_NOEXCEPT : storage_(std::move(other.storage_)) {}
-#endif
 
     template <
         class OtherElementType, std::ptrdiff_t OtherExtent,
@@ -452,15 +430,8 @@ public:
     ~span() GSL_NOEXCEPT = default;
     constexpr span& operator=(const span& other) GSL_NOEXCEPT = default;
 
-#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr span& operator=(span&& other) GSL_NOEXCEPT = default;
-#else
-    constexpr span& operator=(span&& other) GSL_NOEXCEPT
-    {
-        storage_ = std::move(other.storage_);
-        return *this;
-    }
-#endif
+
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>
     constexpr span<element_type, Count> first() const
@@ -566,11 +537,7 @@ template <class ElementType, std::ptrdiff_t FirstExtent, std::ptrdiff_t SecondEx
 inline constexpr bool operator==(const span<ElementType, FirstExtent>& l,
                                  const span<ElementType, SecondExtent>& r)
 {
-#ifdef GSL_MSVC_NO_CPP14_STD_EQUAL
-    return (l.size() == r.size()) && std::equal(l.begin(), l.end(), r.begin());
-#else
     return std::equal(l.begin(), l.end(), r.begin(), r.end());
-#endif
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
@@ -709,17 +676,6 @@ inline constexpr ElementType& at(const span<ElementType, Extent>& s, std::ptrdif
 #undef constexpr
 #pragma pop_macro("constexpr")
 
-#if _MSC_VER <= 1800
-#undef noexcept
-#pragma pop_macro("noexcept")
-
-#undef alignof
-#pragma pop_macro("alignof")
-
-#undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-#undef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
-#undef GSL_MSVC_NO_CPP14_STD_EQUAL
-#endif // _MSC_VER <= 1800
 #endif // _MSC_VER < 1910
 
 #pragma warning(pop)

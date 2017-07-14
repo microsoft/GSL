@@ -38,6 +38,7 @@
 #include <utility>
 
 #ifdef _MSC_VER
+
 // turn off some warnings that are noisy about our Expects statements
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
@@ -47,19 +48,6 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-// VS 2013 workarounds
-#if _MSC_VER <= 1800
-#define GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-#define GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
-
-// noexcept is not understood
-#pragma push_macro("noexcept")
-#define noexcept /*noexcept*/
-
-// turn off some misguided warnings
-#pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
-#pragma warning(disable : 4512) // warns that assignment op could not be generated
-#endif                          // _MSC_VER <= 1800
 #endif                          // _MSC_VER < 1910
 #endif                          // _MSC_VER
 
@@ -118,22 +106,11 @@ public:
         std::copy(values, values + Rank, elems);
     }
 
-#ifdef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-    template <
-        typename T, typename... Ts,
-        typename = std::enable_if_t<((sizeof...(Ts) + 1) == Rank) && std::is_integral<T>::value &&
-                                    details::are_integral<Ts...>::value>>
-    constexpr index(T t, Ts... ds)
-        : index({narrow_cast<value_type>(t), narrow_cast<value_type>(ds)...})
-    {
-    }
-#else
     template <typename... Ts, typename = std::enable_if_t<(sizeof...(Ts) == Rank) &&
                                                           details::are_integral<Ts...>::value>>
     constexpr index(Ts... ds) GSL_NOEXCEPT : elems{narrow_cast<value_type>(ds)...}
     {
     }
-#endif
 
     constexpr index(const index& other) GSL_NOEXCEPT = default;
 
@@ -1383,17 +1360,13 @@ public:
     {
     }
 
-// trivial copy and move
-#ifndef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
-    constexpr multi_span(multi_span&&) = default;
-#endif
+    // trivial copy and move
     constexpr multi_span(const multi_span&) = default;
+    constexpr multi_span(multi_span&&) = default;
 
-// trivial assignment
-#ifndef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
-    constexpr multi_span& operator=(multi_span&&) = default;
-#endif
+    // trivial assignment
     constexpr multi_span& operator=(const multi_span&) = default;
+    constexpr multi_span& operator=(multi_span&&) = default;
 
     // first() - extract the first Count elements into a new multi_span
     template <std::ptrdiff_t Count>
@@ -2249,19 +2222,13 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #ifdef _MSC_VER
 #if _MSC_VER < 1910
-#if _MSC_VER <= 1800
-#undef noexcept
-#pragma pop_macro("noexcept")
-
-#undef GSL_MSVC_HAS_VARIADIC_CTOR_BUG
-#undef GSL_MSVC_NO_SUPPORT_FOR_MOVE_CTOR_DEFAULT
-#endif // _MSC_VER <= 1800
 
 #undef constexpr
 #pragma pop_macro("constexpr")
 #endif // _MSC_VER < 1910
 
 #pragma warning(pop)
+
 #endif // _MSC_VER
 
 #endif // GSL_MULTI_SPAN_H
