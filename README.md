@@ -6,7 +6,7 @@ This repo contains Microsoft's implementation of GSL.
 
 The library includes types like `span<T>`, `string_span`, `owner<>` and others.
 
-The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2013 and 2015.
+The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2015.
 
 While some types have been broken out into their own headers (e.g. [gsl/span](./include/gsl/span)),
 it is simplest to just include [gsl/gsl](./include/gsl/gsl) and gain access to the entire library.
