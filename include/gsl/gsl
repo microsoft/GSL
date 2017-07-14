@@ -33,16 +33,6 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-// MSVC 2013 workarounds
-#if _MSC_VER <= 1800
-// noexcept is not understood
-#pragma push_macro("noexcept")
-#define noexcept /*noexcept*/
-
-// turn off some misguided warnings
-#pragma warning(push)
-#pragma warning(disable : 4351) // warns about newly introduced aggregate initializer behavior
-#endif                          // _MSC_VER <= 1800
 #endif                          // defined(_MSC_VER) && _MSC_VER < 1910
 
 namespace gsl
@@ -56,7 +46,6 @@ using std::shared_ptr;
 
 //
 // owner
-//
 //
 // owner<T> is designed as a bridge for code that must deal directly with owning pointers for some reason
 //
@@ -196,12 +185,6 @@ struct hash<gsl::not_null<T>>
 #undef constexpr
 #pragma pop_macro("constexpr")
 
-#if _MSC_VER <= 1800
-#undef noexcept
-#pragma pop_macro("noexcept")
-
-#pragma warning(pop)
-#endif // _MSC_VER <= 1800
 #endif // defined(_MSC_VER) && _MSC_VER < 1910
 
 #endif // GSL_GSL_H

@@ -39,17 +39,6 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-// VS 2013 workarounds
-#if _MSC_VER <= 1800
-#define GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
-#define GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
-#define GSL_MSVC_NO_CPP14_STD_EQUAL
-#define GSL_MSVC_NO_DEFAULT_MOVE_CTOR
-
-// noexcept is not understood
-#pragma push_macro("noexcept")
-#define noexcept /*noexcept*/
-#endif           // _MSC_VER <= 1800
 #endif           // _MSC_VER < 1910
 #endif           // _MSC_VER
 
@@ -274,25 +263,13 @@ public:
     constexpr basic_string_span(const basic_string_span& other) GSL_NOEXCEPT = default;
 
 // move
-#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr basic_string_span(basic_string_span&& other) GSL_NOEXCEPT = default;
-#else
-    constexpr basic_string_span(basic_string_span&& other) : span_(std::move(other.span_)) {}
-#endif
 
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) GSL_NOEXCEPT = default;
 
 // move assign
-#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr basic_string_span& operator=(basic_string_span&& other) GSL_NOEXCEPT = default;
-#else
-    constexpr basic_string_span& operator=(basic_string_span&& other) GSL_NOEXCEPT
-    {
-        span_ = std::move(other.span_);
-        return *this;
-    }
-#endif
 
     // from nullptr
     constexpr basic_string_span(std::nullptr_t ptr) GSL_NOEXCEPT : span_(ptr) {}
@@ -449,7 +426,6 @@ using cwstring_span = basic_string_span<const wchar_t, Extent>;
 //
 // to_string() allow (explicit) conversions from string_span to string
 //
-#ifndef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
 
 template <typename CharT, std::ptrdiff_t Extent>
 std::basic_string<typename std::remove_const<CharT>::type>
@@ -457,30 +433,6 @@ to_string(basic_string_span<CharT, Extent> view)
 {
     return {view.data(), static_cast<std::size_t>(view.length())};
 }
-
-#else
-
-inline std::string to_string(cstring_span<> view)
-{
-    return {view.data(), static_cast<std::size_t>(view.length())};
-}
-
-inline std::string to_string(string_span<> view)
-{
-    return {view.data(), static_cast<std::size_t>(view.length())};
-}
-
-inline std::wstring to_string(cwstring_span<> view)
-{
-    return {view.data(), static_cast<std::size_t>(view.length())};
-}
-
-inline std::wstring to_string(wstring_span<> view)
-{
-    return {view.data(), static_cast<std::size_t>(view.length())};
-}
-
-#endif
 
 template <typename CharT, typename Traits = typename std::char_traits<CharT>,
           typename Allocator = std::allocator<CharT>, typename gCharT, std::ptrdiff_t Extent>
@@ -517,25 +469,13 @@ public:
     constexpr basic_zstring_span(const basic_zstring_span& other) = default;
 
 // move
-#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr basic_zstring_span(basic_zstring_span&& other) = default;
-#else
-    constexpr basic_zstring_span(basic_zstring_span&& other) : span_(std::move(other.span_)) {}
-#endif
 
     // assign
     constexpr basic_zstring_span& operator=(const basic_zstring_span& other) = default;
 
 // move assign
-#ifndef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
     constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
-#else
-    constexpr basic_zstring_span& operator=(basic_zstring_span&& other)
-    {
-        span_ = std::move(other.span_);
-        return *this;
-    }
-#endif
 
     constexpr bool empty() const GSL_NOEXCEPT { return span_.size() == 0; }
 
@@ -573,11 +513,7 @@ template <class CharT, std::ptrdiff_t Extent, class T,
 bool operator==(const gsl::basic_string_span<CharT, Extent>& one, const T& other) GSL_NOEXCEPT
 {
     const gsl::basic_string_span<std::add_const_t<CharT>> tmp(other);
-#ifdef GSL_MSVC_NO_CPP14_STD_EQUAL
-    return (one.size() == tmp.size()) && std::equal(one.begin(), one.end(), tmp.begin());
-#else
     return std::equal(one.begin(), one.end(), tmp.begin(), tmp.end());
-#endif
 }
 
 template <class CharT, std::ptrdiff_t Extent, class T,
@@ -587,11 +523,7 @@ template <class CharT, std::ptrdiff_t Extent, class T,
 bool operator==(const T& one, const gsl::basic_string_span<CharT, Extent>& other) GSL_NOEXCEPT
 {
     gsl::basic_string_span<std::add_const_t<CharT>> tmp(one);
-#ifdef GSL_MSVC_NO_CPP14_STD_EQUAL
-    return (tmp.size() == other.size()) && std::equal(tmp.begin(), tmp.end(), other.begin());
-#else
     return std::equal(tmp.begin(), tmp.end(), other.begin(), other.end());
-#endif
 }
 
 // operator !=
@@ -831,16 +763,6 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 #undef constexpr
 #pragma pop_macro("constexpr")
 
-// VS 2013 workarounds
-#if _MSC_VER <= 1800
-#undef noexcept
-#pragma pop_macro("noexcept")
-
-#undef GSL_MSVC_HAS_TYPE_DEDUCTION_BUG
-#undef GSL_MSVC_HAS_SFINAE_SUBSTITUTION_ICE
-#undef GSL_MSVC_NO_CPP14_STD_EQUAL
-#undef GSL_MSVC_NO_DEFAULT_MOVE_CTOR
-#endif // _MSC_VER <= 1800
 #endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
