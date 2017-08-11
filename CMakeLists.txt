@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1.3)
 project(GSL CXX)
 
 include(ExternalProject)
-find_package(Git REQUIRED)
+find_package(Git)
 
 # creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)

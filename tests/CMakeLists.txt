@@ -10,16 +10,21 @@ list(APPEND CATCH_CMAKE_ARGS
     "-DNO_SELFTEST=true"
 )
 
-# add catch
-ExternalProject_Add(
-    catch
-    PREFIX ${CMAKE_BINARY_DIR}/catch
-    GIT_REPOSITORY https://github.com/philsquared/Catch.git
-    GIT_TAG v1.9.6    
-    CMAKE_ARGS ${CATCH_CMAKE_ARGS}
-    LOG_DOWNLOAD 1
-    UPDATE_DISCONNECTED 1
-)
+if(GIT_FOUND)
+    # add catch
+    ExternalProject_Add(
+        catch
+        PREFIX ${CMAKE_BINARY_DIR}/catch
+        GIT_REPOSITORY https://github.com/philsquared/Catch.git
+        GIT_TAG v1.9.6
+        CMAKE_ARGS ${CATCH_CMAKE_ARGS}
+        LOG_DOWNLOAD 1
+        UPDATE_DISCONNECTED 1
+    )
+else()
+    # assume catch is installed in a system directory
+    add_custom_target(catch)
+endif()
 
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
