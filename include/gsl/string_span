@@ -39,8 +39,8 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-#endif           // _MSC_VER < 1910
-#endif           // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
 
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
@@ -91,7 +91,7 @@ using u32zstring = basic_zstring<char32_t, Extent>;
 
 namespace details
 {
-    template<class CharT>
+    template <class CharT>
     std::ptrdiff_t string_length(const CharT* str, std::ptrdiff_t n)
     {
         if (str == nullptr || n <= 0) return 0;
@@ -250,13 +250,13 @@ public:
     // copy
     constexpr basic_string_span(const basic_string_span& other) GSL_NOEXCEPT = default;
 
-// move
+    // move
     constexpr basic_string_span(basic_string_span&& other) GSL_NOEXCEPT = default;
 
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) GSL_NOEXCEPT = default;
 
-// move assign
+    // move assign
     constexpr basic_string_span& operator=(basic_string_span&& other) GSL_NOEXCEPT = default;
 
     // from nullptr
@@ -468,13 +468,13 @@ public:
     // copy
     constexpr basic_zstring_span(const basic_zstring_span& other) = default;
 
-// move
+    // move
     constexpr basic_zstring_span(basic_zstring_span&& other) = default;
 
     // assign
     constexpr basic_zstring_span& operator=(const basic_zstring_span& other) = default;
 
-// move assign
+    // move assign
     constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
 
     constexpr bool empty() const GSL_NOEXCEPT { return span_.size() == 0; }
