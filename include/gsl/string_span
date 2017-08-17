@@ -371,6 +371,18 @@ using wstring_span = basic_string_span<wchar_t, Extent>;
 template <std::ptrdiff_t Extent = dynamic_extent>
 using cwstring_span = basic_string_span<const wchar_t, Extent>;
 
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u16string_span = basic_string_span<char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using cu16string_span = basic_string_span<const char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u32string_span = basic_string_span<char32_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using cu32string_span = basic_string_span<const char32_t, Extent>;
+
 //
 // to_string() allow (explicit) conversions from string_span to string
 //
@@ -448,10 +460,22 @@ template <std::ptrdiff_t Max = dynamic_extent>
 using wzstring_span = basic_zstring_span<wchar_t, Max>;
 
 template <std::ptrdiff_t Max = dynamic_extent>
+using u16zstring_span = basic_zstring_span<char16_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
+using u32zstring_span = basic_zstring_span<char32_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
 using czstring_span = basic_zstring_span<const char, Max>;
 
 template <std::ptrdiff_t Max = dynamic_extent>
 using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
+using cu16zstring_span = basic_zstring_span<const char16_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
+using cu32zstring_span = basic_zstring_span<const char32_t, Max>;
 
 // operator ==
 template <class CharT, std::ptrdiff_t Extent, class T,
