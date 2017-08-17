@@ -22,13 +22,15 @@
 
 using namespace gsl;
 
-void f(int& i) { i += 1; }
+namespace {
+    void f(int& i) { ++i; }
+}
 
 TEST_CASE("finally_lambda")
 {
     int i = 0;
     {
-        auto _ = finally([&]() { f(i); });
+        auto _ = finally([&]{ f(i); });
         CHECK(i == 0);
     }
     CHECK(i == 1);
@@ -38,7 +40,7 @@ TEST_CASE("finally_lambda_move")
 {
     int i = 0;
     {
-        auto _1 = finally([&]() { f(i); });
+        auto _1 = finally([&]{ f(i); });
         {
             auto _2 = std::move(_1);
             CHECK(i == 0);
@@ -63,8 +65,10 @@ TEST_CASE("finally_function_with_bind")
     CHECK(i == 1);
 }
 
-int j = 0;
-void g() { j += 1; }
+namespace {
+    int j = 0;
+    void g() { ++j; }
+}
 TEST_CASE("finally_function_ptr")
 {
     j = 0;
@@ -73,6 +77,87 @@ TEST_CASE("finally_function_ptr")
         CHECK(j == 0);
     }
     CHECK(j == 1);
+}
+
+TEST_CASE("finally_modifiable_lvalue")
+{
+    auto gptr = &g;
+    j = 0;
+    {
+        auto _ = finally(gptr);
+        CHECK(j == 0);
+    }
+    CHECK(j == 1);
+}
+
+namespace {
+    struct F {
+        struct exception {};
+
+        F() = default;
+        F(F&&) {
+            if (throw_on_smf) throw exception{};
+        }
+        F(const F&) {
+            if (throw_on_smf) throw exception{};
+        }
+
+        void operator()() const { ++counter; }
+
+        static bool throw_on_smf;
+        static int counter;
+    };
+
+    bool F::throw_on_smf = false;
+    int F::counter = 0;
+}
+
+TEST_CASE("finally_construct_throws")
+{
+    F::counter = 0;
+    F::throw_on_smf = true;
+    try {
+        auto _ = finally(F{});
+        CHECK(false);
+    } catch(F::exception&) {}
+    CHECK(F::counter == 1);
+}
+
+TEST_CASE("finally_move_throws")
+{
+    F::counter = 0;
+    F::throw_on_smf = false;
+    {
+        auto x = finally(F{});
+        F::throw_on_smf = true;
+        try {
+            auto y = std::move(x);
+            CHECK(false);
+        } catch(F::exception&) {}
+    }
+    CHECK(F::counter == 1);
+}
+
+TEST_CASE("finally_deduction_guide")
+{
+#if GSL_USE_DEDUCTION_GUIDES
+    auto f = []{};
+    {
+        auto _ = final_act{f};
+        static_assert(std::is_same<decltype(_), final_act<decltype(f)>>::value,
+            "Deduction guide is broken");
+    }
+    {
+        auto _ = final_act{const_cast<const decltype(f)&>(f)};
+        static_assert(std::is_same<decltype(_), final_act<decltype(f)>>::value,
+            "Deduction guide is broken");
+    }
+    {
+        auto _ = final_act{std::move(f)};
+        static_assert(std::is_same<decltype(_), final_act<decltype(f)>>::value,
+            "Deduction guide is broken");
+    }
+#endif
 }
 
 TEST_CASE("narrow_cast")

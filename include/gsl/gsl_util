@@ -37,6 +37,16 @@
 #endif                          // _MSC_VER < 1910
 #endif                          // _MSC_VER
 
+#ifndef GSL_USE_DEDUCTION_GUIDES
+#ifdef __cpp_deduction_guides
+#define GSL_USE_DEDUCTION_GUIDES __cpp_deduction_guides
+#elif !(defined(__GNUC__) || defined(__clang__)) && __cplusplus >= 201703L
+#define GSL_USE_DEDUCTION_GUIDES 201611L
+#else
+#define GSL_USE_DEDUCTION_GUIDES 0
+#endif
+#endif // GSL_USE_DEDUCTION_GUIDES
+
 namespace gsl
 {
 //
@@ -47,38 +57,60 @@ namespace gsl
 template <class F>
 class final_act
 {
-public:
-    explicit final_act(F f) noexcept : f_(std::move(f)), invoke_(true) {}
+    template <class FF>
+    using init_type = std::conditional_t<
+        !std::is_lvalue_reference<FF>::value &&
+            std::is_nothrow_constructible<F, FF>::value,
+        FF&&, const FF&>;
 
-    final_act(final_act&& other) noexcept : f_(std::move(other.f_)), invoke_(other.invoke_)
-    {
-        other.invoke_ = false;
+    using copy_type = std::conditional_t<
+        std::is_nothrow_move_constructible<F>::value, F&&, const F&>;
+public:
+    template <class FF,
+        std::enable_if_t<std::is_constructible<F, FF>::value>* = nullptr>
+    explicit final_act(FF&& f)
+    try : f_(static_cast<init_type<FF>>(f)) {}
+    catch(...) {
+        f();
+        throw;
     }
 
-    final_act(const final_act&) = delete;
-    final_act& operator=(const final_act&) = delete;
+    final_act(final_act&& other)
+        noexcept(std::is_nothrow_move_constructible<F>::value ||
+            std::is_nothrow_copy_constructible<F>::value)
+        : f_(static_cast<copy_type>(other.f_))
+        , invoke_(other.invoke_)
+    {
+        other.release();
+    }
 
     ~final_act() noexcept
     {
         if (invoke_) f_();
     }
 
+    void release() noexcept
+    {
+        invoke_ = false;
+    }
+
+    final_act& operator=(final_act&&) = delete;
+
 private:
     F f_;
-    bool invoke_;
+    bool invoke_ = true;
 };
+
+#if GSL_USE_DEDUCTION_GUIDES
+template <class F>
+final_act(F&&) -> final_act<std::decay_t<F>>;
+#endif
 
 // finally() - convenience function to generate a final_act
 template <class F>
-inline final_act<F> finally(const F& f) noexcept
+inline final_act<std::decay_t<F>> finally(F&& f)
 {
-    return final_act<F>(f);
-}
-
-template <class F>
-inline final_act<F> finally(F&& f) noexcept
-{
-    return final_act<F>(std::forward<F>(f));
+    return final_act<std::decay_t<F>>(std::forward<F>(f));
 }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
