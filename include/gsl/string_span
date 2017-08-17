@@ -151,6 +151,34 @@ inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, st
     return {sz, len};
 }
 
+inline span<char16_t, dynamic_extent> ensure_z(char16_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::string_length(sz, max);
+    Ensures(sz[len] == 0);
+    return {sz, len};
+}
+
+inline span<const char16_t, dynamic_extent> ensure_z(const char16_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::string_length(sz, max);
+    Ensures(sz[len] == 0);
+    return {sz, len};
+}
+
+inline span<char32_t, dynamic_extent> ensure_z(char32_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::string_length(sz, max);
+    Ensures(sz[len] == 0);
+    return {sz, len};
+}
+
+inline span<const char32_t, dynamic_extent> ensure_z(const char32_t* const& sz, std::ptrdiff_t max)
+{
+    auto len = details::string_length(sz, max);
+    Ensures(sz[len] == 0);
+    return {sz, len};
+}
+
 template <typename T, std::size_t N>
 span<T, dynamic_extent> ensure_z(T (&sz)[N])
 {
