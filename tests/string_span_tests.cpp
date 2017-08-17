@@ -961,3 +961,82 @@ TEST_CASE("Issue305")
     CHECK(foo["foo"] == 0);
     CHECK(foo["bar"] == 1);
 }
+
+TEST_CASE("char16_t type")
+{
+	gsl::cu16string_span<> ss1 = gsl::ensure_z(u"abc");
+	CHECK(ss1.size() == 3);
+	CHECK(ss1.size_bytes() == 6);
+
+	std::u16string s1 = gsl::to_string(ss1);
+	CHECK(s1 == u"abc");
+
+	std::u16string s2 = u"abc";
+	gsl::u16string_span<> ss2 = s2;
+	CHECK(ss2.size() == 3);
+
+	gsl::u16string_span<> ss3 = ss2.subspan(1, 1);
+	CHECK(ss3.size() == 1);
+	CHECK(ss3[0] == u'b');
+
+	char16_t buf[4]{u'a', u'b', u'c', u'\0'};
+	gsl::u16string_span<> ss4{buf, 4};
+	CHECK(ss4[3] == u'\0');
+
+	gsl::cu16zstring_span<> ss5(u"abc");
+	CHECK(ss5.as_string_span().size() == 3);
+
+	gsl::cu16string_span<> ss6 = ss5.as_string_span();
+	CHECK(ss6 == ss1);
+
+	std::vector<char16_t> v7 = {u'a', u'b', u'c'};
+	gsl::cu16string_span<> ss7{v7};
+	CHECK(ss7 == ss1);
+
+	gsl::cu16string_span<> ss8 = gsl::ensure_z(u"abc");
+	gsl::cu16string_span<> ss9 = gsl::ensure_z(u"abc");
+	CHECK(ss8 == ss9);
+
+	ss9 = gsl::ensure_z(u"abd");
+	CHECK(ss8 < ss9);
+	CHECK(ss8 <= ss9);
+	CHECK(ss8 != ss9);
+}
+
+TEST_CASE("char32_t type")
+{
+	gsl::cu32string_span<> ss1 = gsl::ensure_z(U"abc");
+	CHECK(ss1.size() == 3);
+	CHECK(ss1.size_bytes() == 12);
+
+	std::u32string s1 = gsl::to_string(ss1);
+	CHECK(s1 == U"abc");
+
+	std::u32string s2 = U"abc";
+	gsl::u32string_span<> ss2 = s2;
+	CHECK(ss2.size() == 3);
+
+	gsl::u32string_span<> ss3 = ss2.subspan(1, 1);
+	CHECK(ss3.size() == 1);
+	CHECK(ss3[0] == U'b');
+
+	char32_t buf[4]{U'a', U'b', U'c', U'\0'};
+	gsl::u32string_span<> ss4{buf, 4};
+	CHECK(ss4[3] == u'\0');
+
+	gsl::cu32zstring_span<> ss5(U"abc");
+	CHECK(ss5.as_string_span().size() == 3);
+
+	gsl::cu32string_span<> ss6 = ss5.as_string_span();
+	CHECK(ss6 == ss1);
+
+	gsl::cu32string_span<> ss8 = gsl::ensure_z(U"abc");
+	gsl::cu32string_span<> ss9 = gsl::ensure_z(U"abc");
+	CHECK(ss8 == ss9);
+
+	ss9 = gsl::ensure_z(U"abd");
+	CHECK(ss8 < ss9);
+	CHECK(ss8 <= ss9);
+	CHECK(ss8 != ss9);
+}
+
