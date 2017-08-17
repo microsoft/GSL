@@ -72,10 +72,22 @@ template <std::ptrdiff_t Extent = dynamic_extent>
 using cwzstring = basic_zstring<const wchar_t, Extent>;
 
 template <std::ptrdiff_t Extent = dynamic_extent>
+using cu16zstring = basic_zstring<const char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using cu32zstring = basic_zstring<const char32_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
 using zstring = basic_zstring<char, Extent>;
 
 template <std::ptrdiff_t Extent = dynamic_extent>
 using wzstring = basic_zstring<wchar_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u16zstring = basic_zstring<char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u32zstring = basic_zstring<char32_t, Extent>;
 
 namespace details
 {
