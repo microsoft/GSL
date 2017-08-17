@@ -6,7 +6,7 @@ project(GSLTests CXX)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 list(APPEND CATCH_CMAKE_ARGS
-    "-DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}"
+    "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external"
     "-DNO_SELFTEST=true"
 )
 
@@ -46,6 +46,11 @@ target_compile_options(gsl_tests_config INTERFACE
         -Wshadow
         -Wsign-conversion
     >
+)
+
+# for tests to find the catch header
+target_include_directories(gsl_tests_config INTERFACE
+    ${CMAKE_BINARY_DIR}/external/include
 )
 
 # set definitions for tests
