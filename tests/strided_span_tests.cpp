@@ -294,7 +294,7 @@ TEST_CASE("strided_span_slice")
 
 TEST_CASE("strided_span_column_major")
 {
-    // strided_span may be used to accomodate more peculiar
+    // strided_span may be used to accommodate more peculiar
     // use cases, such as column-major multidimensional array
     // (aka. "FORTRAN" layout).
 
