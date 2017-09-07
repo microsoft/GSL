@@ -8,6 +8,12 @@ find_package(Git)
 # creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
+# determine whether this is a standalone project or included by other projects
+set(GSL_STANDALONE_PROJECT OFF)
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  set(GSL_STANDALONE_PROJECT ON)
+endif ()
+
 # when minimum version required is 3.8.0 remove if below
 # both branches do exactly the same thing
 if (CMAKE_MAJOR_VERSION VERSION_LESS 3.7.9)
@@ -53,5 +59,8 @@ install(
     DESTINATION include
 )
 
-enable_testing()
-add_subdirectory(tests)
+option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
+if (GSL_TEST)
+	enable_testing()
+	add_subdirectory(tests)
+endif ()
