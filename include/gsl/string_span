@@ -123,76 +123,18 @@ span<T, dynamic_extent> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX
 }
 
 //
-// ensure_z - creates a span for a czstring or cwzstring.
+// ensure_z - creates a span for a zero terminated strings.
 // Will fail fast if a null-terminator cannot be found before
 // the limit of size_type.
 //
-template <typename T>
-inline span<T, dynamic_extent> ensure_z(T* const& sz, std::ptrdiff_t max = PTRDIFF_MAX)
+template <typename CharT>
+inline span<CharT, dynamic_extent> ensure_z(CharT* const& sz, std::ptrdiff_t max = PTRDIFF_MAX)
 {
-    return ensure_sentinel<T, 0>(sz, max);
+    return ensure_sentinel<CharT, CharT(0)>(sz, max);
 }
 
-// TODO (neilmac) there is probably a better template-magic way to get the const and non-const
-// overloads to share an implementation
-inline span<char, dynamic_extent> ensure_z(char* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<const char, dynamic_extent> ensure_z(const char* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<wchar_t, dynamic_extent> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<char16_t, dynamic_extent> ensure_z(char16_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<const char16_t, dynamic_extent> ensure_z(const char16_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<char32_t, dynamic_extent> ensure_z(char32_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<const char32_t, dynamic_extent> ensure_z(const char32_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-template <typename T, std::size_t N>
-span<T, dynamic_extent> ensure_z(T (&sz)[N])
+template <typename CharT, std::size_t N>
+span<CharT, dynamic_extent> ensure_z(CharT (&sz)[N])
 {
     return ensure_z(&sz[0], static_cast<std::ptrdiff_t>(N));
 }
