@@ -1,0 +1,47 @@
+shallow_clone: true
+
+platform:
+  - x86
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+image:
+  - Visual Studio 2015
+  - Visual Studio 2017
+
+cache:
+  - C:\cmake-3.8.0-win32-x86
+
+install:
+  - ps: |
+      if (![IO.File]::Exists("C:\cmake-3.8.0-win32-x86\bin\cmake.exe")) {
+        Start-FileDownload 'https://cmake.org/files/v3.8/cmake-3.8.0-win32-x86.zip'
+        7z x -y cmake-3.8.0-win32-x86.zip -oC:\
+      }
+      $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
+
+before_build:
+  - ps: |
+      mkdir build
+      cd build
+      if ("$env:APPVEYOR_JOB_NAME" -match "Image: Visual Studio 2015") {
+          $env:generator="Visual Studio 14 2015"
+      } else {
+          $env:generator="Visual Studio 15 2017"
+      }
+      if ($env:PLATFORM -eq "x64") {
+          $env:generator="$env:generator Win64"
+      }
+      echo generator="$env:generator"
+      cmake .. -G "$env:generator"
+
+build_script:
+  - cmake --build . --config %CONFIGURATION% -- /m /v:minimal
+
+test_script:
+  - ctest -j2
+
+deploy: off
