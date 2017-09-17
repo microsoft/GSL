@@ -129,7 +129,7 @@ namespace details
         constexpr span_iterator(const Span* span, typename Span::index_type index) GSL_NOEXCEPT
             : span_(span), index_(index)
         {
-            Expects(span == nullptr || (index_ >= 0 && index <= span_->length()));
+            Expects(span == nullptr || (0 <= index_ && index <= span_->length()));
         }
 
         friend span_iterator<Span, true>;
@@ -141,19 +141,19 @@ namespace details
 
         constexpr reference operator*() const GSL_NOEXCEPT
         {
-            Expects(span_);
-            return (*span_)[index_];
+            Expects(index_ != span_->length());
+            return *(span_->data() + index_);
         }
 
         constexpr pointer operator->() const GSL_NOEXCEPT
         {
-            Expects(span_ && index_ >= 0 && index_ < span_->length());
+            Expects(index_ != span_->length());
             return span_->data() + index_;
         }
 
         constexpr span_iterator& operator++() GSL_NOEXCEPT
         {
-            Expects(span_ && index_ >= 0 && index_ < span_->length());
+            Expects(0 <= index_ && index_ != span_->length());
             ++index_;
             return *this;
         }
@@ -167,7 +167,7 @@ namespace details
 
         constexpr span_iterator& operator--() GSL_NOEXCEPT
         {
-            Expects(span_ && index_ > 0 && index_ <= span_->length());
+            Expects(index_ != 0 && index_ <= span_->length());
             --index_;
             return *this;
         }
@@ -187,7 +187,7 @@ namespace details
 
         constexpr span_iterator& operator+=(difference_type n) GSL_NOEXCEPT
         {
-            Expects(span_ && (index_ + n) >= 0 && (index_ + n) <= span_->length());
+            Expects((index_ + n) >= 0 && (index_ + n) <= span_->length());
             index_ += n;
             return *this;
         }
