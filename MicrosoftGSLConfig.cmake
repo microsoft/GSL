@@ -6,7 +6,7 @@ macro(find_module FILENAME)
     endif()
 endmacro()
 
-find_module("${CMAKE_CURRENT_LIST_DIR}/cmake/GSL/GSL-export.cmake")
+find_module("${CMAKE_CURRENT_LIST_DIR}/cmake/MicrosoftGSL/MicrosoftGSL-export.cmake")
 
 set(GSL_FOUND Off)
 if (TARGET GSL::GSL)

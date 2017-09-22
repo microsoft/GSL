@@ -53,17 +53,17 @@ endif()
 # Installation paths
 if(UNIX AND SYSTEM_DIR_INSTALL)
     # Install into the system (/usr/bin or /usr/local/bin)
-    set(INSTALL_ROOT      "share/GSL")       # /usr/[local]/share/<project>
-    set(INSTALL_CMAKE     "share/GSL/cmake") # /usr/[local]/share/<project>/cmake
-    set(INSTALL_INCLUDE   "include")         # /usr/[local]/include
+    set(INSTALL_ROOT      "share/MicrosoftGSL")       # /usr/[local]/share/<project>
+    set(INSTALL_CMAKE     "share/MicrosoftGSL/cmake") # /usr/[local]/share/<project>/cmake
+    set(INSTALL_INCLUDE   "include")                  # /usr/[local]/include
 else()
     # Install into local directory
-    set(INSTALL_ROOT      ".")                      # ./
-    set(INSTALL_CMAKE     "cmake")                  # ./cmake
-    set(INSTALL_INCLUDE   "include")                # ./include
+    set(INSTALL_ROOT      ".")                        # ./
+    set(INSTALL_CMAKE     "cmake")                    # ./cmake
+    set(INSTALL_INCLUDE   "include")                  # ./include
 endif()
 
-export(TARGETS GSL NAMESPACE GSL:: FILE ${PROJECT_BINARY_DIR}/cmake/GSL/GSL-export.cmake)
+export(TARGETS GSL NAMESPACE GSL:: FILE ${PROJECT_BINARY_DIR}/cmake/MicrosoftGSL/MicrosoftGSL-export.cmake)
 
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/gsl
@@ -76,10 +76,10 @@ install(TARGETS GSL
 
 install(EXPORT GSL-export
     NAMESPACE   GSL::
-    DESTINATION ${INSTALL_CMAKE}/GSL
+    DESTINATION ${INSTALL_CMAKE}/MicrosoftGSL
 )
 
-install(FILES GSLConfig.cmake DESTINATION ${INSTALL_ROOT})
+install(FILES MicrosoftGSLConfig.cmake DESTINATION ${INSTALL_ROOT})
 
 enable_testing()
 add_subdirectory(tests)
