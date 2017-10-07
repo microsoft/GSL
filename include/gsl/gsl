@@ -159,6 +159,78 @@ auto operator>=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.
     return lhs.get() >= rhs.get();
 }
 
+template <class T, class U>
+auto operator==(const not_null<T>& lhs, U* rhs) -> decltype(lhs.get() == rhs)
+{
+	return lhs.get() == rhs;
+}
+
+template <class T, class U>
+auto operator!=(const not_null<T>& lhs, U* rhs) -> decltype(lhs.get() != rhs)
+{
+	return lhs.get() != rhs;
+}
+
+template <class T, class U>
+auto operator<(const not_null<T>& lhs, U* rhs) -> decltype(lhs.get() < rhs)
+{
+	return lhs.get() < rhs;
+}
+
+template <class T, class U>
+auto operator<=(const not_null<T>& lhs, U* rhs) -> decltype(lhs.get() <= rhs)
+{
+	return lhs.get() <= rhs;
+}
+
+template <class T, class U>
+auto operator>(const not_null<T>& lhs, U* rhs) -> decltype(lhs.get() > rhs)
+{
+	return lhs.get() > rhs;
+}
+
+template <class T, class U>
+auto operator>=(const not_null<T>& lhs, U* rhs) -> decltype(lhs.get() >= rhs)
+{
+	return lhs.get() >= rhs;
+}
+
+template <class T, class U>
+auto operator==(T* lhs, const not_null<U>& rhs) -> decltype(lhs == rhs.get())
+{
+	return lhs == rhs.get();
+}
+
+template <class T, class U>
+auto operator!=(T* lhs, const not_null<U>& rhs) -> decltype(lhs != rhs.get())
+{
+	return lhs != rhs.get();
+}
+
+template <class T, class U>
+auto operator<(T* lhs, const not_null<U>& rhs) -> decltype(lhs < rhs.get())
+{
+	return lhs < rhs.get();
+}
+
+template <class T, class U>
+auto operator<=(T* lhs, const not_null<U>& rhs) -> decltype(lhs <= rhs.get())
+{
+	return lhs <= rhs.get();
+}
+
+template <class T, class U>
+auto operator>(T* lhs, const not_null<U>& rhs) -> decltype(lhs > rhs.get())
+{
+	return lhs > rhs.get();
+}
+
+template <class T, class U>
+auto operator>=(T* lhs, const not_null<U>& rhs) -> decltype(lhs >= rhs.get())
+{
+	return lhs >= rhs.get();
+}
+
 // more unwanted operators
 template <class T, class U>
 std::ptrdiff_t operator-(const not_null<T>&, const not_null<U>&) = delete;

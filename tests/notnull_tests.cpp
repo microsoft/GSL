@@ -140,6 +140,9 @@ TEST_CASE("TestNotNullCasting")
     not_null<MyBase*> q = &base;
     q = p; // allowed with heterogeneous copy ctor
     CHECK(q == p);
+	CHECK(p == &derived);
+	CHECK(&base != q);
+	CHECK(&derived == p);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     q = u; // no viable conversion possible between MyBase* and Unrelated*
