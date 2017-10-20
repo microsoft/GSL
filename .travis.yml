@@ -2,28 +2,41 @@
 
 language: cpp
 sudo: false
+notifications:
+  email: false
+
+# Use Linux unless specified otherwise
+os: linux
 
 cache:
   directories:
-    - ${TRAVIS_BUILD_DIR}/deps/cmake
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.5.2/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.7.1/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.8.1/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.9.1/install
+    - ${TRAVIS_BUILD_DIR}/deps
 
 matrix:
   include:
+
+    ##########################################################################
+    # Clang on OSX
+    # Travis seems to take longer to start OSX instances,
+    # so leave this first for the overall build to be faster
+    ##########################################################################
+
     - env: BUILD_TYPE=Debug
       os: osx
       osx_image: xcode8
       compiler: clang
+
     - env: BUILD_TYPE=Release
       os: osx
       osx_image: xcode8
       compiler: clang
+
+    ##########################################################################
+    # Clang on Linux
+    ##########################################################################
+
+    # Clang 3.6
     - env: CLANG_VERSION=3.6 BUILD_TYPE=Debug
-      os: linux
       addons: &clang36
         apt:
           packages:
@@ -32,11 +45,13 @@ matrix:
           sources: &sources
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.6
+
     - env: CLANG_VERSION=3.6 BUILD_TYPE=Release
       os: linux
       addons: *clang36
+
+    # Clang 3.7
     - env: CLANG_VERSION=3.7 BUILD_TYPE=Debug
-      os: linux
       addons: &clang37
         apt:
           packages:
@@ -45,11 +60,12 @@ matrix:
           sources: &sources
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.7
+
     - env: CLANG_VERSION=3.7 BUILD_TYPE=Release
-      os: linux
       addons: *clang37
+
+    # Clang 3.8
     - env: CLANG_VERSION=3.8 BUILD_TYPE=Debug
-      os: linux
       addons: &clang38
         apt:
           packages:
@@ -58,11 +74,12 @@ matrix:
           sources: &sources
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.8
+
     - env: CLANG_VERSION=3.8 BUILD_TYPE=Release
-      os: linux
       addons: *clang38
+
+    # Clang 3.9
     - env: CLANG_VERSION=3.9 BUILD_TYPE=Debug
-      os: linux
       addons: &clang39
         apt:
           packages:
@@ -71,18 +88,28 @@ matrix:
           sources: &sources
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.9
+
     - env: CLANG_VERSION=3.9 BUILD_TYPE=Release
       os: linux
       addons: *clang39
+
+    ##########################################################################
+    # GCC on Linux
+    ##########################################################################
+
+    # GCC 5
     - env: GCC_VERSION=5 BUILD_TYPE=Debug
       os: linux
       addons: &gcc5
         apt:
           packages: g++-5
           sources: *sources
+
     - env: GCC_VERSION=5 BUILD_TYPE=Release
       os: linux
       addons: *gcc5
+
+    # GCC 6
     - env: GCC_VERSION=6 BUILD_TYPE=Debug
       os: linux
       addons: &gcc6
@@ -150,6 +177,3 @@ before_script:
 script:
   - cd build
   - ctest --output-on-failure -j$JOBS
-
-notifications:
-  email: false
