@@ -130,16 +130,17 @@ install:
   ############################################################################
   # Install a recent CMake (unless already installed on OS X)
   ############################################################################
+  - CMAKE_VERSION=3.7.2
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      if [[ -z "$(ls -A ${DEPS_DIR}/cmake/bin)" ]]; then
-        CMAKE_URL="https://cmake.org/files/v3.7/cmake-3.7.2-Linux-x86_64.tar.gz"
-        mkdir -p cmake && travis_retry wget --no-check-certificate --quiet -O - "${CMAKE_URL}" | tar --strip-components=1 -xz -C cmake
-      fi
-      export PATH="${DEPS_DIR}/cmake/bin:${PATH}"
+    CMAKE_PATH=${DEPS_DIR}/cmake/bin
+    if [[ "${TRAVIS_OS_NAME}" == "linux" && ! -d "${CMAKE_PATH}" ]]; then
+      CMAKE_URL="https://cmake.org/files/v${CMAKE_VERSION%.[0-9]}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz"
+      mkdir cmake && travis_retry wget --no-check-certificate -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+      export PATH=${CMAKE_PATH}:${PATH}
     else
-      if ! brew ls --version cmake &>/dev/null; then brew install cmake; fi
+      brew install cmake || brew upgrade cmake
     fi
+  - cmake --version
 
   ############################################################################
   # [linux]: Install the right version of libc++
