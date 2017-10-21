@@ -50,7 +50,7 @@ target_include_directories(GSL INTERFACE
 
 # add natvis file to the library so it will automatically be loaded into Visual Studio
 target_sources(GSL INTERFACE
-    ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis>
 )
 
 # Check for system dir install
