@@ -16,10 +16,9 @@
 
 #include <catch/catch.hpp>
 
-#include <gsl/gsl>
+#include <gsl/pointers>
 
 #include <functional>
-
 #include <memory>
 
 using namespace gsl;
