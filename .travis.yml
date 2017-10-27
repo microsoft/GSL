@@ -17,6 +17,30 @@ matrix:
   include:
 
     ##########################################################################
+    # Check for code formatting errors
+    ##########################################################################
+
+    - env: TEST="CodingStyle" BUILD_TYPE=Debug
+      dist: trusty
+      addons:
+        apt:
+          packages:
+            - clang-format-5.0
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+      install: # suppress
+      before_script: # suppress
+      script:
+        - |
+          git ls-files | grep -e include -e .cpp | xargs clang-format-5.0 -i
+          if [[ -n $(git status --porcelain) ]]; then
+            (>&2 echo "Please fix coding style issues")
+            git diff --exit-code
+            exit -1
+          fi
+
+    ##########################################################################
     # Clang on OSX
     # Travis seems to take longer to start OSX instances,
     # so leave this first for the overall build to be faster
