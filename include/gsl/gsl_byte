@@ -30,15 +30,15 @@
 
 #ifndef GSL_USE_STD_BYTE
 // this tests if we are under MSVC and the standard lib has std::byte and it is enabled
-#if _MSC_VER >= 1911 && (!defined(_HAS_STD_BYTE) || _HAS_STD_BYTE)
+#if defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
 
 #define GSL_USE_STD_BYTE 1
 
-#else // _MSC_VER >= 1911 && (!defined(_HAS_STD_BYTE) || _HAS_STD_BYTE)
+#else // defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
 
 #define GSL_USE_STD_BYTE 0
 
-#endif // _MSC_VER >= 1911 && (!defined(_HAS_STD_BYTE) || _HAS_STD_BYTE)
+#endif // defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
 #endif // GSL_USE_STD_BYTE
 
 #else // _MSC_VER

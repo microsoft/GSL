@@ -19,12 +19,34 @@
 #include <gsl/gsl> //owner
 #include <gsl/string_span>
 
+#include <algorithm>
 #include <cstdlib>
 #include <map>
 #include <vector>
 
 using namespace std;
 using namespace gsl;
+
+// Generic string functions
+
+namespace generic
+{
+
+template <typename CharT>
+auto strlen(const CharT* s)
+{
+    auto p = s;
+    while (*p) ++p;
+    return p - s;
+}
+
+template <typename CharT>
+auto strnlen(const CharT* s, std::size_t n)
+{
+    return std::find(s, s + n, CharT(0)) - s;
+}
+
+} // namespace generic
 
 TEST_CASE("TestLiteralConstruction")
 {
@@ -748,7 +770,7 @@ TEST_CASE("Constructors")
 }
 
 template <typename T>
-T move_wrapper(T && t)
+T move_wrapper(T&& t)
 {
     return std::move(t);
 }
@@ -874,7 +896,7 @@ TEST_CASE("zstring")
 
         zstring_span<> zspan({buf, 1});
 
-        CHECK(strlen(zspan.assume_z()) == 0);
+        CHECK(generic::strlen(zspan.assume_z()) == 0);
         CHECK(zspan.as_string_span().size() == 0);
         CHECK(zspan.ensure_z().size() == 0);
     }
@@ -895,7 +917,7 @@ TEST_CASE("zstring")
         auto name = CreateTempName({buf, 10});
         if (!name.empty()) {
             czstring<> str = name.assume_z();
-            CHECK(strlen(str) == 3);
+            CHECK(generic::strlen(str) == 3);
             CHECK(*(str + 3) == '\0');
         }
     }
@@ -928,7 +950,7 @@ TEST_CASE("wzstring")
 
         wzstring_span<> zspan({buf, 1});
 
-        CHECK(wcsnlen(zspan.assume_z(), 1) == 0);
+        CHECK(generic::strnlen(zspan.assume_z(), 1) == 0);
         CHECK(zspan.as_string_span().size() == 0);
         CHECK(zspan.ensure_z().size() == 0);
     }
@@ -949,7 +971,115 @@ TEST_CASE("wzstring")
         const auto name = CreateTempNameW({buf, 10});
         if (!name.empty()) {
             cwzstring<> str = name.assume_z();
-            CHECK(wcsnlen(str, 10) == 3);
+            CHECK(generic::strnlen(str, 10) == 3);
+            CHECK(*(str + 3) == L'\0');
+        }
+    }
+}
+
+cu16zstring_span<> CreateTempNameU16(u16string_span<> span)
+{
+    Expects(span.size() > 1);
+
+    int last = 0;
+    if (span.size() > 4) {
+        span[0] = u't';
+        span[1] = u'm';
+        span[2] = u'p';
+        last = 3;
+    }
+    span[last] = u'\0';
+
+    auto ret = span.subspan(0, 4);
+    return {ret};
+}
+
+TEST_CASE("u16zstring")
+{
+
+    // create zspan from zero terminated string
+    {
+        char16_t buf[1];
+        buf[0] = L'\0';
+
+        u16zstring_span<> zspan({buf, 1});
+
+        CHECK(generic::strnlen(zspan.assume_z(), 1) == 0);
+        CHECK(zspan.as_string_span().size() == 0);
+        CHECK(zspan.ensure_z().size() == 0);
+    }
+
+    // create zspan from non-zero terminated string
+    {
+        char16_t buf[1];
+        buf[0] = u'a';
+
+        const auto workaround_macro = [&]() { u16zstring_span<> zspan({buf, 1}); };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    // usage scenario: create zero-terminated temp file name and pass to a legacy API
+    {
+        char16_t buf[10];
+
+        const auto name = CreateTempNameU16({buf, 10});
+        if (!name.empty()) {
+            cu16zstring<> str = name.assume_z();
+            CHECK(generic::strnlen(str, 10) == 3);
+            CHECK(*(str + 3) == L'\0');
+        }
+    }
+}
+
+cu32zstring_span<> CreateTempNameU32(u32string_span<> span)
+{
+    Expects(span.size() > 1);
+
+    int last = 0;
+    if (span.size() > 4) {
+        span[0] = U't';
+        span[1] = U'm';
+        span[2] = U'p';
+        last = 3;
+    }
+    span[last] = U'\0';
+
+    auto ret = span.subspan(0, 4);
+    return {ret};
+}
+
+TEST_CASE("u32zstring")
+{
+
+    // create zspan from zero terminated string
+    {
+        char32_t buf[1];
+        buf[0] = L'\0';
+
+        u32zstring_span<> zspan({buf, 1});
+
+        CHECK(generic::strnlen(zspan.assume_z(), 1) == 0);
+        CHECK(zspan.as_string_span().size() == 0);
+        CHECK(zspan.ensure_z().size() == 0);
+    }
+
+    // create zspan from non-zero terminated string
+    {
+        char32_t buf[1];
+        buf[0] = u'a';
+
+        const auto workaround_macro = [&]() { u32zstring_span<> zspan({buf, 1}); };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    // usage scenario: create zero-terminated temp file name and pass to a legacy API
+    {
+        char32_t buf[10];
+
+        const auto name = CreateTempNameU32({buf, 10});
+        if (!name.empty()) {
+            cu32zstring<> str = name.assume_z();
+            CHECK(generic::strnlen(str, 10) == 3);
             CHECK(*(str + 3) == L'\0');
         }
     }
@@ -960,4 +1090,82 @@ TEST_CASE("Issue305")
     std::map<gsl::cstring_span<>, int> foo = {{"foo", 0}, {"bar", 1}};
     CHECK(foo["foo"] == 0);
     CHECK(foo["bar"] == 1);
+}
+
+TEST_CASE("char16_t type")
+{
+    gsl::cu16string_span<> ss1 = gsl::ensure_z(u"abc");
+    CHECK(ss1.size() == 3);
+    CHECK(ss1.size_bytes() == 6);
+
+    std::u16string s1 = gsl::to_string(ss1);
+    CHECK(s1 == u"abc");
+
+    std::u16string s2 = u"abc";
+    gsl::u16string_span<> ss2 = s2;
+    CHECK(ss2.size() == 3);
+
+    gsl::u16string_span<> ss3 = ss2.subspan(1, 1);
+    CHECK(ss3.size() == 1);
+    CHECK(ss3[0] == u'b');
+
+    char16_t buf[4]{u'a', u'b', u'c', u'\0'};
+    gsl::u16string_span<> ss4{buf, 4};
+    CHECK(ss4[3] == u'\0');
+
+    gsl::cu16zstring_span<> ss5(u"abc");
+    CHECK(ss5.as_string_span().size() == 3);
+
+    gsl::cu16string_span<> ss6 = ss5.as_string_span();
+    CHECK(ss6 == ss1);
+
+    std::vector<char16_t> v7 = {u'a', u'b', u'c'};
+    gsl::cu16string_span<> ss7{v7};
+    CHECK(ss7 == ss1);
+
+    gsl::cu16string_span<> ss8 = gsl::ensure_z(u"abc");
+    gsl::cu16string_span<> ss9 = gsl::ensure_z(u"abc");
+    CHECK(ss8 == ss9);
+
+    ss9 = gsl::ensure_z(u"abd");
+    CHECK(ss8 < ss9);
+    CHECK(ss8 <= ss9);
+    CHECK(ss8 != ss9);
+}
+
+TEST_CASE("char32_t type")
+{
+    gsl::cu32string_span<> ss1 = gsl::ensure_z(U"abc");
+    CHECK(ss1.size() == 3);
+    CHECK(ss1.size_bytes() == 12);
+
+    std::u32string s1 = gsl::to_string(ss1);
+    CHECK(s1 == U"abc");
+
+    std::u32string s2 = U"abc";
+    gsl::u32string_span<> ss2 = s2;
+    CHECK(ss2.size() == 3);
+
+    gsl::u32string_span<> ss3 = ss2.subspan(1, 1);
+    CHECK(ss3.size() == 1);
+    CHECK(ss3[0] == U'b');
+
+    char32_t buf[4]{U'a', U'b', U'c', U'\0'};
+    gsl::u32string_span<> ss4{buf, 4};
+    CHECK(ss4[3] == u'\0');
+
+    gsl::cu32zstring_span<> ss5(U"abc");
+    CHECK(ss5.as_string_span().size() == 3);
+
+    gsl::cu32string_span<> ss6 = ss5.as_string_span();
+    CHECK(ss6 == ss1);
+
+    gsl::cu32string_span<> ss8 = gsl::ensure_z(U"abc");
+    gsl::cu32string_span<> ss9 = gsl::ensure_z(U"abc");
+    CHECK(ss8 == ss9);
+
+    ss9 = gsl::ensure_z(U"abd");
+    CHECK(ss8 < ss9);
+    CHECK(ss8 <= ss9);
+    CHECK(ss8 != ss9);
 }

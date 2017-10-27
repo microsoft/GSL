@@ -39,8 +39,8 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-#endif           // _MSC_VER < 1910
-#endif           // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
 
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
@@ -72,30 +72,31 @@ template <std::ptrdiff_t Extent = dynamic_extent>
 using cwzstring = basic_zstring<const wchar_t, Extent>;
 
 template <std::ptrdiff_t Extent = dynamic_extent>
+using cu16zstring = basic_zstring<const char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using cu32zstring = basic_zstring<const char32_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
 using zstring = basic_zstring<char, Extent>;
 
 template <std::ptrdiff_t Extent = dynamic_extent>
 using wzstring = basic_zstring<wchar_t, Extent>;
 
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u16zstring = basic_zstring<char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u32zstring = basic_zstring<char32_t, Extent>;
+
 namespace details
 {
-    inline std::ptrdiff_t string_length(const char* str, std::ptrdiff_t n)
+    template <class CharT>
+    std::ptrdiff_t string_length(const CharT* str, std::ptrdiff_t n)
     {
         if (str == nullptr || n <= 0) return 0;
 
-        span<const char> str_span{str, n};
-
-        std::ptrdiff_t len = 0;
-        while (len < n && str_span[len]) len++;
-
-        return len;
-    }
-
-    inline std::ptrdiff_t wstring_length(const wchar_t* str, std::ptrdiff_t n)
-    {
-        if (str == nullptr || n <= 0) return 0;
-
-        span<const wchar_t> str_span{str, n};
+        span<const CharT> str_span{str, n};
 
         std::ptrdiff_t len = 0;
         while (len < n && str_span[len]) len++;
@@ -122,48 +123,18 @@ span<T, dynamic_extent> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX
 }
 
 //
-// ensure_z - creates a span for a czstring or cwzstring.
+// ensure_z - creates a span for a zero terminated strings.
 // Will fail fast if a null-terminator cannot be found before
 // the limit of size_type.
 //
-template <typename T>
-inline span<T, dynamic_extent> ensure_z(T* const& sz, std::ptrdiff_t max = PTRDIFF_MAX)
+template <typename CharT>
+inline span<CharT, dynamic_extent> ensure_z(CharT* const& sz, std::ptrdiff_t max = PTRDIFF_MAX)
 {
-    return ensure_sentinel<T, 0>(sz, max);
+    return ensure_sentinel<CharT, CharT(0)>(sz, max);
 }
 
-// TODO (neilmac) there is probably a better template-magic way to get the const and non-const
-// overloads to share an implementation
-inline span<char, dynamic_extent> ensure_z(char* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<const char, dynamic_extent> ensure_z(const char* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::string_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<wchar_t, dynamic_extent> ensure_z(wchar_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::wstring_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-inline span<const wchar_t, dynamic_extent> ensure_z(const wchar_t* const& sz, std::ptrdiff_t max)
-{
-    auto len = details::wstring_length(sz, max);
-    Ensures(sz[len] == 0);
-    return {sz, len};
-}
-
-template <typename T, std::size_t N>
-span<T, dynamic_extent> ensure_z(T (&sz)[N])
+template <typename CharT, std::size_t N>
+span<CharT, dynamic_extent> ensure_z(CharT (&sz)[N])
 {
     return ensure_z(&sz[0], static_cast<std::ptrdiff_t>(N));
 }
@@ -194,47 +165,6 @@ namespace details
     struct is_basic_string_span : is_basic_string_span_oracle<std::remove_cv_t<T>>
     {
     };
-
-    template <typename T>
-    struct length_func
-    {
-    };
-
-    template <>
-    struct length_func<char>
-    {
-        std::ptrdiff_t operator()(const char* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
-        {
-            return details::string_length(ptr, length);
-        }
-    };
-
-    template <>
-    struct length_func<wchar_t>
-    {
-        std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
-        {
-            return details::wstring_length(ptr, length);
-        }
-    };
-
-    template <>
-    struct length_func<const char>
-    {
-        std::ptrdiff_t operator()(const char* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
-        {
-            return details::string_length(ptr, length);
-        }
-    };
-
-    template <>
-    struct length_func<const wchar_t>
-    {
-        std::ptrdiff_t operator()(const wchar_t* const ptr, std::ptrdiff_t length) GSL_NOEXCEPT
-        {
-            return details::wstring_length(ptr, length);
-        }
-    };
 }
 
 //
@@ -262,13 +192,13 @@ public:
     // copy
     constexpr basic_string_span(const basic_string_span& other) GSL_NOEXCEPT = default;
 
-// move
+    // move
     constexpr basic_string_span(basic_string_span&& other) GSL_NOEXCEPT = default;
 
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) GSL_NOEXCEPT = default;
 
-// move assign
+    // move assign
     constexpr basic_string_span& operator=(basic_string_span&& other) GSL_NOEXCEPT = default;
 
     // from nullptr
@@ -399,7 +329,7 @@ public:
 private:
     static impl_type remove_z(pointer const& sz, std::ptrdiff_t max)
     {
-        return {sz, details::length_func<element_type>()(sz, max)};
+        return {sz, details::string_length(sz, max)};
     }
 
     template <std::size_t N>
@@ -422,6 +352,18 @@ using wstring_span = basic_string_span<wchar_t, Extent>;
 
 template <std::ptrdiff_t Extent = dynamic_extent>
 using cwstring_span = basic_string_span<const wchar_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u16string_span = basic_string_span<char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using cu16string_span = basic_string_span<const char16_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using u32string_span = basic_string_span<char32_t, Extent>;
+
+template <std::ptrdiff_t Extent = dynamic_extent>
+using cu32string_span = basic_string_span<const char32_t, Extent>;
 
 //
 // to_string() allow (explicit) conversions from string_span to string
@@ -468,13 +410,13 @@ public:
     // copy
     constexpr basic_zstring_span(const basic_zstring_span& other) = default;
 
-// move
+    // move
     constexpr basic_zstring_span(basic_zstring_span&& other) = default;
 
     // assign
     constexpr basic_zstring_span& operator=(const basic_zstring_span& other) = default;
 
-// move assign
+    // move assign
     constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
 
     constexpr bool empty() const GSL_NOEXCEPT { return span_.size() == 0; }
@@ -500,10 +442,22 @@ template <std::ptrdiff_t Max = dynamic_extent>
 using wzstring_span = basic_zstring_span<wchar_t, Max>;
 
 template <std::ptrdiff_t Max = dynamic_extent>
+using u16zstring_span = basic_zstring_span<char16_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
+using u32zstring_span = basic_zstring_span<char32_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
 using czstring_span = basic_zstring_span<const char, Max>;
 
 template <std::ptrdiff_t Max = dynamic_extent>
 using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
+using cu16zstring_span = basic_zstring_span<const char16_t, Max>;
+
+template <std::ptrdiff_t Max = dynamic_extent>
+using cu32zstring_span = basic_zstring_span<const char32_t, Max>;
 
 // operator ==
 template <class CharT, std::ptrdiff_t Extent, class T,
