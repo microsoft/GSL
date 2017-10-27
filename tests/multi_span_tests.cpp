@@ -581,8 +581,7 @@ TEST_CASE("from_container_constructor")
         multi_span<char> s{cstr};
 #endif
         multi_span<const char> cs{cstr};
-        CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
-               cs.data() == cstr.data()));
+        CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) && cs.data() == cstr.data()));
     }
 
     {
@@ -1283,76 +1282,73 @@ TEST_CASE("index_constructor")
     delete[] arr;
 }
 
-TEST_CASE("index_constructors")
+TEST_CASE("index_constructors"){{// components of the same type
+                                 index<3> i1(0, 1, 2);
+CHECK(i1[0] == 0);
+
+// components of different types
+std::size_t c0 = 0;
+std::size_t c1 = 1;
+index<3> i2(c0, c1, 2);
+CHECK(i2[0] == 0);
+
+// from array
+index<3> i3 = {0, 1, 2};
+CHECK(i3[0] == 0);
+
+// from other index of the same size type
+index<3> i4 = i3;
+CHECK(i4[0] == 0);
+
+// default
+index<3> i7;
+CHECK(i7[0] == 0);
+
+// default
+index<3> i9 = {};
+CHECK(i9[0] == 0);
+}
+
 {
-    {
-        // components of the same type
-        index<3> i1(0, 1, 2);
-        CHECK(i1[0] == 0);
+    // components of the same type
+    index<1> i1(0);
+    CHECK(i1[0] == 0);
 
-        // components of different types
-        std::size_t c0 = 0;
-        std::size_t c1 = 1;
-        index<3> i2(c0, c1, 2);
-        CHECK(i2[0] == 0);
+    // components of different types
+    std::size_t c0 = 0;
+    index<1> i2(c0);
+    CHECK(i2[0] == 0);
 
-        // from array
-        index<3> i3 = {0, 1, 2};
-        CHECK(i3[0] == 0);
+    // from array
+    index<1> i3 = {0};
+    CHECK(i3[0] == 0);
 
-        // from other index of the same size type
-        index<3> i4 = i3;
-        CHECK(i4[0] == 0);
+    // from int
+    index<1> i4 = 0;
+    CHECK(i4[0] == 0);
 
-        // default
-        index<3> i7;
-        CHECK(i7[0] == 0);
+    // from other index of the same size type
+    index<1> i5 = i3;
+    CHECK(i5[0] == 0);
 
-        // default
-        index<3> i9 = {};
-        CHECK(i9[0] == 0);
-    }
+    // default
+    index<1> i8;
+    CHECK(i8[0] == 0);
 
-    {
-        // components of the same type
-        index<1> i1(0);
-        CHECK(i1[0] == 0);
+    // default
+    index<1> i9 = {};
+    CHECK(i9[0] == 0);
+}
 
-        // components of different types
-        std::size_t c0 = 0;
-        index<1> i2(c0);
-        CHECK(i2[0] == 0);
-
-        // from array
-        index<1> i3 = {0};
-        CHECK(i3[0] == 0);
-
-        // from int
-        index<1> i4 = 0;
-        CHECK(i4[0] == 0);
-
-        // from other index of the same size type
-        index<1> i5 = i3;
-        CHECK(i5[0] == 0);
-
-        // default
-        index<1> i8;
-        CHECK(i8[0] == 0);
-
-        // default
-        index<1> i9 = {};
-        CHECK(i9[0] == 0);
-    }
-
-    #ifdef CONFIRM_COMPILATION_ERRORS
-    {
+#ifdef CONFIRM_COMPILATION_ERRORS
+{
     index<3> i1(0, 1);
     index<3> i2(0, 1, 2, 3);
     index<3> i3 = {0};
     index<3> i4 = {0, 1, 2, 3};
     index<1> i5 = {0, 1};
-    }
-    #endif
+}
+#endif
 }
 
 TEST_CASE("index_operations")

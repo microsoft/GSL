@@ -36,10 +36,10 @@ TEST_CASE("basic_test")
 
 TEST_CASE("check_pointer_constraint")
 {
-    #ifdef CONFIRM_COMPILATION_ERRORS
+#ifdef CONFIRM_COMPILATION_ERRORS
     {
         owner<int> integerTest = 10;
         owner<std::shared_ptr<int>> sharedPtrTest(new int(10));
     }
-    #endif
+#endif
 }

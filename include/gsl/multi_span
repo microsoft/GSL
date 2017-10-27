@@ -46,8 +46,8 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
 
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
 #define GSL_NOEXCEPT /*noexcept*/
@@ -811,9 +811,9 @@ private:
 
 public:
     static const std::size_t rank = IndexType::rank;
-    using typename Base::reference;
-    using typename Base::pointer;
     using typename Base::difference_type;
+    using typename Base::pointer;
+    using typename Base::reference;
     using typename Base::value_type;
     using index_type = value_type;
     using index_size_type = typename IndexType::value_type;
@@ -1311,8 +1311,9 @@ public:
     constexpr multi_span(const std::array<T, N>& arr)
         : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
     {
-        static_assert(std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
-                      "Cannot convert from source type to target multi_span type.");
+        static_assert(
+            std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
+            "Cannot convert from source type to target multi_span type.");
         static_assert(std::is_convertible<static_bounds<N>, bounds_type>::value,
                       "You cannot construct a multi_span from a std::array of smaller size.");
     }
@@ -1537,8 +1538,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator==(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
     {
@@ -1547,8 +1548,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator!=(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
     {
@@ -1556,8 +1557,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
     {
@@ -1565,8 +1566,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<=(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
     {
@@ -1574,8 +1575,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
     {
@@ -1583,8 +1584,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>=(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
     {
@@ -1898,8 +1899,8 @@ public:
     constexpr const_reverse_iterator crend() const { return const_reverse_iterator{cbegin()}; }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator==(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
     {
@@ -1908,8 +1909,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator!=(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
     {
@@ -1917,8 +1918,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
     {
@@ -1926,8 +1927,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<=(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
     {
@@ -1935,8 +1936,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
     {
@@ -1944,8 +1945,8 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename = std::enable_if_t<std::is_same<
-                  std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
+              typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
+                                                       std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>=(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
     {
@@ -2001,9 +2002,9 @@ class contiguous_span_iterator
     using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
 
 public:
-    using typename Base::reference;
-    using typename Base::pointer;
     using typename Base::difference_type;
+    using typename Base::pointer;
+    using typename Base::reference;
 
 private:
     template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
@@ -2121,9 +2122,9 @@ class general_span_iterator
     using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
 
 public:
-    using typename Base::reference;
-    using typename Base::pointer;
     using typename Base::difference_type;
+    using typename Base::pointer;
+    using typename Base::reference;
     using typename Base::value_type;
 
 private:

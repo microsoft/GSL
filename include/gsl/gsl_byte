@@ -52,15 +52,14 @@
 
 #define GSL_USE_STD_BYTE 0
 
-#endif //defined(__cplusplus) && (__cplusplus >= 201703L)
+#endif // defined(__cplusplus) && (__cplusplus >= 201703L)
 #endif // GSL_USE_STD_BYTE
 
-#endif           // _MSC_VER
+#endif // _MSC_VER
 
 namespace gsl
 {
 #if GSL_USE_STD_BYTE
-
 
 using std::byte;
 using std::to_integer;

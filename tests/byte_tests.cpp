@@ -114,7 +114,7 @@ TEST_CASE("to_integer")
     //      CHECK(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
 }
 
-int modify_both(gsl::byte & b, int& i)
+int modify_both(gsl::byte& b, int& i)
 {
     i = 10;
     b = to_byte<5>();
@@ -127,5 +127,4 @@ TEST_CASE("aliasing")
     const int res = modify_both(reinterpret_cast<byte&>(i), i);
     CHECK(res == i);
 }
-
 }

@@ -220,7 +220,6 @@ TEST_CASE("TestNotNullRawPointerComparison")
     CHECK((NotNull1(p1) <= NotNull1(p1)) == true);
     CHECK((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
     CHECK((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
-
 }
 
 TEST_CASE("TestNotNullDereferenceOperator")
@@ -229,12 +228,12 @@ TEST_CASE("TestNotNullDereferenceOperator")
         auto sp1 = std::make_shared<NonCopyableNonMovable>();
 
         using NotNullSp1 = not_null<decltype(sp1)>;
-        CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1))); 
+        CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1)));
         CHECK(std::addressof(*NotNullSp1(sp1)) == std::addressof(*sp1));
     }
 
     {
-        int ints[1] = { 42 };
+        int ints[1] = {42};
         CustomPtr<int> p1(&ints[0]);
 
         using NotNull1 = not_null<decltype(p1)>;

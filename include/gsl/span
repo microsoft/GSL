@@ -45,8 +45,8 @@
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
 
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
 #define GSL_NOEXCEPT /*noexcept*/
@@ -125,13 +125,14 @@ namespace details
         span_iterator() = default;
 
         constexpr span_iterator(const Span* span, typename Span::index_type index) GSL_NOEXCEPT
-            : span_(span), index_(index)
+            : span_(span),
+              index_(index)
         {
             Expects(span == nullptr || (0 <= index_ && index <= span_->length()));
         }
 
         friend span_iterator<Span, true>;
-        template<bool B, std::enable_if_t<!B && IsConst>* = nullptr>
+        template <bool B, std::enable_if_t<!B && IsConst>* = nullptr>
         constexpr span_iterator(const span_iterator<Span, B>& other) GSL_NOEXCEPT
             : span_iterator(other.span_, other.index_)
         {
@@ -471,7 +472,6 @@ public:
         return make_subspan(offset, count, subspan_selector<Extent>{});
     }
 
-
     // [span.obs], span observers
     constexpr index_type length() const GSL_NOEXCEPT { return size(); }
     constexpr index_type size() const GSL_NOEXCEPT { return storage_.size(); }
@@ -514,10 +514,10 @@ private:
     class storage_type : public ExtentType
     {
     public:
-
         // checked parameter is needed to remove unnecessary null check in subspans
         template <class OtherExtentType>
-        constexpr storage_type(pointer data, OtherExtentType ext, bool checked = false) : ExtentType(ext), data_(data)
+        constexpr storage_type(pointer data, OtherExtentType ext, bool checked = false)
+            : ExtentType(ext), data_(data)
         {
             Expects(((checked || !data) && ExtentType::size() == 0) ||
                     ((checked || data) && ExtentType::size() >= 0));
@@ -535,32 +535,32 @@ private:
     constexpr span(pointer ptr, index_type count, bool checked) : storage_(ptr, count, checked) {}
 
     template <std::ptrdiff_t CallerExtent>
-    class subspan_selector {};
+    class subspan_selector
+    {
+    };
 
     template <std::ptrdiff_t CallerExtent>
-    span<element_type, dynamic_extent> make_subspan(index_type offset,
-                                                    index_type count,
-                                                    subspan_selector<CallerExtent>) const GSL_NOEXCEPT
+    span<element_type, dynamic_extent>
+    make_subspan(index_type offset, index_type count,
+                 subspan_selector<CallerExtent>) const GSL_NOEXCEPT
     {
         span<element_type, dynamic_extent> tmp(*this);
         return tmp.subspan(offset, count);
     }
 
-    span<element_type, dynamic_extent> make_subspan(index_type offset,
-                                                    index_type count,
-                                                    subspan_selector<dynamic_extent>) const GSL_NOEXCEPT
+    span<element_type, dynamic_extent>
+    make_subspan(index_type offset, index_type count,
+                 subspan_selector<dynamic_extent>) const GSL_NOEXCEPT
     {
         Expects(offset >= 0 && size() - offset >= 0);
-        if (count == dynamic_extent)
-        {
-            return { data() + offset, size() - offset, true };
+        if (count == dynamic_extent) {
+            return {data() + offset, size() - offset, true};
         }
 
         Expects(count >= 0 && size() - offset >= count);
-        return { data() + offset,  count, true };
+        return {data() + offset, count, true};
     }
 };
-
 
 // [span.comparison], span comparison operators
 template <class ElementType, std::ptrdiff_t FirstExtent, std::ptrdiff_t SecondExtent>

@@ -32,8 +32,8 @@
 #if _MSC_VER < 1910
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#endif            // _MSC_VER < 1910
+#endif            // _MSC_VER
 
 namespace gsl
 {

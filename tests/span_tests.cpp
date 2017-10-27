@@ -183,30 +183,27 @@ TEST_CASE("from_pointer_length_constructor")
     int arr[4] = {1, 2, 3, 4};
 
     {
-        for(int i = 0; i<4 ; ++i)
-        {
+        for (int i = 0; i < 4; ++i) {
             {
-                span<int> s = { &arr[0], i };
+                span<int> s = {&arr[0], i};
                 CHECK(s.length() == i);
                 CHECK(s.data() == &arr[0]);
                 CHECK(s.empty() == (i == 0));
-                for (int j = 0; j < i; ++j)
-                {
+                for (int j = 0; j < i; ++j) {
                     CHECK(arr[j] == s[j]);
                     CHECK(arr[j] == s.at(j));
                     CHECK(arr[j] == s(j));
                 }
             }
             {
-                span<int> s = { &arr[i], 4-i };
-                CHECK(s.length() == 4-i);
+                span<int> s = {&arr[i], 4 - i};
+                CHECK(s.length() == 4 - i);
                 CHECK(s.data() == &arr[i]);
-                CHECK(s.empty() == (4-i == 0));
-                for (int j = 0; j < 4-i; ++j)
-                {
-                    CHECK(arr[j+i] == s[j]);
-                    CHECK(arr[j+i] == s.at(j));
-                    CHECK(arr[j+i] == s(j));
+                CHECK(s.empty() == (4 - i == 0));
+                for (int j = 0; j < 4 - i; ++j) {
+                    CHECK(arr[j + i] == s[j]);
+                    CHECK(arr[j + i] == s.at(j));
+                    CHECK(arr[j + i] == s(j));
                 }
             }
         }
@@ -706,8 +703,7 @@ TEST_CASE("from_container_constructor")
         span<char> s{cstr};
 #endif
         span<const char> cs{cstr};
-        CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
-              cs.data() == cstr.data()));
+        CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) && cs.data() == cstr.data()));
     }
 
     {
@@ -768,41 +764,38 @@ TEST_CASE("from_container_constructor")
     }
 }
 
-TEST_CASE("from_convertible_span_constructor")
+TEST_CASE("from_convertible_span_constructor"){{span<DerivedClass> avd;
+span<const DerivedClass> avcd = avd;
+static_cast<void>(avcd);
+}
+
 {
-    {
-        span<DerivedClass> avd;
-        span<const DerivedClass> avcd = avd;
-        static_cast<void>(avcd);
-    }
+#ifdef CONFIRM_COMPILATION_ERRORS
+    span<DerivedClass> avd;
+    span<BaseClass> avb = avd;
+    static_cast<void>(avb);
+#endif
+}
 
-    {
-    #ifdef CONFIRM_COMPILATION_ERRORS
-        span<DerivedClass> avd;
-        span<BaseClass> avb = avd;
-        static_cast<void>(avb);
-    #endif
-    }
+#ifdef CONFIRM_COMPILATION_ERRORS
+{
+    span<int> s;
+    span<unsigned int> s2 = s;
+    static_cast<void>(s2);
+}
 
-    #ifdef CONFIRM_COMPILATION_ERRORS
-    {
-        span<int> s;
-        span<unsigned int> s2 = s;
-        static_cast<void>(s2);
-    }
+{
+    span<int> s;
+    span<const unsigned int> s2 = s;
+    static_cast<void>(s2);
+}
 
-    {
-        span<int> s;
-        span<const unsigned int> s2 = s;
-        static_cast<void>(s2);
-    }
-
-    {
-        span<int> s;
-        span<short> s2 = s;
-        static_cast<void>(s2);
-    }
-    #endif
+{
+    span<int> s;
+    span<short> s2 = s;
+    static_cast<void>(s2);
+}
+#endif
 }
 
 TEST_CASE("copy_move_and_assignment")

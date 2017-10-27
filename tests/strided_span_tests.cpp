@@ -104,11 +104,9 @@ TEST_CASE("strided_span_constructors")
 
 #if _MSC_VER > 1800
             // strided_span<const int, 1> sav_c{ {src}, {2, 1} };
-            strided_span<const int, 1> sav_c{multi_span<const int>{src},
-                                             strided_bounds<1>{2, 1}};
+            strided_span<const int, 1> sav_c{multi_span<const int>{src}, strided_bounds<1>{2, 1}};
 #else
-            strided_span<const int, 1> sav_c{multi_span<const int>{src},
-                                             strided_bounds<1>{2, 1}};
+            strided_span<const int, 1> sav_c{multi_span<const int>{src}, strided_bounds<1>{2, 1}};
 #endif
             CHECK(sav_c.bounds().index_bounds() == index<1>{2});
             CHECK(sav_c.bounds().strides() == index<1>{1});
@@ -270,15 +268,13 @@ TEST_CASE("strided_span_slice")
 {
     std::vector<int> data(5 * 10);
     std::iota(begin(data), end(data), 0);
-    const multi_span<int, 5, 10> src =
-        as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
+    const multi_span<int, 5, 10> src = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
     const strided_span<int, 2> sav{src, {{5, 10}, {10, 1}}};
 #ifdef CONFIRM_COMPILATION_ERRORS
     const strided_span<const int, 2> csav{{src}, {{5, 10}, {10, 1}}};
 #endif
-    const strided_span<const int, 2> csav{multi_span<const int, 5, 10>{src},
-                                          {{5, 10}, {10, 1}}};
+    const strided_span<const int, 2> csav{multi_span<const int, 5, 10>{src}, {{5, 10}, {10, 1}}};
 
     strided_span<int, 1> sav_sl = sav[2];
     CHECK(sav_sl[0] == 20);
@@ -425,8 +421,7 @@ TEST_CASE("strided_span_bounds")
         strided_span<int, 1> sav4{av, {1, 1, 1}};
         strided_span<int, 2> sav5{av.as_multi_span(dim<2>(), dim<2>()), {1}};
         strided_span<int, 2> sav6{av.as_multi_span(dim<2>(), dim<2>()), {1, 1, 1}};
-        strided_span<int, 2> sav7{av.as_multi_span(dim<2>(), dim<2>()),
-                                  {{1, 1}, {1, 1}, {1, 1}}};
+        strided_span<int, 2> sav7{av.as_multi_span(dim<2>(), dim<2>()), {{1, 1}, {1, 1}, {1, 1}}};
 
         index<1> index{0, 1};
         strided_span<int, 1> sav8{arr, {1, {1, 1}}};
@@ -732,9 +727,8 @@ TEST_CASE("strided_span_conversion")
     CHECK(cs.bounds().index_bounds()[1] == 1);
 
     // transpose to 1x4 array
-    strided_bounds<2> reverse_bounds{
-        {cs.bounds().index_bounds()[1], cs.bounds().index_bounds()[0]},
-        {cs.bounds().strides()[1], cs.bounds().strides()[0]}};
+    strided_bounds<2> reverse_bounds{{cs.bounds().index_bounds()[1], cs.bounds().index_bounds()[0]},
+                                     {cs.bounds().strides()[1], cs.bounds().strides()[0]}};
 
     strided_span<int, 2> transposed{cs.data(), cs.bounds().total_size(), reverse_bounds};
 
