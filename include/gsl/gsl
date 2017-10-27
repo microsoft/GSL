@@ -14,10 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_GSL_H
-#define GSL_GSL_H
+#ifndef GUIDELINE_SUPPORT_LIBRARY_H
+#define GUIDELINE_SUPPORT_LIBRARY_H
 
 #include <gsl/gsl_assert>  // Ensures/Expects
 #include <gsl/gsl_util>    // finally()/narrow()/narrow_cast()...
@@ -26,4 +24,4 @@
 #include <gsl/string_span> // zstring, string_span, zstring_builder...
 #include <gsl/pointers>    // owner, not_null
 
-#endif // GSL_GSL_H
+#endif // GUIDELINE_SUPPORT_LIBRARY_H

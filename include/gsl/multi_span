@@ -14,10 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_MULTI_SPAN_H
-#define GSL_MULTI_SPAN_H
+#ifndef GUIDELINE_SUPPORT_LIBRARY_MULTI_SPAN_H
+#define GUIDELINE_SUPPORT_LIBRARY_MULTI_SPAN_H
 
 #include <gsl/gsl_assert>
 #include <gsl/gsl_byte>
@@ -2231,4 +2229,4 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #endif // _MSC_VER
 
-#endif // GSL_MULTI_SPAN_H
+#endif // GUIDELINE_SUPPORT_LIBRARY_MULTI_SPAN_H

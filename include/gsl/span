@@ -14,10 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_SPAN_H
-#define GSL_SPAN_H
+#ifndef GUIDELINE_SUPPORT_LIBRARY_SPAN_H
+#define GUIDELINE_SUPPORT_LIBRARY_SPAN_H
 
 #include <gsl/gsl_assert>
 #include <gsl/gsl_byte>
@@ -713,4 +711,4 @@ inline constexpr ElementType& at(const span<ElementType, Extent>& s, std::ptrdif
 #pragma warning(pop)
 #endif // _MSC_VER
 
-#endif // GSL_SPAN_H
+#endif // GUIDELINE_SUPPORT_LIBRARY_SPAN_H

@@ -14,10 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_STRING_SPAN_H
-#define GSL_STRING_SPAN_H
+#ifndef GUIDELINE_SUPPORT_LIBRARY_STRING_SPAN_H
+#define GUIDELINE_SUPPORT_LIBRARY_STRING_SPAN_H
 
 #include <gsl/gsl_assert>
 #include <gsl/gsl_util>
@@ -720,4 +718,4 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 #endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
-#endif // GSL_STRING_SPAN_H
+#endif // GUIDELINE_SUPPORT_LIBRARY_STRING_SPAN_H
