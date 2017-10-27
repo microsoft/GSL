@@ -92,7 +92,8 @@ namespace details
     template <class CharT>
     std::ptrdiff_t string_length(const CharT* str, std::ptrdiff_t n)
     {
-        if (str == nullptr || n <= 0) return 0;
+        Expects(!(n < 0 || (str == nullptr && n >= 0)));
+        if (n == 0 || str == nullptr) return 0;
 
         span<const CharT> str_span{str, n};
 
