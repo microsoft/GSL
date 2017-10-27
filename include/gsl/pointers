@@ -71,13 +71,13 @@ class not_null
 public:
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 
-    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
     constexpr not_null(U&& u) : ptr_(std::forward<U>(u))
     {
         Expects(ptr_ != nullptr);
     }
 
-    template <typename U, typename Dummy = std::enable_if_t<std::is_convertible<U, T>::value>>
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
     constexpr not_null(const not_null<U>& other) : not_null(other.get())
     {
     }
