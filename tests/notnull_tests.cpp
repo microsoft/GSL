@@ -16,7 +16,7 @@
 
 #include <catch/catch.hpp>
 
-#include <gsl/gsl>
+#include <gsl/pointers>
 
 #include <memory>
 #include <string>
