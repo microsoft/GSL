@@ -183,9 +183,33 @@ TEST_CASE("from_pointer_length_constructor")
     int arr[4] = {1, 2, 3, 4};
 
     {
-        span<int> s{&arr[0], 2};
-        CHECK((s.length() == 2 && s.data() == &arr[0]));
-        CHECK((s[0] == 1 && s[1] == 2));
+        for(int i = 0; i<4 ; ++i)
+        {
+            {
+                span<int> s = { &arr[0], i };
+                CHECK(s.length() == i);
+                CHECK(s.data() == &arr[0]);
+                CHECK(s.empty() == (i == 0));
+                for (int j = 0; j < i; ++j)
+                {
+                    CHECK(arr[j] == s[j]);
+                    CHECK(arr[j] == s.at(j));
+                    CHECK(arr[j] == s(j));
+                }
+            }
+            {
+                span<int> s = { &arr[i], 4-i };
+                CHECK(s.length() == 4-i);
+                CHECK(s.data() == &arr[i]);
+                CHECK(s.empty() == (4-i == 0));
+                for (int j = 0; j < 4-i; ++j)
+                {
+                    CHECK(arr[j+i] == s[j]);
+                    CHECK(arr[j+i] == s.at(j));
+                    CHECK(arr[j+i] == s(j));
+                }
+            }
+        }
     }
 
     {
