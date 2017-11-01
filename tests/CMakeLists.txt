@@ -58,6 +58,10 @@ target_link_libraries(gsl_tests_config INTERFACE
     $<$<CXX_COMPILER_ID:GNU>:
         -pthread
     >
+    
+    $<$<CXX_COMPILER_ID:Clang>:
+        -pthread
+    >
 )
 
 # for tests to find the catch header
