@@ -28,6 +28,7 @@
 
 // turn off some warnings that are noisy about our Expects statements
 #pragma warning(disable : 4127) // conditional expression is constant
+#pragma warning(disable : 4996) // unsafe use of std::copy_n
 
 // blanket turn off warnings from CppCoreCheck for now
 // so people aren't annoyed by them when running the tool.

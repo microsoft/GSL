@@ -14,33 +14,5 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#define CATCH_CONFIG_MAIN
 #include <catch/catch.hpp>
-
-#include <gsl/gsl>
-
-using namespace gsl;
-
-int f(int i)
-{
-    Expects(i > 0 && i < 10);
-    return i;
-}
-
-TEST_CASE("expects")
-{
-    CHECK(f(2) == 2);
-    CHECK_THROWS_AS(f(10), fail_fast);
-}
-
-int g(int i)
-{
-    i++;
-    Ensures(i > 0 && i < 10);
-    return i;
-}
-
-TEST_CASE("ensures")
-{
-    CHECK(g(2) == 3);
-    CHECK_THROWS_AS(g(9), fail_fast);
-}

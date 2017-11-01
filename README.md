@@ -6,7 +6,7 @@ This repo contains Microsoft's implementation of GSL.
 
 The library includes types like `span<T>`, `string_span`, `owner<>` and others.
 
-The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2013 and 2015.
+The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2015.
 
 While some types have been broken out into their own headers (e.g. [gsl/span](./include/gsl/span)),
 it is simplest to just include [gsl/gsl](./include/gsl/gsl) and gain access to the entire library.
@@ -16,6 +16,9 @@ other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more inform
 
 # Project Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+# Usage of Third Party Libraries
+This project makes use of the [Catch](https://github.com/philsquared/catch) testing library. Please see the [ThirdPartyNotices.txt](./ThirdPartyNotices.txt) file for details regarding the licensing of Catch.
 
 # Quick Start
 ## Supported Platforms
@@ -30,6 +33,7 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * OS X Yosemite using Xcode with Apple Clang 7.0.0.7000072
 * OS X Yosemite using GCC-5.2.0
 * OS X Sierra 10.12.4 using Apple LLVM version 8.1.0 (Clang-802.0.42)
+* OS X El Capitan (10.11) using Xcode with AppleClang 8.0.0.8000042
 * FreeBSD 10.x with Clang/LLVM 3.6
 
 > If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
@@ -40,9 +44,7 @@ contributing any changes that were necessary back to this project to benefit the
 ## Building the tests
 To build the tests, you will require the following:
 
-* [CMake](http://cmake.org), version 2.8.7 or later to be installed and in your PATH.
-* [UnitTest-cpp](https://github.com/Microsoft/unittest-cpp), to be cloned under the [tests/unittest-cpp](./tests/unittest-cpp) directory
-of your GSL source.
+* [CMake](http://cmake.org), version 3.1.3 or later to be installed and in your PATH.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 
@@ -56,11 +58,11 @@ These steps assume the source code of this repository has been cloned into a dir
 
         cmake -G "Visual Studio 14 2015" c:\GSL
 
-3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).    
+3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).
 
         cmake --build . --config Debug
 
-4. Run the test suite.    
+4. Run the test suite.
 
         ctest -C Debug
 
