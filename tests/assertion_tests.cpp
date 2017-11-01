@@ -14,38 +14,33 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <UnitTest++/UnitTest++.h>
+#include <catch/catch.hpp>
 
 #include <gsl/gsl>
 
 using namespace gsl;
 
-SUITE(assertion_tests)
+int f(int i)
 {
-    int f(int i)
-    {
-        Expects(i > 0 && i < 10);
-        return i;
-    }
-
-    TEST(expects)
-    {
-        CHECK(f(2) == 2);
-        CHECK_THROW(f(10), fail_fast);
-    }
-
-    int g(int i)
-    {
-        i++;
-        Ensures(i > 0 && i < 10);
-        return i;
-    }
-
-    TEST(ensures)
-    {
-        CHECK(g(2) == 3);
-        CHECK_THROW(g(9), fail_fast);
-    }
+    Expects(i > 0 && i < 10);
+    return i;
 }
 
-int main(int, const char* []) { return UnitTest::RunAllTests(); }
+TEST_CASE("expects")
+{
+    CHECK(f(2) == 2);
+    CHECK_THROWS_AS(f(10), fail_fast);
+}
+
+int g(int i)
+{
+    i++;
+    Ensures(i > 0 && i < 10);
+    return i;
+}
+
+TEST_CASE("ensures")
+{
+    CHECK(g(2) == 3);
+    CHECK_THROWS_AS(g(9), fail_fast);
+}
