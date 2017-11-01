@@ -28,9 +28,9 @@ using std::this_thread::sleep_for;
 
 const auto t_100ms = std::chrono::milliseconds(100);
 
-SUITE(raii_thread_tests)
+SUITE(joining_thread_tests)
 {
-    TEST(raii_thread_same_scope_clock_test)
+    TEST(joining_thread_same_scope_clock_test)
     {
         auto start_time = steady_clock::now();
 
@@ -41,7 +41,7 @@ SUITE(raii_thread_tests)
         CHECK(end_time - start_time < t_100ms);
     }
 
-    TEST(raii_thread_different_scope_clock_test)
+    TEST(joining_thread_different_scope_clock_test)
     {
         auto start_time = steady_clock::now();
 
@@ -54,7 +54,7 @@ SUITE(raii_thread_tests)
         CHECK(end_time - start_time >= t_100ms);
     }
 
-    TEST(raii_thread_ctor_test)
+    TEST(joining_thread_ctor_test)
     {
         auto start_time = steady_clock::now();
 
@@ -69,7 +69,7 @@ SUITE(raii_thread_tests)
         CHECK(end_time - start_time >= t_100ms);
     }
 
-    TEST(raii_thread_assign_test)
+    TEST(joining_thread_assign_test)
     {
         auto start_time = steady_clock::now();
 
@@ -85,7 +85,7 @@ SUITE(raii_thread_tests)
         CHECK(end_time - start_time >= t_100ms);
     }
 
-    TEST(raii_thread_std_thread_ctor_test)
+    TEST(joining_thread_std_thread_ctor_test)
     {
         auto start_time = steady_clock::now();
 
@@ -100,7 +100,7 @@ SUITE(raii_thread_tests)
         CHECK(end_time - start_time >= t_100ms);
     }
 
-    TEST(raii_thread_std_thread_assign_test)
+    TEST(joining_thread_std_thread_assign_test)
     {
         auto start_time = steady_clock::now();
 
@@ -116,7 +116,7 @@ SUITE(raii_thread_tests)
         CHECK(end_time - start_time >= t_100ms);
     }
 
-    TEST(raii_thread_swap_test)
+    TEST(joining_thread_swap_test)
     {
         gsl::joining_thread t1{[&]{ sleep_for(t_100ms); }};
         gsl::joining_thread t2{[&]{ sleep_for(t_100ms); }};
