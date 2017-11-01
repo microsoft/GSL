@@ -14,17 +14,5 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_GSL_H
-#define GSL_GSL_H
-
-#include <gsl/gsl_assert>  // Ensures/Expects
-#include <gsl/gsl_thread>  // raii_thread
-#include <gsl/gsl_util>    // finally()/narrow()/narrow_cast()...
-#include <gsl/multi_span>  // multi_span, strided_span...
-#include <gsl/span>        // span
-#include <gsl/string_span> // zstring, string_span, zstring_builder...
-#include <gsl/pointers>    // owner, not_null
-
-#endif // GSL_GSL_H
+#define CATCH_CONFIG_MAIN
+#include <catch/catch.hpp>
