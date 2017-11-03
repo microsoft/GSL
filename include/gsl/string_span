@@ -491,7 +491,7 @@ bool operator!=(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_N
 
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
 bool operator!=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NOEXCEPT
@@ -511,7 +511,7 @@ bool operator<(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_NO
 
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
 bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NOEXCEPT
@@ -528,7 +528,7 @@ bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NO
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -542,7 +542,7 @@ bool operator<(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_NO
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -565,7 +565,7 @@ bool operator<=(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_N
 
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
 bool operator<=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NOEXCEPT
@@ -581,7 +581,7 @@ bool operator<=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -594,7 +594,7 @@ bool operator<=(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_N
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -616,7 +616,7 @@ bool operator>(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_NO
 
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
 bool operator>(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NOEXCEPT
@@ -632,7 +632,7 @@ bool operator>(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NO
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -645,7 +645,7 @@ bool operator>(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_NO
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -667,7 +667,7 @@ bool operator>=(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_N
 
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
 bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_NOEXCEPT
@@ -683,7 +683,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
@@ -696,7 +696,7 @@ bool operator>=(gsl::basic_string_span<CharT, Extent> one, const T& other) GSL_N
 template <
     typename CharT, std::ptrdiff_t Extent = gsl::dynamic_extent, typename T,
     typename DataType = typename T::value_type,
-    typename Dummy = std::enable_if_t<
+    typename = std::enable_if_t<
         !gsl::details::is_span<T>::value && !gsl::details::is_basic_string_span<T>::value &&
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,

@@ -213,7 +213,7 @@ private:
 
 struct static_bounds_dynamic_range_t
 {
-    template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
+    template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
     constexpr operator T() const GSL_NOEXCEPT
     {
         return narrow_cast<T>(-1);
@@ -230,25 +230,25 @@ constexpr bool operator!=(static_bounds_dynamic_range_t, static_bounds_dynamic_r
     return false;
 }
 
-template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
+template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
 constexpr bool operator==(static_bounds_dynamic_range_t, T other) GSL_NOEXCEPT
 {
     return narrow_cast<T>(-1) == other;
 }
 
-template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
+template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
 constexpr bool operator==(T left, static_bounds_dynamic_range_t right) GSL_NOEXCEPT
 {
     return right == left;
 }
 
-template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
+template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
 constexpr bool operator!=(static_bounds_dynamic_range_t, T other) GSL_NOEXCEPT
 {
     return narrow_cast<T>(-1) != other;
 }
 
-template <typename T, typename Dummy = std::enable_if_t<std::is_integral<T>::value>>
+template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
 constexpr bool operator!=(T left, static_bounds_dynamic_range_t right) GSL_NOEXCEPT
 {
     return right != left;
@@ -1539,7 +1539,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator==(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
@@ -1549,7 +1549,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator!=(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
@@ -1558,7 +1558,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
@@ -1567,7 +1567,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<=(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
@@ -1576,7 +1576,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
@@ -1585,7 +1585,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>=(const multi_span<OtherValueType, OtherDimensions...>& other) const GSL_NOEXCEPT
@@ -1805,14 +1805,14 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... Dimensions,
               bool Enabled1 = (sizeof...(Dimensions) == Rank),
               bool Enabled2 = std::is_convertible<OtherValueType*, ValueType*>::value,
-              typename Dummy = std::enable_if_t<Enabled1 && Enabled2>>
+              typename = std::enable_if_t<Enabled1 && Enabled2>>
     constexpr strided_span(multi_span<OtherValueType, Dimensions...> av, bounds_type bounds)
         : strided_span(av.data(), av.bounds().total_size(), std::move(bounds))
     {
     }
 
     // convertible
-    template <typename OtherValueType, typename Dummy = std::enable_if_t<std::is_convertible<
+    template <typename OtherValueType, typename = std::enable_if_t<std::is_convertible<
                                            OtherValueType (*)[], value_type (*)[]>::value>>
     constexpr strided_span(const strided_span<OtherValueType, Rank>& other)
         : data_(other.data_), bounds_(other.bounds_)
@@ -1900,7 +1900,7 @@ public:
     constexpr const_reverse_iterator crend() const { return const_reverse_iterator{cbegin()}; }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator==(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
@@ -1910,7 +1910,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator!=(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
@@ -1919,7 +1919,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
@@ -1928,7 +1928,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator<=(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
@@ -1937,7 +1937,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
@@ -1946,7 +1946,7 @@ public:
     }
 
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
-              typename Dummy = std::enable_if_t<std::is_same<
+              typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
     operator>=(const strided_span<OtherValueType, OtherRank>& other) const GSL_NOEXCEPT
@@ -1966,7 +1966,7 @@ private:
         return ret;
     }
 
-    template <bool Enabled = (Rank == 1), typename Dummy = std::enable_if_t<Enabled>>
+    template <bool Enabled = (Rank == 1), typename = std::enable_if_t<Enabled>>
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t, void* = nullptr)
     {
         // Only strided arrays with regular strides can be resized
@@ -1975,7 +1975,7 @@ private:
         return strides;
     }
 
-    template <bool Enabled = (Rank > 1), typename Dummy = std::enable_if_t<Enabled>>
+    template <bool Enabled = (Rank > 1), typename = std::enable_if_t<Enabled>>
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t d)
     {
         // Only strided arrays with regular strides can be resized
