@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.1.3)
 project(GSL CXX)
 
 include(ExternalProject)
+include(GNUInstallDirs)
 find_package(Git)
 
 # creates a library GSL which is an interface (header files only)
@@ -62,13 +63,39 @@ if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
     endif()
 endif()
 
-install(
-    DIRECTORY include/gsl
-    DESTINATION include
-)
-
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
 	enable_testing()
 	add_subdirectory(tests)
 endif ()
+
+set(package_name "MicrosoftGSL")
+set(targets_export_name "${package_name}Targets")
+set(project_config "${package_name}Config.cmake")
+set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${package_name}")
+set(project_namespace "${package_name}::")
+install(
+    TARGETS GSL
+    EXPORT ${targets_export_name}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+ )
+
+install(
+    DIRECTORY include/gsl
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(
+    EXPORT ${targets_export_name}
+    NAMESPACE ${project_namespace}
+    DESTINATION ${config_install_dir}
+    FILE ${project_config}
+)
+
+export(
+    EXPORT ${targets_export_name}
+    NAMESPACE ${project_namespace}
+    FILE ${project_config}
+)
+export(PACKAGE ${package_name})
+

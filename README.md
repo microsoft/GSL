@@ -71,24 +71,53 @@ These steps assume the source code of this repository has been cloned into a dir
 All tests should pass - indicating your platform is fully supported and you are ready to use the GSL types!
 
 ## Using the libraries
-As the types are entirely implemented inline in headers, there are no linking requirements.
+* ### Copy headers to build tree
+    As the types are entirely implemented inline in headers, there are no linking requirements.
 
-You can copy the [gsl](./include/gsl) directory into your source tree so it is available
-to your compiler, then include the appropriate headers in your program.
+    You can copy the [gsl](./include/gsl) directory into your source tree so it is available to your compiler, then include the appropriate headers in your program.
 
-Alternatively set your compiler's *include path* flag to point to the GSL development folder (`c:\GSL\include` in the example above) or installation folder (after running the install). Eg.
+    Alternatively set your compiler's *include path* flag to point to the GSL development folder (`c:\GSL\include` in the example above) or installation folder (after running the install). Eg.
 
-MSVC++
+    MSVC++
 
-    /I c:\GSL\include
+        /I c:\GSL\include
 
-GCC/clang
+    GCC/clang
 
-    -I$HOME/dev/GSL/include
+        -I$HOME/dev/GSL/include
 
-Include the library using:
+    Include the library using:
 
-    #include <gsl/gsl>
+        #include <gsl/gsl>
+
+* ### Install GSL libraries and import MicrosoftGSL::GSL CMake target
+    In order to install GSL library into <prefix> path, create a directory to contain the build outputs for a particular architecture (we name it c:\GSL\build-x86 in this example).
+
+        cd GSL
+        md build-x86
+        cd build-x86
+
+    Configure CMake with existing installation path (we name it c:\GSL-INSTALL). If installation path is not given, system include/library ones are used.
+
+        cmake -DCMAKE_INSTALL_PREFIX=c:\GSL-INSTALL -DGSL_TEST=OFF c:\GSL
+
+    Install GSL library with CMake
+
+        cmake --build . --config Release --target install
+
+    In your CMake project search for MicrosoftGSL using find\_package. If GSL was installed to non-system path, you have to append it to CMake module search path. All your targets, which are using GSL, must be linked with MicrosoftGSL::GSL imported target.
+
+        project(my-awesome-project CXX)
+        find_package(MicrosoftGSL CONFIG REQUIRED c:\GSL-INSTALL)
+
+        add_executable(awesome-app main.cpp)
+        target_link_libraries(awesome-app PUBLIC
+            MicrosoftGSL::GSL
+        )
+
+    Include gsl library using:
+
+        #include <gsl/gsl>
 
 ## Debugging visualization support
 For Visual Studio users, the file [GSL.natvis](./GSL.natvis) in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.
