@@ -43,9 +43,8 @@ target_compile_definitions(GSL INTERFACE
 
 # add include folders to the library and targets that consume it
 target_include_directories(GSL INTERFACE
-    $<BUILD_INTERFACE:
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    >
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
@@ -57,9 +56,9 @@ if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
 
     # add natvis file to the library so it will automatically be loaded into Visual Studio
     if(VS_ADD_NATIVE_VISUALIZERS)
-        target_sources(GSL INTERFACE
-            ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
-        )
+    target_sources(GSL INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis>
+    )
     endif()
 endif()
 
