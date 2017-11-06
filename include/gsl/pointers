@@ -21,7 +21,6 @@
 
 #include <gsl/gsl_assert>
 
-#include <iostream>
 #include <memory>
 #include <type_traits>
 
@@ -111,13 +110,6 @@ public:
 private:
     T ptr_;
 };
-
-template <class T>
-std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
-{
-    os << val.get();
-    return os;
-}
 
 template <class T, class U>
 auto operator==(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() == rhs.get())
