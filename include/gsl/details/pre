@@ -1,0 +1,44 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//
+// This code is licensed under the MIT License (MIT).
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+#ifdef _MSC_VER
+#pragma warning(push)
+
+// turn off some warnings that are noisy about our Expects statements
+#pragma warning(disable : 4127) // conditional expression is constant
+#pragma warning(disable : 4996) // unsafe use of std::copy_n
+#pragma warning(disable : 4702) // unreachable code
+
+// don't warn about function style casts in byte related operators
+#pragma warning(disable : 26493)
+
+// blanket turn off warnings from CppCoreCheck for now
+// so people aren't annoyed by them when running the tool.
+// more targeted suppressions will be added in a future update to the GSL
+#pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
+
+#if _MSC_VER < 1910
+#pragma push_macro("constexpr")
+#define constexpr /*constexpr*/
+#endif                          // _MSC_VER < 1910
+
+#endif // _MSC_VER
+
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
+#define GSL_NOEXCEPT /*noexcept*/
+#else
+#define GSL_NOEXCEPT noexcept
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION

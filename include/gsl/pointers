@@ -25,11 +25,7 @@
 #include <memory>
 #include <type_traits>
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-#endif                          // defined(_MSC_VER) && _MSC_VER < 1910
+#include <gsl/details/pre>
 
 namespace gsl
 {
@@ -177,10 +173,6 @@ struct hash<gsl::not_null<T>>
 
 } // namespace std
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#endif // defined(_MSC_VER) && _MSC_VER < 1910
+#include <gsl/details/post>
 
 #endif // GSL_POINTERS_H
