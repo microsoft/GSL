@@ -37,25 +37,7 @@
 #include <type_traits>
 #include <utility>
 
-#ifdef _MSC_VER
-
-// turn off some warnings that are noisy about our Expects statements
-#pragma warning(push)
-#pragma warning(disable : 4127) // conditional expression is constant
-#pragma warning(disable : 4702) // unreachable code
-
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
-
-#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
-#define GSL_NOEXCEPT /*noexcept*/
-#else
-#define GSL_NOEXCEPT noexcept
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION
+#include <gsl/details/pre>
 
 namespace gsl
 {
@@ -2218,17 +2200,6 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 } // namespace gsl
 
-#undef GSL_NOEXCEPT
-
-#ifdef _MSC_VER
-#if _MSC_VER < 1910
-
-#undef constexpr
-#pragma pop_macro("constexpr")
-#endif // _MSC_VER < 1910
-
-#pragma warning(pop)
-
-#endif // _MSC_VER
+#include <gsl/details/post>
 
 #endif // GSL_MULTI_SPAN_H

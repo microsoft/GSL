@@ -27,20 +27,7 @@
 #include <cstring>
 #include <string>
 
-#ifdef _MSC_VER
-#pragma warning(push)
-
-// blanket turn off warnings from CppCoreCheck for now
-// so people aren't annoyed by them when running the tool.
-// more targeted suppressions will be added in a future update to the GSL
-#pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
-
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-#endif // _MSC_VER < 1910
-#endif // _MSC_VER
+#include <gsl/details/pre>
 
 // In order to test the library, we need it to throw exceptions that we can catch
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
@@ -710,14 +697,6 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
 
 #undef GSL_NOEXCEPT
 
-#ifdef _MSC_VER
-#pragma warning(pop)
-
-#if _MSC_VER < 1910
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#endif // _MSC_VER < 1910
-#endif // _MSC_VER
+#include <gsl/details/post>
 
 #endif // GSL_STRING_SPAN_H

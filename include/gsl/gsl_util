@@ -26,16 +26,7 @@
 #include <type_traits>
 #include <utility>
 
-#if defined(_MSC_VER)
-
-#pragma warning(push)
-#pragma warning(disable : 4127) // conditional expression is constant
-
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#include <gsl/details/pre>
 
 namespace gsl
 {
@@ -139,15 +130,6 @@ inline constexpr T at(const std::initializer_list<T> cont, const std::ptrdiff_t 
 
 } // namespace gsl
 
-#if defined(_MSC_VER)
-#if _MSC_VER < 1910
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#endif // _MSC_VER < 1910
-
-#pragma warning(pop)
-
-#endif // _MSC_VER
+#include <gsl/details/post>
 
 #endif // GSL_UTIL_H
