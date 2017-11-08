@@ -4,7 +4,7 @@ project(GSL CXX)
 
 include(ExternalProject)
 find_package(Git)
-
+find_package(Threads REQUIRED)
 # creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
@@ -46,6 +46,10 @@ target_include_directories(GSL INTERFACE
     $<BUILD_INTERFACE:
         ${CMAKE_CURRENT_SOURCE_DIR}/include
     >
+)
+
+target_link_libraries(GSL INTERFACE
+    Threads::Threads
 )
 
 if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))

@@ -14,17 +14,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef GSL_GSL_H
-#define GSL_GSL_H
+#include <catch/catch.hpp>
+#include <gsl/joining_thread>
 
-#include <gsl/gsl_algorithm>  // copy
-#include <gsl/gsl_assert>     // Ensures/Expects
-#include <gsl/gsl_byte>       // byte
-#include <gsl/gsl_util>       // finally()/narrow()/narrow_cast()...
-#include <gsl/joining_thread> // joining_thread
-#include <gsl/multi_span>     // multi_span, strided_span...
-#include <gsl/pointers>       // owner, not_null
-#include <gsl/span>           // span
-#include <gsl/string_span>    // zstring, string_span, zstring_builder...
-
-#endif // GSL_GSL_H
+TEST_CASE("joining_thread native_handle posix")
+{
+    gsl::joining_thread thread([]() {});
+    sched_param sch{};
+    int policy{};
+    auto result = pthread_getschedparam(thread.native_handle(), &policy, &sch);
+    REQUIRE(result != ESRCH);
+}

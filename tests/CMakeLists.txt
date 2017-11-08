@@ -101,7 +101,12 @@ add_gsl_test(utils_tests)
 add_gsl_test(owner_tests)
 add_gsl_test(byte_tests)
 add_gsl_test(algorithm_tests)
-
+add_gsl_test(joining_thread_tests)
+if(WIN32)
+add_gsl_test(joining_thread_native_handle_windows_tests)
+else()
+add_gsl_test(joining_thread_native_handle_posix_tests)
+endif()
 
 # No exception tests
 
