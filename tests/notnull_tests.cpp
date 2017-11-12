@@ -129,6 +129,38 @@ TEST_CASE("TestNotNullConstructors")
         std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
 }
 
+template<typename T>
+void ostream_helper(T v)
+{
+    not_null<T*> p(&v);
+    {
+        std::ostringstream os;
+        std::ostringstream ref;
+        os << p;
+        ref << &v;
+        CHECK(os.str() == ref.str());
+    }
+    {
+        std::ostringstream os;
+        std::ostringstream ref;
+        os << *p;
+        ref << v;
+        CHECK(os.str() == ref.str());
+    }
+}
+
+TEST_CASE("TestNotNullostream")
+{
+    ostream_helper<int>(17);
+    ostream_helper<float>(21.5f);
+    ostream_helper<double>(3.4566e-7f);
+    ostream_helper<char>('c');
+    ostream_helper<uint16_t>(0x0123u);
+    ostream_helper<const char*>("cstring");
+    ostream_helper<std::string>("string");
+}
+
+
 TEST_CASE("TestNotNullCasting")
 {
     MyBase base;
