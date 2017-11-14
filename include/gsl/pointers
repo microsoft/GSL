@@ -21,7 +21,7 @@
 
 #include <gsl/gsl_assert>
 
-#include <iostream>
+#include <iosfwd>
 #include <memory>
 #include <type_traits>
 
