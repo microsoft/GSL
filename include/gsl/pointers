@@ -14,10 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_POINTERS_H
-#define GSL_POINTERS_H
+#ifndef GUIDELINE_SUPPORT_LIBRARY_POINTERS_H
+#define GUIDELINE_SUPPORT_LIBRARY_POINTERS_H
 
 #include <gsl/gsl_assert>
 
@@ -183,4 +181,4 @@ struct hash<gsl::not_null<T>>
 
 #endif // defined(_MSC_VER) && _MSC_VER < 1910
 
-#endif // GSL_POINTERS_H
+#endif // GUIDELINE_SUPPORT_LIBRARY_POINTERS_H

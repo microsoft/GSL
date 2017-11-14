@@ -14,10 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef GSL_UTIL_H
-#define GSL_UTIL_H
+#ifndef GUIDELINE_SUPPORT_LIBRARY_UTIL_H
+#define GUIDELINE_SUPPORT_LIBRARY_UTIL_H
 
 #include <gsl/gsl_assert> // Ensures/Expects
 
@@ -150,4 +148,4 @@ inline constexpr T at(const std::initializer_list<T> cont, const std::ptrdiff_t 
 
 #endif // _MSC_VER
 
-#endif // GSL_UTIL_H
+#endif // GUIDELINE_SUPPORT_LIBRARY_UTIL_H
