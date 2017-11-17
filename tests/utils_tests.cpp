@@ -14,11 +14,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/gsl>
+#include <gsl/gsl_util> // for narrow, finally, narrow_cast, narrowing_e...
 
-#include <functional>
+#include <algorithm>  // for move
+#include <functional> // for reference_wrapper, _Bind_helper<>::type
+#include <limits>     // for numeric_limits
+#include <stdint.h>   // for uint32_t, int32_t
 
 using namespace gsl;
 

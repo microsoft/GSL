@@ -17,16 +17,18 @@
 #ifndef GSL_SPAN_H
 #define GSL_SPAN_H
 
-#include <gsl/gsl_assert>
-#include <gsl/gsl_byte>
-#include <gsl/gsl_util>
+#include <gsl/gsl_assert> // for Expects
+#include <gsl/gsl_byte>   // for byte
+#include <gsl/gsl_util>   // for narrow_cast, narrow
 
-#include <array>
-#include <iterator>
+#include <algorithm> // for lexicographical_compare
+#include <array>     // for array
+#include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
+#include <iterator>  // for reverse_iterator, distance, random_access_...
 #include <limits>
-#include <memory>
+#include <memory> // for unique_ptr, shared_ptr
 #include <stdexcept>
-#include <type_traits>
+#include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 #include <utility>
 
 #ifdef _MSC_VER

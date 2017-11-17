@@ -14,12 +14,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK_THROW...
 
-#include <gsl/gsl>
+#include <gsl/gsl_util> // for at
 
-#include <initializer_list>
-#include <vector>
+#include <array>            // for array
+#include <cstddef>          // for size_t
+#include <initializer_list> // for initializer_list
+#include <vector>           // for vector
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using gsl::fail_fast;
 

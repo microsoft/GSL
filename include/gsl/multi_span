@@ -17,22 +17,24 @@
 #ifndef GSL_MULTI_SPAN_H
 #define GSL_MULTI_SPAN_H
 
-#include <gsl/gsl_assert>
-#include <gsl/gsl_byte>
-#include <gsl/gsl_util>
+#include <gsl/gsl_assert> // for Expects
+#include <gsl/gsl_byte>   // for byte
+#include <gsl/gsl_util>   // for narrow_cast
 
-#include <algorithm>
-#include <array>
+#include <algorithm> // for transform, lexicographical_compare
+#include <array>     // for array
 #include <cassert>
-#include <cstddef>
-#include <cstdint>
-#include <functional>
-#include <iterator>
-#include <limits>
+#include <cstddef>          // for ptrdiff_t, size_t, nullptr_t
+#include <cstdint>          // for PTRDIFF_MAX
+#include <functional>       // for divides, multiplies, minus, negate, plus
+#include <initializer_list> // for initializer_list
+#include <iterator>         // for iterator, random_access_iterator_tag
+#include <limits>           // for numeric_limits
 #include <new>
 #include <numeric>
 #include <stdexcept>
-#include <type_traits>
+#include <string>      // for basic_string
+#include <type_traits> // for enable_if_t, remove_cv_t, is_same, is_co...
 #include <utility>
 
 #ifdef _MSC_VER
@@ -1070,7 +1072,6 @@ inline constexpr dim_t<N> dim(std::ptrdiff_t n) GSL_NOEXCEPT
 template <typename ValueType, std::ptrdiff_t FirstDimension = dynamic_range,
           std::ptrdiff_t... RestDimensions>
 class multi_span;
-
 template <typename ValueType, std::size_t Rank>
 class strided_span;
 

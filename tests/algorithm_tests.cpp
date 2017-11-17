@@ -14,11 +14,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHE...
 
-#include <gsl/gsl_algorithm>
+#include <gsl/gsl_algorithm> // for copy
+#include <gsl/span>          // for span
 
-#include <array>
+#include <array>   // for array
+#include <cstddef> // for size_t
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace std;
 using namespace gsl;
