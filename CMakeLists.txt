@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.3)
+cmake_minimum_required(VERSION 3.7)
 
 project(GSL CXX)
 
@@ -49,10 +49,18 @@ target_include_directories(GSL INTERFACE
     >
 )
 
+if (MSVC_IDE)
+    option(VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
+else()
+    set(VS_ADD_NATIVE_VISUALIZERS FALSE CACHE INTERNAL "Native visualizers are Visual Studio extension" FORCE)
+endif()
+
 # add natvis file to the library so it will automatically be loaded into Visual Studio
-target_sources(GSL INTERFACE
-    ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
-)
+if(VS_ADD_NATIVE_VISUALIZERS)
+    target_sources(GSL INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
+    )
+endif()
 
 install(
     DIRECTORY include/gsl
