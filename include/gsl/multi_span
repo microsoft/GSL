@@ -806,17 +806,15 @@ struct is_bounds<strided_bounds<Rank>> : std::integral_constant<bool, true>
 };
 
 template <typename IndexType>
-class bounds_iterator : public std::iterator<std::random_access_iterator_tag, IndexType>
+class bounds_iterator
 {
-private:
-    using Base = std::iterator<std::random_access_iterator_tag, IndexType>;
-
 public:
     static const std::size_t rank = IndexType::rank;
-    using typename Base::reference;
-    using typename Base::pointer;
-    using typename Base::difference_type;
-    using typename Base::value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using value_type = IndexType;
+    using difference_type = std::ptrdiff_t;
+    using pointer = value_type*;
+    using reference = value_type&;
     using index_type = value_type;
     using index_size_type = typename IndexType::value_type;
     template <typename Bounds>
@@ -1997,14 +1995,13 @@ private:
 
 template <class Span>
 class contiguous_span_iterator
-    : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
 {
-    using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
-
 public:
-    using typename Base::reference;
-    using typename Base::pointer;
-    using typename Base::difference_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using value_type = typename Span::value_type;
+    using difference_type = std::ptrdiff_t;
+    using pointer = value_type*;
+    using reference = value_type&;
 
 private:
     template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
@@ -2117,15 +2114,13 @@ contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>
 
 template <typename Span>
 class general_span_iterator
-    : public std::iterator<std::random_access_iterator_tag, typename Span::value_type>
 {
-    using Base = std::iterator<std::random_access_iterator_tag, typename Span::value_type>;
-
 public:
-    using typename Base::reference;
-    using typename Base::pointer;
-    using typename Base::difference_type;
-    using typename Base::value_type;
+    using iterator_category = std::random_access_iterator_tag;
+    using value_type = typename Span::value_type;
+    using difference_type = std::ptrdiff_t;
+    using pointer = value_type*;
+    using reference = value_type&;
 
 private:
     template <typename ValueType, std::size_t Rank>
