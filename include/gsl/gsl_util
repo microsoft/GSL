@@ -17,12 +17,14 @@
 #ifndef GSL_UTIL_H
 #define GSL_UTIL_H
 
-#include <gsl/gsl_assert> // Ensures/Expects
+#include <gsl/gsl_assert> // for Expects
 
 #include <array>
-#include <exception>
-#include <type_traits>
-#include <utility>
+#include <cstddef>          // for ptrdiff_t, size_t
+#include <exception>        // for exception
+#include <initializer_list> // for initializer_list
+#include <type_traits>      // for is_signed, integral_constant
+#include <utility>          // for forward
 
 #if defined(_MSC_VER)
 

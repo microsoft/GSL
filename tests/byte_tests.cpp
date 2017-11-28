@@ -14,16 +14,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/gsl_byte>
-
-#include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <string>
-#include <vector>
+#include <gsl/gsl_byte> // for to_byte, to_integer, byte, operator&, ope...
 
 using namespace std;
 using namespace gsl;

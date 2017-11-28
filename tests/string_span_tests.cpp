@@ -14,15 +14,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/gsl> //owner
-#include <gsl/string_span>
+#include <gsl/gsl_assert>  // for Expects, fail_fast (ptr only)
+#include <gsl/pointers>    // for owner
+#include <gsl/span>        // for span, dynamic_extent
+#include <gsl/string_span> // for basic_string_span, operator==, ensure_z
 
-#include <algorithm>
-#include <cstdlib>
-#include <map>
-#include <vector>
+#include <algorithm>   // for move, find
+#include <cstddef>     // for size_t
+#include <map>         // for map
+#include <string>      // for basic_string, string, char_traits, operat...
+#include <type_traits> // for remove_reference<>::type
+#include <vector>      // for vector, allocator
 
 using namespace std;
 using namespace gsl;

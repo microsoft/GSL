@@ -14,13 +14,20 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/pointers>
+#include <gsl/pointers> // for not_null, operator<, operator<=, operator>
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <algorithm> // for addressof
+#include <memory>    // for shared_ptr, make_shared, operator<, opera...
+#include <sstream>   // for operator<<, ostringstream, basic_ostream:...
+#include <stdint.h>  // for uint16_t
+#include <string>    // for basic_string, operator==, string, operator<<
+#include <typeinfo>  // for type_info
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace gsl;
 

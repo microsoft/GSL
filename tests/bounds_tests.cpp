@@ -14,11 +14,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, TEST_CASE
 
-#include <gsl/multi_span>
+#include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t
 
-#include <vector>
+#include <cstddef> // for ptrdiff_t, size_t
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace std;
 using namespace gsl;

@@ -17,13 +17,17 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
-#include <gsl/gsl_assert>
-#include <gsl/gsl_util>
-#include <gsl/span>
+#include <gsl/gsl_assert> // for Ensures, Expects
+#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/span>       // for operator!=, operator==, dynamic_extent
 
-#include <cstdint>
+#include <algorithm> // for equal, lexicographical_compare
+#include <array>     // for array
+#include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
+#include <cstdint>   // for PTRDIFF_MAX
 #include <cstring>
-#include <string>
+#include <string>      // for basic_string, allocator, char_traits
+#include <type_traits> // for declval, is_convertible, enable_if_t, add_...
 
 #ifdef _MSC_VER
 #pragma warning(push)
