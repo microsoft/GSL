@@ -361,7 +361,7 @@ public:
     template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>,
               class = std::enable_if_t<
                   ( extent == dynamic_extent || N == extent ) &&
-                  std::is_convertible_v<std::add_pointer_t<ArrayElementType>, pointer>
+                  std::is_convertible<std::add_pointer_t<ArrayElementType>, pointer>::value
     >>
     constexpr span( std::array<ArrayElementType, N>& arr )
         : storage_(&arr[0], details::extent_type<N>())
@@ -371,8 +371,8 @@ public:
     template <std::size_t N,
               class = std::enable_if_t<
                   ( extent == dynamic_extent || N == extent ) &&
-                  std::is_const_v<element_type> &&
-                  std::is_convertible_v<std::add_pointer_t<element_type>, pointer>
+                  std::is_const<element_type>::value &&
+                  std::is_convertible<std::add_pointer_t<element_type>, pointer>::value
     >>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) GSL_NOEXCEPT
         : storage_(&arr[0], details::extent_type<N>())
