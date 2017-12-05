@@ -342,6 +342,7 @@ public:
     {
     }
 
+    template <class = std::enable_if_t<Extent == dynamic_extent || Extent == 0>>
     constexpr span(std::nullptr_t) GSL_NOEXCEPT : span() {}
 
     constexpr span(pointer ptr, index_type count) : storage_(ptr, count) {}
@@ -351,19 +352,28 @@ public:
     {
     }
 
-    template <std::size_t N>
+    template <std::size_t N, class = std::enable_if_t<extent == dynamic_extent || N == extent>>
     constexpr span(element_type (&arr)[N]) GSL_NOEXCEPT
         : storage_(&arr[0], details::extent_type<N>())
     {
     }
 
-    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    constexpr span(std::array<ArrayElementType, N>& arr) GSL_NOEXCEPT
+    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>,
+              class = std::enable_if_t<
+                  ( extent == dynamic_extent || N == extent ) &&
+                  std::is_convertible<std::add_pointer_t<ArrayElementType>, pointer>::value
+    >>
+    constexpr span( std::array<ArrayElementType, N>& arr )
         : storage_(&arr[0], details::extent_type<N>())
     {
     }
 
-    template <std::size_t N>
+    template <std::size_t N,
+              class = std::enable_if_t<
+                  ( extent == dynamic_extent || N == extent ) &&
+                  std::is_const<element_type>::value &&
+                  std::is_convertible<std::add_pointer_t<element_type>, pointer>::value
+    >>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) GSL_NOEXCEPT
         : storage_(&arr[0], details::extent_type<N>())
     {
@@ -387,9 +397,7 @@ public:
     template <class Container,
               class = std::enable_if_t<
                   !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
-                  std::is_convertible<typename Container::pointer, pointer>::value &&
-                  std::is_convertible<typename Container::pointer,
-                                      decltype(std::declval<Container>().data())>::value>>
+                  std::is_convertible<decltype(std::declval<Container>().data()), pointer>::value>>
     constexpr span(Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
     {
     }
@@ -397,9 +405,8 @@ public:
     template <class Container,
               class = std::enable_if_t<
                   std::is_const<element_type>::value && !details::is_span<Container>::value &&
-                  std::is_convertible<typename Container::pointer, pointer>::value &&
-                  std::is_convertible<typename Container::pointer,
-                                      decltype(std::declval<Container>().data())>::value>>
+                  !details::is_std_array<Container>::value &&
+                  std::is_convertible<decltype(std::declval<Container>().data()), pointer>::value>>
     constexpr span(const Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
     {
     }
@@ -433,14 +440,18 @@ public:
     constexpr span& operator=(span&& other) GSL_NOEXCEPT = default;
 
     // [span.sub], span subviews
-    template <std::ptrdiff_t Count>
+    template <std::ptrdiff_t Count,
+        class = std::enable_if_t<
+            Count >= 0 && ( extent == dynamic_extent || Count <= extent )>>
     constexpr span<element_type, Count> first() const
     {
         Expects(Count >= 0 && Count <= size());
         return {data(), Count};
     }
 
-    template <std::ptrdiff_t Count>
+    template <std::ptrdiff_t Count,
+        class = std::enable_if_t<
+            Count >= 0 && ( extent == dynamic_extent || Count <= extent )>>
     constexpr span<element_type, Count> last() const
     {
         Expects(Count >= 0 && size() - Count >= 0);

@@ -23,6 +23,7 @@
 #include <array>       // for array
 #include <iostream>    // for ptrdiff_t
 #include <iterator>    // for reverse_iterator, operator-, operator==
+#include <map>         // for std::map
 #include <memory>      // for unique_ptr, shared_ptr, make_unique, allo...
 #include <regex>       // for match_results, sub_match, match_results<>...
 #include <stddef.h>    // for ptrdiff_t
