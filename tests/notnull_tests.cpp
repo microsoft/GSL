@@ -14,13 +14,20 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/pointers>
+#include <gsl/pointers> // for not_null, operator<, operator<=, operator>
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <algorithm> // for addressof
+#include <memory>    // for shared_ptr, make_shared, operator<, opera...
+#include <sstream>   // for operator<<, ostringstream, basic_ostream:...
+#include <stdint.h>  // for uint16_t
+#include <string>    // for basic_string, operator==, string, operator<<
+#include <typeinfo>  // for type_info
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace gsl;
 
@@ -128,6 +135,38 @@ TEST_CASE("TestNotNullConstructors")
     not_null<std::shared_ptr<int>> x(
         std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
 }
+
+template<typename T>
+void ostream_helper(T v)
+{
+    not_null<T*> p(&v);
+    {
+        std::ostringstream os;
+        std::ostringstream ref;
+        os << p;
+        ref << &v;
+        CHECK(os.str() == ref.str());
+    }
+    {
+        std::ostringstream os;
+        std::ostringstream ref;
+        os << *p;
+        ref << v;
+        CHECK(os.str() == ref.str());
+    }
+}
+
+TEST_CASE("TestNotNullostream")
+{
+    ostream_helper<int>(17);
+    ostream_helper<float>(21.5f);
+    ostream_helper<double>(3.4566e-7f);
+    ostream_helper<char>('c');
+    ostream_helper<uint16_t>(0x0123u);
+    ostream_helper<const char*>("cstring");
+    ostream_helper<std::string>("string");
+}
+
 
 TEST_CASE("TestNotNullCasting")
 {

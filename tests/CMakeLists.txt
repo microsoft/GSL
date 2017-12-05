@@ -15,8 +15,8 @@ if(GIT_FOUND)
     ExternalProject_Add(
         catch
         PREFIX ${CMAKE_BINARY_DIR}/catch
-        GIT_REPOSITORY https://github.com/philsquared/Catch.git
-        GIT_TAG v1.9.6
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v2.0.1
         CMAKE_ARGS ${CATCH_CMAKE_ARGS}
         LOG_DOWNLOAD 1
         UPDATE_DISCONNECTED 1

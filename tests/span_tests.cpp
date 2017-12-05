@@ -14,17 +14,25 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/span>
+#include <gsl/gsl_byte> // for byte
+#include <gsl/gsl_util> // for narrow_cast, at
+#include <gsl/span>     // for span, span_iterator, operator==, operator!=
 
-#include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <regex>
-#include <string>
-#include <vector>
+#include <array>       // for array
+#include <iostream>    // for ptrdiff_t
+#include <iterator>    // for reverse_iterator, operator-, operator==
+#include <memory>      // for unique_ptr, shared_ptr, make_unique, allo...
+#include <regex>       // for match_results, sub_match, match_results<>...
+#include <stddef.h>    // for ptrdiff_t
+#include <string>      // for string
+#include <type_traits> // for integral_constant<>::value, is_default_co...
+#include <vector>      // for vector
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace std;
 using namespace gsl;

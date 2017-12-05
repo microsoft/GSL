@@ -44,7 +44,7 @@ contributing any changes that were necessary back to this project to benefit the
 ## Building the tests
 To build the tests, you will require the following:
 
-* [CMake](http://cmake.org), version 3.1.3 or later to be installed and in your PATH.
+* [CMake](http://cmake.org), version 3.7 or later to be installed and in your PATH.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 

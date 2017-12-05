@@ -14,13 +14,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #ifndef GSL_CONTRACTS_H
 #define GSL_CONTRACTS_H
 
 #include <exception>
-#include <stdexcept>
+#include <stdexcept> // for logic_error
 
 //
 // There are three configuration options for this GSL implementation's behavior

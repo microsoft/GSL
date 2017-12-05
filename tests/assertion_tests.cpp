@@ -14,9 +14,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 
-#include <gsl/gsl>
+#include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
 
 using namespace gsl;
 

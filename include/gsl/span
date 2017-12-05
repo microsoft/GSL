@@ -14,21 +14,21 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #ifndef GSL_SPAN_H
 #define GSL_SPAN_H
 
-#include <gsl/gsl_assert>
-#include <gsl/gsl_byte>
-#include <gsl/gsl_util>
+#include <gsl/gsl_assert> // for Expects
+#include <gsl/gsl_byte>   // for byte
+#include <gsl/gsl_util>   // for narrow_cast, narrow
 
-#include <array>
-#include <iterator>
+#include <algorithm> // for lexicographical_compare
+#include <array>     // for array
+#include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
+#include <iterator>  // for reverse_iterator, distance, random_access_...
 #include <limits>
-#include <memory>
+#include <memory> // for unique_ptr, shared_ptr
 #include <stdexcept>
-#include <type_traits>
+#include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 #include <utility>
 
 #ifdef _MSC_VER
@@ -443,15 +443,16 @@ public:
     template <std::ptrdiff_t Count>
     constexpr span<element_type, Count> last() const
     {
-        Expects(Count >= 0 && Count <= size());
+        Expects(Count >= 0 && size() - Count >= 0);
         return {data() + (size() - Count), Count};
     }
 
     template <std::ptrdiff_t Offset, std::ptrdiff_t Count = dynamic_extent>
     constexpr span<element_type, Count> subspan() const
     {
-        Expects((Offset == 0 || (Offset > 0 && Offset <= size())) &&
+        Expects((Offset >= 0 && size() - Offset >= 0) &&
                 (Count == dynamic_extent || (Count >= 0 && Offset + Count <= size())));
+
         return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
 
@@ -463,17 +464,15 @@ public:
 
     constexpr span<element_type, dynamic_extent> last(index_type count) const
     {
-        Expects(count >= 0 && count <= size());
-        return {data() + (size() - count), count};
+        return make_subspan(size() - count, dynamic_extent, subspan_selector<Extent>{});
     }
 
     constexpr span<element_type, dynamic_extent> subspan(index_type offset,
                                                          index_type count = dynamic_extent) const
     {
-        Expects((offset == 0 || (offset > 0 && offset <= size())) &&
-                (count == dynamic_extent || (count >= 0 && offset + count <= size())));
-        return {data() + offset, count == dynamic_extent ? size() - offset : count};
+        return make_subspan(offset, count, subspan_selector<Extent>{});
     }
+
 
     // [span.obs], span observers
     constexpr index_type length() const GSL_NOEXCEPT { return size(); }
@@ -517,10 +516,13 @@ private:
     class storage_type : public ExtentType
     {
     public:
+
+        // checked parameter is needed to remove unnecessary null check in subspans
         template <class OtherExtentType>
-        constexpr storage_type(pointer data, OtherExtentType ext) : ExtentType(ext), data_(data)
+        constexpr storage_type(pointer data, OtherExtentType ext, bool checked = false) : ExtentType(ext), data_(data)
         {
-            Expects((!data && ExtentType::size() == 0) || (data && ExtentType::size() >= 0));
+            Expects(((checked || !data) && ExtentType::size() == 0) ||
+                    ((checked || data) && ExtentType::size() >= 0));
         }
 
         constexpr pointer data() const GSL_NOEXCEPT { return data_; }
@@ -530,7 +532,37 @@ private:
     };
 
     storage_type<details::extent_type<Extent>> storage_;
+
+    // The rest is needed to remove unnecessary null check in subspans
+    constexpr span(pointer ptr, index_type count, bool checked) : storage_(ptr, count, checked) {}
+
+    template <std::ptrdiff_t CallerExtent>
+    class subspan_selector {};
+
+    template <std::ptrdiff_t CallerExtent>
+    span<element_type, dynamic_extent> make_subspan(index_type offset,
+                                                    index_type count,
+                                                    subspan_selector<CallerExtent>) const GSL_NOEXCEPT
+    {
+        span<element_type, dynamic_extent> tmp(*this);
+        return tmp.subspan(offset, count);
+    }
+
+    span<element_type, dynamic_extent> make_subspan(index_type offset,
+                                                    index_type count,
+                                                    subspan_selector<dynamic_extent>) const GSL_NOEXCEPT
+    {
+        Expects(offset >= 0 && size() - offset >= 0);
+        if (count == dynamic_extent)
+        {
+            return { data() + offset, size() - offset, true };
+        }
+
+        Expects(count >= 0 && size() - offset >= count);
+        return { data() + offset,  count, true };
+    }
 };
+
 
 // [span.comparison], span comparison operators
 template <class ElementType, std::ptrdiff_t FirstExtent, std::ptrdiff_t SecondExtent>

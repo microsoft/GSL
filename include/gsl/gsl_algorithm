@@ -14,14 +14,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #ifndef GSL_ALGORITHM_H
 #define GSL_ALGORITHM_H
 
-#include <gsl/span>
+#include <gsl/gsl_assert> // for Expects
+#include <gsl/span>       // for dynamic_extent, span
 
-#include <algorithm>
+#include <algorithm>   // for copy_n
+#include <cstddef>     // for ptrdiff_t
+#include <type_traits> // for is_assignable
 
 #ifdef _MSC_VER
 #pragma warning(push)

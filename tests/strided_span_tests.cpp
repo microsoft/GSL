@@ -14,16 +14,21 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 
-#include <gsl/multi_span>
+#include <gsl/gsl_byte>   // for byte
+#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/multi_span> // for strided_span, index, multi_span, strided_...
 
-#include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <string>
-#include <vector>
+#include <iostream>    // for size_t
+#include <iterator>    // for begin, end
+#include <numeric>     // for iota
+#include <type_traits> // for integral_constant<>::value, is_convertible
+#include <vector>      // for vector
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace std;
 using namespace gsl;

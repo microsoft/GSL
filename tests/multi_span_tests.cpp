@@ -14,16 +14,24 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <catch/catch.hpp>
+#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 
-#include <gsl/multi_span>
+#include <gsl/gsl_byte>   // for byte
+#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/multi_span> // for multi_span, contiguous_span_iterator, dim
 
-#include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <string>
-#include <vector>
+#include <algorithm> // for fill, for_each
+#include <array>     // for array
+#include <iostream>  // for ptrdiff_t, size_t
+#include <iterator>  // for reverse_iterator, begin, end, operator!=
+#include <numeric>   // for iota
+#include <stddef.h>  // for ptrdiff_t
+#include <string>    // for string
+#include <vector>    // for vector
+
+namespace gsl {
+struct fail_fast;
+}  // namespace gsl
 
 using namespace std;
 using namespace gsl;

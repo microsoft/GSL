@@ -14,17 +14,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #ifndef GSL_UTIL_H
 #define GSL_UTIL_H
 
-#include <gsl/gsl_assert> // Ensures/Expects
+#include <gsl/gsl_assert> // for Expects
 
 #include <array>
-#include <exception>
-#include <type_traits>
-#include <utility>
+#include <cstddef>          // for ptrdiff_t, size_t
+#include <exception>        // for exception
+#include <initializer_list> // for initializer_list
+#include <type_traits>      // for is_signed, integral_constant
+#include <utility>          // for forward
 
 #if defined(_MSC_VER)
 
@@ -43,22 +43,22 @@ namespace gsl
 // GSL.util: utilities
 //
 
-// final_act allows you to ensure something gets run at the end of a scope
+// final_action allows you to ensure something gets run at the end of a scope
 template <class F>
-class final_act
+class final_action
 {
 public:
-    explicit final_act(F f) noexcept : f_(std::move(f)), invoke_(true) {}
+    explicit final_action(F f) noexcept : f_(std::move(f)), invoke_(true) {}
 
-    final_act(final_act&& other) noexcept : f_(std::move(other.f_)), invoke_(other.invoke_)
+    final_action(final_action&& other) noexcept : f_(std::move(other.f_)), invoke_(other.invoke_)
     {
         other.invoke_ = false;
     }
 
-    final_act(const final_act&) = delete;
-    final_act& operator=(const final_act&) = delete;
+    final_action(const final_action&) = delete;
+    final_action& operator=(const final_action&) = delete;
 
-    ~final_act() noexcept
+    ~final_action() noexcept
     {
         if (invoke_) f_();
     }
@@ -68,17 +68,17 @@ private:
     bool invoke_;
 };
 
-// finally() - convenience function to generate a final_act
+// finally() - convenience function to generate a final_action
 template <class F>
-inline final_act<F> finally(const F& f) noexcept
+inline final_action<F> finally(const F& f) noexcept
 {
-    return final_act<F>(f);
+    return final_action<F>(f);
 }
 
 template <class F>
-inline final_act<F> finally(F&& f) noexcept
+inline final_action<F> finally(F&& f) noexcept
 {
-    return final_act<F>(std::forward<F>(f));
+    return final_action<F>(std::forward<F>(f));
 }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
