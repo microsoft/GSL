@@ -48,7 +48,7 @@ template <class F>
 class final_action
 {
 public:
-    explicit final_action(F f) noexcept : f_(std::move(f)), invoke_(true) {}
+    explicit final_action(F f) noexcept : f_(std::move(f)) {}
 
     final_action(final_action&& other) noexcept : f_(std::move(other.f_)), invoke_(other.invoke_)
     {
@@ -65,7 +65,7 @@ public:
 
 private:
     F f_;
-    bool invoke_;
+    bool invoke_ {true};
 };
 
 // finally() - convenience function to generate a final_action
