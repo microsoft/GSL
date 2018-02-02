@@ -52,12 +52,10 @@
 //
 #ifdef _MSC_VER
 #define GSL_ASSUME(cond) __assume(cond)
-#elif defined(__clang__)
-#define GSL_ASSUME(cond) __builtin_assume(cond)
 #elif defined(__GNUC__)
 #define GSL_ASSUME(cond) ((cond) ? static_cast<void>(0) : __builtin_unreachable())
 #else
-#define GSL_ASSUME(cond) static_cast<void>(!!(cond))
+#define GSL_ASSUME(cond) static_cast<void>((cond) ? 0 : 0)
 #endif
 
 //
