@@ -389,7 +389,6 @@ public:
     }
 
     constexpr span(const span& other) GSL_NOEXCEPT = default;
-    constexpr span(span&& other) GSL_NOEXCEPT = default;
 
     template <
         class OtherElementType, std::ptrdiff_t OtherExtent,
@@ -401,21 +400,9 @@ public:
     {
     }
 
-    template <
-        class OtherElementType, std::ptrdiff_t OtherExtent,
-        class = std::enable_if_t<
-            details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
-            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
-    constexpr span(span<OtherElementType, OtherExtent>&& other)
-        : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
-    {
-    }
-
     ~span() GSL_NOEXCEPT = default;
     constexpr span& operator=(const span& other) GSL_NOEXCEPT = default;
-
-    constexpr span& operator=(span&& other) GSL_NOEXCEPT = default;
-
+    
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>
     constexpr span<element_type, Count> first() const
