@@ -98,7 +98,7 @@ namespace details
     {
         if (str == nullptr || n <= 0) return 0;
 
-        span<const CharT> str_span{str, n};
+        const span<const CharT> str_span{str, n};
 
         std::ptrdiff_t len = 0;
         while (len < n && str_span[len]) len++;
