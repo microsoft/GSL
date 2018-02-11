@@ -145,7 +145,7 @@ template <class Cont>
 span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
 ensure_z(Cont& cont)
 {
-    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
+    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.size()));
 }
 
 template <typename CharT, std::ptrdiff_t>
