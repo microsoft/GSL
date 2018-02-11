@@ -482,17 +482,17 @@ public:
     constexpr pointer data() const GSL_NOEXCEPT { return storage_.data(); }
 
     // [span.iter], span iterator support
-    iterator begin() const GSL_NOEXCEPT { return {this, 0}; }
-    iterator end() const GSL_NOEXCEPT { return {this, length()}; }
+    constexpr iterator begin() const GSL_NOEXCEPT { return {this, 0}; }
+    constexpr iterator end() const GSL_NOEXCEPT { return {this, length()}; }
 
-    const_iterator cbegin() const GSL_NOEXCEPT { return {this, 0}; }
-    const_iterator cend() const GSL_NOEXCEPT { return {this, length()}; }
+    constexpr const_iterator cbegin() const GSL_NOEXCEPT { return {this, 0}; }
+    constexpr const_iterator cend() const GSL_NOEXCEPT { return {this, length()}; }
 
-    reverse_iterator rbegin() const GSL_NOEXCEPT { return reverse_iterator{end()}; }
-    reverse_iterator rend() const GSL_NOEXCEPT { return reverse_iterator{begin()}; }
+    constexpr reverse_iterator rbegin() const GSL_NOEXCEPT { return reverse_iterator{end()}; }
+    constexpr reverse_iterator rend() const GSL_NOEXCEPT { return reverse_iterator{begin()}; }
 
-    const_reverse_iterator crbegin() const GSL_NOEXCEPT { return const_reverse_iterator{cend()}; }
-    const_reverse_iterator crend() const GSL_NOEXCEPT { return const_reverse_iterator{cbegin()}; }
+    constexpr const_reverse_iterator crbegin() const GSL_NOEXCEPT { return const_reverse_iterator{cend()}; }
+    constexpr const_reverse_iterator crend() const GSL_NOEXCEPT { return const_reverse_iterator{cbegin()}; }
 
 private:
     // this implementation detail class lets us take advantage of the
