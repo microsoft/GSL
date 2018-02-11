@@ -11,7 +11,7 @@
     </Type>
 
     <!-- These types are from the gsl_util header. -->
-    <Type Name="gsl::final_act&lt;*&gt;">
+    <Type Name="gsl::final_action&lt;*&gt;">
         <DisplayString>{{ invoke = {invoke_}, action = {f_} }}</DisplayString>
         <Expand>
             <Item Name="[invoke]">invoke_</Item>
