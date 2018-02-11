@@ -341,8 +341,6 @@ public:
     {
     }
 
-    constexpr span(std::nullptr_t) GSL_NOEXCEPT : span() {}
-
     constexpr span(pointer ptr, index_type count) : storage_(ptr, count) {}
 
     constexpr span(pointer firstElem, pointer lastElem)
