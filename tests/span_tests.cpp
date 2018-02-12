@@ -51,33 +51,33 @@ TEST_CASE("default_constructor")
 {
     {
         span<int> s;
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
 
         span<const int> cs;
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
+        CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 
     {
         span<int, 0> s;
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
 
         span<const int, 0> cs;
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
+        CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         span<int, 1> s;
-        CHECK((s.length() == 1 && s.data() == nullptr)); // explains why it can't compile
+        CHECK((s.size() == 1 && s.data() == nullptr)); // explains why it can't compile
 #endif
     }
 
     {
         span<int> s{};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
 
         span<const int> cs{};
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
+        CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 }
 
@@ -94,64 +94,22 @@ TEST_CASE("size_optimization")
     }
 }
 
-TEST_CASE("from_nullptr_constructor")
-{
-    {
-        span<int> s = nullptr;
-        CHECK((s.length() == 0 && s.data() == nullptr));
-
-        span<const int> cs = nullptr;
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
-    }
-
-    {
-        span<int, 0> s = nullptr;
-        CHECK((s.length() == 0 && s.data() == nullptr));
-
-        span<const int, 0> cs = nullptr;
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
-    }
-
-    {
-#ifdef CONFIRM_COMPILATION_ERRORS
-        span<int, 1> s = nullptr;
-        CHECK((s.length() == 1 && s.data() == nullptr)); // explains why it can't compile
-#endif
-    }
-
-    {
-        span<int> s{nullptr};
-        CHECK((s.length() == 0 && s.data() == nullptr));
-
-        span<const int> cs{nullptr};
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
-    }
-
-    {
-        span<int*> s{nullptr};
-        CHECK((s.length() == 0 && s.data() == nullptr));
-
-        span<const int*> cs{nullptr};
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
-    }
-}
-
-TEST_CASE("from_nullptr_length_constructor")
+TEST_CASE("from_nullptr_size_constructor")
 {
     {
         span<int> s{nullptr, static_cast<span<int>::index_type>(0)};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
 
         span<const int> cs{nullptr, static_cast<span<int>::index_type>(0)};
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
+        CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 
     {
         span<int, 0> s{nullptr, static_cast<span<int>::index_type>(0)};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
 
         span<const int, 0> cs{nullptr, static_cast<span<int>::index_type>(0)};
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
+        CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 
     {
@@ -179,10 +137,10 @@ TEST_CASE("from_nullptr_length_constructor")
 
     {
         span<int*> s{nullptr, static_cast<span<int>::index_type>(0)};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
 
         span<const int*> cs{nullptr, static_cast<span<int>::index_type>(0)};
-        CHECK((cs.length() == 0 && cs.data() == nullptr));
+        CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 }
 
@@ -195,7 +153,7 @@ TEST_CASE("from_pointer_length_constructor")
         {
             {
                 span<int> s = { &arr[0], i };
-                CHECK(s.length() == i);
+                CHECK(s.size() == i);
                 CHECK(s.data() == &arr[0]);
                 CHECK(s.empty() == (i == 0));
                 for (int j = 0; j < i; ++j)
@@ -207,7 +165,7 @@ TEST_CASE("from_pointer_length_constructor")
             }
             {
                 span<int> s = { &arr[i], 4-i };
-                CHECK(s.length() == 4-i);
+                CHECK(s.size() == 4-i);
                 CHECK(s.data() == &arr[i]);
                 CHECK(s.empty() == (4-i == 0));
                 for (int j = 0; j < 4-i; ++j)
@@ -222,14 +180,14 @@ TEST_CASE("from_pointer_length_constructor")
 
     {
         span<int, 2> s{&arr[0], 2};
-        CHECK((s.length() == 2 && s.data() == &arr[0]));
+        CHECK((s.size() == 2 && s.data() == &arr[0]));
         CHECK((s[0] == 1 && s[1] == 2));
     }
 
     {
         int* p = nullptr;
         span<int> s{p, static_cast<span<int>::index_type>(0)};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
     }
 
     {
@@ -240,14 +198,14 @@ TEST_CASE("from_pointer_length_constructor")
 
     {
         auto s = make_span(&arr[0], 2);
-        CHECK((s.length() == 2 && s.data() == &arr[0]));
+        CHECK((s.size() == 2 && s.data() == &arr[0]));
         CHECK((s[0] == 1 && s[1] == 2));
     }
 
     {
         int* p = nullptr;
         auto s = make_span(p, static_cast<span<int>::index_type>(0));
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
     }
 
     {
@@ -263,24 +221,24 @@ TEST_CASE("from_pointer_pointer_constructor")
 
     {
         span<int> s{&arr[0], &arr[2]};
-        CHECK((s.length() == 2 && s.data() == &arr[0]));
+        CHECK((s.size() == 2 && s.data() == &arr[0]));
         CHECK((s[0] == 1 && s[1] == 2));
     }
 
     {
         span<int, 2> s{&arr[0], &arr[2]};
-        CHECK((s.length() == 2 && s.data() == &arr[0]));
+        CHECK((s.size() == 2 && s.data() == &arr[0]));
         CHECK((s[0] == 1 && s[1] == 2));
     }
 
     {
         span<int> s{&arr[0], &arr[0]};
-        CHECK((s.length() == 0 && s.data() == &arr[0]));
+        CHECK((s.size() == 0 && s.data() == &arr[0]));
     }
 
     {
         span<int, 0> s{&arr[0], &arr[0]};
-        CHECK((s.length() == 0 && s.data() == &arr[0]));
+        CHECK((s.size() == 0 && s.data() == &arr[0]));
     }
 
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
@@ -299,13 +257,13 @@ TEST_CASE("from_pointer_pointer_constructor")
     {
         int* p = nullptr;
         span<int> s{p, p};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
     }
 
     {
         int* p = nullptr;
         span<int, 0> s{p, p};
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
     }
 
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
@@ -317,19 +275,19 @@ TEST_CASE("from_pointer_pointer_constructor")
 
     {
         auto s = make_span(&arr[0], &arr[2]);
-        CHECK((s.length() == 2 && s.data() == &arr[0]));
+        CHECK((s.size() == 2 && s.data() == &arr[0]));
         CHECK((s[0] == 1 && s[1] == 2));
     }
 
     {
         auto s = make_span(&arr[0], &arr[0]);
-        CHECK((s.length() == 0 && s.data() == &arr[0]));
+        CHECK((s.size() == 0 && s.data() == &arr[0]));
     }
 
     {
         int* p = nullptr;
         auto s = make_span(p, p);
-        CHECK((s.length() == 0 && s.data() == nullptr));
+        CHECK((s.size() == 0 && s.data() == nullptr));
     }
 }
 
@@ -339,12 +297,12 @@ TEST_CASE("from_array_constructor")
 
     {
         span<int> s{arr};
-        CHECK((s.length() == 5 && s.data() == &arr[0]));
+        CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
     {
         span<int, 5> s{arr};
-        CHECK((s.length() == 5 && s.data() == &arr[0]));
+        CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
     int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
@@ -356,18 +314,18 @@ TEST_CASE("from_array_constructor")
 
     {
         span<int, 0> s{arr};
-        CHECK((s.length() == 0 && s.data() == &arr[0]));
+        CHECK((s.size() == 0 && s.data() == &arr[0]));
     }
 
     {
         span<int> s{arr2d};
-        CHECK((s.length() == 6 && s.data() == &arr2d[0][0]));
+        CHECK((s.size() == 6 && s.data() == &arr2d[0][0]));
         CHECK((s[0] == 1 && s[5] == 6));
     }
 
     {
         span<int, 0> s{arr2d};
-        CHECK((s.length() == 0 && s.data() == &arr2d[0][0]));
+        CHECK((s.size() == 0 && s.data() == &arr2d[0][0]));
     }
 
     {
@@ -376,7 +334,7 @@ TEST_CASE("from_array_constructor")
 #endif
     {
         span<int[3]> s{&(arr2d[0]), 1};
-        CHECK((s.length() == 1 && s.data() == &arr2d[0]));
+        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
     }
 
     int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -384,13 +342,13 @@ TEST_CASE("from_array_constructor")
 #ifdef CONFIRM_COMPILATION_ERRORS
     {
         span<int> s{arr3d};
-        CHECK((s.length() == 12 && s.data() == &arr3d[0][0][0]));
+        CHECK((s.size() == 12 && s.data() == &arr3d[0][0][0]));
         CHECK((s[0] == 1 && s[11] == 12));
     }
 
     {
         span<int, 0> s{arr3d};
-        CHECK((s.length() == 0 && s.data() == &arr3d[0][0][0]));
+        CHECK((s.size() == 0 && s.data() == &arr3d[0][0][0]));
     }
 
     {
@@ -399,28 +357,28 @@ TEST_CASE("from_array_constructor")
 
     {
         span<int, 12> s{arr3d};
-        CHECK((s.length() == 12 && s.data() == &arr3d[0][0][0]));
+        CHECK((s.size() == 12 && s.data() == &arr3d[0][0][0]));
         CHECK((s[0] == 1 && s[5] == 6));
     }
 #endif
     {
         span<int[3][2]> s{&arr3d[0], 1};
-        CHECK((s.length() == 1 && s.data() == &arr3d[0]));
+        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
     }
 
     {
         auto s = make_span(arr);
-        CHECK((s.length() == 5 && s.data() == &arr[0]));
+        CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
     {
         auto s = make_span(&(arr2d[0]), 1);
-        CHECK((s.length() == 1 && s.data() == &arr2d[0]));
+        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
     }
 
     {
         auto s = make_span(&arr3d[0], 1);
-        CHECK((s.length() == 1 && s.data() == &arr3d[0]));
+        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
     }
 }
 
@@ -430,12 +388,12 @@ TEST_CASE("from_dynamic_array_constructor")
 
     {
         span<double> s(&arr[0][0][0], 10);
-        CHECK((s.length() == 10 && s.data() == &arr[0][0][0]));
+        CHECK((s.size() == 10 && s.data() == &arr[0][0][0]));
     }
 
     {
         auto s = make_span(&arr[0][0][0], 10);
-        CHECK((s.length() == 10 && s.data() == &arr[0][0][0]));
+        CHECK((s.size() == 10 && s.data() == &arr[0][0][0]));
     }
 
     delete[] arr;
@@ -723,17 +681,17 @@ TEST_CASE("copy_move_and_assignment")
     int arr[] = {3, 4, 5};
 
     span<const int> s2 = arr;
-    CHECK((s2.length() == 3 && s2.data() == &arr[0]));
+    CHECK((s2.size() == 3 && s2.data() == &arr[0]));
 
     s2 = s1;
     CHECK(s2.empty());
 
     auto get_temp_span = [&]() -> span<int> { return {&arr[1], 2}; };
-    auto use_span = [&](span<const int> s) { CHECK((s.length() == 2 && s.data() == &arr[1])); };
+    auto use_span = [&](span<const int> s) { CHECK((s.size() == 2 && s.data() == &arr[1])); };
     use_span(get_temp_span());
 
     s1 = get_temp_span();
-    CHECK((s1.length() == 2 && s1.data() == &arr[1]));
+    CHECK((s1.size() == 2 && s1.data() == &arr[1]));
 }
 
 TEST_CASE("first")
@@ -742,35 +700,35 @@ TEST_CASE("first")
 
     {
         span<int, 5> av = arr;
-        CHECK(av.first<2>().length() == 2);
-        CHECK(av.first(2).length() == 2);
+        CHECK(av.first<2>().size() == 2);
+        CHECK(av.first(2).size() == 2);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK(av.first<0>().length() == 0);
-        CHECK(av.first(0).length() == 0);
+        CHECK(av.first<0>().size() == 0);
+        CHECK(av.first(0).size() == 0);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK(av.first<5>().length() == 5);
-        CHECK(av.first(5).length() == 5);
+        CHECK(av.first<5>().size() == 5);
+        CHECK(av.first(5).size() == 5);
     }
 
     {
         span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-        CHECK(av.first<6>().length() == 6);
-        CHECK(av.first<-1>().length() == -1);
+        CHECK(av.first<6>().size() == 6);
+        CHECK(av.first<-1>().size() == -1);
 #endif
-        CHECK_THROWS_AS(av.first(6).length(), fail_fast);
+        CHECK_THROWS_AS(av.first(6).size(), fail_fast);
     }
 
     {
         span<int> av;
-        CHECK(av.first<0>().length() == 0);
-        CHECK(av.first(0).length() == 0);
+        CHECK(av.first<0>().size() == 0);
+        CHECK(av.first(0).size() == 0);
     }
 }
 
@@ -780,34 +738,34 @@ TEST_CASE("last")
 
     {
         span<int, 5> av = arr;
-        CHECK(av.last<2>().length() == 2);
-        CHECK(av.last(2).length() == 2);
+        CHECK(av.last<2>().size() == 2);
+        CHECK(av.last(2).size() == 2);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK(av.last<0>().length() == 0);
-        CHECK(av.last(0).length() == 0);
+        CHECK(av.last<0>().size() == 0);
+        CHECK(av.last(0).size() == 0);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK(av.last<5>().length() == 5);
-        CHECK(av.last(5).length() == 5);
+        CHECK(av.last<5>().size() == 5);
+        CHECK(av.last(5).size() == 5);
     }
 
     {
         span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-        CHECK(av.last<6>().length() == 6);
+        CHECK(av.last<6>().size() == 6);
 #endif
-        CHECK_THROWS_AS(av.last(6).length(), fail_fast);
+        CHECK_THROWS_AS(av.last(6).size(), fail_fast);
     }
 
     {
         span<int> av;
-        CHECK(av.last<0>().length() == 0);
-        CHECK(av.last(0).length() == 0);
+        CHECK(av.last<0>().size() == 0);
+        CHECK(av.last(0).size() == 0);
     }
 }
 
@@ -817,64 +775,64 @@ TEST_CASE("subspan")
 
     {
         span<int, 5> av = arr;
-        CHECK((av.subspan<2, 2>().length() == 2));
-        CHECK(av.subspan(2, 2).length() == 2);
-        CHECK(av.subspan(2, 3).length() == 3);
+        CHECK((av.subspan<2, 2>().size() == 2));
+        CHECK(av.subspan(2, 2).size() == 2);
+        CHECK(av.subspan(2, 3).size() == 3);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK((av.subspan<0, 0>().length() == 0));
-        CHECK(av.subspan(0, 0).length() == 0);
+        CHECK((av.subspan<0, 0>().size() == 0));
+        CHECK(av.subspan(0, 0).size() == 0);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK((av.subspan<0, 5>().length() == 5));
-        CHECK(av.subspan(0, 5).length() == 5);
-        CHECK_THROWS_AS(av.subspan(0, 6).length(), fail_fast);
-        CHECK_THROWS_AS(av.subspan(1, 5).length(), fail_fast);
+        CHECK((av.subspan<0, 5>().size() == 5));
+        CHECK(av.subspan(0, 5).size() == 5);
+        CHECK_THROWS_AS(av.subspan(0, 6).size(), fail_fast);
+        CHECK_THROWS_AS(av.subspan(1, 5).size(), fail_fast);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK((av.subspan<4, 0>().length() == 0));
-        CHECK(av.subspan(4, 0).length() == 0);
-        CHECK(av.subspan(5, 0).length() == 0);
-        CHECK_THROWS_AS(av.subspan(6, 0).length(), fail_fast);
+        CHECK((av.subspan<4, 0>().size() == 0));
+        CHECK(av.subspan(4, 0).size() == 0);
+        CHECK(av.subspan(5, 0).size() == 0);
+        CHECK_THROWS_AS(av.subspan(6, 0).size(), fail_fast);
     }
 
     {
         span<int> av;
-        CHECK((av.subspan<0, 0>().length() == 0));
-        CHECK(av.subspan(0, 0).length() == 0);
-        CHECK_THROWS_AS((av.subspan<1, 0>().length()), fail_fast);
+        CHECK((av.subspan<0, 0>().size() == 0));
+        CHECK(av.subspan(0, 0).size() == 0);
+        CHECK_THROWS_AS((av.subspan<1, 0>().size()), fail_fast);
     }
 
     {
         span<int> av;
-        CHECK(av.subspan(0).length() == 0);
-        CHECK_THROWS_AS(av.subspan(1).length(), fail_fast);
+        CHECK(av.subspan(0).size() == 0);
+        CHECK_THROWS_AS(av.subspan(1).size(), fail_fast);
     }
 
     {
         span<int> av = arr;
-        CHECK(av.subspan(0).length() == 5);
-        CHECK(av.subspan(1).length() == 4);
-        CHECK(av.subspan(4).length() == 1);
-        CHECK(av.subspan(5).length() == 0);
-        CHECK_THROWS_AS(av.subspan(6).length(), fail_fast);
+        CHECK(av.subspan(0).size() == 5);
+        CHECK(av.subspan(1).size() == 4);
+        CHECK(av.subspan(4).size() == 1);
+        CHECK(av.subspan(5).size() == 0);
+        CHECK_THROWS_AS(av.subspan(6).size(), fail_fast);
         const auto av2 = av.subspan(1);
         for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
     }
 
     {
         span<int, 5> av = arr;
-        CHECK(av.subspan(0).length() == 5);
-        CHECK(av.subspan(1).length() == 4);
-        CHECK(av.subspan(4).length() == 1);
-        CHECK(av.subspan(5).length() == 0);
-        CHECK_THROWS_AS(av.subspan(6).length(), fail_fast);
+        CHECK(av.subspan(0).size() == 5);
+        CHECK(av.subspan(1).size() == 4);
+        CHECK(av.subspan(4).size() == 1);
+        CHECK(av.subspan(5).size() == 0);
+        CHECK_THROWS_AS(av.subspan(6).size(), fail_fast);
         const auto av2 = av.subspan(1);
         for (int i = 0; i < 4; ++i) CHECK(av2[i] == i + 2);
     }
@@ -1192,8 +1150,8 @@ TEST_CASE("crbegin_crend")
 TEST_CASE("comparison_operators")
 {
     {
-        span<int> s1 = nullptr;
-        span<int> s2 = nullptr;
+        span<int> s1;
+        span<int> s2;
         CHECK(s1 == s2);
         CHECK(!(s1 != s2));
         CHECK(!(s1 < s2));
@@ -1230,7 +1188,7 @@ TEST_CASE("comparison_operators")
     {
         int arr[] = {2, 1}; // bigger
 
-        span<int> s1 = nullptr;
+        span<int> s1;
         span<int> s2 = arr;
 
         CHECK(s1 != s2);
@@ -1315,17 +1273,17 @@ TEST_CASE("as_bytes")
 
     {
         const span<const int> s = a;
-        CHECK(s.length() == 4);
+        CHECK(s.size() == 4);
         const span<const byte> bs = as_bytes(s);
         CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
-        CHECK(bs.length() == s.length_bytes());
+        CHECK(bs.size() == s.size_bytes());
     }
 
     {
         span<int> s;
         const auto bs = as_bytes(s);
-        CHECK(bs.length() == s.length());
-        CHECK(bs.length() == 0);
+        CHECK(bs.size() == s.size());
+        CHECK(bs.size() == 0);
         CHECK(bs.size_bytes() == 0);
         CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
         CHECK(bs.data() == nullptr);
@@ -1335,7 +1293,7 @@ TEST_CASE("as_bytes")
         span<int> s = a;
         const auto bs = as_bytes(s);
         CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
-        CHECK(bs.length() == s.length_bytes());
+        CHECK(bs.size() == s.size_bytes());
     }
 }
 
@@ -1347,18 +1305,18 @@ TEST_CASE("as_writeable_bytes")
 #ifdef CONFIRM_COMPILATION_ERRORS
         // you should not be able to get writeable bytes for const objects
         span<const int> s = a;
-        CHECK(s.length() == 4);
+        CHECK(s.size() == 4);
         span<const byte> bs = as_writeable_bytes(s);
         CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
-        CHECK(bs.length() == s.length_bytes());
+        CHECK(bs.size() == s.size_bytes());
 #endif
     }
 
     {
         span<int> s;
         const auto bs = as_writeable_bytes(s);
-        CHECK(bs.length() == s.length());
-        CHECK(bs.length() == 0);
+        CHECK(bs.size() == s.size());
+        CHECK(bs.size() == 0);
         CHECK(bs.size_bytes() == 0);
         CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
         CHECK(bs.data() == nullptr);
@@ -1368,7 +1326,7 @@ TEST_CASE("as_writeable_bytes")
         span<int> s = a;
         const auto bs = as_writeable_bytes(s);
         CHECK(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
-        CHECK(bs.length() == s.length_bytes());
+        CHECK(bs.size() == s.size_bytes());
     }
 }
 
@@ -1378,12 +1336,12 @@ TEST_CASE("fixed_size_conversions")
 
     // converting to an span from an equal size array is ok
     span<int, 4> s4 = arr;
-    CHECK(s4.length() == 4);
+    CHECK(s4.size() == 4);
 
     // converting to dynamic_range is always ok
     {
         span<int> s = s4;
-        CHECK(s.length() == s4.length());
+        CHECK(s.size() == s4.size());
         static_cast<void>(s);
     }
 

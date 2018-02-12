@@ -145,7 +145,7 @@ template <class Cont>
 span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
 ensure_z(Cont& cont)
 {
-    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
+    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.size()));
 }
 
 template <typename CharT, std::ptrdiff_t>
@@ -202,9 +202,6 @@ public:
 
     // move assign
     constexpr basic_string_span& operator=(basic_string_span&& other) GSL_NOEXCEPT = default;
-
-    // from nullptr
-    constexpr basic_string_span(std::nullptr_t ptr) GSL_NOEXCEPT : span_(ptr) {}
 
     constexpr basic_string_span(pointer ptr, index_type length) : span_(ptr, length) {}
     constexpr basic_string_span(pointer firstElem, pointer lastElem) : span_(firstElem, lastElem) {}

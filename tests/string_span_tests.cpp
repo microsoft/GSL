@@ -511,12 +511,6 @@ TEST_CASE("Constructors")
         CHECK(span.length() == 0);
     }
 
-    // from nullptr
-    {
-        cstring_span<> span(nullptr);
-        CHECK(span.length() == 0);
-    }
-
     // from string literal
     {
         cstring_span<> span = "Hello";
