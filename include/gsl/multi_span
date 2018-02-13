@@ -135,7 +135,7 @@ public:
         return std::equal(elems, elems + rank, rhs.elems);
     }
 
-    constexpr bool operator!=(const index& rhs) const GSL_NOEXCEPT { return !(this == rhs); }
+    constexpr bool operator!=(const index& rhs) const GSL_NOEXCEPT { return !(*this == rhs); }
 
     constexpr index operator+() const GSL_NOEXCEPT { return *this; }
 
