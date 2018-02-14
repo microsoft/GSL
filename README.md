@@ -34,6 +34,7 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * OS X Yosemite using GCC-5.2.0
 * OS X Sierra 10.12.4 using Apple LLVM version 8.1.0 (Clang-802.0.42)
 * OS X El Capitan (10.11) using Xcode with AppleClang 8.0.0.8000042
+* OS X High Sierra 10.13.2 (17C88) using Apple LLVM version 9.0.0 (clang-900.0.39.2)
 * FreeBSD 10.x with Clang/LLVM 3.6
 
 > If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
@@ -44,7 +45,7 @@ contributing any changes that were necessary back to this project to benefit the
 ## Building the tests
 To build the tests, you will require the following:
 
-* [CMake](http://cmake.org), version 3.1.3 or later to be installed and in your PATH.
+* [CMake](http://cmake.org), version 3.7 or later to be installed and in your PATH.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 

@@ -17,13 +17,17 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
-#include <gsl/gsl_assert>
-#include <gsl/gsl_util>
-#include <gsl/span>
+#include <gsl/gsl_assert> // for Ensures, Expects
+#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/span>       // for operator!=, operator==, dynamic_extent
 
-#include <cstdint>
+#include <algorithm> // for equal, lexicographical_compare
+#include <array>     // for array
+#include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
+#include <cstdint>   // for PTRDIFF_MAX
 #include <cstring>
-#include <string>
+#include <string>      // for basic_string, allocator, char_traits
+#include <type_traits> // for declval, is_convertible, enable_if_t, add_...
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -94,7 +98,7 @@ namespace details
     {
         if (str == nullptr || n <= 0) return 0;
 
-        span<const CharT> str_span{str, n};
+        const span<const CharT> str_span{str, n};
 
         std::ptrdiff_t len = 0;
         while (len < n && str_span[len]) len++;
@@ -141,7 +145,7 @@ template <class Cont>
 span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
 ensure_z(Cont& cont)
 {
-    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.length()));
+    return ensure_z(cont.data(), static_cast<std::ptrdiff_t>(cont.size()));
 }
 
 template <typename CharT, std::ptrdiff_t>
@@ -190,17 +194,8 @@ public:
     // copy
     constexpr basic_string_span(const basic_string_span& other) GSL_NOEXCEPT = default;
 
-    // move
-    constexpr basic_string_span(basic_string_span&& other) GSL_NOEXCEPT = default;
-
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) GSL_NOEXCEPT = default;
-
-    // move assign
-    constexpr basic_string_span& operator=(basic_string_span&& other) GSL_NOEXCEPT = default;
-
-    // from nullptr
-    constexpr basic_string_span(std::nullptr_t ptr) GSL_NOEXCEPT : span_(ptr) {}
 
     constexpr basic_string_span(pointer ptr, index_type length) : span_(ptr, length) {}
     constexpr basic_string_span(pointer firstElem, pointer lastElem) : span_(firstElem, lastElem) {}
