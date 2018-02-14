@@ -14,17 +14,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef GSL_GSL_H
-#define GSL_GSL_H
+#include <catch/catch.hpp>
+#include <type_traits> // for is_same
 
-#include <gsl/gsl_algorithm> // copy
-#include <gsl/gsl_assert>    // Ensures/Expects
-#include <gsl/gsl_byte>      // byte
-#include <gsl/gsl_util>      // finally()/narrow()/narrow_cast()...
-#include <gsl/index>         // index
-#include <gsl/multi_span>    // multi_span, strided_span...
-#include <gsl/pointers>      // owner, not_null
-#include <gsl/span>          // span
-#include <gsl/string_span>   // zstring, string_span, zstring_builder...
+#include <gsl/index> // for index
 
-#endif // GSL_GSL_H
+TEST_CASE("sanity check for gsl::index typedef")
+{
+    static_assert(std::is_same<gsl::index, std::ptrdiff_t>::value,
+                  "gsl::index represents wrong arithmetic type");
+}
