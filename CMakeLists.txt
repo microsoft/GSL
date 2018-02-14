@@ -16,7 +16,7 @@ endif ()
 
 # when minimum version required is 3.8.0 remove if below
 # both branches do exactly the same thing
-if (CMAKE_MAJOR_VERSION VERSION_LESS 3.7.9)
+if (CMAKE_VERSION VERSION_LESS 3.7.9)
     if (NOT MSVC)
         include(CheckCXXCompilerFlag)
         CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
