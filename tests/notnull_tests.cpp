@@ -134,6 +134,11 @@ TEST_CASE("TestNotNullConstructors")
 
     not_null<std::shared_ptr<int>> x(
         std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
+    int* pi = nullptr;
+    CHECK_THROWS_AS(not_null<decltype(pi)>(pi), fail_fast);
+#endif    
 }
 
 template<typename T>

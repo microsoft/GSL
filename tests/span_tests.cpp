@@ -94,48 +94,6 @@ TEST_CASE("size_optimization")
     }
 }
 
-TEST_CASE("from_nullptr_constructor")
-{
-    {
-        span<int> s = nullptr;
-        CHECK((s.size() == 0 && s.data() == nullptr));
-
-        span<const int> cs = nullptr;
-        CHECK((cs.size() == 0 && cs.data() == nullptr));
-    }
-
-    {
-        span<int, 0> s = nullptr;
-        CHECK((s.size() == 0 && s.data() == nullptr));
-
-        span<const int, 0> cs = nullptr;
-        CHECK((cs.size() == 0 && cs.data() == nullptr));
-    }
-
-    {
-#ifdef CONFIRM_COMPILATION_ERRORS
-        span<int, 1> s = nullptr;
-        CHECK((s.size() == 1 && s.data() == nullptr)); // explains why it can't compile
-#endif
-    }
-
-    {
-        span<int> s{nullptr};
-        CHECK((s.size() == 0 && s.data() == nullptr));
-
-        span<const int> cs{nullptr};
-        CHECK((cs.size() == 0 && cs.data() == nullptr));
-    }
-
-    {
-        span<int*> s{nullptr};
-        CHECK((s.size() == 0 && s.data() == nullptr));
-
-        span<const int*> cs{nullptr};
-        CHECK((cs.size() == 0 && cs.data() == nullptr));
-    }
-}
-
 TEST_CASE("from_nullptr_size_constructor")
 {
     {
@@ -1192,8 +1150,8 @@ TEST_CASE("crbegin_crend")
 TEST_CASE("comparison_operators")
 {
     {
-        span<int> s1 = nullptr;
-        span<int> s2 = nullptr;
+        span<int> s1;
+        span<int> s2;
         CHECK(s1 == s2);
         CHECK(!(s1 != s2));
         CHECK(!(s1 < s2));
@@ -1230,7 +1188,7 @@ TEST_CASE("comparison_operators")
     {
         int arr[] = {2, 1}; // bigger
 
-        span<int> s1 = nullptr;
+        span<int> s1;
         span<int> s2 = arr;
 
         CHECK(s1 != s2);
