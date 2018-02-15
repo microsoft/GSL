@@ -85,12 +85,12 @@ namespace details
 }
 
 template <std::size_t Rank>
-class index final
+class span_index final
 {
     static_assert(Rank > 0, "Rank must be greater than 0!");
 
     template <std::size_t OtherRank>
-    friend class index;
+    friend class span_index;
 
 public:
     static const std::size_t rank = Rank;
@@ -99,22 +99,22 @@ public:
     using reference = std::add_lvalue_reference_t<value_type>;
     using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 
-    constexpr index() GSL_NOEXCEPT {}
+    constexpr span_index() GSL_NOEXCEPT {}
 
-    constexpr index(const value_type (&values)[Rank]) GSL_NOEXCEPT
+    constexpr span_index(const value_type (&values)[Rank]) GSL_NOEXCEPT
     {
         std::copy(values, values + Rank, elems);
     }
 
     template <typename... Ts, typename = std::enable_if_t<(sizeof...(Ts) == Rank) &&
                                                           details::are_integral<Ts...>::value>>
-    constexpr index(Ts... ds) GSL_NOEXCEPT : elems{narrow_cast<value_type>(ds)...}
+    constexpr span_index(Ts... ds) GSL_NOEXCEPT : elems{narrow_cast<value_type>(ds)...}
     {
     }
 
-    constexpr index(const index& other) GSL_NOEXCEPT = default;
+    constexpr span_index(const span_index& other) GSL_NOEXCEPT = default;
 
-    constexpr index& operator=(const index& rhs) GSL_NOEXCEPT = default;
+    constexpr span_index& operator=(const span_index& rhs) GSL_NOEXCEPT = default;
 
     // Preconditions: component_idx < rank
     constexpr reference operator[](std::size_t component_idx)
@@ -130,75 +130,75 @@ public:
         return elems[component_idx];
     }
 
-    constexpr bool operator==(const index& rhs) const GSL_NOEXCEPT
+    constexpr bool operator==(const span_index& rhs) const GSL_NOEXCEPT
     {
         return std::equal(elems, elems + rank, rhs.elems);
     }
 
-    constexpr bool operator!=(const index& rhs) const GSL_NOEXCEPT { return !(*this == rhs); }
+    constexpr bool operator!=(const span_index& rhs) const GSL_NOEXCEPT { return !(*this == rhs); }
 
-    constexpr index operator+() const GSL_NOEXCEPT { return *this; }
+    constexpr span_index operator+() const GSL_NOEXCEPT { return *this; }
 
-    constexpr index operator-() const GSL_NOEXCEPT
+    constexpr span_index operator-() const GSL_NOEXCEPT
     {
-        index ret = *this;
+        span_index ret = *this;
         std::transform(ret, ret + rank, ret, std::negate<value_type>{});
         return ret;
     }
 
-    constexpr index operator+(const index& rhs) const GSL_NOEXCEPT
+    constexpr span_index operator+(const span_index& rhs) const GSL_NOEXCEPT
     {
-        index ret = *this;
+        span_index ret = *this;
         ret += rhs;
         return ret;
     }
 
-    constexpr index operator-(const index& rhs) const GSL_NOEXCEPT
+    constexpr span_index operator-(const span_index& rhs) const GSL_NOEXCEPT
     {
-        index ret = *this;
+        span_index ret = *this;
         ret -= rhs;
         return ret;
     }
 
-    constexpr index& operator+=(const index& rhs) GSL_NOEXCEPT
+    constexpr span_index& operator+=(const span_index& rhs) GSL_NOEXCEPT
     {
         std::transform(elems, elems + rank, rhs.elems, elems, std::plus<value_type>{});
         return *this;
     }
 
-    constexpr index& operator-=(const index& rhs) GSL_NOEXCEPT
+    constexpr span_index& operator-=(const span_index& rhs) GSL_NOEXCEPT
     {
         std::transform(elems, elems + rank, rhs.elems, elems, std::minus<value_type>{});
         return *this;
     }
 
-    constexpr index operator*(value_type v) const GSL_NOEXCEPT
+    constexpr span_index operator*(value_type v) const GSL_NOEXCEPT
     {
-        index ret = *this;
+        span_index ret = *this;
         ret *= v;
         return ret;
     }
 
-    constexpr index operator/(value_type v) const GSL_NOEXCEPT
+    constexpr span_index operator/(value_type v) const GSL_NOEXCEPT
     {
-        index ret = *this;
+        span_index ret = *this;
         ret /= v;
         return ret;
     }
 
-    friend constexpr index operator*(value_type v, const index& rhs) GSL_NOEXCEPT
+    friend constexpr span_index operator*(value_type v, const span_index& rhs) GSL_NOEXCEPT
     {
         return rhs * v;
     }
 
-    constexpr index& operator*=(value_type v) GSL_NOEXCEPT
+    constexpr span_index& operator*=(value_type v) GSL_NOEXCEPT
     {
         std::transform(elems, elems + rank, elems,
                        [v](value_type x) { return std::multiplies<value_type>{}(x, v); });
         return *this;
     }
 
-    constexpr index& operator/=(value_type v) GSL_NOEXCEPT
+    constexpr span_index& operator/=(value_type v) GSL_NOEXCEPT
     {
         std::transform(elems, elems + rank, elems,
                        [v](value_type x) { return std::divides<value_type>{}(x, v); });
@@ -497,8 +497,8 @@ namespace details
     }
 
     template <std::size_t Rank, bool Enabled = (Rank > 1),
-              typename Ret = std::enable_if_t<Enabled, index<Rank - 1>>>
-    constexpr Ret shift_left(const index<Rank>& other) GSL_NOEXCEPT
+              typename Ret = std::enable_if_t<Enabled, span_index<Rank - 1>>>
+    constexpr Ret shift_left(const span_index<Rank>& other) GSL_NOEXCEPT
     {
         Ret ret{};
         for (std::size_t i = 0; i < Rank - 1; ++i) {
@@ -535,7 +535,7 @@ public:
     static const std::ptrdiff_t static_size = MyRanges::TotalSize;
 
     using size_type = std::ptrdiff_t;
-    using index_type = index<rank>;
+    using index_type = span_index<rank>;
     using const_index_type = std::add_const_t<index_type>;
     using iterator = bounds_iterator<const_index_type>;
     using const_iterator = bounds_iterator<const_index_type>;
@@ -698,7 +698,7 @@ public:
     using const_reference = std::add_const_t<reference>;
     using size_type = value_type;
     using difference_type = value_type;
-    using index_type = index<rank>;
+    using index_type = span_index<rank>;
     using const_index_type = std::add_const_t<index_type>;
     using iterator = bounds_iterator<const_index_type>;
     using const_iterator = bounds_iterator<const_index_type>;
