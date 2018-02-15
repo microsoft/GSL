@@ -43,6 +43,9 @@ namespace gsl
 // GSL.util: utilities
 //
 
+// index type for all container indexes/subscripts/sizes
+using index = std::ptrdiff_t;
+
 // final_action allows you to ensure something gets run at the end of a scope
 template <class F>
 class final_action
