@@ -25,6 +25,7 @@
 #include <type_traits> // for is_assignable
 
 #ifdef _MSC_VER
+#include <iterator>    // for stdext::make_checked_array_iterator
 #pragma warning(push)
 
 // turn off some warnings that are noisy about our Expects statements
@@ -51,7 +52,11 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
                   "Source range is longer than target range");
 
     Expects(dest.size() >= src.size());
+#ifdef _MSC_VER
+    std::copy_n(src.data(), src.size(), stdext::make_checked_array_iterator(dest.data(), dest.size()));
+#else
     std::copy_n(src.data(), src.size(), dest.data());
+#endif
 }
 
 } // namespace gsl
