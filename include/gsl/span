@@ -125,10 +125,10 @@ namespace details
 
         span_iterator() = default;
 
-        constexpr span_iterator(const Span* span, typename Span::index_type index) GSL_NOEXCEPT
-            : span_(span), index_(index)
+        constexpr span_iterator(const Span* span, typename Span::index_type idx) GSL_NOEXCEPT
+            : span_(span), index_(idx)
         {
-            Expects(span == nullptr || (0 <= index_ && index <= span_->size()));
+            Expects(span == nullptr || (0 <= index_ && index_ <= span_->size()));
         }
 
         friend span_iterator<Span, true>;
@@ -662,10 +662,10 @@ span<typename Ptr::element_type> make_span(Ptr& cont)
 
 // Specialization of gsl::at for span
 template <class ElementType, std::ptrdiff_t Extent>
-constexpr ElementType& at(span<ElementType, Extent> s, std::ptrdiff_t index)
+constexpr ElementType& at(span<ElementType, Extent> s, index i)
 {
     // No bounds checking here because it is done in span::operator[] called below
-    return s[index];
+    return s[i];
 }
 
 } // namespace gsl

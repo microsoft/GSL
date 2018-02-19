@@ -631,9 +631,9 @@ public:
         return m_ranges.contains(idx) != -1;
     }
 
-    constexpr size_type operator[](std::size_t index) const GSL_NOEXCEPT
+    constexpr size_type operator[](std::size_t idx) const GSL_NOEXCEPT
     {
-        return m_ranges.elementNum(index);
+        return m_ranges.elementNum(idx);
     }
 
     template <std::size_t Dim = 0>
@@ -1478,15 +1478,15 @@ public:
     constexpr pointer data() const GSL_NOEXCEPT { return data_; }
 
     template <typename FirstIndex>
-    constexpr reference operator()(FirstIndex index)
+    constexpr reference operator()(FirstIndex idx)
     {
-        return this->operator[](narrow_cast<std::ptrdiff_t>(index));
+        return this->operator[](narrow_cast<std::ptrdiff_t>(idx));
     }
 
     template <typename FirstIndex, typename... OtherIndices>
-    constexpr reference operator()(FirstIndex index, OtherIndices... indices)
+    constexpr reference operator()(FirstIndex firstIndex, OtherIndices... indices)
     {
-        index_type idx = {narrow_cast<std::ptrdiff_t>(index),
+        index_type idx = {narrow_cast<std::ptrdiff_t>(firstIndex),
                           narrow_cast<std::ptrdiff_t>(indices)...};
         return this->operator[](idx);
     }
