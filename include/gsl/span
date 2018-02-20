@@ -253,7 +253,7 @@ namespace details
     };
 
     template <class Span, bool IsConst>
-    inline constexpr span_iterator<Span, IsConst>
+    constexpr span_iterator<Span, IsConst>
     operator+(typename span_iterator<Span, IsConst>::difference_type n,
               span_iterator<Span, IsConst> rhs) GSL_NOEXCEPT
     {
@@ -261,7 +261,7 @@ namespace details
     }
 
     template <class Span, bool IsConst>
-    inline constexpr span_iterator<Span, IsConst>
+    constexpr span_iterator<Span, IsConst>
     operator-(typename span_iterator<Span, IsConst>::difference_type n,
               span_iterator<Span, IsConst> rhs) GSL_NOEXCEPT
     {
@@ -535,43 +535,43 @@ private:
 
 // [span.comparison], span comparison operators
 template <class ElementType, std::ptrdiff_t FirstExtent, std::ptrdiff_t SecondExtent>
-inline constexpr bool operator==(span<ElementType, FirstExtent> l,
-                                 span<ElementType, SecondExtent> r)
+constexpr bool operator==(span<ElementType, FirstExtent> l,
+                          span<ElementType, SecondExtent> r)
 {
     return std::equal(l.begin(), l.end(), r.begin(), r.end());
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
-inline constexpr bool operator!=(span<ElementType, Extent> l,
-                                 span<ElementType, Extent> r)
+constexpr bool operator!=(span<ElementType, Extent> l,
+                          span<ElementType, Extent> r)
 {
     return !(l == r);
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
-inline constexpr bool operator<(span<ElementType, Extent> l,
-                                span<ElementType, Extent> r)
+constexpr bool operator<(span<ElementType, Extent> l,
+                         span<ElementType, Extent> r)
 {
     return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
-inline constexpr bool operator<=(span<ElementType, Extent> l,
-                                 span<ElementType, Extent> r)
+constexpr bool operator<=(span<ElementType, Extent> l,
+                          span<ElementType, Extent> r)
 {
     return !(l > r);
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
-inline constexpr bool operator>(span<ElementType, Extent> l,
-                                span<ElementType, Extent> r)
+constexpr bool operator>(span<ElementType, Extent> l,
+                         span<ElementType, Extent> r)
 {
     return r < l;
 }
 
 template <class ElementType, std::ptrdiff_t Extent>
-inline constexpr bool operator>=(span<ElementType, Extent> l,
-                                 span<ElementType, Extent> r)
+constexpr bool operator>=(span<ElementType, Extent> l,
+                          span<ElementType, Extent> r)
 {
     return !(l < r);
 }
@@ -662,7 +662,7 @@ span<typename Ptr::element_type> make_span(Ptr& cont)
 
 // Specialization of gsl::at for span
 template <class ElementType, std::ptrdiff_t Extent>
-inline constexpr ElementType& at(span<ElementType, Extent> s, std::ptrdiff_t index)
+constexpr ElementType& at(span<ElementType, Extent> s, std::ptrdiff_t index)
 {
     // No bounds checking here because it is done in span::operator[] called below
     return s[index];

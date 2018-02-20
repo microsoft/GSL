@@ -130,7 +130,7 @@ span<T, dynamic_extent> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX
 // the limit of size_type.
 //
 template <typename CharT>
-inline span<CharT, dynamic_extent> ensure_z(CharT* const& sz, std::ptrdiff_t max = PTRDIFF_MAX)
+span<CharT, dynamic_extent> ensure_z(CharT* const& sz, std::ptrdiff_t max = PTRDIFF_MAX)
 {
     return ensure_sentinel<CharT, CharT(0)>(sz, max);
 }

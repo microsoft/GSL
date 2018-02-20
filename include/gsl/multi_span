@@ -498,7 +498,7 @@ namespace details
 
     template <std::size_t Rank, bool Enabled = (Rank > 1),
               typename Ret = std::enable_if_t<Enabled, index<Rank - 1>>>
-    inline constexpr Ret shift_left(const index<Rank>& other) GSL_NOEXCEPT
+    constexpr Ret shift_left(const index<Rank>& other) GSL_NOEXCEPT
     {
         Ret ret{};
         for (std::size_t i = 0; i < Rank - 1; ++i) {
@@ -996,7 +996,7 @@ bounds_iterator<IndexType> operator+(typename bounds_iterator<IndexType>::differ
 namespace details
 {
     template <typename Bounds>
-    inline constexpr std::enable_if_t<
+    constexpr std::enable_if_t<
         std::is_same<typename Bounds::mapping_type, generalized_mapping_tag>::value,
         typename Bounds::index_type>
     make_stride(const Bounds& bnd) GSL_NOEXCEPT
@@ -1006,7 +1006,7 @@ namespace details
 
     // Make a stride vector from bounds, assuming contiguous memory.
     template <typename Bounds>
-    inline constexpr std::enable_if_t<
+    constexpr std::enable_if_t<
         std::is_same<typename Bounds::mapping_type, contiguous_mapping_tag>::value,
         typename Bounds::index_type>
     make_stride(const Bounds& bnd) GSL_NOEXCEPT
@@ -1056,13 +1056,13 @@ struct dim_t<dynamic_range>
 };
 
 template <std::ptrdiff_t N, class = std::enable_if_t<(N >= 0)>>
-inline constexpr dim_t<N> dim() GSL_NOEXCEPT
+constexpr dim_t<N> dim() GSL_NOEXCEPT
 {
     return dim_t<N>();
 }
 
 template <std::ptrdiff_t N = dynamic_range, class = std::enable_if_t<N == dynamic_range>>
-inline constexpr dim_t<N> dim(std::ptrdiff_t n) GSL_NOEXCEPT
+constexpr dim_t<N> dim(std::ptrdiff_t n) GSL_NOEXCEPT
 {
     return dim_t<>(n);
 }
@@ -1599,7 +1599,7 @@ public:
 // DimCount and Enabled here are workarounds for a bug in MSVC 2015
 template <typename SpanType, typename... Dimensions2, std::size_t DimCount = sizeof...(Dimensions2),
           bool Enabled = (DimCount > 0), typename = std::enable_if_t<Enabled>>
-inline constexpr auto as_multi_span(SpanType s, Dimensions2... dims)
+constexpr auto as_multi_span(SpanType s, Dimensions2... dims)
     -> multi_span<typename SpanType::value_type, Dimensions2::value...>
 {
     static_assert(details::is_multi_span<SpanType>::value,
@@ -1637,7 +1637,7 @@ multi_span<byte> as_writeable_bytes(multi_span<U, Dimensions...> s) GSL_NOEXCEPT
 // on all implementations. It should be considered an experimental extension
 // to the standard GSL interface.
 template <typename U, std::ptrdiff_t... Dimensions>
-inline constexpr auto
+constexpr auto
 as_multi_span(multi_span<const byte, Dimensions...> s) GSL_NOEXCEPT -> multi_span<
     const U, static_cast<std::ptrdiff_t>(
                  multi_span<const byte, Dimensions...>::bounds_type::static_size != dynamic_range
@@ -1664,7 +1664,7 @@ as_multi_span(multi_span<const byte, Dimensions...> s) GSL_NOEXCEPT -> multi_spa
 // on all implementations. It should be considered an experimental extension
 // to the standard GSL interface.
 template <typename U, std::ptrdiff_t... Dimensions>
-inline constexpr auto as_multi_span(multi_span<byte, Dimensions...> s) GSL_NOEXCEPT
+constexpr auto as_multi_span(multi_span<byte, Dimensions...> s) GSL_NOEXCEPT
     -> multi_span<U, narrow_cast<std::ptrdiff_t>(
                          multi_span<byte, Dimensions...>::bounds_type::static_size != dynamic_range
                              ? static_cast<std::size_t>(
@@ -1685,7 +1685,7 @@ inline constexpr auto as_multi_span(multi_span<byte, Dimensions...> s) GSL_NOEXC
 }
 
 template <typename T, std::ptrdiff_t... Dimensions>
-inline constexpr auto as_multi_span(T* const& ptr, dim_t<Dimensions>... args)
+constexpr auto as_multi_span(T* const& ptr, dim_t<Dimensions>... args)
     -> multi_span<std::remove_all_extents_t<T>, Dimensions...>
 {
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(ptr),
@@ -1694,41 +1694,41 @@ inline constexpr auto as_multi_span(T* const& ptr, dim_t<Dimensions>... args)
 }
 
 template <typename T>
-inline constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
+constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
     typename details::SpanArrayTraits<T, dynamic_range>::type
 {
     return {reinterpret_cast<std::remove_all_extents_t<T>*>(arr), len};
 }
 
 template <typename T, std::size_t N>
-inline constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
+constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
 {
     return {arr};
 }
 
 template <typename T, std::size_t N>
-inline constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>& arr)
+constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>& arr)
 {
     return {arr};
 }
 
 template <typename T, std::size_t N>
-inline constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>&&) = delete;
+constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>&&) = delete;
 
 template <typename T, std::size_t N>
-inline constexpr multi_span<T, N> as_multi_span(std::array<T, N>& arr)
+constexpr multi_span<T, N> as_multi_span(std::array<T, N>& arr)
 {
     return {arr};
 }
 
 template <typename T>
-inline constexpr multi_span<T, dynamic_range> as_multi_span(T* begin, T* end)
+constexpr multi_span<T, dynamic_range> as_multi_span(T* begin, T* end)
 {
     return {begin, end};
 }
 
 template <typename Cont>
-inline constexpr auto as_multi_span(Cont& arr) -> std::enable_if_t<
+constexpr auto as_multi_span(Cont& arr) -> std::enable_if_t<
     !details::is_multi_span<std::decay_t<Cont>>::value,
     multi_span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>>
 {
@@ -1737,13 +1737,13 @@ inline constexpr auto as_multi_span(Cont& arr) -> std::enable_if_t<
 }
 
 template <typename Cont>
-inline constexpr auto as_multi_span(Cont&& arr) -> std::enable_if_t<
+constexpr auto as_multi_span(Cont&& arr) -> std::enable_if_t<
     !details::is_multi_span<std::decay_t<Cont>>::value,
     multi_span<std::remove_reference_t<decltype(arr.size(), *arr.data())>, dynamic_range>> = delete;
 
 // from basic_string which doesn't have nonconst .data() member like other contiguous containers
 template <typename CharT, typename Traits, typename Allocator>
-inline constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>& str)
+constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>& str)
     -> multi_span<CharT, dynamic_range>
 {
     Expects(str.size() < PTRDIFF_MAX);
