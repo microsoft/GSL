@@ -1243,7 +1243,7 @@ TEST_CASE("empty_spans")
     {
         multi_span<int, 0> empty_av(nullptr);
 
-        CHECK(empty_av.bounds().index_bounds() == index<1>{0});
+        CHECK(empty_av.bounds().index_bounds() == multi_span_index<1>{0});
         CHECK_THROWS_AS(empty_av[0], fail_fast);
         CHECK_THROWS_AS(empty_av.begin()[0], fail_fast);
         CHECK_THROWS_AS(empty_av.cbegin()[0], fail_fast);
@@ -1255,7 +1255,7 @@ TEST_CASE("empty_spans")
 
     {
         multi_span<int> empty_av = {};
-        CHECK(empty_av.bounds().index_bounds() == index<1>{0});
+        CHECK(empty_av.bounds().index_bounds() == multi_span_index<1>{0});
         CHECK_THROWS_AS(empty_av[0], fail_fast);
         CHECK_THROWS_AS(empty_av.begin()[0], fail_fast);
         CHECK_THROWS_AS(empty_av.cbegin()[0], fail_fast);
@@ -1277,13 +1277,13 @@ TEST_CASE("index_constructor")
     multi_span<int, dynamic_range> av(arr, 8);
 
     ptrdiff_t a[1] = {0};
-    index<1> i = a;
+    multi_span_index<1> i = a;
 
     CHECK(av[i] == 4);
 
     auto av2 = as_multi_span(av, dim<4>(), dim(2));
     ptrdiff_t a2[2] = {0, 1};
-    index<2> i2 = a2;
+    multi_span_index<2> i2 = a2;
 
     CHECK(av2[i2] == 0);
     CHECK(av2[0][i] == 4);
@@ -1295,70 +1295,70 @@ TEST_CASE("index_constructors")
 {
     {
         // components of the same type
-        index<3> i1(0, 1, 2);
+        multi_span_index<3> i1(0, 1, 2);
         CHECK(i1[0] == 0);
 
         // components of different types
         std::size_t c0 = 0;
         std::size_t c1 = 1;
-        index<3> i2(c0, c1, 2);
+        multi_span_index<3> i2(c0, c1, 2);
         CHECK(i2[0] == 0);
 
         // from array
-        index<3> i3 = {0, 1, 2};
+        multi_span_index<3> i3 = {0, 1, 2};
         CHECK(i3[0] == 0);
 
         // from other index of the same size type
-        index<3> i4 = i3;
+        multi_span_index<3> i4 = i3;
         CHECK(i4[0] == 0);
 
         // default
-        index<3> i7;
+        multi_span_index<3> i7;
         CHECK(i7[0] == 0);
 
         // default
-        index<3> i9 = {};
+        multi_span_index<3> i9 = {};
         CHECK(i9[0] == 0);
     }
 
     {
         // components of the same type
-        index<1> i1(0);
+        multi_span_index<1> i1(0);
         CHECK(i1[0] == 0);
 
         // components of different types
         std::size_t c0 = 0;
-        index<1> i2(c0);
+        multi_span_index<1> i2(c0);
         CHECK(i2[0] == 0);
 
         // from array
-        index<1> i3 = {0};
+        multi_span_index<1> i3 = {0};
         CHECK(i3[0] == 0);
 
         // from int
-        index<1> i4 = 0;
+        multi_span_index<1> i4 = 0;
         CHECK(i4[0] == 0);
 
         // from other index of the same size type
-        index<1> i5 = i3;
+        multi_span_index<1> i5 = i3;
         CHECK(i5[0] == 0);
 
         // default
-        index<1> i8;
+        multi_span_index<1> i8;
         CHECK(i8[0] == 0);
 
         // default
-        index<1> i9 = {};
+        multi_span_index<1> i9 = {};
         CHECK(i9[0] == 0);
     }
 
     #ifdef CONFIRM_COMPILATION_ERRORS
     {
-    index<3> i1(0, 1);
-    index<3> i2(0, 1, 2, 3);
-    index<3> i3 = {0};
-    index<3> i4 = {0, 1, 2, 3};
-    index<1> i5 = {0, 1};
+    multi_span_index<3> i1(0, 1);
+    multi_span_index<3> i2(0, 1, 2, 3);
+    multi_span_index<3> i3 = {0};
+    multi_span_index<3> i4 = {0, 1, 2, 3};
+    multi_span_index<1> i5 = {0, 1};
     }
     #endif
 }
@@ -1367,15 +1367,15 @@ TEST_CASE("index_operations")
 {
     ptrdiff_t a[3] = {0, 1, 2};
     ptrdiff_t b[3] = {3, 4, 5};
-    index<3> i = a;
-    index<3> j = b;
+    multi_span_index<3> i = a;
+    multi_span_index<3> j = b;
 
     CHECK(i[0] == 0);
     CHECK(i[1] == 1);
     CHECK(i[2] == 2);
 
     {
-        index<3> k = i + j;
+        multi_span_index<3> k = i + j;
 
         CHECK(i[0] == 0);
         CHECK(i[1] == 1);
@@ -1386,7 +1386,7 @@ TEST_CASE("index_operations")
     }
 
     {
-        index<3> k = i * 3;
+        multi_span_index<3> k = i * 3;
 
         CHECK(i[0] == 0);
         CHECK(i[1] == 1);
@@ -1397,7 +1397,7 @@ TEST_CASE("index_operations")
     }
 
     {
-        index<3> k = 3 * i;
+        multi_span_index<3> k = 3 * i;
 
         CHECK(i[0] == 0);
         CHECK(i[1] == 1);
@@ -1408,7 +1408,7 @@ TEST_CASE("index_operations")
     }
 
     {
-        index<2> k = details::shift_left(i);
+        multi_span_index<2> k = details::shift_left(i);
 
         CHECK(i[0] == 0);
         CHECK(i[1] == 1);
@@ -1431,7 +1431,7 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
     }
 
     for (auto i = 0; i < section.size(); ++i) {
-        auto idx = index<2>{i, 0}; // avoid braces inside the CHECK macro
+        auto idx = multi_span_index<2>{i, 0}; // avoid braces inside the CHECK macro
         CHECK(section[idx] == av[i][1]);
     }
 
@@ -1439,7 +1439,7 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
     CHECK(section.bounds().index_bounds()[1] == 1);
     for (auto i = 0; i < section.bounds().index_bounds()[0]; ++i) {
         for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j) {
-            auto idx = index<2>{i, j}; // avoid braces inside the CHECK macro
+            auto idx = multi_span_index<2>{i, j}; // avoid braces inside the CHECK macro
             CHECK(section[idx] == av[i][1]);
         }
     }
