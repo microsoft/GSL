@@ -99,7 +99,7 @@ public:
     using reference = std::add_lvalue_reference_t<value_type>;
     using const_reference = std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 
-    constexpr multi_span_index() GSL_NOEXCEPT {}
+    constexpr multi_span_index() GSL_NOEXCEPT = default;
 
     constexpr multi_span_index(const value_type (&values)[Rank]) GSL_NOEXCEPT
     {

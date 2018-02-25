@@ -276,7 +276,7 @@ namespace details
 
         static_assert(Ext >= 0, "A fixed-size span must be >= 0 in size.");
 
-        constexpr extent_type() GSL_NOEXCEPT {}
+        constexpr extent_type() GSL_NOEXCEPT = default;
 
         template <index_type Other>
         constexpr extent_type(extent_type<Other> ext)
