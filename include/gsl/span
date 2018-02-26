@@ -45,7 +45,7 @@
 #if _MSC_VER < 1910
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
-#define USE_STATIC_CONSTEXPR_WORKAROUND
+#define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
 
 #endif                          // _MSC_VER < 1910
 #else                           // _MSC_VER
@@ -322,7 +322,7 @@ namespace details
     template <class ElementType, std::ptrdiff_t Extent, std::ptrdiff_t Offset, std::ptrdiff_t Count>
     struct calculate_subspan_type
     {
-      using type = span<ElementType, Count != dynamic_extent ? Count : (Extent != dynamic_extent ? Extent - Offset - 1 : Extent)>;
+      using type = span<ElementType, Count != dynamic_extent ? Count : (Extent != dynamic_extent ? Extent - Offset : Extent)>;
     };
 } // namespace details
 
@@ -346,7 +346,7 @@ public:
     using size_type = index_type;
 
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
-    enum { extent = Extent };
+    enum : index_type { extent = Extent };
 #else
     static constexpr index_type extent { Extent };
 #endif
@@ -442,7 +442,7 @@ public:
         Expects((Offset >= 0 && size() - Offset >= 0) &&
                 (Count == dynamic_extent || (Count >= 0 && Offset + Count <= size())));
 
-        return {data() + Offset, Count == dynamic_extent ? size() - Offset - 1 : Count};
+        return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
 
     constexpr span<element_type, dynamic_extent> first(index_type count) const

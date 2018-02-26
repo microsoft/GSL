@@ -809,8 +809,8 @@ TEST_CASE("subspan")
 
     {
         span<int, 5> av = arr;
-        CHECK((av.subspan<1>().size() == 3));
-        CHECK(decltype(av.subspan<1>())::extent == 3);    
+        CHECK((av.subspan<1>().size() == 4));
+        CHECK(decltype(av.subspan<1>())::extent == 4);    
     }
 
     {
