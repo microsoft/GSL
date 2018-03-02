@@ -201,7 +201,7 @@ namespace details
 
         constexpr difference_type operator-(span_iterator rhs) const GSL_NOEXCEPT
         {
-            Expects(span_ == rhs.span_);
+            Expects(span_->data() == rhs.span_->data());
             return index_ - rhs.index_;
         }
 
@@ -213,7 +213,9 @@ namespace details
         constexpr friend bool operator==(span_iterator lhs,
                                          span_iterator rhs) GSL_NOEXCEPT
         {
-            return lhs.span_ == rhs.span_ && lhs.index_ == rhs.index_;
+            return lhs.span_->data() == rhs.span_->data()
+                && lhs.span_->size() == rhs.span_->size()
+                && lhs.index_        == rhs.index_;
         }
 
         constexpr friend bool operator!=(span_iterator lhs,
@@ -225,7 +227,7 @@ namespace details
         constexpr friend bool operator<(span_iterator lhs,
                                         span_iterator rhs) GSL_NOEXCEPT
         {
-            Expects(lhs.span_ == rhs.span_);
+            Expects(lhs.span_->data() == rhs.span_->data());
             return lhs.index_ < rhs.index_;
         }
 
