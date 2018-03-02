@@ -345,11 +345,8 @@ public:
 
     using size_type = index_type;
 
-#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
-    enum : index_type { extent = Extent };
-#else
     static constexpr index_type extent { Extent };
-#endif
+
     // [span.cons], span constructors, copy, assignment, and destructor
     template <bool Dependent = false,
               // "Dependent" is needed to make "std::enable_if_t<Dependent || Extent <= 0>" SFINAE,
@@ -549,6 +546,11 @@ private:
         return { data() + offset,  count, true };
     }
 };
+
+#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::index_type span<ElementType, Extent>::extent;
+#endif
 
 
 // [span.comparison], span comparison operators
