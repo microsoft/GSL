@@ -327,3 +327,5 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
+
+static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
