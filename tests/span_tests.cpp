@@ -957,6 +957,48 @@ TEST_CASE("iterator_comparisons")
         CHECK(it2 > cit);
         CHECK(it2 >= cit);
     }
+    {
+        span<int> s1 = a;
+        span<int> s2 = a;
+        span<int> s3 = s1.subspan(0, 3);
+
+        span<int>::iterator it1 = s1.begin();
+        auto it1a = it1 + 1;
+        span<int>::iterator it2 = s2.begin();
+        auto it2a = it2 + 1;
+        span<int>::iterator it3 = s3.begin();
+        auto it3a = it3 + 1;
+
+        CHECK(it1 == it2);
+        CHECK(it2 == it1);
+        CHECK(it1a == it2a);
+        CHECK(it2a == it1a);
+
+        CHECK(it1 != it3);
+        CHECK(it3 != it1);
+        CHECK(it1a != it3a);
+        CHECK(it3a != it1a);
+
+        CHECK(it1 < it1a);
+        CHECK(it1 < it2a);
+        CHECK(it1 < it3a);
+        CHECK(it2 < it1a);
+        CHECK(it2 < it2a);
+        CHECK(it2 < it3a);
+        CHECK(it3 < it1a);
+        CHECK(it3 < it2a);
+        CHECK(it3 < it3a);
+
+        CHECK(it1a - it1 == 1);
+        CHECK(it2a - it1 == 1);
+        CHECK(it3a - it1 == 1);
+        CHECK(it1a - it2 == 1);
+        CHECK(it2a - it2 == 1);
+        CHECK(it3a - it2 == 1);
+        CHECK(it1a - it3 == 1);
+        CHECK(it2a - it3 == 1);
+        CHECK(it3a - it3 == 1);
+    }
 }
 
 TEST_CASE("begin_end")
