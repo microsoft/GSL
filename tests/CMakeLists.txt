@@ -50,7 +50,6 @@ target_compile_options(gsl_tests_config INTERFACE
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-        -Wunknown-attributes
     >
 )
 
