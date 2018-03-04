@@ -233,7 +233,7 @@ namespace details
         }
 
         constexpr friend bool operator<(span_iterator lhs,
-                                        span_iterator rhs) GSL_NOEXCEPT
+                                        span_iterator rhs)
         {
             Expects( (!lhs.span_ && !rhs.span_)
                   || ( lhs.span_ &&  rhs.span_
@@ -243,19 +243,19 @@ namespace details
         }
 
         constexpr friend bool operator<=(span_iterator lhs,
-                                         span_iterator rhs) GSL_NOEXCEPT
+                                         span_iterator rhs)
         {
             return !(rhs < lhs);
         }
 
         constexpr friend bool operator>(span_iterator lhs,
-                                        span_iterator rhs) GSL_NOEXCEPT
+                                        span_iterator rhs)
         {
             return rhs < lhs;
         }
 
         constexpr friend bool operator>=(span_iterator lhs,
-                                         span_iterator rhs) GSL_NOEXCEPT
+                                         span_iterator rhs)
         {
             return !(rhs > lhs);
         }
