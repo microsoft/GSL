@@ -49,11 +49,7 @@
 #endif                          // _MSC_VER < 1910
 #endif                          // _MSC_VER
 
-#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
-#define GSL_NOEXCEPT /*noexcept*/
-#else
 #define GSL_NOEXCEPT noexcept
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 namespace gsl
 {
@@ -127,9 +123,7 @@ namespace details
 
         constexpr span_iterator(const Span* span, typename Span::index_type idx) GSL_NOEXCEPT
             : span_(span), index_(idx)
-        {
-            Expects(span == nullptr || (0 <= index_ && index_ <= span_->size()));
-        }
+        {}
 
         friend span_iterator<Span, true>;
         template<bool B, std::enable_if_t<!B && IsConst>* = nullptr>
@@ -138,74 +132,74 @@ namespace details
         {
         }
 
-        constexpr reference operator*() const GSL_NOEXCEPT
+        constexpr reference operator*() const
         {
             Expects(index_ != span_->size());
             return *(span_->data() + index_);
         }
 
-        constexpr pointer operator->() const GSL_NOEXCEPT
+        constexpr pointer operator->() const
         {
             Expects(index_ != span_->size());
             return span_->data() + index_;
         }
 
-        constexpr span_iterator& operator++() GSL_NOEXCEPT
+        constexpr span_iterator& operator++()
         {
             Expects(0 <= index_ && index_ != span_->size());
             ++index_;
             return *this;
         }
 
-        constexpr span_iterator operator++(int) GSL_NOEXCEPT
+        constexpr span_iterator operator++(int)
         {
             auto ret = *this;
             ++(*this);
             return ret;
         }
 
-        constexpr span_iterator& operator--() GSL_NOEXCEPT
+        constexpr span_iterator& operator--()
         {
             Expects(index_ != 0 && index_ <= span_->size());
             --index_;
             return *this;
         }
 
-        constexpr span_iterator operator--(int) GSL_NOEXCEPT
+        constexpr span_iterator operator--(int)
         {
             auto ret = *this;
             --(*this);
             return ret;
         }
 
-        constexpr span_iterator operator+(difference_type n) const GSL_NOEXCEPT
+        constexpr span_iterator operator+(difference_type n) const
         {
             auto ret = *this;
             return ret += n;
         }
 
-        constexpr span_iterator& operator+=(difference_type n) GSL_NOEXCEPT
+        constexpr span_iterator& operator+=(difference_type n)
         {
             Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
             index_ += n;
             return *this;
         }
 
-        constexpr span_iterator operator-(difference_type n) const GSL_NOEXCEPT
+        constexpr span_iterator operator-(difference_type n) const
         {
             auto ret = *this;
             return ret -= n;
         }
 
-        constexpr span_iterator& operator-=(difference_type n) GSL_NOEXCEPT { return *this += -n; }
+        constexpr span_iterator& operator-=(difference_type n) { return *this += -n; }
 
-        constexpr difference_type operator-(span_iterator rhs) const GSL_NOEXCEPT
+        constexpr difference_type operator-(span_iterator rhs) const
         {
             Expects(span_ == rhs.span_);
             return index_ - rhs.index_;
         }
 
-        constexpr reference operator[](difference_type n) const GSL_NOEXCEPT
+        constexpr reference operator[](difference_type n) const
         {
             return *(*this + n);
         }
@@ -225,7 +219,6 @@ namespace details
         constexpr friend bool operator<(span_iterator lhs,
                                         span_iterator rhs) GSL_NOEXCEPT
         {
-            Expects(lhs.span_ == rhs.span_);
             return lhs.index_ < rhs.index_;
         }
 
@@ -255,7 +248,7 @@ namespace details
     template <class Span, bool IsConst>
     constexpr span_iterator<Span, IsConst>
     operator+(typename span_iterator<Span, IsConst>::difference_type n,
-              span_iterator<Span, IsConst> rhs) GSL_NOEXCEPT
+              span_iterator<Span, IsConst> rhs)
     {
         return rhs + n;
     }
@@ -263,7 +256,7 @@ namespace details
     template <class Span, bool IsConst>
     constexpr span_iterator<Span, IsConst>
     operator-(typename span_iterator<Span, IsConst>::difference_type n,
-              span_iterator<Span, IsConst> rhs) GSL_NOEXCEPT
+              span_iterator<Span, IsConst> rhs)
     {
         return rhs - n;
     }
@@ -511,7 +504,7 @@ private:
     template <std::ptrdiff_t CallerExtent>
     span<element_type, dynamic_extent> make_subspan(index_type offset,
                                                     index_type count,
-                                                    subspan_selector<CallerExtent>) const GSL_NOEXCEPT
+                                                    subspan_selector<CallerExtent>) const
     {
         span<element_type, dynamic_extent> tmp(*this);
         return tmp.subspan(offset, count);
@@ -519,7 +512,7 @@ private:
 
     span<element_type, dynamic_extent> make_subspan(index_type offset,
                                                     index_type count,
-                                                    subspan_selector<dynamic_extent>) const GSL_NOEXCEPT
+                                                    subspan_selector<dynamic_extent>) const
     {
         Expects(offset >= 0 && size() - offset >= 0);
         if (count == dynamic_extent)
@@ -631,7 +624,7 @@ constexpr span<ElementType> make_span(ElementType* firstElem, ElementType* lastE
 }
 
 template <class ElementType, std::size_t N>
-constexpr span<ElementType, N> make_span(ElementType (&arr)[N])
+constexpr span<ElementType, N> make_span(ElementType (&arr)[N]) GSL_NOEXCEPT
 {
     return span<ElementType, N>(arr);
 }
