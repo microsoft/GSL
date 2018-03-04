@@ -776,6 +776,7 @@ TEST_CASE("subspan")
     {
         span<int, 5> av = arr;
         CHECK((av.subspan<2, 2>().size() == 2));
+        CHECK(decltype(av.subspan<2, 2>())::extent == 2);
         CHECK(av.subspan(2, 2).size() == 2);
         CHECK(av.subspan(2, 3).size() == 3);
     }
@@ -783,13 +784,16 @@ TEST_CASE("subspan")
     {
         span<int, 5> av = arr;
         CHECK((av.subspan<0, 0>().size() == 0));
+        CHECK(decltype(av.subspan<0,0>())::extent == 0);
         CHECK(av.subspan(0, 0).size() == 0);
     }
 
     {
         span<int, 5> av = arr;
         CHECK((av.subspan<0, 5>().size() == 5));
+        CHECK(decltype(av.subspan<0, 5>())::extent == 5);
         CHECK(av.subspan(0, 5).size() == 5);
+
         CHECK_THROWS_AS(av.subspan(0, 6).size(), fail_fast);
         CHECK_THROWS_AS(av.subspan(1, 5).size(), fail_fast);
     }
@@ -797,14 +801,22 @@ TEST_CASE("subspan")
     {
         span<int, 5> av = arr;
         CHECK((av.subspan<4, 0>().size() == 0));
+        CHECK(decltype(av.subspan<4, 0>())::extent == 0);
         CHECK(av.subspan(4, 0).size() == 0);
         CHECK(av.subspan(5, 0).size() == 0);
         CHECK_THROWS_AS(av.subspan(6, 0).size(), fail_fast);
     }
 
     {
+        span<int, 5> av = arr;
+        CHECK((av.subspan<1>().size() == 4));
+        CHECK(decltype(av.subspan<1>())::extent == 4);    
+    }
+
+    {
         span<int> av;
         CHECK((av.subspan<0, 0>().size() == 0));
+        CHECK((decltype(av.subspan<0, 0>())::extent == 0));
         CHECK(av.subspan(0, 0).size() == 0);
         CHECK_THROWS_AS((av.subspan<1, 0>().size()), fail_fast);
     }
