@@ -45,8 +45,17 @@
 #if _MSC_VER < 1910
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
+#define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
 
 #endif                          // _MSC_VER < 1910
+#else                           // _MSC_VER
+
+// See if we have enough C++17 power to use a static constexpr data member
+// without needing an out-of-line definition
+#if !(defined(__cplusplus) && (__cplusplus >= 201703L))
+#define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
+#endif // !(defined(__cplusplus) && (__cplusplus >= 201703L))
+
 #endif                          // _MSC_VER
 
 #define GSL_NOEXCEPT noexcept
@@ -302,6 +311,12 @@ namespace details
     private:
         index_type size_;
     };
+
+    template <class ElementType, std::ptrdiff_t Extent, std::ptrdiff_t Offset, std::ptrdiff_t Count>
+    struct calculate_subspan_type
+    {
+      using type = span<ElementType, Count != dynamic_extent ? Count : (Extent != dynamic_extent ? Extent - Offset : Extent)>;
+    };
 } // namespace details
 
 // [span], class template span
@@ -323,7 +338,11 @@ public:
 
     using size_type = index_type;
 
-    constexpr static const index_type extent = Extent;
+#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
+    static constexpr const index_type extent { Extent };
+#else
+    static constexpr index_type extent { Extent };
+#endif
 
     // [span.cons], span constructors, copy, assignment, and destructor
     template <bool Dependent = false,
@@ -412,7 +431,7 @@ public:
     }
 
     template <std::ptrdiff_t Offset, std::ptrdiff_t Count = dynamic_extent>
-    constexpr span<element_type, Count> subspan() const
+    constexpr auto subspan() const -> typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((Offset >= 0 && size() - Offset >= 0) &&
                 (Count == dynamic_extent || (Count >= 0 && Offset + Count <= size())));
@@ -524,6 +543,11 @@ private:
         return { data() + offset,  count, true };
     }
 };
+
+#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr const typename span<ElementType, Extent>::index_type span<ElementType, Extent>::extent;
+#endif
 
 
 // [span.comparison], span comparison operators
