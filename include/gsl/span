@@ -121,6 +121,12 @@ namespace details
         using element_type_ = typename Span::element_type;
 
     public:
+
+#ifdef _MSC_VER
+        // Tell Microsoft standard library that span_iterators are checked.
+        using _Unchecked_type = typename Span::pointer;
+#endif
+
         using iterator_category = std::random_access_iterator_tag;
         using value_type = std::remove_cv_t<element_type_>;
         using difference_type = typename Span::index_type;
