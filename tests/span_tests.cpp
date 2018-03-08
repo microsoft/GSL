@@ -1462,3 +1462,18 @@ TEST_CASE("default_constructible")
     CHECK((std::is_default_constructible<span<int, 0>>::value));
     CHECK((!std::is_default_constructible<span<int, 42>>::value));
 }
+
+TEST_CASE("gcc_bug")
+{
+    // this test case covers a situation that happened to trip across
+    // a bug in a sequence of GCC releases. It is added here to guard
+    // against regressions (and help people using those older compilers
+    // catch the problem)
+    // More details can be found here: https://github.com/Microsoft/GSL/issues/590
+    std::array<int, 10> array;
+    span<int> test1 = make_span(array);
+
+    static span<int> test2;
+    test2 = test1;
+    CHECK(test1.size() == test2.size());  
+}
