@@ -34,8 +34,26 @@ TEST_CASE("expects")
 
 int g(int i)
 {
-    i++;
     Ensures(i > 0 && i < 10);
+    i++;
+    return i;
+}
+
+int g2(int i)
+{
+    Ensures(i > 0 && i < 10);
+    Ensures(i == 4);
+
+    i++;
+    return i;
+}
+
+int g3(int i)
+{
+    AlwaysEnsures(i > 0 && i < 10);
+    AlwaysEnsures(i == 4);
+
+    i++;
     return i;
 }
 
@@ -43,4 +61,59 @@ TEST_CASE("ensures")
 {
     CHECK(g(2) == 3);
     CHECK_THROWS_AS(g(9), fail_fast);
+
+    CHECK(g2(3) == 4);
+    CHECK_THROWS_AS(g2(4), fail_fast);
+    CHECK_THROWS_AS(g2(9), fail_fast);
+
+    CHECK(g3(3) == 4);
+    CHECK_THROWS_AS(g3(4), fail_fast);
+    // g3(9); // should terminate
+}
+
+int h(int i, int j)
+{
+    Maintains(i > 0 && i < 10);
+    i += j;
+    return i;
+}
+
+int h2(int i, int j)
+{
+  Maintains(i < 3);
+  Maintains(J > 7);
+  i++;
+  j--;
+  return i + j;
+}
+
+int h3(int i, int j)
+{
+  AlwaysMaintains(i < 3);
+  AlwaysMaintains(j > 7);
+  i++;
+  j--;
+  return i + j;
+}
+
+TEST_CASE("maintains")
+{
+    CHECK(h(2, 4) == 6);
+    CHECK_THROWS_AS(h(9,1), fail_fast);
+    CHECK_THROWS_AS(h(1,-1), fail_fast);
+    CHECK_THROWS_AS(h(0,2), fail_fast);
+
+    CHECK(h2(1,9) == 10);
+    CHECK_THROWS_AS(h2(1,7), fail_fast);
+    CHECK_THROWS_AS(h2(1,8), fail_fast);
+    CHECK_THROWS_AS(h2(3,9), fail_fast);
+    CHECK_THROWS_AS(h2(2,9), fail_fast);
+    CHECK_THROWS_AS(h2(2,8), fail_fast);
+
+    CHECK(h3(1,9) == 10);
+    CHECK_THROWS_AS(h3(1,7), fail_fast);
+    CHECK_THROWS_AS(h3(1,8), fail_fast);
+    CHECK_THROWS_AS(h3(3,9), fail_fast);
+    CHECK_THROWS_AS(h3(2,9), fail_fast);
+    // h3(2,8); // should terminate
 }

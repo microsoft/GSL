@@ -88,6 +88,58 @@ struct fail_fast : public std::logic_error
 #endif
 
 #define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
-#define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
+
+#if defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
+
+#define Ensures(cond)         static_cast<void>(0)
+#define AlwaysEnsures(cond)   static_cast<void>(0)
+
+#else // GSL_UNENFORCED_ON_CONTRACT_VIOLATION
+
+// Ensures uses an object that checks the condition on destruction
+// Setting `always` to true means we want the ensurer to trigger even when
+// exiting via exception (this will call std::terminate).
+template<class A, bool always> class gsl_ensurer {
+    gsl_ensurer           (const gsl_ensurer&) = delete;
+    gsl_ensurer& operator=(const gsl_ensurer&) = delete;
+    A& asserter;
+public:
+    gsl_ensurer(A& asserter) : asserter(asserter) {}
+    ~gsl_ensurer() noexcept(false)
+    { if (!std::uncaught_exceptions() || always) asserter(); }
+};
+
+// Use line numbers to create unique names for each ensurer.
+#define GSL_UNIQUE(a) GSL_JOIN(a, __LINE__)
+#define GSL_JOIN(a, b) GSL_PASTE(a, b)
+#define GSL_PASTE(a, b) a##b
+
+// Ensure along all non-exception exit paths.
+#define Ensures(cond)                                                                              \
+    auto GSL_UNIQUE(GSL_ENSURER_) = [&]() {                                                        \
+        GSL_CONTRACT_CHECK("Postcondition", cond);                                                 \
+    };                                                                                             \
+    gsl_ensurer<decltype(GSL_UNIQUE(GSL_ENSURER_)), false>                                         \
+        GSL_UNIQUE(GSL_ENSURE_)(GSL_UNIQUE(GSL_ENSURER_));
+
+// Ensure even when exiting via exception.
+#define AlwaysEnsures(cond)                                                                        \
+    auto GSL_UNIQUE(GSL_ENSURER_) = [&]() {                                                        \
+        GSL_CONTRACT_CHECK("Postcondition", cond);                                                 \
+    };                                                                                             \
+    gsl_ensurer<decltype(GSL_UNIQUE(GSL_ENSURER_)), true>                                          \
+        GSL_UNIQUE(GSL_ENSURE_)(GSL_UNIQUE(GSL_ENSURER_));
+
+#endif // GSL_UNENFORCED_ON_CONTRACT_VIOLATION
+
+// Assert that a function maintains an invariant during normal control flow
+#define Maintains(cond)                                                                            \
+    Expects(cond);                                                                                 \
+    Ensures(cond)                                                                                  \
+
+// Assert that the invariant is maintained even when exiting via exception
+#define AlwaysMaintains(cond)                                                                      \
+    Expects(cond);                                                                                 \
+    AlwaysEnsures(cond)                                                                            \
 
 #endif // GSL_CONTRACTS_H
