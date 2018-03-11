@@ -417,9 +417,8 @@ public:
     constexpr string_span_type as_string_span() const GSL_NOEXCEPT
     {
         auto sz = span_.size();
-        return span_.first(sz <= 0 ? 0 : sz - 1);
+        return { span_.data(), sz > 1 ? sz - 1 : 0 };
     }
-
     constexpr string_span_type ensure_z() const GSL_NOEXCEPT { return gsl::ensure_z(span_); }
 
     constexpr const_zstring_type assume_z() const GSL_NOEXCEPT { return span_.data(); }
