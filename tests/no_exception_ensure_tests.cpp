@@ -17,7 +17,6 @@
 #include <cstdlib>      // for std::exit
 #include <gsl/span>     // for span
 
-
 int operator_subscript_no_throw()
 {
     int arr[10]; 
