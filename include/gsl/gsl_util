@@ -110,9 +110,9 @@ template <class T, class U>
 T narrow(U u)
 {
     T t = narrow_cast<T>(u);
-    if (static_cast<U>(t) != u) throw narrowing_error();
+    if (static_cast<U>(t) != u) gsl::details::throw_exception(narrowing_error());
     if (!details::is_same_signedness<T, U>::value && ((t < T{}) != (u < U{})))
-        throw narrowing_error();
+        gsl::details::throw_exception(narrowing_error());
     return t;
 }
 
