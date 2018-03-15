@@ -14,10 +14,41 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <cstdlib>      // for std::exit
+#include <gsl/span>     // for span
 
-#define INTERNAL_CATCH_UNIQUE_NAME_LINE2( name, line ) name##line
-#define INTERNAL_CATCH_UNIQUE_NAME_LINE( name, line ) INTERNAL_CATCH_UNIQUE_NAME_LINE2( name, line )
-#define INTERNAL_CATCH_UNIQUE_NAME( name ) INTERNAL_CATCH_UNIQUE_NAME_LINE( name, __LINE__ )
 
-#define TEST_CASE2( TestName, TestId ) int TestName()
-#define TEST_CASE( ... ) TEST_CASE2( INTERNAL_CATCH_UNIQUE_NAME ( ____C_A_T_C_H____T_E_S_T____ ), __VA_ARGS__)
+int operator_subscript_no_throw()
+{
+    int arr[10]; 
+    gsl::span<int> sp { arr };
+    return sp[11];
+}
+
+
+void test_terminate()
+{ 
+    std::exit(0);
+}
+
+void setup_termination_handler()
+{
+#if defined(_MSC_VER)
+
+    auto& handler = gsl::details::get_terminate_handler();
+    handler = &test_terminate;
+
+#else
+
+    std::set_terminate(test_terminate);
+
+#endif
+}
+
+
+int main()
+{
+    setup_termination_handler();
+    operator_subscript_no_throw();
+    return -1;
+}

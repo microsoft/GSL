@@ -27,6 +27,7 @@
 #if defined(_MSC_VER) && defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS
 #define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
 #endif
+
 //
 // There are three configuration options for this GSL implementation's behavior
 // when pre/post conditions on the GSL types are violated:
@@ -80,9 +81,9 @@ namespace details
 {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
-    typedef void (*terminate_handler)();
+    typedef void  (*terminate_handler)();
 
-    terminate_handler& get_terminate() noexcept
+    inline gsl::details::terminate_handler& get_terminate_handler() noexcept
     {
         static terminate_handler handler = &abort;
         return handler;
@@ -93,7 +94,7 @@ namespace details
     [[noreturn]] inline void terminate() noexcept
     {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
-        (*gsl::details::get_terminate())();
+        (*gsl::details::get_terminate_handler())();
 #else
         std::terminate();
 #endif

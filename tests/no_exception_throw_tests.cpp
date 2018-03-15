@@ -14,29 +14,38 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gsl/gsl_util> // for narrow_cast, at
-#include <gsl/span>     // for span, span_iterator, operator==, operator!=
+#include <cstdlib>      // for std::exit
+#include <gsl/gsl_util> // for narrow
 
-#include "test_noexcept.h"
-
-using namespace gsl;
-
-TEST_CASE("narrow_no_throw")
+int narrow_no_throw()
 {
-    {
-        long long arr[10];
-        span<long long> sp { arr };
-        arr[9] = 0x0fffffffffffffff;
-        return  narrow<int>(sp[9]); // narrow should terminate
-    }
+    long long bigNumber = 0x0fffffffffffffff;
+    return gsl::narrow<int>(bigNumber); 
 }
 
-TEST_CASE("operator_subscript_no_throw")
+void test_terminate()
+{ 
+    std::exit(0);
+}
+
+void setup_termination_handler()
 {
-    {
-        long long arr[10];
-        span<long long> sp { arr };
-        arr[9] = 0x0fffffffffffffff;
-        return narrow<int>(sp[11]); // span::operator[] should terminate
-    }
+#if defined(_MSC_VER)
+
+    auto& handler = gsl::details::get_terminate_handler();
+    handler = &test_terminate;
+
+#else
+
+    std::set_terminate(test_terminate);
+
+#endif
+}
+
+
+int main()
+{
+    setup_termination_handler();
+    narrow_no_throw();
+    return -1;
 }
