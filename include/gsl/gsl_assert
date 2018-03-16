@@ -103,6 +103,10 @@ namespace details
 #if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
     template <typename Exception>
+#if defined(__clang__) || defined(__GNUC__)
+#else
+    [[gsl::suppress(f.6)]]
+#endif
     [[noreturn]] void throw_exception(Exception&&)
     {
         gsl::details::terminate();
