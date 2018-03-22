@@ -56,6 +56,7 @@ struct CustomPtr
 {
     CustomPtr(T* p) : p_(p) {}
     operator T*() { return p_; }
+    operator const T*() const { return p_; }
     bool operator!=(std::nullptr_t) const { return p_ != nullptr; }
     T* p_ = nullptr;
 };
@@ -326,6 +327,26 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull1(p1) >= NotNull1(p1)) == "true");
     CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
+}
+
+
+struct UniquePtrTestStruct {
+    int i = 0;
+};
+
+TEST_CASE("TestNotNullUniquePtr")
+{
+    {
+	not_null<unique_ptr<int>> up = std::make_unique<int>(4);
+	CHECK(*up == 4);
+	*up = 5;
+	CHECK(*up == 5);
+    }
+    {
+	not_null<unique_ptr<UniquePtrTestStruct>> up = std::make_unique<UniquePtrTestStruct>();
+	up->i = 1;
+	CHECK(up->i == 1);
+    }
 }
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");

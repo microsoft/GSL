@@ -68,7 +68,17 @@ using owner = T;
 template <class T>
 class not_null
 {
+private:
+    constexpr T & _get() const
+    {	    
+	Ensures(ptr_ != nullptr);
+	return const_cast<T&>(ptr_); // required to not propogate not-null constness to pointee
+    }
+    
 public:
+
+    using pointer = T;
+
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
@@ -86,15 +96,16 @@ public:
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
 
-    constexpr T get() const
+    constexpr const T & get() const
     {
-        Ensures(ptr_ != nullptr);
-        return ptr_;
+	return _get();
     }
 
-    constexpr operator T() const { return get(); }
-    constexpr T operator->() const { return get(); }
-    constexpr decltype(auto) operator*() const { return *get(); } 
+    constexpr operator const T&() const { return _get(); }
+    constexpr operator T&() { return _get(); }
+    
+    constexpr T & operator->() const { return _get(); }
+    constexpr decltype(auto) operator*() const { return *_get(); } 
 
     // prevents compilation when someone attempts to assign a null pointer constant
     not_null(std::nullptr_t) = delete;
