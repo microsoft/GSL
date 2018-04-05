@@ -160,17 +160,16 @@ matrix:
     - env: COMPILER=g++-6 BUILD_TYPE=Release
       addons: *gcc6
 
-    # Currently fails due to #525
-    ## GCC 7
-    #- env: COMPILER=g++-7 BUILD_TYPE=Debug
-    #  addons: &gcc7
-    #    apt:
-    #      packages: g++-7
-    #      sources:
-    #        - ubuntu-toolchain-r-test
+    # GCC 7
+    - env: COMPILER=g++-7 BUILD_TYPE=Debug
+      addons: &gcc7
+        apt:
+          packages: g++-7
+          sources:
+            - ubuntu-toolchain-r-test
 
-    #- env: COMPILER=g++-7 BUILD_TYPE=Release
-    #  addons: *gcc7
+    - env: COMPILER=g++-7 BUILD_TYPE=Release
+      addons: *gcc7
 
 
 install:

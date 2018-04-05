@@ -366,19 +366,19 @@ public:
 
     template <std::size_t N>
     constexpr span(element_type (&arr)[N]) noexcept
-        : storage_(KnownNotNull{&arr[0]}, details::extent_type<N>())
+        : storage_(KnownNotNull{&arr[0]}, details::extent_type<static_cast<std::ptrdiff_t>(N)>())
     {
     }
 
     template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     constexpr span(std::array<ArrayElementType, N>& arr) noexcept
-        : storage_(&arr[0], details::extent_type<N>())
+        : storage_(&arr[0], details::extent_type<static_cast<std::ptrdiff_t>(N)>())
     {
     }
 
     template <std::size_t N>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
-        : storage_(&arr[0], details::extent_type<N>())
+        : storage_(&arr[0], details::extent_type<static_cast<std::ptrdiff_t>(N)>())
     {
     }
 
@@ -418,7 +418,7 @@ public:
 
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
-    
+
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>
     constexpr span<element_type, Count> first() const
@@ -667,9 +667,9 @@ constexpr span<ElementType> make_span(ElementType* firstElem, ElementType* lastE
 }
 
 template <class ElementType, std::size_t N>
-constexpr span<ElementType, N> make_span(ElementType (&arr)[N]) noexcept
+constexpr span<ElementType, static_cast<std::ptrdiff_t>(N)> make_span(ElementType (&arr)[N]) noexcept
 {
-    return span<ElementType, N>(arr);
+    return span<ElementType, static_cast<std::ptrdiff_t>(N)>(arr);
 }
 
 template <class Container>

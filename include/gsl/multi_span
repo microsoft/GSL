@@ -1162,7 +1162,7 @@ namespace details
     {
     };
 
-    template <typename ValueType, std::ptrdiff_t Rank>
+    template <typename ValueType, std::size_t Rank>
     struct is_multi_span_oracle<strided_span<ValueType, Rank>> : std::true_type
     {
     };
@@ -1273,7 +1273,8 @@ public:
     }
 
     // construct from n-dimensions static array
-    template <typename T, std::size_t N, typename Helper = details::SpanArrayTraits<T, N>>
+    template <typename T, std::size_t N,
+              typename Helper = details::SpanArrayTraits<T, static_cast<std::ptrdiff_t>(N)>>
     constexpr multi_span(T (&arr)[N])
         : multi_span(reinterpret_cast<pointer>(arr), bounds_type{typename Helper::bounds_type{}})
     {
@@ -1296,23 +1297,25 @@ public:
     // construct from std::array
     template <typename T, std::size_t N>
     constexpr multi_span(std::array<T, N>& arr)
-        : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
+        : multi_span(arr.data(), bounds_type{static_bounds<static_cast<std::ptrdiff_t>(N)>{}})
     {
+        using bounds = static_bounds<static_cast<std::ptrdiff_t>(N)>;
         static_assert(
             std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
             "Cannot convert from source type to target multi_span type.");
-        static_assert(std::is_convertible<static_bounds<N>, bounds_type>::value,
+        static_assert(std::is_convertible<bounds, bounds_type>::value,
                       "You cannot construct a multi_span from a std::array of smaller size.");
     }
 
     // construct from const std::array
     template <typename T, std::size_t N>
     constexpr multi_span(const std::array<T, N>& arr)
-        : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
+        : multi_span(arr.data(), bounds_type{static_bounds<static_cast<std::ptrdiff_t>(N)>{}})
     {
+        using bounds = static_bounds<static_cast<std::ptrdiff_t>(N)>;
         static_assert(std::is_convertible<T(*)[], typename std::remove_const_t<value_type>(*)[]>::value,
                       "Cannot convert from source type to target multi_span type.");
-        static_assert(std::is_convertible<static_bounds<N>, bounds_type>::value,
+        static_assert(std::is_convertible<bounds, bounds_type>::value,
                       "You cannot construct a multi_span from a std::array of smaller size.");
     }
 
@@ -1701,22 +1704,23 @@ constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
 }
 
 template <typename T, std::size_t N>
-constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
+constexpr auto as_multi_span(T (&arr)[N]) ->
+    typename details::SpanArrayTraits<T, static_cast<std::ptrdiff_t>(N)>::type
 {
     return {arr};
 }
 
 template <typename T, std::size_t N>
-constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>& arr)
+constexpr multi_span<const T, static_cast<std::ptrdiff_t>(N)> as_multi_span(const std::array<T, N>& arr)
 {
     return {arr};
 }
 
 template <typename T, std::size_t N>
-constexpr multi_span<const T, N> as_multi_span(const std::array<T, N>&&) = delete;
+constexpr multi_span<const T, static_cast<std::ptrdiff_t>(N)> as_multi_span(const std::array<T, N>&&) = delete;
 
 template <typename T, std::size_t N>
-constexpr multi_span<T, N> as_multi_span(std::array<T, N>& arr)
+constexpr multi_span<T, static_cast<std::ptrdiff_t>(N)> as_multi_span(std::array<T, N>& arr)
 {
     return {arr};
 }
@@ -1896,7 +1900,7 @@ public:
 
     constexpr const_reverse_iterator crend() const { return const_reverse_iterator{cbegin()}; }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1906,7 +1910,7 @@ public:
                (data_ == other.data_ || std::equal(this->begin(), this->end(), other.begin()));
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1915,7 +1919,7 @@ public:
         return !(*this == other);
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1924,7 +1928,7 @@ public:
         return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1933,7 +1937,7 @@ public:
         return !(other < *this);
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
@@ -1942,7 +1946,7 @@ public:
         return (other < *this);
     }
 
-    template <typename OtherValueType, std::ptrdiff_t OtherRank,
+    template <typename OtherValueType, std::size_t OtherRank,
               typename = std::enable_if_t<std::is_same<
                   std::remove_cv_t<value_type>, std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool
