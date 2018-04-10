@@ -21,6 +21,14 @@
 #include <stdexcept> // for logic_error
 
 //
+// Temporary until MSVC STL supports no-exceptions mode.
+// Currently terminate is a no-op in this mode, so we add termination behavior back
+//
+#if defined(_MSC_VER) && defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS
+#define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
+#endif
+
+//
 // There are three configuration options for this GSL implementation's behavior
 // when pre/post conditions on the GSL types are violated:
 //
@@ -68,18 +76,62 @@ struct fail_fast : public std::logic_error
 {
     explicit fail_fast(char const* const message) : std::logic_error(message) {}
 };
-}
+
+namespace details
+{
+#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
+
+    typedef void  (*terminate_handler)();
+
+    inline gsl::details::terminate_handler& get_terminate_handler() noexcept
+    {
+        static terminate_handler handler = &abort;
+        return handler;
+    }
+
+#endif
+
+    [[noreturn]] inline void terminate() noexcept
+    {
+#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
+        (*gsl::details::get_terminate_handler())();
+#else
+        std::terminate();
+#endif
+    }
+
+#if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
+
+    template <typename Exception>
+    [[noreturn]] void throw_exception(Exception&&)
+    {
+        gsl::details::terminate();
+    }
+
+#else
+
+    template <typename Exception>
+    [[noreturn]] void throw_exception(Exception&& exception)
+    {
+        throw exception;
+    }
+
+#endif
+
+} // namespace details
+} // namespace gsl
 
 #if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
 #define GSL_CONTRACT_CHECK(type, cond)                                                             \
     (GSL_LIKELY(cond) ? static_cast<void>(0)                                                       \
-                      : throw gsl::fail_fast("GSL: " type " failure at " __FILE__                  \
-                                             ": " GSL_STRINGIFY(__LINE__)))
+                      : gsl::details::throw_exception(gsl::fail_fast(                              \
+                            "GSL: " type " failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__))))
 
 #elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
-#define GSL_CONTRACT_CHECK(type, cond) (GSL_LIKELY(cond) ? static_cast<void>(0) : std::terminate())
+#define GSL_CONTRACT_CHECK(type, cond)                                                             \
+    (GSL_LIKELY(cond) ? static_cast<void>(0) : gsl::details::terminate())
 
 #elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
 
