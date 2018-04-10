@@ -149,6 +149,14 @@ namespace details
         friend Span;
         friend span_iterator<Span, true>;
 
+        friend bool compatible(const span_iterator& lhs,
+                               const span_iterator& rhs)
+        {
+          return (!lhs.span_ && !rhs.span_)
+              || ( lhs.span_ &&  rhs.span_
+                && lhs.span_->data() == rhs.span_->data());
+        }
+
         constexpr reference operator*() const
         {
             Expects(index_ != span_->size());
@@ -212,10 +220,7 @@ namespace details
 
         constexpr difference_type operator-(span_iterator rhs) const
         {
-            Expects( (!span_ && !rhs.span_)
-                  || ( span_ &&  rhs.span_ 
-                    && span_->data() == rhs.span_->data()));
-
+            Expects(compatible(*this, rhs));
             return index_ - rhs.index_;
         }
 
@@ -225,17 +230,14 @@ namespace details
         }
 
         constexpr friend bool operator==(span_iterator lhs,
-                                         span_iterator rhs) noexcept
+                                         span_iterator rhs)
         {
-            return ( (!lhs.span_ && !rhs.span_)
-                  || ( lhs.span_ &&  rhs.span_
-                    && lhs.span_->data() == rhs.span_->data()
-                    && lhs.span_->size() == rhs.span_->size()))
-                && lhs.index_ == rhs.index_;
+            Expects(compatible(lhs, rhs));
+            return lhs.index_ == rhs.index_;
         }
 
         constexpr friend bool operator!=(span_iterator lhs,
-                                         span_iterator rhs) noexcept
+                                         span_iterator rhs)
         {
             return !(lhs == rhs);
         }
@@ -243,10 +245,7 @@ namespace details
         constexpr friend bool operator<(span_iterator lhs,
                                         span_iterator rhs)
         {
-            Expects( (!lhs.span_ && !rhs.span_)
-                  || ( lhs.span_ &&  rhs.span_
-                    && lhs.span_->data() == rhs.span_->data()));
-
+            Expects(compatible(lhs, rhs));
             return lhs.index_ < rhs.index_;
         }
 
