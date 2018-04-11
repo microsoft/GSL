@@ -136,7 +136,7 @@ namespace details
 
     private:
         constexpr span_iterator(const Span* span, typename Span::index_type idx) noexcept
-            : base_(span->data()), index_(idx), size_(span->size())
+            : base_(span->data()), index_(idx), size_(size_t(span->size()))
         {}
     public:
 
