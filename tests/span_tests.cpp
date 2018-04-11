@@ -20,6 +20,7 @@
 #include <gsl/gsl_util> // for narrow_cast, at
 #include <gsl/span>     // for span, span_iterator, operator==, operator!=
 
+#include <algorithm>   // for equal
 #include <array>       // for array
 #include <iostream>    // for ptrdiff_t
 #include <iterator>    // for reverse_iterator, operator-, operator==
@@ -986,33 +987,78 @@ TEST_CASE("iterator_comparisons")
         CHECK(it1a == it2a);
         CHECK(it2a == it1a);
 
-        CHECK(it1 != it3);
-        CHECK(it3 != it1);
-        CHECK(it1a != it3a);
-        CHECK(it3a != it1a);
+        // Incompatible iterators (same underlying data, but different sizes).
+        CHECK_THROWS_AS(it1 == it3, fail_fast);
+        CHECK_THROWS_AS(it3 == it1, fail_fast);
+        CHECK_THROWS_AS(it1a == it3a, fail_fast);
+        CHECK_THROWS_AS(it3a == it1a, fail_fast);
+        CHECK_THROWS_AS(it1 != it3, fail_fast);
+        CHECK_THROWS_AS(it3 != it1, fail_fast);
+        CHECK_THROWS_AS(it1a != it3a, fail_fast);
+        CHECK_THROWS_AS(it3a != it1a, fail_fast);
 
         CHECK(it1 < it1a);
         CHECK(it1 < it2a);
-        CHECK(it1 < it3a);
+        CHECK_THROWS_AS(it1 < it3a, fail_fast);
         CHECK(it2 < it1a);
         CHECK(it2 < it2a);
-        CHECK(it2 < it3a);
-        CHECK(it3 < it1a);
-        CHECK(it3 < it2a);
+        CHECK_THROWS_AS(it2 < it3a, fail_fast);
+        CHECK_THROWS_AS(it3 < it1a, fail_fast);
+        CHECK_THROWS_AS(it3 < it2a, fail_fast);
         CHECK(it3 < it3a);
 
         CHECK(it1a - it1 == 1);
         CHECK(it2a - it1 == 1);
-        CHECK(it3a - it1 == 1);
+        CHECK_THROWS_AS(it3a - it1 == 1, fail_fast);
         CHECK(it1a - it2 == 1);
         CHECK(it2a - it2 == 1);
-        CHECK(it3a - it2 == 1);
-        CHECK(it1a - it3 == 1);
-        CHECK(it2a - it3 == 1);
+        CHECK_THROWS_AS(it3a - it2 == 1, fail_fast);
+        CHECK_THROWS_AS(it1a - it3 == 1, fail_fast);
+        CHECK_THROWS_AS(it2a - it3 == 1, fail_fast);
         CHECK(it3a - it3 == 1);
     }
 }
 
+TEST_CASE("iterator_invalidation")
+{
+    int a[] = {1, 2, 3, 4};
+    int b[] = {1, 2, 3, 4};
+    int c[] = {9, 8, 7, 6};
+    {
+      span<int> sa1 = a;
+      span<int> sa2 = a;
+      span<int> sb  = b;
+      span<int> sc  = c;
+
+      CHECK(sa1 == sa2);
+      CHECK(sa1 == sb);
+      CHECK(sa1 != sc);
+
+      auto begin_sa1 = sa1.begin();
+      auto   end_sa1 = sa1.end();
+      auto begin_sa2 = sa2.begin();
+      auto   end_sa2 = sa2.end();
+      auto begin_sb  = sb.begin();
+      auto   end_sb  = sb.end();
+      auto begin_sc  = sc.begin();
+      auto   end_sc  = sc.end();
+
+      CHECK( equal(begin_sa1, end_sa1, begin_sa2, end_sa2));
+      CHECK( equal(begin_sa1, end_sa1, begin_sb,  end_sb));
+      CHECK(!equal(begin_sa1, end_sa1, begin_sc,  end_sc));
+
+      sa1 = c;
+
+      CHECK( equal(begin_sa1, end_sa1, begin_sa2, end_sa2));
+      CHECK( equal(begin_sa1, end_sa1, begin_sb,  end_sb));
+      CHECK(!equal(begin_sa1, end_sa1, begin_sc,  end_sc));
+
+      CHECK(!equal(begin_sa1, end_sa1, sa1.begin(), sa1.end()));
+      CHECK(*begin_sa1   == 1);
+      CHECK(*sa1.begin() == 9);
+      CHECK( sa1.begin() == begin_sc);
+    }
+}
 TEST_CASE("begin_end")
 {
     {

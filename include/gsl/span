@@ -136,13 +136,13 @@ namespace details
 
     private:
         constexpr span_iterator(const Span* span, typename Span::index_type idx) noexcept
-            : span_(span), index_(idx)
+            : base_(span->data()), index_(idx), size_(span->size())
         {}
     public:
 
         template<bool B, std::enable_if_t<!B && IsConst>* = nullptr>
         constexpr span_iterator(const span_iterator<Span, B>& other) noexcept
-            : span_iterator(other.span_, other.index_)
+            : base_(other.base_), index_(other.index_), size_(other.size_)
         {
         }
 
@@ -152,26 +152,24 @@ namespace details
         friend bool compatible(const span_iterator& lhs,
                                const span_iterator& rhs)
         {
-          return (!lhs.span_ && !rhs.span_)
-              || ( lhs.span_ &&  rhs.span_
-                && lhs.span_->data() == rhs.span_->data());
+            return (lhs.base_ == rhs.base_ && lhs.size_ == rhs.size_);
         }
 
         constexpr reference operator*() const
         {
-            Expects(index_ != span_->size());
-            return *(span_->data() + index_);
+            Expects(size_t(index_) != size_);
+            return *(base_ + index_);
         }
 
         constexpr pointer operator->() const
         {
-            Expects(index_ != span_->size());
-            return span_->data() + index_;
+            Expects(size_t(index_) != size_);
+            return base_ + index_;
         }
 
         constexpr span_iterator& operator++()
         {
-            Expects(0 <= index_ && index_ != span_->size());
+            Expects(0 <= index_ && size_t(index_) != size_);
             ++index_;
             return *this;
         }
@@ -185,7 +183,7 @@ namespace details
 
         constexpr span_iterator& operator--()
         {
-            Expects(index_ != 0 && index_ <= span_->size());
+            Expects(index_ != 0 && size_t(index_) <= size_);
             --index_;
             return *this;
         }
@@ -205,7 +203,7 @@ namespace details
 
         constexpr span_iterator& operator+=(difference_type n)
         {
-            Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
+            Expects((index_ + n) >= 0 && size_t(index_ + n) <= size_);
             index_ += n;
             return *this;
         }
@@ -268,8 +266,9 @@ namespace details
         }
 
     protected:
-        const Span* span_ = nullptr;
+        pointer        base_  = nullptr;
         std::ptrdiff_t index_ = 0;
+        std::size_t    size_  = 0;
     };
 
     template <class Span, bool IsConst>
