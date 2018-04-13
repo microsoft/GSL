@@ -60,6 +60,7 @@ public:
 
     final_action(const final_action&) = delete;
     final_action& operator=(const final_action&) = delete;
+    final_action& operator=(final_action&&) = delete;
 
     ~final_action() noexcept
     {
