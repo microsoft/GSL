@@ -374,3 +374,11 @@ TEST_CASE("ConfirmCopyableAndMoveablePointerTypeNotRequired") {
     gsl::not_null<UncopyableUnmovablePointerLikeType<int>> fixed_in_place(&i);
     CHECK(*fixed_in_place == 5);
 }
+
+
+TEST_CASE("std::function") {
+    gsl::not_null<std::function<int()>> nnsf([](){return 4;});
+    CHECK(nnsf.get()() == 4);
+    std::function<int()> empty_function;
+    CHECK_THROWS(nnsf = empty_function);
+}
