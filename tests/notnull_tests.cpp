@@ -56,6 +56,7 @@ struct CustomPtr
 {
     CustomPtr(T* p) : p_(p) {}
     operator T*() { return p_; }
+    operator T*() const { return p_; }
     bool operator!=(std::nullptr_t) const { return p_ != nullptr; }
     T* p_ = nullptr;
 };
@@ -329,3 +330,47 @@ TEST_CASE("TestNotNullCustomPtrComparison")
 }
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
+
+struct UniquePointerTestStruct {
+    int i = 0;
+};
+
+TEST_CASE("TestNotNullUniquePtrComparison") {
+
+    {
+        using NotNull1 = not_null<std::unique_ptr<int>>;
+
+        // values are the same
+        CHECK((*NotNull1(std::make_unique<int>(42)) == *NotNull1(std::make_unique<int>(42))));
+    }
+    {
+        using NotNull1 = not_null<std::unique_ptr<UniquePointerTestStruct>>;
+
+        // values are the same
+        CHECK((NotNull1(std::make_unique<UniquePointerTestStruct>())->i == NotNull1(std::make_unique<UniquePointerTestStruct>())->i));
+    }
+}
+
+
+template<typename T>
+struct UncopyableUnmovablePointerLikeType {
+private:
+    T * t;
+
+public:
+    UncopyableUnmovablePointerLikeType(T * pointer) : t(pointer) {}
+    UncopyableUnmovablePointerLikeType(const UncopyableUnmovablePointerLikeType&) = delete;
+    UncopyableUnmovablePointerLikeType(UncopyableUnmovablePointerLikeType &&) = delete;
+
+    operator T*() { return t; }
+    operator T*() const { return t; }
+};
+
+
+// this test case makes sure not_null works on move-only types like std::unique_ptr as well as verifying
+//   that no copy penalty is being paid for types with expensive copy constructors like std::shared_ptr
+TEST_CASE("ConfirmCopyableAndMoveablePointerTypeNotRequired") {
+    int i = 5;
+    gsl::not_null<UncopyableUnmovablePointerLikeType<int>> fixed_in_place(&i);
+    CHECK(*fixed_in_place == 5);
+}
