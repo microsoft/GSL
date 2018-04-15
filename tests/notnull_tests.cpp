@@ -24,6 +24,7 @@
 #include <stdint.h>  // for uint16_t
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
+#include <functional>
 
 namespace gsl {
 struct fail_fast;
