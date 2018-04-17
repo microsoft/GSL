@@ -482,6 +482,12 @@ public:
     constexpr const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator{cend()}; }
     constexpr const_reverse_iterator crend() const noexcept { return const_reverse_iterator{cbegin()}; }
 
+#ifdef _MSC_VER
+    // Tell MSVC how to unwrap spans in range-based-for
+    constexpr pointer _Unchecked_begin() const noexcept { return data(); }
+    constexpr pointer _Unchecked_end() const noexcept { return data() + size(); }
+#endif // _MSC_VER
+
 private:
 
     // Needed to remove unnecessary null check in subspans
