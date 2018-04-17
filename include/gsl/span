@@ -191,6 +191,11 @@ namespace details
             return ret += n;
         }
 
+        friend constexpr span_iterator operator+(difference_type n, span_iterator const& rhs)
+        {
+            return rhs + n;
+        }
+
         constexpr span_iterator& operator+=(difference_type n)
         {
             Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
@@ -257,22 +262,6 @@ namespace details
         const Span* span_ = nullptr;
         std::ptrdiff_t index_ = 0;
     };
-
-    template <class Span, bool IsConst>
-    constexpr span_iterator<Span, IsConst>
-    operator+(typename span_iterator<Span, IsConst>::difference_type n,
-              span_iterator<Span, IsConst> rhs)
-    {
-        return rhs + n;
-    }
-
-    template <class Span, bool IsConst>
-    constexpr span_iterator<Span, IsConst>
-    operator-(typename span_iterator<Span, IsConst>::difference_type n,
-              span_iterator<Span, IsConst> rhs)
-    {
-        return rhs - n;
-    }
 
     template <std::ptrdiff_t Ext>
     class extent_type
@@ -418,7 +407,7 @@ public:
 
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
-    
+
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>
     constexpr span<element_type, Count> first() const
@@ -496,7 +485,7 @@ public:
 private:
 
     // Needed to remove unnecessary null check in subspans
-    struct KnownNotNull 
+    struct KnownNotNull
     {
         pointer p;
     };
@@ -508,7 +497,7 @@ private:
     class storage_type : public ExtentType
     {
     public:
-        // KnownNotNull parameter is needed to remove unnecessary null check 
+        // KnownNotNull parameter is needed to remove unnecessary null check
         // in subspans and constructors from arrays
         template <class OtherExtentType>
         constexpr storage_type(KnownNotNull data, OtherExtentType ext) : ExtentType(ext), data_(data.p)
