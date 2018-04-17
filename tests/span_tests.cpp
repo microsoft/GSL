@@ -45,6 +45,10 @@ struct BaseClass
 struct DerivedClass : BaseClass
 {
 };
+struct AddressOverloaded
+{
+    AddressOverloaded operator&() const { return {}; }
+};
 }
 
 TEST_CASE("default_constructor")
@@ -380,6 +384,14 @@ TEST_CASE("from_array_constructor")
         auto s = make_span(&arr3d[0], 1);
         CHECK((s.size() == 1 && s.data() == &arr3d[0]));
     }
+
+    AddressOverloaded ao_arr[5] = {};
+
+    {
+        span<AddressOverloaded, 5> s{ao_arr};
+        CHECK((s.size() == 5 && s.data() == ao_arr));
+    }
+
 }
 
 TEST_CASE("from_dynamic_array_constructor")
@@ -417,6 +429,13 @@ TEST_CASE("from_std_array_constructor")
 
         span<const int, 4> cs{arr};
         CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data()));
+    }
+
+    std::array<AddressOverloaded, 4> ao_arr{};  
+
+    {
+        span<AddressOverloaded, 4> fs{ao_arr};
+        CHECK((fs.size() == narrow_cast<ptrdiff_t>(ao_arr.size()) && ao_arr.data() == fs.data()));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -473,6 +492,13 @@ TEST_CASE("from_const_std_array_constructor")
     {
         span<const int, 4> s{arr};
         CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data()));
+    }
+
+    const std::array<AddressOverloaded, 4> ao_arr{};
+
+    {
+        span<const AddressOverloaded, 4> s{ao_arr};
+        CHECK((s.size() == narrow_cast<ptrdiff_t>(ao_arr.size()) && s.data() == ao_arr.data()));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
