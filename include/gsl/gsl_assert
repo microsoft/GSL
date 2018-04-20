@@ -113,7 +113,7 @@ namespace details
     template <typename Exception>
     [[noreturn]] void throw_exception(Exception&& exception)
     {
-        throw exception;
+        throw std::forward<Exception>(exception);
     }
 
 #endif
