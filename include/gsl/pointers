@@ -68,10 +68,9 @@ using owner = T;
 template <class T>
 class not_null
 {
-public:
-    static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 
-    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+public:
+    template <typename U, typename = typename std::enable_if<std::is_constructible<T, U>::value>::type>
     constexpr not_null(U&& u) : ptr_(std::forward<U>(u))
     {
         Expects(ptr_ != nullptr);
@@ -86,14 +85,20 @@ public:
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
 
-    constexpr T get() const
+    
+    constexpr T const & get() const
     {
-        Ensures(ptr_ != nullptr);
+	/*
+	  not_null constructors and assignment operators always verify ptr_ is
+	  not set to null.   As long as references to ptr_ are not exposed publicly
+	  it is not additionally necessary to check the value against nullptr here.
+	*/
+	// Ensures(ptr_ != nullptr);
         return ptr_;
     }
 
-    constexpr operator T() const { return get(); }
-    constexpr T operator->() const { return get(); }
+    constexpr operator T const & () const { return get(); }
+    constexpr T const & operator->() const { return get(); }
     constexpr decltype(auto) operator*() const { return *get(); } 
 
     // prevents compilation when someone attempts to assign a null pointer constant
