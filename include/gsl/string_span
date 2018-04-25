@@ -698,7 +698,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) GSL_N
     return !(one < other);
 }
 #endif
-} // namespace GSL
+} // namespace gsl
 
 #undef GSL_NOEXCEPT
 
