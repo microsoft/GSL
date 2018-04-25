@@ -178,10 +178,10 @@ TEST_CASE("TestNotNullCasting")
     MyBase base;
     MyDerived derived;
     Unrelated unrelated;
-    not_null<Unrelated*> u = &unrelated;
+    not_null<Unrelated*> u{&unrelated};
     (void) u;
-    not_null<MyDerived*> p = &derived;
-    not_null<MyBase*> q = &base;
+    not_null<MyDerived*> p{&derived};
+    not_null<MyBase*> q(&base);
     q = p; // allowed with heterogeneous copy ctor
     CHECK(q == p);
 
@@ -192,18 +192,18 @@ TEST_CASE("TestNotNullCasting")
     not_null<Unrelated*> r = p;
     not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
-    not_null<Unrelated*> t = reinterpret_cast<Unrelated*>(p.get());
+    not_null<Unrelated*> t(reinterpret_cast<Unrelated*>(p.get()));
     CHECK(reinterpret_cast<void*>(p.get()) == reinterpret_cast<void*>(t.get()));
 }
 
 TEST_CASE("TestNotNullAssignment")
 {
     int i = 12;
-    not_null<int*> p = &i;
+    not_null<int*> p(&i);
     CHECK(helper(p));
 
     int* q = nullptr;
-    CHECK_THROWS_AS(p = q, fail_fast);
+    CHECK_THROWS_AS(p = not_null<int*>(q), fail_fast);
 }
 
 TEST_CASE("TestNotNullRawPointerComparison")
