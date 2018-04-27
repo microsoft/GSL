@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.1.3)
 
 project(GSL CXX)
 
@@ -25,7 +25,6 @@ if (CMAKE_VERSION VERSION_LESS 3.7.9)
         else()
             message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
         endif()
-
     endif()
 else ()
     # set the GSL library to be compiled only with c++14
@@ -49,17 +48,19 @@ target_include_directories(GSL INTERFACE
     >
 )
 
-if (MSVC_IDE)
-    option(VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
-else()
-    set(VS_ADD_NATIVE_VISUALIZERS FALSE CACHE INTERNAL "Native visualizers are Visual Studio extension" FORCE)
-endif()
+if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
+    if (MSVC_IDE)
+        option(VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
+    else()
+        set(VS_ADD_NATIVE_VISUALIZERS FALSE CACHE INTERNAL "Native visualizers are Visual Studio extension" FORCE)
+    endif()
 
-# add natvis file to the library so it will automatically be loaded into Visual Studio
-if(VS_ADD_NATIVE_VISUALIZERS)
-    target_sources(GSL INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
-    )
+    # add natvis file to the library so it will automatically be loaded into Visual Studio
+    if(VS_ADD_NATIVE_VISUALIZERS)
+        target_sources(GSL INTERFACE
+            ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
+        )
+    endif()
 endif()
 
 install(
