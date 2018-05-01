@@ -57,6 +57,13 @@
 
 #endif           // _MSC_VER
 
+// Use __may_alias__ attribute on gcc and clang
+#if defined __clang__ || (__GNUC__ > 5)
+#define byte_may_alias __attribute__((__may_alias__))
+#else // defined __clang__ || defined __GNUC__
+#define byte_may_alias
+#endif // defined __clang__ || defined __GNUC__
+
 namespace gsl
 {
 #if GSL_USE_STD_BYTE
@@ -69,7 +76,7 @@ using std::to_integer;
 
 // This is a simple definition for now that allows
 // use of byte within span<> to be standards-compliant
-enum class byte : unsigned char
+enum class byte_may_alias byte : unsigned char
 {
 };
 
