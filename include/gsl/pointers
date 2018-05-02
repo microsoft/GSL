@@ -88,7 +88,12 @@ public:
 
     constexpr T get() const
     {
-        Ensures(ptr_ != nullptr);
+        /*
+          not_null constructors and assignment operators always verify ptr_ is
+          not set to null.   As long as references to ptr_ are not exposed publicly
+          it is not additionally necessary to check the value against nullptr here.
+        */
+        // Ensures(ptr_ != nullptr);
         return ptr_;
     }
 
