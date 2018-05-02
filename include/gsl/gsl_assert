@@ -81,7 +81,7 @@ namespace details
 {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
-    typedef void  (*terminate_handler)();
+    typedef void  (__cdecl *terminate_handler)();
 
     inline gsl::details::terminate_handler& get_terminate_handler() noexcept
     {
