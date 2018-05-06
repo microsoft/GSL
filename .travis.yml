@@ -120,7 +120,7 @@ matrix:
 
     # Clang 5.0
     - env: COMPILER=clang++-5.0 BUILD_TYPE=Debug
-      addons: &clang40
+      addons: &clang50
         apt:
           packages:
             - clang-5.0
@@ -132,7 +132,7 @@ matrix:
               key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
 
     - env: COMPILER=clang++-5.0 BUILD_TYPE=Release
-      addons: *clang40    
+      addons: *clang50    
 
     ##########################################################################
     # GCC on Linux
