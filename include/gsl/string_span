@@ -376,6 +376,21 @@ std::basic_string<CharT, Traits, Allocator> to_basic_string(basic_string_span<gC
     return {view.data(), static_cast<std::size_t>(view.length())};
 }
 
+template <class ElementType, std::ptrdiff_t Extent>
+basic_string_span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
+as_bytes(basic_string_span<ElementType, Extent> s) noexcept
+{
+	return { reinterpret_cast<const byte*>(s.data()), s.size_bytes() };
+}
+
+template <class ElementType, std::ptrdiff_t Extent,
+          class = std::enable_if_t<!std::is_const<ElementType>::value>>
+basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
+as_writeable_bytes(basic_string_span<ElementType, Extent> s) noexcept
+{
+    return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
+}
+
 // zero-terminated string span, used to convert
 // zero-terminated spans to legacy strings
 template <typename CharT, std::ptrdiff_t Extent = dynamic_extent>
