@@ -266,7 +266,7 @@ namespace details
                                             span_iterator rhs) noexcept
         {   // test that [lhs, rhs) forms a valid range inside an STL algorithm
             Expects(lhs.span_ == rhs.span_ // range spans have to match
-                && lhs.index_ < rhs.index_); // range must not be transposed
+                && lhs.index_ <= rhs.index_); // range must not be transposed
         }
 
         cosntexpr void _Verify_offset(const difference_type n) const noexcpt
