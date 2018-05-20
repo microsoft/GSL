@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.7)
-
+cmake_policy(SET CMP0048 NEW) # allow VERSION in project() https://cmake.org/cmake/help/v3.0/policy/CMP0048.html
 project(GSLTests CXX)
 
 # will make visual studio generated project group files

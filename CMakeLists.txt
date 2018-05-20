@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3)
-
-project(GSL CXX)
+cmake_policy(SET CMP0048 NEW) # allow VERSION in project() https://cmake.org/cmake/help/v3.0/policy/CMP0048.html
+project(GSL VERSION 1.0.0 LANGUAGES CXX)
 
 include(ExternalProject)
 include(GNUInstallDirs)
@@ -70,10 +70,21 @@ if (GSL_TEST)
 endif ()
 
 set(package_name "MicrosoftGSL")
+set(project_namespace "${package_name}::")
 set(targets_export_name "${package_name}Targets")
 set(project_config "${package_name}Config.cmake")
+set(version_config "${CMAKE_BINARY_DIR}/${package_name}ConfigVersion.cmake")
+set(pkg_config "${CMAKE_BINARY_DIR}/${package_name}.pc")
+set(pkgconfig_install_dir "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${package_name}")
-set(project_namespace "${package_name}::")
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${version_config}" COMPATIBILITY SameMajorVersion
+)
+
+configure_file("cmake/MicrosoftGSL.pc.in" "${pkg_config}" @ONLY)
+
 install(
     TARGETS GSL
     EXPORT ${targets_export_name}
@@ -83,6 +94,16 @@ install(
 install(
     DIRECTORY include/gsl
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(
+    FILES "${version_config}"
+    DESTINATION "${config_install_dir}"
+)
+
+install(
+    FILES "${pkg_config}"
+    DESTINATION "${pkgconfig_install_dir}"
 )
 
 install(
@@ -97,5 +118,5 @@ export(
     NAMESPACE ${project_namespace}
     FILE ${project_config}
 )
-export(PACKAGE ${package_name})
 
+export(PACKAGE ${package_name})
