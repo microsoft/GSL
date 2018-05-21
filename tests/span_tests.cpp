@@ -419,6 +419,12 @@ TEST_CASE("from_std_array_constructor")
         CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data()));
     }
 
+    {
+        std::array<int, 0> empty_arr{};
+        span<int> s{empty_arr};
+        CHECK((s.size() == 0 && s.empty()));
+    }
+
 #ifdef CONFIRM_COMPILATION_ERRORS
     {
         span<int, 2> s{arr};

@@ -409,13 +409,13 @@ public:
 
     template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     constexpr span(std::array<ArrayElementType, N>& arr) noexcept
-        : storage_(&arr[0], details::extent_type<N>())
+        : storage_(arr.data(), details::extent_type<N>())
     {
     }
 
     template <std::size_t N>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
-        : storage_(&arr[0], details::extent_type<N>())
+        : storage_(arr.data(), details::extent_type<N>())
     {
     }
 
