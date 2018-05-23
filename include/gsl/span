@@ -282,12 +282,12 @@ namespace details
             return span_->data() + index_;
         }
 
-#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
         // Tell the STL that span_iterator should not be unwrapped if it can't
         // validate in advance, even in release / optimized builds:
-        static constexpr bool _Unwrap_when_unverified = false;
-#else
+#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
         static constexpr const bool _Unwrap_when_unverified = false;
+#else
+        static constexpr bool _Unwrap_when_unverified = false;
 #endif
         constexpr void _Seek_to(const pointer p) noexcept
         {   // adjust the position of *this to previously verified location p
