@@ -258,6 +258,44 @@ namespace details
             return !(rhs > lhs);
         }
 
+#ifdef _MSC_VER
+        // MSVC++ iterator debugging support; allows STL algorithms in 15.8+
+        // to unwrap span_iterator to a pointer type after a range check in STL
+        // algorithm calls
+        friend constexpr void _Verify_range(span_iterator lhs,
+                                            span_iterator rhs) noexcept
+        {   // test that [lhs, rhs) forms a valid range inside an STL algorithm
+            Expects(lhs.span_ == rhs.span_ // range spans have to match
+                && lhs.index_ <= rhs.index_); // range must not be transposed
+        }
+
+        constexpr void _Verify_offset(const difference_type n) const noexcept
+        {   // test that the iterator *this + n is a valid range in an STL
+            // algorithm call
+            Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
+        }
+
+        constexpr pointer _Unwrapped() const noexcept
+        {   // after seeking *this to a high water mark, or using one of the
+            // _Verify_xxx functions above, unwrap this span_iterator to a raw
+            // pointer
+            return span_->data() + index_;
+        }
+
+        // Tell the STL that span_iterator should not be unwrapped if it can't
+        // validate in advance, even in release / optimized builds:
+#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
+        static constexpr const bool _Unwrap_when_unverified = false;
+#else
+        static constexpr bool _Unwrap_when_unverified = false;
+#endif
+        constexpr void _Seek_to(const pointer p) noexcept
+        {   // adjust the position of *this to previously verified location p
+            // after _Unwrapped
+            index_ = p - span_->data();
+        }
+#endif
+
     protected:
         const Span* span_ = nullptr;
         std::ptrdiff_t index_ = 0;
