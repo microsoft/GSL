@@ -1167,3 +1167,22 @@ TEST_CASE("char32_t type")
     CHECK(ss8 <= ss9);
     CHECK(ss8 != ss9);
 }
+
+TEST_CASE("as_bytes")
+{
+    cwzstring_span<> v(L"qwerty");
+    const auto s = v.as_string_span();
+    const auto bs = as_bytes(s);
+    CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+    CHECK(bs.size() == s.size_bytes());
+}
+
+TEST_CASE("as_writeable_bytes")
+{
+    wchar_t buf[]{L"qwerty"};
+    wzstring_span<> v(buf);
+    const auto s = v.as_string_span();
+    const auto bs = as_writeable_bytes(s);
+    CHECK(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
+    CHECK(bs.size() == s.size_bytes());
+}
