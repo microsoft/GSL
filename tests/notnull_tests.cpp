@@ -332,7 +332,7 @@ TEST_CASE("TestNotNullCustomPtrComparison")
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
 
 struct UniquePointerTestStruct {
-    int i = 0;
+    int i = 42;
 };
 
 TEST_CASE("TestNotNullUniquePtrComparison") {
@@ -340,13 +340,126 @@ TEST_CASE("TestNotNullUniquePtrComparison") {
     {
         using NotNull1 = not_null<std::unique_ptr<int>>;
 
+        NotNull1 p(std::make_unique<int>(42));
+        CHECK(*p == 42);
         // values are the same
-        CHECK((*NotNull1(std::make_unique<int>(42)) == *NotNull1(std::make_unique<int>(42))));
+        CHECK(*p == *NotNull1(std::make_unique<int>(42)));
     }
     {
         using NotNull1 = not_null<std::unique_ptr<UniquePointerTestStruct>>;
 
+        NotNull1 p(std::make_unique<UniquePointerTestStruct>());
+        CHECK(p->i == 42);
         // values are the same
-        CHECK((NotNull1(std::make_unique<UniquePointerTestStruct>())->i == NotNull1(std::make_unique<UniquePointerTestStruct>())->i));
+        CHECK(p->i == NotNull1(std::make_unique<UniquePointerTestStruct>())->i);
     }
+}
+static_assert(!std::is_assignable<not_null<std::unique_ptr<int>>, std::unique_ptr<int>>::value, "not_null<std::unique_ptr> must be non assignable from std:unique_ptr");
+static_assert(!std::is_copy_constructible<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be non copy constructible");
+static_assert(!std::is_copy_assignable<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be non copy assignable");
+static_assert(std::is_nothrow_move_constructible<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be no-throw move constructible");
+static_assert(std::is_nothrow_move_assignable<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be no-throw move assignable");
+
+
+TEST_CASE("TestNotNullUniquePtrMove") {
+
+    using NotNull1 = not_null<std::unique_ptr<int>>;
+
+    NotNull1 src(std::make_unique<int>(42));
+    NotNull1 dst(std::move(src));
+#ifdef CONFIRM_COMPILATION_ERRORS
+    NotNull1 fail(dst);
+    dst = src;
+    dst = std::make_unique<int>(43);
+    src->reset();
+    *src = nullptr;
+#endif
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
+    CHECK_THROWS_AS(!src.get(), fail_fast);
+#endif
+    CHECK(dst.get());
+    CHECK(*dst.get() == 42);
+    src = std::move(dst);
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
+    CHECK_THROWS_AS(!dst.get(), fail_fast);
+#endif
+    CHECK(src.get());
+    CHECK(*src.get() == 42);
+}
+
+
+
+
+TEST_CASE("TestNotNullSharedPtrValueComparison") {
+
+    {
+        using NotNull1 = not_null<std::shared_ptr<int>>;
+
+        NotNull1 p(std::make_shared<int>(42));
+        CHECK(*p == 42);
+        // values are the same
+        CHECK(*p == *NotNull1(std::make_shared<int>(42)));
+    }
+    {
+        using NotNull1 = not_null<std::shared_ptr<UniquePointerTestStruct>>;
+
+        NotNull1 p(std::make_shared<UniquePointerTestStruct>());
+        CHECK(p->i == 42);
+        // values are the same
+        CHECK(p->i == NotNull1(std::make_shared<UniquePointerTestStruct>())->i);
+    }
+}
+static_assert(!std::is_assignable<not_null<std::shared_ptr<int>>, std::shared_ptr<int>>::value, "not_null<std::shared_ptr> must be non assignable from std::shared_ptr");
+static_assert(std::is_copy_constructible<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be copy constructible");
+static_assert(std::is_copy_assignable<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be copy assignable");
+static_assert(std::is_nothrow_move_constructible<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be no-throw move constructible");
+static_assert(std::is_nothrow_move_assignable<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be no-throw move assignable");
+
+
+TEST_CASE("TestNotNullSharedPtrMove") {
+
+    using NotNull1 = not_null<std::shared_ptr<int>>;
+
+    NotNull1 src(std::make_shared<int>(42));
+    NotNull1 dst(std::move(src));
+#ifdef CONFIRM_COMPILATION_ERRORS
+    src->reset();
+    *src = nullptr;
+#endif
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
+    CHECK_THROWS_AS(!src.get(), fail_fast);
+#endif
+    CHECK(dst.get());
+    CHECK(*dst.get() == 42);
+    src = std::move(dst);
+#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
+    CHECK_THROWS_AS(!dst.get(), fail_fast);
+#endif
+    CHECK(src.get());
+    CHECK(*src.get() == 42);
+}
+
+TEST_CASE("TestNotNullSharedPtrcopy") {
+
+    using NotNull1 = not_null<std::shared_ptr<int>>;
+
+    NotNull1 src(std::make_shared<int>(42));
+    NotNull1 dst(src);
+#ifdef CONFIRM_COMPILATION_ERRORS
+    src->reset();
+    *src = nullptr;
+#endif
+    CHECK(src.get());
+    CHECK(*src.get() == 42);
+    CHECK(dst.get());
+    CHECK(*dst.get() == 42);
+    *src.get() = 43;
+    CHECK(dst.get());
+    CHECK(dst.get());
+    CHECK(*dst.get() == 43);
+    NotNull1 dst2(std::make_shared<int>(44));
+    dst2 = dst;
+    CHECK(dst2.get());
+    CHECK(dst2.get());
+    CHECK(*dst2.get() == 43);
 }

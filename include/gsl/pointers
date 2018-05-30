@@ -84,6 +84,7 @@ public:
 
     not_null(not_null&& other) = default;
     not_null(const not_null& other) = default;
+    not_null& operator=(not_null&& other) = default;
     not_null& operator=(const not_null& other) = default;
 
     constexpr T const & get() const
