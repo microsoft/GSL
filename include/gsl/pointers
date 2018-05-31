@@ -31,6 +31,10 @@
 
 #endif                          // defined(_MSC_VER) && _MSC_VER < 1910
 
+#if defined(_DEDUCTION_GUIDES_SUPPORTED) || defined(__cpp_deduction_guides)
+#define GSL_DEDUCTION_GUIDES_SUPPORTED
+#endif
+
 namespace gsl
 {
 
@@ -112,6 +116,11 @@ public:
 private:
     T ptr_;
 };
+
+#if defined GSL_DEDUCTION_GUIDES_SUPPORTED
+template <typename T>
+not_null(T)->not_null<T>;
+#endif
 
 template <class T>
 std::ostream& operator<<(std::ostream& os, const not_null<T>& val)

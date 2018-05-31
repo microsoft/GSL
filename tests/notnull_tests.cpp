@@ -112,6 +112,7 @@ struct NonCopyableNonMovable
 };
 
 bool helper(not_null<int*> p) { return *p == 12; }
+bool helper_const(not_null<const int*> p) { return *p == 12; }
 
 TEST_CASE("TestNotNullConstructors")
 {
@@ -327,5 +328,53 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
+
+#if defined(GSL_DEDUCTION_GUIDES_SUPPORTED)
+TEST_CASE("TestNotNullDeductionGuides")
+{
+    {
+        int i = 42;
+
+        not_null x{&i};
+        helper(not_null{&i});
+        helper_const(not_null{&i});
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int i = 42;
+        int* p = &i;
+
+        not_null x{p};
+        helper(not_null{p});
+        helper_const(not_null{p});
+
+        CHECK(*x == 42);
+    }
+
+    {
+
+        auto workaround_macro = []() {
+            int* p1 = nullptr;
+            not_null x{p1};
+        };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+
+        int* p = nullptr;
+
+        CHECK_THROWS_AS(helper(not_null{p}), fail_fast);
+        CHECK_THROWS_AS(helper_const(not_null{p}), fail_fast);
+    }
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+    {
+        not_null x{nullptr};
+        helper(not_null{nullptr});
+        helper_const(not_null{nullptr});
+    }
+#endif
+}
+#endif
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");

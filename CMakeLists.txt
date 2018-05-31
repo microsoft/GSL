@@ -14,21 +14,41 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   set(GSL_STANDALONE_PROJECT ON)
 endif ()
 
+
+include(CheckCXXCompilerFlag)
+if (NOT MSVC)
+    CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
+    CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
+else()
+    CHECK_CXX_COMPILER_FLAG("-std:c++14" COMPILER_SUPPORTS_CXX14)
+    CHECK_CXX_COMPILER_FLAG("-std:c++17" COMPILER_SUPPORTS_CXX17)
+endif()
+
 # when minimum version required is 3.8.0 remove if below
 # both branches do exactly the same thing
 if (CMAKE_VERSION VERSION_LESS 3.7.9)
     if (NOT MSVC)
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
-        if(COMPILER_SUPPORTS_CXX14)
-            target_compile_options(GSL INTERFACE "-std=c++14")
+        if(COMPILER_SUPPORTS_CXX17)
+            target_compile_options(GSL INTERFACE "-std=c++17")
         else()
-            message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
+            if(COMPILER_SUPPORTS_CXX14)
+                target_compile_options(GSL INTERFACE "-std=c++14")
+            else()
+                message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
+            endif()
         endif()
     endif()
 else ()
     # set the GSL library to be compiled only with c++14
-    target_compile_features(GSL INTERFACE cxx_std_14)
+    if(COMPILER_SUPPORTS_CXX17)
+        target_compile_features(GSL INTERFACE cxx_std_17)
+    else()
+        if(COMPILER_SUPPORTS_CXX14)
+            target_compile_features(GSL INTERFACE cxx_std_14)
+        else()
+            message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
+        endif()
+    endif()
     # on *nix systems force the use of -std=c++XX instead of -std=gnu++XX (default)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
@@ -38,6 +58,7 @@ target_compile_definitions(GSL INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:
         # remove unnecessary warnings about unchecked iterators
         _SCL_SECURE_NO_WARNINGS
+        _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
     >
 )
 
