@@ -31,10 +31,6 @@
 
 #endif                          // defined(_MSC_VER) && _MSC_VER < 1910
 
-#if defined(_DEDUCTION_GUIDES_SUPPORTED) || defined(__cpp_deduction_guides)
-#define GSL_DEDUCTION_GUIDES_SUPPORTED
-#endif
-
 namespace gsl
 {
 
@@ -81,6 +77,12 @@ public:
         Expects(ptr_ != nullptr);
     }
 
+    template <typename = std::enable_if_t<!std::is_same<nullptr_t, T>::value>>
+    constexpr explicit not_null(T u) : ptr_(u)
+    {
+        Expects(ptr_ != nullptr);
+    }
+
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
     constexpr not_null(const not_null<U>& other) : not_null(other.get())
     {
@@ -116,11 +118,6 @@ public:
 private:
     T ptr_;
 };
-
-#if defined GSL_DEDUCTION_GUIDES_SUPPORTED
-template <typename T>
-not_null(T)->not_null<T>;
-#endif
 
 template <class T>
 std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
