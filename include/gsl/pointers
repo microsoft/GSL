@@ -25,6 +25,10 @@
 #include <system_error> // for hash
 #include <type_traits>  // for enable_if_t, is_convertible, is_assignable
 
+#else // defined __clang__ || defined __GNUC__
+#include <cstddef>      // for nullptr_t
+#endif() // defined __clang__ || defined __GNUC__
+
 #if defined(_MSC_VER) && _MSC_VER < 1910
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
