@@ -45,8 +45,16 @@
 // this tests if we are under GCC or Clang with enough -std:c++1z power to get us std::byte
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
+#if defined __clang__ && (__clang_major__ < 5)
+
+#define GSL_USE_STD_BYTE 0
+
+#else // __clang__ && (__clang_major__ < 5)
+
 #define GSL_USE_STD_BYTE 1
 #include <cstddef>
+
+#endif
 
 #else // defined(__cplusplus) && (__cplusplus >= 201703L)
 
