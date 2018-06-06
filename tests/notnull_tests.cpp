@@ -329,6 +329,8 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
 
+
+#if defined(_MSC_VER) && _MSC_VER >= 1910
 TEST_CASE("TestNotNullConstructorTypeDeduction")
 {
     {
@@ -383,5 +385,6 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
     }
 #endif
 }
+#endif // #if defined(_MSC_VER) && _MSC_VER >= 1910
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
