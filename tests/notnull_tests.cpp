@@ -329,8 +329,7 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
 
-#if defined(GSL_DEDUCTION_GUIDES_SUPPORTED)
-TEST_CASE("TestNotNullDeductionGuides")
+TEST_CASE("TestNotNullConstructorTypeDeduction")
 {
     {
         int i = 42;
@@ -354,13 +353,22 @@ TEST_CASE("TestNotNullDeductionGuides")
     }
 
     {
-
         auto workaround_macro = []() {
             int* p1 = nullptr;
             not_null x{p1};
         };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
 
+    {
+        auto workaround_macro = []() {
+            const int* p1 = nullptr;
+            not_null x{p1};
+        };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    {
         int* p = nullptr;
 
         CHECK_THROWS_AS(helper(not_null{p}), fail_fast);
@@ -375,6 +383,5 @@ TEST_CASE("TestNotNullDeductionGuides")
     }
 #endif
 }
-#endif
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
