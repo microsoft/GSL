@@ -25,10 +25,6 @@
 #include <system_error> // for hash
 #include <type_traits>  // for enable_if_t, is_convertible, is_assignable
 
-#else // defined __clang__ || defined __GNUC__
-#include <cstddef>      // for nullptr_t
-#endif // defined __clang__ || defined __GNUC__
-
 #if defined(_MSC_VER) && _MSC_VER < 1910
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
@@ -81,7 +77,7 @@ public:
         Expects(ptr_ != nullptr);
     }
 
-    template <typename = std::enable_if_t<!std::is_same<nullptr_t, T>::value>>
+    template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
     constexpr explicit not_null(T u) : ptr_(u)
     {
         Expects(ptr_ != nullptr);
