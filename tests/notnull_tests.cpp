@@ -330,7 +330,7 @@ TEST_CASE("TestNotNullCustomPtrComparison")
 }
 
 
-#if defined(_MSC_VER) && _MSC_VER >= 1910
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
 TEST_CASE("TestNotNullConstructorTypeDeduction")
 {
     {
@@ -385,6 +385,6 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
     }
 #endif
 }
-#endif // #if defined(_MSC_VER) && _MSC_VER >= 1910
+#endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
