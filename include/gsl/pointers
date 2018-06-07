@@ -77,6 +77,12 @@ public:
         Expects(ptr_ != nullptr);
     }
 
+    template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
+    constexpr explicit not_null(T u) : ptr_(u)
+    {
+        Expects(ptr_ != nullptr);
+    }
+
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
     constexpr not_null(const not_null<U>& other) : not_null(other.get())
     {
