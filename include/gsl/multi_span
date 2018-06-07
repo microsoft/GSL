@@ -602,7 +602,7 @@ public:
     }
 
     constexpr static_bounds(std::initializer_list<size_type> il)
-        : m_ranges(static_cast<const std::ptrdiff_t*>(il.begin()))
+        : m_ranges(il.begin())
     {
         // Size of the initializer list must match the rank of the array
         Expects((MyRanges::DynamicNum == 0 && il.size() == 1 && *il.begin() == static_size) ||
@@ -1676,7 +1676,7 @@ constexpr auto as_multi_span(multi_span<byte, Dimensions...> s) GSL_NOEXCEPT
     static_assert(
         std::is_trivial<std::decay_t<U>>::value &&
             (ByteSpan::bounds_type::static_size == dynamic_range ||
-             ByteSpan::bounds_type::static_size % static_cast<std::size_t>(sizeof(U)) == 0),
+             ByteSpan::bounds_type::static_size % sizeof(U) == 0),
         "Target type must be a trivial type and its size must match the byte array size");
 
     Expects((s.size_bytes() % sizeof(U)) == 0);
