@@ -14,32 +14,28 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   set(GSL_STANDALONE_PROJECT ON)
 endif ()
 
+set(GSL_CXX_STANDARD "14" CACHE STRING "Use c++ standard")
+set(GSL_CXX_STD "cxx_std_${GSL_CXX_STANDARD}")
 
-include(CheckCXXCompilerFlag)
-if (NOT MSVC)
-    CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
+if (MSVC)
+    set(GSL_CXX_STD_OPT "-std:c++${GSL_CXX_STANDARD}")
 else()
-    CHECK_CXX_COMPILER_FLAG("-std:c++14" COMPILER_SUPPORTS_CXX14)
+    set(GSL_CXX_STD_OPT "-std=c++${GSL_CXX_STANDARD}")
 endif()
 
 # when minimum version required is 3.8.0 remove if below
 # both branches do exactly the same thing
 if (CMAKE_VERSION VERSION_LESS 3.7.9)
-    if (NOT MSVC)
-        if(COMPILER_SUPPORTS_CXX14)
-            target_compile_options(GSL INTERFACE "-std=c++14")
-        else()
-            message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
-        endif()
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("${GSL_CXX_STD_OPT}" COMPILER_SUPPORTS_CXX_STANDARD)
+
+    if(COMPILER_SUPPORTS_CXX_STANDARD)
+        target_compile_options(GSL INTERFACE "${GSL_CXX_STD_OPT}")
     else()
-        if(COMPILER_SUPPORTS_CXX14)
-            target_compile_options(GSL INTERFACE "-std:c++14")
-        else()
-            message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
-        endif()
+        message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no c++${GSL_CXX_STANDARD} support. Please use a different C++ compiler.")
     endif()
 else ()
-    target_compile_features(GSL INTERFACE cxx_std_14)
+    target_compile_features(GSL INTERFACE "${GSL_CXX_STD}")
     # on *nix systems force the use of -std=c++XX instead of -std=gnu++XX (default)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
@@ -49,6 +45,8 @@ target_compile_definitions(GSL INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:
         # remove unnecessary warnings about unchecked iterators
         _SCL_SECURE_NO_WARNINGS
+        # remove deprecation warnings about std::uncaught_exception() (from catch)
+        _SILENCE_CXX17_UNCAUGHT_EXCEPTION_DEPRECATION_WARNING
     >
 )
 
