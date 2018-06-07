@@ -39,11 +39,7 @@ if (CMAKE_VERSION VERSION_LESS 3.7.9)
         endif()
     endif()
 else ()
-    if(COMPILER_SUPPORTS_CXX14)
-        target_compile_features(GSL INTERFACE cxx_std_14)
-    else()
-        message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
-    endif()
+    target_compile_features(GSL INTERFACE cxx_std_14)
     # on *nix systems force the use of -std=c++XX instead of -std=gnu++XX (default)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
@@ -53,7 +49,6 @@ target_compile_definitions(GSL INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:
         # remove unnecessary warnings about unchecked iterators
         _SCL_SECURE_NO_WARNINGS
-        _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
     >
 )
 
