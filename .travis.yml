@@ -163,6 +163,28 @@ matrix:
     - env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang60
 
+    # Clang 7.0
+    - env: COMPILER=clang++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang70
+        apt:
+          packages:
+            - clang-7
+            - g++-7
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-7
+
+
+    - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang70
+
+    # Clang 7.0 c++17
+    - env: COMPILER=clang++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang70
+
+    - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang70
+
     ##########################################################################
     # GCC on Linux
     ##########################################################################
