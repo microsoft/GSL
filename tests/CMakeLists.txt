@@ -26,10 +26,8 @@ else()
     add_custom_target(catch)
 endif()
 
-if (MSVC)
-    if (GSL_CXX_STANDARD EQUAL 17)
-        set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus)
-    endif()
+if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
+    set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus)
 endif()
 
 # this interface adds compile options to how the tests are run
