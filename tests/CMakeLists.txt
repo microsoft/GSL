@@ -26,6 +26,10 @@ else()
     add_custom_target(catch)
 endif()
 
+if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
+    set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus)
+endif()
+
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
@@ -35,6 +39,7 @@ target_compile_options(gsl_tests_config INTERFACE
         /W4
         /WX
     >
+    ${GSL_CPLUSPLUS_OPT}
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
         -fno-strict-aliasing
         -Wall
@@ -122,6 +127,7 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
         /W4
         /WX
     >
+    ${GSL_CPLUSPLUS_OPT}
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
         -fno-strict-aliasing
         -fno-exceptions
