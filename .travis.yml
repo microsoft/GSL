@@ -124,7 +124,7 @@ matrix:
         apt:
           packages:
             - clang-5.0
-            - g++-5
+            - g++-7
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
@@ -134,13 +134,19 @@ matrix:
     - env: COMPILER=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang50
 
+    - env: COMPILER=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang50
+
+    - env: COMPILER=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang50
+
     # Clang 6.0
     - env: COMPILER=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang60
         apt:
           packages:
             - clang-6.0
-            - g++-6
+            - g++-7
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-6.0
@@ -150,13 +156,12 @@ matrix:
     - env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang60
 
-    # Does not work due to #695
     # Clang 6.0 c++17
-    #- env: COMPILER=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-    #  addons: *clang60
+    - env: COMPILER=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang60
 
-    #- env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-    #  addons: *clang60
+    - env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang60
 
     ##########################################################################
     # GCC on Linux
