@@ -23,9 +23,6 @@
 
 #pragma warning(push)
 
-// don't warn about function style casts in byte related operators
-#pragma warning(disable : 26493)
-
 #ifndef GSL_USE_STD_BYTE
 // this tests if we are under MSVC and the standard lib has std::byte and it is enabled
 #if defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
@@ -155,6 +152,7 @@ constexpr byte to_byte_impl(T t) noexcept
 template <>
 constexpr byte to_byte_impl<true, unsigned char>(unsigned char t) noexcept
 {
+    [[gsl::suppress(type.4)]] // NO-FORMAT: attribute
     return byte(t);
 }
 

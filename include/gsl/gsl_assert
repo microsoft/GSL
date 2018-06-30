@@ -103,6 +103,7 @@ namespace details
 #if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
     template <typename Exception>
+    [[gsl::suppress(f.6)]] // NO-FORMAT: attribute
     [[noreturn]] void throw_exception(Exception&&)
     {
         gsl::details::terminate();

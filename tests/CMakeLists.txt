@@ -27,7 +27,7 @@ else()
 endif()
 
 if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
-    set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus)
+    set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
 endif()
 
 # this interface adds compile options to how the tests are run

@@ -62,6 +62,7 @@ public:
     final_action& operator=(const final_action&) = delete;
     final_action& operator=(final_action&&) = delete;
 
+    [[gsl::suppress(f.6)]] // NO-FORMAT: attribute // terminate if throws
     ~final_action() noexcept
     {
         if (invoke_) f_();
@@ -74,7 +75,6 @@ private:
 
 // finally() - convenience function to generate a final_action
 template <class F>
-
 final_action<F> finally(const F& f) noexcept
 {
     return final_action<F>(f);
@@ -90,6 +90,7 @@ final_action<F> finally(F&& f) noexcept
 template <class T, class U>
 constexpr T narrow_cast(U&& u) noexcept
 {
+    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
     return static_cast<T>(std::forward<U>(u));
 }
 
@@ -108,6 +109,7 @@ namespace details
 
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template <class T, class U>
+[[gsl::suppress(type.1)]] // NO-FORMAT: attribute
 T narrow(U u)
 {
     T t = narrow_cast<T>(u);
@@ -124,7 +126,9 @@ template <class T, std::size_t N>
 constexpr T& at(T (&arr)[N], const index i)
 {
     Expects(i >= 0 && i < narrow_cast<index>(N));
-    return arr[static_cast<std::size_t>(i)];
+    [[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
+    [[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+    return arr[narrow_cast<std::size_t>(i)];
 }
 
 template <class Cont>
@@ -132,6 +136,8 @@ constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
 {
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     using size_type = decltype(cont.size());
+    [[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
+    [[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
     return cont[static_cast<size_type>(i)];
 }
 
@@ -139,6 +145,7 @@ template <class T>
 constexpr T at(const std::initializer_list<T> cont, const index i)
 {
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
+    [[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
     return *(cont.begin() + i);
 }
 
