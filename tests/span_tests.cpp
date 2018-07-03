@@ -459,6 +459,15 @@ TEST_CASE("from_std_array_constructor")
         auto s = make_span(arr);
         CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data()));
     }
+
+    // This test checks for the bug found in gcc 6.1, 6.2, 6.3, 7.1, 7.2, 7.3 - issue #590
+    {
+        span<int> s1 = make_span(arr);
+
+        static span<int> s2;
+        s2 = s1;
+        CHECK(s1.size() == s2.size());
+    }
 }
 
 TEST_CASE("from_const_std_array_constructor")
