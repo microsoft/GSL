@@ -467,7 +467,7 @@ TEST_CASE("from_std_array_constructor")
         static span<int> s2;
         s2 = s1;
     
-    #if defined(GCC_VERSION) && GCC_VERSION == 60400
+    #if __GNUC__ == 6 && __GNUC_MINOR__ == 4 && __GNUC_PATCHLEVEL__ == 0
         // Known to be broken in gcc 6.4
         // Issue in gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83116
         CHECK(s1.size() == 4 && s2.size() == 0);
