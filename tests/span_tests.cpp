@@ -470,7 +470,8 @@ TEST_CASE("from_std_array_constructor")
     #if __GNUC__ == 6 && __GNUC_MINOR__ == 4 && __GNUC_PATCHLEVEL__ == 0
         // Known to be broken in gcc 6.4
         // Issue in gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83116
-        CHECK(s1.size() == 4 && s2.size() == 0);
+        CHECK(s1.size() == 4);
+        CHECK(s2.size() == 0);
     #else
         CHECK(s1.size() == s2.size());
     #endif
