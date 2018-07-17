@@ -10,8 +10,7 @@ include(GNUInstallDirs)
 
 # creates a library GSL which is an interface (header files only)
 # Target must be renamed to avoid conflics with GNU Scientific Library
-add_library(Microsoft.GSL INTERFACE)
-add_library(GSL ALIAS Microsoft.GSL)
+add_library(GSL INTERFACE)
 
 # determine whether this is a standalone project or included by other projects
 set(GSL_STANDALONE_PROJECT OFF)
@@ -26,7 +25,7 @@ if (CMAKE_VERSION VERSION_LESS 3.7.9)
         include(CheckCXXCompilerFlag)
         CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
         if(COMPILER_SUPPORTS_CXX14)
-            target_compile_options(Microsoft.GSL INTERFACE "-std=c++14")
+            target_compile_options(GSL INTERFACE "-std=c++14")
         else()
             message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
         endif()
@@ -34,13 +33,13 @@ if (CMAKE_VERSION VERSION_LESS 3.7.9)
     endif()
 else ()
     # set the GSL library to be compiled only with c++14
-    target_compile_features(Microsoft.GSL INTERFACE cxx_std_14)
+    target_compile_features(GSL INTERFACE cxx_std_14)
     # on *nix systems force the use of -std=c++XX instead of -std=gnu++XX (default)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
 
 # add definitions to the library and targets that consume it
-target_compile_definitions(Microsoft.GSL INTERFACE
+target_compile_definitions(GSL INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:
         # remove unnecessary warnings about unchecked iterators
         _SCL_SECURE_NO_WARNINGS
@@ -48,10 +47,8 @@ target_compile_definitions(Microsoft.GSL INTERFACE
 )
 
 # add include folders to the library and targets that consume it
-target_include_directories(Microsoft.GSL INTERFACE
-    $<BUILD_INTERFACE:
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    >
+target_include_directories(GSL INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
@@ -63,12 +60,12 @@ endif()
 
 # add natvis file to the library so it will automatically be loaded into Visual Studio
 if(VS_ADD_NATIVE_VISUALIZERS)
-  target_sources(Microsoft.GSL INTERFACE
+  target_sources(GSL INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
     )
 endif()
 
-install(TARGETS Microsoft.GSL EXPORT Microsoft.GSLConfig
+install(TARGETS GSL EXPORT Microsoft.GSLConfig
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -78,8 +75,8 @@ install(
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 # Make library importable by other projects
-install(EXPORT Microsoft.GSLConfig DESTINATION share/Microsoft.GSL/cmake)
-export(TARGETS Microsoft.GSL FILE Microsoft.GSLConfig.cmake)
+install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION share/Microsoft.GSL/cmake)
+export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
 
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
