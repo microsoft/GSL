@@ -5,6 +5,9 @@ project(GSL CXX)
 include(ExternalProject)
 find_package(Git)
 
+# Use GNUInstallDirs to provide the right locations on all platforms
+include(GNUInstallDirs)
+
 # creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
@@ -47,6 +50,7 @@ target_include_directories(GSL INTERFACE
     $<BUILD_INTERFACE:
         ${CMAKE_CURRENT_SOURCE_DIR}/include
     >
+    $<INSTALL_INTERFACE:include>
 )
 
 if (MSVC_IDE)
@@ -62,10 +66,18 @@ if(VS_ADD_NATIVE_VISUALIZERS)
     )
 endif()
 
+install(TARGETS GSL EXPORT GSLConfig
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 install(
     DIRECTORY include/gsl
-    DESTINATION include
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+# Make library importable by other projects
+install(EXPORT GSLConfig DESTINATION share/GSL/cmake)
+export(TARGETS GSL FILE GSLConfig.cmake)
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
