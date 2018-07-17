@@ -55,12 +55,8 @@ target_compile_definitions(GSL INTERFACE
 
 # add include folders to the library and targets that consume it
 target_include_directories(GSL INTERFACE
-    $<BUILD_INTERFACE:
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    >
-    $<INSTALL_INTERFACE:
-        include
-    >
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
@@ -79,9 +75,7 @@ if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
 endif()
 
 install(TARGETS GSL EXPORT GSLConfig
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(
     DIRECTORY include/gsl
