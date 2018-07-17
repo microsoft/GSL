@@ -83,7 +83,7 @@ install(
 )
 # Make library importable by other projects
 install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION share/Microsoft.GSL/cmake)
-export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE GSLConfig.cmake)
+export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
