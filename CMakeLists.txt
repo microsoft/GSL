@@ -78,7 +78,7 @@ install(
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 # Make library importable by other projects
-install(EXPORT Microsoft.GSLConfig DESTINATION share/GSL/cmake)
+install(EXPORT Microsoft.GSLConfig DESTINATION share/Microsoft.GSL/cmake)
 export(TARGETS Microsoft.GSL FILE Microsoft.GSLConfig.cmake)
 
 
