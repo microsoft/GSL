@@ -74,7 +74,7 @@ if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
     endif()
 endif()
 
-install(TARGETS GSL EXPORT GSLConfig
+install(TARGETS GSL EXPORT Microsoft.GSLConfig
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(
@@ -82,8 +82,8 @@ install(
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 # Make library importable by other projects
-install(EXPORT GSLConfig DESTINATION share/GSL/cmake)
-export(TARGETS GSL FILE GSLConfig.cmake)
+install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION share/Microsoft.GSL/cmake)
+export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE GSLConfig.cmake)
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
