@@ -49,6 +49,7 @@ target_compile_options(gsl_tests_config INTERFACE
         -Werror
         -Wextra
         -Wno-missing-braces
+        -Wno-unknown-attributes
         -Wnon-virtual-dtor
         -Wold-style-cast
         -Woverloaded-virtual
