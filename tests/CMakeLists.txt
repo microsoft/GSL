@@ -48,8 +48,6 @@ target_compile_options(gsl_tests_config INTERFACE
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-attributes
-        -Wno-error=attributes
         -Wno-missing-braces
         -Wno-unknown-attributes
         -Wnon-virtual-dtor
@@ -140,8 +138,6 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-attributes
-        -Wno-error=attributes
         -Wno-missing-braces
         -Wno-unknown-attributes
         -Wnon-virtual-dtor
