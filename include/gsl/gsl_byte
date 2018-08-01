@@ -28,7 +28,7 @@
 #define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
 #else
 #define GSL_SUPPRESS(x)
-#endif // __GNUC__ || __clang__
+#endif // __clang__
 #endif // _MSC_VER
 
 #include <type_traits>

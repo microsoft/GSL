@@ -129,28 +129,27 @@ public:
     constexpr multi_span_index& operator=(const multi_span_index& rhs) noexcept = default;
 
     // Preconditions: component_idx < rank
+    GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     constexpr reference operator[](std::size_t component_idx)
     {
         Expects(component_idx < Rank); // Component index must be less than rank
-        GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-        GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
         return elems[component_idx];
     }
 
     // Preconditions: component_idx < rank
+    GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     constexpr const_reference operator[](std::size_t component_idx) const noexcept
     {
         Expects(component_idx < Rank); // Component index must be less than rank
-        GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-        GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
         return elems[component_idx];
     }
 
-
+    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds .3) // NO-FORMAT: attribute
     constexpr bool operator==(const multi_span_index& rhs) const noexcept
     {
-        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-        GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
         return std::equal(elems, elems + rank, rhs.elems);
     }
 
