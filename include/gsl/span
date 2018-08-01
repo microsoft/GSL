@@ -152,10 +152,10 @@ namespace details
         {
         }
 
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr reference operator*() const
         {
             Expects(index_ != span_->size());
-            GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
             return *(span_->data() + index_);
         }
 
@@ -273,11 +273,11 @@ namespace details
             Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
         }
 
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr pointer _Unwrapped() const noexcept
         { // after seeking *this to a high water mark, or using one of the
             // _Verify_xxx functions above, unwrap this span_iterator to a raw
             // pointer
-            GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
             return span_->data() + index_;
         }
 
@@ -461,21 +461,21 @@ public:
     }
 
     template <std::ptrdiff_t Count>
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr span<element_type, Count> last() const
     {
         Expects(Count >= 0 && size() - Count >= 0);
-        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         return {data() + (size() - Count), Count};
     }
 
     template <std::ptrdiff_t Offset, std::ptrdiff_t Count = dynamic_extent>
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr auto subspan() const ->
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((Offset >= 0 && size() - Offset >= 0) &&
                 (Count == dynamic_extent || (Count >= 0 && Offset + Count <= size())));
 
-        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
 
@@ -505,11 +505,10 @@ public:
     constexpr bool empty() const noexcept { return size() == 0; }
 
     // [span.elem], span element access
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr reference operator[](index_type idx) const
     {
         Expects(idx >= 0 && idx < storage_.size());
-
-        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         return data()[idx];
     }
 

@@ -123,29 +123,29 @@ T narrow(U u)
 // at() - Bounds-checked way of accessing builtin arrays, std::array, std::vector
 //
 template <class T, std::size_t N>
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 constexpr T& at(T (&arr)[N], const index i)
 {
     Expects(i >= 0 && i < narrow_cast<index>(N));
-    GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-    GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     return arr[narrow_cast<std::size_t>(i)];
 }
 
 template <class Cont>
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
 {
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     using size_type = decltype(cont.size());
-    GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-    GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     return cont[narrow_cast<size_type>(i)];
 }
 
 template <class T>
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 constexpr T at(const std::initializer_list<T> cont, const index i)
 {
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
-    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     return *(cont.begin() + i);
 }
 

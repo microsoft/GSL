@@ -166,16 +166,10 @@ constexpr byte to_byte_impl(T t) noexcept
     return static_cast<byte>(t);
 }
 template <>
+// GSL_SUPPRESS(type.4) // NO-FORMAT: attribute // TODO: suppression does not work
 constexpr byte to_byte_impl<true, unsigned char>(unsigned char t) noexcept
 {
-
-#if defined(__cplusplus) && (__cplusplus >= 201703L)
-    return byte{t};
-#else 
-    // clang version 5.0 an up does not like attributes in constexpr function
-    // GSL_SUPPRESS(type.4) // NO-FORMAT: attribute
     return byte(t);
-#endif
 }
 
 template <typename T>
