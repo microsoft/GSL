@@ -35,6 +35,11 @@
 
 #ifdef _MSC_VER
 
+#pragma warning(push)
+
+// Turn off rules that generate too much noise. To be fixed in the static analysis tool.
+#pragma warning(disable : 26493) // don't use c-style casts
+
 #ifndef GSL_USE_STD_BYTE
 // this tests if we are under MSVC and the standard lib has std::byte and it is enabled
 #if defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
@@ -61,10 +66,10 @@
 
 #define GSL_USE_STD_BYTE 0
 
-#endif //defined(__cplusplus) && (__cplusplus >= 201703L)
+#endif // defined(__cplusplus) && (__cplusplus >= 201703L)
 #endif // GSL_USE_STD_BYTE
 
-#endif           // _MSC_VER
+#endif // _MSC_VER
 
 // Use __may_alias__ attribute on gcc and clang
 #if defined __clang__ || (__GNUC__ > 5)
@@ -76,7 +81,6 @@
 namespace gsl
 {
 #if GSL_USE_STD_BYTE
-
 
 using std::byte;
 using std::to_integer;
@@ -164,8 +168,14 @@ constexpr byte to_byte_impl(T t) noexcept
 template <>
 constexpr byte to_byte_impl<true, unsigned char>(unsigned char t) noexcept
 {
-    GSL_SUPPRESS(type.4) // NO-FORMAT: attribute
+
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+    return byte{t};
+#else 
+    // clang version 5.0 an up does not like attributes in constexpr function
+    // GSL_SUPPRESS(type.4) // NO-FORMAT: attribute
     return byte(t);
+#endif
 }
 
 template <typename T>
@@ -183,5 +193,9 @@ constexpr byte to_byte() noexcept
 }
 
 } // namespace gsl
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif // _MSC_VER
 
 #endif // GSL_BYTE_H
