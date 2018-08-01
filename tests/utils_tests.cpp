@@ -92,7 +92,7 @@ TEST_CASE("finally_function_ptr")
     CHECK(j == 1);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("narrow_cast")
 {
     int n = 120;
@@ -104,7 +104,7 @@ TEST_CASE("narrow_cast")
     CHECK(uc == 44);
 }
 
-[[gsl::suppress(con.5)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.5) // NO-FORMAT: attribute
 TEST_CASE("narrow")
 {
     int n = 120;

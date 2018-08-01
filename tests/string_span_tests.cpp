@@ -44,8 +44,8 @@ namespace generic
 {
 
 template <typename CharT>
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
-[[gsl::suppress(f.23)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
 auto strlen(const CharT* s)
 {
     auto p = s;
@@ -54,7 +54,7 @@ auto strlen(const CharT* s)
 }
 
 template <typename CharT>
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 auto strnlen(const CharT* s, std::size_t n)
 {
     return std::find(s, s + n, CharT{0}) - s;
@@ -62,7 +62,7 @@ auto strnlen(const CharT* s, std::size_t n)
 
 } // namespace generic
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestLiteralConstruction")
 {
     cwstring_span<> v = ensure_z(L"Hello");
@@ -72,7 +72,7 @@ TEST_CASE("TestLiteralConstruction")
     wstring_span<> v2 = ensure0(L"Hello");
 #endif
 }
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 
 TEST_CASE("TestConstructFromStdString")
 {
@@ -81,7 +81,7 @@ TEST_CASE("TestConstructFromStdString")
     CHECK(v.length() == static_cast<cstring_span<>::index_type>(s.length()));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestConstructFromStdVector")
 {
     std::vector<char> vec(5, 'h');
@@ -89,7 +89,7 @@ TEST_CASE("TestConstructFromStdVector")
     CHECK(v.length() == static_cast<string_span<>::index_type>(vec.size()));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestStackArrayConstruction")
 {
     wchar_t stack_string[] = L"Hello";
@@ -115,7 +115,7 @@ TEST_CASE("TestStackArrayConstruction")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestConstructFromConstCharPointer")
 {
     const char* s = "Hello";
@@ -123,7 +123,7 @@ TEST_CASE("TestConstructFromConstCharPointer")
     CHECK(v.length() == 5);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestConversionToConst")
 {
     char stack_string[] = "Hello";
@@ -132,7 +132,7 @@ TEST_CASE("TestConversionToConst")
     CHECK(v.length() == v2.length());
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestConversionFromConst")
 {
     char stack_string[] = "Hello";
@@ -144,7 +144,7 @@ TEST_CASE("TestConversionFromConst")
 #endif
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestToString")
 {
     auto s = gsl::to_string(cstring_span<>{});
@@ -157,7 +157,7 @@ TEST_CASE("TestToString")
     CHECK(s2.length() == 5);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestToBasicString")
 {
     auto s = gsl::to_basic_string<char, std::char_traits<char>, ::std::allocator<char>>(
@@ -171,8 +171,8 @@ TEST_CASE("TestToBasicString")
     CHECK(s2.length() == 5);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
 TEST_CASE("EqualityAndImplicitConstructors")
 {
     {
@@ -399,8 +399,8 @@ TEST_CASE("EqualityAndImplicitConstructors")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
 TEST_CASE("ComparisonAndImplicitConstructors")
 {
     {
@@ -472,11 +472,11 @@ TEST_CASE("ComparisonAndImplicitConstructors")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("ConstrutorsEnsureZ")
 {
     // remove z from literals
@@ -507,8 +507,8 @@ TEST_CASE("ConstrutorsEnsureZ")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
 TEST_CASE("Constructors")
 {
     // creating cstring_span
@@ -915,8 +915,8 @@ czstring_span<> CreateTempName(string_span<> span)
     return {ret};
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("zstring")
 {
 
@@ -971,8 +971,8 @@ cwzstring_span<> CreateTempNameW(wstring_span<> span)
     return {ret};
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("wzstring")
 {
 
@@ -1027,8 +1027,8 @@ cu16zstring_span<> CreateTempNameU16(u16string_span<> span)
     return {ret};
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("u16zstring")
 {
 
@@ -1083,8 +1083,8 @@ cu32zstring_span<> CreateTempNameU32(u32string_span<> span)
     return {ret};
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("u32zstring")
 {
 
@@ -1129,8 +1129,8 @@ TEST_CASE("Issue305")
     CHECK(foo["bar"] == 1);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
 TEST_CASE("char16_t type")
 {
     gsl::cu16string_span<> ss1 = gsl::ensure_z(u"abc");
@@ -1172,8 +1172,8 @@ TEST_CASE("char16_t type")
     CHECK(ss8 != ss9);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
 TEST_CASE("char32_t type")
 {
     gsl::cu32string_span<> ss1 = gsl::ensure_z(U"abc");
@@ -1211,7 +1211,7 @@ TEST_CASE("char32_t type")
     CHECK(ss8 != ss9);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_bytes")
 {
     cwzstring_span<> v(L"qwerty");
@@ -1221,7 +1221,7 @@ TEST_CASE("as_bytes")
     CHECK(bs.size() == s.size_bytes());
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_writeable_bytes")
 {
     wchar_t buf[]{L"qwerty"};

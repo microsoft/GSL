@@ -78,7 +78,7 @@ TEST_CASE("span_section")
     CHECK((av_section_2[{1, 0}] == 34));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_constructors")
 {
     // Check stride constructor
@@ -279,7 +279,7 @@ TEST_CASE("strided_span_constructors")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_slice")
 {
     std::vector<int> data(5 * 10);
@@ -306,7 +306,7 @@ TEST_CASE("strided_span_slice")
     CHECK(sav[4][9] == 49);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_column_major")
 {
     // strided_span may be used to accommodate more peculiar
@@ -339,7 +339,7 @@ TEST_CASE("strided_span_column_major")
     CHECK((cm_sec[{2, 1}] == 15));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_bounds")
 {
     int arr[] = {0, 1, 2, 3};
@@ -456,7 +456,7 @@ TEST_CASE("strided_span_bounds")
 #endif
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_type_conversion")
 {
     int arr[] = {0, 1, 2, 3};
@@ -554,8 +554,8 @@ TEST_CASE("strided_span_type_conversion")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 TEST_CASE("empty_strided_spans")
 {
     {
@@ -588,8 +588,8 @@ TEST_CASE("empty_strided_spans")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 void iterate_every_other_element(multi_span<int, dynamic_range> av)
 {
     // pick every other element
@@ -615,7 +615,7 @@ void iterate_every_other_element(multi_span<int, dynamic_range> av)
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_section_iteration")
 {
     int arr[8] = {4, 0, 5, 1, 6, 2, 7, 3};
@@ -633,11 +633,11 @@ TEST_CASE("strided_span_section_iteration")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("dynamic_strided_span_section_iteration")
 {
     auto arr = new int[8];
@@ -652,9 +652,9 @@ TEST_CASE("dynamic_strided_span_section_iteration")
     delete[] arr;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute // TODO: does not work
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute // TODO: does not work
 void iterate_second_slice(multi_span<int, dynamic_range, dynamic_range, dynamic_range> av)
 {
     const int expected[6] = {2, 3, 10, 11, 18, 19};
@@ -681,9 +681,9 @@ void iterate_second_slice(multi_span<int, dynamic_range, dynamic_range, dynamic_
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("strided_span_section_iteration_3d")
 {
     int arr[3][4][2]{};
@@ -698,11 +698,11 @@ TEST_CASE("strided_span_section_iteration_3d")
     }
 }
 
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
 TEST_CASE("dynamic_strided_span_section_iteration_3d")
 {
     const auto height = 12, width = 2;
@@ -735,9 +735,9 @@ TEST_CASE("dynamic_strided_span_section_iteration_3d")
     delete[] arr;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("strided_span_conversion")
 {
     // get an multi_span of 'c' values from the list of X's

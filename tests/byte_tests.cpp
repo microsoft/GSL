@@ -36,7 +36,7 @@ TEST_CASE("construction")
         CHECK(static_cast<unsigned char>(b) == 4);
     }
 
-    [[gsl::suppress(es.49)]]
+    GSL_SUPPRESS(es.49)
     {
         const byte b = byte(12);
         CHECK(static_cast<unsigned char>(b) == 12);
@@ -121,7 +121,7 @@ int modify_both(gsl::byte & b, int& i)
     return i;
 }
 
-[[gsl::suppress(type.1)]]
+GSL_SUPPRESS(type.1)
 TEST_CASE("aliasing")
 {
     int i{0};

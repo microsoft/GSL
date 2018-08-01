@@ -54,7 +54,7 @@ struct DerivedClass : BaseClass
 };
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("default_constructor")
 {
     {
@@ -89,7 +89,7 @@ TEST_CASE("default_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("size_optimization")
 {
     {
@@ -103,7 +103,7 @@ TEST_CASE("size_optimization")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_nullptr_size_constructor")
 {
     {
@@ -154,9 +154,9 @@ TEST_CASE("from_nullptr_size_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("from_pointer_length_constructor")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -229,7 +229,7 @@ TEST_CASE("from_pointer_length_constructor")
 }
 
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_pointer_pointer_constructor")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -306,8 +306,8 @@ TEST_CASE("from_pointer_pointer_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute // TODO: false positive?
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute // TODO: false positive?
 TEST_CASE("from_array_constructor")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -399,10 +399,10 @@ TEST_CASE("from_array_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(i.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(i.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("from_dynamic_array_constructor")
 {
     double(*arr)[3][4] = new double[100][3][4];
@@ -421,7 +421,7 @@ TEST_CASE("from_dynamic_array_constructor")
 }
 
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_std_array_constructor")
 {
     std::array<int, 4> arr = {1, 2, 3, 4};
@@ -501,7 +501,7 @@ TEST_CASE("from_std_array_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_const_std_array_constructor")
 {
     const std::array<int, 4> arr = {1, 2, 3, 4};
@@ -545,7 +545,7 @@ TEST_CASE("from_const_std_array_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_std_array_const_constructor")
 {
     std::array<const int, 4> arr = {1, 2, 3, 4};
@@ -586,7 +586,7 @@ TEST_CASE("from_std_array_const_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_container_constructor")
 {
     std::vector<int> v = {1, 2, 3};
@@ -679,7 +679,7 @@ TEST_CASE("from_container_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_convertible_span_constructor")
 {
     {
@@ -717,7 +717,7 @@ TEST_CASE("from_convertible_span_constructor")
     #endif
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("copy_move_and_assignment")
 {
     span<int> s1;
@@ -739,7 +739,7 @@ TEST_CASE("copy_move_and_assignment")
     CHECK((s1.size() == 2 && s1.data() == &arr[1]));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("first")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -778,7 +778,7 @@ TEST_CASE("first")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("last")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -816,7 +816,7 @@ TEST_CASE("last")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("subspan")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -898,7 +898,7 @@ TEST_CASE("subspan")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("at_call")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -918,7 +918,7 @@ TEST_CASE("at_call")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("operator_function_call")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -938,7 +938,7 @@ TEST_CASE("operator_function_call")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator_default_init")
 {
     span<int>::iterator it1;
@@ -946,7 +946,7 @@ TEST_CASE("iterator_default_init")
     CHECK(it1 == it2);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("const_iterator_default_init")
 {
     span<int>::const_iterator it1;
@@ -954,7 +954,7 @@ TEST_CASE("const_iterator_default_init")
     CHECK(it1 == it2);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator_conversions")
 {
     span<int>::iterator badIt;
@@ -977,7 +977,7 @@ TEST_CASE("iterator_conversions")
     CHECK(cit3 == s.cend());
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator_comparisons")
 {
     int a[] = {1, 2, 3, 4};
@@ -1025,7 +1025,7 @@ TEST_CASE("iterator_comparisons")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("begin_end")
 {
     {
@@ -1081,7 +1081,7 @@ TEST_CASE("begin_end")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("cbegin_cend")
 {
     {
@@ -1134,7 +1134,7 @@ TEST_CASE("cbegin_cend")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("rbegin_rend")
 {
     {
@@ -1177,7 +1177,7 @@ TEST_CASE("rbegin_rend")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("crbegin_crend")
 {
     {
@@ -1217,7 +1217,7 @@ TEST_CASE("crbegin_crend")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("comparison_operators")
 {
     {
@@ -1338,7 +1338,7 @@ TEST_CASE("comparison_operators")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_bytes")
 {
     int a[] = {1, 2, 3, 4};
@@ -1369,7 +1369,7 @@ TEST_CASE("as_bytes")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_writeable_bytes")
 {
     int a[] = {1, 2, 3, 4};
@@ -1403,7 +1403,7 @@ TEST_CASE("as_writeable_bytes")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("fixed_size_conversions")
 {
     int arr[] = {1, 2, 3, 4};
@@ -1488,7 +1488,7 @@ TEST_CASE("fixed_size_conversions")
     CHECK_THROWS_AS(f(), fail_fast);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("interop_with_std_regex")
 {
     char lat[] = {'1', '2', '3', '4', '5', '6', 'E', 'F', 'G'};
@@ -1512,7 +1512,7 @@ TEST_CASE("interop_with_std_regex")
     CHECK(match[0].second == (f_it + 1));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("interop_with_gsl_at")
 {
     int arr[5] = {1, 2, 3, 4, 5};

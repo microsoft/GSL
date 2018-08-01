@@ -36,8 +36,8 @@ struct fail_fast;
 
 using gsl::fail_fast;
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("static_array")
 {
     int a[4] = {1, 2, 3, 4};
@@ -54,8 +54,8 @@ TEST_CASE("static_array")
     CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
 }
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("std_array")
 {
     std::array<int, 4> a = {1, 2, 3, 4};
@@ -72,8 +72,8 @@ TEST_CASE("std_array")
     CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
 }
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("StdVector")
 {
     std::vector<int> a = {1, 2, 3, 4};
@@ -90,8 +90,8 @@ TEST_CASE("StdVector")
     CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
 }
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("InitializerList")
 {
     const std::initializer_list<int> a = {1, 2, 3, 4};
@@ -108,9 +108,9 @@ TEST_CASE("InitializerList")
 }
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 static constexpr bool test_constexpr()
 {
     int a1[4] = {1, 2, 3, 4};

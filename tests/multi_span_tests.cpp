@@ -54,7 +54,7 @@ struct DerivedClass : BaseClass
 };
 } // namespace
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("default_constructor")
 {
     {
@@ -89,7 +89,7 @@ TEST_CASE("default_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_nullptr_constructor")
 {
     {
@@ -132,7 +132,7 @@ TEST_CASE("from_nullptr_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_nullptr_length_constructor") {
     {
         multi_span<int> s{nullptr, 0};
@@ -182,7 +182,7 @@ TEST_CASE("from_nullptr_length_constructor") {
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_element_constructor")
 {
     int i = 5;
@@ -233,7 +233,7 @@ TEST_CASE("from_element_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_pointer_length_constructor")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -263,7 +263,7 @@ TEST_CASE("from_pointer_length_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_pointer_pointer_constructor")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -314,8 +314,8 @@ TEST_CASE("from_pointer_pointer_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
 TEST_CASE("from_array_constructor")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -440,11 +440,11 @@ TEST_CASE("from_array_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(i.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]]  // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(i.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11)  // NO-FORMAT: attribute
 TEST_CASE("from_dynamic_array_constructor")
 {
     double(*arr)[3][4] = new double[100][3][4];
@@ -473,7 +473,7 @@ TEST_CASE("from_dynamic_array_constructor")
     delete[] arr;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: Attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: Attribute
 TEST_CASE("from_std_array_constructor")
 {
     std::array<int, 4> arr = {1, 2, 3, 4};
@@ -533,7 +533,7 @@ TEST_CASE("from_std_array_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_const_std_array_constructor")
 {
     const std::array<int, 4> arr = {1, 2, 3, 4};
@@ -581,7 +581,7 @@ TEST_CASE("from_const_std_array_constructor")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_container_constructor")
 {
     std::vector<int> v = {1, 2, 3};
@@ -655,8 +655,8 @@ TEST_CASE("from_container_constructor")
     }
 }
 
-[[gsl::suppress(f.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_convertible_span_constructor")
 {
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -684,7 +684,7 @@ TEST_CASE("from_convertible_span_constructor")
     (void) avcd;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("copy_move_and_assignment")
 {
     multi_span<int> s1;
@@ -714,7 +714,7 @@ void fn(const Bounds&)
     static_assert(Bounds::static_size == 60, "static bounds is wrong size");
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_multi_span_reshape")
 {
     int a[3][4][5];
@@ -736,7 +736,7 @@ TEST_CASE("as_multi_span_reshape")
     for (auto i = 0; i < av8.size(); i++) { CHECK(av8[i] == 1); }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("first")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -780,7 +780,7 @@ TEST_CASE("first")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("last")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -823,7 +823,7 @@ TEST_CASE("last")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("subspan")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -897,7 +897,7 @@ TEST_CASE("subspan")
     }
 }
 
-[[gsl::suppress(con.4)]]  // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4)  // NO-FORMAT: attribute
 TEST_CASE("rank")
 {
     int arr[2] = {1, 2};
@@ -919,7 +919,7 @@ TEST_CASE("rank")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("extent")
 {
     {
@@ -992,7 +992,7 @@ TEST_CASE("operator_function_call")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("comparison_operators")
 {
     {
@@ -1105,9 +1105,9 @@ TEST_CASE("comparison_operators")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(i.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(i.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
 TEST_CASE("basics")
 {
     auto ptr = as_multi_span(new int[10], 10);
@@ -1117,8 +1117,8 @@ TEST_CASE("basics")
     delete[] ptr.data();
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 TEST_CASE("bounds_checks")
 {
     int arr[10][2];
@@ -1158,11 +1158,11 @@ void fixed_func(multi_span<int, 3, 3, 5> exp, int expected_value)
     for (auto val : exp) { CHECK(val == expected_value); }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
 TEST_CASE("span_parameter_test")
 {
     auto data = new int[4][3][5];
@@ -1184,10 +1184,10 @@ TEST_CASE("span_parameter_test")
     delete[] data;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]]  // NO-FORMAT: attribute // false positive, checker does not recognize multi_span yet
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4)  // NO-FORMAT: attribute // false positive, checker does not recognize multi_span yet
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
 TEST_CASE("md_access")
 {
     auto width = 5, height = 20;
@@ -1222,11 +1222,11 @@ TEST_CASE("md_access")
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.3)]] // NO-FORMAT: attribute
-[[gsl::suppress(i.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(i.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
 TEST_CASE("as_multi_span")
 {
     {
@@ -1245,7 +1245,7 @@ TEST_CASE("as_multi_span")
 
         string str = "ttttttttttttttt"; // size = 15
         auto t = str.data();
-        [[gsl::suppress(type.4)]] // NO-FORMAT: attribute // TODO: false positive
+        GSL_SUPPRESS(type.4) // NO-FORMAT: attribute // TODO: false positive
         (void) t;
         auto av3 = as_multi_span(str);
         overloaded_func(as_multi_span(av3, dim(1), dim<3>(), dim<5>()), 't');
@@ -1283,7 +1283,7 @@ TEST_CASE("as_multi_span")
     }
 }
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 TEST_CASE("empty_spans")
 {
     {
@@ -1314,12 +1314,12 @@ TEST_CASE("empty_spans")
     }
 }
 
-[[gsl::suppress(con.4)]]    // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]]      // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]]      // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]]     // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4)    // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3)      // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5)      // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11)     // NO-FORMAT: attribute
 TEST_CASE("index_constructor")
 {
     auto arr = new int[8];
@@ -1346,7 +1346,7 @@ TEST_CASE("index_constructor")
     delete[] arr;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("index_constructors")
 {
     {
@@ -1419,7 +1419,7 @@ TEST_CASE("index_constructors")
 #endif
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("index_operations")
 {
     ptrdiff_t a[3] = {0, 1, 2};
@@ -1475,8 +1475,8 @@ TEST_CASE("index_operations")
     }
 }
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
 {
     auto length = av.size() / 2;
@@ -1533,7 +1533,7 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
     }
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("span_section_iteration")
 {
     int arr[4][2] = {{4, 0}, {5, 1}, {6, 2}, {7, 3}};
@@ -1560,11 +1560,11 @@ TEST_CASE("span_section_iteration")
     }
 }
 
-[[gsl::suppress(con.4)]]     // NO-FORMAT: attribute
-[[gsl::suppress(bounds.1)]]  // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]]       // NO-FORMAT: attribute
-[[gsl::suppress(r.5)]]       // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]]      // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4)     // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1)  // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3)       // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5)       // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11)      // NO-FORMAT: attribute
 TEST_CASE("dynamic_span_section_iteration")
 {
     auto height = 4, width = 2;
@@ -1595,10 +1595,10 @@ TEST_CASE("dynamic_span_section_iteration")
     delete[] arr;
 }
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]]    // NO-FORMAT: attribute
-[[gsl::suppress(r.11)]]     // NO-FORMAT: attribute
-[[gsl::suppress(i.11)]]     // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4)    // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11)     // NO-FORMAT: attribute
+GSL_SUPPRESS(i.11)     // NO-FORMAT: attribute
 TEST_CASE("span_structure_size")
 {
     double(*arr)[3][4] = new double[100][3][4];
@@ -1618,7 +1618,7 @@ TEST_CASE("span_structure_size")
     (void) av2;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("fixed_size_conversions")
 {
     int arr[] = {1, 2, 3, 4};
@@ -1715,7 +1715,7 @@ TEST_CASE("fixed_size_conversions")
     CHECK_THROWS_AS(f(), fail_fast);
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_writeable_bytes")
 {
     int a[] = {1, 2, 3, 4};
@@ -1745,9 +1745,9 @@ TEST_CASE("as_writeable_bytes")
 }
 
 
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator")
 {
     int a[] = {1, 2, 3, 4};
@@ -1759,7 +1759,7 @@ TEST_CASE("iterator")
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
             b = byte{0};
 #else
-            [[gsl::suppress(es.49)]]
+            GSL_SUPPRESS(es.49)
             b = byte(0);
 #endif
         }

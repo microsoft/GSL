@@ -113,11 +113,11 @@ span<T, dynamic_extent> ensure_sentinel(T* seq, std::ptrdiff_t max = PTRDIFF_MAX
 {
     Ensures(seq != nullptr);
 
-    [[gsl::suppress(f.23)]] // NO-FORMAT: attribute // TODO: false positive // TODO: suppress does not work
+    GSL_SUPPRESS(f.23) // NO-FORMAT: attribute // TODO: false positive // TODO: suppress does not work
     auto cur = seq;
     Ensures(cur != nullptr); // workaround for removing the warning
 
-    [[gsl::suppress(bounds.1)]] // NO-FORMAT: attribute // TODO: suppress does not work
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute // TODO: suppress does not work
     while ((cur - seq) < max && *cur != Sentinel) ++cur;
     Ensures(*cur == Sentinel);
     return {seq, cur - seq};
@@ -214,7 +214,7 @@ public:
 
     // Container signature should work for basic_string after C++17 version exists
     template <class Traits, class Allocator>
-    // [[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute // TODO: parser bug
+    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
     constexpr basic_string_span(std::basic_string<element_type, Traits, Allocator>& str)
         : span_(&str[0], narrow_cast<std::ptrdiff_t>(str.length()))
     {}
@@ -370,7 +370,7 @@ template <class ElementType, std::ptrdiff_t Extent>
 basic_string_span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
 }
 
@@ -379,7 +379,7 @@ template <class ElementType, std::ptrdiff_t Extent,
 basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writeable_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 

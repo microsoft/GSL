@@ -17,11 +17,21 @@
 #ifndef GSL_BYTE_H
 #define GSL_BYTE_H
 
+//
+// make suppress attributes work for various compilers
+// Hopefully temporary until suppresion stardization occurs
+//
+#if defined(_MSC_VER)
+#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
+#else
+#if defined(__GNUC__)
+#define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
+#endif // __GNUC__
+#endif // _MSC_VER
+
 #include <type_traits>
 
 #ifdef _MSC_VER
-
-#pragma warning(push)
 
 #ifndef GSL_USE_STD_BYTE
 // this tests if we are under MSVC and the standard lib has std::byte and it is enabled
@@ -152,7 +162,7 @@ constexpr byte to_byte_impl(T t) noexcept
 template <>
 constexpr byte to_byte_impl<true, unsigned char>(unsigned char t) noexcept
 {
-    [[gsl::suppress(type.4)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.4) // NO-FORMAT: attribute
     return byte(t);
 }
 
@@ -171,9 +181,5 @@ constexpr byte to_byte() noexcept
 }
 
 } // namespace gsl
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif // _MSC_VER
 
 #endif // GSL_BYTE_H

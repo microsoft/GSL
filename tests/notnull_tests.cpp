@@ -70,7 +70,7 @@ struct CustomPtr
 template <typename T, typename U>
 std::string operator==(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return reinterpret_cast<const void*>(lhs.p_) == reinterpret_cast<const void*>(rhs.p_) ? "true"
                                                                                           : "false";
 }
@@ -78,7 +78,7 @@ std::string operator==(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 template <typename T, typename U>
 std::string operator!=(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return reinterpret_cast<const void*>(lhs.p_) != reinterpret_cast<const void*>(rhs.p_) ? "true"
                                                                                           : "false";
 }
@@ -86,7 +86,7 @@ std::string operator!=(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 template <typename T, typename U>
 std::string operator<(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return reinterpret_cast<const void*>(lhs.p_) < reinterpret_cast<const void*>(rhs.p_) ? "true"
                                                                                          : "false";
 }
@@ -94,7 +94,7 @@ std::string operator<(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 template <typename T, typename U>
 std::string operator>(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return reinterpret_cast<const void*>(lhs.p_) > reinterpret_cast<const void*>(rhs.p_) ? "true"
                                                                                          : "false";
 }
@@ -102,7 +102,7 @@ std::string operator>(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 template <typename T, typename U>
 std::string operator<=(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return reinterpret_cast<const void*>(lhs.p_) <= reinterpret_cast<const void*>(rhs.p_) ? "true"
                                                                                           : "false";
 }
@@ -110,7 +110,7 @@ std::string operator<=(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 template <typename T, typename U>
 std::string operator>=(CustomPtr<T> const& lhs, CustomPtr<U> const& rhs)
 {
-    [[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return reinterpret_cast<const void*>(lhs.p_) >= reinterpret_cast<const void*>(rhs.p_) ? "true"
                                                                                           : "false";
 }
@@ -124,19 +124,19 @@ struct NonCopyableNonMovable
     NonCopyableNonMovable& operator=(NonCopyableNonMovable&&) = delete;
 };
 
-[[gsl::suppress(f.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper(not_null<int*> p)
 {
     return *p == 12;
 }
 
-[[gsl::suppress(f.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper_const(not_null<const int*> p)
 {
     return *p == 12;
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullConstructors")
 {
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -166,7 +166,7 @@ TEST_CASE("TestNotNullConstructors")
 }
 
 template<typename T>
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 void ostream_helper(T v)
 {
     not_null<T*> p(&v);
@@ -197,8 +197,8 @@ TEST_CASE("TestNotNullostream")
     ostream_helper<std::string>("string");
 }
 
-[[gsl::suppress(type.1)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullCasting")
 {
     MyBase base;
@@ -261,7 +261,7 @@ TEST_CASE("TestNotNullRawPointerComparison")
 
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullDereferenceOperator")
 {
     {
@@ -323,7 +323,7 @@ TEST_CASE("TestNotNullSharedPtrComparison")
     CHECK((NotNullSp2(sp2) >= NotNullSp1(sp1)) == (sp2 >= sp1));
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullCustomPtrComparison")
 {
     int ints[2] = {42, 43};
@@ -359,7 +359,7 @@ TEST_CASE("TestNotNullCustomPtrComparison")
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullConstructorTypeDeduction")
 {
     {

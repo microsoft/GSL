@@ -27,12 +27,12 @@
 
 using namespace gsl;
 
-[[gsl::suppress(f.23)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
 void f(int* i) { *i += 1; }
 
-[[gsl::suppress(r.11)]] // NO-FORMAT: attribute
-[[gsl::suppress(r.3)]] // NO-FORMAT: attribute // TODO: false positive
-[[gsl::suppress(r.5)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute // TODO: false positive
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
 TEST_CASE("basic_test")
 {
     owner<int*> p = new int(120);

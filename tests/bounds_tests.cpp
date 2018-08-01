@@ -38,7 +38,7 @@ namespace
 void use(std::ptrdiff_t&) {}
 }
 
-[[gsl::suppress(type.1)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
 TEST_CASE("basic_bounds")
 {
     for (auto point : static_bounds<dynamic_range, 3, 4>{2}) {
@@ -51,8 +51,8 @@ TEST_CASE("basic_bounds")
     }
 }
 
-[[gsl::suppress(f.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("bounds_basic")
 {
     static_bounds<3, 4, 5> b;
@@ -62,8 +62,8 @@ TEST_CASE("bounds_basic")
     x.slice().slice();
 }
 
-[[gsl::suppress(f.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("arrayview_iterator")
 {
     static_bounds<4, dynamic_range, 2> bounds{3};
@@ -82,7 +82,7 @@ TEST_CASE("arrayview_iterator")
 #endif
 }
 
-[[gsl::suppress(con.4)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("bounds_convertible")
 {
     static_bounds<7, 4, 2> b1;
