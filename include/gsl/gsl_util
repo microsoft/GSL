@@ -138,7 +138,7 @@ constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
     using size_type = decltype(cont.size());
     [[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
     [[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
-    return cont[static_cast<size_type>(i)];
+    return cont[narrow_cast<size_type>(i)];
 }
 
 template <class T>
