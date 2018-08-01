@@ -16,7 +16,8 @@
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/pointers> // for not_null, operator<, operator<=, operator>
+#include <gsl/gsl_transition> // for sloppy_not_null
+#include <gsl/pointers>       // for not_null, operator<, operator<=, operator>
 
 #include <algorithm> // for addressof
 #include <memory>    // for shared_ptr, make_shared, operator<, opera...
@@ -25,9 +26,10 @@
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
 
-namespace gsl {
+namespace gsl
+{
 struct fail_fast;
-}  // namespace gsl
+} // namespace gsl
 
 using namespace gsl;
 
@@ -139,10 +141,10 @@ TEST_CASE("TestNotNullConstructors")
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
     int* pi = nullptr;
     CHECK_THROWS_AS(not_null<decltype(pi)>(pi), fail_fast);
-#endif    
+#endif
 }
 
-template<typename T>
+template <typename T>
 void ostream_helper(T v)
 {
     not_null<T*> p(&v);
@@ -172,7 +174,6 @@ TEST_CASE("TestNotNullostream")
     ostream_helper<const char*>("cstring");
     ostream_helper<std::string>("string");
 }
-
 
 TEST_CASE("TestNotNullCasting")
 {
@@ -233,7 +234,6 @@ TEST_CASE("TestNotNullRawPointerComparison")
     CHECK((NotNull1(p1) <= NotNull1(p1)) == true);
     CHECK((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
     CHECK((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
-
 }
 
 TEST_CASE("TestNotNullDereferenceOperator")
@@ -242,12 +242,12 @@ TEST_CASE("TestNotNullDereferenceOperator")
         auto sp1 = std::make_shared<NonCopyableNonMovable>();
 
         using NotNullSp1 = not_null<decltype(sp1)>;
-        CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1))); 
+        CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1)));
         CHECK(std::addressof(*NotNullSp1(sp1)) == std::addressof(*sp1));
     }
 
     {
-        int ints[1] = { 42 };
+        int ints[1] = {42};
         CustomPtr<int> p1(&ints[0]);
 
         using NotNull1 = not_null<decltype(p1)>;
@@ -329,6 +329,82 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
 
+bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
+bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
+
+TEST_CASE("TestSloppyNotNull")
+{
+    {
+        // raw ptr <-> sloppy_not_null
+        int x = 42;
+
+        sloppy_not_null<int*> snn = &x;
+
+        sloppy_helper(&x);
+        sloppy_helper_const(&x);
+
+        CHECK(*snn == 42);
+    }
+
+    {
+        // sloppy_not_null -> sloppy_not_null
+        int x = 42;
+
+        sloppy_not_null<int*> snn1{&x};
+        sloppy_not_null<int*> snn2{&x};
+
+        sloppy_helper(snn1);
+        sloppy_helper_const(snn1);
+
+        CHECK(snn1 == snn2);
+    }
+
+    {
+        // sloppy_not_null -> not_null
+        int x = 42;
+
+        sloppy_not_null<int*> snn{&x};
+
+        not_null<int*> nn1 = snn;
+        not_null<int*> nn2{snn};
+
+        helper(snn);
+        helper_const(snn);
+
+        CHECK(snn == nn1);
+        CHECK(snn == nn2);
+    }
+
+    {
+        // not_null -> sloppy_not_null
+        int x = 42;
+
+        not_null<int*> nn{&x};
+
+        sloppy_not_null<int*> snn1{nn};
+        sloppy_not_null<int*> snn2 = nn;
+
+        sloppy_helper(nn);
+        sloppy_helper_const(nn);
+
+        CHECK(snn1 == nn);
+        CHECK(snn2 == nn);
+
+        std::hash<sloppy_not_null<int*>> hash_snn;
+        std::hash<not_null<int*>> hash_nn;
+
+        CHECK(hash_nn(snn1) == hash_nn(nn));
+        CHECK(hash_snn(snn1) == hash_nn(nn));
+        CHECK(hash_nn(snn1) == hash_nn(snn2));
+        CHECK(hash_snn(snn1) == hash_snn(nn));
+    }
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+    {
+        sloppy_not_null<int*> p{nullptr};
+    }
+#endif
+}
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 TEST_CASE("TestNotNullConstructorTypeDeduction")
@@ -387,4 +463,5 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
 }
 #endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
-static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
+static_assert(std::is_nothrow_move_constructible<not_null<void*>>::value,
+              "not_null must be no-throw move constructible");
