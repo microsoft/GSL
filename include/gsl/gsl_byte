@@ -24,9 +24,11 @@
 #if defined(_MSC_VER)
 #define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
 #else
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 #define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
-#endif // __GNUC__
+#else
+#define GSL_SUPPRESS(x)
+#endif // __GNUC__ || __clang__
 #endif // _MSC_VER
 
 #include <type_traits>
