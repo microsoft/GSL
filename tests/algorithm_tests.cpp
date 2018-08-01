@@ -35,8 +35,8 @@ struct fail_fast;
 using namespace std;
 using namespace gsl;
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("same_type")
 {
     // dynamic source and destination span
@@ -109,8 +109,8 @@ TEST_CASE("same_type")
 }
 
 
-[[gsl::suppress(bounds.4)]] // NO-FORMAT: attribute
-[[gsl::suppress(bounds.2)]] // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("compatible_type")
 {
     // dynamic source and destination span
