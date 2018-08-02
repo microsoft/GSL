@@ -44,7 +44,7 @@
 #ifndef GSL_USE_STD_BYTE
 // this tests if we are under GCC or Clang with enough -std:c++1z power to get us std::byte
 // also check if libc++ version is sufficient (> 5.0) or libstc++ actually contains std::byte
-#if defined(__cplusplus) && (__cplusplus >= 201703L) &&
+#if defined(__cplusplus) && (__cplusplus >= 201703L) && \
   (defined(__cpp_lib_byte) && (__cpp_lib_byte >= 201603)  || \
    defined(_LIBCPP_VERSION) && (_LIBCPP_VERSION >= 5000))
 
