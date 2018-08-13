@@ -18,7 +18,7 @@
 #define GSL_TRANSITION_H
 
 #include <gsl/gsl_assert>  // for Ensures, Expects
-#include <gsl/pointers> // for not_null
+#include <gsl/pointers> // for gsl::not_null
 
 #if defined(_MSC_VER) && _MSC_VER < 1910
 #pragma push_macro("constexpr")
@@ -26,48 +26,53 @@
 
 #endif                          // defined(_MSC_VER) && _MSC_VER < 1910
 
-namespace gsl
+namespace gsl_helpers
 {
 //
 // sloppy_not_null
 //
 // Restricts a pointer or smart pointer to only hold non-null values,
 // 
-// - provides a sloppy (i.e. no explicit contructor from T) wrapper of not_null
+// - provides a sloppy (i.e. no explicit contructor from T) wrapper of gsl::not_null
 // - is temporary, only to be used to incrementally transition of code 
-//   using older version of not_null to the new one that made the constructor explicit
+//   using older version of gsl::not_null to the new one that made the constructor explicit
 // 
 // To make the transition:
 //
-// - replace all occurences of not_null in your code by sloppy_not_null
+// - replace all occurences of gsl::not_null in your code by sloppy_not_null
 // - compile - compilation should be successful
-// - replace some sloppy_not_nulls by not_null, fix compilation erros, 
+// - replace some sloppy_not_nulls by gsl::not_null, fix compilation erros, 
 //   redesign as needed, compile and test
 // - repeat until no sloppy_not_nulls remain
 //
 template <class T>
-class sloppy_not_null: public not_null<T>
+class sloppy_not_null: public gsl::not_null<T>
 {
 public:
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
     constexpr sloppy_not_null(U&& u) :
-        not_null(std::forward<U>(u))
+        gsl::not_null<T>(std::forward<U>(u))
     {}
 
     template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
     constexpr sloppy_not_null(T u) :
-        not_null(u)
+        gsl::not_null<T>(u)
     {}
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr sloppy_not_null(const not_null<U>& other) :
-        not_null(other)
+    constexpr sloppy_not_null(const gsl::not_null<U>& other) :
+        gsl::not_null<T>(other)
     {}
 
     sloppy_not_null(sloppy_not_null&& other) = default;
     sloppy_not_null(const sloppy_not_null& other) = default;
     sloppy_not_null& operator=(const sloppy_not_null& other) = default;
+    sloppy_not_null& operator=(const gsl::not_null<T>& other)
+    {
+        gsl::not_null<T>::operator=(other);
+        return *this;
+    }
 
     // prevents compilation when someone attempts to assign a null pointer constant
     sloppy_not_null(std::nullptr_t) = delete;
@@ -98,9 +103,9 @@ sloppy_not_null<T> operator+(std::ptrdiff_t, const sloppy_not_null<T>&) = delete
 namespace std
 {
 template <class T>
-struct hash<gsl::sloppy_not_null<T>>
+struct hash<gsl_helpers::sloppy_not_null<T>>
 {
-    std::size_t operator()(const gsl::sloppy_not_null<T>& value) const { return hash<T>{}(value); }
+    std::size_t operator()(const gsl_helpers::sloppy_not_null<T>& value) const { return hash<T>{}(value); }
 };
 
 } // namespace std

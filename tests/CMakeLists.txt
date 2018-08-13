@@ -27,7 +27,7 @@ else()
 endif()
 
 if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
-    set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus)
+    set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
 endif()
 
 # this interface adds compile options to how the tests are run
@@ -49,6 +49,7 @@ target_compile_options(gsl_tests_config INTERFACE
         -Werror
         -Wextra
         -Wno-missing-braces
+        -Wno-unknown-attributes
         -Wnon-virtual-dtor
         -Wold-style-cast
         -Woverloaded-virtual
@@ -61,11 +62,6 @@ target_compile_options(gsl_tests_config INTERFACE
 # for tests to find the catch header
 target_include_directories(gsl_tests_config INTERFACE
     ${CMAKE_BINARY_DIR}/external/include
-)
-
-# for tests to find the samples
-target_include_directories(gsl_tests_config INTERFACE
-    ${CMAKE_SOURCE_DIR}/samples
 )
 
 # set definitions for tests
@@ -144,6 +140,7 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
         -Werror
         -Wextra
         -Wno-missing-braces
+        -Wno-unknown-attributes
         -Wnon-virtual-dtor
         -Wold-style-cast
         -Woverloaded-virtual

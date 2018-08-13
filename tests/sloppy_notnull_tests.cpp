@@ -14,10 +14,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+
+// Fix VS2015 build breaks in Release
+#pragma warning(disable : 4702) // unreachable code
+#endif
+
 #include <catch/catch.hpp>    // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl_transition>     // for sloppy_not_null
 #include <gsl/pointers>       // for not_null, operator<, operator<=, operator>
+#include <samples/gsl_transition> // for sloppy_not_null
 
 namespace gsl
 {
@@ -25,13 +34,13 @@ struct fail_fast;
 } // namespace gsl
 
 using namespace gsl;
+using namespace gsl_helpers;
 
+constexpr bool helper(not_null<int*> p) { return *p == 12; }
+constexpr bool helper_const(not_null<const int*> p) { return *p == 12; }
 
-bool helper(not_null<int*> p) { return *p == 12; }
-bool helper_const(not_null<const int*> p) { return *p == 12; }
-
-bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
-bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
+constexpr bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
+constexpr bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
 
 TEST_CASE("TestSloppyNotNull")
 {
@@ -39,7 +48,7 @@ TEST_CASE("TestSloppyNotNull")
         // raw ptr <-> sloppy_not_null
         int x = 42;
 
-        sloppy_not_null<int*> snn = &x;
+        const sloppy_not_null<int*> snn = &x;
 
         sloppy_helper(&x);
         sloppy_helper_const(&x);
@@ -52,7 +61,7 @@ TEST_CASE("TestSloppyNotNull")
         int x = 42;
 
         sloppy_not_null<int*> snn1{&x};
-        sloppy_not_null<int*> snn2{&x};
+        const sloppy_not_null<int*> snn2{&x};
 
         sloppy_helper(snn1);
         sloppy_helper_const(snn1);
@@ -66,8 +75,8 @@ TEST_CASE("TestSloppyNotNull")
 
         sloppy_not_null<int*> snn{&x};
 
-        not_null<int*> nn1 = snn;
-        not_null<int*> nn2{snn};
+        const not_null<int*> nn1 = snn;
+        const not_null<int*> nn2{snn};
 
         helper(snn);
         helper_const(snn);
@@ -82,8 +91,8 @@ TEST_CASE("TestSloppyNotNull")
 
         not_null<int*> nn{&x};
 
-        sloppy_not_null<int*> snn1{nn};
-        sloppy_not_null<int*> snn2 = nn;
+        const sloppy_not_null<int*> snn1{nn};
+        const sloppy_not_null<int*> snn2 = nn;
 
         sloppy_helper(nn);
         sloppy_helper_const(nn);
