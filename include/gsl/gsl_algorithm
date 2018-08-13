@@ -31,15 +31,12 @@
 #pragma warning(disable : 4127) // conditional expression is constant
 #pragma warning(disable : 4996) // unsafe use of std::copy_n
 
-// blanket turn off warnings from CppCoreCheck for now
-// so people aren't annoyed by them when running the tool.
-// more targeted suppressions will be added in a future update to the GSL
-#pragma warning(disable : 26481 26482 26483 26485 26490 26491 26492 26493 26495)
 #endif // _MSC_VER
 
 namespace gsl
 {
-
+// Note: this will generate faster code than std::copy using span iterator in older msvc+stl
+// not necessary for msvc since VS2017 15.8 (_MSC_VER >= 1915)
 template <class SrcElementType, std::ptrdiff_t SrcExtent, class DestElementType,
           std::ptrdiff_t DestExtent>
 void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent> dest)
@@ -51,6 +48,7 @@ void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent>
                   "Source range is longer than target range");
 
     Expects(dest.size() >= src.size());
+    GSL_SUPPRESS(stl.1) // NO-FORMAT: attribute
     std::copy_n(src.data(), src.size(), dest.data());
 }
 

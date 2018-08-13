@@ -21,6 +21,20 @@
 #include <stdexcept> // for logic_error
 
 //
+// make suppress attributes parse for some compilers
+// Hopefully temporary until suppresion standardization occurs
+//
+#if defined (_MSC_VER)
+#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
+#else
+#if defined(__clang__)
+#define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
+#else
+#define GSL_SUPPRESS(x)
+#endif // __clang__
+#endif // _MSC_VER
+
+//
 // Temporary until MSVC STL supports no-exceptions mode.
 // Currently terminate is a no-op in this mode, so we add termination behavior back
 //
@@ -85,6 +99,7 @@ namespace details
 
     typedef void  (__cdecl *terminate_handler)();
     
+    GSL_SUPPRESS(f.6) // NO-FORMAT: attribute
     [[noreturn]] inline void __cdecl default_terminate_handler()
     {
         __fastfail(RANGE_CHECKS_FAILURE);
@@ -110,11 +125,7 @@ namespace details
 #if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
     template <typename Exception>
-#if defined(__clang__) || defined(__GNUC__)
-#else
-    [[gsl::suppress(f.6)]]
-#endif
-    [[noreturn]] void throw_exception(Exception&&)
+    [[noreturn]] void throw_exception(Exception&&) noexcept
     {
         gsl::details::terminate();
     }

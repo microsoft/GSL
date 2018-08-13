@@ -14,6 +14,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK_THROW...
 
 #include <gsl/gsl_util> // for at
@@ -23,12 +29,15 @@
 #include <initializer_list> // for initializer_list
 #include <vector>           // for vector
 
+
 namespace gsl {
 struct fail_fast;
 }  // namespace gsl
 
 using gsl::fail_fast;
 
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("static_array")
 {
     int a[4] = {1, 2, 3, 4};
@@ -45,6 +54,8 @@ TEST_CASE("static_array")
     CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
 }
 
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("std_array")
 {
     std::array<int, 4> a = {1, 2, 3, 4};
@@ -61,6 +72,8 @@ TEST_CASE("std_array")
     CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
 }
 
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("StdVector")
 {
     std::vector<int> a = {1, 2, 3, 4};
@@ -77,9 +90,11 @@ TEST_CASE("StdVector")
     CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
 }
 
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("InitializerList")
 {
-    std::initializer_list<int> a = {1, 2, 3, 4};
+    const std::initializer_list<int> a = {1, 2, 3, 4};
 
     for (int i = 0; i < 4; ++i) {
         CHECK(gsl::at(a, i) == i + 1);
@@ -93,6 +108,9 @@ TEST_CASE("InitializerList")
 }
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 static constexpr bool test_constexpr()
 {
     int a1[4] = {1, 2, 3, 4};
@@ -114,3 +132,4 @@ static constexpr bool test_constexpr()
 
 static_assert(test_constexpr(), "FAIL");
 #endif
+
