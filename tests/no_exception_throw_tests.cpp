@@ -16,6 +16,7 @@
 
 #include <cstdlib>      // for std::exit
 #include <gsl/gsl_util> // for narrow
+#include <gsl/gsl_assert> // for get_terminate
 
 int narrow_no_throw()
 {
