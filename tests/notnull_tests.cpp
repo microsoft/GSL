@@ -421,7 +421,7 @@ TEST_CASE("TestMakeNotNull")
     {
         int i = 42;
 
-        auto x = make_not_null(&i);
+        const auto x = make_not_null(&i);
         helper(make_not_null(&i));
         helper_const(make_not_null(&i));
 
@@ -432,7 +432,7 @@ TEST_CASE("TestMakeNotNull")
         int i = 42;
         int* p = &i;
 
-        auto x = make_not_null(p);
+        const auto x = make_not_null(p);
         helper(make_not_null(p));
         helper_const(make_not_null(p));
 
@@ -440,17 +440,19 @@ TEST_CASE("TestMakeNotNull")
     }
 
     {
-        auto workaround_macro = []() {
+        const auto workaround_macro = []() {
             int* p1 = nullptr;
-            auto x = make_not_null(p1);
+            const auto x = make_not_null(p1);
+            CHECK(*x == 42);
         };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
     }
 
     {
-        auto workaround_macro = []() {
+        const auto workaround_macro = []() {
             const int* p1 = nullptr;
-            auto x = make_not_null(p1);
+            const auto x = make_not_null(p1);
+            CHECK(*x == 42);
         };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
     }
