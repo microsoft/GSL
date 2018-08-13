@@ -33,7 +33,7 @@
 #ifdef _MSC_VER
 #pragma warning(push)
 
-// Turn off rules that generate too much noise. To be fixed in the static analysis tool.
+// Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
 #pragma warning(disable : 26446) // TODO: bug in parser - attributes and templates
 #pragma warning(disable : 26481) // TODO: suppress does not work inside templates sometimes
 
@@ -425,7 +425,7 @@ public:
         const auto sz = span_.size();
         return {span_.data(), sz > 1 ? sz - 1 : 0};
     }
-    constexpr string_span_type ensure_z() const noexcept { return gsl::ensure_z(span_); }
+    constexpr string_span_type ensure_z() const { return gsl::ensure_z(span_); }
 
     constexpr const_zstring_type assume_z() const noexcept { return span_.data(); }
 
@@ -492,7 +492,7 @@ template <
     typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
-bool operator!=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+bool operator!=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 {
     return !(one == other);
 }
@@ -512,7 +512,7 @@ template <
     typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
-bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other)
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(one);
     return std::lexicographical_compare(tmp.begin(), tmp.end(), other.begin(), other.end());
@@ -531,7 +531,7 @@ template <
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
                      DataType>::value>>
-bool operator<(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
+bool operator<(gsl::basic_string_span<CharT, Extent> one, const T& other)
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(other);
     return std::lexicographical_compare(one.begin(), one.end(), tmp.begin(), tmp.end());
@@ -545,7 +545,7 @@ template <
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
                      DataType>::value>>
-bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+bool operator<(const T& one, gsl::basic_string_span<CharT, Extent> other)
 {
     gsl::basic_string_span<std::add_const_t<CharT>, Extent> tmp(one);
     return std::lexicographical_compare(tmp.begin(), tmp.end(), other.begin(), other.end());
@@ -635,7 +635,7 @@ template <
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
                      DataType>::value>>
-bool operator>(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
+bool operator>(gsl::basic_string_span<CharT, Extent> one, const T& other)
 {
     return other < one;
 }
@@ -648,7 +648,7 @@ template <
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
                      DataType>::value>>
-bool operator>(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+bool operator>(const T& one, gsl::basic_string_span<CharT, Extent> other)
 {
     return other < one;
 }
@@ -668,7 +668,7 @@ template <
     typename = std::enable_if_t<
         std::is_convertible<T, gsl::basic_string_span<std::add_const_t<CharT>, Extent>>::value &&
         !gsl::details::is_basic_string_span<T>::value>>
-bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 {
     return !(one < other);
 }
@@ -686,7 +686,7 @@ template <
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
                      DataType>::value>>
-bool operator>=(gsl::basic_string_span<CharT, Extent> one, const T& other) noexcept
+bool operator>=(gsl::basic_string_span<CharT, Extent> one, const T& other)
 {
     return !(one < other);
 }
@@ -699,14 +699,12 @@ template <
         std::is_convertible<DataType*, CharT*>::value &&
         std::is_same<std::decay_t<decltype(std::declval<T>().size(), *std::declval<T>().data())>,
                      DataType>::value>>
-bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexcept
+bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 {
     return !(one < other);
 }
 #endif
 } // namespace gsl
-
-#undef noexcept
 
 #ifdef _MSC_VER
 #pragma warning(pop)

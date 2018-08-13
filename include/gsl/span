@@ -37,7 +37,7 @@
 #pragma warning(disable : 4127) // conditional expression is constant
 #pragma warning(disable : 4702) // unreachable code
 
-// Turn off rules that generate too much noise. To be fixed in the static analysis tool.
+// Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
 #pragma warning(disable : 26495) // uninitalized member when constructor calls constructor
 #pragma warning(disable : 26446) // parser bug does not allow attributes on some templates
 
@@ -404,7 +404,6 @@ public:
     constexpr span(std::array<ArrayElementType, N>& arr) noexcept
         : storage_(&arr[0], details::extent_type<N>())
     {
-
     }
 
     template <std::size_t N>
@@ -412,7 +411,6 @@ public:
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
         : storage_(&arr[0], details::extent_type<N>())
     {
-
     }
 
     // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement

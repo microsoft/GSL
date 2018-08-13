@@ -44,7 +44,7 @@
 #pragma warning(disable : 4127) // conditional expression is constant
 #pragma warning(disable : 4702) // unreachable code
 
-// Turn off rules that generate too much noise. To be fixed in the static analysis tool.
+// Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
 #pragma warning(disable : 26495) // uninitalized member when constructor calls constructor
 #pragma warning(disable : 26473) // in some instantiations we cast to the same type
 #pragma warning(disable : 26490) // TODO: bug in parser - attributes and templates
@@ -146,8 +146,8 @@ public:
         return elems[component_idx];
     }
 
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
-    GSL_SUPPRESS(bounds .3) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
     constexpr bool operator==(const multi_span_index& rhs) const noexcept
     {
         return std::equal(elems, elems + rank, rhs.elems);
@@ -2044,7 +2044,8 @@ private:
 };
 
 template <class Span>
-class contiguous_span_iterator {
+class contiguous_span_iterator
+{
 public:
     using iterator_category = std::random_access_iterator_tag;
     using value_type = typename Span::value_type;
@@ -2077,7 +2078,7 @@ public:
         validateThis();
         return *data_;
     }
-    pointer operator->() const noexcept
+    pointer operator->() const
     {
         validateThis();
         return data_;
