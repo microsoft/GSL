@@ -16,7 +16,6 @@
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/gsl_transition> // for sloppy_not_null
 #include <gsl/pointers>       // for not_null, operator<, operator<=, operator>
 
 #include <algorithm> // for addressof
@@ -327,83 +326,6 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull1(p1) >= NotNull1(p1)) == "true");
     CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
-}
-
-bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
-bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
-
-TEST_CASE("TestSloppyNotNull")
-{
-    {
-        // raw ptr <-> sloppy_not_null
-        int x = 42;
-
-        sloppy_not_null<int*> snn = &x;
-
-        sloppy_helper(&x);
-        sloppy_helper_const(&x);
-
-        CHECK(*snn == 42);
-    }
-
-    {
-        // sloppy_not_null -> sloppy_not_null
-        int x = 42;
-
-        sloppy_not_null<int*> snn1{&x};
-        sloppy_not_null<int*> snn2{&x};
-
-        sloppy_helper(snn1);
-        sloppy_helper_const(snn1);
-
-        CHECK(snn1 == snn2);
-    }
-
-    {
-        // sloppy_not_null -> not_null
-        int x = 42;
-
-        sloppy_not_null<int*> snn{&x};
-
-        not_null<int*> nn1 = snn;
-        not_null<int*> nn2{snn};
-
-        helper(snn);
-        helper_const(snn);
-
-        CHECK(snn == nn1);
-        CHECK(snn == nn2);
-    }
-
-    {
-        // not_null -> sloppy_not_null
-        int x = 42;
-
-        not_null<int*> nn{&x};
-
-        sloppy_not_null<int*> snn1{nn};
-        sloppy_not_null<int*> snn2 = nn;
-
-        sloppy_helper(nn);
-        sloppy_helper_const(nn);
-
-        CHECK(snn1 == nn);
-        CHECK(snn2 == nn);
-
-        std::hash<sloppy_not_null<int*>> hash_snn;
-        std::hash<not_null<int*>> hash_nn;
-
-        CHECK(hash_nn(snn1) == hash_nn(nn));
-        CHECK(hash_snn(snn1) == hash_nn(nn));
-        CHECK(hash_nn(snn1) == hash_nn(snn2));
-        CHECK(hash_snn(snn1) == hash_snn(nn));
-    }
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-    {
-        sloppy_not_null<int*> p{nullptr};
-    }
-#endif
 }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
