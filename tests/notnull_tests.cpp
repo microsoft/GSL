@@ -19,6 +19,8 @@
 // so people aren't annoyed by them when running the tool.
 #pragma warning(disable : 26440 26426) // from catch
 
+// Fix VS2015 build breaks in Release
+#pragma warning(disable : 4702) // unreachable code
 #endif
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
@@ -31,6 +33,8 @@
 #include <stdint.h>  // for uint16_t
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
+
+
 
 namespace gsl {
 struct fail_fast;
@@ -415,5 +419,62 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
 #endif
 }
 #endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
+
+TEST_CASE("TestMakeNotNull")
+{
+    {
+        int i = 42;
+
+        const auto x = make_not_null(&i);
+        helper(make_not_null(&i));
+        helper_const(make_not_null(&i));
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int i = 42;
+        int* p = &i;
+
+        const auto x = make_not_null(p);
+        helper(make_not_null(p));
+        helper_const(make_not_null(p));
+
+        CHECK(*x == 42);
+    }
+
+    {
+        const auto workaround_macro = []() {
+            int* p1 = nullptr;
+            const auto x = make_not_null(p1);
+            CHECK(*x == 42);
+        };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    {
+        const auto workaround_macro = []() {
+            const int* p1 = nullptr;
+            const auto x = make_not_null(p1);
+            CHECK(*x == 42);
+        };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    {
+        int* p = nullptr;
+
+        CHECK_THROWS_AS(helper(make_not_null(p)), fail_fast);
+        CHECK_THROWS_AS(helper_const(make_not_null(p)), fail_fast);
+    }
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+    {
+        CHECK_THROWS_AS(make_not_null(nullptr), fail_fast);
+        CHECK_THROWS_AS(helper(make_not_null(nullptr)), fail_fast);
+        CHECK_THROWS_AS(helper_const(make_not_null(nullptr)), fail_fast);
+    }
+#endif
+}
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
