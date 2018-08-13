@@ -22,7 +22,7 @@
 
 //
 // make suppress attributes parse for some compilers
-// Hopefully temporary until suppresion stardization occurs
+// Hopefully temporary until suppresion standardization occurs
 //
 #if defined (_MSC_VER)
 #define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
