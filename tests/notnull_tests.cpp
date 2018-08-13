@@ -32,6 +32,9 @@
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
 
+// Fix VS2015 build breaks in Release
+#pragma warning(disable : 4702) // unreachable code
+
 namespace gsl {
 struct fail_fast;
 }  // namespace gsl
