@@ -402,7 +402,7 @@ public:
     using impl_type = span<value_type, Extent>;
     using string_span_type = basic_string_span<value_type, Extent>;
 
-    constexpr basic_zstring_span(impl_type s) noexcept : span_(s)
+    constexpr basic_zstring_span(impl_type s) : span_(s)
     {
         // expects a zero-terminated span
         Expects(s[s.size() - 1] == '\0');
