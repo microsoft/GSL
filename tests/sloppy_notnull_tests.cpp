@@ -25,7 +25,7 @@
 
 #include <catch/catch.hpp>    // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/pointers>       // for not_null, operator<, operator<=, operator>
+#include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
 #include <samples/gsl_transition> // for sloppy_not_null
 
 namespace gsl
@@ -36,11 +36,15 @@ struct fail_fast;
 using namespace gsl;
 using namespace gsl_helpers;
 
-constexpr bool helper(not_null<int*> p) { return *p == 12; }
-constexpr bool helper_const(not_null<const int*> p) { return *p == 12; }
+GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
+bool helper(not_null<int*> p) { return *p == 12; }
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+bool helper_const(not_null<const int*> p) { return *p == 12; }
 
-constexpr bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
-constexpr bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
 
 TEST_CASE("TestSloppyNotNull")
 {
