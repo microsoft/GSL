@@ -111,7 +111,6 @@ public:
 
     constexpr multi_span_index() noexcept {}
 
-
     constexpr multi_span_index(const value_type (&values)[Rank]) noexcept
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
@@ -140,7 +139,7 @@ public:
     // Preconditions: component_idx < rank
     GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-    constexpr const_reference operator[](std::size_t component_idx) const noexcept
+    constexpr const_reference operator[](std::size_t component_idx) const 
     {
         Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
@@ -148,40 +147,40 @@ public:
 
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
-    constexpr bool operator==(const multi_span_index& rhs) const noexcept
+    constexpr bool operator==(const multi_span_index& rhs) const
     {
         return std::equal(elems, elems + rank, rhs.elems);
     }
 
-    constexpr bool operator!=(const multi_span_index& rhs) const noexcept
+    constexpr bool operator!=(const multi_span_index& rhs) const
     {
         return !(*this == rhs);
     }
 
     constexpr multi_span_index operator+() const noexcept { return *this; }
 
-    constexpr multi_span_index operator-() const noexcept
+    constexpr multi_span_index operator-() const
     {
         multi_span_index ret = *this;
         std::transform(ret, ret + rank, ret, std::negate<value_type>{});
         return ret;
     }
 
-    constexpr multi_span_index operator+(const multi_span_index& rhs) const noexcept
+    constexpr multi_span_index operator+(const multi_span_index& rhs) const
     {
         multi_span_index ret = *this;
         ret += rhs;
         return ret;
     }
 
-    constexpr multi_span_index operator-(const multi_span_index& rhs) const noexcept
+    constexpr multi_span_index operator-(const multi_span_index& rhs) const
     {
         multi_span_index ret = *this;
         ret -= rhs;
         return ret;
     }
 
-    constexpr multi_span_index& operator+=(const multi_span_index& rhs) noexcept
+    constexpr multi_span_index& operator+=(const multi_span_index& rhs)
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
@@ -190,7 +189,7 @@ public:
         return *this;
     }
 
-    constexpr multi_span_index& operator-=(const multi_span_index& rhs) noexcept
+    constexpr multi_span_index& operator-=(const multi_span_index& rhs)
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
@@ -198,26 +197,26 @@ public:
         return *this;
     }
 
-    constexpr multi_span_index operator*(value_type v) const noexcept
+    constexpr multi_span_index operator*(value_type v) const
     {
         multi_span_index ret = *this;
         ret *= v;
         return ret;
     }
 
-    constexpr multi_span_index operator/(value_type v) const noexcept
+    constexpr multi_span_index operator/(value_type v) const
     {
         multi_span_index ret = *this;
         ret /= v;
         return ret;
     }
 
-    friend constexpr multi_span_index operator*(value_type v, const multi_span_index& rhs) noexcept
+    friend constexpr multi_span_index operator*(value_type v, const multi_span_index& rhs)
     {
         return rhs * v;
     }
 
-    constexpr multi_span_index& operator*=(value_type v) noexcept
+    constexpr multi_span_index& operator*=(value_type v)
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
@@ -226,7 +225,7 @@ public:
         return *this;
     }
 
-    constexpr multi_span_index& operator/=(value_type v) noexcept
+    constexpr multi_span_index& operator/=(value_type v)
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
@@ -725,7 +724,10 @@ public:
         return !(*this == rhs);
     }
 
-    constexpr const_iterator begin() const noexcept { return const_iterator(*this, index_type{}); }
+    constexpr const_iterator begin() const noexcept
+    {
+        return const_iterator(*this, index_type{});
+    }
 
     constexpr const_iterator end() const noexcept
     {
@@ -764,7 +766,8 @@ public:
 
     constexpr strided_bounds(const index_type& extents, const index_type& strides) noexcept
         : m_extents(extents), m_strides(strides)
-    {}
+    {
+    }
 
     constexpr index_type strides() const noexcept { return m_strides; }
 
@@ -815,6 +818,7 @@ public:
     }
 
     template <std::size_t Dim = 0>
+
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     constexpr size_type extent() const noexcept
     {
@@ -824,6 +828,7 @@ public:
     }
 
     constexpr index_type index_bounds() const noexcept { return m_extents; }
+
     constexpr const_iterator begin() const noexcept { return const_iterator{*this, index_type{}}; }
 
     constexpr const_iterator end() const noexcept { return const_iterator{*this, index_bounds()}; }
@@ -871,8 +876,8 @@ public:
 
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-    constexpr bounds_iterator&
-    operator++() noexcept
+    constexpr bounds_iterator& operator++() noexcept
+
     {
         for (std::size_t i = rank; i-- > 0;)
         {
@@ -969,6 +974,7 @@ public:
         return curr_ == rhs.curr_;
     }
 
+
     constexpr bool operator!=(const bounds_iterator& rhs) const noexcept { return !(*this == rhs); }
 
     constexpr bool operator<(const bounds_iterator& rhs) const noexcept
@@ -989,6 +995,7 @@ public:
     }
 
 private:
+
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     constexpr bool less(index_type& one, index_type& other) const noexcept
     {
@@ -1277,6 +1284,7 @@ public:
 
     // construct from nullptr with size of 0 (helps with template function calls)
     template <class IntType, typename = std::enable_if_t<std::is_integral<IntType>::value>>
+
     // GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive // TODO: parser bug
     constexpr multi_span(std::nullptr_t, IntType size) : multi_span(nullptr, bounds_type{})
     {
@@ -1288,6 +1296,7 @@ public:
     }
 
     // construct from a single element
+
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
     constexpr multi_span(reference data) noexcept
         : multi_span(&data, bounds_type{1})
@@ -1418,7 +1427,8 @@ public:
 
     // first() - extract the first Count elements into a new multi_span
     template <std::ptrdiff_t Count>
-    constexpr multi_span<ValueType, Count> first() const noexcept
+
+    constexpr multi_span<ValueType, Count> first() const
     {
         static_assert(Count >= 0, "Count must be >= 0.");
         static_assert(bounds_type::static_size == dynamic_range ||
@@ -1483,7 +1493,8 @@ public:
     }
 
     // section - creates a non-contiguous, strided multi_span from a contiguous one
-    constexpr strided_span<ValueType, Rank> section(index_type origin, index_type extents) const
+    constexpr strided_span<ValueType, Rank> section(index_type origin,
+                                                    index_type extents) const
     {
         const size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
         return {&this->operator[](origin), size,
@@ -1548,6 +1559,7 @@ public:
     }
 
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
+
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr Ret operator[](size_type idx) const
     {
@@ -1592,7 +1604,6 @@ public:
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool operator==(const multi_span<OtherValueType, OtherDimensions...>& other) const
-        noexcept
     {
         return bounds_.size() == other.bounds_.size() &&
                (data_ == other.data_ || std::equal(this->begin(), this->end(), other.begin()));
@@ -1602,7 +1613,6 @@ public:
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool operator!=(const multi_span<OtherValueType, OtherDimensions...>& other) const
-        noexcept
     {
         return !(*this == other);
     }
@@ -1611,7 +1621,6 @@ public:
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool operator<(const multi_span<OtherValueType, OtherDimensions...>& other) const
-        noexcept
     {
         return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
     }
@@ -1620,7 +1629,6 @@ public:
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool operator<=(const multi_span<OtherValueType, OtherDimensions...>& other) const
-        noexcept
     {
         return !(other < *this);
     }
@@ -1638,7 +1646,6 @@ public:
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
     constexpr bool operator>=(const multi_span<OtherValueType, OtherDimensions...>& other) const
-        noexcept
     {
         return !(*this < other);
     }
@@ -1951,7 +1958,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator==(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    constexpr bool operator==(const strided_span<OtherValueType, OtherRank>& other) const
     {
         return bounds_.size() == other.bounds_.size() &&
                (data_ == other.data_ || std::equal(this->begin(), this->end(), other.begin()));
@@ -1960,7 +1967,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator!=(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    constexpr bool operator!=(const strided_span<OtherValueType, OtherRank>& other) const
     {
         return !(*this == other);
     }
@@ -1968,7 +1975,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator<(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    constexpr bool operator<(const strided_span<OtherValueType, OtherRank>& other) const
     {
         return std::lexicographical_compare(this->begin(), this->end(), other.begin(), other.end());
     }
@@ -1976,7 +1983,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator<=(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    constexpr bool operator<=(const strided_span<OtherValueType, OtherRank>& other) const
     {
         return !(other < *this);
     }
@@ -1984,7 +1991,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    constexpr bool operator>(const strided_span<OtherValueType, OtherRank>& other) const
     {
         return (other < *this);
     }
@@ -1992,7 +1999,7 @@ public:
     template <typename OtherValueType, std::ptrdiff_t OtherRank,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>=(const strided_span<OtherValueType, OtherRank>& other) const noexcept
+    constexpr bool operator>=(const strided_span<OtherValueType, OtherRank>& other) const
     {
         return !(*this < other);
     }
@@ -2083,7 +2090,9 @@ public:
         validateThis();
         return data_;
     }
-    GSL_SUPPRESS(bounds.1) contiguous_span_iterator& operator++() noexcept
+
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    contiguous_span_iterator& operator++() noexcept
     {
         ++data_;
         return *this;
@@ -2094,6 +2103,7 @@ public:
         ++(*this);
         return ret;
     }
+
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     contiguous_span_iterator& operator--() noexcept
     {
@@ -2121,6 +2131,7 @@ public:
         contiguous_span_iterator ret{*this};
         return ret -= n;
     }
+
     contiguous_span_iterator& operator-=(difference_type n) { return *this += -n; }
     difference_type operator-(const contiguous_span_iterator& rhs) const
     {
@@ -2133,15 +2144,19 @@ public:
         Expects(m_validator == rhs.m_validator);
         return data_ == rhs.data_;
     }
+
     bool operator!=(const contiguous_span_iterator& rhs) const { return !(*this == rhs); }
+
     bool operator<(const contiguous_span_iterator& rhs) const
     {
         Expects(m_validator == rhs.m_validator);
         return data_ < rhs.data_;
     }
+
     bool operator<=(const contiguous_span_iterator& rhs) const { return !(rhs < *this); }
     bool operator>(const contiguous_span_iterator& rhs) const { return rhs < *this; }
     bool operator>=(const contiguous_span_iterator& rhs) const { return !(rhs > *this); }
+
     void swap(contiguous_span_iterator& rhs) noexcept
     {
         std::swap(data_, rhs.data_);
@@ -2222,6 +2237,7 @@ public:
         Expects(m_container == rhs.m_container);
         return m_itr - rhs.m_itr;
     }
+
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     value_type operator[](difference_type n) const { return (*m_container)[m_itr[n]]; }
 

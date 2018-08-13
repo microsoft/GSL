@@ -110,7 +110,8 @@ namespace details
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template <class T, class U>
 GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
-T narrow(U u)
+GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recognise noexcept(false)
+T narrow(U u) noexcept(false)
 {
     T t = narrow_cast<T>(u);
     if (static_cast<U>(t) != u) gsl::details::throw_exception(narrowing_error());
