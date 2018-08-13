@@ -44,13 +44,6 @@
 #endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
-// In order to test the library, we need it to throw exceptions that we can catch
-#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
-#define noexcept /*noexcept*/
-#else
-#define noexcept noexcept
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION
-
 namespace gsl
 {
 //
@@ -714,8 +707,6 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other) noexc
 }
 #endif
 } // namespace gsl
-
-#undef noexcept
 
 #ifdef _MSC_VER
 #pragma warning(pop)
