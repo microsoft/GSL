@@ -19,6 +19,8 @@
 // so people aren't annoyed by them when running the tool.
 #pragma warning(disable : 26440 26426) // from catch
 
+// Fix VS2015 build breaks in Release
+#pragma warning(disable : 4702) // unreachable code
 #endif
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
@@ -32,8 +34,7 @@
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
 
-// Fix VS2015 build breaks in Release
-#pragma warning(disable : 4702) // unreachable code
+
 
 namespace gsl {
 struct fail_fast;
