@@ -67,12 +67,14 @@ TEST_CASE("span_section")
     const multi_span<int, 5, 10> av = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
     const strided_span<int, 2> av_section_1 = av.section({1, 2}, {3, 4});
+    CHECK(!av_section_1.empty());
     CHECK((av_section_1[{0, 0}] == 12));
     CHECK((av_section_1[{0, 1}] == 13));
     CHECK((av_section_1[{1, 0}] == 22));
     CHECK((av_section_1[{2, 3}] == 35));
 
     const strided_span<int, 2> av_section_2 = av_section_1.section({1, 2}, {2, 2});
+    CHECK(!av_section_2.empty());
     CHECK((av_section_2[{0, 0}] == 24));
     CHECK((av_section_2[{0, 1}] == 25));
     CHECK((av_section_2[{1, 0}] == 34));
@@ -563,6 +565,7 @@ TEST_CASE("empty_strided_spans")
         strided_span<int, 1> empty_sav{empty_av, {0, 1}};
 
         CHECK(empty_sav.bounds().index_bounds() == multi_span_index<1>{0});
+        CHECK(empty_sav.empty());
         CHECK_THROWS_AS(empty_sav[0], fail_fast);
         CHECK_THROWS_AS(empty_sav.begin()[0], fail_fast);
         CHECK_THROWS_AS(empty_sav.cbegin()[0], fail_fast);

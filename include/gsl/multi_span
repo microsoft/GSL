@@ -1931,6 +1931,8 @@ public:
 
     constexpr pointer data() const noexcept { return data_; }
 
+    constexpr bool empty() const noexcept { return this->size() == 0; }
+
     constexpr explicit operator bool() const noexcept { return data_ != nullptr; }
 
     constexpr iterator begin() const { return iterator{this, true}; }
