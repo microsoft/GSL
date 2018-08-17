@@ -46,8 +46,8 @@
 #define constexpr /*constexpr*/
 #define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
 
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
 
 // See if we have enough C++17 power to use a static constexpr data member
 // without needing an out-of-line definition
@@ -142,15 +142,13 @@ namespace details
 
         constexpr span_iterator(const Span* span, typename Span::index_type idx) noexcept
             : span_(span), index_(idx)
-        {
-        }
+        {}
 
         friend span_iterator<Span, true>;
         template <bool B, std::enable_if_t<!B && IsConst>* = nullptr>
         constexpr span_iterator(const span_iterator<Span, B>& other) noexcept
             : span_iterator(other.span_, other.index_)
-        {
-        }
+        {}
 
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr reference operator*() const
@@ -332,8 +330,7 @@ namespace details
 
         template <index_type Other>
         explicit constexpr extent_type(extent_type<Other> ext) : size_(ext.size())
-        {
-        }
+        {}
 
         explicit constexpr extent_type(index_type size) : size_(size) { Expects(size >= 0); }
 
@@ -383,35 +380,30 @@ public:
               // since "std::enable_if_t<Extent <= 0>" is ill-formed when Extent is greater than 0.
               class = std::enable_if_t<(Dependent || Extent <= 0)>>
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
-    {
-    }
+    {}
 
     constexpr span(pointer ptr, index_type count) : storage_(ptr, count) {}
 
     constexpr span(pointer firstElem, pointer lastElem)
         : storage_(firstElem, std::distance(firstElem, lastElem))
-    {
-    }
+    {}
 
     template <std::size_t N>
     constexpr span(element_type (&arr)[N]) noexcept
         : storage_(KnownNotNull{&arr[0]}, details::extent_type<N>())
-    {
-    }
+    {}
 
     template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
     // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
     constexpr span(std::array<ArrayElementType, N>& arr) noexcept
         : storage_(&arr[0], details::extent_type<N>())
-    {
-    }
+    {}
 
     template <std::size_t N>
     // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
         : storage_(&arr[0], details::extent_type<N>())
-    {
-    }
+    {}
 
     // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
     // on Container to be a contiguous sequence container.
@@ -422,8 +414,7 @@ public:
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
     constexpr span(Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
-    {
-    }
+    {}
 
     template <class Container,
               class = std::enable_if_t<
@@ -432,8 +423,7 @@ public:
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
     constexpr span(const Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
-    {
-    }
+    {}
 
     constexpr span(const span& other) noexcept = default;
 
@@ -444,8 +434,7 @@ public:
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(const span<OtherElementType, OtherExtent>& other)
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
-    {
-    }
+    {}
 
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
@@ -506,7 +495,7 @@ public:
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr reference operator[](index_type idx) const
     {
-        Expects(idx >= 0 && idx < storage_.size());
+        ExpectsInRange(idx, storage_.size());
         return data()[idx];
     }
 
@@ -536,7 +525,7 @@ public:
 #ifdef _MSC_VER
     // Tell MSVC how to unwrap spans in range-based-for
     constexpr pointer _Unchecked_begin() const noexcept { return data(); }
-    constexpr pointer _Unchecked_end() const noexcept 
+    constexpr pointer _Unchecked_end() const noexcept
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         return data() + size();
@@ -544,6 +533,21 @@ public:
 #endif // _MSC_VER
 
 private:
+    static void ExpectsInRange(index_type idx, index_type size)
+    {
+        // Optimization: cast to size_t to cause wrap-around of a negative value,
+        // should be greater than max<ptrdiff_t>. We can safely assume size >= 0
+        // by span construction.
+        if (std::numeric_limits<index_type>::max() < std::numeric_limits<size_t>::max())
+        {
+            Expects(narrow_cast<size_t>(idx) < narrow_cast<size_t>(size));
+        }
+        else
+        {
+            Expects(idx >= 0 && idx < size);
+        }
+    }
+
     // Needed to remove unnecessary null check in subspans
     struct KnownNotNull
     {
