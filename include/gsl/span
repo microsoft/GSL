@@ -495,7 +495,7 @@ public:
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr reference operator[](index_type idx) const
     {
-        ExpectsInRange(idx, storage_.size());
+        Expects(CheckRange(idx, storage_.size()));
         return data()[idx];
     }
 
@@ -533,18 +533,18 @@ public:
 #endif // _MSC_VER
 
 private:
-    static void ExpectsInRange(index_type idx, index_type size)
+    static bool CheckRange(index_type idx, index_type size)
     {
         // Optimization: cast to size_t to cause wrap-around of a negative value,
         // should be greater than max<ptrdiff_t>. We can safely assume size >= 0
         // by span construction.
         if (std::numeric_limits<index_type>::max() < std::numeric_limits<size_t>::max())
         {
-            Expects(narrow_cast<size_t>(idx) < narrow_cast<size_t>(size));
+            return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
         }
         else
         {
-            Expects(idx >= 0 && idx < size);
+            return idx >= 0 && idx < size;
         }
     }
 
