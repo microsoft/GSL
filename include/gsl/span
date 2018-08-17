@@ -536,13 +536,17 @@ private:
     static bool CheckRange(index_type idx, index_type size)
     {
         // Optimization:
+        //
         // idx >= 0 && idx < size
         // =>
         // static_cast<size_t>(idx) < static_cast<size_t>(size)
         //
         // because size >=0 by span construction, and negative idx will
         // wrap around to a value always greater than size when casted.
-        if (narrow_cast<size_t>(std::numeric_limits<index_type>::max()) < std::numeric_limits<size_t>::max())
+
+        // check if we have enough space to wrap around
+        if (narrow_cast<unsigned long long>(std::numeric_limits<index_type>::max()) < 
+            narrow_cast<unsigned long long>(std::numeric_limits<size_t>::max()))
         {
             return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
         }
