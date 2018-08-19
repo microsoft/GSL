@@ -545,8 +545,7 @@ private:
         // wrap around to a value always greater than size when casted.
 
         // check if we have enough space to wrap around
-        if (narrow_cast<unsigned long long>(std::numeric_limits<index_type>::max()) < 
-            narrow_cast<unsigned long long>(std::numeric_limits<size_t>::max()))
+        if (sizeof(index_type) <= sizeof(size_t))
         {
             return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
         }
