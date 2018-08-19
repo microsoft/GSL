@@ -310,19 +310,17 @@ TEST_CASE("from_pointer_pointer_constructor")
     }
 }
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute // TODO: false positive?
 TEST_CASE("from_array_constructor")
 {
     int arr[5] = {1, 2, 3, 4, 5};
 
     {
-        span<int> s{arr};
+        const span<int> s{arr};
         CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
     {
-        span<int, 5> s{arr};
+        const span<int, 5> s{arr};
         CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
@@ -354,8 +352,8 @@ TEST_CASE("from_array_constructor")
     }
 #endif
     {
-        span<int[3]> s{&arr2d[0], 1};
-        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
+        const span<int[3]> s{std::addressof(arr2d[0]), 1};
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr2d[0])));
     }
 
     int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -383,30 +381,30 @@ TEST_CASE("from_array_constructor")
     }
 #endif
     {
-        span<int[3][2]> s{&arr3d[0], 1};
-        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
+        const span<int[3][2]> s{std::addressof(arr3d[0]), 1};
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr3d[0])));
     }
 
     {
-        auto s = make_span(arr);
-        CHECK((s.size() == 5 && s.data() == &arr[0]));
+        const auto s = make_span(arr);
+        CHECK((s.size() == 5 && s.data() == std::addressof(arr[0])));
     }
 
     {
-        auto s = make_span(&(arr2d[0]), 1);
-        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
+        const auto s = make_span(std::addressof(arr2d[0]), 1);
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr2d[0])));
     }
 
     {
-        auto s = make_span(&arr3d[0], 1);
-        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
+        const auto s = make_span(std::addressof(arr3d[0]), 1);
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr3d[0])));
     }
 
     AddressOverloaded ao_arr[5] = {};
 
     {
-        span<AddressOverloaded, 5> s{ao_arr};
-        CHECK((s.size() == 5 && s.data() == ao_arr));
+        const span<AddressOverloaded, 5> s{ao_arr};
+        CHECK((s.size() == 5 && s.data() == std::addressof(ao_arr[0])));
     }
 
 }

@@ -29,6 +29,7 @@
 #include <stdexcept>
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 #include <utility>
+#include <memory> // for std::addressof
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -390,7 +391,7 @@ public:
 
     template <std::size_t N>
     constexpr span(element_type (&arr)[N]) noexcept
-        : storage_(KnownNotNull{arr}, details::extent_type<N>())
+        : storage_(KnownNotNull{std::addressof(arr[0])}, details::extent_type<N>())
     {}
 
     template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
