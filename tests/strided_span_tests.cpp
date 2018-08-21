@@ -14,6 +14,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 
 #include <gsl/gsl_byte>   // for byte
@@ -60,17 +67,20 @@ TEST_CASE("span_section")
     const multi_span<int, 5, 10> av = as_multi_span(multi_span<int>{data}, dim<5>(), dim<10>());
 
     const strided_span<int, 2> av_section_1 = av.section({1, 2}, {3, 4});
+    CHECK(!av_section_1.empty());
     CHECK((av_section_1[{0, 0}] == 12));
     CHECK((av_section_1[{0, 1}] == 13));
     CHECK((av_section_1[{1, 0}] == 22));
     CHECK((av_section_1[{2, 3}] == 35));
 
     const strided_span<int, 2> av_section_2 = av_section_1.section({1, 2}, {2, 2});
+    CHECK(!av_section_2.empty());
     CHECK((av_section_2[{0, 0}] == 24));
     CHECK((av_section_2[{0, 1}] == 25));
     CHECK((av_section_2[{1, 0}] == 34));
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_constructors")
 {
     // Check stride constructor
@@ -271,6 +281,7 @@ TEST_CASE("strided_span_constructors")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_slice")
 {
     std::vector<int> data(5 * 10);
@@ -297,6 +308,7 @@ TEST_CASE("strided_span_slice")
     CHECK(sav[4][9] == 49);
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_column_major")
 {
     // strided_span may be used to accommodate more peculiar
@@ -329,6 +341,7 @@ TEST_CASE("strided_span_column_major")
     CHECK((cm_sec[{2, 1}] == 15));
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_bounds")
 {
     int arr[] = {0, 1, 2, 3};
@@ -445,6 +458,7 @@ TEST_CASE("strided_span_bounds")
 #endif
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_type_conversion")
 {
     int arr[] = {0, 1, 2, 3};
@@ -542,6 +556,8 @@ TEST_CASE("strided_span_type_conversion")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 TEST_CASE("empty_strided_spans")
 {
     {
@@ -549,6 +565,7 @@ TEST_CASE("empty_strided_spans")
         strided_span<int, 1> empty_sav{empty_av, {0, 1}};
 
         CHECK(empty_sav.bounds().index_bounds() == multi_span_index<1>{0});
+        CHECK(empty_sav.empty());
         CHECK_THROWS_AS(empty_sav[0], fail_fast);
         CHECK_THROWS_AS(empty_sav.begin()[0], fail_fast);
         CHECK_THROWS_AS(empty_sav.cbegin()[0], fail_fast);
@@ -574,6 +591,8 @@ TEST_CASE("empty_strided_spans")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 void iterate_every_other_element(multi_span<int, dynamic_range> av)
 {
     // pick every other element
@@ -599,6 +618,7 @@ void iterate_every_other_element(multi_span<int, dynamic_range> av)
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("strided_span_section_iteration")
 {
     int arr[8] = {4, 0, 5, 1, 6, 2, 7, 3};
@@ -616,6 +636,11 @@ TEST_CASE("strided_span_section_iteration")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("dynamic_strided_span_section_iteration")
 {
     auto arr = new int[8];
@@ -630,6 +655,9 @@ TEST_CASE("dynamic_strided_span_section_iteration")
     delete[] arr;
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute // TODO: does not work
 void iterate_second_slice(multi_span<int, dynamic_range, dynamic_range, dynamic_range> av)
 {
     const int expected[6] = {2, 3, 10, 11, 18, 19};
@@ -656,6 +684,9 @@ void iterate_second_slice(multi_span<int, dynamic_range, dynamic_range, dynamic_
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("strided_span_section_iteration_3d")
 {
     int arr[3][4][2]{};
@@ -670,6 +701,11 @@ TEST_CASE("strided_span_section_iteration_3d")
     }
 }
 
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
 TEST_CASE("dynamic_strided_span_section_iteration_3d")
 {
     const auto height = 12, width = 2;
@@ -702,6 +738,9 @@ TEST_CASE("dynamic_strided_span_section_iteration_3d")
     delete[] arr;
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("strided_span_conversion")
 {
     // get an multi_span of 'c' values from the list of X's
@@ -720,7 +759,7 @@ TEST_CASE("strided_span_conversion")
     auto d1 = narrow_cast<int>(sizeof(int)) * 12 / d2;
 
     // convert to 4x12 array of bytes
-    auto av = as_multi_span(as_bytes(as_multi_span(arr, 4)), dim(d1), dim(d2));
+    auto av = as_multi_span(as_bytes(as_multi_span(&arr[0], 4)), dim(d1), dim(d2));
 
     CHECK(av.bounds().index_bounds()[0] == 4);
     CHECK(av.bounds().index_bounds()[1] == 12);

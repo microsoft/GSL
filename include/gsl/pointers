@@ -120,6 +120,11 @@ private:
 };
 
 template <class T>
+auto make_not_null(T&& t) {
+    return gsl::not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
+}
+
+template <class T>
 std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
 {
     os << val.get();
