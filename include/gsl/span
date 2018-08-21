@@ -394,17 +394,27 @@ public:
         : storage_(KnownNotNull{std::addressof(arr[0])}, details::extent_type<N>())
     {}
 
-    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
-    constexpr span(std::array<ArrayElementType, N>& arr) noexcept
-        : storage_(arr.data(), details::extent_type<N>())
-    {}
+    template <std::size_t N, class = std::enable_if_t<(N > 0)>>
+    constexpr span(std::array<std::remove_const_t<element_type>, N>& arr) noexcept
+        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
+    {
+    }
 
-    template <std::size_t N>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
+    constexpr span(std::array<std::remove_const_t<element_type>, 0>&) noexcept
+        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
+    {
+    }
+
+    template <std::size_t N, class = std::enable_if_t<(N > 0)>>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
-        : storage_(arr.data(), details::extent_type<N>())
-    {}
+        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
+    {
+    }
+
+    constexpr span(const std::array<std::remove_const_t<element_type>, 0>&) noexcept
+        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
+    {
+    }
 
     // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
     // on Container to be a contiguous sequence container.
