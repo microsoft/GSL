@@ -1551,3 +1551,33 @@ TEST_CASE("default_constructible")
     CHECK((!std::is_default_constructible<span<int, 42>>::value));
 }
 
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+TEST_CASE("span_deduction_guides")
+{
+    //CTAD tests
+    int arr[10] = {};
+    static_assert(std::is_same_v<decltype(gsl::span{arr}), gsl::span<int, 10>>);
+
+    const int carr[10] = {};
+    static_assert(std::is_same_v<decltype(gsl::span{carr}), gsl::span<const int, 10>>);
+
+    std::array<int, 10> arr2 = {};
+    static_assert(std::is_same_v<decltype(gsl::span{arr2}), gsl::span<int, 10>>);
+
+    const std::array<int, 10> carr2 = {};
+    static_assert(std::is_same_v<decltype(gsl::span{carr2}), gsl::span<const int, 10>>);
+
+    std::vector<int> vec;
+    static_assert(std::is_same_v<decltype(gsl::span{vec}), gsl::span<int>>);
+
+    const std::vector<int> cvec;
+    static_assert(std::is_same_v<decltype(gsl::span{cvec}), gsl::span<const int>>);
+
+    int* fake = nullptr;
+    static_assert(std::is_same_v<decltype(gsl::span{fake, fake}), gsl::span<int>>);
+    static_assert(std::is_same_v<decltype(gsl::span{fake, 0}), gsl::span<int>>);
+
+    const int* cfake = nullptr;
+    static_assert(std::is_same_v<decltype(gsl::span{cfake, cfake}), gsl::span<const int>>);
+}
+#endif

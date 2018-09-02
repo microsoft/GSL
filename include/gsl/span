@@ -623,6 +623,26 @@ private:
     }
 };
 
+
+template<typename T, std::size_t N>
+span(std::array<T, N>&) -> span<std::remove_const_t<T>, static_cast<std::ptrdiff_t>(N)>;
+
+template<typename T, std::size_t N>
+span(const std::array<T, N>&) -> span<std::add_const_t<T>, static_cast<std::ptrdiff_t>(N)>;
+
+template<typename T, std::size_t N>
+span(T(&)[N]) -> span<T, static_cast<std::ptrdiff_t>(N)>;
+
+template <class Container,
+              class = std::enable_if_t<
+                  !details::is_span<Container>::value && !details::is_std_array<Container>::value>>
+span(Container& cont) -> span<typename Container::value_type>;
+
+template <class Container,
+              class = std::enable_if_t<
+                  !details::is_span<Container>::value && !details::is_std_array<Container>::value>>
+span(const Container& cont) -> span<std::add_const_t<typename Container::value_type>>;
+
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
 template <class ElementType, std::ptrdiff_t Extent>
 constexpr const typename span<ElementType, Extent>::index_type span<ElementType, Extent>::extent;
