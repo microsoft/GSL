@@ -14,6 +14,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426 26497) // from catch
+
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_byte> // for byte
@@ -45,8 +52,13 @@ struct BaseClass
 struct DerivedClass : BaseClass
 {
 };
+struct AddressOverloaded
+{
+    AddressOverloaded operator&() const { return {}; }
+};
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("default_constructor")
 {
     {
@@ -81,6 +93,7 @@ TEST_CASE("default_constructor")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("size_optimization")
 {
     {
@@ -94,56 +107,60 @@ TEST_CASE("size_optimization")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_nullptr_size_constructor")
 {
     {
-        span<int> s{nullptr, static_cast<span<int>::index_type>(0)};
+        span<int> s{nullptr, narrow_cast<span<int>::index_type>(0)};
         CHECK((s.size() == 0 && s.data() == nullptr));
 
-        span<const int> cs{nullptr, static_cast<span<int>::index_type>(0)};
+        span<const int> cs{nullptr, narrow_cast<span<int>::index_type>(0)};
         CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 
     {
-        span<int, 0> s{nullptr, static_cast<span<int>::index_type>(0)};
+        span<int, 0> s{nullptr, narrow_cast<span<int>::index_type>(0)};
         CHECK((s.size() == 0 && s.data() == nullptr));
 
-        span<const int, 0> cs{nullptr, static_cast<span<int>::index_type>(0)};
+        span<const int, 0> cs{nullptr, narrow_cast<span<int>::index_type>(0)};
         CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 
     {
         auto workaround_macro = []() {
-            span<int, 1> s{nullptr, static_cast<span<int>::index_type>(0)};
+            const span<int, 1> s{nullptr, narrow_cast<span<int>::index_type>(0)};
         };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
     }
 
     {
-        auto workaround_macro = []() { span<int> s{nullptr, 1}; };
+        auto workaround_macro = []() { const span<int> s{nullptr, 1}; };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
 
-        auto const_workaround_macro = []() { span<const int> cs{nullptr, 1}; };
+        auto const_workaround_macro = []() { const span<const int> cs{nullptr, 1}; };
         CHECK_THROWS_AS(const_workaround_macro(), fail_fast);
     }
 
     {
-        auto workaround_macro = []() { span<int, 0> s{nullptr, 1}; };
+        auto workaround_macro = []() { const span<int, 0> s{nullptr, 1}; };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
 
-        auto const_workaround_macro = []() { span<const int, 0> s{nullptr, 1}; };
+        auto const_workaround_macro = []() { const span<const int, 0> s{nullptr, 1}; };
         CHECK_THROWS_AS(const_workaround_macro(), fail_fast);
     }
 
     {
-        span<int*> s{nullptr, static_cast<span<int>::index_type>(0)};
+        span<int*> s{nullptr, narrow_cast<span<int>::index_type>(0)};
         CHECK((s.size() == 0 && s.data() == nullptr));
 
-        span<const int*> cs{nullptr, static_cast<span<int>::index_type>(0)};
+        span<const int*> cs{nullptr, narrow_cast<span<int>::index_type>(0)};
         CHECK((cs.size() == 0 && cs.data() == nullptr));
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 TEST_CASE("from_pointer_length_constructor")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -164,7 +181,7 @@ TEST_CASE("from_pointer_length_constructor")
                 }
             }
             {
-                span<int> s = { &arr[i], 4-i };
+                span<int> s = { &arr[i], 4-narrow_cast<ptrdiff_t>(i) };
                 CHECK(s.size() == 4-i);
                 CHECK(s.data() == &arr[i]);
                 CHECK(s.empty() == (4-i == 0));
@@ -186,13 +203,13 @@ TEST_CASE("from_pointer_length_constructor")
 
     {
         int* p = nullptr;
-        span<int> s{p, static_cast<span<int>::index_type>(0)};
+        span<int> s{p, narrow_cast<span<int>::index_type>(0)};
         CHECK((s.size() == 0 && s.data() == nullptr));
     }
 
     {
         int* p = nullptr;
-        auto workaround_macro = [=]() { span<int> s{p, 2}; };
+        auto workaround_macro = [=]() { const span<int> s{p, 2}; };
         CHECK_THROWS_AS(workaround_macro(), fail_fast);
     }
 
@@ -204,7 +221,7 @@ TEST_CASE("from_pointer_length_constructor")
 
     {
         int* p = nullptr;
-        auto s = make_span(p, static_cast<span<int>::index_type>(0));
+        auto s = make_span(p, narrow_cast<span<int>::index_type>(0));
         CHECK((s.size() == 0 && s.data() == nullptr));
     }
 
@@ -215,6 +232,8 @@ TEST_CASE("from_pointer_length_constructor")
     }
 }
 
+
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_pointer_pointer_constructor")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -296,12 +315,12 @@ TEST_CASE("from_array_constructor")
     int arr[5] = {1, 2, 3, 4, 5};
 
     {
-        span<int> s{arr};
+        const span<int> s{arr};
         CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
     {
-        span<int, 5> s{arr};
+        const span<int, 5> s{arr};
         CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
@@ -333,8 +352,8 @@ TEST_CASE("from_array_constructor")
     }
 #endif
     {
-        span<int[3]> s{&(arr2d[0]), 1};
-        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
+        const span<int[3]> s{std::addressof(arr2d[0]), 1};
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr2d[0])));
     }
 
     int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -362,26 +381,38 @@ TEST_CASE("from_array_constructor")
     }
 #endif
     {
-        span<int[3][2]> s{&arr3d[0], 1};
-        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
+        const span<int[3][2]> s{std::addressof(arr3d[0]), 1};
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr3d[0])));
     }
 
     {
-        auto s = make_span(arr);
-        CHECK((s.size() == 5 && s.data() == &arr[0]));
+        const auto s = make_span(arr);
+        CHECK((s.size() == 5 && s.data() == std::addressof(arr[0])));
     }
 
     {
-        auto s = make_span(&(arr2d[0]), 1);
-        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
+        const auto s = make_span(std::addressof(arr2d[0]), 1);
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr2d[0])));
     }
 
     {
-        auto s = make_span(&arr3d[0], 1);
-        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
+        const auto s = make_span(std::addressof(arr3d[0]), 1);
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr3d[0])));
     }
+
+    AddressOverloaded ao_arr[5] = {};
+
+    {
+        const span<AddressOverloaded, 5> s{ao_arr};
+        CHECK((s.size() == 5 && s.data() == std::addressof(ao_arr[0])));
+    }
+
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(i.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 TEST_CASE("from_dynamic_array_constructor")
 {
     double(*arr)[3][4] = new double[100][3][4];
@@ -399,6 +430,8 @@ TEST_CASE("from_dynamic_array_constructor")
     delete[] arr;
 }
 
+
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_std_array_constructor")
 {
     std::array<int, 4> arr = {1, 2, 3, 4};
@@ -417,6 +450,13 @@ TEST_CASE("from_std_array_constructor")
 
         span<const int, 4> cs{arr};
         CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data()));
+    }
+
+    std::array<AddressOverloaded, 4> ao_arr{};  
+
+    {
+        span<AddressOverloaded, 4> fs{ao_arr};
+        CHECK((fs.size() == narrow_cast<ptrdiff_t>(ao_arr.size()) && ao_arr.data() == fs.data()));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -478,6 +518,7 @@ TEST_CASE("from_std_array_constructor")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_const_std_array_constructor")
 {
     const std::array<int, 4> arr = {1, 2, 3, 4};
@@ -490,6 +531,13 @@ TEST_CASE("from_const_std_array_constructor")
     {
         span<const int, 4> s{arr};
         CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data()));
+    }
+
+    const std::array<AddressOverloaded, 4> ao_arr{};
+
+    {
+        span<const AddressOverloaded, 4> s{ao_arr};
+        CHECK((s.size() == narrow_cast<ptrdiff_t>(ao_arr.size()) && s.data() == ao_arr.data()));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -521,6 +569,7 @@ TEST_CASE("from_const_std_array_constructor")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_std_array_const_constructor")
 {
     std::array<const int, 4> arr = {1, 2, 3, 4};
@@ -561,6 +610,7 @@ TEST_CASE("from_std_array_const_constructor")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_container_constructor")
 {
     std::vector<int> v = {1, 2, 3};
@@ -653,6 +703,7 @@ TEST_CASE("from_container_constructor")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("from_convertible_span_constructor")
 {
     {
@@ -690,6 +741,7 @@ TEST_CASE("from_convertible_span_constructor")
     #endif
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("copy_move_and_assignment")
 {
     span<int> s1;
@@ -711,6 +763,7 @@ TEST_CASE("copy_move_and_assignment")
     CHECK((s1.size() == 2 && s1.data() == &arr[1]));
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("first")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -749,6 +802,7 @@ TEST_CASE("first")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("last")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -786,6 +840,7 @@ TEST_CASE("last")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("subspan")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -867,6 +922,7 @@ TEST_CASE("subspan")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("at_call")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -886,6 +942,7 @@ TEST_CASE("at_call")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("operator_function_call")
 {
     int arr[4] = {1, 2, 3, 4};
@@ -905,6 +962,7 @@ TEST_CASE("operator_function_call")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator_default_init")
 {
     span<int>::iterator it1;
@@ -912,6 +970,7 @@ TEST_CASE("iterator_default_init")
     CHECK(it1 == it2);
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("const_iterator_default_init")
 {
     span<int>::const_iterator it1;
@@ -919,6 +978,7 @@ TEST_CASE("const_iterator_default_init")
     CHECK(it1 == it2);
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator_conversions")
 {
     span<int>::iterator badIt;
@@ -941,6 +1001,7 @@ TEST_CASE("iterator_conversions")
     CHECK(cit3 == s.cend());
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("iterator_comparisons")
 {
     int a[] = {1, 2, 3, 4};
@@ -988,6 +1049,7 @@ TEST_CASE("iterator_comparisons")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("begin_end")
 {
     {
@@ -1043,6 +1105,7 @@ TEST_CASE("begin_end")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("cbegin_cend")
 {
     {
@@ -1095,6 +1158,7 @@ TEST_CASE("cbegin_cend")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("rbegin_rend")
 {
     {
@@ -1137,6 +1201,7 @@ TEST_CASE("rbegin_rend")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("crbegin_crend")
 {
     {
@@ -1176,6 +1241,7 @@ TEST_CASE("crbegin_crend")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("comparison_operators")
 {
     {
@@ -1296,6 +1362,7 @@ TEST_CASE("comparison_operators")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_bytes")
 {
     int a[] = {1, 2, 3, 4};
@@ -1326,6 +1393,7 @@ TEST_CASE("as_bytes")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("as_writeable_bytes")
 {
     int a[] = {1, 2, 3, 4};
@@ -1359,6 +1427,7 @@ TEST_CASE("as_writeable_bytes")
     }
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("fixed_size_conversions")
 {
     int arr[] = {1, 2, 3, 4};
@@ -1389,7 +1458,7 @@ TEST_CASE("fixed_size_conversions")
     {
         span<int> s = arr;
         auto f = [&]() {
-            span<int, 2> s2 = s;
+            const span<int, 2> s2 = s;
             static_cast<void>(s2);
         };
         CHECK_THROWS_AS(f(), fail_fast);
@@ -1399,7 +1468,7 @@ TEST_CASE("fixed_size_conversions")
 
     // you can convert statically
     {
-        const span<int, 2> s2 = {arr, 2};
+        const span<int, 2> s2 = {&arr[0], 2};
         static_cast<void>(s2);
     }
     {
@@ -1428,7 +1497,7 @@ TEST_CASE("fixed_size_conversions")
 #endif
     {
         auto f = [&]() {
-            span<int, 4> _s4 = {arr2, 2};
+            const span<int, 4> _s4 = {arr2, 2};
             static_cast<void>(_s4);
         };
         CHECK_THROWS_AS(f(), fail_fast);
@@ -1437,12 +1506,13 @@ TEST_CASE("fixed_size_conversions")
     // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
     span<int> av = arr2;
     auto f = [&]() {
-        span<int, 4> _s4 = av;
+        const span<int, 4> _s4 = av;
         static_cast<void>(_s4);
     };
     CHECK_THROWS_AS(f(), fail_fast);
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("interop_with_std_regex")
 {
     char lat[] = {'1', '2', '3', '4', '5', '6', 'E', 'F', 'G'};
@@ -1466,6 +1536,7 @@ TEST_CASE("interop_with_std_regex")
     CHECK(match[0].second == (f_it + 1));
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("interop_with_gsl_at")
 {
     int arr[5] = {1, 2, 3, 4, 5};
@@ -1479,3 +1550,4 @@ TEST_CASE("default_constructible")
     CHECK((std::is_default_constructible<span<int, 0>>::value));
     CHECK((!std::is_default_constructible<span<int, 42>>::value));
 }
+

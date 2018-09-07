@@ -5,7 +5,19 @@ IndentWidth: 4
 AccessModifierOffset: -4
 NamespaceIndentation: Inner
 
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterNamespace: true
+  AfterEnum: true
+  AfterStruct: true
+  AfterClass: true
+  SplitEmptyFunction: false
+  AfterControlStatement: true
+  AfterFunction: true
+  AfterUnion: true
+  BeforeElse: true
+
+
 AlwaysBreakTemplateDeclarations: true
 BreakConstructorInitializersBeforeComma: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
@@ -19,3 +31,4 @@ AlignConsecutiveAssignments: false
 AlignTrailingComments: true
 
 SpaceAfterCStyleCast: true
+CommentPragmas: '^ NO-FORMAT:'
