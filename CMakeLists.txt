@@ -51,11 +51,21 @@ target_compile_definitions(GSL INTERFACE
 )
 
 # add include folders to the library and targets that consume it
-target_include_directories(GSL INTERFACE
-    $<BUILD_INTERFACE:
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    >
-)
+# the SYSTEM keyword suppresses warnings for users of the library
+if(GSL_STANDALONE_PROJECT)
+    target_include_directories(GSL INTERFACE
+        $<BUILD_INTERFACE:
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+        >
+    )
+else()
+    target_include_directories(GSL SYSTEM INTERFACE
+        $<BUILD_INTERFACE:
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+        >
+    )
+endif()
+
 
 if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
     if (MSVC_IDE)
