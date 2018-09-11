@@ -308,40 +308,40 @@ namespace details
     struct BoundsRanges
     {
         using size_type = std::ptrdiff_t;
-        static const size_type Depth = 0;
-        static const size_type DynamicNum = 0;
-        static const size_type CurrentRange = 1;
-        static const size_type TotalSize = 1;
+        static constexpr size_type Depth = 0;
+        static constexpr size_type DynamicNum = 0;
+        static constexpr size_type CurrentRange = 1;
+        static constexpr size_type TotalSize = 1;
 
         // TODO : following signature is for work around VS bug
         template <typename OtherRange>
-        BoundsRanges(const OtherRange&, bool /* firstLevel */)
+        constexpr BoundsRanges(const OtherRange&, bool /* firstLevel */)
         {}
 
-        BoundsRanges(const std::ptrdiff_t* const) {}
-        BoundsRanges() noexcept = default;
+        constexpr BoundsRanges(const std::ptrdiff_t* const) {}
+        constexpr BoundsRanges() noexcept = default;
 
         template <typename T, std::size_t Dim>
-        void serialize(T&) const
+        constexpr void serialize(T&) const
         {}
 
         template <typename T, std::size_t Dim>
-        size_type linearize(const T&) const
+        constexpr size_type linearize(const T&) const
         {
             return 0;
         }
 
         template <typename T, std::size_t Dim>
-        size_type contains(const T&) const
+        constexpr size_type contains(const T&) const
         {
             return -1;
         }
 
-        size_type elementNum(std::size_t) const noexcept { return 0; }
+        constexpr size_type elementNum(std::size_t) const noexcept { return 0; }
 
-        size_type totalSize() const noexcept { return TotalSize; }
+        constexpr size_type totalSize() const noexcept { return TotalSize; }
 
-        bool operator==(const BoundsRanges&) const noexcept { return true; }
+        constexpr bool operator==(const BoundsRanges&) const noexcept { return true; }
     };
 
     template <std::ptrdiff_t... RestRanges>
@@ -349,10 +349,10 @@ namespace details
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
-        static const std::size_t Depth = Base::Depth + 1;
-        static const std::size_t DynamicNum = Base::DynamicNum + 1;
-        static const size_type CurrentRange = dynamic_range;
-        static const size_type TotalSize = dynamic_range;
+        static constexpr std::size_t Depth = Base::Depth + 1;
+        static constexpr std::size_t DynamicNum = Base::DynamicNum + 1;
+        static constexpr size_type CurrentRange = dynamic_range;
+        static constexpr size_type TotalSize = dynamic_range;
 
     private:
         size_type m_bound;
@@ -360,23 +360,23 @@ namespace details
     public:
         GSL_SUPPRESS(f.23) // NO-FORMAT: attribute // this pointer type is cannot be assigned nullptr - issue in not_null
         GSL_SUPPRESS(bounds.1)  // NO-FORMAT: attribute
-        BoundsRanges(const std::ptrdiff_t* const arr)
+        constexpr BoundsRanges(const std::ptrdiff_t* const arr)
             : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
         {
             Expects(0 <= *arr);
         }
 
-        BoundsRanges() noexcept : m_bound(0) {}
+        constexpr BoundsRanges() noexcept : m_bound(0) {}
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
-        BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
+        constexpr BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
                      bool /* firstLevel */ = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
             , m_bound(other.totalSize())
         {}
 
         template <typename T, std::size_t Dim = 0>
-        void serialize(T& arr) const
+        constexpr void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
@@ -384,7 +384,7 @@ namespace details
 
         template <typename T, std::size_t Dim = 0>
         GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-        size_type linearize(const T& arr) const
+        constexpr size_type linearize(const T& arr) const
         {
             const size_type index = this->Base::totalSize() * arr[Dim];
             Expects(index < m_bound);
@@ -392,7 +392,7 @@ namespace details
         }
 
         template <typename T, std::size_t Dim = 0>
-        size_type contains(const T& arr) const
+        constexpr size_type contains(const T& arr) const
         {
             const ptrdiff_t last = this->Base::template contains<T, Dim + 1>(arr);
             if (last == -1) return -1;
@@ -401,18 +401,18 @@ namespace details
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type totalSize() const noexcept
+        constexpr size_type totalSize() const noexcept
         {
             return m_bound;
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type elementNum() const noexcept
+        constexpr size_type elementNum() const noexcept
         {
             return totalSize() / this->Base::totalSize();
         }
 
-        size_type elementNum(std::size_t dim) const noexcept
+        constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -420,7 +420,7 @@ namespace details
                 return elementNum();
         }
 
-        bool operator==(const BoundsRanges& rhs) const noexcept
+        constexpr bool operator==(const BoundsRanges& rhs) const noexcept
         {
             return m_bound == rhs.m_bound &&
                    static_cast<const Base&>(*this) == static_cast<const Base&>(rhs);
@@ -432,17 +432,17 @@ namespace details
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
-        static const std::size_t Depth = Base::Depth + 1;
-        static const std::size_t DynamicNum = Base::DynamicNum;
-        static const size_type CurrentRange = CurRange;
-        static const size_type TotalSize =
+        static constexpr std::size_t Depth = Base::Depth + 1;
+        static constexpr std::size_t DynamicNum = Base::DynamicNum;
+        static constexpr size_type CurrentRange = CurRange;
+        static constexpr size_type TotalSize =
             Base::TotalSize == dynamic_range ? dynamic_range : CurrentRange * Base::TotalSize;
 
-        BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) {}
-        BoundsRanges() = default;
+        constexpr BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) {}
+        constexpr BoundsRanges() = default;
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
-        BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
+        constexpr BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
                      bool firstLevel = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
         {
@@ -451,14 +451,14 @@ namespace details
         }
 
         template <typename T, std::size_t Dim = 0>
-        void serialize(T& arr) const
+        constexpr void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
         }
 
         template <typename T, std::size_t Dim = 0>
-        size_type linearize(const T& arr) const
+        constexpr size_type linearize(const T& arr) const
         {
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
@@ -469,7 +469,7 @@ namespace details
         }
 
         template <typename T, std::size_t Dim = 0>
-        size_type contains(const T& arr) const
+        constexpr size_type contains(const T& arr) const
         {
             if (arr[Dim] >= CurrentRange) return -1;
             const size_type last = this->Base::template contains<T, Dim + 1>(arr);
@@ -478,19 +478,19 @@ namespace details
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type totalSize() const noexcept
+        constexpr size_type totalSize() const noexcept
         {
             return CurrentRange * this->Base::totalSize();
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type elementNum() const noexcept
+        constexpr size_type elementNum() const noexcept
         {
             return CurrentRange;
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type elementNum(std::size_t dim) const noexcept
+        constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -498,7 +498,7 @@ namespace details
                 return elementNum();
         }
 
-        bool operator==(const BoundsRanges& rhs) const noexcept
+        constexpr bool operator==(const BoundsRanges& rhs) const noexcept
         {
             return static_cast<const Base&>(*this) == static_cast<const Base&>(rhs);
         }
