@@ -462,9 +462,9 @@ namespace details
         {
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
-
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-            return this->Base::totalSize() * arr[Dim] +
+            const ptrdiff_t d = arr[Dim];
+            return this->Base::totalSize() * d +
                    this->Base::template linearize<T, Dim + 1>(arr);
         }
 
