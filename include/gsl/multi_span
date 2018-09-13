@@ -308,10 +308,10 @@ namespace details
     struct BoundsRanges
     {
         using size_type = std::ptrdiff_t;
-        static constexpr size_type Depth = 0;
-        static constexpr size_type DynamicNum = 0;
-        static constexpr size_type CurrentRange = 1;
-        static constexpr size_type TotalSize = 1;
+        static const size_type Depth = 0;
+        static const size_type DynamicNum = 0;
+        static const size_type CurrentRange = 1;
+        static const size_type TotalSize = 1;
 
         // TODO : following signature is for work around VS bug
         template <typename OtherRange>
@@ -349,10 +349,10 @@ namespace details
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
-        static constexpr std::size_t Depth = Base::Depth + 1;
-        static constexpr std::size_t DynamicNum = Base::DynamicNum + 1;
-        static constexpr size_type CurrentRange = dynamic_range;
-        static constexpr size_type TotalSize = dynamic_range;
+        static const std::size_t Depth = Base::Depth + 1;
+        static const std::size_t DynamicNum = Base::DynamicNum + 1;
+        static const size_type CurrentRange = dynamic_range;
+        static const size_type TotalSize = dynamic_range;
 
     private:
         size_type m_bound;
@@ -432,10 +432,10 @@ namespace details
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
-        static constexpr std::size_t Depth = Base::Depth + 1;
-        static constexpr std::size_t DynamicNum = Base::DynamicNum;
-        static constexpr size_type CurrentRange = CurRange;
-        static constexpr size_type TotalSize =
+        static const std::size_t Depth = Base::Depth + 1;
+        static const std::size_t DynamicNum = Base::DynamicNum;
+        static const size_type CurrentRange = CurRange;
+        static const size_type TotalSize =
             Base::TotalSize == dynamic_range ? dynamic_range : CurrentRange * Base::TotalSize;
 
         constexpr BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) {}
