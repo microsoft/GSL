@@ -29,6 +29,7 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * Windows using Clang/LLVM 3.6
 * Windows using GCC 5.1
 * Windows using Intel C++ Compiler 18.0
+* GNU/Linux using Clang/LLVM 3.12.3
 * GNU/Linux using Clang/LLVM 3.6
 * GNU/Linux using GCC 5.1
 * OS X Yosemite using Xcode with Apple Clang 7.0.0.7000072
