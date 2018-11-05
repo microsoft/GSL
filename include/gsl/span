@@ -29,6 +29,7 @@
 #include <stdexcept>
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 #include <utility>
+#include <memory> // for std::addressof
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -46,8 +47,8 @@
 #define constexpr /*constexpr*/
 #define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
 
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
 
 // See if we have enough C++17 power to use a static constexpr data member
 // without needing an out-of-line definition
@@ -142,15 +143,13 @@ namespace details
 
         constexpr span_iterator(const Span* span, typename Span::index_type idx) noexcept
             : span_(span), index_(idx)
-        {
-        }
+        {}
 
         friend span_iterator<Span, true>;
         template <bool B, std::enable_if_t<!B && IsConst>* = nullptr>
         constexpr span_iterator(const span_iterator<Span, B>& other) noexcept
             : span_iterator(other.span_, other.index_)
-        {
-        }
+        {}
 
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr reference operator*() const
@@ -332,8 +331,7 @@ namespace details
 
         template <index_type Other>
         explicit constexpr extent_type(extent_type<Other> ext) : size_(ext.size())
-        {
-        }
+        {}
 
         explicit constexpr extent_type(index_type size) : size_(size) { Expects(size >= 0); }
 
@@ -383,33 +381,38 @@ public:
               // since "std::enable_if_t<Extent <= 0>" is ill-formed when Extent is greater than 0.
               class = std::enable_if_t<(Dependent || Extent <= 0)>>
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
-    {
-    }
+    {}
 
     constexpr span(pointer ptr, index_type count) : storage_(ptr, count) {}
 
     constexpr span(pointer firstElem, pointer lastElem)
         : storage_(firstElem, std::distance(firstElem, lastElem))
-    {
-    }
+    {}
 
     template <std::size_t N>
     constexpr span(element_type (&arr)[N]) noexcept
-        : storage_(KnownNotNull{&arr[0]}, details::extent_type<N>())
+        : storage_(KnownNotNull{std::addressof(arr[0])}, details::extent_type<N>())
+    {}
+
+    template <std::size_t N, class = std::enable_if_t<(N > 0)>>
+    constexpr span(std::array<std::remove_const_t<element_type>, N>& arr) noexcept
+        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {
     }
 
-    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
-    constexpr span(std::array<ArrayElementType, N>& arr) noexcept
-        : storage_(&arr[0], details::extent_type<N>())
+    constexpr span(std::array<std::remove_const_t<element_type>, 0>&) noexcept
+        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
     {
     }
 
-    template <std::size_t N>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
+    template <std::size_t N, class = std::enable_if_t<(N > 0)>>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
-        : storage_(&arr[0], details::extent_type<N>())
+        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
+    {
+    }
+
+    constexpr span(const std::array<std::remove_const_t<element_type>, 0>&) noexcept
+        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
     {
     }
 
@@ -422,8 +425,7 @@ public:
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
     constexpr span(Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
-    {
-    }
+    {}
 
     template <class Container,
               class = std::enable_if_t<
@@ -432,8 +434,7 @@ public:
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
     constexpr span(const Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
-    {
-    }
+    {}
 
     constexpr span(const span& other) noexcept = default;
 
@@ -444,8 +445,7 @@ public:
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
     constexpr span(const span<OtherElementType, OtherExtent>& other)
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
-    {
-    }
+    {}
 
     ~span() noexcept = default;
     constexpr span& operator=(const span& other) noexcept = default;
@@ -506,7 +506,7 @@ public:
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr reference operator[](index_type idx) const
     {
-        Expects(idx >= 0 && idx < storage_.size());
+        Expects(CheckRange(idx, storage_.size()));
         return data()[idx];
     }
 
@@ -536,7 +536,7 @@ public:
 #ifdef _MSC_VER
     // Tell MSVC how to unwrap spans in range-based-for
     constexpr pointer _Unchecked_begin() const noexcept { return data(); }
-    constexpr pointer _Unchecked_end() const noexcept 
+    constexpr pointer _Unchecked_end() const noexcept
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         return data() + size();
@@ -544,6 +544,28 @@ public:
 #endif // _MSC_VER
 
 private:
+    static bool CheckRange(index_type idx, index_type size)
+    {
+        // Optimization:
+        //
+        // idx >= 0 && idx < size
+        // =>
+        // static_cast<size_t>(idx) < static_cast<size_t>(size)
+        //
+        // because size >=0 by span construction, and negative idx will
+        // wrap around to a value always greater than size when casted.
+
+        // check if we have enough space to wrap around
+        if (sizeof(index_type) <= sizeof(size_t))
+        {
+            return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
+        }
+        else
+        {
+            return idx >= 0 && idx < size;
+        }
+    }
+
     // Needed to remove unnecessary null check in subspans
     struct KnownNotNull
     {

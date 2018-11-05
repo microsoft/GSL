@@ -52,6 +52,10 @@ struct BaseClass
 struct DerivedClass : BaseClass
 {
 };
+struct AddressOverloaded
+{
+    AddressOverloaded operator&() const { return {}; }
+};
 }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
@@ -306,19 +310,17 @@ TEST_CASE("from_pointer_pointer_constructor")
     }
 }
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute // TODO: false positive?
 TEST_CASE("from_array_constructor")
 {
     int arr[5] = {1, 2, 3, 4, 5};
 
     {
-        span<int> s{arr};
+        const span<int> s{arr};
         CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
     {
-        span<int, 5> s{arr};
+        const span<int, 5> s{arr};
         CHECK((s.size() == 5 && s.data() == &arr[0]));
     }
 
@@ -350,8 +352,8 @@ TEST_CASE("from_array_constructor")
     }
 #endif
     {
-        span<int[3]> s{&arr2d[0], 1};
-        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
+        const span<int[3]> s{std::addressof(arr2d[0]), 1};
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr2d[0])));
     }
 
     int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -379,24 +381,32 @@ TEST_CASE("from_array_constructor")
     }
 #endif
     {
-        span<int[3][2]> s{&arr3d[0], 1};
-        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
+        const span<int[3][2]> s{std::addressof(arr3d[0]), 1};
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr3d[0])));
     }
 
     {
-        auto s = make_span(arr);
-        CHECK((s.size() == 5 && s.data() == &arr[0]));
+        const auto s = make_span(arr);
+        CHECK((s.size() == 5 && s.data() == std::addressof(arr[0])));
     }
 
     {
-        auto s = make_span(&(arr2d[0]), 1);
-        CHECK((s.size() == 1 && s.data() == &arr2d[0]));
+        const auto s = make_span(std::addressof(arr2d[0]), 1);
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr2d[0])));
     }
 
     {
-        auto s = make_span(&arr3d[0], 1);
-        CHECK((s.size() == 1 && s.data() == &arr3d[0]));
+        const auto s = make_span(std::addressof(arr3d[0]), 1);
+        CHECK((s.size() == 1 && s.data() == std::addressof(arr3d[0])));
     }
+
+    AddressOverloaded ao_arr[5] = {};
+
+    {
+        const span<AddressOverloaded, 5> s{ao_arr};
+        CHECK((s.size() == 5 && s.data() == std::addressof(ao_arr[0])));
+    }
+
 }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
@@ -440,6 +450,19 @@ TEST_CASE("from_std_array_constructor")
 
         span<const int, 4> cs{arr};
         CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data()));
+    }
+
+    {
+        std::array<int, 0> empty_arr{};
+        span<int> s{empty_arr};
+        CHECK((s.size() == 0 && s.empty()));
+    }
+
+    std::array<AddressOverloaded, 4> ao_arr{};
+
+    {
+        span<AddressOverloaded, 4> fs{ao_arr};
+        CHECK((fs.size() == narrow_cast<ptrdiff_t>(ao_arr.size()) && ao_arr.data() == fs.data()));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -514,6 +537,13 @@ TEST_CASE("from_const_std_array_constructor")
     {
         span<const int, 4> s{arr};
         CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data()));
+    }
+
+    const std::array<AddressOverloaded, 4> ao_arr{};
+
+    {
+        span<const AddressOverloaded, 4> s{ao_arr};
+        CHECK((s.size() == narrow_cast<ptrdiff_t>(ao_arr.size()) && s.data() == ao_arr.data()));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS

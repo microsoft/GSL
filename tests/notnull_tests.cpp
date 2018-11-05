@@ -25,7 +25,7 @@
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/pointers> // for not_null, operator<, operator<=, operator>
+#include <gsl/pointers>       // for not_null, operator<, operator<=, operator>
 
 #include <algorithm> // for addressof
 #include <memory>    // for shared_ptr, make_shared, operator<, opera...
@@ -34,11 +34,10 @@
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
 
-
-
-namespace gsl {
+namespace gsl
+{
 struct fail_fast;
-}  // namespace gsl
+} // namespace gsl
 
 using namespace gsl;
 
@@ -166,7 +165,7 @@ TEST_CASE("TestNotNullConstructors")
 #ifdef GSL_THROW_ON_CONTRACT_VIOLATION
     int* pi = nullptr;
     CHECK_THROWS_AS(not_null<decltype(pi)>(pi), fail_fast);
-#endif    
+#endif
 }
 
 template<typename T>
@@ -262,7 +261,6 @@ TEST_CASE("TestNotNullRawPointerComparison")
     CHECK((NotNull1(p1) <= NotNull1(p1)) == true);
     CHECK((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
     CHECK((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
-
 }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
@@ -272,12 +270,12 @@ TEST_CASE("TestNotNullDereferenceOperator")
         auto sp1 = std::make_shared<NonCopyableNonMovable>();
 
         using NotNullSp1 = not_null<decltype(sp1)>;
-        CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1))); 
+        CHECK(typeid(*sp1) == typeid(*NotNullSp1(sp1)));
         CHECK(std::addressof(*NotNullSp1(sp1)) == std::addressof(*sp1));
     }
 
     {
-        int ints[1] = { 42 };
+        int ints[1] = {42};
         CustomPtr<int> p1(&ints[0]);
 
         using NotNull1 = not_null<decltype(p1)>;
@@ -359,7 +357,6 @@ TEST_CASE("TestNotNullCustomPtrComparison")
     CHECK((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
     CHECK((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
-
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
@@ -478,3 +475,4 @@ TEST_CASE("TestMakeNotNull")
 }
 
 static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
+
