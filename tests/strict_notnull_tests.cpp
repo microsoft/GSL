@@ -24,9 +24,7 @@
 #endif
 
 #include <catch/catch.hpp>    // for AssertionHandler, StringRef, CHECK, TEST_...
-
 #include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
-#include <samples/gsl_transition> // for sloppy_not_null
 
 namespace gsl
 {
@@ -34,7 +32,6 @@ struct fail_fast;
 } // namespace gsl
 
 using namespace gsl;
-using namespace gsl_helpers;
 
 GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
 bool helper(not_null<int*> p) { return *p == 12; }
@@ -42,42 +39,49 @@ GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper_const(not_null<const int*> p) { return *p == 12; }
 
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-bool sloppy_helper(sloppy_not_null<int*> p) { return *p == 12; }
+bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-bool sloppy_helper_const(sloppy_not_null<const int*> p) { return *p == 12; }
+bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
-TEST_CASE("TestSloppyNotNull")
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+TEST_CASE("TestStrictNotNull")
 {
     {
-        // raw ptr <-> sloppy_not_null
+        // raw ptr <-> strict_not_null
         int x = 42;
 
-        const sloppy_not_null<int*> snn = &x;
+#ifdef CONFIRM_COMPILATION_ERRORS
+        const strict_not_null<int*> snn = &x;
+        strict_helper(&x);
+        strict_helper_const(&x);
+#endif
 
-        sloppy_helper(&x);
-        sloppy_helper_const(&x);
+		const strict_not_null<int*> snn1{&x};
+        helper(snn1);
+        helper_const(snn1);
 
-        CHECK(*snn == 42);
+        CHECK(*snn1 == 42);
     }
 
     {
-        // sloppy_not_null -> sloppy_not_null
+        // strict_not_null -> strict_not_null
         int x = 42;
 
-        sloppy_not_null<int*> snn1{&x};
-        const sloppy_not_null<int*> snn2{&x};
+        strict_not_null<int*> snn1{&x};
+        const strict_not_null<int*> snn2{&x};
 
-        sloppy_helper(snn1);
-        sloppy_helper_const(snn1);
+        strict_helper(snn1);
+        strict_helper_const(snn1);
+        strict_helper_const(snn2);
 
         CHECK(snn1 == snn2);
     }
 
     {
-        // sloppy_not_null -> not_null
+        // strict_not_null -> not_null
         int x = 42;
 
-        sloppy_not_null<int*> snn{&x};
+        strict_not_null<int*> snn{&x};
 
         const not_null<int*> nn1 = snn;
         const not_null<int*> nn2{snn};
@@ -90,21 +94,21 @@ TEST_CASE("TestSloppyNotNull")
     }
 
     {
-        // not_null -> sloppy_not_null
+        // not_null -> strict_not_null
         int x = 42;
 
         not_null<int*> nn{&x};
 
-        const sloppy_not_null<int*> snn1{nn};
-        const sloppy_not_null<int*> snn2 = nn;
+        const strict_not_null<int*> snn1{nn};
+        const strict_not_null<int*> snn2{nn};
 
-        sloppy_helper(nn);
-        sloppy_helper_const(nn);
+        strict_helper(nn);
+        strict_helper_const(nn);
 
         CHECK(snn1 == nn);
         CHECK(snn2 == nn);
 
-        std::hash<sloppy_not_null<int*>> hash_snn;
+        std::hash<strict_not_null<int*>> hash_snn;
         std::hash<not_null<int*>> hash_nn;
 
         CHECK(hash_nn(snn1) == hash_nn(nn));
@@ -115,10 +119,10 @@ TEST_CASE("TestSloppyNotNull")
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     {
-        sloppy_not_null<int*> p{nullptr};
+        strict_not_null<int*> p{nullptr};
     }
 #endif
 }
 
-static_assert(std::is_nothrow_move_constructible<sloppy_not_null<void*>>::value,
-              "sloppy_not_null must be no-throw move constructible");
+static_assert(std::is_nothrow_move_constructible<strict_not_null<void*>>::value,
+              "strict_not_null must be no-throw move constructible");
