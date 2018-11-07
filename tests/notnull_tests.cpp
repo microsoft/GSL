@@ -407,7 +407,11 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
     {
         int i = 42;
         int* p = &i;
+        const int* cp = &i;
 
+		not_null<int*> y1 = &i;
+        not_null<int*> y2 = p;
+        not_null<const int*> y3 = cp;
         not_null x{p};
         helper(not_null{p});
         helper_const(not_null{p});
