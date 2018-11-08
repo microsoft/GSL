@@ -56,7 +56,7 @@ TEST_CASE("TestStrictNotNull")
         strict_helper_const(&x);
 #endif
 
-		const strict_not_null<int*> snn1{&x};
+        const strict_not_null<int*> snn1{&x};
         helper(snn1);
         helper_const(snn1);
 

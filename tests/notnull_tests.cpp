@@ -375,12 +375,39 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
 
     {
         int i = 42;
+
+        not_null<int*> x = &i;
+        helper(x);
+        helper_const(x);
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int i = 42;
         int* p = &i;
+
+        not_null<int*> x = p;
+        helper(x);
+        helper_const(x);
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int i = 42;
         const int* cp = &i;
 
-		not_null<int*> y1 = &i;
-        not_null<int*> y2 = p;
-        not_null<const int*> y3 = cp;
+        not_null<const int*> x = cp;
+        helper_const(x);
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int i = 42;
+        int* p = &i;
+
         not_null x{p};
         helper(not_null{p});
         helper_const(not_null{p});
