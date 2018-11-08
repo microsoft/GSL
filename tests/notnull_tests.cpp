@@ -142,30 +142,73 @@ bool helper_const(not_null<const int*> p)
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullConstructors")
 {
+    {
 #ifdef CONFIRM_COMPILATION_ERRORS
-    not_null<int*> p = nullptr;         // yay...does not compile!
-    not_null<std::vector<char>*> p = 0; // yay...does not compile!
-    not_null<int*> p;                   // yay...does not compile!
-    std::unique_ptr<int> up = std::make_unique<int>(120);
-    not_null<int*> p = up;
+        not_null<int*> p = nullptr;         // yay...does not compile!
+        not_null<std::vector<char>*> p1 = 0; // yay...does not compile!
+        not_null<int*> p2;                   // yay...does not compile!
+        std::unique_ptr<int> up = std::make_unique<int>(120);
+        not_null<int*> p3 = up;
 
-    // Forbid non-nullptr assignable types
-    not_null<std::vector<int>> f(std::vector<int>{1});
-    not_null<int> z(10);
-    not_null<std::vector<int>> y({1, 2});
+        // Forbid non-nullptr assignable types
+        not_null<std::vector<int>> f(std::vector<int>{1});
+        not_null<int> z(10);
+        not_null<std::vector<int>> y({1, 2});
 #endif
-    int i = 12;
-    auto rp = RefCounted<int>(&i);
-    not_null<int*> p(rp);
-    CHECK(p.get() == &i);
+    }
 
-    not_null<std::shared_ptr<int>> x(
-        std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+    {
+        int i = 12;
+        auto rp = RefCounted<int>(&i);
+        not_null<int*> p(rp);
+        CHECK(p.get() == &i);
 
-#ifdef GSL_THROW_ON_CONTRACT_VIOLATION
-    int* pi = nullptr;
-    CHECK_THROWS_AS(not_null<decltype(pi)>(pi), fail_fast);
-#endif
+        not_null<std::shared_ptr<int>> x(
+            std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+
+        int* pi = nullptr;
+        CHECK_THROWS_AS(not_null<decltype(pi)>(pi), fail_fast);
+    }
+
+    {
+        int t = 42;
+
+        not_null<int*> x = &t;
+        helper(&t);
+        helper_const(&t);
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int t = 42;
+        int* p = &t;
+
+        not_null<int*> x{p};
+        helper(x);
+        helper_const(x);
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int t = 42;
+        const int* cp = &t;
+
+        not_null<const int*> x{cp};
+        helper_const(x);
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int t = 42;
+        const int* cp = &t;
+
+        auto x = not_null<const int*>{cp};
+
+        CHECK(*x == 42);
+    }
 }
 
 template<typename T>
@@ -369,52 +412,6 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
         not_null x{&i};
         helper(not_null{&i});
         helper_const(not_null{&i});
-
-        CHECK(*x == 42);
-    }
-
-    {
-        int i = 42;
-
-        not_null<int*> x = &i;
-        helper(x);
-        helper_const(x);
-
-        CHECK(*x == 42);
-    }
-
-    {
-        int i = 42;
-        int* p = &i;
-
-        not_null<int*> x = p;
-        helper(x);
-        helper_const(x);
-
-        CHECK(*x == 42);
-    }
-
-    {
-        int i = 42;
-        const int* cp = &i;
-
-        not_null<const int*> x = cp;
-        helper_const(x);
-
-        CHECK(*x == 42);
-    }
-
-    {
-        int i = 42;
-        int* p = &i;
-        const int* cp = &i;
-
-		not_null<int*> y1 = &i;
-        not_null<int*> y2 = p;
-        not_null<const int*> y3 = cp;
-        not_null x{p};
-        helper(not_null{p});
-        helper_const(not_null{p});
 
         CHECK(*x == 42);
     }

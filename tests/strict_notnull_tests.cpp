@@ -51,10 +51,11 @@ TEST_CASE("TestStrictNotNull")
         int x = 42;
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-        const strict_not_null<int*> snn = &x;
+        strict_not_null<int*> snn = &x;
         strict_helper(&x);
         strict_helper_const(&x);
 #endif
+
         const strict_not_null<int*> snn1{&x};
 
         helper(snn1);
@@ -123,6 +124,54 @@ TEST_CASE("TestStrictNotNull")
     }
 #endif
 }
+
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+
+GSL_SUPPRESS(con .4) // NO-FORMAT: attribute
+TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
+{
+    {
+        int i = 42;
+
+        strict_not_null x{&i};
+        helper(strict_not_null{&i});
+        helper_const(strict_not_null{&i});
+
+        CHECK(*x == 42);
+    }
+
+    {
+        auto workaround_macro = []() {
+            int* p1 = nullptr;
+            const strict_not_null x{p1};
+        };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    {
+        auto workaround_macro = []() {
+            const int* p1 = nullptr;
+            const strict_not_null x{p1};
+        };
+        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+    }
+
+    {
+        int* p = nullptr;
+
+        CHECK_THROWS_AS(helper(strict_not_null{p}), fail_fast);
+        CHECK_THROWS_AS(helper_const(strict_not_null{p}), fail_fast);
+    }
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+    {
+        strict_not_null x{nullptr};
+        helper(strict_not_null{nullptr});
+        helper_const(strict_not_null{nullptr});
+    }
+#endif
+}
+#endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
 static_assert(std::is_nothrow_move_constructible<strict_not_null<void*>>::value,
               "strict_not_null must be no-throw move constructible");
