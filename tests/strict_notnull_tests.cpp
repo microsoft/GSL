@@ -43,6 +43,9 @@ bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
+int* return_pointer() { return nullptr; }
+const int* return_pointer_const() { return nullptr; }
+
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestStrictNotNull")
 {
@@ -54,6 +57,8 @@ TEST_CASE("TestStrictNotNull")
         strict_not_null<int*> snn = &x;
         strict_helper(&x);
         strict_helper_const(&x);
+        strict_helper(return_pointer());
+        strict_helper_const(return_pointer_const());
 #endif
 
         const strict_not_null<int*> snn1{&x};
