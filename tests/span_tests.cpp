@@ -452,7 +452,13 @@ TEST_CASE("from_std_array_constructor")
         CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data()));
     }
 
-    std::array<AddressOverloaded, 4> ao_arr{};  
+    {
+        std::array<int, 0> empty_arr{};
+        span<int> s{empty_arr};
+        CHECK((s.size() == 0 && s.empty()));
+    }
+
+    std::array<AddressOverloaded, 4> ao_arr{};
 
     {
         span<AddressOverloaded, 4> fs{ao_arr};
