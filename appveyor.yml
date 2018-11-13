@@ -56,7 +56,7 @@ before_build:
       }
       echo generator="$env:generator"
       if ("$env:USE_TOOLSET=" -match "clang-cl") {
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER="C:\Program Files\LLVM\bin\clang-cl.exe"
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER="C:\\Program Files\\LLVM\\bin\\clang-cl.exe"
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
