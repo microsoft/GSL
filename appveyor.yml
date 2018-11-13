@@ -14,21 +14,21 @@ image:
 
 environment:
   matrix:
+    #- GSL_CXX_STANDARD: 14
+    #  USE_TOOLSET: MSVC
+    #- GSL_CXX_STANDARD: 17
+    #  USE_TOOLSET: MSVC
     - GSL_CXX_STANDARD: 14
-      USE_COMPILER: MSVC
-    - GSL_CXX_STANDARD: 14
-      USE_COMPILER: MSVC
+      USE_TOOLSET: clang-cl
     - GSL_CXX_STANDARD: 17
-      USE_COMPILER: clang-cl
-    - GSL_CXX_STANDARD: 17
-      USE_COMPILER: clang-cl
+      USE_TOOLSET: clang-cl
 
 matrix:
     exclude:
     - image: Visual Studio 2015
       GSL_CXX_STANDARD: 17
     - image: Visual Studio 2015
-      USE_COMPILER: clang-cl
+      USE_TOOLSET: clang-cl
 
 cache:
   - C:\cmake-3.8.0-win32-x86
@@ -55,8 +55,8 @@ before_build:
           $env:generator="$env:generator Win64"
       }
       echo generator="$env:generator"
-      if ("$env:USE_COMPILER=" -match "clang_cl") {
-          cmake .. -G "$env:generator" -T LLVM -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
+      if ("$env:USE_TOOLSET=" -match "clang-cl") {
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
