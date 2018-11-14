@@ -60,6 +60,7 @@ target_compile_options(gsl_tests_config INTERFACE
     $<$<CXX_COMPILER_ID:Clang>:
         -Wno-c++98-compat
         -Wno-c++98-compat-pedantic
+        -Wno-missing-prototypes
         -Wno-undef
     >
 )
@@ -158,6 +159,7 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
     $<$<CXX_COMPILER_ID:Clang>:
         -Wno-c++98-compat
         -Wno-c++98-compat-pedantic
+        -Wno-missing-prototypes
         -Wno-undef
     >
 )
