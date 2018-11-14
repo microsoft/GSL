@@ -40,6 +40,10 @@ install:
         7z x -y cmake-3.8.0-win32-x86.zip -oC:\
       }
       $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
+  - cd C:\Tools\vcpkg
+  - git pull
+  - .\bootstrap-vcpkg.bat
+  - cd %APPVEYOR_BUILD_FOLDER%
 
 before_build:
   - ps: |
