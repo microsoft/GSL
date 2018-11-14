@@ -34,7 +34,7 @@ endif()
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
 target_compile_options(gsl_tests_config INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:
+    $<$<AND:$<PLATFORM_ID:Windows>,$<OR:$<CXX_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:Clang>>>:
         /EHsc
         /W4
         /WX
@@ -56,6 +56,11 @@ target_compile_options(gsl_tests_config INTERFACE
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+    >
+    $<$<CXX_COMPILER_ID:Clang>:
+        -Wno-c++98-compat
+        -Wno-c++98-compat-pedantic
+        -Wno-undef
     >
 )
 
@@ -122,7 +127,7 @@ endforeach(flag_var)
 # please try to keep entries ordered =)
 add_library(gsl_tests_config_noexcept INTERFACE)
 target_compile_options(gsl_tests_config_noexcept INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:
+    $<$<AND:$<PLATFORM_ID:Windows>,$<OR:$<CXX_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:Clang>>>:
         /D_HAS_EXCEPTIONS=0
         /wd4702
         /wd4577
@@ -131,8 +136,10 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
     >
     ${GSL_CPLUSPLUS_OPT}
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        $<$<NOT:$<AND:$<PLATFORM_ID:Windows>,$<CXX_COMPILER_ID:Clang>>>:
+            -fno-exceptions
+        >
         -fno-strict-aliasing
-        -fno-exceptions
         -Wall
         -Wcast-align
         -Wconversion
@@ -147,6 +154,11 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+    >
+    $<$<CXX_COMPILER_ID:Clang>:
+        -Wno-c++98-compat
+        -Wno-c++98-compat-pedantic
+        -Wno-undef
     >
 )
 
