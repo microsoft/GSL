@@ -49,7 +49,7 @@ install:
       ) {
         cd C:\Tools\vcpkg
         git pull
-        cd %APPVEYOR_BUILD_FOLDER%
+        cd "$env:APPVEYOR_BUILD_FOLDER"
       }
 
 before_build:
