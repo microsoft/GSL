@@ -24,7 +24,7 @@
 // make suppress attributes parse for some compilers
 // Hopefully temporary until suppresion standardization occurs
 //
-#if defined (_MSC_VER)
+#if defined(_MSC_VER)
 #define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
 #else
 #if defined(__clang__)
@@ -52,9 +52,9 @@
 // 2. GSL_THROW_ON_CONTRACT_VIOLATION: a gsl::fail_fast exception will be thrown
 // 3. GSL_UNENFORCED_ON_CONTRACT_VIOLATION: nothing happens
 //
-#if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) || defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION) ||  \
-      defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION))
-#define GSL_TERMINATE_ON_CONTRACT_VIOLATION
+#if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) || defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)     \
+    || defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION))
+#define GSL_THROW_ON_CONTRACT_VIOLATION
 #endif
 
 #define GSL_STRINGIFY_DETAIL(x) #x
@@ -86,20 +86,20 @@
 // GSL.assert: assertions
 //
 
-namespace gsl
-{
-struct fail_fast : public std::logic_error
-{
-    explicit fail_fast(char const* const message) : std::logic_error(message) {}
+namespace gsl {
+struct fail_fast : public std::logic_error {
+    explicit fail_fast(char const* const message)
+        : std::logic_error(message)
+    {
+    }
 };
 
-namespace details
-{
+namespace details {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
-    typedef void  (__cdecl *terminate_handler)();
-    
-    GSL_SUPPRESS(f.6) // NO-FORMAT: attribute
+    typedef void(__cdecl* terminate_handler)();
+
+    GSL_SUPPRESS(f .6) // NO-FORMAT: attribute
     [[noreturn]] inline void __cdecl default_terminate_handler()
     {
         __fastfail(RANGE_CHECKS_FAILURE);
@@ -124,16 +124,14 @@ namespace details
 
 #if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
-    template <typename Exception>
-    [[noreturn]] void throw_exception(Exception&&) noexcept
+    template <typename Exception>[[noreturn]] void throw_exception(Exception&&) noexcept
     {
         gsl::details::terminate();
     }
 
 #else
 
-    template <typename Exception>
-    [[noreturn]] void throw_exception(Exception&& exception)
+    template <typename Exception>[[noreturn]] void throw_exception(Exception&& exception)
     {
         throw std::forward<Exception>(exception);
     }
