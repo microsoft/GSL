@@ -193,7 +193,7 @@ TEST_CASE("TestNotNullostream")
 {
     ostream_helper<int>(17);
     ostream_helper<float>(21.5f);
-    ostream_helper<double>(3.4566e-7f);
+    ostream_helper<double>(3.4566e-7);
     ostream_helper<char>('c');
     ostream_helper<uint16_t>(0x0123u);
     ostream_helper<const char*>("cstring");
