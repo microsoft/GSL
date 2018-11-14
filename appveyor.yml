@@ -43,15 +43,13 @@ install:
       $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
       #
       # Until vcpkg has been updated.
+      # Note: vcpkg can also be removed from "cache".
       if ("$env:USE_TOOLSET=" -match "LLVM" -and
           (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
       ) {
-          cd C:\Tools\vcpkg
-          git pull
-          cd %APPVEYOR_BUILD_FOLDER%
-        }
-        else { echo "Vcpkg fix is no longer needed." }
-        # Note: vcpkg can also be removed from "cache".
+        cd C:\Tools\vcpkg
+        git pull
+        cd %APPVEYOR_BUILD_FOLDER%
       }
 
 before_build:
