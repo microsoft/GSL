@@ -19,19 +19,20 @@ environment:
     #- GSL_CXX_STANDARD: 17
     #  USE_TOOLSET: MSVC
     - GSL_CXX_STANDARD: 14
-      USE_TOOLSET: clang-cl
+      USE_TOOLSET: LLVM
     - GSL_CXX_STANDARD: 17
-      USE_TOOLSET: clang-cl
+      USE_TOOLSET: LLVM
 
 matrix:
     exclude:
     - image: Visual Studio 2015
       GSL_CXX_STANDARD: 17
     - image: Visual Studio 2015
-      USE_TOOLSET: clang-cl
+      USE_TOOLSET: LLVM
 
 cache:
   - C:\cmake-3.8.0-win32-x86
+  - C:\Tools\vcpkg
 
 install:
   - ps: |
@@ -40,16 +41,23 @@ install:
         7z x -y cmake-3.8.0-win32-x86.zip -oC:\
       }
       $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
-  - cd C:\Tools\vcpkg
-  - git pull
-  - .\bootstrap-vcpkg.bat
-  - cd %APPVEYOR_BUILD_FOLDER%
+      #
+      # Until vcpkg has been updated.
+      if ("$env:USE_TOOLSET=" -match "LLVM" -and
+          (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
+      ) {
+          cd C:\Tools\vcpkg
+          git pull
+          cd %APPVEYOR_BUILD_FOLDER%
+        }
+        else { echo "Vcpkg fix is no longer needed." }
+        # Note: vcpkg can also be removed from "cache".
+      }
 
 before_build:
   - ps: |
       mkdir build
       cd build
-
       if ("$env:APPVEYOR_JOB_NAME" -match "Image: Visual Studio 2015") {
           $env:generator="Visual Studio 14 2015"
       } else {
@@ -59,8 +67,9 @@ before_build:
           $env:generator="$env:generator Win64"
       }
       echo generator="$env:generator"
-      if ("$env:USE_TOOLSET=" -match "clang-cl") {
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER="C:\\Program Files\\LLVM\\bin\\clang-cl.exe"
+      if ("$env:USE_TOOLSET=" -match "LLVM") {
+          clang-cl --version
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER="clang-cl"
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
