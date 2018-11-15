@@ -67,7 +67,7 @@ before_build:
       echo generator="$env:generator"
       if ("$env:USE_TOOLSET=" -match "LLVM") {
           clang-cl --version
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER="clang-cl"
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl  -DCMAKE_LINKER=lld-link
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
