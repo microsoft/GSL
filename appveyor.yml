@@ -32,6 +32,7 @@ matrix:
 
 cache:
   - C:\cmake-3.8.0-win32-x86
+  - C:\Tools\vcpkg
 
 install:
   - ps: |
@@ -41,6 +42,15 @@ install:
           7z x -y cmake-3.8.0-win32-x86.zip -oC:\
         }
         $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
+      }
+      # Until vcpkg has been updated.
+      # Note: vcpkg can also be removed from "cache".
+      if ($env:USE_TOOLSET -eq "LLVM" -and
+          (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
+      ) {
+        cd C:\Tools\vcpkg
+        git pull
+        cd "$env:APPVEYOR_BUILD_FOLDER"
       }
 
 before_build:
@@ -57,19 +67,8 @@ before_build:
       }
       echo generator="$env:generator"
       if ($env:USE_TOOLSET -eq "LLVM") {
-          $LINKER = "lld-link"
-          # Workaround for lld bug with vcpkg integration
-          if ((Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020) {
-              if ($env:PLATFORM -eq "x64") {
-                  call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-              } else {
-                  call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
-              }
-              $LINKER = "link.exe" # MSVC-linker
-          } else { echo "==> vcpkg has been updated, please remove workaround from appvayor.yml." }
-          # /Workaround
           clang-cl --version
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_LINKER=$LINKER
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl  -DCMAKE_LINKER=lld-link
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
