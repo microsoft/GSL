@@ -44,7 +44,7 @@ install:
       #
       # Until vcpkg has been updated.
       # Note: vcpkg can also be removed from "cache".
-      if ("$env:USE_TOOLSET=" -match "LLVM" -and
+      if ($env:USE_TOOLSET -eq "LLVM" -and
           (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
       ) {
         cd C:\Tools\vcpkg
@@ -65,7 +65,7 @@ before_build:
           $env:generator="$env:generator Win64"
       }
       echo generator="$env:generator"
-      if ("$env:USE_TOOLSET=" -match "LLVM") {
+      if ($env:USE_TOOLSET -eq "LLVM") {
           clang-cl --version
           cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl  -DCMAKE_LINKER=lld-link
       }
