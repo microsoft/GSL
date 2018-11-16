@@ -60,7 +60,10 @@ before_build:
           $LINKER = "lld-link"
           # Workaround for lld bug with vcpkg integration
           if ((Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020) {
-              $LINKER = "link" # MSVC-linker
+              echo "Fallback to MSVC linker."
+              cmd /c '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %PLATFORM% && PATH > path.txt'
+              $env:PATH = Get-Content .\path.txt
+              $LINKER = "link"
           } else { echo "==> vcpkg has been updated, please remove the workaround from appvayor.yml." }
           # /Workaround
           clang-cl --version
