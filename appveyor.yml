@@ -14,10 +14,10 @@ image:
 
 environment:
   matrix:
-    #- GSL_CXX_STANDARD: 14
-    #  USE_TOOLSET: MSVC
-    #- GSL_CXX_STANDARD: 17
-    #  USE_TOOLSET: MSVC
+    - GSL_CXX_STANDARD: 14
+      USE_TOOLSET: MSVC
+    - GSL_CXX_STANDARD: 17
+      USE_TOOLSET: MSVC
     - GSL_CXX_STANDARD: 14
       USE_TOOLSET: LLVM
     - GSL_CXX_STANDARD: 17
