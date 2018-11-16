@@ -55,9 +55,18 @@ struct DerivedClass : BaseClass
 };
 struct AddressOverloaded
 {
+#if (__cplusplus > 201402L)
+    [[maybe_unused]]
+#elif defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-member-function"
+#endif
     AddressOverloaded operator&() const { return {}; }
+#if !(__cplusplus > 201402L) && defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 };
-}
+} // namespace
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("default_constructor")
