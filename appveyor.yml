@@ -57,7 +57,7 @@ before_build:
       }
       echo generator="$env:generator"
       if ($env:USE_TOOLSET -eq "LLVM") {
-          $COMPILER = "C:\Program Files\LLVM\bin\clang-cl.exe"
+          $COMPILER = "C:\\Program Files\\LLVM\\bin\\clang-cl.exe"
           $LINKER = "lld-link"
           # Workaround for lld bug with vcpkg integration
           if ((Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020) {
