@@ -139,7 +139,7 @@ namespace details
         throw std::forward<Exception>(exception);
     }
 
-#endif
+#endif // GSL_TERMINATE_ON_CONTRACT_VIOLATION
 
 } // namespace details
 } // namespace gsl
@@ -160,7 +160,7 @@ namespace details
 
 #define GSL_CONTRACT_CHECK(type, cond) GSL_ASSUME(cond)
 
-#endif
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 #define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
 #define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
