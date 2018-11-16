@@ -27,7 +27,7 @@
 #if defined(__clang__)
 #define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
 #else
-#if defined (_MSC_VER)
+#if defined(_MSC_VER)
 #define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
 #else
 #define GSL_SUPPRESS(x)
@@ -98,7 +98,7 @@ namespace details
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
     typedef void  (__cdecl *terminate_handler)();
-    
+
     GSL_SUPPRESS(f.6) // NO-FORMAT: attribute
     [[noreturn]] inline void __cdecl default_terminate_handler()
     {
@@ -113,19 +113,20 @@ namespace details
 
 #endif
 
-    [[noreturn]] inline void terminate() noexcept
-    {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
-        (*gsl::details::get_terminate_handler())();
+    inline void terminate() noexcept { (*gsl::details::get_terminate_handler())(); }
 #else
-        std::terminate();
+    [[noreturn]] inline void terminate() noexcept { std::terminate(); }
 #endif
-    }
 
 #if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
     template <typename Exception>
+#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
+    void throw_exception(Exception&&) noexcept
+#else
     [[noreturn]] void throw_exception(Exception&&) noexcept
+#endif
     {
         gsl::details::terminate();
     }
