@@ -18,8 +18,8 @@ environment:
     #  USE_TOOLSET: MSVC
     #- GSL_CXX_STANDARD: 17
     #  USE_TOOLSET: MSVC
-    #- GSL_CXX_STANDARD: 14
-    #  USE_TOOLSET: LLVM
+    - GSL_CXX_STANDARD: 14
+      USE_TOOLSET: LLVM
     - GSL_CXX_STANDARD: 17
       USE_TOOLSET: LLVM
 
@@ -32,6 +32,7 @@ matrix:
 
 cache:
   - C:\cmake-3.8.0-win32-x86
+  - C:\Tools\vcpkg
 
 install:
   - ps: |
@@ -41,6 +42,15 @@ install:
           7z x -y cmake-3.8.0-win32-x86.zip -oC:\
         }
         $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
+      }
+      # Until vcpkg has been updated.
+      # Note: vcpkg can also be removed from "cache".
+      if ($env:USE_TOOLSET -eq "LLVM" -and
+          (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
+      ) {
+        cd C:\Tools\vcpkg
+        git pull
+        cd "$env:APPVEYOR_BUILD_FOLDER"
       }
 
 before_build:
@@ -57,19 +67,8 @@ before_build:
       }
       echo generator="$env:generator"
       if ($env:USE_TOOLSET -eq "LLVM") {
-          $COMPILER = "C:\\Program Files\\LLVM\\bin\\clang-cl.exe"
-          $LINKER = "lld-link"
-          # Workaround for lld bug with vcpkg integration
-          if ((Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020) {
-              echo "Fallback to MSVC linker."
-              cmd /c '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %PLATFORM% && PATH > path.txt'
-              $env:PATH = (Get-Content .\path.txt).Remove(0,5) # "PATH="
-              $LINKER = "link.exe"
-          } else { echo "==> vcpkg has been updated, please remove the workaround from appvayor.yml." }
-          # /Workaround
           clang-cl --version
-          echo $env:PATH
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER="$COMPILER" -DCMAKE_LINKER="$LINKER"
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl  -DCMAKE_LINKER=lld-link
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
