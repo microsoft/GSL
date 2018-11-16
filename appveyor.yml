@@ -32,7 +32,6 @@ matrix:
 
 cache:
   - C:\cmake-3.8.0-win32-x86
-  - C:\Tools\vcpkg
 
 install:
   - ps: |
@@ -43,15 +42,16 @@ install:
         }
         $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
       }
-      # Until vcpkg has been updated.
-      # Note: vcpkg can also be removed from "cache".
+      # Workaround for lld bug with vcpkg integration
       if ($env:USE_TOOLSET -eq "LLVM" -and
           (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
       ) {
+        echo "Updating vcpkg..."
         cd C:\Tools\vcpkg
-        git pull
+        git pull > $NULL
         cd "$env:APPVEYOR_BUILD_FOLDER"
-      }
+      } else { echo "==> vcpkg has been updated, please remove the workaround from appvayor.yml." }
+      # /Workaround
 
 before_build:
   - ps: |
@@ -68,7 +68,7 @@ before_build:
       echo generator="$env:generator"
       if ($env:USE_TOOLSET -eq "LLVM") {
           clang-cl --version
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl  -DCMAKE_LINKER=lld-link
+          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_LINKER=lld-link
       }
       else {
           cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
