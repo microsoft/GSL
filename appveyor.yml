@@ -50,7 +50,7 @@ install:
         cd C:\Tools\vcpkg
         git pull > $NULL
         cd "$env:APPVEYOR_BUILD_FOLDER"
-      } else { echo "==> vcpkg has been updated, please remove the workaround from appvayor.yml." }
+      } else { echo "==> vcpkg has been updated, please remove the workaround from appveyor.yml." }
       # /Workaround
 
 before_build:
