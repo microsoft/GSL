@@ -54,7 +54,6 @@ struct DerivedClass : BaseClass
 };
 struct AddressOverloaded
 {
-    AddressOverloaded operator&() const { return {}; }
 };
 }
 
