@@ -84,8 +84,15 @@ before_build:
       }
       $env:ARCHITECTURE = $env:PLATFORM
       if ("$env:USE_TOOLSET" -eq "LLVM") {
-          $env:CC  = "clang-cl"
-          $env:CXX = "clang-cl"
+        $env:CC  = "clang-cl"
+        $env:CXX = "clang-cl"
+        if ("$env:PLATFORM" -eq "x86") {
+          $env:CFLAGS   = "-m32";
+          $env:CXXFLAGS = "-m32";
+        } else {
+          $env:CFLAGS   = "-m64";
+          $env:CXXFLAGS = "-m64";
+        }
       } elseif ("$env:USE_TOOLSET" -ne "MSVC") {
         Write-Warning "Configuration error: Invalid value for 'USE_TOOLSET'. Assume MSVC"
       }
