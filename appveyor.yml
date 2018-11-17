@@ -13,6 +13,11 @@ image:
   - Visual Studio 2017
 
 environment:
+  NINJA_TAG: v1.8.2
+  NINJA_SHA512: 9B9CE248240665FCD6404B989F3B3C27ED9682838225E6DC9B67B551774F251E4FF8A207504F941E7C811E7A8BE1945E7BCB94472A335EF15E23A0200A32E6D5
+  NINJA_PATH: C:\Tools\ninja\ninja-%NINJA_TAG%
+  VCVAR2015: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+  VCVAR2017: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat'
   matrix:
     - GSL_CXX_STANDARD: 14
       USE_TOOLSET: MSVC
@@ -32,9 +37,21 @@ matrix:
 
 cache:
   - C:\cmake-3.8.0-win32-x86
+  - C:\Tools\ninja
 
 install:
   - ps: |
+      if (![IO.File]::Exists("$env:NINJA_PATH\ninja.exe")) {
+        Start-FileDownload `
+          "https://github.com/ninja-build/ninja/releases/download/$env:NINJA_TAG/ninja-win.zip"
+        $hash = (Get-FileHash ninja-win.zip -Algorithm SHA512).Hash
+        if ($env:NINJA_SHA512 -eq $hash) {
+          7z e -y ninja-win.zip -o"$env:NINJA_PATH"
+        } else { Write-Warning "Ninja download hash changed!"; Write-Output "$hash" }
+      }
+      if ([IO.File]::Exists("$env:NINJA_PATH\ninja.exe")) {
+        $env:PATH = "$env:NINJA_PATH;$env:PATH"
+      } else { Write-Warning "Failed to find ninja.exe in expected location." }
       if ($env:USE_TOOLSET -ne "LLVM") {
         if (![IO.File]::Exists("C:\cmake-3.8.0-win32-x86\bin\cmake.exe")) {
           Start-FileDownload 'https://cmake.org/files/v3.8/cmake-3.8.0-win32-x86.zip'
@@ -52,7 +69,7 @@ install:
           git pull --quiet
           cd "$env:APPVEYOR_BUILD_FOLDER"
         } else {
-          echo "==> vcpkg has been updated, please remove the workaround from appveyor.yml."
+          Write-Warning "vcpkg has been updated, please remove the workaround from appveyor.yml."
         }
       }
 
@@ -60,25 +77,23 @@ before_build:
   - ps: |
       mkdir build > $NULL
       cd build
-      if ("$env:APPVEYOR_JOB_NAME" -match "Image: Visual Studio 2015") {
-          $env:generator="Visual Studio 14 2015"
+      if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
+        $env:VCVARSALL = $env:VCVAR2015
       } else {
-          $env:generator="Visual Studio 15 2017"
+        $env:VCVARSALL = $env:VCVAR2017
       }
-      if ($env:PLATFORM -eq "x64") {
-          $env:generator="$env:generator Win64"
-      }
-      echo generator="$env:generator"
-      if ($env:USE_TOOLSET -eq "LLVM") {
-          clang-cl --version
-          cmake .. -G "$env:generator" -T llvm -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_LINKER=lld-link
-      }
-      else {
-          cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
+      $env:ARCHITECTURE = $env:PLATFORM
+      if ("$env:USE_TOOLSET" -eq "LLVM") {
+          $env:CC  = "clang-cl"
+          $env:CXX = "clang-cl"
+      } elseif ("$env:USE_TOOLSET" -ne "MSVC") {
+        Write-Warning "Configuration error: Invalid value for 'USE_TOOLSET'. Assume MSVC"
       }
 
 build_script:
-  - cmake --build . --config %CONFIGURATION% -- /m /v:minimal
+  - call "%VCVARSALL%" %ARCHITECTURE%
+  - cmake .. -G "Ninja" -DGSL_CXX_STANDARD="%GSL_CXX_STANDARD%"
+  - cmake --build . --config %CONFIGURATION%
 
 test_script:
   - ctest -j2
