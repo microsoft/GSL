@@ -45,7 +45,7 @@ install:
       # Workaround for lld bug with vcpkg integration
       if ($env:USE_TOOLSET -eq "LLVM") {
         if (
-          Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
+          (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
         ) {
           echo "Updating vcpkg..."
           cd C:\Tools\vcpkg
