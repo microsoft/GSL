@@ -58,7 +58,7 @@ install:
 
 before_build:
   - ps: |
-      mkdir build
+      mkdir build > $NULL
       cd build
       if ("$env:APPVEYOR_JOB_NAME" -match "Image: Visual Studio 2015") {
           $env:generator="Visual Studio 14 2015"
