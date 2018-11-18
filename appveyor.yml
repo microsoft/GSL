@@ -59,19 +59,6 @@ install:
         }
         $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
       }
-      # Workaround for lld bug with vcpkg integration
-      if ($env:USE_TOOLSET -eq "LLVM") {
-        if (
-          (Get-Content C:\Tools\vcpkg\toolsrc\VERSION.txt).Replace('.','').Trim('"') -lt 20181020
-        ) {
-          echo "Updating vcpkg..."
-          cd C:\Tools\vcpkg
-          git pull --quiet
-          cd "$env:APPVEYOR_BUILD_FOLDER"
-        } else {
-          Write-Warning "vcpkg has been updated, please remove the workaround from appveyor.yml."
-        }
-      }
 
 before_build:
   - ps: |
@@ -93,8 +80,6 @@ before_build:
           $env:CFLAGS   = "-m64";
           $env:CXXFLAGS = "-m64";
         }
-      } elseif ("$env:USE_TOOLSET" -ne "MSVC") {
-        Write-Warning "Configuration error: Invalid value for 'USE_TOOLSET'. Assume MSVC"
       }
 
 build_script:
