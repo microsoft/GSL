@@ -54,7 +54,6 @@
 // without needing an out-of-line definition
 #if !(defined(__cplusplus) && (__cplusplus >= 201703L))
 #define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
-#define GSL_USE_IF_CONSTEXPR_WORKAROUND
 #endif // !(defined(__cplusplus) && (__cplusplus >= 201703L))
 
 // GCC 7 does not like the signed unsigned missmatch (size_t ptrdiff_t)
@@ -557,10 +556,10 @@ private:
         // wrap around to a value always greater than size when casted.
 
         // check if we have enough space to wrap around
-#if defined(GSL_USE_IF_CONSTEXPR_WORKAROUND)
-        if (sizeof(index_type) <= sizeof(size_t))
-#else
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
         if constexpr (sizeof(index_type) <= sizeof(size_t))
+#else
+        if (sizeof(index_type) <= sizeof(size_t))
 #endif
         {
             return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
