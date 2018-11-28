@@ -412,6 +412,7 @@ namespace details
             return totalSize() / this->Base::totalSize();
         }
 
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)

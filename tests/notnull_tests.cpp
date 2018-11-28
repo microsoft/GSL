@@ -25,7 +25,7 @@
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
-#include <gsl/pointers>       // for not_null, operator<, operator<=, operator>
+#include <gsl/pointers> // for not_null, operator<, operator<=, operator>
 
 #include <algorithm> // for addressof
 #include <memory>    // for shared_ptr, make_shared, operator<, opera...
@@ -128,23 +128,19 @@ struct NonCopyableNonMovable
 };
 
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-bool helper(not_null<int*> p)
-{
-    return *p == 12;
-}
-
+bool helper(not_null<int*> p) { return *p == 12; }
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-bool helper_const(not_null<const int*> p)
-{
-    return *p == 12;
-}
+bool helper_const(not_null<const int*> p) { return *p == 12; }
+
+int* return_pointer() { return nullptr; }
+const int* return_pointer_const() { return nullptr; }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestNotNullConstructors")
 {
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
-        not_null<int*> p = nullptr;         // yay...does not compile!
+        not_null<int*> p = nullptr;          // yay...does not compile!
         not_null<std::vector<char>*> p1 = 0; // yay...does not compile!
         not_null<int*> p2;                   // yay...does not compile!
         std::unique_ptr<int> up = std::make_unique<int>(120);
@@ -158,6 +154,7 @@ TEST_CASE("TestNotNullConstructors")
     }
 
     {
+        // from shared pointer
         int i = 12;
         auto rp = RefCounted<int>(&i);
         not_null<int*> p(rp);
@@ -171,6 +168,7 @@ TEST_CASE("TestNotNullConstructors")
     }
 
     {
+        // from pointer to local
         int t = 42;
 
         not_null<int*> x = &t;
@@ -181,10 +179,15 @@ TEST_CASE("TestNotNullConstructors")
     }
 
     {
+        // from raw pointer
+        // from not_null pointer
+
         int t = 42;
         int* p = &t;
 
-        not_null<int*> x{p};
+        not_null<int*> x = p;
+        helper(p);
+        helper_const(p);
         helper(x);
         helper_const(x);
 
@@ -192,16 +195,21 @@ TEST_CASE("TestNotNullConstructors")
     }
 
     {
+        // from raw const pointer
+        // from not_null const pointer
+
         int t = 42;
         const int* cp = &t;
 
-        not_null<const int*> x{cp};
+        not_null<const int*> x = cp;
+        helper_const(cp);
         helper_const(x);
 
         CHECK(*x == 42);
     }
 
     {
+        // from not_null const pointer, using auto
         int t = 42;
         const int* cp = &t;
 
@@ -209,9 +217,15 @@ TEST_CASE("TestNotNullConstructors")
 
         CHECK(*x == 42);
     }
+
+    {
+        // from returned pointer
+        helper(return_pointer());
+        helper_const(return_pointer_const());
+    }
 }
 
-template<typename T>
+template <typename T>
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 void ostream_helper(T v)
 {
@@ -417,6 +431,17 @@ TEST_CASE("TestNotNullConstructorTypeDeduction")
     }
 
     {
+        int i = 42;
+        int* p = &i;
+
+        not_null x{p};
+        helper(not_null{p});
+        helper_const(not_null{p});
+
+        CHECK(*x == 42);
+    }
+
+    {
         auto workaround_macro = []() {
             int* p1 = nullptr;
             const not_null x{p1};
@@ -506,5 +531,5 @@ TEST_CASE("TestMakeNotNull")
 #endif
 }
 
-static_assert(std::is_nothrow_move_constructible<not_null<void *>>::value, "not_null must be no-throw move constructible");
-
+static_assert(std::is_nothrow_move_constructible<not_null<void*>>::value,
+              "not_null must be no-throw move constructible");

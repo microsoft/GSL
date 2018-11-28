@@ -132,7 +132,7 @@ TEST_CASE("TestStrictNotNull")
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
-GSL_SUPPRESS(con .4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
 {
     {
@@ -141,6 +141,17 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
         strict_not_null x{&i};
         helper(strict_not_null{&i});
         helper_const(strict_not_null{&i});
+
+        CHECK(*x == 42);
+    }
+
+    {
+        int i = 42;
+        int* p = &i;
+
+        strict_not_null x{p};
+        helper(strict_not_null{p});
+        helper_const(strict_not_null{p});
 
         CHECK(*x == 42);
     }
