@@ -544,7 +544,7 @@ public:
 #endif // _MSC_VER
 
 private:
-    static bool CheckRange(index_type idx, index_type size)
+    static bool CheckRange(index_type idx, index_type size) noexcept
     {
         // Optimization:
         //
@@ -556,7 +556,11 @@ private:
         // wrap around to a value always greater than size when casted.
 
         // check if we have enough space to wrap around
+#if defined(__cpp_if_constexpr)
+        if constexpr (sizeof(index_type) <= sizeof(size_t))
+#else
         if (sizeof(index_type) <= sizeof(size_t))
+#endif
         {
             return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
         }
