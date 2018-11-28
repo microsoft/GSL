@@ -544,7 +544,7 @@ public:
 #endif // _MSC_VER
 
 private:
-    static bool CheckRange(index_type idx, index_type size)
+    static bool CheckRange(index_type idx, index_type size) noexcept
     {
         // Optimization:
         //
