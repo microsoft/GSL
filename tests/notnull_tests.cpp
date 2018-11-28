@@ -220,8 +220,9 @@ TEST_CASE("TestNotNullConstructors")
 
     {
         // from returned pointer
-        helper(return_pointer());
-        helper_const(return_pointer_const());
+
+        CHECK_THROWS_AS(helper(return_pointer()), fail_fast);
+        CHECK_THROWS_AS(helper_const(return_pointer()), fail_fast);
     }
 }
 
