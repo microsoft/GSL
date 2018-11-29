@@ -62,8 +62,6 @@ install:
 
 before_build:
   - ps: |
-      mkdir build > $NULL
-      cd build
       if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
         $env:VCVARSALL = $env:VCVAR2015
       } else {
@@ -81,10 +79,12 @@ before_build:
           $env:CXXFLAGS = "-m64";
         }
       }
-
-build_script:
+  - mkdir build
+  - cd build
   - call "%VCVARSALL%" %ARCHITECTURE%
   - cmake .. -G "Ninja" -DGSL_CXX_STANDARD="%GSL_CXX_STANDARD%"
+
+build_script:
   - cmake --build . --config %CONFIGURATION%
 
 test_script:
