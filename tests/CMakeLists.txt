@@ -42,6 +42,7 @@ if(MSVC) # MSVC or simulating MSVC
         $<$<CXX_COMPILER_ID:Clang>:
           -Wcast-align
           -Wconversion
+          -Wmissing-noreturn
           -Wno-missing-braces
           -Wno-unknown-attributes
           -Wnon-virtual-dtor
@@ -145,6 +146,7 @@ if(MSVC) # MSVC or simulating MSVC
         $<$<CXX_COMPILER_ID:Clang>:
           -Wcast-align
           -Wconversion
+          -Wmissing-noreturn
           -Wno-missing-braces
           -Wno-unknown-attributes
           -Wnon-virtual-dtor
