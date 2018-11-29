@@ -33,37 +33,51 @@ endif()
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
-target_compile_options(gsl_tests_config INTERFACE
-    $<$<AND:$<PLATFORM_ID:Windows>,$<OR:$<CXX_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:Clang>>>:
+if(MSVC) # MSVC or simulating MSVC
+    target_compile_options(gsl_tests_config INTERFACE
+        ${GSL_CPLUSPLUS_OPT}
         /EHsc
         /W4
         /WX
-    >
-    ${GSL_CPLUSPLUS_OPT}
-    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
-        -fno-strict-aliasing
-        -Wall
-        -Wcast-align
-        -Wconversion
-        -Wctor-dtor-privacy
-        -Werror
-        -Wextra
-        -Wno-missing-braces
-        -Wno-unknown-attributes
-        -Wnon-virtual-dtor
-        -Wold-style-cast
-        -Woverloaded-virtual
-        -Wpedantic
-        -Wshadow
-        -Wsign-conversion
-    >
-    $<$<CXX_COMPILER_ID:Clang>:
-        -Wno-c++98-compat
-        -Wno-c++98-compat-pedantic
-        -Wno-missing-prototypes
-        -Wno-undef
-    >
-)
+        $<$<CXX_COMPILER_ID:Clang>:
+          -fno-strict-aliasing
+          -Wcast-align
+          -Wconversion
+          -Wctor-dtor-privacy
+          -Wno-missing-braces
+          -Wno-unknown-attributes
+          -Wnon-virtual-dtor
+          -Wold-style-cast
+          -Woverloaded-virtual
+          -Wpedantic
+          -Wshadow
+          -Wsign-conversion
+
+          -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
+          -Wno-undef
+        >
+    )
+else()
+    target_compile_options(gsl_tests_config INTERFACE
+          -fno-strict-aliasing
+          -Wall
+          -Wcast-align
+          -Wconversion
+          -Wctor-dtor-privacy
+          -Werror
+          -Wextra
+          -Wno-missing-braces
+          -Wno-unknown-attributes
+          -Wnon-virtual-dtor
+          -Wold-style-cast
+          -Woverloaded-virtual
+          -Wpedantic
+          -Wshadow
+          -Wsign-conversion
+    )
+endif(MSVC)
 
 # for tests to find the catch header
 target_include_directories(gsl_tests_config INTERFACE
@@ -127,19 +141,39 @@ endforeach(flag_var)
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
 add_library(gsl_tests_config_noexcept INTERFACE)
-target_compile_options(gsl_tests_config_noexcept INTERFACE
-    $<$<AND:$<PLATFORM_ID:Windows>,$<OR:$<CXX_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:Clang>>>:
+if(MSVC) # MSVC or simulating MSVC
+    target_compile_options(gsl_tests_config_noexcept INTERFACE
+        ${GSL_CPLUSPLUS_OPT}
         /D_HAS_EXCEPTIONS=0
-        /wd4702
-        /wd4577
         /W4
         /WX
-    >
-    ${GSL_CPLUSPLUS_OPT}
-    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
-        $<$<NOT:$<AND:$<PLATFORM_ID:Windows>,$<CXX_COMPILER_ID:Clang>>>:
-            -fno-exceptions
+        $<$<CXX_COMPILER_ID:MSVC>:
+          /wd4577
+          /wd4702
         >
+        $<$<CXX_COMPILER_ID:Clang>:
+          -fno-strict-aliasing
+          -Wcast-align
+          -Wconversion
+          -Wctor-dtor-privacy
+          -Wno-missing-braces
+          -Wno-unknown-attributes
+          -Wnon-virtual-dtor
+          -Wold-style-cast
+          -Woverloaded-virtual
+          -Wpedantic
+          -Wshadow
+          -Wsign-conversion
+
+          -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
+          -Wno-undef
+        >
+    )
+else()
+    target_compile_options(gsl_tests_config_noexcept INTERFACE
+        -fno-exceptions
         -fno-strict-aliasing
         -Wall
         -Wcast-align
@@ -155,14 +189,8 @@ target_compile_options(gsl_tests_config_noexcept INTERFACE
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-    >
-    $<$<CXX_COMPILER_ID:Clang>:
-        -Wno-c++98-compat
-        -Wno-c++98-compat-pedantic
-        -Wno-missing-prototypes
-        -Wno-undef
-    >
-)
+    )
+endif(MSVC)
 
 # set definitions for tests
 target_compile_definitions(gsl_tests_config_noexcept INTERFACE
