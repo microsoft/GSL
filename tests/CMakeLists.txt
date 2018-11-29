@@ -52,11 +52,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Wpedantic
           -Wshadow
           -Wsign-conversion
-
-          -Wno-c++98-compat
-          -Wno-c++98-compat-pedantic
-          -Wno-missing-prototypes
-          -Wno-undef
         >
     )
 else()
@@ -164,11 +159,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Wpedantic
           -Wshadow
           -Wsign-conversion
-
-          -Wno-c++98-compat
-          -Wno-c++98-compat-pedantic
-          -Wno-missing-prototypes
-          -Wno-undef
         >
     )
 else()
