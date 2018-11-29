@@ -46,7 +46,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-unknown-attributes
           -Wnon-virtual-dtor
           -Wold-style-cast
-          -Woverloaded-virtual
           -Wpedantic
           -Wshadow
         >
@@ -150,7 +149,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-unknown-attributes
           -Wnon-virtual-dtor
           -Wold-style-cast
-          -Woverloaded-virtual
           -Wpedantic
           -Wshadow
         >
