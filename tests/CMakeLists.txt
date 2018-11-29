@@ -50,7 +50,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Woverloaded-virtual
           -Wpedantic
           -Wshadow
-          -Wsign-conversion
         >
     )
 else()
@@ -156,7 +155,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Woverloaded-virtual
           -Wpedantic
           -Wshadow
-          -Wsign-conversion
         >
     )
 else()
