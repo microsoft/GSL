@@ -84,7 +84,11 @@ before_build:
         if ("$env:PLATFORM" -eq "x64") {
           $Generator = "$Generator Win64"
         }
-        $env:CMakeGenFlags = "-G `"$Generator`" -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
+        if ("$env:USE_TOOLSET" -eq "LLVM") {
+          $env:CMakeGenFlags = "-G `"$Generator`" -T llvm -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
+        } else {
+          $env:CMakeGenFlags = "-G `"$Generator`" -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
+        }
       }
       if ("$env:USE_TOOLSET" -eq "LLVM") {
         $env:CC  = "clang-cl"
