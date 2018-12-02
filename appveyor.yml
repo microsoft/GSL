@@ -21,12 +21,16 @@ environment:
   matrix:
     - GSL_CXX_STANDARD: 14
       USE_TOOLSET: MSVC
+      USE_GENERATOR: MSBuild
     - GSL_CXX_STANDARD: 17
       USE_TOOLSET: MSVC
+      USE_GENERATOR: MSBuild
     - GSL_CXX_STANDARD: 14
       USE_TOOLSET: LLVM
+      USE_GENERATOR: Ninja
     - GSL_CXX_STANDARD: 17
       USE_TOOLSET: LLVM
+      USE_GENERATOR: Ninja
 
 matrix:
     exclude:
@@ -62,12 +66,25 @@ install:
 
 before_build:
   - ps: |
-      if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
-        $env:VCVARSALL = $env:VCVAR2015
+      if ("$env:USE_GENERATOR" -eq "Ninja") {
+        $env:Generator = 'Ninja'
+        $env:GeneratorFlags = "-k 10"
+        if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
+          $env:VCVARSALL = $env:VCVAR2015
+        } else {
+          $env:VCVARSALL = $env:VCVAR2017
+        }
       } else {
-        $env:VCVARSALL = $env:VCVAR2017
+        $env:GeneratorFlags = "/m /v:minimal"
+        if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
+          $env:Generator = 'Visual Studio 14 2015'
+        } else {
+          $env:Generator = 'Visual Studio 15 2017'
+        }
+        if ("$env:PLATFORM" -eq "x64") {
+          $env:Generator = "$env:Generator Win64"
+        }
       }
-      $env:ARCHITECTURE = $env:PLATFORM
       if ("$env:USE_TOOLSET" -eq "LLVM") {
         $env:CC  = "clang-cl"
         $env:CXX = "clang-cl"
@@ -79,13 +96,14 @@ before_build:
           $env:CXXFLAGS = "-m64";
         }
       }
+      $env:ARCHITECTURE = $env:PLATFORM
   - mkdir build
   - cd build
-  - call "%VCVARSALL%" %ARCHITECTURE%
-  - cmake .. -G "Ninja" -DGSL_CXX_STANDARD="%GSL_CXX_STANDARD%"
+  - if %USE_GENERATOR%==Ninja (call "%VCVARSALL%" %ARCHITECTURE%)
+  - cmake .. -G "%Generator%" -DGSL_CXX_STANDARD="%GSL_CXX_STANDARD%"
 
 build_script:
-  - cmake --build . --config %CONFIGURATION%
+  - cmake --build . --config %CONFIGURATION% -- %GeneratorFlags%
 
 test_script:
   - ctest -j2
