@@ -38,6 +38,7 @@ matrix:
       GSL_CXX_STANDARD: 17
     - image: Visual Studio 2015
       USE_TOOLSET: LLVM
+      USE_GENERATOR: MSBuild
 
 cache:
   - C:\cmake-3.8.0-win32-x86
