@@ -68,10 +68,11 @@ before_build:
   - ps: |
       if ("$env:USE_GENERATOR" -eq "Ninja") {
         $GeneratorFlags = '-k 10'
+        $Architecture = $env:PLATFORM
         if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
-          $env:VCVARSALL = $env:VCVAR2015
+          $env:VCVARSALL = "`"$env:VCVAR2015`" $Architecture"
         } else {
-          $env:VCVARSALL = $env:VCVAR2017
+          $env:VCVARSALL = "`"$env:VCVAR2017`" $Architecture"
         }
         $env:CMakeGenFlags = "-G Ninja -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
       } else {
@@ -81,13 +82,12 @@ before_build:
         } else {
           $Generator = 'Visual Studio 15 2017'
         }
-        if ("$env:PLATFORM" -eq "x64") {
-          $Generator = "$Generator Win64"
-        }
+        if ("$env:PLATFORM" -eq "x86") { $Architecture = "Win32"}
+        else { $Architecture = "x64" }
         if ("$env:USE_TOOLSET" -eq "LLVM") {
-          $env:CMakeGenFlags = "-G `"$Generator`" -T llvm -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
+          $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -T llvm -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
         } else {
-          $env:CMakeGenFlags = "-G `"$Generator`" -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
+          $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
         }
       }
       if ("$env:USE_TOOLSET" -eq "LLVM") {
@@ -101,12 +101,10 @@ before_build:
           $env:CXXFLAGS = "-m64";
         }
       }
-      $env:ARCHITECTURE = $env:PLATFORM
       $env:CMakeBuildFlags = "--config $env:CONFIGURATION -- $GeneratorFlags"
-
   - mkdir build
   - cd build
-  - if %USE_GENERATOR%==Ninja (call "%VCVARSALL%" %ARCHITECTURE%)
+  - if %USE_GENERATOR%==Ninja (call %VCVARSALL%)
   - echo %CMakeGenFlags%
   - cmake .. %CMakeGenFlags%
 
