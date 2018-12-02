@@ -31,7 +31,7 @@
 #include <utility>
 #include <memory> // for std::addressof
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
 
 // turn off some warnings that are noisy about our Expects statements
@@ -776,7 +776,7 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
 
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 #undef constexpr
 #pragma pop_macro("constexpr")

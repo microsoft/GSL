@@ -37,7 +37,7 @@
 #include <type_traits> // for enable_if_t, remove_cv_t, is_same, is_co...
 #include <utility>
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 
 // turn off some warnings that are noisy about our Expects statements
 #pragma warning(push)
@@ -2272,7 +2272,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 
 #undef constexpr

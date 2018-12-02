@@ -20,7 +20,7 @@
 #include <gsl/gsl_assert>  // for Ensures, Expects
 #include <gsl/pointers> // for gsl::not_null
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
@@ -120,7 +120,7 @@ struct hash<gsl_helpers::sloppy_not_null<T>>
 
 } // namespace std
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
 #undef constexpr
 #pragma pop_macro("constexpr")
 
