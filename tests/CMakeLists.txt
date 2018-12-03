@@ -44,6 +44,7 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-braces
+          -Wno-missing-prototypes
           -Wno-unknown-attributes
         >
     )
@@ -143,6 +144,7 @@ if(MSVC) # MSVC or simulating MSVC
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
           -Wno-unknown-attributes
         >
     )
