@@ -70,6 +70,7 @@ else()
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
         >
     )
 endif(MSVC)
@@ -175,6 +176,7 @@ else()
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
         >
     )
 endif(MSVC)
