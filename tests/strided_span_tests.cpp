@@ -117,7 +117,7 @@ TEST_CASE("strided_span_constructors")
             CHECK(sav.bounds().strides() == multi_span_index<1>{1});
             CHECK(sav[1] == 2);
 
-#if _MSC_VER > 1800
+#if defined(_MSC_VER) && _MSC_VER > 1800
             // strided_span<const int, 1> sav_c{ {src}, {2, 1} };
             strided_span<const int, 1> sav_c{multi_span<const int>{src},
                                              strided_bounds<1>{2, 1}};
@@ -129,7 +129,7 @@ TEST_CASE("strided_span_constructors")
             CHECK(sav_c.bounds().strides() == multi_span_index<1>{1});
             CHECK(sav_c[1] == 2);
 
-#if _MSC_VER > 1800
+#if defined(_MSC_VER) && _MSC_VER > 1800
             strided_span<volatile int, 1> sav_v{src, {2, 1}};
 #else
             strided_span<volatile int, 1> sav_v{multi_span<volatile int>{src},
@@ -139,7 +139,7 @@ TEST_CASE("strided_span_constructors")
             CHECK(sav_v.bounds().strides() == multi_span_index<1>{1});
             CHECK(sav_v[1] == 2);
 
-#if _MSC_VER > 1800
+#if defined(_MSC_VER) && _MSC_VER > 1800
             strided_span<const volatile int, 1> sav_cv{src, {2, 1}};
 #else
             strided_span<const volatile int, 1> sav_cv{multi_span<const volatile int>{src},
@@ -159,7 +159,7 @@ TEST_CASE("strided_span_constructors")
             CHECK(sav_c.bounds().strides() == multi_span_index<1>{1});
             CHECK(sav_c[1] == 2);
 
-#if _MSC_VER > 1800
+#if defined(_MSC_VER) && _MSC_VER > 1800
             strided_span<const volatile int, 1> sav_cv{src, {2, 1}};
 #else
             strided_span<const volatile int, 1> sav_cv{multi_span<const volatile int>{src},
@@ -180,7 +180,7 @@ TEST_CASE("strided_span_constructors")
             CHECK(sav_v.bounds().strides() == multi_span_index<1>{1});
             CHECK(sav_v[1] == 2);
 
-#if _MSC_VER > 1800
+#if defined(_MSC_VER) && _MSC_VER > 1800
             strided_span<const volatile int, 1> sav_cv{src, {2, 1}};
 #else
             strided_span<const volatile int, 1> sav_cv{multi_span<const volatile int>{src},
@@ -598,7 +598,7 @@ void iterate_every_other_element(multi_span<int, dynamic_range> av)
     // pick every other element
 
     auto length = av.size() / 2;
-#if _MSC_VER > 1800
+#if defined(_MSC_VER) && _MSC_VER > 1800
     auto bounds = strided_bounds<1>({length}, {2});
 #else
     auto bounds = strided_bounds<1>(multi_span_index<1>{length}, multi_span_index<1>{2});
