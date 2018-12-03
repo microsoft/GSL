@@ -51,21 +51,24 @@ if(MSVC) # MSVC or simulating MSVC
     )
 else()
     target_compile_options(gsl_tests_config INTERFACE
-          -fno-strict-aliasing
-          -Wall
-          -Wcast-align
-          -Wconversion
-          -Wctor-dtor-privacy
-          -Werror
-          -Wextra
-          -Wno-missing-braces
-          -Wno-unknown-attributes
-          -Wnon-virtual-dtor
-          -Wold-style-cast
-          -Woverloaded-virtual
-          -Wpedantic
-          -Wshadow
-          -Wsign-conversion
+        -fno-strict-aliasing
+        -Wall
+        -Wcast-align
+        -Wconversion
+        -Wctor-dtor-privacy
+        -Werror
+        -Wextra
+        -Wno-missing-braces
+        -Wno-unknown-attributes
+        -Wnon-virtual-dtor
+        -Wold-style-cast
+        -Woverloaded-virtual
+        -Wpedantic
+        -Wshadow
+        -Wsign-conversion
+        $<$<CXX_COMPILER_ID:Clang>:
+          -Weverything
+        >
     )
 endif(MSVC)
 
@@ -166,6 +169,9 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        $<$<CXX_COMPILER_ID:Clang>:
+          -Weverything
+        >
     )
 endif(MSVC)
 
