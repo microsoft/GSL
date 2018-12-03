@@ -68,6 +68,7 @@ else()
         -Wsign-conversion
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
+          -Wno-c++98-compat
         >
     )
 endif(MSVC)
@@ -171,6 +172,7 @@ else()
         -Wsign-conversion
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
+          -Wno-c++98-compat
         >
     )
 endif(MSVC)
