@@ -71,6 +71,7 @@ else()
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
           -Wno-weak-vtables
         >
     )
