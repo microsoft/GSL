@@ -61,7 +61,7 @@
 // compiletime, so the compiler wouldn't have to warn indiscriminently, but
 // could check if the source value actually doesn't fit into the target type
 // and only warn in those cases.
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
@@ -786,7 +786,7 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
 #pragma warning(pop)
 #endif // _MSC_VER
 
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
 
