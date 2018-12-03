@@ -595,7 +595,6 @@ public:
     using sliced_type = static_bounds<RestRanges...>;
     using mapping_type = contiguous_mapping_tag;
 
-    constexpr static_bounds(const static_bounds&) noexcept = default;
     constexpr static_bounds() /*noexcept*/ = default;
 
     template <typename SourceType, typename TargetType, std::size_t Rank>
