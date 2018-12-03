@@ -40,15 +40,9 @@ if(MSVC) # MSVC or simulating MSVC
         /W4
         /WX
         $<$<CXX_COMPILER_ID:Clang>:
-          -Wcast-align
-          -Wconversion
-          -Wmissing-noreturn
+          -Weverything
           -Wno-missing-braces
           -Wno-unknown-attributes
-          -Wnon-virtual-dtor
-          -Wold-style-cast
-          -Wpedantic
-          -Wshadow
         >
     )
 else()
@@ -144,15 +138,8 @@ if(MSVC) # MSVC or simulating MSVC
           /wd4702
         >
         $<$<CXX_COMPILER_ID:Clang>:
-          -Wcast-align
-          -Wconversion
-          -Wmissing-noreturn
-          -Wno-missing-braces
+          -Weverything
           -Wno-unknown-attributes
-          -Wnon-virtual-dtor
-          -Wold-style-cast
-          -Wpedantic
-          -Wshadow
         >
     )
 else()
@@ -165,7 +152,6 @@ else()
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-missing-braces
         -Wno-unknown-attributes
         -Wnon-virtual-dtor
         -Wold-style-cast
