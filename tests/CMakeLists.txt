@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.0.2)
 
 project(GSLTests CXX)
 
@@ -66,7 +66,7 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-        $<$<CXX_COMPILER_ID:Clang>:
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
@@ -175,7 +175,7 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-        $<$<CXX_COMPILER_ID:Clang>:
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
