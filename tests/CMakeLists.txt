@@ -42,6 +42,7 @@ if(MSVC) # MSVC or simulating MSVC
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
           -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
           -Wno-missing-braces
           -Wno-unknown-attributes
         >
@@ -140,8 +141,9 @@ if(MSVC) # MSVC or simulating MSVC
         >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
-          -Wno-unknown-attributes
           -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-unknown-attributes
         >
     )
 else()
