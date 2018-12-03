@@ -69,6 +69,7 @@ else()
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
           -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
         >
     )
 endif(MSVC)
@@ -173,6 +174,7 @@ else()
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
           -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
         >
     )
 endif(MSVC)
