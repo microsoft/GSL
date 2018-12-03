@@ -71,6 +71,7 @@ else()
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
+          -Wno-weak-vtables
         >
     )
 endif(MSVC)
@@ -177,6 +178,7 @@ else()
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
+          -Wno-weak-vtables
         >
     )
 endif(MSVC)
