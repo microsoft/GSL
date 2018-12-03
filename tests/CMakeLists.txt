@@ -75,6 +75,9 @@ else()
           $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
           -Wno-weak-vtables
         >
+        $<$<CXX_COMPILER_ID:Clang>:
+          $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
+        >
     )
 endif(MSVC)
 
