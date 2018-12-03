@@ -46,6 +46,7 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-missing-braces
           -Wno-missing-prototypes
           -Wno-unknown-attributes
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
         >
     )
 else()
