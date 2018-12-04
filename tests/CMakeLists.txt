@@ -58,11 +58,6 @@ else()
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-missing-braces
-        -Wno-unknown-attributes
-        -Wnon-virtual-dtor
-        -Wold-style-cast
-        -Woverloaded-virtual
         -Wpedantic
         -Wshadow
         -Wsign-conversion
@@ -70,8 +65,10 @@ else()
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
+          -Wno-missing-braces
           -Wno-missing-prototypes
           -Wno-padded
+          -Wno-unknown-attributes
           $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
           -Wno-weak-vtables
         >
@@ -171,10 +168,6 @@ else()
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-unknown-attributes
-        -Wnon-virtual-dtor
-        -Wold-style-cast
-        -Woverloaded-virtual
         -Wpedantic
         -Wshadow
         -Wsign-conversion
@@ -183,6 +176,7 @@ else()
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
+          -Wno-unknown-attributes
           -Wno-weak-vtables
         >
     )
