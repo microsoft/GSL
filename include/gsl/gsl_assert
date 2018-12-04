@@ -113,20 +113,19 @@ namespace details
 
 #endif
 
+    [[noreturn]] inline void terminate() noexcept
+    {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
-    inline void terminate() noexcept { (*gsl::details::get_terminate_handler())(); }
+        (*gsl::details::get_terminate_handler())();
 #else
-    [[noreturn]] inline void terminate() noexcept { std::terminate(); }
+        std::terminate();
 #endif
+    }
 
 #if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
     template <typename Exception>
-#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
-    void throw_exception(Exception&&) noexcept
-#else
     [[noreturn]] void throw_exception(Exception&&) noexcept
-#endif
     {
         gsl::details::terminate();
     }
