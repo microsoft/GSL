@@ -42,6 +42,12 @@
 #define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
 #include <intrin.h>
 #define RANGE_CHECKS_FAILURE 0
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-noreturn"
+#endif
+
 #endif
 
 //
@@ -163,5 +169,9 @@ namespace details
 
 #define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
 #define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
+
+#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND) && defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 
 #endif // GSL_CONTRACTS_H
