@@ -171,3 +171,36 @@ endfunction()
 
 add_gsl_test_noexcept(no_exception_throw_tests)
 add_gsl_test_noexcept(no_exception_ensure_tests)
+
+set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${CMAKE_GENERATOR})
+file(MAKE_DIRECTORY ${ASM_LOCATION})
+
+add_custom_target(asm_tests)
+
+function(add_gsl_asm_test name)
+    add_library(${name}_asm ${name}.cpp)
+
+    target_compile_options(${name}_asm PRIVATE
+        $<$<CXX_COMPILER_ID:MSVC>:
+            /FA
+            /Fa${ASM_LOCATION}\\${name}_asm.asm
+        >
+        ${GSL_CPLUSPLUS_OPT}
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+            -S
+            -o ${ASM_LOCATION}\${name}.s
+        >
+    )
+
+    target_link_libraries(${name}_asm
+        GSL
+        test_catch
+        gsl_tests_config
+    )
+    add_dependencies(${name}_asm catch)
+    add_dependencies(asm_tests ${name}_asm)
+    # group all tests under GSL_tests
+    set_property(TARGET ${name}_asm PROPERTY FOLDER "GSL_tests")
+endfunction()
+
+add_gsl_asm_test(span_tests)
