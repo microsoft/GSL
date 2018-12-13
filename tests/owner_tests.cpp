@@ -14,14 +14,25 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/pointers> // for owner
 
 using namespace gsl;
 
+GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
 void f(int* i) { *i += 1; }
 
+GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
+GSL_SUPPRESS(r.3) // NO-FORMAT: attribute // TODO: false positive
+GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
 TEST_CASE("basic_test")
 {
     owner<int*> p = new int(120);

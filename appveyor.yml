@@ -12,6 +12,16 @@ image:
   - Visual Studio 2015
   - Visual Studio 2017
 
+environment:
+  matrix:
+    - GSL_CXX_STANDARD: 14
+    - GSL_CXX_STANDARD: 17
+
+matrix:
+    exclude:
+    - image: Visual Studio 2015
+      GSL_CXX_STANDARD: 17
+
 cache:
   - C:\cmake-3.8.0-win32-x86
 
@@ -27,6 +37,7 @@ before_build:
   - ps: |
       mkdir build
       cd build
+
       if ("$env:APPVEYOR_JOB_NAME" -match "Image: Visual Studio 2015") {
           $env:generator="Visual Studio 14 2015"
       } else {
@@ -36,7 +47,7 @@ before_build:
           $env:generator="$env:generator Win64"
       }
       echo generator="$env:generator"
-      cmake .. -G "$env:generator"
+      cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
 
 build_script:
   - cmake --build . --config %CONFIGURATION% -- /m /v:minimal

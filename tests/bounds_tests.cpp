@@ -14,6 +14,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, TEST_CASE
 
 #include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t
@@ -32,6 +38,7 @@ namespace
 void use(std::ptrdiff_t&) {}
 }
 
+GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
 TEST_CASE("basic_bounds")
 {
     for (auto point : static_bounds<dynamic_range, 3, 4>{2}) {
@@ -44,6 +51,8 @@ TEST_CASE("basic_bounds")
     }
 }
 
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("bounds_basic")
 {
     static_bounds<3, 4, 5> b;
@@ -53,6 +62,8 @@ TEST_CASE("bounds_basic")
     x.slice().slice();
 }
 
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("arrayview_iterator")
 {
     static_bounds<4, dynamic_range, 2> bounds{3};
@@ -71,6 +82,7 @@ TEST_CASE("arrayview_iterator")
 #endif
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("bounds_convertible")
 {
     static_bounds<7, 4, 2> b1;
@@ -97,3 +109,7 @@ TEST_CASE("bounds_convertible")
     CHECK(b5 == b6);
     CHECK(b5.size() == b6.size());
 }
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+copy(src_span_static, dst_span_static);
+#endif

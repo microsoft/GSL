@@ -14,6 +14,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_byte> // for to_byte, to_integer, byte, operator&, ope...
@@ -23,7 +29,6 @@ using namespace gsl;
 
 namespace
 {
-
 TEST_CASE("construction")
 {
     {
@@ -31,6 +36,7 @@ TEST_CASE("construction")
         CHECK(static_cast<unsigned char>(b) == 4);
     }
 
+    GSL_SUPPRESS(es.49)
     {
         const byte b = byte(12);
         CHECK(static_cast<unsigned char>(b) == 12);
@@ -46,11 +52,12 @@ TEST_CASE("construction")
         CHECK(static_cast<unsigned char>(b) == 12);
     }
 
-    // waiting for C++17 enum class direct initializer support
-    //{
-    //    byte b { 14 };
-    //    CHECK(static_cast<unsigned char>(b) == 14);
-    //}
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+    {
+        const byte b { 14 };
+        CHECK(static_cast<unsigned char>(b) == 14);
+    }
+#endif
 }
 
 TEST_CASE("bitwise_operations")
@@ -114,6 +121,7 @@ int modify_both(gsl::byte & b, int& i)
     return i;
 }
 
+GSL_SUPPRESS(type.1)
 TEST_CASE("aliasing")
 {
     int i{0};
@@ -122,3 +130,7 @@ TEST_CASE("aliasing")
 }
 
 }
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+copy(src_span_static, dst_span_static);
+#endif
