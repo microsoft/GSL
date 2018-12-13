@@ -31,9 +31,9 @@ TEST_CASE("joining_thread construction")
     gsl::joining_thread t7{[](std::string) {}, std::move(other_text)};
     gsl::joining_thread t8{std::move(t1)};
     gsl::joining_thread t9 = std::move(t5);
+    gsl::joining_thread t10;
 #ifdef CONFIRM_COMPILATION_ERRORS
     {
-        gsl::joining_thread t10{};    // should not compile - no default c-tor
         gsl::joining_thread t11 = t6; // should not compile - no copy assigment
         gsl::joining_thread t12(t7);  // should not compile - no copy c-tor
     }
