@@ -19,7 +19,6 @@
 #ifndef GSL_JOINING_THREAD_H
 #define GSL_JOINING_THREAD_H
 
-#include <memory>
 #include <thread>
 #include <utility>
 
@@ -27,28 +26,33 @@ namespace gsl
 {
 /**
  * RAII wrapper for std::thread.
- * It's guaranteed that joining_thread will join when destructed.
+ * It's guaranteed that joining_thread will join started thread when destroyed.
  */
 class joining_thread
 {
-    using JoiningThreadUPtr = std::unique_ptr<std::thread, std::function<void(std::thread*)>>;
-    template <typename... Args>
-    JoiningThreadUPtr create_thread_with_joining_deleter(Args&&... args)
-    {
-        return {new std::thread(std::forward<Args>(args)...), [](auto* th) { th->join(); }};
-    }
-
 public:
+    joining_thread() noexcept {};
+
     template <class Function, class... Args>
     explicit joining_thread(Function&& function, Args&&... args)
-        : thread{create_thread_with_joining_deleter(std::forward<Function>(function),
-                                                    std::forward<Args>(args)...)}
+        : thread(std::forward<Function>(function), std::forward<Args>(args)...)
     {
     }
 
-    std::thread::id get_id() const noexcept { return (*thread).get_id(); }
+    joining_thread(const joining_thread&) = delete;
+    joining_thread& operator=(const joining_thread&) = delete;
 
-    std::thread::native_handle_type native_handle() { return (*thread).native_handle(); }
+    joining_thread(joining_thread&&) noexcept = default;
+    joining_thread& operator=(joining_thread&&) noexcept = default;
+
+    ~joining_thread()
+    {
+        if (thread.joinable()) { thread.join(); }
+    }
+
+    std::thread::id get_id() const noexcept { return thread.get_id(); }
+
+    std::thread::native_handle_type native_handle() { return thread.native_handle(); }
 
     static unsigned int hardware_concurrency() noexcept
     {
@@ -62,7 +66,7 @@ public:
     }
 
 private:
-    JoiningThreadUPtr thread;
+    std::thread thread;
 };
 }
 
