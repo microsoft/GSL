@@ -39,8 +39,8 @@ public:
     {
     }
 
-    joining_thread(const joining_thread&) = delete;
-    joining_thread& operator=(const joining_thread&) = delete;
+    joining_thread(const joining_thread&) = default;
+    joining_thread& operator=(const joining_thread&) = default;
 
     joining_thread(joining_thread&&) noexcept = default;
     joining_thread& operator=(joining_thread&&) noexcept = default;
