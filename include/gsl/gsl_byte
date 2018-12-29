@@ -79,7 +79,7 @@
 #endif // _MSC_VER
 
 // Use __may_alias__ attribute on gcc and clang
-#if defined __clang__ || (__GNUC__ > 5)
+#if defined __clang__ || (defined(__GNUC__) && __GNUC__ > 5)
 #define byte_may_alias __attribute__((__may_alias__))
 #else // defined __clang__ || defined __GNUC__
 #define byte_may_alias
