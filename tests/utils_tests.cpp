@@ -126,4 +126,8 @@ TEST_CASE("narrow")
 
     n = -42;
     CHECK_THROWS_AS(narrow<unsigned>(n), narrowing_error);
+
+#if GSL_CONSTEXPR_NARROW
+    static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");
+#endif
 }
