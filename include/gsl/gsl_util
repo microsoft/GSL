@@ -26,7 +26,7 @@
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for forward
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined(__clang__)
 
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
@@ -152,7 +152,7 @@ constexpr T at(const std::initializer_list<T> cont, const index i)
 
 } // namespace gsl
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 #undef constexpr
 #pragma pop_macro("constexpr")
