@@ -412,6 +412,7 @@ namespace details
             return totalSize() / this->Base::totalSize();
         }
 
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
@@ -1885,6 +1886,8 @@ public:
         auto d = narrow_cast<size_type>(sizeof(OtherValueType) / sizeof(value_type));
 
         const size_type size = this->bounds().total_size() / d;
+
+        GSL_SUPPRESS(type.3) // NO-FORMAT: attribute
         return {const_cast<OtherValueType*>(reinterpret_cast<const OtherValueType*>(this->data())),
                 size,
                 bounds_type{resize_extent(this->bounds().index_bounds(), d),

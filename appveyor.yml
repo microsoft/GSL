@@ -83,8 +83,11 @@ before_build:
         } else {
           $Generator = 'Visual Studio 15 2017'
         }
-        if ("$env:PLATFORM" -eq "x86") { $Architecture = "Win32"}
-        else { $Architecture = "x64" }
+        if ("$env:PLATFORM" -eq "x86") { 
+            $Architecture = "Win32"
+        } else { 
+            $Architecture = "x64" 
+        }
         if ("$env:USE_TOOLSET" -eq "LLVM") {
           $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -T llvm -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
         } else {
