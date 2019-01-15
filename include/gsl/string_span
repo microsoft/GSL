@@ -30,7 +30,7 @@
 #include <string>      // for basic_string, allocator, char_traits
 #include <type_traits> // for declval, is_convertible, enable_if_t, add_...
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
 
 // Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
@@ -706,7 +706,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 #endif
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(pop)
 
 #if _MSC_VER < 1910

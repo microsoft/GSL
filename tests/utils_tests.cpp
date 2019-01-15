@@ -80,7 +80,7 @@ TEST_CASE("finally_function_with_bind")
     CHECK(i == 1);
 }
 
-int j = 0;
+static int j = 0;
 void g() { j += 1; }
 TEST_CASE("finally_function_ptr")
 {

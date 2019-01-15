@@ -25,7 +25,7 @@
 #include <system_error> // for hash
 #include <type_traits>  // for enable_if_t, is_convertible, is_assignable
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
@@ -283,10 +283,12 @@ struct hash<gsl::strict_not_null<T>>
 };
 
 } // namespace std
-#if defined(_MSC_VER) && _MSC_VER < 1910
+
+#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
+
 #undef constexpr
 #pragma pop_macro("constexpr")
 
-#endif // defined(_MSC_VER) && _MSC_VER < 1910
+#endif // defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
 
 #endif // GSL_POINTERS_H
