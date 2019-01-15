@@ -51,13 +51,23 @@ target_compile_definitions(GSL INTERFACE
 )
 
 # add include folders to the library and targets that consume it
-target_include_directories(GSL INTERFACE
-    $<BUILD_INTERFACE:
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    >
-)
+# the SYSTEM keyword suppresses warnings for users of the library
+if(GSL_STANDALONE_PROJECT)
+    target_include_directories(GSL INTERFACE
+        $<BUILD_INTERFACE:
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+        >
+    )
+else()
+    target_include_directories(GSL SYSTEM INTERFACE
+        $<BUILD_INTERFACE:
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+        >
+    )
+endif()
 
-if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
+
+if (CMAKE_VERSION VERSION_GREATER 3.7.8)
     if (MSVC_IDE)
         option(VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
     else()
