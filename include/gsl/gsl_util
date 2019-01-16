@@ -23,7 +23,10 @@
 #include <cstddef>          // for ptrdiff_t, size_t
 #include <exception>        // for exception
 #include <initializer_list> // for initializer_list
+#include <sstream>          // for ostringstream
+#include <string>           // for string
 #include <type_traits>      // for is_signed, integral_constant
+#include <typeinfo>         // for typeid
 #include <utility>          // for forward
 
 #if defined(_MSC_VER) && !defined(__clang__)
@@ -100,8 +103,48 @@ constexpr T narrow_cast(U&& u) noexcept
     return static_cast<T>(std::forward<U>(u));
 }
 
+namespace details
+{
+    template <class S, class T>
+    struct is_streamable	// Can't be class because of gcc -Werror=ctor-dtor-privacy
+    {
+        template <typename SS, typename TT>
+        static auto test(SS&& s, TT&& t) -> decltype(s << t);
+
+        struct dummy_t
+        {
+        };
+        static dummy_t test(...);
+
+        using return_type = decltype(test(std::declval<S>(), std::declval<T>()));
+
+    public:
+        static const bool value = !std::is_same<return_type, dummy_t>::value;
+    };
+} // namespace details
+
 struct narrowing_error : public std::exception
 {
+    narrowing_error(std::string&& what) : _what(what) {}
+
+    template <class T, class U>
+    static narrowing_error create(const U &u)
+    {
+        static_cast<void>(u);	// to simulate [[maybe_unused]]
+        std::ostringstream strm;
+        strm << typeid(U).name();
+#if defined(__cpp_if_constexpr)
+        if constexpr (details::is_streamable<std::ostringstream, const U&>::value)
+			strm << ' ' << u;
+#endif
+		strm << " to " << typeid(T).name();
+        return narrowing_error{strm.str()};
+    }
+
+    const char* what() const noexcept override { return _what.c_str(); }
+
+private:
+    std::string _what;
 };
 
 namespace details
@@ -123,9 +166,9 @@ constexpr
 T narrow(U u) noexcept(false)
 {
     T t = narrow_cast<T>(u);
-    if (static_cast<U>(t) != u) gsl::details::throw_exception(narrowing_error());
+    if (static_cast<U>(t) != u) gsl::details::throw_exception(narrowing_error::create<T, U>(u));
     if (!details::is_same_signedness<T, U>::value && ((t < T{}) != (u < U{})))
-        gsl::details::throw_exception(narrowing_error());
+        gsl::details::throw_exception(narrowing_error::create<T, U>(u));
     return t;
 }
 
