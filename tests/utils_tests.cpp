@@ -51,6 +51,18 @@ TEST_CASE("finally_lambda")
     CHECK(i == 1);
 }
 
+TEST_CASE("finally_lambda_cancel")
+{
+    int i = 0;
+    {
+        auto fin = finally([&]() { f(i); });
+        CHECK(i == 0);
+
+        fin.cancel();
+    }
+    CHECK(i == 0);
+}
+
 TEST_CASE("finally_lambda_move")
 {
     int i = 0;

@@ -68,6 +68,12 @@ public:
     final_action& operator=(const final_action&) = delete;
     final_action& operator=(final_action&&) = delete;
 
+    // cancel action
+    void cancel() noexcept
+    {
+        invoke_ = false;
+    }
+
     GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // terminate if throws
     ~final_action() noexcept
     {
