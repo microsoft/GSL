@@ -1,4 +1,9 @@
-shallow_clone: true
+branches:
+  only:
+    - master
+
+skip_branch_with_pr: true
+
 
 platform:
   - x86
@@ -13,6 +18,8 @@ image:
   - Visual Studio 2017
 
 environment:
+  access_token:
+    secure: JoKQ6wDekwtEk9su/zJWT12TtHMsHAacSLnPe47/SV22BAfVSMMR8VCyDF/W9bE2
   matrix:
     - GSL_CXX_STANDARD: 14
     - GSL_CXX_STANDARD: 17
@@ -47,12 +54,24 @@ before_build:
           $env:generator="$env:generator Win64"
       }
       echo generator="$env:generator"
-      cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD"
+      cmake .. -G "$env:generator" -DGSL_CXX_STANDARD="$env:GSL_CXX_STANDARD" -DGSL_ASM_FOLDER="$($env:APPVEYOR_BUILD_WORKER_IMAGE)_$($env:GSL_CXX_STANDARD)_$($env:PLATFORM)_$($env:CONFIGURATION)"
 
 build_script:
   - cmake --build . --config %CONFIGURATION% -- /m /v:minimal
 
 test_script:
   - ctest -j2
+
+on_success:
+  - git config --global credential.helper store
+  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git config --global user.email "dadonenf@microsoft.com"
+  - git config --global user.name "Daniel Donenfeld"
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git checkout %APPVEYOR_REPO_BRANCH% 
+  - git add "asm\%APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%PLATFORM%_%CONFIGURATION%"
+  - git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%PLATFORM%_%CONFIGURATION%"
+  - git push
+
 
 deploy: off
