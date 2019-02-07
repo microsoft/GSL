@@ -221,16 +221,17 @@ function(add_gsl_asm_test name)
     add_library(${name}_asm ${name}.cpp)
 
     add_library(${name}_asm_options INTERFACE)
-    target_compile_options(${name}_asm_options INTERFACE
-        $<$<CXX_COMPILER_ID:MSVC>:
+    if(MSVC) # MSVC or simulating MSVC
+        target_compile_options(${name}_asm_options INTERFACE
             /FA
             /Fa${ASM_LOCATION}\\${name}.asm
-        >
-        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        )
+    else()
+        target_compile_options(${name}_asm_options INTERFACE
             -S
             -o ${ASM_LOCATION}\\${name}.s
-        >
-    )
+        )
+    endif(MSVC)
 
     target_link_libraries(${name}_asm
         GSL
