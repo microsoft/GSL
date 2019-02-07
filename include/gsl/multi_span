@@ -37,7 +37,7 @@
 #include <type_traits> // for enable_if_t, remove_cv_t, is_same, is_co...
 #include <utility>
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 
 // turn off some warnings that are noisy about our Expects statements
 #pragma warning(push)
@@ -62,7 +62,7 @@
 // compiletime, so the compiler wouldn't have to warn indiscriminently, but
 // could check if the source value actually doesn't fit into the target type
 // and only warn in those cases.
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
@@ -412,6 +412,7 @@ namespace details
             return totalSize() / this->Base::totalSize();
         }
 
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
@@ -595,7 +596,6 @@ public:
     using sliced_type = static_bounds<RestRanges...>;
     using mapping_type = contiguous_mapping_tag;
 
-    constexpr static_bounds(const static_bounds&) noexcept = default;
     constexpr static_bounds() /*noexcept*/ = default;
 
     template <typename SourceType, typename TargetType, std::size_t Rank>
@@ -1886,6 +1886,8 @@ public:
         auto d = narrow_cast<size_type>(sizeof(OtherValueType) / sizeof(value_type));
 
         const size_type size = this->bounds().total_size() / d;
+
+        GSL_SUPPRESS(type.3) // NO-FORMAT: attribute
         return {const_cast<OtherValueType*>(reinterpret_cast<const OtherValueType*>(this->data())),
                 size,
                 bounds_type{resize_extent(this->bounds().index_bounds(), d),
@@ -2273,7 +2275,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 
 #undef constexpr
@@ -2284,7 +2286,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #endif // _MSC_VER
 
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
 

@@ -26,7 +26,7 @@
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for forward
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined(__clang__)
 
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
@@ -36,6 +36,12 @@
 #define constexpr /*constexpr*/
 #endif            // _MSC_VER < 1910
 #endif            // _MSC_VER
+
+#if (defined(_MSC_VER) && _MSC_VER < 1910) || (!defined(__clang__) && defined(__GNUC__) && __GUNC__ < 6)
+#define GSL_CONSTEXPR_NARROW 0
+#else
+#define GSL_CONSTEXPR_NARROW 1
+#endif
 
 namespace gsl
 {
@@ -111,6 +117,9 @@ namespace details
 template <class T, class U>
 GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
 GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recognise noexcept(false)
+#if GSL_CONSTEXPR_NARROW
+constexpr
+#endif
 T narrow(U u) noexcept(false)
 {
     T t = narrow_cast<T>(u);
@@ -152,7 +161,7 @@ constexpr T at(const std::initializer_list<T> cont, const index i)
 
 } // namespace gsl
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 #undef constexpr
 #pragma pop_macro("constexpr")

@@ -67,7 +67,7 @@ else()
 endif()
 
 
-if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
+if (CMAKE_VERSION VERSION_GREATER 3.7.8)
     if (MSVC_IDE)
         option(VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
     else()
