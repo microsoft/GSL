@@ -88,15 +88,6 @@ target_compile_definitions(gsl_tests_config INTERFACE
     GSL_THROW_ON_CONTRACT_VIOLATION
 )
 
-# Set the location asm files are output into
-if(DEFINED GSL_ASM_FOLDER)
-    set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${GSL_ASM_FOLDER})
-else()
-    set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${CMAKE_GENERATOR})
-endif()
-
-file(MAKE_DIRECTORY ${ASM_LOCATION})
-
 # create the main executable for each test. this reduces the compile time
 # of each test by pre-compiling catch.
 add_library(test_catch STATIC test.cpp)
@@ -107,31 +98,13 @@ target_link_libraries(test_catch
 add_dependencies(test_catch catch)
 set_property(TARGET test_catch PROPERTY FOLDER "GSL_tests")
 
-function(add_gsl_test name gen_asm)
+function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
-
-    #Set the asm options if used
-    if(${gen_asm})
-        add_library(${name}_asm INTERFACE)
-        target_compile_options(${name}_asm INTERFACE
-            $<$<BOOL:${gen_asm}>:
-                $<$<CXX_COMPILER_ID:MSVC>:
-                    /FA
-                    /Fa${ASM_LOCATION}\\${name}.asm
-                >
-                $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
-                    -S
-                    -o ${ASM_LOCATION}\\${name}.s
-                >
-            >
-        )
-    endif()
 
     target_link_libraries(${name}
         GSL
         test_catch
         gsl_tests_config
-        $<$<BOOL:${gen_asm}>:${name}_asm>
     )
 
     add_dependencies(${name} catch)
@@ -143,19 +116,19 @@ function(add_gsl_test name gen_asm)
     set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests")
 endfunction()
 
-add_gsl_test(span_tests TRUE)
-add_gsl_test(multi_span_tests FALSE)
-add_gsl_test(strided_span_tests FALSE)
-add_gsl_test(string_span_tests FALSE)
-add_gsl_test(at_tests FALSE)
-add_gsl_test(bounds_tests FALSE)
-add_gsl_test(notnull_tests FALSE)
-add_gsl_test(assertion_tests FALSE)
-add_gsl_test(utils_tests FALSE)
-add_gsl_test(owner_tests FALSE)
-add_gsl_test(byte_tests FALSE)
-add_gsl_test(algorithm_tests FALSE)
-add_gsl_test(strict_notnull_tests FALSE)
+add_gsl_test(span_tests)
+add_gsl_test(multi_span_tests)
+add_gsl_test(strided_span_tests)
+add_gsl_test(string_span_tests)
+add_gsl_test(at_tests)
+add_gsl_test(bounds_tests)
+add_gsl_test(notnull_tests)
+add_gsl_test(assertion_tests)
+add_gsl_test(utils_tests)
+add_gsl_test(owner_tests)
+add_gsl_test(byte_tests)
+add_gsl_test(algorithm_tests)
+add_gsl_test(strict_notnull_tests)
 
 
 # No exception tests
@@ -235,6 +208,15 @@ endfunction()
 add_gsl_test_noexcept(no_exception_throw_tests)
 add_gsl_test_noexcept(no_exception_ensure_tests)
 
+# Set the location asm files are output into
+if(DEFINED GSL_ASM_FOLDER)
+    set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${GSL_ASM_FOLDER})
+else()
+    set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${CMAKE_GENERATOR})
+endif()
+
+file(MAKE_DIRECTORY ${ASM_LOCATION})
+
 function(add_gsl_asm_test name)
     add_library(${name}_asm ${name}.cpp)
 
@@ -262,4 +244,5 @@ function(add_gsl_asm_test name)
     set_property(TARGET ${name}_asm PROPERTY FOLDER "GSL_asm_tests")
 endfunction()
 
+add_gsl_asm_test(span_tests)
 add_gsl_asm_test(span_compile_only)

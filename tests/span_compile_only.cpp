@@ -15,7 +15,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_byte> // for byte
 #include <gsl/gsl_util> // for narrow_cast, at
@@ -53,13 +52,16 @@ struct AddressOverloaded
 }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("default_constructor")
+bool foo()
 {
     {
+        bool ret = true;
         span<int> s;
-        CHECK((s.size() == 0 && s.data() == nullptr));
+        ret = ret || (s.size() == 0 && s.data() == nullptr);
 
         span<const int> cs;
-        CHECK((cs.size() == 0 && cs.data() == nullptr));
+        ret = ret || (cs.size() == 0 && cs.data() == nullptr);
+
+        return ret;
     }
 }
