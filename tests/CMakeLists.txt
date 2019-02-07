@@ -69,6 +69,15 @@ target_compile_definitions(gsl_tests_config INTERFACE
     GSL_THROW_ON_CONTRACT_VIOLATION
 )
 
+# Set the location asm files are output into
+if(DEFINED GSL_ASM_FOLDER)
+    set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${GSL_ASM_FOLDER})
+else()
+    set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${CMAKE_GENERATOR})
+endif()
+
+file(MAKE_DIRECTORY ${ASM_LOCATION})
+
 # create the main executable for each test. this reduces the compile time
 # of each test by pre-compiling catch.
 add_library(test_catch STATIC test.cpp)
@@ -79,13 +88,33 @@ target_link_libraries(test_catch
 add_dependencies(test_catch catch)
 set_property(TARGET test_catch PROPERTY FOLDER "GSL_tests")
 
-function(add_gsl_test name)
+function(add_gsl_test name gen_asm)
     add_executable(${name} ${name}.cpp)
+
+    #Set the asm options if used
+    if(${gen_asm})
+        add_library(${name}_asm INTERFACE)
+        target_compile_options(${name}_asm INTERFACE
+            $<$<BOOL:${gen_asm}>:
+                $<$<CXX_COMPILER_ID:MSVC>:
+                    /FA
+                    /Fa${ASM_LOCATION}\\${name}.asm
+                >
+                $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+                    -S
+                    -o ${ASM_LOCATION}\\${name}.s
+                >
+            >
+        )
+    endif()
+
     target_link_libraries(${name}
         GSL
         test_catch
         gsl_tests_config
+        $<$<BOOL:${gen_asm}>:${name}_asm>
     )
+
     add_dependencies(${name} catch)
     add_test(
       ${name}
@@ -95,19 +124,19 @@ function(add_gsl_test name)
     set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests")
 endfunction()
 
-add_gsl_test(span_tests)
-add_gsl_test(multi_span_tests)
-add_gsl_test(strided_span_tests)
-add_gsl_test(string_span_tests)
-add_gsl_test(at_tests)
-add_gsl_test(bounds_tests)
-add_gsl_test(notnull_tests)
-add_gsl_test(assertion_tests)
-add_gsl_test(utils_tests)
-add_gsl_test(owner_tests)
-add_gsl_test(byte_tests)
-add_gsl_test(algorithm_tests)
-add_gsl_test(sloppy_notnull_tests)
+add_gsl_test(span_tests TRUE)
+add_gsl_test(multi_span_tests FALSE)
+add_gsl_test(strided_span_tests FALSE)
+add_gsl_test(string_span_tests FALSE)
+add_gsl_test(at_tests FALSE)
+add_gsl_test(bounds_tests FALSE)
+add_gsl_test(notnull_tests FALSE)
+add_gsl_test(assertion_tests FALSE)
+add_gsl_test(utils_tests FALSE)
+add_gsl_test(owner_tests FALSE)
+add_gsl_test(byte_tests FALSE)
+add_gsl_test(algorithm_tests FALSE)
+add_gsl_test(sloppy_notnull_tests FALSE)
 
 
 # No exception tests
@@ -172,23 +201,18 @@ endfunction()
 add_gsl_test_noexcept(no_exception_throw_tests)
 add_gsl_test_noexcept(no_exception_ensure_tests)
 
-set(ASM_LOCATION ${CMAKE_SOURCE_DIR}\\asm\\${CMAKE_GENERATOR})
-file(MAKE_DIRECTORY ${ASM_LOCATION})
-
-add_custom_target(asm_tests)
-
 function(add_gsl_asm_test name)
     add_library(${name}_asm ${name}.cpp)
 
-    target_compile_options(${name}_asm PRIVATE
+    add_library(${name}_asm_options INTERFACE)
+    target_compile_options(${name}_asm_options INTERFACE
         $<$<CXX_COMPILER_ID:MSVC>:
             /FA
-            /Fa${ASM_LOCATION}\\${name}_asm.asm
+            /Fa${ASM_LOCATION}\\${name}.asm
         >
-        ${GSL_CPLUSPLUS_OPT}
         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
             -S
-            -o ${ASM_LOCATION}\${name}.s
+            -o ${ASM_LOCATION}\\${name}.s
         >
     )
 
@@ -196,11 +220,12 @@ function(add_gsl_asm_test name)
         GSL
         test_catch
         gsl_tests_config
+        ${name}_asm_options
     )
+
     add_dependencies(${name}_asm catch)
-    add_dependencies(asm_tests ${name}_asm)
-    # group all tests under GSL_tests
-    set_property(TARGET ${name}_asm PROPERTY FOLDER "GSL_tests")
+    # group all tests under GSL_asm_tests
+    set_property(TARGET ${name}_asm PROPERTY FOLDER "GSL_asm_tests")
 endfunction()
 
-add_gsl_asm_test(span_tests)
+add_gsl_asm_test(span_compile_only)
