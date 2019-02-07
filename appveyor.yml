@@ -133,7 +133,7 @@ on_success:
   - git config --global user.name "Daniel Donenfeld"
   - cd %APPVEYOR_BUILD_FOLDER%
   - git checkout %APPVEYOR_REPO_BRANCH% 
-  - git add "asm\%APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%"
+  - git add "asm/*"
   - git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%"
   - git push
 
