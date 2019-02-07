@@ -132,6 +132,7 @@ on_success:
   - git config --global user.email "dadonenf@microsoft.com"
   - git config --global user.name "Daniel Donenfeld"
   - cd %APPVEYOR_BUILD_FOLDER%
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - git checkout %APPVEYOR_REPO_BRANCH% 
   - git add "asm/*"
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
