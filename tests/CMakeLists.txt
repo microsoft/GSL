@@ -229,8 +229,10 @@ function(add_gsl_asm_test name)
     else()
         target_compile_options(${name}_asm_options INTERFACE
             -S
-            -o ${ASM_LOCATION}\\${name}.s
         )
+        set_target_properties(${name}_asm PROPERTIES PREFIX "")
+        set_target_properties(${name}_asm PROPERTIES OUTPUT_NAME "${ASM_LOCATION}/${name}")
+        set_target_properties(${name}_asm PROPERTIES SUFFIX  ".s")    
     endif(MSVC)
 
     target_link_libraries(${name}_asm
