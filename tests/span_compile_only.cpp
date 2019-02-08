@@ -37,20 +37,6 @@ struct fail_fast;
 using namespace std;
 using namespace gsl;
 
-namespace
-{
-struct BaseClass
-{
-};
-struct DerivedClass : BaseClass
-{
-};
-struct AddressOverloaded
-{
-    AddressOverloaded operator&() const { return {}; }
-};
-}
-
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 bool foo()
 {

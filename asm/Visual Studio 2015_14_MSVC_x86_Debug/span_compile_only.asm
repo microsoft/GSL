@@ -962,7 +962,7 @@ _s$2 = -16						; size = 8
 _ret$3 = -1						; size = 1
 ?foo@@YA_NXZ PROC					; foo
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 56
+; Line 42
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 44					; 0000002cH
@@ -971,12 +971,12 @@ _ret$3 = -1						; size = 1
 	mov	ecx, 11					; 0000000bH
 	mov	eax, -858993460				; ccccccccH
 	rep stosd
-; Line 58
+; Line 44
 	mov	BYTE PTR _ret$3[ebp], 1
-; Line 59
+; Line 45
 	lea	ecx, DWORD PTR _s$2[ebp]
 	call	??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ	; gsl::span<int,-1>::span<int,-1><0,void>
-; Line 60
+; Line 46
 	movzx	eax, BYTE PTR _ret$3[ebp]
 	test	eax, eax
 	jne	SHORT $LN4@foo
@@ -996,10 +996,10 @@ $LN4@foo:
 $LN5@foo:
 	mov	cl, BYTE PTR tv73[ebp]
 	mov	BYTE PTR _ret$3[ebp], cl
-; Line 62
+; Line 48
 	lea	ecx, DWORD PTR _cs$1[ebp]
 	call	??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ	; gsl::span<int const ,-1>::span<int const ,-1><0,void>
-; Line 63
+; Line 49
 	movzx	edx, BYTE PTR _ret$3[ebp]
 	test	edx, edx
 	jne	SHORT $LN7@foo
@@ -1019,9 +1019,9 @@ $LN7@foo:
 $LN8@foo:
 	mov	al, BYTE PTR tv84[ebp]
 	mov	BYTE PTR _ret$3[ebp], al
-; Line 65
+; Line 51
 	mov	al, BYTE PTR _ret$3[ebp]
-; Line 67
+; Line 53
 	push	edx
 	mov	ecx, ebp
 	push	eax
@@ -1620,7 +1620,7 @@ ___formal$ = 8						; size = 4
 ___formal$ = 12						; size = 4
 ?__empty_global_delete@@YAXPAXI@Z PROC			; __empty_global_delete, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 68
+; Line 54
 	push	ebp
 	mov	ebp, esp
 	pop	ebp
@@ -1633,7 +1633,7 @@ _TEXT	SEGMENT
 ___formal$ = 8						; size = 4
 ?__empty_global_delete@@YAXPAX@Z PROC			; __empty_global_delete, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 68
+; Line 54
 	push	ebp
 	mov	ebp, esp
 	pop	ebp
