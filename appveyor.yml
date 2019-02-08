@@ -131,12 +131,12 @@ on_success:
   - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
   - git config --global user.email "dadonenf@microsoft.com"
   - git config --global user.name "Daniel Donenfeld"
+  - git config --global core.autocrlf false 
   - cd %APPVEYOR_BUILD_FOLDER%
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - git checkout %APPVEYOR_REPO_BRANCH% 
   - git add "asm/*"
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  - git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%"
-  - git push
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - (git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%" && git push) || git status
 
 deploy: off
