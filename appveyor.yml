@@ -109,7 +109,7 @@ before_build:
           $env:CXXFLAGS = "-m32";
           
           #Disable ASM generation for x86, there are errors with the llvm assembler
-          $env:CMakeGenFlags = $env:CMakeGenFlags' -DASM_TESTS_ENABLED=FALSE'
+          $env:CMakeGenFlags += " -DASM_TESTS_ENABLED=FALSE"
         } else {
           $env:CFLAGS   = "-m64";
           $env:CXXFLAGS = "-m64";
