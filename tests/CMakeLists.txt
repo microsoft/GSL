@@ -247,6 +247,10 @@ function(add_gsl_asm_test name)
     set_property(TARGET ${name}_asm PROPERTY FOLDER "GSL_asm_tests")
 endfunction()
 
+if(NOT DEFINED ASM_TESTS_ENABLED)
+    set(ASM_TESTS_ENABLED TRUE)
+endif()
+
 if(ASM_TESTS_ENABLED)
     add_gsl_asm_test(span_tests)
     add_gsl_asm_test(span_compile_only)
