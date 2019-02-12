@@ -141,6 +141,8 @@ on_success:
   - git add "asm/*"
   # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - git status
-  - (git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%" && git push) || (echo NO CHANGES TO COMMIT)
+  - git diff-index --cached --quiet --exit-code HEAD || (git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%" && git push)
+
+
 
 deploy: off
