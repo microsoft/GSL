@@ -124,8 +124,8 @@ $pdata$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z 
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?foo@@YA_NXZ DD imagerel $LN150
-	DD	imagerel $LN150+27
+$pdata$?foo@@YA_NXZ DD imagerel $LN223
+	DD	imagerel $LN223+27
 	DD	imagerel $unwind$?foo@@YA_NXZ
 pdata	ENDS
 ;	COMDAT pdata
@@ -707,13 +707,13 @@ $T2 = 32
 ?foo@@YA_NXZ PROC					; foo, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
 ; Line 42
-$LN150:
+$LN223:
 	sub	rsp, 24
 	mov	QWORD PTR $T1[rsp], -2
 	mov	DWORD PTR $T2[rsp], 0
-; Line 51
+; Line 54
 	mov	al, 1
-; Line 53
+; Line 56
 	add	rsp, 24
 	ret	0
 ?foo@@YA_NXZ ENDP					; foo
