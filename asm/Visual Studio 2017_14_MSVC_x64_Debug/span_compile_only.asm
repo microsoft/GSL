@@ -192,8 +192,8 @@ $pdata$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z 
 	DD	imagerel $unwind$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z
 pdata	ENDS
 pdata	SEGMENT
-$pdata$?foo@@YA_NXZ DD imagerel $LN9
-	DD	imagerel $LN9+232
+$pdata$?foo@@YA_NXZ DD imagerel $LN12
+	DD	imagerel $LN12+326
 	DD	imagerel $unwind$?foo@@YA_NXZ
 pdata	ENDS
 ;	COMDAT pdata
@@ -708,7 +708,7 @@ $unwind$?size@?$span@H$0?0@gsl@@QEBA_JXZ DD 021e01H
 xdata	ENDS
 xdata	SEGMENT
 $unwind$?foo@@YA_NXZ DD 031801H
-	DD	0120109H
+	DD	0180109H
 	DD	07002H
 xdata	ENDS
 CONST	SEGMENT
@@ -718,15 +718,22 @@ CONST	SEGMENT
 ?foo@@YA_NXZ$rtcName$1 DB 063H				; foo
 	DB	073H
 	DB	00H
-	ORG $+9
-?foo@@YA_NXZ$rtcVarDesc DD 068H				; foo
+	ORG $+1
+?foo@@YA_NXZ$rtcName$2 DB 073H				; foo
+	DB	032H
+	DB	00H
+	ORG $+5
+?foo@@YA_NXZ$rtcVarDesc DD 098H				; foo
+	DD	010H
+	DQ	FLAT:?foo@@YA_NXZ$rtcName$2
+	DD	068H
 	DD	010H
 	DQ	FLAT:?foo@@YA_NXZ$rtcName$1
 	DD	038H
 	DD	010H
 	DQ	FLAT:?foo@@YA_NXZ$rtcName$0
-	ORG $+96
-?foo@@YA_NXZ$rtcFrameData DD 02H			; foo
+	ORG $+144
+?foo@@YA_NXZ$rtcFrameData DD 03H			; foo
 	DD	00H
 	DQ	FLAT:?foo@@YA_NXZ$rtcVarDesc
 CONST	ENDS
@@ -1601,35 +1608,37 @@ $LN3:
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu
 _TEXT	SEGMENT
-ret$5 = 32
-s$6 = 56
-cs$7 = 104
-tv73 = 132
-tv84 = 136
+ret$6 = 32
+s$7 = 56
+cs$8 = 104
+s2$9 = 152
+tv73 = 180
+tv84 = 184
+tv95 = 188
 ?foo@@YA_NXZ PROC					; foo
 ; File c:\projects\gsl\tests\span_compile_only.cpp
 ; Line 42
-$LN9:
+$LN12:
 	push	rdi
-	sub	rsp, 144				; 00000090H
+	sub	rsp, 192				; 000000c0H
 	mov	rdi, rsp
-	mov	ecx, 36					; 00000024H
+	mov	ecx, 48					; 00000030H
 	mov	eax, -858993460				; ccccccccH
 	rep stosd
 ; Line 44
-	mov	BYTE PTR ret$5[rsp], 1
+	mov	BYTE PTR ret$6[rsp], 1
 ; Line 45
-	lea	rcx, QWORD PTR s$6[rsp]
+	lea	rcx, QWORD PTR s$7[rsp]
 	call	??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ	; gsl::span<int,-1>::span<int,-1><0,void>
 ; Line 46
-	movzx	eax, BYTE PTR ret$5[rsp]
+	movzx	eax, BYTE PTR ret$6[rsp]
 	test	eax, eax
 	jne	SHORT $LN4@foo
-	lea	rcx, QWORD PTR s$6[rsp]
+	lea	rcx, QWORD PTR s$7[rsp]
 	call	?size@?$span@H$0?0@gsl@@QEBA_JXZ	; gsl::span<int,-1>::size
 	test	rax, rax
 	jne	SHORT $LN3@foo
-	lea	rcx, QWORD PTR s$6[rsp]
+	lea	rcx, QWORD PTR s$7[rsp]
 	call	?data@?$span@H$0?0@gsl@@QEBAPEAHXZ	; gsl::span<int,-1>::data
 	test	rax, rax
 	je	SHORT $LN4@foo
@@ -1640,19 +1649,19 @@ $LN4@foo:
 	mov	DWORD PTR tv73[rsp], 1
 $LN5@foo:
 	movzx	eax, BYTE PTR tv73[rsp]
-	mov	BYTE PTR ret$5[rsp], al
+	mov	BYTE PTR ret$6[rsp], al
 ; Line 48
-	lea	rcx, QWORD PTR cs$7[rsp]
+	lea	rcx, QWORD PTR cs$8[rsp]
 	call	??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ ; gsl::span<int const ,-1>::span<int const ,-1><0,void>
 ; Line 49
-	movzx	eax, BYTE PTR ret$5[rsp]
+	movzx	eax, BYTE PTR ret$6[rsp]
 	test	eax, eax
 	jne	SHORT $LN7@foo
-	lea	rcx, QWORD PTR cs$7[rsp]
+	lea	rcx, QWORD PTR cs$8[rsp]
 	call	?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ	; gsl::span<int const ,-1>::size
 	test	rax, rax
 	jne	SHORT $LN6@foo
-	lea	rcx, QWORD PTR cs$7[rsp]
+	lea	rcx, QWORD PTR cs$8[rsp]
 	call	?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ	; gsl::span<int const ,-1>::data
 	test	rax, rax
 	je	SHORT $LN7@foo
@@ -1663,16 +1672,39 @@ $LN7@foo:
 	mov	DWORD PTR tv84[rsp], 1
 $LN8@foo:
 	movzx	eax, BYTE PTR tv84[rsp]
-	mov	BYTE PTR ret$5[rsp], al
+	mov	BYTE PTR ret$6[rsp], al
 ; Line 51
-	movzx	eax, BYTE PTR ret$5[rsp]
-; Line 53
+	lea	rcx, QWORD PTR s2$9[rsp]
+	call	??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ	; gsl::span<int,-1>::span<int,-1><0,void>
+; Line 52
+	movzx	eax, BYTE PTR ret$6[rsp]
+	test	eax, eax
+	jne	SHORT $LN10@foo
+	lea	rcx, QWORD PTR s2$9[rsp]
+	call	?size@?$span@H$0?0@gsl@@QEBA_JXZ	; gsl::span<int,-1>::size
+	test	rax, rax
+	jne	SHORT $LN9@foo
+	lea	rcx, QWORD PTR s2$9[rsp]
+	call	?data@?$span@H$0?0@gsl@@QEBAPEAHXZ	; gsl::span<int,-1>::data
+	test	rax, rax
+	je	SHORT $LN10@foo
+$LN9@foo:
+	mov	DWORD PTR tv95[rsp], 0
+	jmp	SHORT $LN11@foo
+$LN10@foo:
+	mov	DWORD PTR tv95[rsp], 1
+$LN11@foo:
+	movzx	eax, BYTE PTR tv95[rsp]
+	mov	BYTE PTR ret$6[rsp], al
+; Line 54
+	movzx	eax, BYTE PTR ret$6[rsp]
+; Line 56
 	mov	edi, eax
 	mov	rcx, rsp
 	lea	rdx, OFFSET FLAT:?foo@@YA_NXZ$rtcFrameData
 	call	_RTC_CheckStackVars
 	mov	eax, edi
-	add	rsp, 144				; 00000090H
+	add	rsp, 192				; 000000c0H
 	pop	rdi
 	ret	0
 ?foo@@YA_NXZ ENDP					; foo
@@ -2205,7 +2237,7 @@ __formal$ = 16
 __formal$ = 24
 ?__empty_global_delete@@YAXPEAX_K@Z PROC		; __empty_global_delete, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 54
+; Line 57
 $LN3:
 	mov	QWORD PTR [rsp+16], rdx
 	mov	QWORD PTR [rsp+8], rcx
@@ -2220,7 +2252,7 @@ _TEXT	SEGMENT
 __formal$ = 16
 ?__empty_global_delete@@YAXPEAX@Z PROC			; __empty_global_delete, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 54
+; Line 57
 $LN3:
 	mov	QWORD PTR [rsp+8], rcx
 	push	rdi
