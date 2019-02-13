@@ -131,13 +131,7 @@ test_script:
   - ctest -j2
 
 on_success:
-  - git config --global credential.helper store
-  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  - git config --global user.email "dadonenf@microsoft.com"
-  - git config --global user.name "Daniel Donenfeld"
-  - git config --global core.autocrlf false 
   - cd %APPVEYOR_BUILD_FOLDER%
   - push_asm.bat
-
 
 deploy: off
