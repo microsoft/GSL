@@ -1,5 +1,9 @@
 # Based on https://github.com/ldionne/hana/blob/master/.travis.yml
 
+branches:
+  except:
+    - /asm.*/
+
 language: cpp
 sudo: false
 notifications:
