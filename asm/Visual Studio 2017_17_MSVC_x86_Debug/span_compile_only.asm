@@ -955,36 +955,38 @@ _this$ = -4						; size = 4
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu
 _TEXT	SEGMENT
-tv84 = -44						; size = 4
-tv73 = -40						; size = 4
-_cs$1 = -32						; size = 8
-_s$2 = -16						; size = 8
-_ret$3 = -1						; size = 1
+tv95 = -64						; size = 4
+tv84 = -60						; size = 4
+tv73 = -56						; size = 4
+_s2$1 = -48						; size = 8
+_cs$2 = -32						; size = 8
+_s$3 = -16						; size = 8
+_ret$4 = -1						; size = 1
 ?foo@@YA_NXZ PROC					; foo
 ; File c:\projects\gsl\tests\span_compile_only.cpp
 ; Line 42
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 44					; 0000002cH
+	sub	esp, 64					; 00000040H
 	push	edi
-	lea	edi, DWORD PTR [ebp-44]
-	mov	ecx, 11					; 0000000bH
+	lea	edi, DWORD PTR [ebp-64]
+	mov	ecx, 16					; 00000010H
 	mov	eax, -858993460				; ccccccccH
 	rep stosd
 ; Line 44
-	mov	BYTE PTR _ret$3[ebp], 1
+	mov	BYTE PTR _ret$4[ebp], 1
 ; Line 45
-	lea	ecx, DWORD PTR _s$2[ebp]
+	lea	ecx, DWORD PTR _s$3[ebp]
 	call	??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ	; gsl::span<int,-1>::span<int,-1><0,void>
 ; Line 46
-	movzx	eax, BYTE PTR _ret$3[ebp]
+	movzx	eax, BYTE PTR _ret$4[ebp]
 	test	eax, eax
 	jne	SHORT $LN4@foo
-	lea	ecx, DWORD PTR _s$2[ebp]
+	lea	ecx, DWORD PTR _s$3[ebp]
 	call	?size@?$span@H$0?0@gsl@@QBEHXZ		; gsl::span<int,-1>::size
 	test	eax, eax
 	jne	SHORT $LN3@foo
-	lea	ecx, DWORD PTR _s$2[ebp]
+	lea	ecx, DWORD PTR _s$3[ebp]
 	call	?data@?$span@H$0?0@gsl@@QBEPAHXZ	; gsl::span<int,-1>::data
 	test	eax, eax
 	je	SHORT $LN4@foo
@@ -995,19 +997,19 @@ $LN4@foo:
 	mov	DWORD PTR tv73[ebp], 1
 $LN5@foo:
 	mov	cl, BYTE PTR tv73[ebp]
-	mov	BYTE PTR _ret$3[ebp], cl
+	mov	BYTE PTR _ret$4[ebp], cl
 ; Line 48
-	lea	ecx, DWORD PTR _cs$1[ebp]
+	lea	ecx, DWORD PTR _cs$2[ebp]
 	call	??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ	; gsl::span<int const ,-1>::span<int const ,-1><0,void>
 ; Line 49
-	movzx	edx, BYTE PTR _ret$3[ebp]
+	movzx	edx, BYTE PTR _ret$4[ebp]
 	test	edx, edx
 	jne	SHORT $LN7@foo
-	lea	ecx, DWORD PTR _cs$1[ebp]
+	lea	ecx, DWORD PTR _cs$2[ebp]
 	call	?size@?$span@$$CBH$0?0@gsl@@QBEHXZ	; gsl::span<int const ,-1>::size
 	test	eax, eax
 	jne	SHORT $LN6@foo
-	lea	ecx, DWORD PTR _cs$1[ebp]
+	lea	ecx, DWORD PTR _cs$2[ebp]
 	call	?data@?$span@$$CBH$0?0@gsl@@QBEPBHXZ	; gsl::span<int const ,-1>::data
 	test	eax, eax
 	je	SHORT $LN7@foo
@@ -1018,40 +1020,70 @@ $LN7@foo:
 	mov	DWORD PTR tv84[ebp], 1
 $LN8@foo:
 	mov	al, BYTE PTR tv84[ebp]
-	mov	BYTE PTR _ret$3[ebp], al
+	mov	BYTE PTR _ret$4[ebp], al
 ; Line 51
-	mov	al, BYTE PTR _ret$3[ebp]
-; Line 53
+	lea	ecx, DWORD PTR _s2$1[ebp]
+	call	??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ	; gsl::span<int,-1>::span<int,-1><0,void>
+; Line 52
+	movzx	ecx, BYTE PTR _ret$4[ebp]
+	test	ecx, ecx
+	jne	SHORT $LN10@foo
+	lea	ecx, DWORD PTR _s2$1[ebp]
+	call	?size@?$span@H$0?0@gsl@@QBEHXZ		; gsl::span<int,-1>::size
+	test	eax, eax
+	jne	SHORT $LN9@foo
+	lea	ecx, DWORD PTR _s2$1[ebp]
+	call	?data@?$span@H$0?0@gsl@@QBEPAHXZ	; gsl::span<int,-1>::data
+	test	eax, eax
+	je	SHORT $LN10@foo
+$LN9@foo:
+	mov	DWORD PTR tv95[ebp], 0
+	jmp	SHORT $LN11@foo
+$LN10@foo:
+	mov	DWORD PTR tv95[ebp], 1
+$LN11@foo:
+	mov	dl, BYTE PTR tv95[ebp]
+	mov	BYTE PTR _ret$4[ebp], dl
+; Line 54
+	mov	al, BYTE PTR _ret$4[ebp]
+; Line 56
 	push	edx
 	mov	ecx, ebp
 	push	eax
-	lea	edx, DWORD PTR $LN12@foo
+	lea	edx, DWORD PTR $LN16@foo
 	call	@_RTC_CheckStackVars@8
 	pop	eax
 	pop	edx
 	pop	edi
-	add	esp, 44					; 0000002cH
+	add	esp, 64					; 00000040H
 	cmp	ebp, esp
 	call	__RTC_CheckEsp
 	mov	esp, ebp
 	pop	ebp
 	ret	0
-	npad	3
-$LN12@foo:
-	DD	2
-	DD	$LN11@foo
-$LN11@foo:
+	npad	1
+$LN16@foo:
+	DD	3
+	DD	$LN15@foo
+$LN15@foo:
 	DD	-16					; fffffff0H
 	DD	8
-	DD	$LN9@foo
+	DD	$LN12@foo
 	DD	-32					; ffffffe0H
 	DD	8
-	DD	$LN10@foo
-$LN10@foo:
+	DD	$LN13@foo
+	DD	-48					; ffffffd0H
+	DD	8
+	DD	$LN14@foo
+$LN14@foo:
+	DB	115					; 00000073H
+	DB	50					; 00000032H
+	DB	0
+$LN13@foo:
 	DB	99					; 00000063H
 	DB	115					; 00000073H
 	DB	0
-$LN9@foo:
+$LN12@foo:
 	DB	115					; 00000073H
 	DB	0
 ?foo@@YA_NXZ ENDP					; foo
@@ -1605,7 +1637,7 @@ ___formal$ = 8						; size = 4
 ___formal$ = 12						; size = 4
 ?__empty_global_delete@@YAXPAXI@Z PROC			; __empty_global_delete, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 54
+; Line 57
 	push	ebp
 	mov	ebp, esp
 	pop	ebp
@@ -1618,7 +1650,7 @@ _TEXT	SEGMENT
 ___formal$ = 8						; size = 4
 ?__empty_global_delete@@YAXPAX@Z PROC			; __empty_global_delete, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 54
+; Line 57
 	push	ebp
 	mov	ebp, esp
 	pop	ebp
