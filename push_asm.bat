@@ -1,7 +1,3 @@
-git config --global credential.helper store
-powershell -command 'Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"' > nul 2>&1
-git config --global user.email "dadonenf@microsoft.com"
-git config --global user.name "Daniel Donenfeld"
 git config --global core.autocrlf false 
 
 REM Get branch to check asm into 
