@@ -284,8 +284,10 @@ __unwindtable$?foo@@YA_NXZ DD 0ffffffffH
 	DD	FLAT:__unwindfunclet$?foo@@YA_NXZ$0
 	DD	0ffffffffH
 	DD	FLAT:__unwindfunclet$?foo@@YA_NXZ$15
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?foo@@YA_NXZ$30
 __ehfuncinfo$?foo@@YA_NXZ DD 019930522H
-	DD	02H
+	DD	03H
 	DD	FLAT:__unwindtable$?foo@@YA_NXZ
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
@@ -627,9 +629,9 @@ __$EHRec$ = -12						; size = 12
 	lea	eax, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, eax
 	mov	DWORD PTR $T2[ebp], 0
-; Line 51
+; Line 54
 	mov	al, 1
-; Line 53
+; Line 56
 	mov	ecx, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, ecx
 	pop	ecx
@@ -643,6 +645,9 @@ __unwindfunclet$?foo@@YA_NXZ$0:
 	call	___std_terminate
 	ret	0
 __unwindfunclet$?foo@@YA_NXZ$15:
+	call	___std_terminate
+	ret	0
+__unwindfunclet$?foo@@YA_NXZ$30:
 	call	___std_terminate
 	ret	0
 __ehhandler$?foo@@YA_NXZ:
