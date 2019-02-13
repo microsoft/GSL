@@ -73,6 +73,7 @@ install:
       }
 
 before_build:
+  - set ASM_FOLDER=%APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%env:PLATFORM%_%env:CONFIGURATION%
   - ps: |
       if ("$env:USE_GENERATOR" -eq "Ninja") {
         $GeneratorFlags = '-k 10'
@@ -82,7 +83,7 @@ before_build:
         } else {
           $env:VCVARSALL = "`"$env:VCVAR2017`" $Architecture"
         }
-        $env:CMakeGenFlags = "-G Ninja -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD -DGSL_ASM_FOLDER=`"$($env:APPVEYOR_BUILD_WORKER_IMAGE)_$($env:GSL_CXX_STANDARD)_$($env:USE_TOOLSET)_$($env:PLATFORM)_$($env:CONFIGURATION)`""
+        $env:CMakeGenFlags = "-G Ninja -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD -DGSL_ASM_FOLDER=`"$($env:ASM_FOLDER)`""
       } else {
         $GeneratorFlags = '/m /v:minimal'
         if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
@@ -96,9 +97,9 @@ before_build:
             $Architecture = "x64" 
         }
         if ("$env:USE_TOOLSET" -eq "LLVM") {
-          $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -T llvm -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD -DGSL_ASM_FOLDER=`"$($env:APPVEYOR_BUILD_WORKER_IMAGE)_$($env:GSL_CXX_STANDARD)_$($env:USE_TOOLSET)_$($env:PLATFORM)_$($env:CONFIGURATION)`""
+          $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -T llvm -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD -DGSL_ASM_FOLDER=`"$($env:ASM_FOLDER)`""
         } else {
-          $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD -DGSL_ASM_FOLDER=`"$($env:APPVEYOR_BUILD_WORKER_IMAGE)_$($env:GSL_CXX_STANDARD)_$($env:USE_TOOLSET)_$($env:PLATFORM)_$($env:CONFIGURATION)`""
+          $env:CMakeGenFlags = "-G `"$Generator`" -A $Architecture -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD -DGSL_ASM_FOLDER=`"$($env:ASM_FOLDER)`""
         }
       }
       if ("$env:USE_TOOLSET" -eq "LLVM") {
@@ -136,13 +137,7 @@ on_success:
   - git config --global user.name "Daniel Donenfeld"
   - git config --global core.autocrlf false 
   - cd %APPVEYOR_BUILD_FOLDER%
-  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  - git checkout %APPVEYOR_REPO_BRANCH% 
-  - git add "asm/*"
-  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  - git status
-  - git diff-index --cached --quiet --exit-code HEAD || (git commit -m "[skip ci] Update ASM for %APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%" && git push)
-
+  - push_asm.bat
 
 
 deploy: off
