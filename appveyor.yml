@@ -73,7 +73,7 @@ install:
       }
 
 before_build:
-  - set ASM_FOLDER=%APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%env:PLATFORM%_%env:CONFIGURATION%
+  - set ASM_FOLDER=%APPVEYOR_BUILD_WORKER_IMAGE%_%GSL_CXX_STANDARD%_%USE_TOOLSET%_%PLATFORM%_%CONFIGURATION%
   - ps: |
       if ("$env:USE_GENERATOR" -eq "Ninja") {
         $GeneratorFlags = '-k 10'
