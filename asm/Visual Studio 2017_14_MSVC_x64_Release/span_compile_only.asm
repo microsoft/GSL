@@ -126,8 +126,8 @@ $pdata$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z 
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?foo@@YA_NXZ DD imagerel $LN112
-	DD	imagerel $LN112+19
+$pdata$?foo@@YA_NXZ DD imagerel $LN165
+	DD	imagerel $LN165+19
 	DD	imagerel $unwind$?foo@@YA_NXZ
 pdata	ENDS
 ;	COMDAT pdata
@@ -676,16 +676,16 @@ _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ?foo@@YA_NXZ
 _TEXT	SEGMENT
-$T3 = 0
+$T4 = 0
 ?foo@@YA_NXZ PROC					; foo, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
 ; Line 42
-$LN112:
+$LN165:
 	sub	rsp, 24
-	mov	QWORD PTR $T3[rsp], -2
-; Line 51
+	mov	QWORD PTR $T4[rsp], -2
+; Line 54
 	mov	al, 1
-; Line 53
+; Line 56
 	add	rsp, 24
 	ret	0
 ?foo@@YA_NXZ ENDP					; foo
