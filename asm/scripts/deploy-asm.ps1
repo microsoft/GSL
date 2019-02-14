@@ -46,6 +46,8 @@ function appveyorFinished {
 
     Write-Host "[Appveyor] At Last Job: "
     Write-Host $buildData
+    Write-Host $buildData.build
+    Write-Host $buildData.build.jobs
 
     [datetime]$stop = ([datetime]::Now).AddMinutes($env:TIMEOUT_MINS)
 
