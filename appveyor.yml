@@ -145,11 +145,11 @@ before_deploy:
         Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n" | Out-Null
         git config --global user.email "dadonenf@microsoft.com"
         git config --global user.name "Daniel Donenfeld"
-        cd %APPVEYOR_BUILD_FOLDER%
+        Push-Location $env:APPVEYOR_BUILD_FOLDER
         
         Write-Host "[before_deploy] About to call push_asm batch script!"
         
-        asm\scripts\push_asm.bat
+        .\asm\scripts\push_asm.bat
         
         Write-Host "[before_deploy] after push asm!"
       }
