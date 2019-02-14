@@ -110,7 +110,7 @@ function collectAsm {
 
     #collect all branches to merge
     $asmBranches = @()
-    (Get-AppVeyorBuild).build.jobs | Foreach-Object { $asmBranches += "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"}
+    (Get-AppVeyorBuild).build.jobs | Foreach-Object { $asmBranches += "origin/asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"}
     #TODO: collect asm from travis
     # $travisBuild = Get-TravisBuild
     # $travisJobs = @()
@@ -119,6 +119,7 @@ function collectAsm {
     #Merge all branches into master
     $branchString = $asmBranches -join ' '
     git checkout master
+    git pull
     git merge --squash $branchString
     git diff-index --cached --quiet --exit-code HEAD
     if(-not $?) {
