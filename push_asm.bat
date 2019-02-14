@@ -2,7 +2,7 @@ git config --global core.autocrlf false
 
 REM Get branch to check asm into 
 git checkout %APPVEYOR_REPO_BRANCH% 
-git checkout -b asm/%APPVEYOR_REPO_COMMIT%/appveyor-%APPVEYOR_JOB_NUMBER%
+git checkout -b asm/%APPVEYOR_REPO_COMMIT%/appveyor-%APPVEYOR_JOB_ID%
 
 REM Check asm into the branch
 git add "asm/*"

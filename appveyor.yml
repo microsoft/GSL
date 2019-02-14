@@ -20,6 +20,11 @@ image:
 environment:
   access_token:
     secure: JoKQ6wDekwtEk9su/zJWT12TtHMsHAacSLnPe47/SV22BAfVSMMR8VCyDF/W9bE2
+  APPVEYOR_API_TOKEN:
+    secure: JwBE1w4itlwjHKNDVnG+frRTexCT0x6e3iF6Qsw2Ov4=
+  TRAVIS_API_TOKEN:
+    secure: 1U+1NKVIjalxvmkEm9XYMaIrya5yc/rDw9yowBcSbuw=
+  TIMEOUT_MINS: 10
   NINJA_TAG: v1.8.2
   NINJA_SHA512: 9B9CE248240665FCD6404B989F3B3C27ED9682838225E6DC9B67B551774F251E4FF8A207504F941E7C811E7A8BE1945E7BCB94472A335EF15E23A0200A32E6D5
   NINJA_PATH: C:\Tools\ninja\ninja-%NINJA_TAG%
@@ -130,12 +135,17 @@ build_script:
 test_script:
   - ctest -j2
 
-on_success:
-  - git config --global credential.helper store
-  - ps: powershell -command 'Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"'
-  - git config --global user.email "dadonenf@microsoft.com"
-  - git config --global user.name "Daniel Donenfeld"
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - push_asm.bat
+before_deploy:
+  - ps: |
+      if($env:APPVEYOR_PULL_REQUEST_NUMBER -eq "") {
+        # Only push asm during CI. Credentials are not available during a PR
+        git config --global credential.helper store
+        Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n" | Out-Null
+        git config --global user.email "dadonenf@microsoft.com"
+        git config --global user.name "Daniel Donenfeld"
+        cd %APPVEYOR_BUILD_FOLDER%
+        push_asm.bat
+      }
 
-deploy: off
+deploy_script:
+  - ps: '& "deploy-asm.ps1"'
