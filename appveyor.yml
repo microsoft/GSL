@@ -137,14 +137,21 @@ test_script:
 
 before_deploy:
   - ps: |
-      if($env:APPVEYOR_PULL_REQUEST_NUMBER -eq "") {
+      if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         # Only push asm during CI. Credentials are not available during a PR
+        Write-Host "[before_deploy] Not a PR, pushing asm!"
+        
         git config --global credential.helper store
         Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n" | Out-Null
         git config --global user.email "dadonenf@microsoft.com"
         git config --global user.name "Daniel Donenfeld"
         cd %APPVEYOR_BUILD_FOLDER%
+        
+        Write-Host "[before_deploy] About to call push_asm batch script!"
+        
         asm\scripts\push_asm.bat
+        
+        Write-Host "[before_deploy] after push asm!"
       }
 
 deploy_script:
