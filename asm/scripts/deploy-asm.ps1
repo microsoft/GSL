@@ -120,7 +120,11 @@ function collectAsm {
     $branchString = $asmBranches -join ' '
     git checkout master
     git pull
+    git branch -a
     git merge --squash $branchString
+    if(-not $?){
+        throw "Failed merge"
+    }
     git diff-index --cached --quiet --exit-code HEAD
     if(-not $?) {
         git commit -m "[skip ci] Update ASM for $($env:APPVEYOR_REPO_COMMIT)"
