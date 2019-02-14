@@ -6,15 +6,15 @@ skip_branch_with_pr: true
 
 
 platform:
-  - x86
+  # - x86
   - x64
 
 configuration:
-  - Debug
+  # - Debug
   - Release
 
 image:
-  - Visual Studio 2015
+  # - Visual Studio 2015
   - Visual Studio 2017
 
 environment:
@@ -31,18 +31,18 @@ environment:
   VCVAR2015: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
   VCVAR2017: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat'
   matrix:
-    - GSL_CXX_STANDARD: 14
-      USE_TOOLSET: MSVC
-      USE_GENERATOR: MSBuild
+    # - GSL_CXX_STANDARD: 14
+    #   USE_TOOLSET: MSVC
+    #   USE_GENERATOR: MSBuild
     - GSL_CXX_STANDARD: 17
       USE_TOOLSET: MSVC
       USE_GENERATOR: MSBuild
     - GSL_CXX_STANDARD: 14
       USE_TOOLSET: LLVM
       USE_GENERATOR: Ninja
-    - GSL_CXX_STANDARD: 17
-      USE_TOOLSET: LLVM
-      USE_GENERATOR: Ninja
+    # - GSL_CXX_STANDARD: 17
+    #   USE_TOOLSET: LLVM
+    #   USE_GENERATOR: Ninja
 
 matrix:
     exclude:
