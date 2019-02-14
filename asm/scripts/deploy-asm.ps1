@@ -47,16 +47,16 @@ function appveyorFinished {
     [datetime]$stop = ([datetime]::Now).AddMinutes($env:TIMEOUT_MINS)
 
     do {
-        (Get-AppVeyorBuild).build.jobs | Where-Object {$_.jobId -ne $env:APPVEYOR_JOB_ID} | Foreach-Object 
-            -Begin { $anyFalse = $false } 
-            -Progress {
+        (Get-AppVeyorBuild).build.jobs | Where-Object {$_.jobId -ne $env:APPVEYOR_JOB_ID} | Foreach-Object `
+            -Begin { $anyFalse = $false } `
+            -Process { 
                 $job = $_
                 switch ($job.status) {
                     "failed" { throw "AppVeyor's Job ($($job.jobId)) failed." }
                     "success" { continue }
                     Default { $anyFalse = $true }
                 }
-            } 
+            } `
             -End { if (!$anyFalse) { return $true } }
         Start-sleep 5
     } while (([datetime]::Now) -lt $stop)
