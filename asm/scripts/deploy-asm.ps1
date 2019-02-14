@@ -54,17 +54,21 @@ function appveyorFinished {
     do {
         Write-Host "[Appveyor] Checking Build Jobs"
 
+        $allSuccess = $true
         (Get-AppVeyorBuild).build.jobs | Where-Object {$_.jobId -ne $env:APPVEYOR_JOB_ID} | Foreach-Object `
-            -Begin { $allSuccess = $true } `
-            -Process { 
+            { 
                 $job = $_
+                Write-Host "[Appveyor] Checking Build Job $($job.jobId)"
+                Write-Host $job
+                Write-Host " "
+
                 switch ($job.status) {
                     "failed" { throw "AppVeyor's Job ($($job.jobId)) failed." }
                     "success" { continue }
                     Default { Write-Host "Job status: $($job.status)"; Write-Host $job ;$allSuccess = $false }
                 }
-            } `
-            -End { if ($allSuccess) { return $true } }
+            }
+        if ($allSuccess) { return $true }
         Start-sleep 5
     } while (([datetime]::Now) -lt $stop)
 
