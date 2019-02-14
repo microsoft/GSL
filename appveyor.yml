@@ -144,9 +144,9 @@ before_deploy:
         git config --global user.email "dadonenf@microsoft.com"
         git config --global user.name "Daniel Donenfeld"
         cd %APPVEYOR_BUILD_FOLDER%
-        push_asm.bat
+        asm\scripts\push_asm.bat
       }
 
 deploy_script:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - ps: '& "deploy-asm.ps1"'
+  - ps: '& "asm\scripts\deploy-asm.ps1"'
