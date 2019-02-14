@@ -148,4 +148,5 @@ before_deploy:
       }
 
 deploy_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
   - ps: '& "deploy-asm.ps1"'
