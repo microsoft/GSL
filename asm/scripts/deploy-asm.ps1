@@ -59,7 +59,7 @@ function appveyorFinished {
                 switch ($job.status) {
                     "failed" { throw "AppVeyor's Job ($($job.jobId)) failed." }
                     "success" { continue }
-                    Default { $allSuccess = $false }
+                    Default { Write-Host "Job status: $($job.status)"; Write-Host $job ;$allSuccess = $false }
                 }
             } `
             -End { if ($allSuccess) { return $true } }
