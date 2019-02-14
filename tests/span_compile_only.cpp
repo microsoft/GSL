@@ -48,8 +48,8 @@ bool foo()
         span<const int> cs;
         ret = ret || (cs.size() == 0 && cs.data() == nullptr);
 
-        span<int> s2{};
-        ret = ret || (s2.size() == 0 && s2.data() == nullptr);
+        // span<int> s2{};
+        // ret = ret || (s2.size() == 0 && s2.data() == nullptr);
 
         return ret;
     }

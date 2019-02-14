@@ -149,7 +149,7 @@ before_deploy:
         
         Write-Host "[before_deploy] About to call push_asm batch script!"
         
-        .\asm\scripts\push_asm.bat
+        cmd.exe /c 'asm\scripts\push_asm.bat'
         
         Write-Host "[before_deploy] after push asm!"
       }
