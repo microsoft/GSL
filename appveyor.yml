@@ -174,7 +174,7 @@ on_finish:
             $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
             git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
             if($?){
-              git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) 
+              git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) 2>&1
             }
           }
         }
