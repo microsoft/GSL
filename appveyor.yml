@@ -160,19 +160,22 @@ deploy_script:
 
 on_finish:
   - ps: |
-      # Delete all branches for asm 
       if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        # Delete all branches for asm if this is the last build
         $build = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG" -Method GET -Headers @{
           "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
           "Content-type"  = "application/json"
         }
-        $build.build.jobs | Foreach-Object { 
-          $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
-          git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
-          if($?){
-            git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) 
+        $jobs = $buildData.build.jobs
+        $lastJob = ($jobs | Select-Object -Last 1).jobId
+
+        if ($lastJob -eq $env:APPVEYOR_JOB_ID) {
+          $jobs | Foreach-Object { 
+            $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
+            git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
+            if($?){
+              git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) 
+            }
           }
         }
       }
-
-      
