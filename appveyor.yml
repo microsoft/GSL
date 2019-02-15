@@ -157,3 +157,16 @@ before_deploy:
 deploy_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - ps: '& "asm\scripts\deploy-asm.ps1"'
+
+on_finish:
+  - ps: |
+      # Delete all branches for asm 
+      if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        $build = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG" -Method GET -Headers @{
+          "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
+          "Content-type"  = "application/json"
+        }
+        $build.build.jobs | Foreach-Object { git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) }
+      }
+
+      
