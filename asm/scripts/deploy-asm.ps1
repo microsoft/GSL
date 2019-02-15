@@ -110,7 +110,20 @@ function collectAsm {
 
     #collect all branches to merge
     $asmBranches = @()
-    (Get-AppVeyorBuild).build.jobs | Foreach-Object { $asmBranches += "origin/asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"}
+    (Get-AppVeyorBuild).build.jobs | Foreach-Object { 
+        $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
+
+        #Check that all branches exist
+        git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
+        if(-not $?){
+            throw "Missing branch for job $($_.jobId)"
+        }
+
+        #Add origin branch to the branch list
+        $branchName = "origin/"+$branchName
+        $asmBranches += $branchName
+    }
+
     #TODO: collect asm from travis
     # $travisBuild = Get-TravisBuild
     # $travisJobs = @()
@@ -121,6 +134,7 @@ function collectAsm {
     git checkout master
     git pull
     git branch -a
+    Write-Host "git merge --squash $($branchString)"
     git merge --squash $branchString
     if(-not $?){
         throw "Failed merge"

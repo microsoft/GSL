@@ -166,7 +166,13 @@ on_finish:
           "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
           "Content-type"  = "application/json"
         }
-        $build.build.jobs | Foreach-Object { git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) }
+        $build.build.jobs | Foreach-Object { 
+          $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
+          git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
+          if($?){
+            git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) 
+          }
+        }
       }
 
       
