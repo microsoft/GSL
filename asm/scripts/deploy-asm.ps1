@@ -120,9 +120,10 @@ function collectAsm {
         }
 
         git checkout $branchName 2>&1
+        git pull 2>&1
 
-        #Add origin branch to the branch list
-        $branchName = "origin/"+$branchName
+        #Add branch to the branch list
+        # $branchName = "origin/"+$branchName
         $asmBranches += $branchName
     }
 
