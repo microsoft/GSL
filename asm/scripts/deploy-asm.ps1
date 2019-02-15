@@ -133,6 +133,7 @@ function collectAsm {
     $branchString = $asmBranches -join ' '
     git checkout master
     git pull
+    git fetch origin
     git branch -a
     Write-Host "git merge --squash $($branchString)"
     git merge --squash $branchString
