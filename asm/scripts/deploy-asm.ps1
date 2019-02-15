@@ -119,6 +119,8 @@ function collectAsm {
             throw "Missing branch for job $($_.jobId)"
         }
 
+        git checkout $branchName 2>&1
+
         #Add origin branch to the branch list
         $branchName = "origin/"+$branchName
         $asmBranches += $branchName
@@ -131,7 +133,7 @@ function collectAsm {
 
     #Merge all branches into master
     $branchString = $asmBranches -join ' '
-    git checkout master
+    git checkout master 2>&1
     git pull
     git fetch origin
     git branch -a
