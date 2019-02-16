@@ -138,20 +138,13 @@ test_script:
 before_deploy:
   - ps: |
       if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
-        # Only push asm during CI. Credentials are not available during a PR
-        Write-Host "[before_deploy] Not a PR, pushing asm!"
-        
-        git config --global credential.helper store
+        # Only push asm during CI. Credentials are not available during a PR        
+        git config --global credential.helper store | Out-Null
         Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n" | Out-Null
-        git config --global user.email "dadonenf@microsoft.com"
-        git config --global user.name "Daniel Donenfeld"
-        Push-Location $env:APPVEYOR_BUILD_FOLDER
-        
-        Write-Host "[before_deploy] About to call push_asm batch script!"
-        
-        cmd.exe /c 'asm\scripts\push_asm.bat'
-        
-        Write-Host "[before_deploy] after push asm!"
+        git config --global user.email "dadonenf@microsoft.com" | Out-Null
+        git config --global user.name "Daniel Donenfeld" | Out-Null
+        Push-Location $env:APPVEYOR_BUILD_FOLDER        
+        cmd.exe /c 'asm\scripts\push_asm.bat' 
       }
 
 deploy_script:
@@ -167,9 +160,13 @@ on_finish:
           "Content-type"  = "application/json"
         }
         $jobs = $buildData.build.jobs
-        $lastJob = ($jobs | Select-Object -Last 1).jobId
+        $lastJob = ($jobs | Select-Object -Last 1)
 
-        if ($lastJob -eq $env:APPVEYOR_JOB_ID) {
+        Write-Host $jobs
+        Write-Host "Current job: $($env:APPVEYOR_JOB_ID)"
+        Write-Host "Last job: $($lastJob)"
+
+        if ($lastJob.jobId -eq $env:APPVEYOR_JOB_ID) {
           $jobs | Foreach-Object { 
             $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
             git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
