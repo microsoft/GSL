@@ -162,7 +162,11 @@ on_finish:
         $jobs = $buildData.build.jobs
         $lastJob = ($jobs | Select-Object -Last 1)
 
-        Write-Host $jobs
+        Write-Host "Jobs:"
+        $jobs | Foreach-Object { 
+            Write-Host "  - $($_)"
+          }
+
         Write-Host "Current job: $($env:APPVEYOR_JOB_ID)"
         Write-Host "Last job: $($lastJob)"
 
