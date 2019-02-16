@@ -19,7 +19,9 @@ function collectAsm {
         }
 
         cmd.exe /c "git merge $($branchName) 2>&1"
-
+        if(-not $?){
+            throw "Failed merge of $($branchName)"
+        }
     }
 
     #Merge all branches into master
