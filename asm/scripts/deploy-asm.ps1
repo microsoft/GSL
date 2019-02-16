@@ -44,28 +44,18 @@ function appveyorFinished {
         return $false
     }
 
-    Write-Host "[Appveyor] At Last Job: "
-    Write-Host $buildData
-    Write-Host $buildData.build
-    Write-Host $buildData.build.jobs
-
     [datetime]$stop = ([datetime]::Now).AddMinutes($env:TIMEOUT_MINS)
 
     do {
-        Write-Host "[Appveyor] Checking Build Jobs"
 
         $allSuccess = $true
         (Get-AppVeyorBuild).build.jobs | Where-Object {$_.jobId -ne $env:APPVEYOR_JOB_ID} | Foreach-Object `
             { 
                 $job = $_
-                Write-Host "[Appveyor] Checking Build Job $($job.jobId)"
-                Write-Host $job
-                Write-Host " "
-
                 switch ($job.status) {
                     "failed" { throw "AppVeyor's Job ($($job.jobId)) failed." }
                     "success" { continue }
-                    Default { Write-Host "Job status: $($job.status)"; Write-Host $job ;$allSuccess = $false }
+                    Default { $allSuccess = $false }
                 }
             }
         if ($allSuccess) { return $true }
@@ -120,7 +110,6 @@ function collectAsm {
         }
 
         git checkout $branchName 2>&1
-        git pull 2>&1
 
         #Add branch to the branch list
         # $branchName = "origin/"+$branchName
@@ -134,9 +123,9 @@ function collectAsm {
 
     #Merge all branches into master
     $branchString = $asmBranches -join ' '
-    git checkout master 2>&1
+    git checkout origin/master 2>&1
     git pull
-    git fetch origin
+    git fetch --all
     git branch -a
     Write-Host "git merge --squash $($branchString)"
     git merge --squash $branchString
