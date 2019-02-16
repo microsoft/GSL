@@ -9,130 +9,97 @@
 "?foo@@YA_NXZ":                         # @"?foo@@YA_NXZ"
 .Lfunc_begin0:
 	.cv_func_id 0
-	.cv_file	1 "C:\\projects\\gsl\\tests\\span_compile_only.cpp" "CEABC981FD71A5C2BE596AB3B742E767" 1
+	.cv_file	1 "C:\\projects\\gsl\\tests\\span_compile_only.cpp" "6A7309D4C1BE60BFB2E8D3B953E4C94C" 1
 	.cv_loc	0 1 42 0 is_stmt 0      # ..\tests\span_compile_only.cpp:42:0
 .seh_proc "?foo@@YA_NXZ"
 # %bb.0:
-	sub	rsp, 152
-	.seh_stackalloc 152
+	sub	rsp, 120
+	.seh_stackalloc 120
 	.seh_endprologue
 	mov	rax, qword ptr [rip + __security_cookie]
 	xor	rax, rsp
-	mov	qword ptr [rsp + 144], rax
+	mov	qword ptr [rsp + 112], rax
 .Ltmp0:
 	.cv_loc	0 1 44 0                # ..\tests\span_compile_only.cpp:44:0
-	mov	byte ptr [rsp + 95], 1
+	mov	byte ptr [rsp + 79], 1
 	.cv_loc	0 1 45 0                # ..\tests\span_compile_only.cpp:45:0
-	lea	rcx, [rsp + 128]
+	lea	rcx, [rsp + 96]
 .Ltmp1:
 	#DEBUG_VALUE: s <- [$rcx+0]
 	call	"??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ"
 .Ltmp2:
 	.cv_loc	0 1 46 0                # ..\tests\span_compile_only.cpp:46:0
-	test	byte ptr [rsp + 95], 1
+	test	byte ptr [rsp + 79], 1
 	mov	dl, 1
-	mov	qword ptr [rsp + 80], rax # 8-byte Spill
-	mov	byte ptr [rsp + 79], dl # 1-byte Spill
+	mov	qword ptr [rsp + 64], rax # 8-byte Spill
+	mov	byte ptr [rsp + 63], dl # 1-byte Spill
 	jne	.LBB0_4
 # %bb.1:
-	lea	rcx, [rsp + 128]
+	lea	rcx, [rsp + 96]
 	call	"?size@?$span@H$0?0@gsl@@QEBA_JXZ"
 	xor	edx, edx
 	mov	r8b, dl
 	cmp	rax, 0
-	mov	byte ptr [rsp + 78], r8b # 1-byte Spill
+	mov	byte ptr [rsp + 62], r8b # 1-byte Spill
 	jne	.LBB0_3
 # %bb.2:
-	lea	rcx, [rsp + 128]
+	lea	rcx, [rsp + 96]
 	call	"?data@?$span@H$0?0@gsl@@QEBAPEAHXZ"
 	cmp	rax, 0
 	sete	dl
-	mov	byte ptr [rsp + 78], dl # 1-byte Spill
+	mov	byte ptr [rsp + 62], dl # 1-byte Spill
 .LBB0_3:
-	mov	al, byte ptr [rsp + 78] # 1-byte Reload
-	mov	byte ptr [rsp + 79], al # 1-byte Spill
+	mov	al, byte ptr [rsp + 62] # 1-byte Reload
+	mov	byte ptr [rsp + 63], al # 1-byte Spill
 .LBB0_4:
-	mov	al, byte ptr [rsp + 79] # 1-byte Reload
+	mov	al, byte ptr [rsp + 63] # 1-byte Reload
 	and	al, 1
-	mov	byte ptr [rsp + 95], al
+	mov	byte ptr [rsp + 79], al
 	.cv_loc	0 1 48 0                # ..\tests\span_compile_only.cpp:48:0
-	lea	rcx, [rsp + 112]
+	lea	rcx, [rsp + 80]
 .Ltmp3:
 	#DEBUG_VALUE: cs <- [$rcx+0]
 	call	"??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ"
 .Ltmp4:
 	.cv_loc	0 1 49 0                # ..\tests\span_compile_only.cpp:49:0
-	test	byte ptr [rsp + 95], 1
+	test	byte ptr [rsp + 79], 1
 	mov	dl, 1
-	mov	qword ptr [rsp + 64], rax # 8-byte Spill
-	mov	byte ptr [rsp + 63], dl # 1-byte Spill
+	mov	qword ptr [rsp + 48], rax # 8-byte Spill
+	mov	byte ptr [rsp + 47], dl # 1-byte Spill
 	jne	.LBB0_8
 # %bb.5:
-	lea	rcx, [rsp + 112]
+	lea	rcx, [rsp + 80]
 	call	"?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ"
 	xor	edx, edx
 	mov	r8b, dl
 	cmp	rax, 0
-	mov	byte ptr [rsp + 62], r8b # 1-byte Spill
+	mov	byte ptr [rsp + 46], r8b # 1-byte Spill
 	jne	.LBB0_7
 # %bb.6:
-	lea	rcx, [rsp + 112]
+	lea	rcx, [rsp + 80]
 	call	"?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ"
 	cmp	rax, 0
 	sete	dl
-	mov	byte ptr [rsp + 62], dl # 1-byte Spill
-.LBB0_7:
-	mov	al, byte ptr [rsp + 62] # 1-byte Reload
-	mov	byte ptr [rsp + 63], al # 1-byte Spill
-.LBB0_8:
-	mov	al, byte ptr [rsp + 63] # 1-byte Reload
-	and	al, 1
-	mov	byte ptr [rsp + 95], al
-	.cv_loc	0 1 51 0                # ..\tests\span_compile_only.cpp:51:0
-	lea	rcx, [rsp + 96]
-.Ltmp5:
-	#DEBUG_VALUE: s2 <- [$rcx+0]
-	call	"??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ"
-.Ltmp6:
-	.cv_loc	0 1 52 0                # ..\tests\span_compile_only.cpp:52:0
-	test	byte ptr [rsp + 95], 1
-	mov	dl, 1
-	mov	qword ptr [rsp + 48], rax # 8-byte Spill
-	mov	byte ptr [rsp + 47], dl # 1-byte Spill
-	jne	.LBB0_12
-# %bb.9:
-	lea	rcx, [rsp + 96]
-	call	"?size@?$span@H$0?0@gsl@@QEBA_JXZ"
-	xor	edx, edx
-	mov	r8b, dl
-	cmp	rax, 0
-	mov	byte ptr [rsp + 46], r8b # 1-byte Spill
-	jne	.LBB0_11
-# %bb.10:
-	lea	rcx, [rsp + 96]
-	call	"?data@?$span@H$0?0@gsl@@QEBAPEAHXZ"
-	cmp	rax, 0
-	sete	dl
 	mov	byte ptr [rsp + 46], dl # 1-byte Spill
-.LBB0_11:
+.LBB0_7:
 	mov	al, byte ptr [rsp + 46] # 1-byte Reload
 	mov	byte ptr [rsp + 47], al # 1-byte Spill
-.LBB0_12:
+.LBB0_8:
 	mov	al, byte ptr [rsp + 47] # 1-byte Reload
 	and	al, 1
-	mov	byte ptr [rsp + 95], al
+	mov	byte ptr [rsp + 79], al
 	.cv_loc	0 1 54 0                # ..\tests\span_compile_only.cpp:54:0
-	mov	al, byte ptr [rsp + 95]
+	mov	al, byte ptr [rsp + 79]
 	and	al, 1
 	movzx	eax, al
-	mov	rcx, qword ptr [rsp + 144]
+	mov	rcx, qword ptr [rsp + 112]
 	xor	rcx, rsp
 	mov	dword ptr [rsp + 40], eax # 4-byte Spill
 	call	__security_check_cookie
 	mov	eax, dword ptr [rsp + 40] # 4-byte Reload
-	add	rsp, 152
+	add	rsp, 120
 	ret
-.Ltmp7:
+.Ltmp5:
 .Lfunc_end0:
 	.seh_handlerdata
 	.text
@@ -164,18 +131,18 @@
 	mov	qword ptr [rbp - 16], rcx
 	mov	rcx, qword ptr [rbp - 16]
 	lea	rax, [rbp - 24]
-.Ltmp10:
+.Ltmp8:
 	mov	qword ptr [rbp - 32], rcx # 8-byte Spill
 	mov	rcx, rax
 	call	"??0?$extent_type@$0A@@details@gsl@@QEAA@XZ"
 	mov	r8b, byte ptr [rbp - 24]
-.Ltmp8:
+.Ltmp6:
 	xor	edx, edx
                                         # kill: def $rdx killed $edx
 	mov	rcx, qword ptr [rbp - 32] # 8-byte Reload
 	mov	qword ptr [rbp - 40], rax # 8-byte Spill
 	call	"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z"
-.Ltmp9:
+.Ltmp7:
 	mov	qword ptr [rbp - 48], rax # 8-byte Spill
 	jmp	.LBB1_1
 .LBB1_1:
@@ -205,7 +172,7 @@
 	mov	rax, qword ptr [rip + __imp___std_terminate]
 	call	rax
 	ud2
-.Ltmp11:
+.Ltmp9:
 .Lfunc_end1:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ"
@@ -229,9 +196,9 @@
 "$ip2state$??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ":
 	.long	.Lfunc_begin1@IMGREL    # IP
 	.long	-1                      # ToState
-	.long	.Ltmp8@IMGREL+1         # IP
+	.long	.Ltmp6@IMGREL+1         # IP
 	.long	0                       # ToState
-	.long	.Ltmp9@IMGREL+1         # IP
+	.long	.Ltmp7@IMGREL+1         # IP
 	.long	-1                      # ToState
 	.section	.text,"xr",discard,"??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ"
                                         # -- End function
@@ -253,12 +220,12 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp12:
+.Ltmp10:
 	call	"?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ"
 	nop
 	add	rsp, 40
 	ret
-.Ltmp13:
+.Ltmp11:
 .Lfunc_end2:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?size@?$span@H$0?0@gsl@@QEBA_JXZ"
@@ -282,12 +249,12 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp14:
+.Ltmp12:
 	call	"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEBAPEAHXZ"
 	nop
 	add	rsp, 40
 	ret
-.Ltmp15:
+.Ltmp13:
 .Lfunc_end3:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?data@?$span@H$0?0@gsl@@QEBAPEAHXZ"
@@ -318,18 +285,18 @@
 	mov	qword ptr [rbp - 16], rcx
 	mov	rcx, qword ptr [rbp - 16]
 	lea	rax, [rbp - 24]
-.Ltmp18:
+.Ltmp16:
 	mov	qword ptr [rbp - 32], rcx # 8-byte Spill
 	mov	rcx, rax
 	call	"??0?$extent_type@$0A@@details@gsl@@QEAA@XZ"
 	mov	r8b, byte ptr [rbp - 24]
-.Ltmp16:
+.Ltmp14:
 	xor	edx, edx
                                         # kill: def $rdx killed $edx
 	mov	rcx, qword ptr [rbp - 32] # 8-byte Reload
 	mov	qword ptr [rbp - 40], rax # 8-byte Spill
 	call	"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z"
-.Ltmp17:
+.Ltmp15:
 	mov	qword ptr [rbp - 48], rax # 8-byte Spill
 	jmp	.LBB4_1
 .LBB4_1:
@@ -359,7 +326,7 @@
 	mov	rax, qword ptr [rip + __imp___std_terminate]
 	call	rax
 	ud2
-.Ltmp19:
+.Ltmp17:
 .Lfunc_end4:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ"
@@ -383,9 +350,9 @@
 "$ip2state$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ":
 	.long	.Lfunc_begin4@IMGREL    # IP
 	.long	-1                      # ToState
-	.long	.Ltmp16@IMGREL+1        # IP
+	.long	.Ltmp14@IMGREL+1        # IP
 	.long	0                       # ToState
-	.long	.Ltmp17@IMGREL+1        # IP
+	.long	.Ltmp15@IMGREL+1        # IP
 	.long	-1                      # ToState
 	.section	.text,"xr",discard,"??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ"
                                         # -- End function
@@ -407,12 +374,12 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp20:
+.Ltmp18:
 	call	"?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ"
 	nop
 	add	rsp, 40
 	ret
-.Ltmp21:
+.Ltmp19:
 .Lfunc_end5:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ"
@@ -436,12 +403,12 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp22:
+.Ltmp20:
 	call	"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ"
 	nop
 	add	rsp, 40
 	ret
-.Ltmp23:
+.Ltmp21:
 .Lfunc_end6:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ"
@@ -465,10 +432,10 @@
 	.seh_endprologue
 	mov	qword ptr [rsp], rcx
 	mov	rax, qword ptr [rsp]
-.Ltmp24:
+.Ltmp22:
 	pop	rcx
 	ret
-.Ltmp25:
+.Ltmp23:
 .Lfunc_end7:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0?$extent_type@$0A@@details@gsl@@QEAA@XZ"
@@ -501,7 +468,7 @@
 	mov	qword ptr [rbp + 40], rcx
 	mov	rcx, qword ptr [rbp + 40]
 	mov	qword ptr [rbp + 64], rcx
-.Ltmp30:
+.Ltmp28:
 	mov	rdx, rcx
 	mov	r8b, byte ptr [rbp + 32]
 	mov	qword ptr [rbp - 40], rcx # 8-byte Spill
@@ -511,7 +478,7 @@
 	mov	rcx, qword ptr [rbp + 48]
 	mov	r9, qword ptr [rbp - 40] # 8-byte Reload
 	mov	qword ptr [r9 + 8], rcx
-.Ltmp31:
+.Ltmp29:
 	.cv_loc	8 2 598 0               # ..\include\gsl/span:598:0
 	mov	rcx, r9
 	mov	qword ptr [rbp - 48], rax # 8-byte Spill
@@ -533,11 +500,11 @@
 	mov	qword ptr [rbp - 56], rax # 8-byte Spill
 	call	"??0fail_fast@gsl@@QEAA@QEBD@Z"
 	mov	byte ptr [rbp + 7], 1
-.Ltmp26:
+.Ltmp24:
 	mov	rcx, qword ptr [rbp - 56] # 8-byte Reload
 	mov	qword ptr [rbp - 64], rax # 8-byte Spill
 	call	"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z"
-.Ltmp27:
+.Ltmp25:
 	jmp	.LBB8_3
 .LBB8_3:
 	ud2
@@ -575,18 +542,18 @@
 	mov	qword ptr [rbp - 80], rax # 8-byte Spill
 	call	"??0fail_fast@gsl@@QEAA@QEBD@Z"
 	mov	byte ptr [rbp - 25], 1
-.Ltmp28:
+.Ltmp26:
 	mov	rcx, qword ptr [rbp - 80] # 8-byte Reload
 	mov	qword ptr [rbp - 88], rax # 8-byte Spill
 	call	"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z"
-.Ltmp29:
+.Ltmp27:
 	jmp	.LBB8_10
 .LBB8_10:
 	ud2
 .LBB8_14:
 	lea	rcx, [rbp - 24]
 	call	"??1fail_fast@gsl@@UEAA@XZ"
-.Ltmp32:
+.Ltmp30:
 .LBB8_15:
 	.cv_loc	8 2 600 0               # ..\include\gsl/span:600:0
 	mov	rax, qword ptr [rbp + 64]
@@ -612,7 +579,7 @@
 	.seh_stackalloc 32
 	lea	rbp, [rdx + 128]
 	.seh_endprologue
-.Ltmp33:
+.Ltmp31:
 	.cv_loc	8 2 598 0               # ..\include\gsl/span:598:0
 	test	byte ptr [rbp + 7], 1
 	jne	.LBB8_12
@@ -655,7 +622,7 @@
 	add	rsp, 32
 	pop	rbp
 	ret                             # CLEANUPRET
-.Ltmp34:
+.Ltmp32:
 .Lfunc_end8:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z"
@@ -681,13 +648,13 @@
 "$ip2state$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z":
 	.long	.Lfunc_begin8@IMGREL    # IP
 	.long	-1                      # ToState
-	.long	.Ltmp26@IMGREL+1        # IP
+	.long	.Ltmp24@IMGREL+1        # IP
 	.long	0                       # ToState
-	.long	.Ltmp27@IMGREL+1        # IP
+	.long	.Ltmp25@IMGREL+1        # IP
 	.long	-1                      # ToState
-	.long	.Ltmp28@IMGREL+1        # IP
+	.long	.Ltmp26@IMGREL+1        # IP
 	.long	1                       # ToState
-	.long	.Ltmp29@IMGREL+1        # IP
+	.long	.Ltmp27@IMGREL+1        # IP
 	.long	-1                      # ToState
 	.section	.text,"xr",discard,"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z"
                                         # -- End function
@@ -713,12 +680,12 @@
 	mov	byte ptr [rsp + 56], dl
 	mov	qword ptr [rsp + 48], rcx
 	mov	rax, qword ptr [rsp + 48]
-.Ltmp35:
+.Ltmp33:
 	lea	rcx, [rsp + 56]
 	#DEBUG_VALUE: extent_type<0>:ext <- [$rcx+0]
 	mov	qword ptr [rsp + 40], rax # 8-byte Spill
 	call	"?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ"
-.Ltmp36:
+.Ltmp34:
 	mov	rcx, qword ptr [rsp + 40] # 8-byte Reload
 	mov	qword ptr [rcx], rax
 	mov	rax, qword ptr [rsp + 64]
@@ -728,7 +695,7 @@
 	mov	rax, qword ptr [rsp + 40] # 8-byte Reload
 	add	rsp, 72
 	ret
-.Ltmp37:
+.Ltmp35:
 .Lfunc_end9:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z"
@@ -752,11 +719,11 @@
 	.seh_endprologue
 	mov	qword ptr [rsp], rcx
 	mov	rcx, qword ptr [rsp]
-.Ltmp38:
+.Ltmp36:
 	mov	rax, qword ptr [rcx]
 	pop	rcx
 	ret
-.Ltmp39:
+.Ltmp37:
 .Lfunc_end10:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ"
@@ -780,7 +747,7 @@
 	.seh_stackalloc 88
 	.seh_endprologue
 	mov	qword ptr [rsp + 80], rcx
-.Ltmp40:
+.Ltmp38:
 	.cv_loc	11 3 144 0              # ..\include\gsl/gsl_assert:144:0
 	mov	rcx, qword ptr [rsp + 80]
 	call	"??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z"
@@ -797,7 +764,7 @@
 	mov	qword ptr [rsp + 32], rax # 8-byte Spill
 	call	r9
 	ud2
-.Ltmp41:
+.Ltmp39:
 .Lfunc_end11:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z"
@@ -822,7 +789,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp42:
+.Ltmp40:
 	mov	rdx, rcx
 	mov	rax, qword ptr [rsp + 64]
 	mov	qword ptr [rsp + 48], rcx # 8-byte Spill
@@ -836,7 +803,7 @@
 	mov	rax, rdx
 	add	rsp, 72
 	ret
-.Ltmp43:
+.Ltmp41:
 .Lfunc_end12:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0fail_fast@gsl@@QEAA@QEBD@Z"
@@ -860,15 +827,15 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp44:
+.Ltmp42:
 	.cv_loc	13 3 97 0               # ..\include\gsl/gsl_assert:97:0
 	call	"??1logic_error@std@@UEAA@XZ"
-.Ltmp45:
+.Ltmp43:
 	.cv_loc	13 3 97 0               # ..\include\gsl/gsl_assert:97:0
 	nop
 	add	rsp, 40
 	ret
-.Ltmp46:
+.Ltmp44:
 .Lfunc_end13:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??1fail_fast@gsl@@UEAA@XZ"
@@ -893,10 +860,10 @@
 	xor	eax, eax
                                         # kill: def $rax killed $eax
 	mov	qword ptr [rsp], rcx
-.Ltmp47:
+.Ltmp45:
 	pop	rcx
 	ret
-.Ltmp48:
+.Ltmp46:
 .Lfunc_end14:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ"
@@ -920,12 +887,12 @@
 	.seh_stackalloc 8
 	.seh_endprologue
 	mov	qword ptr [rsp], rcx
-.Ltmp49:
+.Ltmp47:
 	.cv_loc	15 4 1574 0             # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\type_traits:1574:0
 	mov	rax, qword ptr [rsp]
 	pop	rcx
 	ret
-.Ltmp50:
+.Ltmp48:
 .Lfunc_end15:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z"
@@ -950,7 +917,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp51:
+.Ltmp49:
 	mov	rdx, rcx
 	mov	rax, qword ptr [rsp + 64]
 	mov	qword ptr [rsp + 48], rcx # 8-byte Spill
@@ -964,7 +931,7 @@
 	mov	rax, rdx
 	add	rsp, 72
 	ret
-.Ltmp52:
+.Ltmp50:
 .Lfunc_end16:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0fail_fast@gsl@@QEAA@$$QEAU01@@Z"
@@ -989,7 +956,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp53:
+.Ltmp51:
 	mov	rdx, rcx
 	mov	rax, qword ptr [rsp + 64]
 	mov	qword ptr [rsp + 48], rcx # 8-byte Spill
@@ -1003,7 +970,7 @@
 	mov	rax, rdx
 	add	rsp, 72
 	ret
-.Ltmp54:
+.Ltmp52:
 .Lfunc_end17:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0fail_fast@gsl@@QEAA@AEBU01@@Z"
@@ -1029,7 +996,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp55:
+.Ltmp53:
 	mov	rdx, rcx
 	mov	rax, qword ptr [rsp + 64]
 	mov	qword ptr [rsp + 48], rcx # 8-byte Spill
@@ -1043,7 +1010,7 @@
 	mov	rax, rdx
 	add	rsp, 72
 	ret
-.Ltmp56:
+.Ltmp54:
 .Lfunc_end18:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0logic_error@std@@QEAA@AEBV01@@Z"
@@ -1073,7 +1040,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp57:
+.Ltmp55:
 	mov	qword ptr [rcx], r9
 	mov	rdx, rcx
 	add	rdx, 8
@@ -1081,7 +1048,7 @@
 	mov	rcx, rdx
 	mov	edx, eax
 	call	memset
-.Ltmp58:
+.Ltmp56:
 	.cv_loc	19 6 69 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:69:0
 	mov	rcx, qword ptr [rsp + 48] # 8-byte Reload
 	add	rcx, 8
@@ -1091,12 +1058,12 @@
 	mov	rcx, r8
 	mov	rdx, qword ptr [rsp + 40] # 8-byte Reload
 	call	__std_exception_copy
-.Ltmp59:
+.Ltmp57:
 	.cv_loc	19 6 70 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:70:0
 	mov	rax, qword ptr [rsp + 48] # 8-byte Reload
 	add	rsp, 72
 	ret
-.Ltmp60:
+.Ltmp58:
 .Lfunc_end19:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0exception@std@@QEAA@AEBV01@@Z"
@@ -1121,7 +1088,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp61:
+.Ltmp59:
 	mov	rdx, rcx
 	mov	rax, qword ptr [rsp + 64]
 	mov	qword ptr [rsp + 48], rcx # 8-byte Spill
@@ -1135,7 +1102,7 @@
 	mov	rax, rdx
 	add	rsp, 72
 	ret
-.Ltmp62:
+.Ltmp60:
 .Lfunc_end20:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0logic_error@std@@QEAA@$$QEAV01@@Z"
@@ -1163,7 +1130,7 @@
 	mov	rax, rcx
 	mov	qword ptr [rsp + 64], rax
 	mov	edx, dword ptr [rsp + 60]
-.Ltmp63:
+.Ltmp61:
 	mov	qword ptr [rsp + 40], rcx # 8-byte Spill
 	mov	dword ptr [rsp + 36], edx # 4-byte Spill
 	call	"??1fail_fast@gsl@@UEAA@XZ"
@@ -1178,7 +1145,7 @@
 	mov	rax, qword ptr [rsp + 64]
 	add	rsp, 72
 	ret
-.Ltmp64:
+.Ltmp62:
 .Lfunc_end21:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??_Gfail_fast@gsl@@UEAAPEAXI@Z"
@@ -1202,7 +1169,7 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 16], rcx
 	mov	rcx, qword ptr [rsp + 16]
-.Ltmp65:
+.Ltmp63:
 	.cv_loc	22 6 91 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:91:0
 	cmp	qword ptr [rcx + 8], 0
 	mov	qword ptr [rsp + 8], rcx # 8-byte Spill
@@ -1220,7 +1187,7 @@
 	mov	rax, qword ptr [rsp]    # 8-byte Reload
 	add	rsp, 24
 	ret
-.Ltmp66:
+.Ltmp64:
 .Lfunc_end22:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?what@exception@std@@UEBAPEBDXZ"
@@ -1248,7 +1215,7 @@
 	mov	rax, rcx
 	mov	qword ptr [rsp + 64], rax
 	mov	edx, dword ptr [rsp + 60]
-.Ltmp67:
+.Ltmp65:
 	mov	qword ptr [rsp + 40], rcx # 8-byte Spill
 	mov	dword ptr [rsp + 36], edx # 4-byte Spill
 	call	"??1logic_error@std@@UEAA@XZ"
@@ -1263,7 +1230,7 @@
 	mov	rax, qword ptr [rsp + 64]
 	add	rsp, 72
 	ret
-.Ltmp68:
+.Ltmp66:
 .Lfunc_end23:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??_Glogic_error@std@@UEAAPEAXI@Z"
@@ -1287,15 +1254,15 @@
 	.seh_endprologue
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp69:
+.Ltmp67:
 	.cv_loc	24 5 17 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\stdexcept:17:0
 	call	"??1exception@std@@UEAA@XZ"
-.Ltmp70:
+.Ltmp68:
 	.cv_loc	24 5 17 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\stdexcept:17:0
 	nop
 	add	rsp, 40
 	ret
-.Ltmp71:
+.Ltmp69:
 .Lfunc_end24:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??1logic_error@std@@UEAA@XZ"
@@ -1320,18 +1287,18 @@
 	lea	rax, [rip + "??_7exception@std@@6B@"]
 	mov	qword ptr [rsp + 32], rcx
 	mov	rcx, qword ptr [rsp + 32]
-.Ltmp72:
+.Ltmp70:
 	mov	qword ptr [rcx], rax
-.Ltmp73:
+.Ltmp71:
 	.cv_loc	25 6 86 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:86:0
 	add	rcx, 8
 	call	__std_exception_destroy
-.Ltmp74:
+.Ltmp72:
 	.cv_loc	25 6 87 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:87:0
 	nop
 	add	rsp, 40
 	ret
-.Ltmp75:
+.Ltmp73:
 .Lfunc_end25:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??1exception@std@@UEAA@XZ"
@@ -1359,7 +1326,7 @@
 	mov	rax, rcx
 	mov	qword ptr [rsp + 64], rax
 	mov	edx, dword ptr [rsp + 60]
-.Ltmp76:
+.Ltmp74:
 	mov	qword ptr [rsp + 40], rcx # 8-byte Spill
 	mov	dword ptr [rsp + 36], edx # 4-byte Spill
 	call	"??1exception@std@@UEAA@XZ"
@@ -1375,7 +1342,7 @@
 	mov	rax, qword ptr [rsp + 64]
 	add	rsp, 72
 	ret
-.Ltmp77:
+.Ltmp75:
 .Lfunc_end26:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??_Gexception@std@@UEAAPEAXI@Z"
@@ -1400,7 +1367,7 @@
 	mov	qword ptr [rsp + 64], rdx
 	mov	qword ptr [rsp + 56], rcx
 	mov	rcx, qword ptr [rsp + 56]
-.Ltmp78:
+.Ltmp76:
 	mov	rdx, rcx
 	mov	rax, qword ptr [rsp + 64]
 	mov	qword ptr [rsp + 48], rcx # 8-byte Spill
@@ -1415,7 +1382,7 @@
 	mov	rax, rdx
 	add	rsp, 72
 	ret
-.Ltmp79:
+.Ltmp77:
 .Lfunc_end27:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0logic_error@std@@QEAA@PEBD@Z"
@@ -1447,7 +1414,7 @@
 	mov	qword ptr [rsp + 56], rdx
 	mov	qword ptr [rsp + 48], rcx
 	mov	rcx, qword ptr [rsp + 48]
-.Ltmp80:
+.Ltmp78:
 	mov	qword ptr [rcx], r9
 	mov	rdx, rcx
 	add	rdx, 8
@@ -1455,7 +1422,7 @@
 	mov	rcx, rdx
 	mov	edx, eax
 	call	memset
-.Ltmp81:
+.Ltmp79:
 	.cv_loc	28 6 56 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:56:0
 	mov	rcx, qword ptr [rsp + 56]
 	mov	qword ptr [rsp + 64], rcx
@@ -1464,22 +1431,22 @@
 	mov	rcx, qword ptr [rsp + 40] # 8-byte Reload
 	add	rcx, 8
 	lea	r8, [rsp + 64]
-.Ltmp82:
+.Ltmp80:
 	#DEBUG_VALUE: _InitData <- [$r8+0]
 	mov	qword ptr [rsp + 32], rcx # 8-byte Spill
 	mov	rcx, r8
 	mov	rdx, qword ptr [rsp + 32] # 8-byte Reload
 	call	__std_exception_copy
-.Ltmp83:
+.Ltmp81:
 	mov	rcx, qword ptr [rsp + 80]
 	xor	rcx, rsp
 	call	__security_check_cookie
-.Ltmp84:
+.Ltmp82:
 	.cv_loc	28 6 58 0               # C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\vcruntime_exception.h:58:0
 	mov	rax, qword ptr [rsp + 40] # 8-byte Reload
 	add	rsp, 88
 	ret
-.Ltmp85:
+.Ltmp83:
 .Lfunc_end28:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??0exception@std@@QEAA@QEBD@Z"
@@ -1503,11 +1470,11 @@
 	.seh_endprologue
 	mov	qword ptr [rsp], rcx
 	mov	rcx, qword ptr [rsp]
-.Ltmp86:
+.Ltmp84:
 	mov	rax, qword ptr [rcx + 8]
 	pop	rcx
 	ret
-.Ltmp87:
+.Ltmp85:
 .Lfunc_end29:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEBAPEAHXZ"
@@ -1540,7 +1507,7 @@
 	mov	qword ptr [rbp + 40], rcx
 	mov	rcx, qword ptr [rbp + 40]
 	mov	qword ptr [rbp + 64], rcx
-.Ltmp92:
+.Ltmp90:
 	mov	rdx, rcx
 	mov	r8b, byte ptr [rbp + 32]
 	mov	qword ptr [rbp - 40], rcx # 8-byte Spill
@@ -1550,7 +1517,7 @@
 	mov	rcx, qword ptr [rbp + 48]
 	mov	r9, qword ptr [rbp - 40] # 8-byte Reload
 	mov	qword ptr [r9 + 8], rcx
-.Ltmp93:
+.Ltmp91:
 	.cv_loc	30 2 598 0              # ..\include\gsl/span:598:0
 	mov	rcx, r9
 	mov	qword ptr [rbp - 48], rax # 8-byte Spill
@@ -1572,11 +1539,11 @@
 	mov	qword ptr [rbp - 56], rax # 8-byte Spill
 	call	"??0fail_fast@gsl@@QEAA@QEBD@Z"
 	mov	byte ptr [rbp + 7], 1
-.Ltmp88:
+.Ltmp86:
 	mov	rcx, qword ptr [rbp - 56] # 8-byte Reload
 	mov	qword ptr [rbp - 64], rax # 8-byte Spill
 	call	"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z"
-.Ltmp89:
+.Ltmp87:
 	jmp	.LBB30_3
 .LBB30_3:
 	ud2
@@ -1614,18 +1581,18 @@
 	mov	qword ptr [rbp - 80], rax # 8-byte Spill
 	call	"??0fail_fast@gsl@@QEAA@QEBD@Z"
 	mov	byte ptr [rbp - 25], 1
-.Ltmp90:
+.Ltmp88:
 	mov	rcx, qword ptr [rbp - 80] # 8-byte Reload
 	mov	qword ptr [rbp - 88], rax # 8-byte Spill
 	call	"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z"
-.Ltmp91:
+.Ltmp89:
 	jmp	.LBB30_10
 .LBB30_10:
 	ud2
 .LBB30_14:
 	lea	rcx, [rbp - 24]
 	call	"??1fail_fast@gsl@@UEAA@XZ"
-.Ltmp94:
+.Ltmp92:
 .LBB30_15:
 	.cv_loc	30 2 600 0              # ..\include\gsl/span:600:0
 	mov	rax, qword ptr [rbp + 64]
@@ -1651,7 +1618,7 @@
 	.seh_stackalloc 32
 	lea	rbp, [rdx + 128]
 	.seh_endprologue
-.Ltmp95:
+.Ltmp93:
 	.cv_loc	30 2 598 0              # ..\include\gsl/span:598:0
 	test	byte ptr [rbp + 7], 1
 	jne	.LBB30_12
@@ -1694,7 +1661,7 @@
 	add	rsp, 32
 	pop	rbp
 	ret                             # CLEANUPRET
-.Ltmp96:
+.Ltmp94:
 .Lfunc_end30:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z"
@@ -1720,13 +1687,13 @@
 "$ip2state$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z":
 	.long	.Lfunc_begin30@IMGREL   # IP
 	.long	-1                      # ToState
-	.long	.Ltmp88@IMGREL+1        # IP
+	.long	.Ltmp86@IMGREL+1        # IP
 	.long	0                       # ToState
-	.long	.Ltmp89@IMGREL+1        # IP
+	.long	.Ltmp87@IMGREL+1        # IP
 	.long	-1                      # ToState
-	.long	.Ltmp90@IMGREL+1        # IP
+	.long	.Ltmp88@IMGREL+1        # IP
 	.long	1                       # ToState
-	.long	.Ltmp91@IMGREL+1        # IP
+	.long	.Ltmp89@IMGREL+1        # IP
 	.long	-1                      # ToState
 	.section	.text,"xr",discard,"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z"
                                         # -- End function
@@ -1748,11 +1715,11 @@
 	.seh_endprologue
 	mov	qword ptr [rsp], rcx
 	mov	rcx, qword ptr [rsp]
-.Ltmp97:
+.Ltmp95:
 	mov	rax, qword ptr [rcx + 8]
 	pop	rcx
 	ret
-.Ltmp98:
+.Ltmp96:
 .Lfunc_end31:
 	.seh_handlerdata
 	.section	.text,"xr",discard,"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ"
@@ -2007,10 +1974,10 @@
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241
-	.long	.Ltmp100-.Ltmp99        # Subsection size
+	.long	.Ltmp98-.Ltmp97         # Subsection size
+.Ltmp97:
+	.short	.Ltmp100-.Ltmp99        # Record length
 .Ltmp99:
-	.short	.Ltmp102-.Ltmp101       # Record length
-.Ltmp101:
 	.short	4412                    # Record kind: S_COMPILE3
 	.long	1                       # Flags and language
 	.short	208                     # CPUType
@@ -2023,14 +1990,14 @@
 	.short	0
 	.short	0
 	.asciz	"clang version 7.0.1 (tags/RELEASE_701/final)" # Null-terminated compiler version string
-.Ltmp102:
 .Ltmp100:
+.Ltmp98:
 	.p2align	2
 	.long	241                     # Symbol subsection for foo
-	.long	.Ltmp104-.Ltmp103       # Subsection size
+	.long	.Ltmp102-.Ltmp101       # Subsection size
+.Ltmp101:
+	.short	.Ltmp104-.Ltmp103       # Record length
 .Ltmp103:
-	.short	.Ltmp106-.Ltmp105       # Record length
-.Ltmp105:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2043,64 +2010,56 @@
 	.secidx	"?foo@@YA_NXZ"          # Function section index
 	.byte	0                       # Flags
 	.asciz	"foo"                   # Function name
-.Ltmp106:
-	.short	.Ltmp108-.Ltmp107       # Record length
-.Ltmp107:
+.Ltmp104:
+	.short	.Ltmp106-.Ltmp105       # Record length
+.Ltmp105:
 	.short	4355                    # Record kind: S_BLOCK32
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
-	.long	.Ltmp7-.Ltmp0           # Code size
+	.long	.Ltmp5-.Ltmp0           # Code size
 	.secrel32	.Ltmp0          # Function section relative address
 	.secidx	.Lfunc_begin0           # Function section index
 	.byte	0                       # Lexical block name
-.Ltmp108:
-	.short	.Ltmp110-.Ltmp109       # Record length
-.Ltmp109:
+.Ltmp106:
+	.short	.Ltmp108-.Ltmp107       # Record length
+.Ltmp107:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	48                      # TypeIndex
 	.short	0                       # Flags
 	.asciz	"ret"
-.Ltmp110:
-	.cv_def_range	 .Ltmp0 .Ltmp7, "E\021O\001\000\000_\000\000\000"
-	.short	.Ltmp112-.Ltmp111       # Record length
-.Ltmp111:
+.Ltmp108:
+	.cv_def_range	 .Ltmp0 .Ltmp5, "E\021O\001\000\000O\000\000\000"
+	.short	.Ltmp110-.Ltmp109       # Record length
+.Ltmp109:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4149                    # TypeIndex
 	.short	0                       # Flags
 	.asciz	"s"
-.Ltmp112:
-	.cv_def_range	 .Ltmp0 .Ltmp7, "E\021O\001\000\000\200\000\000\000"
-	.short	.Ltmp114-.Ltmp113       # Record length
-.Ltmp113:
+.Ltmp110:
+	.cv_def_range	 .Ltmp0 .Ltmp5, "E\021O\001\000\000`\000\000\000"
+	.short	.Ltmp112-.Ltmp111       # Record length
+.Ltmp111:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4210                    # TypeIndex
 	.short	0                       # Flags
 	.asciz	"cs"
-.Ltmp114:
-	.cv_def_range	 .Ltmp0 .Ltmp7, "E\021O\001\000\000p\000\000\000"
-	.short	.Ltmp116-.Ltmp115       # Record length
-.Ltmp115:
-	.short	4414                    # Record kind: S_LOCAL
-	.long	4149                    # TypeIndex
-	.short	0                       # Flags
-	.asciz	"s2"
-.Ltmp116:
-	.cv_def_range	 .Ltmp0 .Ltmp7, "E\021O\001\000\000`\000\000\000"
+.Ltmp112:
+	.cv_def_range	 .Ltmp0 .Ltmp5, "E\021O\001\000\000P\000\000\000"
 	.short	2                       # Record length
 	.short	6                       # Record kind: S_END
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp104:
+.Ltmp102:
 	.p2align	2
 	.cv_linetable	0, "?foo@@YA_NXZ", .Lfunc_end0
 	.section	.debug$S,"dr",associative,"??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<int,-1>::span<0,void>
-	.long	.Ltmp118-.Ltmp117       # Subsection size
-.Ltmp117:
-	.short	.Ltmp120-.Ltmp119       # Record length
-.Ltmp119:
+	.long	.Ltmp114-.Ltmp113       # Subsection size
+.Ltmp113:
+	.short	.Ltmp116-.Ltmp115       # Record length
+.Ltmp115:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2113,28 +2072,28 @@
 	.secidx	"??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<int,-1>::span<0,void>" # Function name
-.Ltmp120:
-	.short	.Ltmp122-.Ltmp121       # Record length
-.Ltmp121:
+.Ltmp116:
+	.short	.Ltmp118-.Ltmp117       # Record length
+.Ltmp117:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4102                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp122:
-	.cv_def_range	 .Ltmp10 .Ltmp11, "E\021N\001\000\000\360\377\377\377"
+.Ltmp118:
+	.cv_def_range	 .Ltmp8 .Ltmp9, "E\021N\001\000\000\360\377\377\377"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp118:
+.Ltmp114:
 	.p2align	2
 	.cv_linetable	1, "??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ", .Lfunc_end1
 	.section	.debug$S,"dr",associative,"?size@?$span@H$0?0@gsl@@QEBA_JXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<int,-1>::size
-	.long	.Ltmp124-.Ltmp123       # Subsection size
-.Ltmp123:
-	.short	.Ltmp126-.Ltmp125       # Record length
-.Ltmp125:
+	.long	.Ltmp120-.Ltmp119       # Subsection size
+.Ltmp119:
+	.short	.Ltmp122-.Ltmp121       # Record length
+.Ltmp121:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2147,28 +2106,28 @@
 	.secidx	"?size@?$span@H$0?0@gsl@@QEBA_JXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<int,-1>::size" # Function name
-.Ltmp126:
-	.short	.Ltmp128-.Ltmp127       # Record length
-.Ltmp127:
+.Ltmp122:
+	.short	.Ltmp124-.Ltmp123       # Record length
+.Ltmp123:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4126                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp128:
-	.cv_def_range	 .Ltmp12 .Ltmp13, "E\021O\001\000\000 \000\000\000"
+.Ltmp124:
+	.cv_def_range	 .Ltmp10 .Ltmp11, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp124:
+.Ltmp120:
 	.p2align	2
 	.cv_linetable	2, "?size@?$span@H$0?0@gsl@@QEBA_JXZ", .Lfunc_end2
 	.section	.debug$S,"dr",associative,"?data@?$span@H$0?0@gsl@@QEBAPEAHXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<int,-1>::data
-	.long	.Ltmp130-.Ltmp129       # Subsection size
-.Ltmp129:
-	.short	.Ltmp132-.Ltmp131       # Record length
-.Ltmp131:
+	.long	.Ltmp126-.Ltmp125       # Subsection size
+.Ltmp125:
+	.short	.Ltmp128-.Ltmp127       # Record length
+.Ltmp127:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2181,28 +2140,28 @@
 	.secidx	"?data@?$span@H$0?0@gsl@@QEBAPEAHXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<int,-1>::data" # Function name
-.Ltmp132:
-	.short	.Ltmp134-.Ltmp133       # Record length
-.Ltmp133:
+.Ltmp128:
+	.short	.Ltmp130-.Ltmp129       # Record length
+.Ltmp129:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4126                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp134:
-	.cv_def_range	 .Ltmp14 .Ltmp15, "E\021O\001\000\000 \000\000\000"
+.Ltmp130:
+	.cv_def_range	 .Ltmp12 .Ltmp13, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp130:
+.Ltmp126:
 	.p2align	2
 	.cv_linetable	3, "?data@?$span@H$0?0@gsl@@QEBAPEAHXZ", .Lfunc_end3
 	.section	.debug$S,"dr",associative,"??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<const int,-1>::span<0,void>
-	.long	.Ltmp136-.Ltmp135       # Subsection size
-.Ltmp135:
-	.short	.Ltmp138-.Ltmp137       # Record length
-.Ltmp137:
+	.long	.Ltmp132-.Ltmp131       # Subsection size
+.Ltmp131:
+	.short	.Ltmp134-.Ltmp133       # Record length
+.Ltmp133:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2215,28 +2174,28 @@
 	.secidx	"??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<const int,-1>::span<0,void>" # Function name
-.Ltmp138:
-	.short	.Ltmp140-.Ltmp139       # Record length
-.Ltmp139:
+.Ltmp134:
+	.short	.Ltmp136-.Ltmp135       # Record length
+.Ltmp135:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4169                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp140:
-	.cv_def_range	 .Ltmp18 .Ltmp19, "E\021N\001\000\000\360\377\377\377"
+.Ltmp136:
+	.cv_def_range	 .Ltmp16 .Ltmp17, "E\021N\001\000\000\360\377\377\377"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp136:
+.Ltmp132:
 	.p2align	2
 	.cv_linetable	4, "??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ", .Lfunc_end4
 	.section	.debug$S,"dr",associative,"?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<const int,-1>::size
-	.long	.Ltmp142-.Ltmp141       # Subsection size
-.Ltmp141:
-	.short	.Ltmp144-.Ltmp143       # Record length
-.Ltmp143:
+	.long	.Ltmp138-.Ltmp137       # Subsection size
+.Ltmp137:
+	.short	.Ltmp140-.Ltmp139       # Record length
+.Ltmp139:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2249,28 +2208,28 @@
 	.secidx	"?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<const int,-1>::size" # Function name
-.Ltmp144:
-	.short	.Ltmp146-.Ltmp145       # Record length
-.Ltmp145:
+.Ltmp140:
+	.short	.Ltmp142-.Ltmp141       # Record length
+.Ltmp141:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4189                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp146:
-	.cv_def_range	 .Ltmp20 .Ltmp21, "E\021O\001\000\000 \000\000\000"
+.Ltmp142:
+	.cv_def_range	 .Ltmp18 .Ltmp19, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp142:
+.Ltmp138:
 	.p2align	2
 	.cv_linetable	5, "?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ", .Lfunc_end5
 	.section	.debug$S,"dr",associative,"?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<const int,-1>::data
-	.long	.Ltmp148-.Ltmp147       # Subsection size
-.Ltmp147:
-	.short	.Ltmp150-.Ltmp149       # Record length
-.Ltmp149:
+	.long	.Ltmp144-.Ltmp143       # Subsection size
+.Ltmp143:
+	.short	.Ltmp146-.Ltmp145       # Record length
+.Ltmp145:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2283,28 +2242,28 @@
 	.secidx	"?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<const int,-1>::data" # Function name
-.Ltmp150:
-	.short	.Ltmp152-.Ltmp151       # Record length
-.Ltmp151:
+.Ltmp146:
+	.short	.Ltmp148-.Ltmp147       # Record length
+.Ltmp147:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4189                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp152:
-	.cv_def_range	 .Ltmp22 .Ltmp23, "E\021O\001\000\000 \000\000\000"
+.Ltmp148:
+	.cv_def_range	 .Ltmp20 .Ltmp21, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp148:
+.Ltmp144:
 	.p2align	2
 	.cv_linetable	6, "?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ", .Lfunc_end6
 	.section	.debug$S,"dr",associative,"??0?$extent_type@$0A@@details@gsl@@QEAA@XZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::details::extent_type<0>::extent_type
-	.long	.Ltmp154-.Ltmp153       # Subsection size
-.Ltmp153:
-	.short	.Ltmp156-.Ltmp155       # Record length
-.Ltmp155:
+	.long	.Ltmp150-.Ltmp149       # Subsection size
+.Ltmp149:
+	.short	.Ltmp152-.Ltmp151       # Record length
+.Ltmp151:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2317,28 +2276,28 @@
 	.secidx	"??0?$extent_type@$0A@@details@gsl@@QEAA@XZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::details::extent_type<0>::extent_type" # Function name
-.Ltmp156:
-	.short	.Ltmp158-.Ltmp157       # Record length
-.Ltmp157:
+.Ltmp152:
+	.short	.Ltmp154-.Ltmp153       # Record length
+.Ltmp153:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4225                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp158:
-	.cv_def_range	 .Ltmp24 .Ltmp25, "E\021O\001\000\000\000\000\000\000"
+.Ltmp154:
+	.cv_def_range	 .Ltmp22 .Ltmp23, "E\021O\001\000\000\000\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp154:
+.Ltmp150:
 	.p2align	2
 	.cv_linetable	7, "??0?$extent_type@$0A@@details@gsl@@QEAA@XZ", .Lfunc_end7
 	.section	.debug$S,"dr",associative,"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::storage_type<gsl::details::extent_type<0> >
-	.long	.Ltmp160-.Ltmp159       # Subsection size
-.Ltmp159:
-	.short	.Ltmp162-.Ltmp161       # Record length
-.Ltmp161:
+	.long	.Ltmp156-.Ltmp155       # Subsection size
+.Ltmp155:
+	.short	.Ltmp158-.Ltmp157       # Record length
+.Ltmp157:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2351,44 +2310,44 @@
 	.secidx	"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::storage_type<gsl::details::extent_type<0> >" # Function name
-.Ltmp162:
-	.short	.Ltmp164-.Ltmp163       # Record length
-.Ltmp163:
+.Ltmp158:
+	.short	.Ltmp160-.Ltmp159       # Record length
+.Ltmp159:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4236                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp164:
-	.cv_def_range	 .Ltmp30 .Ltmp34, "E\021N\001\000\000(\000\000\000"
-	.short	.Ltmp166-.Ltmp165       # Record length
-.Ltmp165:
+.Ltmp160:
+	.cv_def_range	 .Ltmp28 .Ltmp32, "E\021N\001\000\000(\000\000\000"
+	.short	.Ltmp162-.Ltmp161       # Record length
+.Ltmp161:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	1652                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"data"
-.Ltmp166:
-	.cv_def_range	 .Ltmp30 .Ltmp34, "E\021N\001\000\0000\000\000\000"
-	.short	.Ltmp168-.Ltmp167       # Record length
-.Ltmp167:
+.Ltmp162:
+	.cv_def_range	 .Ltmp28 .Ltmp32, "E\021N\001\000\0000\000\000\000"
+	.short	.Ltmp164-.Ltmp163       # Record length
+.Ltmp163:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4233                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"ext"
-.Ltmp168:
-	.cv_def_range	 .Ltmp30 .Ltmp34, "E\021N\001\000\0008\000\000\000"
+.Ltmp164:
+	.cv_def_range	 .Ltmp28 .Ltmp32, "E\021N\001\000\0008\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp160:
+.Ltmp156:
 	.p2align	2
 	.cv_linetable	8, "??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z", .Lfunc_end8
 	.section	.debug$S,"dr",associative,"??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::details::extent_type<-1>::extent_type<0>
-	.long	.Ltmp170-.Ltmp169       # Subsection size
-.Ltmp169:
-	.short	.Ltmp172-.Ltmp171       # Record length
-.Ltmp171:
+	.long	.Ltmp166-.Ltmp165       # Subsection size
+.Ltmp165:
+	.short	.Ltmp168-.Ltmp167       # Record length
+.Ltmp167:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2401,36 +2360,36 @@
 	.secidx	"??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::details::extent_type<-1>::extent_type<0>" # Function name
-.Ltmp172:
-	.short	.Ltmp174-.Ltmp173       # Record length
-.Ltmp173:
+.Ltmp168:
+	.short	.Ltmp170-.Ltmp169       # Record length
+.Ltmp169:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4159                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp174:
-	.cv_def_range	 .Ltmp35 .Ltmp37, "E\021O\001\000\0000\000\000\000"
-	.short	.Ltmp176-.Ltmp175       # Record length
-.Ltmp175:
+.Ltmp170:
+	.cv_def_range	 .Ltmp33 .Ltmp35, "E\021O\001\000\0000\000\000\000"
+	.short	.Ltmp172-.Ltmp171       # Record length
+.Ltmp171:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4233                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"ext"
-.Ltmp176:
-	.cv_def_range	 .Ltmp35 .Ltmp37, "E\021O\001\000\0008\000\000\000"
+.Ltmp172:
+	.cv_def_range	 .Ltmp33 .Ltmp35, "E\021O\001\000\0008\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp170:
+.Ltmp166:
 	.p2align	2
 	.cv_linetable	9, "??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z", .Lfunc_end9
 	.section	.debug$S,"dr",associative,"?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::details::extent_type<-1>::size
-	.long	.Ltmp178-.Ltmp177       # Subsection size
-.Ltmp177:
-	.short	.Ltmp180-.Ltmp179       # Record length
-.Ltmp179:
+	.long	.Ltmp174-.Ltmp173       # Subsection size
+.Ltmp173:
+	.short	.Ltmp176-.Ltmp175       # Record length
+.Ltmp175:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2443,28 +2402,28 @@
 	.secidx	"?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::details::extent_type<-1>::size" # Function name
-.Ltmp180:
-	.short	.Ltmp182-.Ltmp181       # Record length
-.Ltmp181:
+.Ltmp176:
+	.short	.Ltmp178-.Ltmp177       # Record length
+.Ltmp177:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4162                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp182:
-	.cv_def_range	 .Ltmp38 .Ltmp39, "E\021O\001\000\000\000\000\000\000"
+.Ltmp178:
+	.cv_def_range	 .Ltmp36 .Ltmp37, "E\021O\001\000\000\000\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp178:
+.Ltmp174:
 	.p2align	2
 	.cv_linetable	10, "?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ", .Lfunc_end10
 	.section	.debug$S,"dr",associative,"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::details::throw_exception<gsl::fail_fast>
-	.long	.Ltmp184-.Ltmp183       # Subsection size
-.Ltmp183:
-	.short	.Ltmp186-.Ltmp185       # Record length
-.Ltmp185:
+	.long	.Ltmp180-.Ltmp179       # Subsection size
+.Ltmp179:
+	.short	.Ltmp182-.Ltmp181       # Record length
+.Ltmp181:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2477,28 +2436,28 @@
 	.secidx	"??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::details::throw_exception<gsl::fail_fast>" # Function name
-.Ltmp186:
-	.short	.Ltmp188-.Ltmp187       # Record length
-.Ltmp187:
+.Ltmp182:
+	.short	.Ltmp184-.Ltmp183       # Record length
+.Ltmp183:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4246                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"exception"
-.Ltmp188:
-	.cv_def_range	 .Ltmp40 .Ltmp41, "E\021O\001\000\000P\000\000\000"
+.Ltmp184:
+	.cv_def_range	 .Ltmp38 .Ltmp39, "E\021O\001\000\000P\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp184:
+.Ltmp180:
 	.p2align	2
 	.cv_linetable	11, "??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z", .Lfunc_end11
 	.section	.debug$S,"dr",associative,"??0fail_fast@gsl@@QEAA@QEBD@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::fail_fast::fail_fast
-	.long	.Ltmp190-.Ltmp189       # Subsection size
-.Ltmp189:
-	.short	.Ltmp192-.Ltmp191       # Record length
-.Ltmp191:
+	.long	.Ltmp186-.Ltmp185       # Subsection size
+.Ltmp185:
+	.short	.Ltmp188-.Ltmp187       # Record length
+.Ltmp187:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2511,36 +2470,36 @@
 	.secidx	"??0fail_fast@gsl@@QEAA@QEBD@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::fail_fast::fail_fast" # Function name
-.Ltmp192:
-	.short	.Ltmp194-.Ltmp193       # Record length
-.Ltmp193:
+.Ltmp188:
+	.short	.Ltmp190-.Ltmp189       # Record length
+.Ltmp189:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4251                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp194:
-	.cv_def_range	 .Ltmp42 .Ltmp43, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp196-.Ltmp195       # Record length
-.Ltmp195:
+.Ltmp190:
+	.cv_def_range	 .Ltmp40 .Ltmp41, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp192-.Ltmp191       # Record length
+.Ltmp191:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4253                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"message"
-.Ltmp196:
-	.cv_def_range	 .Ltmp42 .Ltmp43, "E\021O\001\000\000@\000\000\000"
+.Ltmp192:
+	.cv_def_range	 .Ltmp40 .Ltmp41, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp190:
+.Ltmp186:
 	.p2align	2
 	.cv_linetable	12, "??0fail_fast@gsl@@QEAA@QEBD@Z", .Lfunc_end12
 	.section	.debug$S,"dr",associative,"??1fail_fast@gsl@@UEAA@XZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::fail_fast::~fail_fast
-	.long	.Ltmp198-.Ltmp197       # Subsection size
-.Ltmp197:
-	.short	.Ltmp200-.Ltmp199       # Record length
-.Ltmp199:
+	.long	.Ltmp194-.Ltmp193       # Subsection size
+.Ltmp193:
+	.short	.Ltmp196-.Ltmp195       # Record length
+.Ltmp195:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2553,28 +2512,28 @@
 	.secidx	"??1fail_fast@gsl@@UEAA@XZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::fail_fast::~fail_fast" # Function name
-.Ltmp200:
-	.short	.Ltmp202-.Ltmp201       # Record length
-.Ltmp201:
+.Ltmp196:
+	.short	.Ltmp198-.Ltmp197       # Record length
+.Ltmp197:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4251                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp202:
-	.cv_def_range	 .Ltmp44 .Ltmp46, "E\021O\001\000\000 \000\000\000"
+.Ltmp198:
+	.cv_def_range	 .Ltmp42 .Ltmp44, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp198:
+.Ltmp194:
 	.p2align	2
 	.cv_linetable	13, "??1fail_fast@gsl@@UEAA@XZ", .Lfunc_end13
 	.section	.debug$S,"dr",associative,"?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::details::extent_type<0>::size
-	.long	.Ltmp204-.Ltmp203       # Subsection size
-.Ltmp203:
-	.short	.Ltmp206-.Ltmp205       # Record length
-.Ltmp205:
+	.long	.Ltmp200-.Ltmp199       # Subsection size
+.Ltmp199:
+	.short	.Ltmp202-.Ltmp201       # Record length
+.Ltmp201:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2587,28 +2546,28 @@
 	.secidx	"?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::details::extent_type<0>::size" # Function name
-.Ltmp206:
-	.short	.Ltmp208-.Ltmp207       # Record length
-.Ltmp207:
+.Ltmp202:
+	.short	.Ltmp204-.Ltmp203       # Record length
+.Ltmp203:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4230                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp208:
-	.cv_def_range	 .Ltmp47 .Ltmp48, "E\021O\001\000\000\000\000\000\000"
+.Ltmp204:
+	.cv_def_range	 .Ltmp45 .Ltmp46, "E\021O\001\000\000\000\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp204:
+.Ltmp200:
 	.p2align	2
 	.cv_linetable	14, "?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ", .Lfunc_end14
 	.section	.debug$S,"dr",associative,"??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::forward<gsl::fail_fast>
-	.long	.Ltmp210-.Ltmp209       # Subsection size
-.Ltmp209:
-	.short	.Ltmp212-.Ltmp211       # Record length
-.Ltmp211:
+	.long	.Ltmp206-.Ltmp205       # Subsection size
+.Ltmp205:
+	.short	.Ltmp208-.Ltmp207       # Record length
+.Ltmp207:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2621,28 +2580,28 @@
 	.secidx	"??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::forward<gsl::fail_fast>" # Function name
-.Ltmp212:
-	.short	.Ltmp214-.Ltmp213       # Record length
-.Ltmp213:
+.Ltmp208:
+	.short	.Ltmp210-.Ltmp209       # Record length
+.Ltmp209:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4752                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"_Arg"
-.Ltmp214:
-	.cv_def_range	 .Ltmp49 .Ltmp50, "E\021O\001\000\000\000\000\000\000"
+.Ltmp210:
+	.cv_def_range	 .Ltmp47 .Ltmp48, "E\021O\001\000\000\000\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp210:
+.Ltmp206:
 	.p2align	2
 	.cv_linetable	15, "??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z", .Lfunc_end15
 	.section	.debug$S,"dr",associative,"??0fail_fast@gsl@@QEAA@$$QEAU01@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::fail_fast::fail_fast
-	.long	.Ltmp216-.Ltmp215       # Subsection size
-.Ltmp215:
-	.short	.Ltmp218-.Ltmp217       # Record length
-.Ltmp217:
+	.long	.Ltmp212-.Ltmp211       # Subsection size
+.Ltmp211:
+	.short	.Ltmp214-.Ltmp213       # Record length
+.Ltmp213:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2655,36 +2614,36 @@
 	.secidx	"??0fail_fast@gsl@@QEAA@$$QEAU01@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::fail_fast::fail_fast" # Function name
-.Ltmp218:
-	.short	.Ltmp220-.Ltmp219       # Record length
-.Ltmp219:
+.Ltmp214:
+	.short	.Ltmp216-.Ltmp215       # Record length
+.Ltmp215:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4251                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp220:
-	.cv_def_range	 .Ltmp51 .Ltmp52, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp222-.Ltmp221       # Record length
-.Ltmp221:
+.Ltmp216:
+	.cv_def_range	 .Ltmp49 .Ltmp50, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp218-.Ltmp217       # Record length
+.Ltmp217:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4246                    # TypeIndex
 	.short	1                       # Flags
 	.byte	0
-.Ltmp222:
-	.cv_def_range	 .Ltmp51 .Ltmp52, "E\021O\001\000\000@\000\000\000"
+.Ltmp218:
+	.cv_def_range	 .Ltmp49 .Ltmp50, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp216:
+.Ltmp212:
 	.p2align	2
 	.cv_linetable	16, "??0fail_fast@gsl@@QEAA@$$QEAU01@@Z", .Lfunc_end16
 	.section	.debug$S,"dr",associative,"??0fail_fast@gsl@@QEAA@AEBU01@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::fail_fast::fail_fast
-	.long	.Ltmp224-.Ltmp223       # Subsection size
-.Ltmp223:
-	.short	.Ltmp226-.Ltmp225       # Record length
-.Ltmp225:
+	.long	.Ltmp220-.Ltmp219       # Subsection size
+.Ltmp219:
+	.short	.Ltmp222-.Ltmp221       # Record length
+.Ltmp221:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2697,36 +2656,36 @@
 	.secidx	"??0fail_fast@gsl@@QEAA@AEBU01@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::fail_fast::fail_fast" # Function name
-.Ltmp226:
-	.short	.Ltmp228-.Ltmp227       # Record length
-.Ltmp227:
+.Ltmp222:
+	.short	.Ltmp224-.Ltmp223       # Record length
+.Ltmp223:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4251                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp228:
-	.cv_def_range	 .Ltmp53 .Ltmp54, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp230-.Ltmp229       # Record length
-.Ltmp229:
+.Ltmp224:
+	.cv_def_range	 .Ltmp51 .Ltmp52, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp226-.Ltmp225       # Record length
+.Ltmp225:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4759                    # TypeIndex
 	.short	1                       # Flags
 	.byte	0
-.Ltmp230:
-	.cv_def_range	 .Ltmp53 .Ltmp54, "E\021O\001\000\000@\000\000\000"
+.Ltmp226:
+	.cv_def_range	 .Ltmp51 .Ltmp52, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp224:
+.Ltmp220:
 	.p2align	2
 	.cv_linetable	17, "??0fail_fast@gsl@@QEAA@AEBU01@@Z", .Lfunc_end17
 	.section	.debug$S,"dr",associative,"??0logic_error@std@@QEAA@AEBV01@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::logic_error::logic_error
-	.long	.Ltmp232-.Ltmp231       # Subsection size
-.Ltmp231:
-	.short	.Ltmp234-.Ltmp233       # Record length
-.Ltmp233:
+	.long	.Ltmp228-.Ltmp227       # Subsection size
+.Ltmp227:
+	.short	.Ltmp230-.Ltmp229       # Record length
+.Ltmp229:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2739,36 +2698,36 @@
 	.secidx	"??0logic_error@std@@QEAA@AEBV01@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::logic_error::logic_error" # Function name
-.Ltmp234:
-	.short	.Ltmp236-.Ltmp235       # Record length
-.Ltmp235:
+.Ltmp230:
+	.short	.Ltmp232-.Ltmp231       # Record length
+.Ltmp231:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4261                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp236:
-	.cv_def_range	 .Ltmp55 .Ltmp56, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp238-.Ltmp237       # Record length
-.Ltmp237:
+.Ltmp232:
+	.cv_def_range	 .Ltmp53 .Ltmp54, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp234-.Ltmp233       # Record length
+.Ltmp233:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4764                    # TypeIndex
 	.short	1                       # Flags
 	.byte	0
-.Ltmp238:
-	.cv_def_range	 .Ltmp55 .Ltmp56, "E\021O\001\000\000@\000\000\000"
+.Ltmp234:
+	.cv_def_range	 .Ltmp53 .Ltmp54, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp232:
+.Ltmp228:
 	.p2align	2
 	.cv_linetable	18, "??0logic_error@std@@QEAA@AEBV01@@Z", .Lfunc_end18
 	.section	.debug$S,"dr",associative,"??0exception@std@@QEAA@AEBV01@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::exception::exception
-	.long	.Ltmp240-.Ltmp239       # Subsection size
-.Ltmp239:
-	.short	.Ltmp242-.Ltmp241       # Record length
-.Ltmp241:
+	.long	.Ltmp236-.Ltmp235       # Subsection size
+.Ltmp235:
+	.short	.Ltmp238-.Ltmp237       # Record length
+.Ltmp237:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2781,36 +2740,36 @@
 	.secidx	"??0exception@std@@QEAA@AEBV01@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::exception::exception" # Function name
-.Ltmp242:
-	.short	.Ltmp244-.Ltmp243       # Record length
-.Ltmp243:
+.Ltmp238:
+	.short	.Ltmp240-.Ltmp239       # Record length
+.Ltmp239:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4277                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp244:
-	.cv_def_range	 .Ltmp57 .Ltmp60, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp246-.Ltmp245       # Record length
-.Ltmp245:
+.Ltmp240:
+	.cv_def_range	 .Ltmp55 .Ltmp58, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp242-.Ltmp241       # Record length
+.Ltmp241:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4283                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"_Other"
-.Ltmp246:
-	.cv_def_range	 .Ltmp57 .Ltmp60, "E\021O\001\000\000@\000\000\000"
+.Ltmp242:
+	.cv_def_range	 .Ltmp55 .Ltmp58, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp240:
+.Ltmp236:
 	.p2align	2
 	.cv_linetable	19, "??0exception@std@@QEAA@AEBV01@@Z", .Lfunc_end19
 	.section	.debug$S,"dr",associative,"??0logic_error@std@@QEAA@$$QEAV01@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::logic_error::logic_error
-	.long	.Ltmp248-.Ltmp247       # Subsection size
-.Ltmp247:
-	.short	.Ltmp250-.Ltmp249       # Record length
-.Ltmp249:
+	.long	.Ltmp244-.Ltmp243       # Subsection size
+.Ltmp243:
+	.short	.Ltmp246-.Ltmp245       # Record length
+.Ltmp245:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2823,36 +2782,36 @@
 	.secidx	"??0logic_error@std@@QEAA@$$QEAV01@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::logic_error::logic_error" # Function name
-.Ltmp250:
-	.short	.Ltmp252-.Ltmp251       # Record length
-.Ltmp251:
+.Ltmp246:
+	.short	.Ltmp248-.Ltmp247       # Record length
+.Ltmp247:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4261                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp252:
-	.cv_def_range	 .Ltmp61 .Ltmp62, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp254-.Ltmp253       # Record length
-.Ltmp253:
+.Ltmp248:
+	.cv_def_range	 .Ltmp59 .Ltmp60, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp250-.Ltmp249       # Record length
+.Ltmp249:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4769                    # TypeIndex
 	.short	1                       # Flags
 	.byte	0
-.Ltmp254:
-	.cv_def_range	 .Ltmp61 .Ltmp62, "E\021O\001\000\000@\000\000\000"
+.Ltmp250:
+	.cv_def_range	 .Ltmp59 .Ltmp60, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp248:
+.Ltmp244:
 	.p2align	2
 	.cv_linetable	20, "??0logic_error@std@@QEAA@$$QEAV01@@Z", .Lfunc_end20
 	.section	.debug$S,"dr",associative,"??_Gfail_fast@gsl@@UEAAPEAXI@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::fail_fast::~fail_fast
-	.long	.Ltmp256-.Ltmp255       # Subsection size
-.Ltmp255:
-	.short	.Ltmp258-.Ltmp257       # Record length
-.Ltmp257:
+	.long	.Ltmp252-.Ltmp251       # Subsection size
+.Ltmp251:
+	.short	.Ltmp254-.Ltmp253       # Record length
+.Ltmp253:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2865,36 +2824,36 @@
 	.secidx	"??_Gfail_fast@gsl@@UEAAPEAXI@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::fail_fast::~fail_fast" # Function name
-.Ltmp258:
-	.short	.Ltmp260-.Ltmp259       # Record length
-.Ltmp259:
+.Ltmp254:
+	.short	.Ltmp256-.Ltmp255       # Record length
+.Ltmp255:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4251                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp260:
-	.cv_def_range	 .Ltmp63 .Ltmp64, "E\021O\001\000\0000\000\000\000"
-	.short	.Ltmp262-.Ltmp261       # Record length
-.Ltmp261:
+.Ltmp256:
+	.cv_def_range	 .Ltmp61 .Ltmp62, "E\021O\001\000\0000\000\000\000"
+	.short	.Ltmp258-.Ltmp257       # Record length
+.Ltmp257:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	116                     # TypeIndex
 	.short	1                       # Flags
 	.asciz	"should_call_delete"
-.Ltmp262:
-	.cv_def_range	 .Ltmp63 .Ltmp64, "E\021O\001\000\000<\000\000\000"
+.Ltmp258:
+	.cv_def_range	 .Ltmp61 .Ltmp62, "E\021O\001\000\000<\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp256:
+.Ltmp252:
 	.p2align	2
 	.cv_linetable	21, "??_Gfail_fast@gsl@@UEAAPEAXI@Z", .Lfunc_end21
 	.section	.debug$S,"dr",associative,"?what@exception@std@@UEBAPEBDXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::exception::what
-	.long	.Ltmp264-.Ltmp263       # Subsection size
-.Ltmp263:
-	.short	.Ltmp266-.Ltmp265       # Record length
-.Ltmp265:
+	.long	.Ltmp260-.Ltmp259       # Subsection size
+.Ltmp259:
+	.short	.Ltmp262-.Ltmp261       # Record length
+.Ltmp261:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2907,28 +2866,28 @@
 	.secidx	"?what@exception@std@@UEBAPEBDXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::exception::what"  # Function name
-.Ltmp266:
-	.short	.Ltmp268-.Ltmp267       # Record length
-.Ltmp267:
+.Ltmp262:
+	.short	.Ltmp264-.Ltmp263       # Record length
+.Ltmp263:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4289                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp268:
-	.cv_def_range	 .Ltmp65 .Ltmp66, "E\021O\001\000\000\020\000\000\000"
+.Ltmp264:
+	.cv_def_range	 .Ltmp63 .Ltmp64, "E\021O\001\000\000\020\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp264:
+.Ltmp260:
 	.p2align	2
 	.cv_linetable	22, "?what@exception@std@@UEBAPEBDXZ", .Lfunc_end22
 	.section	.debug$S,"dr",associative,"??_Glogic_error@std@@UEAAPEAXI@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::logic_error::~logic_error
-	.long	.Ltmp270-.Ltmp269       # Subsection size
-.Ltmp269:
-	.short	.Ltmp272-.Ltmp271       # Record length
-.Ltmp271:
+	.long	.Ltmp266-.Ltmp265       # Subsection size
+.Ltmp265:
+	.short	.Ltmp268-.Ltmp267       # Record length
+.Ltmp267:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2941,36 +2900,36 @@
 	.secidx	"??_Glogic_error@std@@UEAAPEAXI@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::logic_error::~logic_error" # Function name
-.Ltmp272:
-	.short	.Ltmp274-.Ltmp273       # Record length
-.Ltmp273:
+.Ltmp268:
+	.short	.Ltmp270-.Ltmp269       # Record length
+.Ltmp269:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4261                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp274:
-	.cv_def_range	 .Ltmp67 .Ltmp68, "E\021O\001\000\0000\000\000\000"
-	.short	.Ltmp276-.Ltmp275       # Record length
-.Ltmp275:
+.Ltmp270:
+	.cv_def_range	 .Ltmp65 .Ltmp66, "E\021O\001\000\0000\000\000\000"
+	.short	.Ltmp272-.Ltmp271       # Record length
+.Ltmp271:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	116                     # TypeIndex
 	.short	1                       # Flags
 	.asciz	"should_call_delete"
-.Ltmp276:
-	.cv_def_range	 .Ltmp67 .Ltmp68, "E\021O\001\000\000<\000\000\000"
+.Ltmp272:
+	.cv_def_range	 .Ltmp65 .Ltmp66, "E\021O\001\000\000<\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp270:
+.Ltmp266:
 	.p2align	2
 	.cv_linetable	23, "??_Glogic_error@std@@UEAAPEAXI@Z", .Lfunc_end23
 	.section	.debug$S,"dr",associative,"??1logic_error@std@@UEAA@XZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::logic_error::~logic_error
-	.long	.Ltmp278-.Ltmp277       # Subsection size
-.Ltmp277:
-	.short	.Ltmp280-.Ltmp279       # Record length
-.Ltmp279:
+	.long	.Ltmp274-.Ltmp273       # Subsection size
+.Ltmp273:
+	.short	.Ltmp276-.Ltmp275       # Record length
+.Ltmp275:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -2983,28 +2942,28 @@
 	.secidx	"??1logic_error@std@@UEAA@XZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::logic_error::~logic_error" # Function name
-.Ltmp280:
-	.short	.Ltmp282-.Ltmp281       # Record length
-.Ltmp281:
+.Ltmp276:
+	.short	.Ltmp278-.Ltmp277       # Record length
+.Ltmp277:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4261                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp282:
-	.cv_def_range	 .Ltmp69 .Ltmp71, "E\021O\001\000\000 \000\000\000"
+.Ltmp278:
+	.cv_def_range	 .Ltmp67 .Ltmp69, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp278:
+.Ltmp274:
 	.p2align	2
 	.cv_linetable	24, "??1logic_error@std@@UEAA@XZ", .Lfunc_end24
 	.section	.debug$S,"dr",associative,"??1exception@std@@UEAA@XZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::exception::~exception
-	.long	.Ltmp284-.Ltmp283       # Subsection size
-.Ltmp283:
-	.short	.Ltmp286-.Ltmp285       # Record length
-.Ltmp285:
+	.long	.Ltmp280-.Ltmp279       # Subsection size
+.Ltmp279:
+	.short	.Ltmp282-.Ltmp281       # Record length
+.Ltmp281:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3017,28 +2976,28 @@
 	.secidx	"??1exception@std@@UEAA@XZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::exception::~exception" # Function name
-.Ltmp286:
-	.short	.Ltmp288-.Ltmp287       # Record length
-.Ltmp287:
+.Ltmp282:
+	.short	.Ltmp284-.Ltmp283       # Record length
+.Ltmp283:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4277                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp288:
-	.cv_def_range	 .Ltmp72 .Ltmp75, "E\021O\001\000\000 \000\000\000"
+.Ltmp284:
+	.cv_def_range	 .Ltmp70 .Ltmp73, "E\021O\001\000\000 \000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp284:
+.Ltmp280:
 	.p2align	2
 	.cv_linetable	25, "??1exception@std@@UEAA@XZ", .Lfunc_end25
 	.section	.debug$S,"dr",associative,"??_Gexception@std@@UEAAPEAXI@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::exception::~exception
-	.long	.Ltmp290-.Ltmp289       # Subsection size
-.Ltmp289:
-	.short	.Ltmp292-.Ltmp291       # Record length
-.Ltmp291:
+	.long	.Ltmp286-.Ltmp285       # Subsection size
+.Ltmp285:
+	.short	.Ltmp288-.Ltmp287       # Record length
+.Ltmp287:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3051,36 +3010,36 @@
 	.secidx	"??_Gexception@std@@UEAAPEAXI@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::exception::~exception" # Function name
-.Ltmp292:
-	.short	.Ltmp294-.Ltmp293       # Record length
-.Ltmp293:
+.Ltmp288:
+	.short	.Ltmp290-.Ltmp289       # Record length
+.Ltmp289:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4277                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp294:
-	.cv_def_range	 .Ltmp76 .Ltmp77, "E\021O\001\000\0000\000\000\000"
-	.short	.Ltmp296-.Ltmp295       # Record length
-.Ltmp295:
+.Ltmp290:
+	.cv_def_range	 .Ltmp74 .Ltmp75, "E\021O\001\000\0000\000\000\000"
+	.short	.Ltmp292-.Ltmp291       # Record length
+.Ltmp291:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	116                     # TypeIndex
 	.short	1                       # Flags
 	.asciz	"should_call_delete"
-.Ltmp296:
-	.cv_def_range	 .Ltmp76 .Ltmp77, "E\021O\001\000\000<\000\000\000"
+.Ltmp292:
+	.cv_def_range	 .Ltmp74 .Ltmp75, "E\021O\001\000\000<\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp290:
+.Ltmp286:
 	.p2align	2
 	.cv_linetable	26, "??_Gexception@std@@UEAAPEAXI@Z", .Lfunc_end26
 	.section	.debug$S,"dr",associative,"??0logic_error@std@@QEAA@PEBD@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::logic_error::logic_error
-	.long	.Ltmp298-.Ltmp297       # Subsection size
-.Ltmp297:
-	.short	.Ltmp300-.Ltmp299       # Record length
-.Ltmp299:
+	.long	.Ltmp294-.Ltmp293       # Subsection size
+.Ltmp293:
+	.short	.Ltmp296-.Ltmp295       # Record length
+.Ltmp295:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3093,36 +3052,36 @@
 	.secidx	"??0logic_error@std@@QEAA@PEBD@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::logic_error::logic_error" # Function name
-.Ltmp300:
-	.short	.Ltmp302-.Ltmp301       # Record length
-.Ltmp301:
+.Ltmp296:
+	.short	.Ltmp298-.Ltmp297       # Record length
+.Ltmp297:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4261                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp302:
-	.cv_def_range	 .Ltmp78 .Ltmp79, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp304-.Ltmp303       # Record length
-.Ltmp303:
+.Ltmp298:
+	.cv_def_range	 .Ltmp76 .Ltmp77, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp300-.Ltmp299       # Record length
+.Ltmp299:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4267                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"_Message"
-.Ltmp304:
-	.cv_def_range	 .Ltmp78 .Ltmp79, "E\021O\001\000\000@\000\000\000"
+.Ltmp300:
+	.cv_def_range	 .Ltmp76 .Ltmp77, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp298:
+.Ltmp294:
 	.p2align	2
 	.cv_linetable	27, "??0logic_error@std@@QEAA@PEBD@Z", .Lfunc_end27
 	.section	.debug$S,"dr",associative,"??0exception@std@@QEAA@QEBD@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for std::exception::exception
-	.long	.Ltmp306-.Ltmp305       # Subsection size
-.Ltmp305:
-	.short	.Ltmp308-.Ltmp307       # Record length
-.Ltmp307:
+	.long	.Ltmp302-.Ltmp301       # Subsection size
+.Ltmp301:
+	.short	.Ltmp304-.Ltmp303       # Record length
+.Ltmp303:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3135,56 +3094,56 @@
 	.secidx	"??0exception@std@@QEAA@QEBD@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"std::exception::exception" # Function name
-.Ltmp308:
-	.short	.Ltmp310-.Ltmp309       # Record length
-.Ltmp309:
+.Ltmp304:
+	.short	.Ltmp306-.Ltmp305       # Record length
+.Ltmp305:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4277                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp310:
-	.cv_def_range	 .Ltmp80 .Ltmp85, "E\021O\001\000\0000\000\000\000"
-	.short	.Ltmp312-.Ltmp311       # Record length
-.Ltmp311:
+.Ltmp306:
+	.cv_def_range	 .Ltmp78 .Ltmp83, "E\021O\001\000\0000\000\000\000"
+	.short	.Ltmp308-.Ltmp307       # Record length
+.Ltmp307:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4253                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"_Message"
-.Ltmp312:
-	.cv_def_range	 .Ltmp80 .Ltmp85, "E\021O\001\000\0008\000\000\000"
-	.short	.Ltmp314-.Ltmp313       # Record length
-.Ltmp313:
+.Ltmp308:
+	.cv_def_range	 .Ltmp78 .Ltmp83, "E\021O\001\000\0008\000\000\000"
+	.short	.Ltmp310-.Ltmp309       # Record length
+.Ltmp309:
 	.short	4355                    # Record kind: S_BLOCK32
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
-	.long	.Ltmp84-.Ltmp81         # Code size
-	.secrel32	.Ltmp81         # Function section relative address
+	.long	.Ltmp82-.Ltmp79         # Code size
+	.secrel32	.Ltmp79         # Function section relative address
 	.secidx	.Lfunc_begin28          # Function section index
 	.byte	0                       # Lexical block name
-.Ltmp314:
-	.short	.Ltmp316-.Ltmp315       # Record length
-.Ltmp315:
+.Ltmp310:
+	.short	.Ltmp312-.Ltmp311       # Record length
+.Ltmp311:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4492                    # TypeIndex
 	.short	0                       # Flags
 	.asciz	"_InitData"
-.Ltmp316:
-	.cv_def_range	 .Ltmp81 .Ltmp84, "E\021O\001\000\000@\000\000\000"
+.Ltmp312:
+	.cv_def_range	 .Ltmp79 .Ltmp82, "E\021O\001\000\000@\000\000\000"
 	.short	2                       # Record length
 	.short	6                       # Record kind: S_END
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp306:
+.Ltmp302:
 	.p2align	2
 	.cv_linetable	28, "??0exception@std@@QEAA@QEBD@Z", .Lfunc_end28
 	.section	.debug$S,"dr",associative,"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEBAPEAHXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::data
-	.long	.Ltmp318-.Ltmp317       # Subsection size
-.Ltmp317:
-	.short	.Ltmp320-.Ltmp319       # Record length
-.Ltmp319:
+	.long	.Ltmp314-.Ltmp313       # Subsection size
+.Ltmp313:
+	.short	.Ltmp316-.Ltmp315       # Record length
+.Ltmp315:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3197,28 +3156,28 @@
 	.secidx	"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEBAPEAHXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::data" # Function name
-.Ltmp320:
-	.short	.Ltmp322-.Ltmp321       # Record length
-.Ltmp321:
+.Ltmp316:
+	.short	.Ltmp318-.Ltmp317       # Record length
+.Ltmp317:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4154                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp322:
-	.cv_def_range	 .Ltmp86 .Ltmp87, "E\021O\001\000\000\000\000\000\000"
+.Ltmp318:
+	.cv_def_range	 .Ltmp84 .Ltmp85, "E\021O\001\000\000\000\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp318:
+.Ltmp314:
 	.p2align	2
 	.cv_linetable	29, "?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEBAPEAHXZ", .Lfunc_end29
 	.section	.debug$S,"dr",associative,"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<const int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::storage_type<gsl::details::extent_type<0> >
-	.long	.Ltmp324-.Ltmp323       # Subsection size
-.Ltmp323:
-	.short	.Ltmp326-.Ltmp325       # Record length
-.Ltmp325:
+	.long	.Ltmp320-.Ltmp319       # Subsection size
+.Ltmp319:
+	.short	.Ltmp322-.Ltmp321       # Record length
+.Ltmp321:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3231,44 +3190,44 @@
 	.secidx	"??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<const int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::storage_type<gsl::details::extent_type<0> >" # Function name
-.Ltmp326:
-	.short	.Ltmp328-.Ltmp327       # Record length
-.Ltmp327:
+.Ltmp322:
+	.short	.Ltmp324-.Ltmp323       # Record length
+.Ltmp323:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4780                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp328:
-	.cv_def_range	 .Ltmp92 .Ltmp96, "E\021N\001\000\000(\000\000\000"
-	.short	.Ltmp330-.Ltmp329       # Record length
-.Ltmp329:
+.Ltmp324:
+	.cv_def_range	 .Ltmp90 .Ltmp94, "E\021N\001\000\000(\000\000\000"
+	.short	.Ltmp326-.Ltmp325       # Record length
+.Ltmp325:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4171                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"data"
-.Ltmp330:
-	.cv_def_range	 .Ltmp92 .Ltmp96, "E\021N\001\000\0000\000\000\000"
-	.short	.Ltmp332-.Ltmp331       # Record length
-.Ltmp331:
+.Ltmp326:
+	.cv_def_range	 .Ltmp90 .Ltmp94, "E\021N\001\000\0000\000\000\000"
+	.short	.Ltmp328-.Ltmp327       # Record length
+.Ltmp327:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4233                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"ext"
-.Ltmp332:
-	.cv_def_range	 .Ltmp92 .Ltmp96, "E\021N\001\000\0008\000\000\000"
+.Ltmp328:
+	.cv_def_range	 .Ltmp90 .Ltmp94, "E\021N\001\000\0008\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp324:
+.Ltmp320:
 	.p2align	2
 	.cv_linetable	30, "??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z", .Lfunc_end30
 	.section	.debug$S,"dr",associative,"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ"
 	.p2align	2
 	.long	4                       # Debug section magic
 	.long	241                     # Symbol subsection for gsl::span<const int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::data
-	.long	.Ltmp334-.Ltmp333       # Subsection size
-.Ltmp333:
-	.short	.Ltmp336-.Ltmp335       # Record length
-.Ltmp335:
+	.long	.Ltmp330-.Ltmp329       # Subsection size
+.Ltmp329:
+	.short	.Ltmp332-.Ltmp331       # Record length
+.Ltmp331:
 	.short	4423                    # Record kind: S_GPROC32_ID
 	.long	0                       # PtrParent
 	.long	0                       # PtrEnd
@@ -3281,221 +3240,233 @@
 	.secidx	"?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ" # Function section index
 	.byte	0                       # Flags
 	.asciz	"gsl::span<const int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >::data" # Function name
-.Ltmp336:
-	.short	.Ltmp338-.Ltmp337       # Record length
-.Ltmp337:
+.Ltmp332:
+	.short	.Ltmp334-.Ltmp333       # Record length
+.Ltmp333:
 	.short	4414                    # Record kind: S_LOCAL
 	.long	4213                    # TypeIndex
 	.short	1                       # Flags
 	.asciz	"this"
-.Ltmp338:
-	.cv_def_range	 .Ltmp97 .Ltmp98, "E\021O\001\000\000\000\000\000\000"
+.Ltmp334:
+	.cv_def_range	 .Ltmp95 .Ltmp96, "E\021O\001\000\000\000\000\000\000"
 	.short	2                       # Record length
 	.short	4431                    # Record kind: S_PROC_ID_END
-.Ltmp334:
+.Ltmp330:
 	.p2align	2
 	.cv_linetable	31, "?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ", .Lfunc_end31
 	.section	.debug$S,"dr"
 	.long	241
-	.long	.Ltmp340-.Ltmp339       # Subsection size
-.Ltmp339:
-	.short	.Ltmp342-.Ltmp341       # Record length
-.Ltmp341:
+	.long	.Ltmp336-.Ltmp335       # Subsection size
+.Ltmp335:
+	.short	.Ltmp338-.Ltmp337       # Record length
+.Ltmp337:
 	.short	4360                    # Record kind: S_UDT
 	.long	19                      # Type
 	.asciz	"ptrdiff_t"
+.Ltmp338:
+	.short	.Ltmp340-.Ltmp339       # Record length
+.Ltmp339:
+	.short	4360                    # Record kind: S_UDT
+	.long	19                      # Type
+	.asciz	"index_type"
+.Ltmp340:
+	.short	.Ltmp342-.Ltmp341       # Record length
+.Ltmp341:
+	.short	4360                    # Record kind: S_UDT
+	.long	116                     # Type
+	.asciz	"std::remove_cv_t<int>"
 .Ltmp342:
 	.short	.Ltmp344-.Ltmp343       # Record length
 .Ltmp343:
 	.short	4360                    # Record kind: S_UDT
-	.long	19                      # Type
-	.asciz	"index_type"
+	.long	4149                    # Type
+	.asciz	"gsl::span<int,-1>"
 .Ltmp344:
 	.short	.Ltmp346-.Ltmp345       # Record length
 .Ltmp345:
 	.short	4360                    # Record kind: S_UDT
-	.long	116                     # Type
-	.asciz	"std::remove_cv_t<int>"
+	.long	4157                    # Type
+	.asciz	"gsl::span<int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >"
 .Ltmp346:
 	.short	.Ltmp348-.Ltmp347       # Record length
 .Ltmp347:
 	.short	4360                    # Record kind: S_UDT
-	.long	4149                    # Type
-	.asciz	"gsl::span<int,-1>"
+	.long	4165                    # Type
+	.asciz	"gsl::details::extent_type<-1>"
 .Ltmp348:
 	.short	.Ltmp350-.Ltmp349       # Record length
 .Ltmp349:
 	.short	4360                    # Record kind: S_UDT
-	.long	4157                    # Type
-	.asciz	"gsl::span<int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >"
+	.long	116                     # Type
+	.asciz	"std::remove_cv_t<const int>"
 .Ltmp350:
 	.short	.Ltmp352-.Ltmp351       # Record length
 .Ltmp351:
 	.short	4360                    # Record kind: S_UDT
-	.long	4165                    # Type
-	.asciz	"gsl::details::extent_type<-1>"
+	.long	4210                    # Type
+	.asciz	"gsl::span<const int,-1>"
 .Ltmp352:
 	.short	.Ltmp354-.Ltmp353       # Record length
 .Ltmp353:
 	.short	4360                    # Record kind: S_UDT
-	.long	116                     # Type
-	.asciz	"std::remove_cv_t<const int>"
+	.long	4216                    # Type
+	.asciz	"gsl::span<const int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >"
 .Ltmp354:
 	.short	.Ltmp356-.Ltmp355       # Record length
 .Ltmp355:
 	.short	4360                    # Record kind: S_UDT
-	.long	4210                    # Type
-	.asciz	"gsl::span<const int,-1>"
+	.long	19                      # Type
+	.asciz	"index_type"
 .Ltmp356:
 	.short	.Ltmp358-.Ltmp357       # Record length
 .Ltmp357:
 	.short	4360                    # Record kind: S_UDT
-	.long	4216                    # Type
-	.asciz	"gsl::span<const int,-1>::storage_type<gsl::details::extent_type<dynamic_extent> >"
+	.long	4233                    # Type
+	.asciz	"gsl::details::extent_type<0>"
 .Ltmp358:
 	.short	.Ltmp360-.Ltmp359       # Record length
 .Ltmp359:
 	.short	4360                    # Record kind: S_UDT
-	.long	19                      # Type
-	.asciz	"index_type"
+	.long	4257                    # Type
+	.asciz	"gsl::fail_fast"
 .Ltmp360:
 	.short	.Ltmp362-.Ltmp361       # Record length
 .Ltmp361:
 	.short	4360                    # Record kind: S_UDT
-	.long	4233                    # Type
-	.asciz	"gsl::details::extent_type<0>"
+	.long	4262                    # Type
+	.asciz	"std::string"
 .Ltmp362:
 	.short	.Ltmp364-.Ltmp363       # Record length
 .Ltmp363:
 	.short	4360                    # Record kind: S_UDT
-	.long	4257                    # Type
-	.asciz	"gsl::fail_fast"
+	.long	4272                    # Type
+	.asciz	"std::logic_error"
 .Ltmp364:
 	.short	.Ltmp366-.Ltmp365       # Record length
 .Ltmp365:
 	.short	4360                    # Record kind: S_UDT
-	.long	4262                    # Type
-	.asciz	"std::string"
+	.long	4292                    # Type
+	.asciz	"std::exception"
 .Ltmp366:
 	.short	.Ltmp368-.Ltmp367       # Record length
 .Ltmp367:
 	.short	4360                    # Record kind: S_UDT
-	.long	4272                    # Type
-	.asciz	"std::logic_error"
+	.long	35                      # Type
+	.asciz	"size_t"
 .Ltmp368:
 	.short	.Ltmp370-.Ltmp369       # Record length
 .Ltmp369:
 	.short	4360                    # Record kind: S_UDT
-	.long	4292                    # Type
-	.asciz	"std::exception"
+	.long	4352                    # Type
+	.asciz	"std::bool_constant<true>"
 .Ltmp370:
 	.short	.Ltmp372-.Ltmp371       # Record length
 .Ltmp371:
 	.short	4360                    # Record kind: S_UDT
-	.long	35                      # Type
-	.asciz	"size_t"
+	.long	4352                    # Type
+	.asciz	"std::true_type"
 .Ltmp372:
 	.short	.Ltmp374-.Ltmp373       # Record length
 .Ltmp373:
 	.short	4360                    # Record kind: S_UDT
-	.long	4352                    # Type
-	.asciz	"std::bool_constant<true>"
+	.long	4355                    # Type
+	.asciz	"std::bool_constant<false>"
 .Ltmp374:
 	.short	.Ltmp376-.Ltmp375       # Record length
 .Ltmp375:
 	.short	4360                    # Record kind: S_UDT
-	.long	4352                    # Type
-	.asciz	"std::true_type"
+	.long	4355                    # Type
+	.asciz	"std::false_type"
 .Ltmp376:
 	.short	.Ltmp378-.Ltmp377       # Record length
 .Ltmp377:
 	.short	4360                    # Record kind: S_UDT
-	.long	4355                    # Type
-	.asciz	"std::bool_constant<false>"
+	.long	4299                    # Type
+	.asciz	"std::_Rebind_alloc_t<std::allocator<char>,char>"
 .Ltmp378:
 	.short	.Ltmp380-.Ltmp379       # Record length
 .Ltmp379:
 	.short	4360                    # Record kind: S_UDT
-	.long	4355                    # Type
-	.asciz	"std::false_type"
+	.long	4352                    # Type
+	.asciz	"std::bool_constant<_Is_specialization_v<std::char_traits<char>,char_traits> && is_trivial_v<std::basic_string<char,std::char_traits<char>,std::allocator<char> >::pointer> >"
 .Ltmp380:
 	.short	.Ltmp382-.Ltmp381       # Record length
 .Ltmp381:
 	.short	4360                    # Record kind: S_UDT
-	.long	4299                    # Type
-	.asciz	"std::_Rebind_alloc_t<std::allocator<char>,char>"
+	.long	4488                    # Type
+	.asciz	"std::basic_string<char,std::char_traits<char>,std::allocator<char> >"
 .Ltmp382:
 	.short	.Ltmp384-.Ltmp383       # Record length
 .Ltmp383:
 	.short	4360                    # Record kind: S_UDT
-	.long	4352                    # Type
-	.asciz	"std::bool_constant<_Is_specialization_v<std::char_traits<char>,char_traits> && is_trivial_v<std::basic_string<char,std::char_traits<char>,std::allocator<char> >::pointer> >"
+	.long	4492                    # Type
+	.asciz	"__std_exception_data"
 .Ltmp384:
 	.short	.Ltmp386-.Ltmp385       # Record length
 .Ltmp385:
 	.short	4360                    # Record kind: S_UDT
-	.long	4488                    # Type
-	.asciz	"std::basic_string<char,std::char_traits<char>,std::allocator<char> >"
+	.long	4526                    # Type
+	.asciz	"std::_Rebind_alloc_t<std::_String_alloc<std::_String_base_types<char,std::allocator<char> > >::_Alty,std::_Container_proxy>"
 .Ltmp386:
 	.short	.Ltmp388-.Ltmp387       # Record length
 .Ltmp387:
 	.short	4360                    # Record kind: S_UDT
-	.long	4492                    # Type
-	.asciz	"__std_exception_data"
+	.long	4528                    # Type
+	.asciz	"std::conditional_t<_Is_simple_alloc_v<std::_String_base_types<char,std::allocator<char> >::_Alty>,_Simple_types<char>,_String_iter_types<char,typename _Alty_traits::size_type,typename _Alty_traits::difference_type,typename _Alty_traits::pointer,typename _Alty_traits::const_pointer,char &,const char &> >"
 .Ltmp388:
 	.short	.Ltmp390-.Ltmp389       # Record length
 .Ltmp389:
 	.short	4360                    # Record kind: S_UDT
-	.long	4526                    # Type
-	.asciz	"std::_Rebind_alloc_t<std::_String_alloc<std::_String_base_types<char,std::allocator<char> > >::_Alty,std::_Container_proxy>"
+	.long	4537                    # Type
+	.asciz	"std::_String_alloc<std::_String_base_types<char,std::allocator<char> > >"
 .Ltmp390:
 	.short	.Ltmp392-.Ltmp391       # Record length
 .Ltmp391:
 	.short	4360                    # Record kind: S_UDT
-	.long	4528                    # Type
-	.asciz	"std::conditional_t<_Is_simple_alloc_v<std::_String_base_types<char,std::allocator<char> >::_Alty>,_Simple_types<char>,_String_iter_types<char,typename _Alty_traits::size_type,typename _Alty_traits::difference_type,typename _Alty_traits::pointer,typename _Alty_traits::const_pointer,char &,const char &> >"
+	.long	4559                    # Type
+	.asciz	"std::allocator<char>"
 .Ltmp392:
 	.short	.Ltmp394-.Ltmp393       # Record length
 .Ltmp393:
 	.short	4360                    # Record kind: S_UDT
-	.long	4537                    # Type
-	.asciz	"std::_String_alloc<std::_String_base_types<char,std::allocator<char> > >"
+	.long	4567                    # Type
+	.asciz	"std::integral_constant<bool,1>"
 .Ltmp394:
 	.short	.Ltmp396-.Ltmp395       # Record length
 .Ltmp395:
 	.short	4360                    # Record kind: S_UDT
-	.long	4559                    # Type
-	.asciz	"std::allocator<char>"
+	.long	4574                    # Type
+	.asciz	"std::integral_constant<bool,0>"
 .Ltmp396:
 	.short	.Ltmp398-.Ltmp397       # Record length
 .Ltmp397:
 	.short	4360                    # Record kind: S_UDT
-	.long	4567                    # Type
-	.asciz	"std::integral_constant<bool,1>"
+	.long	4576                    # Type
+	.asciz	"std::_Container_base"
 .Ltmp398:
 	.short	.Ltmp400-.Ltmp399       # Record length
 .Ltmp399:
 	.short	4360                    # Record kind: S_UDT
-	.long	4574                    # Type
-	.asciz	"std::integral_constant<bool,0>"
+	.long	4592                    # Type
+	.asciz	"std::_String_val<std::_Simple_types<char> >"
 .Ltmp400:
 	.short	.Ltmp402-.Ltmp401       # Record length
 .Ltmp401:
 	.short	4360                    # Record kind: S_UDT
-	.long	4576                    # Type
-	.asciz	"std::_Container_base"
+	.long	19                      # Type
+	.asciz	"std::streamoff"
 .Ltmp402:
 	.short	.Ltmp404-.Ltmp403       # Record length
 .Ltmp403:
 	.short	4360                    # Record kind: S_UDT
-	.long	4592                    # Type
-	.asciz	"std::_String_val<std::_Simple_types<char> >"
+	.long	4618                    # Type
+	.asciz	"_Mbstatet"
 .Ltmp404:
 	.short	.Ltmp406-.Ltmp405       # Record length
 .Ltmp405:
 	.short	4360                    # Record kind: S_UDT
-	.long	19                      # Type
-	.asciz	"std::streamoff"
+	.long	4618                    # Type
+	.asciz	"mbstate_t"
 .Ltmp406:
 	.short	.Ltmp408-.Ltmp407       # Record length
 .Ltmp407:
@@ -3506,118 +3477,106 @@
 	.short	.Ltmp410-.Ltmp409       # Record length
 .Ltmp409:
 	.short	4360                    # Record kind: S_UDT
-	.long	4618                    # Type
-	.asciz	"mbstate_t"
+	.long	4620                    # Type
+	.asciz	"std::char_traits<char>"
 .Ltmp410:
 	.short	.Ltmp412-.Ltmp411       # Record length
 .Ltmp411:
 	.short	4360                    # Record kind: S_UDT
-	.long	4618                    # Type
-	.asciz	"_Mbstatet"
+	.long	4623                    # Type
+	.asciz	"std::conditional_t<_Is_default_allocator<allocator<char> >::value,_Default_allocator_traits<std::allocator<char> >,_Normal_allocator_traits<std::allocator<char> > >"
 .Ltmp412:
 	.short	.Ltmp414-.Ltmp413       # Record length
 .Ltmp413:
 	.short	4360                    # Record kind: S_UDT
-	.long	4620                    # Type
-	.asciz	"std::char_traits<char>"
+	.long	4625                    # Type
+	.asciz	"std::allocator_traits<std::allocator<char> >"
 .Ltmp414:
 	.short	.Ltmp416-.Ltmp415       # Record length
 .Ltmp415:
 	.short	4360                    # Record kind: S_UDT
-	.long	4623                    # Type
-	.asciz	"std::conditional_t<_Is_default_allocator<allocator<char> >::value,_Default_allocator_traits<std::allocator<char> >,_Normal_allocator_traits<std::allocator<char> > >"
+	.long	4637                    # Type
+	.asciz	"std::_Compressed_pair<std::allocator<char>,std::_String_val<std::_Simple_types<char> >,1>"
 .Ltmp416:
 	.short	.Ltmp418-.Ltmp417       # Record length
 .Ltmp417:
 	.short	4360                    # Record kind: S_UDT
-	.long	4625                    # Type
-	.asciz	"std::allocator_traits<std::allocator<char> >"
+	.long	4656                    # Type
+	.asciz	"std::_Iterator_base12"
 .Ltmp418:
 	.short	.Ltmp420-.Ltmp419       # Record length
 .Ltmp419:
 	.short	4360                    # Record kind: S_UDT
-	.long	4637                    # Type
-	.asciz	"std::_Compressed_pair<std::allocator<char>,std::_String_val<std::_Simple_types<char> >,1>"
+	.long	4660                    # Type
+	.asciz	"std::_Container_proxy"
 .Ltmp420:
 	.short	.Ltmp422-.Ltmp421       # Record length
 .Ltmp421:
 	.short	4360                    # Record kind: S_UDT
-	.long	4656                    # Type
-	.asciz	"std::_Iterator_base12"
+	.long	4686                    # Type
+	.asciz	"std::allocator<std::_Container_proxy>"
 .Ltmp422:
 	.short	.Ltmp424-.Ltmp423       # Record length
 .Ltmp423:
 	.short	4360                    # Record kind: S_UDT
-	.long	4660                    # Type
-	.asciz	"std::_Container_proxy"
+	.long	4688                    # Type
+	.asciz	"std::conditional_t<_Is_default_allocator<allocator<_Container_proxy> >::value,_Default_allocator_traits<std::allocator<std::_Container_proxy> >,_Normal_allocator_traits<std::allocator<std::_Container_proxy> > >"
 .Ltmp424:
 	.short	.Ltmp426-.Ltmp425       # Record length
 .Ltmp425:
 	.short	4360                    # Record kind: S_UDT
-	.long	4686                    # Type
-	.asciz	"std::allocator<std::_Container_proxy>"
+	.long	4690                    # Type
+	.asciz	"std::allocator_traits<std::allocator<std::_Container_proxy> >"
 .Ltmp426:
 	.short	.Ltmp428-.Ltmp427       # Record length
 .Ltmp427:
 	.short	4360                    # Record kind: S_UDT
-	.long	4688                    # Type
-	.asciz	"std::conditional_t<_Is_default_allocator<allocator<_Container_proxy> >::value,_Default_allocator_traits<std::allocator<std::_Container_proxy> >,_Normal_allocator_traits<std::allocator<std::_Container_proxy> > >"
+	.long	4693                    # Type
+	.asciz	"std::_Simple_types<char>"
 .Ltmp428:
 	.short	.Ltmp430-.Ltmp429       # Record length
 .Ltmp429:
 	.short	4360                    # Record kind: S_UDT
-	.long	4690                    # Type
-	.asciz	"std::allocator_traits<std::allocator<std::_Container_proxy> >"
+	.long	4699                    # Type
+	.asciz	"std::_String_val<std::_Simple_types<char> >::_Bxty"
 .Ltmp430:
 	.short	.Ltmp432-.Ltmp431       # Record length
 .Ltmp431:
 	.short	4360                    # Record kind: S_UDT
-	.long	4693                    # Type
-	.asciz	"std::_Simple_types<char>"
+	.long	4713                    # Type
+	.asciz	"std::_Container_base12"
 .Ltmp432:
 	.short	.Ltmp434-.Ltmp433       # Record length
 .Ltmp433:
 	.short	4360                    # Record kind: S_UDT
-	.long	4699                    # Type
-	.asciz	"std::_String_val<std::_Simple_types<char> >::_Bxty"
+	.long	4716                    # Type
+	.asciz	"_Mbstatet"
 .Ltmp434:
 	.short	.Ltmp436-.Ltmp435       # Record length
 .Ltmp435:
 	.short	4360                    # Record kind: S_UDT
-	.long	4713                    # Type
-	.asciz	"std::_Container_base12"
+	.long	35                      # Type
+	.asciz	"size_type"
 .Ltmp436:
 	.short	.Ltmp438-.Ltmp437       # Record length
 .Ltmp437:
 	.short	4360                    # Record kind: S_UDT
-	.long	4716                    # Type
-	.asciz	"_Mbstatet"
+	.long	4730                    # Type
+	.asciz	"std::_Default_allocator_traits<std::allocator<char> >"
 .Ltmp438:
 	.short	.Ltmp440-.Ltmp439       # Record length
 .Ltmp439:
 	.short	4360                    # Record kind: S_UDT
-	.long	35                      # Type
-	.asciz	"size_type"
+	.long	4744                    # Type
+	.asciz	"std::_Default_allocator_traits<std::allocator<std::_Container_proxy> >"
 .Ltmp440:
 	.short	.Ltmp442-.Ltmp441       # Record length
 .Ltmp441:
 	.short	4360                    # Record kind: S_UDT
-	.long	4730                    # Type
-	.asciz	"std::_Default_allocator_traits<std::allocator<char> >"
-.Ltmp442:
-	.short	.Ltmp444-.Ltmp443       # Record length
-.Ltmp443:
-	.short	4360                    # Record kind: S_UDT
-	.long	4744                    # Type
-	.asciz	"std::_Default_allocator_traits<std::allocator<std::_Container_proxy> >"
-.Ltmp444:
-	.short	.Ltmp446-.Ltmp445       # Record length
-.Ltmp445:
-	.short	4360                    # Record kind: S_UDT
 	.long	4245                    # Type
 	.asciz	"std::remove_reference_t<gsl::fail_fast>"
-.Ltmp446:
-.Ltmp340:
+.Ltmp442:
+.Ltmp336:
 	.p2align	2
 	.cv_filechecksums               # File index to string table offset subsection
 	.cv_stringtable                 # String table
