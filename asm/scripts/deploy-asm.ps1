@@ -23,7 +23,7 @@ function collectAsm {
     }
 
     #Merge all branches into master
-    git checkout master 2>&1
+    cmd.exe /c "git checkout master 2>&1"
     cmd.exe /c "git merge --squash $($asmFinalBranch) 2>&1"
     if(-not $?){
         throw "Failed merge"

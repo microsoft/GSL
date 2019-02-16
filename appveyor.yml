@@ -6,7 +6,7 @@ skip_branch_with_pr: true
 
 
 platform:
-  # - x86
+  - x86
   - x64
 
 configuration:
