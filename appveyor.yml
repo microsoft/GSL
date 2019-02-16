@@ -162,6 +162,8 @@ on_finish:
         $jobs = $buildData.build.jobs
         $lastJob = ($jobs | Select-Object -Last 1)
 
+        Write-Host "Build : $($buildData.build)"
+
         Write-Host "Jobs:"
         $jobs | Foreach-Object { 
             Write-Host "  - $($_)"

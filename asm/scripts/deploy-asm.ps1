@@ -123,7 +123,7 @@ function collectAsm {
 
     #Merge all branches into master
     $branchString = $asmBranches -join ' '
-    git checkout origin/master 2>&1
+    git checkout master 2>&1
     git pull
     git fetch --all
     git branch -a
