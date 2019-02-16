@@ -3,13 +3,12 @@
 
 function collectAsm {
     # Create branch to merge asm into
-    # $asmFinalBranch = asm/$env:APPVEYOR_REPO_COMMIT/final
-    # git pull
-    # git checkout $env:APPVEYOR_REPO_BRANCH
-    # git checkout -b $asmFinalBranch
+    git fetch --all 2>&1 
 
-    #collect all branches to merge
-    $asmBranches = @()
+    $asmFinalBranch = "asm/$($env:APPVEYOR_REPO_COMMIT)/final"
+    git checkout -b $asmFinalBranch $env:APPVEYOR_REPO_BRANCH
+
+    #merge all branches into final branch
     (Get-AppVeyorBuild).build.jobs | Foreach-Object { 
         $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
 
@@ -19,26 +18,12 @@ function collectAsm {
             throw "Missing branch for job $($_.jobId)"
         }
 
-        git checkout $branchName 2>&1
-
-        #Add branch to the branch list
-        # $branchName = "origin/"+$branchName
-        $asmBranches += $branchName
+        git merge $branchName 2>&1
     }
-
-    #TODO: collect asm from travis
-    # $travisBuild = Get-TravisBuild
-    # $travisJobs = @()
-    # $travisBuild.jobs | Foreach-Object { $travisJobs += $_.id }
-
+    
     #Merge all branches into master
-    $branchString = $asmBranches -join ' '
     git checkout master 2>&1
-    git pull
-    git fetch --all
-    git branch -a
-    Write-Host "git merge --squash $($branchString)"
-    git merge --squash $branchString
+    cmd.exe /c "git merge --squash $($asmFinalBranch)"
     if(-not $?){
         throw "Failed merge"
     }
