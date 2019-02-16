@@ -153,16 +153,15 @@ deploy_script:
 
 on_finish:
   - ps: |
+      Push-Location $env:APPVEYOR_BUILD_FOLDER
+      . .\asm\scripts\API-Functions.ps1
       if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         # Delete all branches for asm if this is the last build
-        $build = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG" -Method GET -Headers @{
-          "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
-          "Content-type"  = "application/json"
-        }
-        $jobs = $buildData.build.jobs
+        $build = Get-AppVeyorBuild
+        $jobs = $build.build.jobs
         $lastJob = ($jobs | Select-Object -Last 1)
 
-        Write-Host "Build : $($buildData.build)"
+        Write-Host "Build : $($build.build)"
 
         Write-Host "Jobs:"
         $jobs | Foreach-Object { 
