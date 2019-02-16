@@ -157,21 +157,11 @@ on_finish:
       . .\asm\scripts\API-Functions.ps1
       if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         # Delete all branches for asm if this is the last build
-        $build = Get-AppVeyorBuild
-        $jobs = $build.build.jobs
+        $build = (Get-AppVeyorBuild).build
+        $jobs = $build.jobs
         $lastJob = ($jobs | Select-Object -Last 1)
 
-        Write-Host "Build : $($build.build)"
-
-        Write-Host "Jobs:"
-        $jobs | Foreach-Object { 
-            Write-Host "  - $($_)"
-          }
-
-        Write-Host "Current job: $($env:APPVEYOR_JOB_ID)"
-        Write-Host "Last job: $($lastJob)"
-
-        if ($lastJob.jobId -eq $env:APPVEYOR_JOB_ID) {
+        if (($lastJob.jobId -eq $env:APPVEYOR_JOB_ID)) {
           $jobs | Foreach-Object { 
             $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
             git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName

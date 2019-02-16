@@ -1,5 +1,5 @@
 # Include the API access functions
-. .\API-Functions.ps1
+. $PSScriptRoot\API-Functions.ps1
 
 function collectAsm {
     # Create branch to merge asm into
