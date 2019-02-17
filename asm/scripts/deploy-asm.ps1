@@ -18,7 +18,8 @@ function collectAsm {
             throw "Missing branch for job $($_.jobId)"
         }
 
-        cmd.exe /c "git merge $($branchName) 2>&1"
+        # Use cherry-pick as the asm branches only have a single commit
+        cmd.exe /c "git cherry-pick $($branchName) 2>&1"
         if(-not $?){
             throw "Failed merge of $($branchName)"
         }
