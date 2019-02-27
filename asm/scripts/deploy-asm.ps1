@@ -3,12 +3,11 @@
 
 function collectAsm {
     cmd.exe /c "git checkout $($env:APPVEYOR_REPO_BRANCH) 2>&1"
-
-    # Create branch to merge asm into
     git fetch --all 2>&1 
 
+    # Create branch to merge asm into
     $asmFinalBranch = "asm/$($env:APPVEYOR_REPO_COMMIT)/final"
-    cmd.exe /c "git checkout -b $($asmFinalBranch) $($env:APPVEYOR_REPO_BRANCH) 2>&1"
+    cmd.exe /c "git checkout -b $($asmFinalBranch) $($env:APPVEYOR_REPO_COMMIT) 2>&1"
 
     #merge all branches into final branch
     (Get-AppVeyorBuild).build.jobs | Foreach-Object { 
@@ -20,15 +19,11 @@ function collectAsm {
             throw "Missing branch for job $($_.jobId)"
         }
 
-        #Only merge in asm if there is any change between the current branch and the final asm branch
-        cmd.exe /c "git diff --quiet origin/$($branchName)..$($asmFinalBranch)"
+        #Only merge in asm if there is any change between the current branch and the repo branch
+        cmd.exe /c "git diff-tree --quiet origin/$($branchName)..$($env:APPVEYOR_REPO_COMMIT)"
         if(-not $?){
-            #TEMPORARY LOGGING:
-            Write-Host "Diffs from $($branchName), cherry-picking into asm final branch $($asmFinalBranch)"
-            cmd.exe /c "git diff origin/$($branchName)..$($asmFinalBranch)"
-
             # Use cherry-pick as the asm branches only have a single commit
-            cmd.exe /c "git cherry-pick origin/$($branchName) --allow-empty 2>&1"
+            cmd.exe /c "git cherry-pick origin/$($branchName) 2>&1"
             if(-not $?){
                 throw "Failed merge of $($branchName)"
             }
