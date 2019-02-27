@@ -286,10 +286,8 @@ __unwindtable$?foo@@YA_NXZ DD 0ffffffffH
 	DD	FLAT:___std_terminate
 	DD	0ffffffffH
 	DD	FLAT:___std_terminate
-	DD	0ffffffffH
-	DD	FLAT:___std_terminate
 __ehfuncinfo$?foo@@YA_NXZ DD 019930522H
-	DD	03H
+	DD	02H
 	DD	FLAT:__unwindtable$?foo@@YA_NXZ
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
