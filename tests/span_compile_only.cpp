@@ -28,7 +28,7 @@
 // #include <stddef.h>    // for ptrdiff_t
 // #include <string>      // for string
 // #include <type_traits> // for integral_constant<>::value, is_default_co...
-// #include <vector>      // for vector
+#include <vector>      // for vector
 
 namespace gsl {
 struct fail_fast;
@@ -50,6 +50,20 @@ bool foo()
 
         span<int> s2{};
         ret = ret || (s2.size() == 0 && s2.data() == nullptr);
+
+        return ret;
+    }
+}
+
+
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
+bool bar()
+{
+    {
+        bool ret = true;
+        vector<int> v{0,1,2,3};
+        span<int> s{v};
+        ret = ret || (s.size() == 4 && s.data() != nullptr);
 
         return ret;
     }
