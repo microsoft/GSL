@@ -11,30 +11,6 @@ function Get-AppVeyorBuild {
     }
 }
 
-function Get-TravisBuild {
-    param(
-        [int]$limit    = 10,
-        [int]$maxLimit = 100
-    )
-    if (-not ($env:TRAVIS_API_TOKEN)) {
-        throw "missing api token for Travis-CI."
-    }
-    
-    $builds = Invoke-RestMethod -Uri "https://api.travis-ci.org/builds?limit=$($limit)" -Method Get -Headers @{
-        "Authorization" = "token $env:TRAVIS_API_TOKEN"
-        "Travis-API-Version" = "3" 
-    } 
-    $currentBuild = $builds.builds | Where-Object {$_.commit.sha -eq $env:APPVEYOR_REPO_COMMIT}
-    if (!$currentBuild) {
-        if($limit+10 -le $maxLimit) {
-            return Get-TravisBuild -limit $limit+10 -maxLimit $maxLimit
-        } else {
-            throw "Could not get information about Travis build with sha $REPO_COMMIT"
-        }
-    } 
-    return $currentBuild
-}
-
 function appveyorFinished {
     param()
     $buildData = Get-AppVeyorBuild
@@ -63,6 +39,31 @@ function appveyorFinished {
     } while (([datetime]::Now) -lt $stop)
 
     throw "Test jobs were not finished in $env:TIMEOUT_MINS minutes"
+}
+
+
+function Get-TravisBuild {
+    param(
+        [int]$limit    = 10,
+        [int]$maxLimit = 100
+    )
+    if (-not ($env:TRAVIS_API_TOKEN)) {
+        throw "missing api token for Travis-CI."
+    }
+    
+    $builds = Invoke-RestMethod -Uri "https://api.travis-ci.org/builds?limit=$($limit)" -Method Get -Headers @{
+        "Authorization" = "token $env:TRAVIS_API_TOKEN"
+        "Travis-API-Version" = "3" 
+    } 
+    $currentBuild = $builds.builds | Where-Object {$_.commit.sha -eq $env:APPVEYOR_REPO_COMMIT}
+    if (!$currentBuild) {
+        if($limit+10 -le $maxLimit) {
+            return Get-TravisBuild -limit $limit+10 -maxLimit $maxLimit
+        } else {
+            throw "Could not get information about Travis build with sha $REPO_COMMIT"
+        }
+    } 
+    return $currentBuild
 }
 
 function travisFinished {
