@@ -2,6 +2,8 @@
 . $PSScriptRoot\API-Functions.ps1
 
 function collectAsm {
+    cmd.exe /c "git checkout $($env:APPVEYOR_REPO_BRANCH) 2>&1"
+
     # Create branch to merge asm into
     git fetch --all 2>&1 
 
@@ -33,8 +35,8 @@ function collectAsm {
         }
     }
 
-    #Merge all branches into master
-    cmd.exe /c "git checkout master 2>&1"
+    #Merge all branches into $($env:APPVEYOR_REPO_BRANCH)
+    cmd.exe /c "git checkout $($env:APPVEYOR_REPO_BRANCH) 2>&1"
     cmd.exe /c "git merge --squash $($asmFinalBranch) 2>&1"
     if(-not $?){
         throw "Failed merge"
