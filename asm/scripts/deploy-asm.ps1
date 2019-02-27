@@ -18,10 +18,14 @@ function collectAsm {
             throw "Missing branch for job $($_.jobId)"
         }
 
-        # Use cherry-pick as the asm branches only have a single commit
-        cmd.exe /c "git cherry-pick origin/$($branchName) --allow-empty 2>&1"
+        #Only merge in asm if there is any change between the current branch and the final asm branch
+        cmd.exe /c "git diff --quiet $($branchName)..$($asmFinalBranch)"
         if(-not $?){
-            throw "Failed merge of $($branchName)"
+            # Use cherry-pick as the asm branches only have a single commit
+            cmd.exe /c "git cherry-pick origin/$($branchName) --allow-empty 2>&1"
+            if(-not $?){
+                throw "Failed merge of $($branchName)"
+            }
         }
     }
 
