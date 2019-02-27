@@ -19,7 +19,7 @@ function collectAsm {
         }
 
         #Only merge in asm if there is any change between the current branch and the final asm branch
-        cmd.exe /c "git diff --quiet $($branchName)..$($asmFinalBranch)"
+        cmd.exe /c "git diff --quiet origin/$($branchName)..$($asmFinalBranch)"
         if(-not $?){
             # Use cherry-pick as the asm branches only have a single commit
             cmd.exe /c "git cherry-pick origin/$($branchName) --allow-empty 2>&1"
