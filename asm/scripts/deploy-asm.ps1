@@ -1,9 +1,29 @@
 # Include the API access functions
 . $PSScriptRoot\API-Functions.ps1
 
+function Run-Command-With-Retry {
+    param(
+        [string]$cmd,
+        [string]$cleanup_cmd = "",
+        [int]$maxTries = 3
+    )
+
+    while ($maxTries -gt 0) {
+        cmd.exe /c $cmd
+        if($?){
+            return
+        } else {
+            cmd.exe /c $cleanup_cmd
+            $maxTries = $maxTries - 1
+        }
+    }
+
+    throw "Command $($command) failed with exit code $($LastExitCode)"
+}
+
 function collectAsm {
     cmd.exe /c "git checkout $($env:APPVEYOR_REPO_BRANCH) 2>&1"
-    git fetch --all 2>&1 
+    cmd.exe /c "git fetch --all 2>&1" 
 
     # Create branch to merge asm into
     $asmFinalBranch = "asm/$($env:APPVEYOR_REPO_COMMIT)/final"
@@ -14,7 +34,7 @@ function collectAsm {
         $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
 
         #Check that all branches exist
-        git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
+        cmd.exe /c "git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $($branchName)"
         if(-not $?){
             throw "Missing branch for job $($_.jobId)"
         }
@@ -36,10 +56,10 @@ function collectAsm {
     if(-not $?){
         throw "Failed merge"
     }
-    git diff-index --cached --quiet --exit-code HEAD
+    cmd.exe /c "git diff-index --cached --quiet --exit-code HEAD"
     if(-not $?) {
         git commit -m "[skip ci] Update ASM for $($env:APPVEYOR_REPO_COMMIT)"
-        cmd.exe /c "git push 2>&1"
+        Run-Command-With-Retry -cmd "git push 2>&1" -cleanup_cmd "git pull --rebase 2>&1"
     }
 }
 
