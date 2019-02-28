@@ -1,6 +1,6 @@
 branches:
   except:
-    - /asm.*/
+    - /asm\/.*/
 
 skip_branch_with_pr: true
 
@@ -17,7 +17,7 @@ image:
   - Visual Studio 2017
 
 environment:
-  access_token:
+  GITHUB_ACCESS_TOKEN:
     secure: JoKQ6wDekwtEk9su/zJWT12TtHMsHAacSLnPe47/SV22BAfVSMMR8VCyDF/W9bE2
   APPVEYOR_API_TOKEN:
     secure: JwBE1w4itlwjHKNDVnG+frRTexCT0x6e3iF6Qsw2Ov4=
@@ -139,7 +139,7 @@ before_deploy:
       if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         # Only push asm during CI. Credentials are not available during a PR        
         git config --global credential.helper store | Out-Null
-        Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n" | Out-Null
+        Add-Content "$HOME\.git-credentials" "https://$($env:GITHUB_ACCESS_TOKEN):x-oauth-basic@github.com`n" | Out-Null
         git config --global user.email "dadonenf@microsoft.com" | Out-Null
         git config --global user.name "Daniel Donenfeld" | Out-Null
         Push-Location $env:APPVEYOR_BUILD_FOLDER        
@@ -150,10 +150,16 @@ deploy_script:
   - ps: |
       Push-Location $env:APPVEYOR_BUILD_FOLDER
       . .\asm\scripts\Asm-Functions.ps1
-      Publish-Asm
+      if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        # Only publish asm during CI
+        Publish-Asm
+      }
 
 on_finish:
   - ps: |
       Push-Location $env:APPVEYOR_BUILD_FOLDER
       . .\asm\scripts\Asm-Functions.ps1
-      Remove-Asm-Branches
+      if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        # Branches are only created during CI, so they only need to be deleted then
+        Remove-Asm-Branches
+      }

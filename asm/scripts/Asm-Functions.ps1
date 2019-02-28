@@ -93,8 +93,6 @@ function appveyorFinished {
     throw "Test jobs were not finished in $env:TIMEOUT_MINS minutes"
 }
 
-#Build System independent functions
-
 # Returns true if any Appveyor build is "failed" or "cancelled"
 function Get-Any-Appveyor-Failures {
     (Get-AppVeyorBuild).build.jobs | Foreach-Object `
@@ -107,6 +105,8 @@ function Get-Any-Appveyor-Failures {
     }
     return $false
 }
+
+#Build System independent functions
 
 function Remove-Asm-Branches {
     if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
