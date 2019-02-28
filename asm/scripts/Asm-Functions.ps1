@@ -1,47 +1,4 @@
-function Get-AppVeyorBuild {
-    param()
-
-    if (-not ($env:APPVEYOR_API_TOKEN)) {
-        throw "missing api token for AppVeyor."
-    }
-
-    Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG/build/$($env:APPVEYOR_BUILD_VERSION)" -Method GET -Headers @{
-        "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
-        "Content-type"  = "application/json"
-    }
-}
-
-function appveyorFinished {
-    param()
-    $buildData = Get-AppVeyorBuild
-    $lastJob = ($buildData.build.jobs | Select-Object -Last 1).jobId
-
-    if ($lastJob -ne $env:APPVEYOR_JOB_ID) {
-        return $false
-    }
-
-    [datetime]$stop = ([datetime]::Now).AddMinutes($env:TIMEOUT_MINS)
-
-    do {
-
-        $allSuccess = $true
-        (Get-AppVeyorBuild).build.jobs | Where-Object {$_.jobId -ne $env:APPVEYOR_JOB_ID} | Foreach-Object `
-            { 
-                $job = $_
-                switch ($job.status) {
-                    "failed" { throw "AppVeyor's Job ($($job.jobId)) failed." }
-                    "success" { continue }
-                    Default { $allSuccess = $false }
-                }
-            }
-        if ($allSuccess) { return $true }
-        Start-sleep 5
-    } while (([datetime]::Now) -lt $stop)
-
-    throw "Test jobs were not finished in $env:TIMEOUT_MINS minutes"
-}
-
-
+#Travis related functions (Currently unused and untested)
 function Get-TravisBuild {
     param(
         [int]$limit    = 10,
@@ -91,6 +48,52 @@ function travisFinished {
 
     throw "Travis build did not finished in $env:TIMEOUT_MINS minutes"
 }
+
+#Appveyor related functions
+function Get-AppVeyorBuild {
+    param()
+
+    if (-not ($env:APPVEYOR_API_TOKEN)) {
+        throw "missing api token for AppVeyor."
+    }
+
+    Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG/build/$($env:APPVEYOR_BUILD_VERSION)" -Method GET -Headers @{
+        "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
+        "Content-type"  = "application/json"
+    }
+}
+
+function appveyorFinished {
+    param()
+    $buildData = Get-AppVeyorBuild
+    $lastJob = ($buildData.build.jobs | Select-Object -Last 1).jobId
+
+    if ($lastJob -ne $env:APPVEYOR_JOB_ID) {
+        return $false
+    }
+
+    [datetime]$stop = ([datetime]::Now).AddMinutes($env:TIMEOUT_MINS)
+
+    do {
+
+        $allSuccess = $true
+        (Get-AppVeyorBuild).build.jobs | Where-Object {$_.jobId -ne $env:APPVEYOR_JOB_ID} | Foreach-Object `
+            { 
+                $job = $_
+                switch ($job.status) {
+                    "failed" { throw "AppVeyor's Job ($($job.jobId)) failed." }
+                    "success" { continue }
+                    Default { $allSuccess = $false }
+                }
+            }
+        if ($allSuccess) { return $true }
+        Start-sleep 5
+    } while (([datetime]::Now) -lt $stop)
+
+    throw "Test jobs were not finished in $env:TIMEOUT_MINS minutes"
+}
+
+#Build System independent functions
 
 # Returns true if any Appveyor build is "failed" or "cancelled"
 function Get-Any-Appveyor-Failures {
