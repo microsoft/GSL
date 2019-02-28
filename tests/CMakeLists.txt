@@ -100,13 +100,11 @@ set_property(TARGET test_catch PROPERTY FOLDER "GSL_tests")
 
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
-
     target_link_libraries(${name}
         GSL
         test_catch
         gsl_tests_config
     )
-
     add_dependencies(${name} catch)
     add_test(
       ${name}
