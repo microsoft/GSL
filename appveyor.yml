@@ -147,26 +147,13 @@ before_deploy:
       }
 
 deploy_script:
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - ps: '& "asm\scripts\deploy-asm.ps1"'
+  - ps: |
+      Push-Location $env:APPVEYOR_BUILD_FOLDER
+      . .\asm\scripts\Asm-Functions.ps1
+      Publish-Asm
 
 on_finish:
   - ps: |
       Push-Location $env:APPVEYOR_BUILD_FOLDER
-      . .\asm\scripts\API-Functions.ps1
-      if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
-        # Delete all branches for asm if this is the last build
-        $build = (Get-AppVeyorBuild).build
-        $jobs = $build.jobs
-        $lastJob = ($jobs | Select-Object -Last 1)
-
-        if (($lastJob.jobId -eq $env:APPVEYOR_JOB_ID)) {
-          $jobs | Foreach-Object { 
-            $branchName = "asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId)"
-            git ls-remote --heads --exit-code https://github.com/dadonenf/GSL.git $branchName
-            if($?){
-              cmd.exe /c "git push origin --delete asm/$($env:APPVEYOR_REPO_COMMIT)/appveyor-$($_.jobId) 2>&1"
-            }
-          }
-        }
-      }
+      . .\asm\scripts\Asm-Functions.ps1
+      Remove-Asm-Branches
