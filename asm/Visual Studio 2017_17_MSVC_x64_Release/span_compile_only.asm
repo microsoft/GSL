@@ -11,25 +11,46 @@ PUBLIC	?what@exception@std@@UEBAPEBDXZ			; std::exception::what
 PUBLIC	??_Gexception@std@@UEAAPEAXI@Z			; std::exception::`scalar deleting destructor'
 PUBLIC	??0logic_error@std@@QEAA@AEBV01@@Z		; std::logic_error::logic_error
 PUBLIC	??_Glogic_error@std@@UEAAPEAXI@Z		; std::logic_error::`scalar deleting destructor'
+PUBLIC	??0fail_fast@gsl@@QEAA@QEBD@Z			; gsl::fail_fast::fail_fast
 PUBLIC	??1fail_fast@gsl@@UEAA@XZ			; gsl::fail_fast::~fail_fast
 PUBLIC	??0fail_fast@gsl@@QEAA@AEBU01@@Z		; gsl::fail_fast::fail_fast
 PUBLIC	??0fail_fast@gsl@@QEAA@$$QEAU01@@Z		; gsl::fail_fast::fail_fast
 PUBLIC	??_Gfail_fast@gsl@@UEAAPEAXI@Z			; gsl::fail_fast::`scalar deleting destructor'
+PUBLIC	??0narrowing_error@gsl@@QEAA@XZ			; gsl::narrowing_error::narrowing_error
+PUBLIC	??1narrowing_error@gsl@@UEAA@XZ			; gsl::narrowing_error::~narrowing_error
+PUBLIC	??0narrowing_error@gsl@@QEAA@AEBU01@@Z		; gsl::narrowing_error::narrowing_error
+PUBLIC	??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z	; gsl::narrowing_error::narrowing_error
+PUBLIC	??_Gnarrowing_error@gsl@@UEAAPEAXI@Z		; gsl::narrowing_error::`scalar deleting destructor'
 PUBLIC	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
 PUBLIC	?foo@@YA_NXZ					; foo
+PUBLIC	?bar@@YA_NXZ					; bar
+PUBLIC	??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+PUBLIC	?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ ; std::vector<int,std::allocator<int> >::_Tidy
+PUBLIC	?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ; std::vector<int,std::allocator<int> >::_Xlength
+PUBLIC	??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
 PUBLIC	??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z ; std::forward<gsl::fail_fast>
+PUBLIC	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+PUBLIC	??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z ; std::forward<gsl::narrowing_error>
 PUBLIC	??_7exception@std@@6B@				; std::exception::`vftable'
 PUBLIC	??_C@_0BC@EOODALEL@Unknown?5exception@		; `string'
 PUBLIC	??_7logic_error@std@@6B@			; std::logic_error::`vftable'
 PUBLIC	??_7fail_fast@gsl@@6B@				; gsl::fail_fast::`vftable'
 PUBLIC	??_R0?AVexception@std@@@8			; std::exception `RTTI Type Descriptor'
 PUBLIC	_CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24
+PUBLIC	??_7narrowing_error@gsl@@6B@			; gsl::narrowing_error::`vftable'
+PUBLIC	??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
 PUBLIC	_TI3?AUfail_fast@gsl@@
 PUBLIC	_CTA3?AUfail_fast@gsl@@
 PUBLIC	??_R0?AUfail_fast@gsl@@@8			; gsl::fail_fast `RTTI Type Descriptor'
 PUBLIC	_CT??_R0?AUfail_fast@gsl@@@8??0fail_fast@gsl@@QEAA@AEBU01@@Z24
 PUBLIC	??_R0?AVlogic_error@std@@@8			; std::logic_error `RTTI Type Descriptor'
 PUBLIC	_CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z24
+PUBLIC	??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@	; `string'
+PUBLIC	??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	_TI2?AUnarrowing_error@gsl@@
+PUBLIC	_CTA2?AUnarrowing_error@gsl@@
+PUBLIC	??_R0?AUnarrowing_error@gsl@@@8			; gsl::narrowing_error `RTTI Type Descriptor'
+PUBLIC	_CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QEAA@AEBU01@@Z24
 PUBLIC	??_R4exception@std@@6B@				; std::exception::`RTTI Complete Object Locator'
 PUBLIC	??_R3exception@std@@8				; std::exception::`RTTI Class Hierarchy Descriptor'
 PUBLIC	??_R2exception@std@@8				; std::exception::`RTTI Base Class Array'
@@ -42,16 +63,29 @@ PUBLIC	??_R4fail_fast@gsl@@6B@				; gsl::fail_fast::`RTTI Complete Object Locato
 PUBLIC	??_R3fail_fast@gsl@@8				; gsl::fail_fast::`RTTI Class Hierarchy Descriptor'
 PUBLIC	??_R2fail_fast@gsl@@8				; gsl::fail_fast::`RTTI Base Class Array'
 PUBLIC	??_R1A@?0A@EA@fail_fast@gsl@@8			; gsl::fail_fast::`RTTI Base Class Descriptor at (0,-1,0,64)'
+PUBLIC	??_R4narrowing_error@gsl@@6B@			; gsl::narrowing_error::`RTTI Complete Object Locator'
+PUBLIC	??_R3narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Class Hierarchy Descriptor'
+PUBLIC	??_R2narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Base Class Array'
+PUBLIC	??_R1A@?0A@EA@narrowing_error@gsl@@8		; gsl::narrowing_error::`RTTI Base Class Descriptor at (0,-1,0,64)'
+PUBLIC	__xmm@00000003000000020000000100000000
+EXTRN	??2@YAPEAX_K@Z:PROC				; operator new
 EXTRN	??3@YAXPEAX_K@Z:PROC				; operator delete
 EXTRN	__std_terminate:PROC
+EXTRN	__imp__invalid_parameter_noinfo_noreturn:PROC
 EXTRN	__std_exception_copy:PROC
 EXTRN	__std_exception_destroy:PROC
 EXTRN	??_Eexception@std@@UEAAPEAXI@Z:PROC		; std::exception::`vector deleting destructor'
+EXTRN	?_Xlength_error@std@@YAXPEBD@Z:PROC		; std::_Xlength_error
 EXTRN	??_Elogic_error@std@@UEAAPEAXI@Z:PROC		; std::logic_error::`vector deleting destructor'
 EXTRN	??_Efail_fast@gsl@@UEAAPEAXI@Z:PROC		; gsl::fail_fast::`vector deleting destructor'
+EXTRN	??_Enarrowing_error@gsl@@UEAAPEAXI@Z:PROC	; gsl::narrowing_error::`vector deleting destructor'
 EXTRN	_CxxThrowException:PROC
 EXTRN	__CxxFrameHandler3:PROC
+EXTRN	__GSHandlerCheck_EH:PROC
+EXTRN	__security_check_cookie:PROC
+EXTRN	memmove:PROC
 EXTRN	??_7type_info@@6B@:BYTE				; type_info::`vftable'
+EXTRN	__security_cookie:QWORD
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$??0exception@std@@QEAA@QEBD@Z DD imagerel $LN5
@@ -69,6 +103,12 @@ pdata	SEGMENT
 $pdata$??_Gexception@std@@UEAAPEAXI@Z DD imagerel $LN9
 	DD	imagerel $LN9+66
 	DD	imagerel $unwind$??_Gexception@std@@UEAAPEAXI@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?_Adjust_manually_vector_aligned@std@@YAXAEAPEAXAEA_K@Z DD imagerel $LN13
+	DD	imagerel $LN13+43
+	DD	imagerel $unwind$?_Adjust_manually_vector_aligned@std@@YAXAEAPEAXAEA_K@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -120,6 +160,36 @@ $pdata$??_Gfail_fast@gsl@@UEAAPEAXI@Z DD imagerel $LN15
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
+$pdata$??0narrowing_error@gsl@@QEAA@AEBU01@@Z DD imagerel $LN7
+	DD	imagerel $LN7+63
+	DD	imagerel $unwind$??0narrowing_error@gsl@@QEAA@AEBU01@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z DD imagerel $LN7
+	DD	imagerel $LN7+63
+	DD	imagerel $unwind$??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??_Gnarrowing_error@gsl@@UEAAPEAXI@Z DD imagerel $LN12
+	DD	imagerel $LN12+66
+	DD	imagerel $unwind$??_Gnarrowing_error@gsl@@UEAAPEAXI@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z DD imagerel $LN19
+	DD	imagerel $LN19+72
+	DD	imagerel $unwind$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA DD imagerel ?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
 $pdata$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z DD imagerel $LN4
 	DD	imagerel $LN4+40
 	DD	imagerel $unwind$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z
@@ -129,6 +199,24 @@ pdata	SEGMENT
 $pdata$?foo@@YA_NXZ DD imagerel $LN165
 	DD	imagerel $LN165+19
 	DD	imagerel $unwind$?foo@@YA_NXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD imagerel $LN56
+	DD	imagerel $LN56+121
+	DD	imagerel $unwind$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD imagerel ?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+	DD	imagerel ?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD imagerel ?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+	DD	imagerel ?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -144,6 +232,108 @@ $pdata$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ DD imagerel $LN40
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
+$pdata$?bar@@YA_NXZ DD imagerel $LN249
+	DD	imagerel $LN249+285
+	DD	imagerel $unwind$?bar@@YA_NXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$6@?0??bar@@YA_NXZ@4HA DD imagerel ?dtor$6@?0??bar@@YA_NXZ@4HA
+	DD	imagerel ?dtor$6@?0??bar@@YA_NXZ@4HA+38
+	DD	imagerel $unwind$?dtor$6@?0??bar@@YA_NXZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?deallocate@?$allocator@H@std@@QEAAXQEAH_K@Z DD imagerel $LN20
+	DD	imagerel $LN20+67
+	DD	imagerel $unwind$?deallocate@?$allocator@H@std@@QEAAXQEAH_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?allocate@?$allocator@H@std@@QEAAPEAH_K@Z DD imagerel $LN30
+	DD	imagerel $LN30+117
+	DD	imagerel $unwind$?allocate@?$allocator@H@std@@QEAAPEAH_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z DD imagerel $LN19
+	DD	imagerel $LN19+53
+	DD	imagerel $unwind$??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ DD imagerel $LN106
+	DD	imagerel $LN106+92
+	DD	imagerel $unwind$??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z DD imagerel $LN102
+	DD	imagerel $LN102+42
+	DD	imagerel $unwind$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$0$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z DD imagerel $LN102+42
+	DD	imagerel $LN102+154
+	DD	imagerel $chain$0$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$1$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z DD imagerel $LN102+154
+	DD	imagerel $LN102+166
+	DD	imagerel $chain$1$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ DD imagerel $LN103
+	DD	imagerel $LN103+92
+	DD	imagerel $unwind$?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ DD imagerel $LN4
+	DD	imagerel $LN4+17
+	DD	imagerel $unwind$?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD imagerel $LN104
+	DD	imagerel $LN104+137
+	DD	imagerel $unwind$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA DD imagerel ?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA
+	DD	imagerel ?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD imagerel $LN154
+	DD	imagerel $LN154+248
+	DD	imagerel $unwind$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA DD imagerel ?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
+	DD	imagerel ?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA+32
+	DD	imagerel $unwind$?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Allocate@$0BA@U_Default_allocate_traits@std@@$0A@@std@@YAPEAX_K@Z DD imagerel $LN23
+	DD	imagerel $LN23+90
+	DD	imagerel $unwind$??$_Allocate@$0BA@U_Default_allocate_traits@std@@$0A@@std@@YAPEAX_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Deallocate@$0BA@$0A@@std@@YAXPEAX_K@Z DD imagerel $LN17
+	DD	imagerel $LN17+53
+	DD	imagerel $unwind$??$_Deallocate@$0BA@$0A@@std@@YAXPEAX_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
 $pdata$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z DD imagerel $LN39
 	DD	imagerel $LN39+31
 	DD	imagerel $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z
@@ -154,6 +344,103 @@ $pdata$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0
 	DD	imagerel $LN39+31
 	DD	imagerel $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z
 pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$narrow@_J_K@gsl@@YA_J_K@Z DD imagerel $LN25
+	DD	imagerel $LN25+63
+	DD	imagerel $unwind$??$narrow@_J_K@gsl@@YA_J_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAPEAHPEBH0PEAH@Z DD imagerel $LN29
+	DD	imagerel $LN29+45
+	DD	imagerel $unwind$??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAPEAHPEBH0PEAH@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPEAX_K@Z DD imagerel $LN16
+	DD	imagerel $LN16+62
+	DD	imagerel $unwind$??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPEAX_K@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD imagerel $LN53
+	DD	imagerel $LN53+121
+	DD	imagerel $unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD imagerel ?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+	DD	imagerel ?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+	DD	imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z DD imagerel $LN4
+	DD	imagerel $LN4+40
+	DD	imagerel $unwind$??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHQEBH0PEAHAEAV?$allocator@H@0@@Z DD imagerel $LN22
+	DD	imagerel $LN22+48
+	DD	imagerel $unwind$??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHQEBH0PEAHAEAV?$allocator@H@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPEAHQEBH0QEAHAEAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z DD imagerel $LN6
+	DD	imagerel $LN6+48
+	DD	imagerel $unwind$??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPEAHQEBH0QEAHAEAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z DD imagerel $LN4
+	DD	imagerel $LN4+48
+	DD	imagerel $unwind$??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z
+pdata	ENDS
+;	COMDAT __xmm@00000003000000020000000100000000
+CONST	SEGMENT
+__xmm@00000003000000020000000100000000 DB 00H, 00H, 00H, 00H, 01H, 00H, 00H
+	DB	00H, 02H, 00H, 00H, 00H, 03H, 00H, 00H, 00H
+CONST	ENDS
+;	COMDAT ??_R1A@?0A@EA@narrowing_error@gsl@@8
+rdata$r	SEGMENT
+??_R1A@?0A@EA@narrowing_error@gsl@@8 DD imagerel ??_R0?AUnarrowing_error@gsl@@@8 ; gsl::narrowing_error::`RTTI Base Class Descriptor at (0,-1,0,64)'
+	DD	01H
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+	DD	040H
+	DD	imagerel ??_R3narrowing_error@gsl@@8
+rdata$r	ENDS
+;	COMDAT ??_R2narrowing_error@gsl@@8
+rdata$r	SEGMENT
+??_R2narrowing_error@gsl@@8 DD imagerel ??_R1A@?0A@EA@narrowing_error@gsl@@8 ; gsl::narrowing_error::`RTTI Base Class Array'
+	DD	imagerel ??_R1A@?0A@EA@exception@std@@8
+	ORG $+3
+rdata$r	ENDS
+;	COMDAT ??_R3narrowing_error@gsl@@8
+rdata$r	SEGMENT
+??_R3narrowing_error@gsl@@8 DD 00H			; gsl::narrowing_error::`RTTI Class Hierarchy Descriptor'
+	DD	00H
+	DD	02H
+	DD	imagerel ??_R2narrowing_error@gsl@@8
+rdata$r	ENDS
+;	COMDAT ??_R4narrowing_error@gsl@@6B@
+rdata$r	SEGMENT
+??_R4narrowing_error@gsl@@6B@ DD 01H			; gsl::narrowing_error::`RTTI Complete Object Locator'
+	DD	00H
+	DD	00H
+	DD	imagerel ??_R0?AUnarrowing_error@gsl@@@8
+	DD	imagerel ??_R3narrowing_error@gsl@@8
+	DD	imagerel ??_R4narrowing_error@gsl@@6B@
+rdata$r	ENDS
 ;	COMDAT ??_R1A@?0A@EA@fail_fast@gsl@@8
 rdata$r	SEGMENT
 ??_R1A@?0A@EA@fail_fast@gsl@@8 DD imagerel ??_R0?AUfail_fast@gsl@@@8 ; gsl::fail_fast::`RTTI Base Class Descriptor at (0,-1,0,64)'
@@ -250,6 +537,44 @@ rdata$r	SEGMENT
 	DD	imagerel ??_R3exception@std@@8
 	DD	imagerel ??_R4exception@std@@6B@
 rdata$r	ENDS
+;	COMDAT _CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QEAA@AEBU01@@Z24
+xdata$x	SEGMENT
+_CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QEAA@AEBU01@@Z24 DD 00H
+	DD	imagerel ??_R0?AUnarrowing_error@gsl@@@8
+	DD	00H
+	DD	0ffffffffH
+	ORG $+4
+	DD	018H
+	DD	imagerel ??0narrowing_error@gsl@@QEAA@AEBU01@@Z
+xdata$x	ENDS
+;	COMDAT ??_R0?AUnarrowing_error@gsl@@@8
+data$r	SEGMENT
+??_R0?AUnarrowing_error@gsl@@@8 DQ FLAT:??_7type_info@@6B@ ; gsl::narrowing_error `RTTI Type Descriptor'
+	DQ	0000000000000000H
+	DB	'.?AUnarrowing_error@gsl@@', 00H
+data$r	ENDS
+;	COMDAT _CTA2?AUnarrowing_error@gsl@@
+xdata$x	SEGMENT
+_CTA2?AUnarrowing_error@gsl@@ DD 02H
+	DD	imagerel _CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QEAA@AEBU01@@Z24
+	DD	imagerel _CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24
+xdata$x	ENDS
+;	COMDAT _TI2?AUnarrowing_error@gsl@@
+xdata$x	SEGMENT
+_TI2?AUnarrowing_error@gsl@@ DD 00H
+	DD	imagerel ??1narrowing_error@gsl@@UEAA@XZ
+	DD	00H
+	DD	imagerel _CTA2?AUnarrowing_error@gsl@@
+xdata$x	ENDS
+;	COMDAT ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 599', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@
+CONST	SEGMENT
+??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@ DB 'vector<T> too long', 00H ; `string'
+CONST	ENDS
 ;	COMDAT _CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z24
 xdata$x	SEGMENT
 _CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z24 DD 00H
@@ -296,6 +621,17 @@ _TI3?AUfail_fast@gsl@@ DD 00H
 	DD	00H
 	DD	imagerel _CTA3?AUfail_fast@gsl@@
 xdata$x	ENDS
+;	COMDAT ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 336', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_7narrowing_error@gsl@@6B@
+CONST	SEGMENT
+??_7narrowing_error@gsl@@6B@ DQ FLAT:??_R4narrowing_error@gsl@@6B@ ; gsl::narrowing_error::`vftable'
+	DQ	FLAT:??_Enarrowing_error@gsl@@UEAAPEAXI@Z
+	DQ	FLAT:?what@exception@std@@UEBAPEBDXZ
+CONST	ENDS
 ;	COMDAT _CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24
 xdata$x	SEGMENT
 _CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24 DD 00H
@@ -336,6 +672,118 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
+$unwind$??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z DD 040a01H
+	DD	06340aH
+	DD	07006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPEAHQEBH0QEAHAEAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z DD 040a01H
+	DD	06340aH
+	DD	07006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHQEBH0PEAHAEAV?$allocator@H@0@@Z DD 040a01H
+	DD	06340aH
+	DD	07006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z DD 010401H
+	DD	08204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z+80
+	DD	02H
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z+115
+	DD	00H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 019930522H
+	DD	03H
+	DD	imagerel $stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+	DD	00H
+	DD	00H
+	DD	02H
+	DD	imagerel $ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 010d11H
+	DD	08204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPEAX_K@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAPEAHPEBH0PEAH@Z DD 040a01H
+	DD	06340aH
+	DD	07006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$narrow@_J_K@gsl@@YA_J_K@Z DD imagerel ??$narrow@_J_K@gsl@@YA_J_K@Z+57
+	DD	01H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$narrow@_J_K@gsl@@YA_J_K@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$narrow@_J_K@gsl@@YA_J_K@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$narrow@_J_K@gsl@@YA_J_K@Z
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$??$narrow@_J_K@gsl@@YA_J_K@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$narrow@_J_K@gsl@@YA_J_K@Z DD 010d11H
+	DD	08204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$narrow@_J_K@gsl@@YA_J_K@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
 $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z DD 010c01H
 	DD	02204H
 xdata	ENDS
@@ -343,6 +791,227 @@ xdata	ENDS
 xdata	SEGMENT
 $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z DD 010c01H
 	DD	02204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Deallocate@$0BA@$0A@@std@@YAXPEAX_K@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Allocate@$0BA@U_Default_allocate_traits@std@@$0A@@std@@YAPEAX_K@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA DD 020a19H
+	DD	05006320aH
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD imagerel ??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z+130
+	DD	0ffffffffH
+	DD	imagerel ??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z+195
+	DD	00H
+	DD	imagerel ??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z+242
+	DD	0ffffffffH
+	DD	imagerel ?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA+26
+	DD	01H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$handlerMap$0$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD 040H
+	DD	00H
+	DD	00H
+	DD	imagerel ?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
+	DD	038H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$tryMap$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD 00H
+	DD	00H
+	DD	01H
+	DD	01H
+	DD	imagerel $handlerMap$0$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+	DD	01H
+	DD	imagerel $tryMap$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+	DD	04H
+	DD	imagerel $ip2state$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z DD 082319H
+	DD	0b7423H
+	DD	0a641eH
+	DD	093419H
+	DD	0e007520bH
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD imagerel ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z+94
+	DD	04H
+	DD	imagerel ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z+131
+	DD	01H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 019930522H
+	DD	05H
+	DD	imagerel $stateUnwindMap$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+	DD	00H
+	DD	00H
+	DD	02H
+	DD	imagerel $ip2state$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 010d11H
+	DD	0c204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$1$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z DD 021H
+	DD	imagerel $LN102
+	DD	imagerel $LN102+42
+	DD	imagerel $unwind$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$0$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z DD 020521H
+	DD	067405H
+	DD	imagerel $LN102
+	DD	imagerel $LN102+42
+	DD	imagerel $unwind$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z DD 020a01H
+	DD	03006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?allocate@?$allocator@H@std@@QEAAPEAH_K@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?deallocate@?$allocator@H@std@@QEAAXQEAH_K@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$6@?0??bar@@YA_NXZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?bar@@YA_NXZ DD imagerel ?bar@@YA_NXZ+86
+	DD	0ffffffffH
+	DD	imagerel ?bar@@YA_NXZ+213
+	DD	00H
+	DD	imagerel ?bar@@YA_NXZ+242
+	DD	05H
+	DD	imagerel ?bar@@YA_NXZ+279
+	DD	02H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?bar@@YA_NXZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0??bar@@YA_NXZ@4HA
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	imagerel ?dtor$2@?0??bar@@YA_NXZ@4HA
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	imagerel ?dtor$6@?0??bar@@YA_NXZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?bar@@YA_NXZ DD 019930522H
+	DD	06H
+	DD	imagerel $stateUnwindMap$?bar@@YA_NXZ
+	DD	00H
+	DD	00H
+	DD	04H
+	DD	imagerel $ip2state$?bar@@YA_NXZ
+	DD	040H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?bar@@YA_NXZ DD 021f19H
+	DD	0110107H
+	DD	imagerel __GSHandlerCheck_EH
+	DD	imagerel $cppxdata$?bar@@YA_NXZ
+	DD	07aH
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
@@ -384,6 +1053,52 @@ $unwind$??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ DD 010c19H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
+$unwind$?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD imagerel ??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z+80
+	DD	02H
+	DD	imagerel ??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z+115
+	DD	00H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 019930522H
+	DD	03H
+	DD	imagerel $stateUnwindMap$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+	DD	00H
+	DD	00H
+	DD	02H
+	DD	imagerel $ip2state$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 010d11H
+	DD	08204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
 $stateUnwindMap$?foo@@YA_NXZ DD 0ffffffffH
 	DD	imagerel __std_terminate
 xdata	ENDS
@@ -410,6 +1125,57 @@ xdata	ENDS
 xdata	SEGMENT
 $unwind$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z DD 010401H
 	DD	08204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z DD imagerel ??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z+66
+	DD	00H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z DD 010d11H
+	DD	08204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??_Gnarrowing_error@gsl@@UEAAPEAXI@Z DD 040a01H
+	DD	06340aH
+	DD	07006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0narrowing_error@gsl@@QEAA@AEBU01@@Z DD 020601H
+	DD	030023206H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -455,6 +1221,11 @@ $unwind$??0logic_error@std@@QEAA@PEBD@Z DD 020601H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
+$unwind$?_Adjust_manually_vector_aligned@std@@YAXAEAPEAXAEA_K@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
 $unwind$??_Gexception@std@@UEAAPEAXI@Z DD 040a01H
 	DD	06340aH
 	DD	07006320aH
@@ -470,6 +1241,264 @@ $unwind$??0exception@std@@QEAA@QEBD@Z DD 020601H
 	DD	030025206H
 xdata	ENDS
 ; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Last$ = 56
+_Dest$ = 64
+??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z PROC	; std::_Copy_memmove<int const *,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2398
+$LN4:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rdx
+	mov	rdi, r8
+; Line 2402
+	sub	rbx, rcx
+; Line 2403
+	mov	rdx, rcx
+	mov	r8, rbx
+	mov	rcx, rdi
+	call	memmove
+; Line 2404
+	lea	rax, QWORD PTR [rbx+rdi]
+; Line 2405
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z ENDP	; std::_Copy_memmove<int const *,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Seek_wrapped@H@std@@YAXAEAPEAHQEAH@Z
+_TEXT	SEGMENT
+_It$ = 8
+_UIt$ = 16
+??$_Seek_wrapped@H@std@@YAXAEAPEAHQEAH@Z PROC		; std::_Seek_wrapped<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 872
+	mov	QWORD PTR [rcx], rdx
+; Line 873
+	ret	0
+??$_Seek_wrapped@H@std@@YAXAEAPEAHQEAH@Z ENDP		; std::_Seek_wrapped<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPEAHQEBH0QEAHAEAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Last$ = 56
+_Dest$ = 64
+__formal$ = 72
+__formal$ = 80
+__formal$ = 88
+??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPEAHQEBH0QEAHAEAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Uninitialized_copy_al_unchecked<int const ,int,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
+; Line 201
+$LN6:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rdx
+	mov	rdi, r8
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2402
+	sub	rbx, rcx
+; Line 2403
+	mov	rdx, rcx
+	mov	r8, rbx
+	mov	rcx, rdi
+	call	memmove
+; Line 2404
+	lea	rax, QWORD PTR [rbx+rdi]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
+; Line 203
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPEAHQEBH0QEAHAEAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Uninitialized_copy_al_unchecked<int const ,int,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBHAEBQEAH@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 8
+__formal$ = 16
+__formal$ = 24
+??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBHAEBQEAH@Z PROC ; std::_Ptr_copy_cat<int const ,int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 1070
+	mov	rax, rcx
+; Line 1071
+	ret	0
+??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBHAEBQEAH@Z ENDP ; std::_Ptr_copy_cat<int const ,int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Get_unwrapped_n@H_J$0A@@std@@YAPEAHQEAH_J@Z
+_TEXT	SEGMENT
+_Src$ = 8
+__formal$ = 16
+??$_Get_unwrapped_n@H_J$0A@@std@@YAPEAHQEAH_J@Z PROC	; std::_Get_unwrapped_n<int,__int64,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 809
+	mov	rax, rcx
+; Line 810
+	ret	0
+??$_Get_unwrapped_n@H_J$0A@@std@@YAPEAHQEAH_J@Z ENDP	; std::_Get_unwrapped_n<int,__int64,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Idl_distance1@PEBHPEBH@std@@YA_JAEBQEBH0Urandom_access_iterator_tag@0@@Z
+_TEXT	SEGMENT
+_First$ = 8
+_Last$ = 16
+__formal$ = 24
+??$_Idl_distance1@PEBHPEBH@std@@YA_JAEBQEBH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Idl_distance1<int const *,int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 968
+	mov	rax, QWORD PTR [rdx]
+	sub	rax, QWORD PTR [rcx]
+	sar	rax, 2
+; Line 969
+	ret	0
+??$_Idl_distance1@PEBHPEBH@std@@YA_JAEBQEBH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Idl_distance1<int const *,int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Idl_distance@PEBHPEBH@std@@YA_JAEBQEBH0@Z
+_TEXT	SEGMENT
+_First$ = 8
+_Last$ = 16
+??$_Idl_distance@PEBHPEBH@std@@YA_JAEBQEBH0@Z PROC	; std::_Idl_distance<int const *,int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 968
+	mov	rax, QWORD PTR [rdx]
+	sub	rax, QWORD PTR [rcx]
+	sar	rax, 2
+; Line 976
+	ret	0
+??$_Idl_distance@PEBHPEBH@std@@YA_JAEBQEBH0@Z ENDP	; std::_Idl_distance<int const *,int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Get_unwrapped@$$CBH@std@@YAPEBHQEBH@Z
+_TEXT	SEGMENT
+_Ptr$ = 8
+??$_Get_unwrapped@$$CBH@std@@YAPEBHQEBH@Z PROC		; std::_Get_unwrapped<int const >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 663
+	mov	rax, rcx
+; Line 664
+	ret	0
+??$_Get_unwrapped@$$CBH@std@@YAPEBHQEBH@Z ENDP		; std::_Get_unwrapped<int const >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z
+_TEXT	SEGMENT
+_Arg$ = 8
+??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z PROC ; std::forward<gsl::narrowing_error>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1574
+	mov	rax, rcx
+; Line 1575
+	ret	0
+??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z ENDP ; std::forward<gsl::narrowing_error>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$forward@AEA_K@std@@YAAEA_KAEA_K@Z
+_TEXT	SEGMENT
+_Arg$ = 8
+??$forward@AEA_K@std@@YAAEA_KAEA_K@Z PROC		; std::forward<unsigned __int64 &>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1574
+	mov	rax, rcx
+; Line 1575
+	ret	0
+??$forward@AEA_K@std@@YAAEA_KAEA_K@Z ENDP		; std::forward<unsigned __int64 &>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHQEBH0PEAHAEAV?$allocator@H@0@@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Last$ = 56
+_Dest$ = 64
+_Al$ = 72
+??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHQEBH0PEAHAEAV?$allocator@H@0@@Z PROC ; std::_Uninitialized_copy<int const *,int *,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
+; Line 209
+$LN22:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rdx
+	mov	rdi, r8
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2402
+	sub	rbx, rcx
+; Line 2403
+	mov	rdx, rcx
+	mov	r8, rbx
+	mov	rcx, rdi
+	call	memmove
+; Line 2404
+	lea	rax, QWORD PTR [rbx+rdi]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
+; Line 220
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHQEBH0PEAHAEAV?$allocator@H@0@@Z ENDP ; std::_Uninitialized_copy<int const *,int *,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Distance1@PEBH@std@@YA_JPEBH0Urandom_access_iterator_tag@0@@Z
+_TEXT	SEGMENT
+_First$ = 8
+_Last$ = 16
+__formal$ = 24
+??$_Distance1@PEBH@std@@YA_JPEBH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Distance1<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 1235
+	sub	rdx, rcx
+	sar	rdx, 2
+	mov	rax, rdx
+; Line 1236
+	ret	0
+??$_Distance1@PEBH@std@@YA_JPEBH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Distance1<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z
+_TEXT	SEGMENT
+$T1 = 32
+exception$ = 80
+??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z PROC ; gsl::details::throw_exception<gsl::narrowing_error>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 143
+$LN4:
+	sub	rsp, 72					; 00000048H
+; Line 144
+	call	??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z ; std::forward<gsl::narrowing_error>
+	mov	rdx, rax
+	lea	rcx, QWORD PTR $T1[rsp]
+	call	??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z
+	lea	rdx, OFFSET FLAT:_TI2?AUnarrowing_error@gsl@@
+	lea	rcx, QWORD PTR $T1[rsp]
+	call	_CxxThrowException
+	int	3
+$LN3@throw_exce:
+??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ENDP ; gsl::details::throw_exception<gsl::narrowing_error>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z
+_TEXT	SEGMENT
+u$ = 8
+??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z PROC		; gsl::narrow_cast<__int64,unsigned __int64 &>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 100
+	mov	rax, QWORD PTR [rcx]
+; Line 101
+	ret	0
+??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z ENDP		; gsl::narrow_cast<__int64,unsigned __int64 &>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
 ;	COMDAT ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z
 _TEXT	SEGMENT
 this$ = 8
@@ -483,6 +1512,388 @@ ext$ = 16
 	ret	0
 ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><0>
 _TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Get_size_of_n@$03@std@@YA_K_K@Z
+_TEXT	SEGMENT
+_Count$ = 8
+??$_Get_size_of_n@$03@std@@YA_K_K@Z PROC		; std::_Get_size_of_n<4>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 26
+	mov	rdx, 4611686018427387903		; 3fffffffffffffffH
+	lea	rax, QWORD PTR [rcx*4]
+	cmp	rcx, rdx
+	mov	r8, -1
+	cmova	rax, r8
+; Line 33
+	ret	0
+??$_Get_size_of_n@$03@std@@YA_K_K@Z ENDP		; std::_Get_size_of_n<4>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+data$ = 88
+ext$ = 96
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+$LN53:
+	sub	rsp, 72					; 00000048H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 336
+	mov	QWORD PTR [rcx], r8
+	test	r8, r8
+	js	SHORT $LN15@extent_typ
+; Line 596
+	mov	QWORD PTR [rcx+8], rdx
+; Line 599
+	test	rdx, rdx
+	jne	SHORT $LN5@extent_typ
+	test	r8, r8
+	jne	SHORT $LN51@extent_typ
+$LN5@extent_typ:
+; Line 600
+	mov	rax, rcx
+	add	rsp, 72					; 00000048H
+	ret	0
+$LN51@extent_typ:
+; Line 599
+	lea	rdx, OFFSET FLAT:??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T4[rsp], 2
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN15@extent_typ:
+; Line 336
+	lea	rdx, OFFSET FLAT:??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T4[rsp], 4
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	int	3
+$LN49@extent_typ:
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+data$ = 88
+ext$ = 96
+?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 4
+	test	eax, eax
+	je	SHORT $LN18@dtor$2
+	and	DWORD PTR $T4[rbp], -5
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN18@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$2
+text$x	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+data$ = 88
+ext$ = 96
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+data$ = 88
+ext$ = 96
+?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 4
+	test	eax, eax
+	je	SHORT $LN18@dtor$2
+	and	DWORD PTR $T4[rbp], -5
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN18@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+data$ = 88
+ext$ = 96
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unfancy_maybe_null@H@std@@YAPEAHPEAH@Z
+_TEXT	SEGMENT
+_Ptr$ = 8
+??$_Unfancy_maybe_null@H@std@@YAPEAHPEAH@Z PROC		; std::_Unfancy_maybe_null<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 618
+	mov	rax, rcx
+; Line 619
+	ret	0
+??$_Unfancy_maybe_null@H@std@@YAPEAHPEAH@Z ENDP		; std::_Unfancy_maybe_null<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Destroy_range1@V?$allocator@H@std@@@std@@YAXPEAH0AEAV?$allocator@H@0@U?$integral_constant@_N$00@0@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+__formal$ = 16
+__formal$ = 24
+__formal$ = 32
+??$_Destroy_range1@V?$allocator@H@std@@@std@@YAXPEAH0AEAV?$allocator@H@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Destroy_range1<std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 1147
+	ret	0
+??$_Destroy_range1@V?$allocator@H@std@@@std@@YAXPEAH0AEAV?$allocator@H@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Destroy_range1<std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPEAX_K@Z
+_TEXT	SEGMENT
+_Bytes$ = 48
+??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPEAX_K@Z PROC ; std::_Allocate_manually_vector_aligned<std::_Default_allocate_traits>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 92
+$LN16:
+	sub	rsp, 40					; 00000028H
+; Line 93
+	lea	rax, QWORD PTR [rcx+39]
+; Line 94
+	mov	rdx, -1
+	cmp	rax, rcx
+	cmovbe	rax, rdx
+; Line 52
+	mov	rcx, rax
+	call	??2@YAPEAX_K@Z				; operator new
+	mov	rcx, rax
+; Line 101
+	test	rax, rax
+	je	SHORT $LN7@Allocate_m
+; Line 103
+	add	rax, 39					; 00000027H
+	and	rax, -32				; ffffffffffffffe0H
+; Line 104
+	mov	QWORD PTR [rax-8], rcx
+; Line 110
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN7@Allocate_m:
+; Line 101
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN14@Allocate_m:
+??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPEAX_K@Z ENDP ; std::_Allocate_manually_vector_aligned<std::_Default_allocate_traits>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAPEAHPEBH0PEAH@Z
+_TEXT	SEGMENT
+this$ = 48
+_First$ = 56
+_Last$ = 64
+_Dest$ = 72
+??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAPEAHPEBH0PEAH@Z PROC ; std::vector<int,std::allocator<int> >::_Ucopy<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1822
+$LN29:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rbx, r8
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	mov	rcx, r9
+	sub	rbx, rdx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1822
+	mov	rdi, r9
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	mov	r8, rbx
+	call	memmove
+; Line 2404
+	lea	rax, QWORD PTR [rbx+rdi]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1824
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAPEAHPEBH0PEAH@Z ENDP ; std::vector<int,std::allocator<int> >::_Ucopy<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$distance@PEBH@std@@YA_JPEBH0@Z
+_TEXT	SEGMENT
+_First$ = 8
+_Last$ = 16
+??$distance@PEBH@std@@YA_JPEBH0@Z PROC			; std::distance<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 1235
+	sub	rdx, rcx
+	sar	rdx, 2
+; Line 1241
+	mov	rax, rdx
+; Line 1242
+	ret	0
+??$distance@PEBH@std@@YA_JPEBH0@Z ENDP			; std::distance<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0AEBV?$allocator@H@std@@$$V@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAA@U_One_then_variadic_args_t@1@AEBV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+this$ = 8
+__formal$ = 16
+_Val1$ = 24
+??$?0AEBV?$allocator@H@std@@$$V@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAA@U_One_then_variadic_args_t@1@AEBV?$allocator@H@1@@Z PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const &>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 389
+	xor	eax, eax
+	mov	QWORD PTR [rcx], rax
+; Line 390
+	mov	QWORD PTR [rcx+8], rax
+; Line 391
+	mov	QWORD PTR [rcx+16], rax
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 288
+	mov	rax, rcx
+	ret	0
+??$?0AEBV?$allocator@H@std@@$$V@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAA@U_One_then_variadic_args_t@1@AEBV?$allocator@H@1@@Z ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const &>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$forward@AEBV?$allocator@H@std@@@std@@YAAEBV?$allocator@H@0@AEBV10@@Z
+_TEXT	SEGMENT
+_Arg$ = 8
+??$forward@AEBV?$allocator@H@std@@@std@@YAAEBV?$allocator@H@0@AEBV10@@Z PROC ; std::forward<std::allocator<int> const &>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1574
+	mov	rax, rcx
+; Line 1575
+	ret	0
+??$forward@AEBV?$allocator@H@std@@@std@@YAAEBV?$allocator@H@0@AEBV10@@Z ENDP ; std::forward<std::allocator<int> const &>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$narrow@_J_K@gsl@@YA_J_K@Z
+_TEXT	SEGMENT
+$T1 = 32
+$T2 = 40
+u$ = 80
+??$narrow@_J_K@gsl@@YA_J_K@Z PROC			; gsl::narrow<__int64,unsigned __int64>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 124
+$LN25:
+	sub	rsp, 72					; 00000048H
+	mov	QWORD PTR $T1[rsp], -2
+; Line 127
+	test	rcx, rcx
+	js	SHORT $LN23@narrow
+; Line 129
+	mov	rax, rcx
+; Line 130
+	add	rsp, 72					; 00000048H
+	ret	0
+$LN23@narrow:
+; Line 128
+	xor	eax, eax
+	mov	QWORD PTR $T2[rsp], rax
+	mov	QWORD PTR $T2[rsp+8], rax
+	mov	QWORD PTR $T2[rsp+16], rax
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??0narrowing_error@gsl@@QEAA@XZ
+	npad	1
+	mov	rcx, rax
+	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+	int	3
+$LN21@narrow:
+??$narrow@_J_K@gsl@@YA_J_K@Z ENDP			; gsl::narrow<__int64,unsigned __int64>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+u$ = 80
+?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA PROC	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
+	lea	rcx, QWORD PTR $T2[rdx]
+	jmp	??1narrowing_error@gsl@@UEAA@XZ
+?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA ENDP	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+u$ = 80
+?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA PROC	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
+	lea	rcx, QWORD PTR $T2[rdx]
+	jmp	??1narrowing_error@gsl@@UEAA@XZ
+?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA ENDP	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
+text$x	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z
 _TEXT	SEGMENT
@@ -563,6 +1974,1358 @@ _Arg$ = 8
 	ret	0
 ??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z ENDP ; std::forward<gsl::fail_fast>
 _TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Destroy_range@V?$allocator@H@std@@@std@@YAXPEAH0AEAV?$allocator@H@0@@Z
+_TEXT	SEGMENT
+_First$ = 8
+_Last$ = 16
+_Al$ = 24
+??$_Destroy_range@V?$allocator@H@std@@@std@@YAXPEAH0AEAV?$allocator@H@0@@Z PROC ; std::_Destroy_range<std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 1161
+	ret	0
+??$_Destroy_range@V?$allocator@H@std@@@std@@YAXPEAH0AEAV?$allocator@H@0@@Z ENDP ; std::_Destroy_range<std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Deallocate@$0BA@$0A@@std@@YAXPEAX_K@Z
+_TEXT	SEGMENT
+_Ptr$ = 48
+_Bytes$ = 56
+??$_Deallocate@$0BA@$0A@@std@@YAXPEAX_K@Z PROC		; std::_Deallocate<16,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 199
+$LN17:
+	sub	rsp, 40					; 00000028H
+; Line 201
+	cmp	rdx, 4096				; 00001000H
+	jb	SHORT $LN13@Deallocate
+; Line 118
+	mov	r8, QWORD PTR [rcx-8]
+	add	rdx, 39					; 00000027H
+; Line 131
+	sub	rcx, r8
+; Line 132
+	lea	rax, QWORD PTR [rcx-8]
+	cmp	rax, 31
+	ja	SHORT $LN10@Deallocate
+; Line 133
+	mov	rcx, r8
+$LN13@Deallocate:
+; Line 208
+	add	rsp, 40					; 00000028H
+; Line 207
+	jmp	??3@YAXPEAX_K@Z				; operator delete
+$LN10@Deallocate:
+; Line 132
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN15@Deallocate:
+??$_Deallocate@$0BA@$0A@@std@@YAXPEAX_K@Z ENDP		; std::_Deallocate<16,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Allocate@$0BA@U_Default_allocate_traits@std@@$0A@@std@@YAPEAX_K@Z
+_TEXT	SEGMENT
+_Bytes$ = 48
+??$_Allocate@$0BA@U_Default_allocate_traits@std@@$0A@@std@@YAPEAX_K@Z PROC ; std::_Allocate<16,std::_Default_allocate_traits,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 180
+$LN23:
+	sub	rsp, 40					; 00000028H
+	mov	rax, rcx
+; Line 182
+	cmp	rcx, 4096				; 00001000H
+	jb	SHORT $LN2@Allocate
+; Line 93
+	add	rcx, 39					; 00000027H
+; Line 94
+	mov	rdx, -1
+	cmp	rcx, rax
+	cmovbe	rcx, rdx
+; Line 52
+	call	??2@YAPEAX_K@Z				; operator new
+	mov	rcx, rax
+; Line 101
+	test	rax, rax
+	je	SHORT $LN11@Allocate
+; Line 103
+	add	rax, 39					; 00000027H
+	and	rax, -32				; ffffffffffffffe0H
+; Line 104
+	mov	QWORD PTR [rax-8], rcx
+; Line 194
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN11@Allocate:
+; Line 101
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN2@Allocate:
+; Line 188
+	test	rax, rax
+	je	SHORT $LN3@Allocate
+; Line 194
+	add	rsp, 40					; 00000028H
+; Line 52
+	jmp	??2@YAPEAX_K@Z				; operator new
+$LN3@Allocate:
+; Line 194
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN21@Allocate:
+??$_Allocate@$0BA@U_Default_allocate_traits@std@@$0A@@std@@YAPEAX_K@Z ENDP ; std::_Allocate<16,std::_Default_allocate_traits,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z
+_TEXT	SEGMENT
+$T1 = 32
+this$ = 64
+_First$ = 72
+_Last$ = 80
+__formal$ = 88
+??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z PROC ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 704
+$LN154:
+	mov	QWORD PTR [rsp+8], rcx
+	push	r14
+	sub	rsp, 48					; 00000030H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+72], rbx
+	mov	QWORD PTR [rsp+80], rsi
+	mov	QWORD PTR [rsp+88], rdi
+	mov	rsi, r8
+	mov	r14, rdx
+	mov	rdi, rcx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 1235
+	sub	rsi, rdx
+	mov	rbx, rsi
+	sar	rbx, 2
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1873
+	xor	eax, eax
+	mov	QWORD PTR [rcx], rax
+; Line 1874
+	mov	QWORD PTR [rcx+8], rax
+; Line 1875
+	mov	QWORD PTR [rcx+16], rax
+; Line 1877
+	test	rbx, rbx
+	je	$LN7@Range_cons
+; Line 1882
+	mov	rcx, 4611686018427387903		; 3fffffffffffffffH
+	cmp	rbx, rcx
+	ja	$LN153@Range_cons
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 25
+	lea	rbx, QWORD PTR [rbx*4]
+; Line 182
+	cmp	rbx, 4096				; 00001000H
+	jb	SHORT $LN59@Range_cons
+; Line 93
+	lea	rcx, QWORD PTR [rbx+39]
+; Line 94
+	mov	rax, -1
+	cmp	rcx, rbx
+	cmovbe	rcx, rax
+; Line 52
+	call	??2@YAPEAX_K@Z				; operator new
+	mov	rcx, rax
+; Line 101
+	test	rax, rax
+	je	SHORT $LN68@Range_cons
+; Line 103
+	add	rax, 39					; 00000027H
+	and	rax, -32				; ffffffffffffffe0H
+; Line 104
+	mov	QWORD PTR [rax-8], rcx
+; Line 184
+	jmp	SHORT $LN58@Range_cons
+$LN68@Range_cons:
+; Line 101
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN59@Range_cons:
+; Line 188
+	test	rbx, rbx
+	je	SHORT $LN58@Range_cons
+; Line 52
+	mov	rcx, rbx
+	call	??2@YAPEAX_K@Z				; operator new
+$LN58@Range_cons:
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1887
+	mov	QWORD PTR [rdi], rax
+; Line 1888
+	mov	QWORD PTR [rdi+8], rax
+; Line 1889
+	mov	rax, QWORD PTR [rdi]
+	lea	rcx, QWORD PTR [rbx+rax]
+	mov	QWORD PTR [rdi+16], rcx
+; Line 708
+	mov	rbx, rax
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	mov	r8, rsi
+	mov	rdx, r14
+	mov	rcx, rax
+	call	memmove
+; Line 2404
+	lea	rax, QWORD PTR [rsi+rbx]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 708
+	mov	QWORD PTR [rdi+8], rax
+$LN7@Range_cons:
+; Line 714
+	mov	rbx, QWORD PTR [rsp+72]
+	mov	rsi, QWORD PTR [rsp+80]
+	mov	rdi, QWORD PTR [rsp+88]
+	add	rsp, 48					; 00000030H
+	pop	r14
+	ret	0
+$LN153@Range_cons:
+; Line 1884
+	call	?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ; std::vector<int,std::allocator<int> >::_Xlength
+	int	3
+$LN151@Range_cons:
+??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z ENDP ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+this$ = 64
+_First$ = 72
+_Last$ = 80
+__formal$ = 88
+?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA PROC ; `std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>'::`1'::catch$0
+; Line 709
+	mov	QWORD PTR [rsp+16], rdx
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+__catch$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z$0:
+; Line 710
+	mov	rcx, QWORD PTR this$[rbp]
+	call	?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ ; std::vector<int,std::allocator<int> >::_Tidy
+; Line 711
+	xor	edx, edx
+	xor	ecx, ecx
+	call	_CxxThrowException
+	npad	1
+?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA ENDP ; `std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>'::`1'::catch$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+this$ = 64
+_First$ = 72
+_Last$ = 80
+__formal$ = 88
+?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA PROC ; `std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>'::`1'::catch$0
+; Line 709
+	mov	QWORD PTR [rsp+16], rdx
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+__catch$??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z$0:
+; Line 710
+	mov	rcx, QWORD PTR this$[rbp]
+	call	?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ ; std::vector<int,std::allocator<int> >::_Tidy
+; Line 711
+	xor	edx, edx
+	xor	ecx, ecx
+	call	_CxxThrowException
+	npad	1
+?catch$0@?0???$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA ENDP ; `std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>'::`1'::catch$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0AEBV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+this$ = 8
+_Al$ = 16
+??$?0AEBV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const &,void>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 389
+	xor	eax, eax
+	mov	QWORD PTR [rcx], rax
+; Line 390
+	mov	QWORD PTR [rcx+8], rax
+; Line 391
+	mov	QWORD PTR [rcx+16], rax
+; Line 431
+	mov	rax, rcx
+	ret	0
+??$?0AEBV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const &,void>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+_TEXT	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 64
+this$ = 112
+$T4 = 120
+cont$ = 120
+??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z PROC ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 428
+$LN104:
+	sub	rsp, 104				; 00000068H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1704
+	mov	r8, QWORD PTR [rdx]
+	mov	rax, QWORD PTR [rdx+8]
+	sub	rax, r8
+	sar	rax, 2
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 127
+	test	rax, rax
+	js	SHORT $LN101@span
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	mov	QWORD PTR [rcx], rax
+; Line 596
+	mov	QWORD PTR [rcx+8], r8
+; Line 599
+	test	r8, r8
+	jne	SHORT $LN54@span
+	test	rax, rax
+	jne	SHORT $LN102@span
+$LN54@span:
+; Line 428
+	mov	rax, rcx
+	add	rsp, 104				; 00000068H
+	ret	0
+$LN102@span:
+; Line 599
+	lea	rdx, OFFSET FLAT:??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T4[rsp], 2
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN101@span:
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 128
+	xor	eax, eax
+	mov	QWORD PTR $T2[rsp], rax
+	mov	QWORD PTR $T2[rsp+8], rax
+	mov	QWORD PTR $T2[rsp+16], rax
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??0narrowing_error@gsl@@QEAA@XZ
+	npad	1
+	mov	rcx, rax
+	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+	int	3
+$LN99@span:
+??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z ENDP ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 64
+this$ = 112
+$T4 = 120
+cont$ = 120
+?dtor$1@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA PROC ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$1
+	lea	rcx, QWORD PTR $T2[rdx]
+	jmp	??1narrowing_error@gsl@@UEAA@XZ
+?dtor$1@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA ENDP ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$1
+text$x	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 64
+this$ = 112
+$T4 = 120
+cont$ = 120
+?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA PROC ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$5
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN60@dtor$5
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN60@dtor$5:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA ENDP ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$5
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 64
+this$ = 112
+$T4 = 120
+cont$ = 120
+?dtor$1@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA PROC ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$1
+	lea	rcx, QWORD PTR $T2[rdx]
+	jmp	??1narrowing_error@gsl@@UEAA@XZ
+?dtor$1@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA ENDP ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 64
+this$ = 112
+$T4 = 120
+cont$ = 120
+?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA PROC ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$5
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN60@dtor$5
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN60@dtor$5:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$5@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA ENDP ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$5
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?end@?$initializer_list@H@std@@QEBAPEBHXZ
+_TEXT	SEGMENT
+this$ = 8
+?end@?$initializer_list@H@std@@QEBAPEBHXZ PROC		; std::initializer_list<int>::end, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\initializer_list
+; Line 47
+	mov	rax, QWORD PTR [rcx+8]
+; Line 48
+	ret	0
+?end@?$initializer_list@H@std@@QEBAPEBHXZ ENDP		; std::initializer_list<int>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?begin@?$initializer_list@H@std@@QEBAPEBHXZ
+_TEXT	SEGMENT
+this$ = 8
+?begin@?$initializer_list@H@std@@QEBAPEBHXZ PROC	; std::initializer_list<int>::begin, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\initializer_list
+; Line 42
+	mov	rax, QWORD PTR [rcx]
+; Line 43
+	ret	0
+?begin@?$initializer_list@H@std@@QEBAPEBHXZ ENDP	; std::initializer_list<int>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$initializer_list@H@std@@QEAA@PEBH0@Z
+_TEXT	SEGMENT
+this$ = 8
+_First_arg$ = 16
+_Last_arg$ = 24
+??0?$initializer_list@H@std@@QEAA@PEBH0@Z PROC		; std::initializer_list<int>::initializer_list<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\initializer_list
+; Line 36
+	mov	QWORD PTR [rcx], rdx
+; Line 38
+	mov	rax, rcx
+	mov	QWORD PTR [rcx+8], r8
+	ret	0
+??0?$initializer_list@H@std@@QEAA@PEBH0@Z ENDP		; std::initializer_list<int>::initializer_list<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ
+_TEXT	SEGMENT
+?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ PROC ; std::vector<int,std::allocator<int> >::_Xlength, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1925
+$LN4:
+	sub	rsp, 40					; 00000028H
+; Line 1926
+	lea	rcx, OFFSET FLAT:??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@
+	call	?_Xlength_error@std@@YAXPEBD@Z		; std::_Xlength_error
+	int	3
+$LN3@Xlength:
+?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ENDP ; std::vector<int,std::allocator<int> >::_Xlength
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ
+_TEXT	SEGMENT
+this$ = 48
+?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ PROC	; std::vector<int,std::allocator<int> >::_Tidy, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1910
+$LN103:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+; Line 1913
+	mov	rcx, QWORD PTR [rcx]
+	test	rcx, rcx
+	je	SHORT $LN2@Tidy
+; Line 1715
+	mov	rdx, QWORD PTR [rbx+16]
+	sub	rdx, rcx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 992
+	and	rdx, -4
+; Line 201
+	cmp	rdx, 4096				; 00001000H
+	jb	SHORT $LN78@Tidy
+; Line 118
+	mov	r8, QWORD PTR [rcx-8]
+	add	rdx, 39					; 00000027H
+; Line 131
+	sub	rcx, r8
+; Line 132
+	lea	rax, QWORD PTR [rcx-8]
+	cmp	rax, 31
+	ja	SHORT $LN75@Tidy
+; Line 133
+	mov	rcx, r8
+$LN78@Tidy:
+; Line 207
+	call	??3@YAXPEAX_K@Z				; operator delete
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1918
+	xor	eax, eax
+	mov	QWORD PTR [rbx], rax
+; Line 1919
+	mov	QWORD PTR [rbx+8], rax
+; Line 1920
+	mov	QWORD PTR [rbx+16], rax
+$LN2@Tidy:
+; Line 1922
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+$LN75@Tidy:
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 132
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN100@Tidy:
+?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AEAAXXZ ENDP	; std::vector<int,std::allocator<int> >::_Tidy
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z
+_TEXT	SEGMENT
+this$ = 48
+_Newcapacity$ = 56
+?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z PROC ; std::vector<int,std::allocator<int> >::_Buy, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1872
+$LN102:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+; Line 1873
+	xor	eax, eax
+	mov	rbx, rcx
+	mov	QWORD PTR [rcx], rax
+; Line 1874
+	mov	QWORD PTR [rcx+8], rax
+; Line 1875
+	mov	QWORD PTR [rcx+16], rax
+; Line 1877
+	test	rdx, rdx
+	je	SHORT $LN1@Buy
+; Line 1882
+	mov	rcx, 4611686018427387903		; 3fffffffffffffffH
+	cmp	rdx, rcx
+	ja	SHORT $LN100@Buy
+	mov	QWORD PTR [rsp+48], rdi
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 25
+	lea	rdi, QWORD PTR [rdx*4]
+; Line 182
+	cmp	rdi, 4096				; 00001000H
+	jb	SHORT $LN45@Buy
+; Line 93
+	lea	rcx, QWORD PTR [rdi+39]
+; Line 94
+	mov	rax, -1
+	cmp	rcx, rdi
+	cmovbe	rcx, rax
+; Line 52
+	call	??2@YAPEAX_K@Z				; operator new
+	mov	rcx, rax
+; Line 101
+	test	rax, rax
+	je	SHORT $LN54@Buy
+; Line 103
+	add	rax, 39					; 00000027H
+	and	rax, -32				; ffffffffffffffe0H
+; Line 104
+	mov	QWORD PTR [rax-8], rcx
+; Line 184
+	jmp	SHORT $LN46@Buy
+$LN54@Buy:
+; Line 101
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN45@Buy:
+; Line 188
+	test	rdi, rdi
+	je	SHORT $LN46@Buy
+; Line 52
+	mov	rcx, rdi
+	call	??2@YAPEAX_K@Z				; operator new
+$LN46@Buy:
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1887
+	mov	QWORD PTR [rbx], rax
+; Line 1888
+	mov	QWORD PTR [rbx+8], rax
+; Line 1889
+	mov	rax, QWORD PTR [rbx]
+	lea	rcx, QWORD PTR [rdi+rax]
+	mov	rdi, QWORD PTR [rsp+48]
+	mov	QWORD PTR [rbx+16], rcx
+; Line 1891
+	mov	al, 1
+$LN1@Buy:
+; Line 1892
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+$LN100@Buy:
+; Line 1884
+	call	?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ; std::vector<int,std::allocator<int> >::_Xlength
+	int	3
+$LN98@Buy:
+?_Buy@?$vector@HV?$allocator@H@std@@@std@@AEAA_N_K@Z ENDP ; std::vector<int,std::allocator<int> >::_Buy
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Destroy@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEAH0@Z
+_TEXT	SEGMENT
+this$ = 8
+_First$ = 16
+_Last$ = 24
+?_Destroy@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEAH0@Z PROC ; std::vector<int,std::allocator<int> >::_Destroy, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1850
+	ret	0
+?_Destroy@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEAH0@Z ENDP ; std::vector<int,std::allocator<int> >::_Destroy
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?capacity@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ
+_TEXT	SEGMENT
+this$ = 8
+?capacity@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ PROC ; std::vector<int,std::allocator<int> >::capacity, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1715
+	mov	rax, QWORD PTR [rcx+16]
+	sub	rax, QWORD PTR [rcx]
+	sar	rax, 2
+; Line 1716
+	ret	0
+?capacity@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ ENDP ; std::vector<int,std::allocator<int> >::capacity
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?max_size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ
+_TEXT	SEGMENT
+this$ = 8
+?max_size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ PROC ; std::vector<int,std::allocator<int> >::max_size, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1709
+	mov	rax, 4611686018427387903		; 3fffffffffffffffH
+; Line 1711
+	ret	0
+?max_size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ ENDP ; std::vector<int,std::allocator<int> >::max_size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ PROC	; std::vector<int,std::allocator<int> >::size, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1704
+	mov	rax, QWORD PTR [rcx+8]
+	sub	rax, QWORD PTR [rcx]
+	sar	rax, 2
+; Line 1705
+	ret	0
+?size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ ENDP	; std::vector<int,std::allocator<int> >::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$vector@HV?$allocator@H@std@@@std@@QEAAPEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$vector@HV?$allocator@H@std@@@std@@QEAAPEAHXZ PROC ; std::vector<int,std::allocator<int> >::data, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1609
+	mov	rax, QWORD PTR [rcx]
+; Line 1610
+	ret	0
+?data@?$vector@HV?$allocator@H@std@@@std@@QEAAPEAHXZ ENDP ; std::vector<int,std::allocator<int> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 48
+??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ PROC	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 893
+$LN106:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+; Line 1913
+	mov	rcx, QWORD PTR [rcx]
+	test	rcx, rcx
+	je	SHORT $LN4@vector
+; Line 1715
+	mov	rdx, QWORD PTR [rbx+16]
+	sub	rdx, rcx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 992
+	and	rdx, -4
+; Line 201
+	cmp	rdx, 4096				; 00001000H
+	jb	SHORT $LN80@vector
+; Line 118
+	mov	r8, QWORD PTR [rcx-8]
+	add	rdx, 39					; 00000027H
+; Line 131
+	sub	rcx, r8
+; Line 132
+	lea	rax, QWORD PTR [rcx-8]
+	cmp	rax, 31
+	ja	SHORT $LN77@vector
+; Line 133
+	mov	rcx, r8
+$LN80@vector:
+; Line 207
+	call	??3@YAXPEAX_K@Z				; operator delete
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1918
+	xor	eax, eax
+	mov	QWORD PTR [rbx], rax
+; Line 1919
+	mov	QWORD PTR [rbx+8], rax
+; Line 1920
+	mov	QWORD PTR [rbx+16], rax
+$LN4@vector:
+; Line 895
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+$LN77@vector:
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 132
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN103@vector:
+??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ ENDP	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+this$ = 48
+_Ilist$ = 56
+$T1 = 64
+_Al$ = 64
+??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z PROC ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 728
+$LN19:
+	mov	QWORD PTR [rsp+24], r8
+	push	rbx
+	sub	rsp, 32					; 00000020H
+; Line 729
+	mov	r8, QWORD PTR [rdx+8]
+; Line 389
+	xor	eax, eax
+; Line 729
+	mov	rdx, QWORD PTR [rdx]
+	mov	rbx, rcx
+	movzx	r9d, BYTE PTR $T1[rsp]
+; Line 389
+	mov	QWORD PTR [rcx], rax
+; Line 390
+	mov	QWORD PTR [rcx+8], rax
+; Line 391
+	mov	QWORD PTR [rcx+16], rax
+; Line 729
+	call	??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
+; Line 730
+	mov	rax, rbx
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z ENDP ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 307
+	mov	rax, rcx
+; Line 308
+	ret	0
+?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 302
+	mov	rax, rcx
+; Line 303
+	ret	0
+?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$allocator@H@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$allocator@H@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 297
+	mov	rax, rcx
+; Line 298
+	ret	0
+?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$allocator@H@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$allocator@H@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$allocator@H@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 292
+	mov	rax, rcx
+; Line 293
+	ret	0
+?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$allocator@H@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QEAA@XZ PROC ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 389
+	xor	eax, eax
+	mov	QWORD PTR [rcx], rax
+; Line 390
+	mov	QWORD PTR [rcx+8], rax
+; Line 391
+	mov	QWORD PTR [rcx+16], rax
+; Line 393
+	mov	rax, rcx
+	ret	0
+??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QEAA@XZ ENDP ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 601
+	lea	rax, QWORD PTR [rcx+16]
+; Line 602
+	ret	0
+?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 596
+	lea	rax, QWORD PTR [rcx+16]
+; Line 597
+	ret	0
+?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 591
+	lea	rax, QWORD PTR [rcx+8]
+; Line 592
+	ret	0
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 586
+	lea	rax, QWORD PTR [rcx+8]
+; Line 587
+	ret	0
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 581
+	mov	rax, rcx
+; Line 582
+	ret	0
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 576
+	mov	rax, rcx
+; Line 577
+	ret	0
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 560
+	mov	rax, rcx
+; Line 561
+	ret	0
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 555
+	mov	rax, rcx
+; Line 556
+	ret	0
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$allocator@H@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$allocator@H@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 550
+	mov	rax, rcx
+; Line 551
+	ret	0
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$allocator@H@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$allocator@H@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$allocator@H@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 545
+	mov	rax, rcx
+; Line 546
+	ret	0
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$allocator@H@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAXXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAXXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 536
+	ret	0
+?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAXXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?max_size@?$_Default_allocator_traits@V?$allocator@H@std@@@std@@SA_KAEBV?$allocator@H@2@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+?max_size@?$_Default_allocator_traits@V?$allocator@H@std@@@std@@SA_KAEBV?$allocator@H@2@@Z PROC ; std::_Default_allocator_traits<std::allocator<int> >::max_size, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 892
+	mov	rax, 4611686018427387903		; 3fffffffffffffffH
+; Line 893
+	ret	0
+?max_size@?$_Default_allocator_traits@V?$allocator@H@std@@@std@@SA_KAEBV?$allocator@H@2@@Z ENDP ; std::_Default_allocator_traits<std::allocator<int> >::max_size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?allocate@?$allocator@H@std@@QEAAPEAH_K@Z
+_TEXT	SEGMENT
+this$ = 48
+_Count$ = 56
+?allocate@?$allocator@H@std@@QEAAPEAH_K@Z PROC		; std::allocator<int>::allocate, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 996
+$LN30:
+	sub	rsp, 40					; 00000028H
+; Line 26
+	mov	rcx, 4611686018427387903		; 3fffffffffffffffH
+	lea	rax, QWORD PTR [rdx*4]
+	mov	r8, -1
+	cmp	rdx, rcx
+	jbe	SHORT $LN4@allocate
+; Line 29
+	mov	rax, r8
+; Line 182
+	jmp	SHORT $LN27@allocate
+$LN4@allocate:
+	cmp	rax, 4096				; 00001000H
+	jb	SHORT $LN7@allocate
+$LN27@allocate:
+; Line 93
+	lea	rcx, QWORD PTR [rax+39]
+; Line 94
+	cmp	rcx, rax
+	cmovbe	rcx, r8
+; Line 52
+	call	??2@YAPEAX_K@Z				; operator new
+	mov	rcx, rax
+; Line 101
+	test	rax, rax
+	je	SHORT $LN16@allocate
+; Line 103
+	add	rax, 39					; 00000027H
+	and	rax, -32				; ffffffffffffffe0H
+; Line 104
+	mov	QWORD PTR [rax-8], rcx
+; Line 998
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN16@allocate:
+; Line 101
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN7@allocate:
+; Line 188
+	test	rax, rax
+	je	SHORT $LN8@allocate
+; Line 52
+	mov	rcx, rax
+; Line 998
+	add	rsp, 40					; 00000028H
+; Line 52
+	jmp	??2@YAPEAX_K@Z				; operator new
+$LN8@allocate:
+; Line 998
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN28@allocate:
+?allocate@?$allocator@H@std@@QEAAPEAH_K@Z ENDP		; std::allocator<int>::allocate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?deallocate@?$allocator@H@std@@QEAAXQEAH_K@Z
+_TEXT	SEGMENT
+this$ = 48
+_Ptr$ = 56
+_Count$ = 64
+?deallocate@?$allocator@H@std@@QEAAXQEAH_K@Z PROC	; std::allocator<int>::deallocate, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 990
+$LN20:
+	sub	rsp, 40					; 00000028H
+	mov	rax, rdx
+; Line 992
+	lea	rdx, QWORD PTR [r8*4]
+; Line 201
+	cmp	rdx, 4096				; 00001000H
+	jb	SHORT $LN15@deallocate
+; Line 118
+	mov	rcx, QWORD PTR [rax-8]
+	add	rdx, 39					; 00000027H
+; Line 131
+	sub	rax, rcx
+; Line 132
+	add	rax, -8
+	cmp	rax, 31
+	ja	SHORT $LN12@deallocate
+; Line 133
+	mov	rax, rcx
+$LN15@deallocate:
+; Line 207
+	mov	rcx, rax
+; Line 993
+	add	rsp, 40					; 00000028H
+; Line 207
+	jmp	??3@YAXPEAX_K@Z				; operator delete
+$LN12@deallocate:
+; Line 132
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN18@deallocate:
+?deallocate@?$allocator@H@std@@QEAAXQEAH_K@Z ENDP	; std::allocator<int>::deallocate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$allocator@H@std@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0?$allocator@H@std@@QEAA@XZ PROC			; std::allocator<int>::allocator<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 981
+	mov	rax, rcx
+	ret	0
+??0?$allocator@H@std@@QEAA@XZ ENDP			; std::allocator<int>::allocator<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?bar@@YA_NXZ
+_TEXT	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?bar@@YA_NXZ PROC					; bar, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 61
+$LN249:
+	sub	rsp, 136				; 00000088H
+	mov	QWORD PTR $T7[rsp], -2
+	mov	rax, QWORD PTR __security_cookie
+	xor	rax, rsp
+	mov	QWORD PTR __$ArrayPad$[rsp], rax
+	xor	eax, eax
+	mov	DWORD PTR $T5[rsp], eax
+; Line 64
+	movdqa	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movdqu	XMMWORD PTR $T10[rsp], xmm0
+	xorps	xmm1, xmm1
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 389
+	movdqu	XMMWORD PTR v$6[rsp], xmm1
+; Line 391
+	mov	QWORD PTR v$6[rsp+16], rax
+; Line 729
+	movzx	r9d, BYTE PTR $T4[rsp]
+	lea	r8, QWORD PTR $T10[rsp+16]
+	lea	rdx, QWORD PTR $T10[rsp]
+	lea	rcx, QWORD PTR v$6[rsp]
+	call	??$_Range_construct_or_tidy@PEBH@?$vector@HV?$allocator@H@std@@@std@@AEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
+	npad	1
+; Line 1704
+	mov	rax, QWORD PTR v$6[rsp+8]
+	mov	rcx, QWORD PTR v$6[rsp]
+	sub	rax, rcx
+	sar	rax, 2
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 127
+	test	rax, rax
+	js	$LN246@bar
+; File c:\projects\gsl\include\gsl\span
+; Line 599
+	test	rcx, rcx
+	jne	SHORT $LN80@bar
+	test	rax, rax
+	jne	SHORT $LN247@bar
+$LN80@bar:
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
+; Line 1913
+	test	rcx, rcx
+	je	SHORT $LN137@bar
+; Line 1715
+	mov	rdx, QWORD PTR v$6[rsp+16]
+	sub	rdx, rcx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 992
+	and	rdx, -4
+	mov	rax, rcx
+; Line 201
+	cmp	rdx, 4096				; 00001000H
+	jb	SHORT $LN213@bar
+; Line 115
+	add	rdx, 39					; 00000027H
+; Line 118
+	mov	rcx, QWORD PTR [rcx-8]
+	sub	rax, rcx
+; Line 132
+	add	rax, -8
+	cmp	rax, 31
+	jbe	SHORT $LN213@bar
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN213@bar:
+; Line 207
+	call	??3@YAXPEAX_K@Z				; operator delete
+$LN137@bar:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 68
+	mov	al, 1
+; Line 70
+	mov	rcx, QWORD PTR __$ArrayPad$[rsp]
+	xor	rcx, rsp
+	call	__security_check_cookie
+	add	rsp, 136				; 00000088H
+	ret	0
+$LN247@bar:
+; File c:\projects\gsl\include\gsl\span
+; Line 599
+	lea	rdx, OFFSET FLAT:??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T8[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T5[rsp], 2
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN246@bar:
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 128
+	xor	eax, eax
+	mov	QWORD PTR $T9[rsp], rax
+	mov	QWORD PTR $T9[rsp+8], rax
+	mov	QWORD PTR $T9[rsp+16], rax
+	lea	rcx, QWORD PTR $T9[rsp]
+	call	??0narrowing_error@gsl@@QEAA@XZ
+	npad	1
+	mov	rcx, rax
+	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+	int	3
+$LN244@bar:
+?bar@@YA_NXZ ENDP					; bar
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?dtor$0@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$0
+	lea	rcx, QWORD PTR v$6[rdx]
+	jmp	??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ ; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+?dtor$0@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$0
+text$x	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?dtor$2@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$2
+	lea	rcx, QWORD PTR $T9[rdx]
+	jmp	??1narrowing_error@gsl@@UEAA@XZ
+?dtor$2@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$2
+text$x	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?dtor$6@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$6
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T5[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN86@dtor$6
+	and	DWORD PTR $T5[rbp], -3
+	lea	rcx, QWORD PTR $T8[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN86@dtor$6:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$6@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$6
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?dtor$0@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$0
+	lea	rcx, QWORD PTR v$6[rdx]
+	jmp	??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ ; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+?dtor$0@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?dtor$2@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$2
+	lea	rcx, QWORD PTR $T9[rdx]
+	jmp	??1narrowing_error@gsl@@UEAA@XZ
+?dtor$2@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T4 = 32
+$T5 = 36
+v$6 = 40
+$T7 = 64
+$T8 = 72
+$T9 = 96
+$T10 = 96
+__$ArrayPad$ = 120
+?dtor$6@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$6
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T5[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN86@dtor$6
+	and	DWORD PTR $T5[rbp], -3
+	lea	rcx, QWORD PTR $T8[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN86@dtor$6:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$6@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$6
+text$x	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ
 _TEXT	SEGMENT
@@ -674,6 +3437,168 @@ this$ = 8
 ?size@?$span@H$0?0@gsl@@QEBA_JXZ ENDP			; gsl::span<int,-1>::size
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+ptr$ = 88
+count$ = 96
+??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z PROC			; gsl::span<int,-1>::span<int,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+$LN56:
+	sub	rsp, 72					; 00000048H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 336
+	mov	QWORD PTR [rcx], r8
+	test	r8, r8
+	js	SHORT $LN17@span
+; Line 596
+	mov	QWORD PTR [rcx+8], rdx
+; Line 599
+	test	rdx, rdx
+	jne	SHORT $LN7@span
+	test	r8, r8
+	jne	SHORT $LN54@span
+$LN7@span:
+; Line 386
+	mov	rax, rcx
+	add	rsp, 72					; 00000048H
+	ret	0
+$LN54@span:
+; Line 599
+	lea	rdx, OFFSET FLAT:??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T4[rsp], 2
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN17@span:
+; Line 336
+	lea	rdx, OFFSET FLAT:??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T4[rsp], 4
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	int	3
+$LN52@span:
+??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ENDP			; gsl::span<int,-1>::span<int,-1>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+ptr$ = 88
+count$ = 96
+?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 4
+	test	eax, eax
+	je	SHORT $LN20@dtor$2
+	and	DWORD PTR $T4[rbp], -5
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN20@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$2
+text$x	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+ptr$ = 88
+count$ = 96
+?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN13@dtor$1
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN13@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+ptr$ = 88
+count$ = 96
+?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 4
+	test	eax, eax
+	je	SHORT $LN20@dtor$2
+	and	DWORD PTR $T4[rbp], -5
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN20@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 80
+this$ = 80
+ptr$ = 88
+count$ = 96
+?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA PROC	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN13@dtor$1
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN13@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP	; `gsl::span<int,-1>::span<int,-1>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
 ;	COMDAT ?foo@@YA_NXZ
 _TEXT	SEGMENT
 $T4 = 0
@@ -722,6 +3647,212 @@ this$ = 8
 	mov	rax, QWORD PTR [rcx]
 	ret	0
 ?size@?$extent_type@$0?0@details@gsl@@QEBA_JXZ ENDP	; gsl::details::extent_type<-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 80
+this$ = 80
+size$ = 88
+??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z PROC	; gsl::details::extent_type<-1>::extent_type<-1>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+$LN19:
+	sub	rsp, 72					; 00000048H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T3[rsp], 0
+	mov	QWORD PTR [rcx], rdx
+	test	rdx, rdx
+	js	SHORT $LN3@extent_typ
+	mov	rax, rcx
+	add	rsp, 72					; 00000048H
+	ret	0
+$LN3@extent_typ:
+	lea	rdx, OFFSET FLAT:??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??0fail_fast@gsl@@QEAA@QEBD@Z		; gsl::fail_fast::fail_fast
+	npad	1
+	mov	DWORD PTR $T3[rsp], 1
+	mov	rcx, rax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	int	3
+$LN16@extent_typ:
+??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z ENDP	; gsl::details::extent_type<-1>::extent_type<-1>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 80
+this$ = 80
+size$ = 88
+?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA PROC ; `gsl::details::extent_type<-1>::extent_type<-1>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T3[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T3[rbp], -2
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA ENDP ; `gsl::details::extent_type<-1>::extent_type<-1>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 80
+this$ = 80
+size$ = 88
+?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA PROC ; `gsl::details::extent_type<-1>::extent_type<-1>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T3[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T3[rbp], -2
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z@4HA ENDP ; `gsl::details::extent_type<-1>::extent_type<-1>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??_Gnarrowing_error@gsl@@UEAAPEAXI@Z
+_TEXT	SEGMENT
+this$ = 48
+__flags$ = 56
+??_Gnarrowing_error@gsl@@UEAAPEAXI@Z PROC		; gsl::narrowing_error::`scalar deleting destructor', COMDAT
+$LN12:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 85
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	rdi, rcx
+	mov	QWORD PTR [rcx], rax
+	mov	ebx, edx
+; Line 86
+	add	rcx, 8
+	call	__std_exception_destroy
+	test	bl, 1
+	je	SHORT $LN9@scalar
+	mov	edx, 24
+	mov	rcx, rdi
+	call	??3@YAXPEAX_K@Z				; operator delete
+$LN9@scalar:
+	mov	rbx, QWORD PTR [rsp+48]
+	mov	rax, rdi
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??_Gnarrowing_error@gsl@@UEAAPEAXI@Z ENDP		; gsl::narrowing_error::`scalar deleting destructor'
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z
+_TEXT	SEGMENT
+this$ = 48
+__that$ = 56
+??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z PROC		; gsl::narrowing_error::narrowing_error, COMDAT
+$LN7:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+	mov	rax, rdx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 67
+	lea	rdx, QWORD PTR [rbx+8]
+; Line 68
+	lea	rcx, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR [rbx], rcx
+	xor	ecx, ecx
+	mov	QWORD PTR [rdx], rcx
+	mov	QWORD PTR [rdx+8], rcx
+; Line 69
+	lea	rcx, QWORD PTR [rax+8]
+	call	__std_exception_copy
+	lea	rax, OFFSET FLAT:??_7narrowing_error@gsl@@6B@
+	mov	QWORD PTR [rbx], rax
+	mov	rax, rbx
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??0narrowing_error@gsl@@QEAA@$$QEAU01@@Z ENDP		; gsl::narrowing_error::narrowing_error
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0narrowing_error@gsl@@QEAA@AEBU01@@Z
+_TEXT	SEGMENT
+this$ = 48
+__that$ = 56
+??0narrowing_error@gsl@@QEAA@AEBU01@@Z PROC		; gsl::narrowing_error::narrowing_error, COMDAT
+$LN7:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+	mov	rax, rdx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 67
+	lea	rdx, QWORD PTR [rbx+8]
+; Line 68
+	lea	rcx, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR [rbx], rcx
+	xor	ecx, ecx
+	mov	QWORD PTR [rdx], rcx
+	mov	QWORD PTR [rdx+8], rcx
+; Line 69
+	lea	rcx, QWORD PTR [rax+8]
+	call	__std_exception_copy
+	lea	rax, OFFSET FLAT:??_7narrowing_error@gsl@@6B@
+	mov	QWORD PTR [rbx], rax
+	mov	rax, rbx
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??0narrowing_error@gsl@@QEAA@AEBU01@@Z ENDP		; gsl::narrowing_error::narrowing_error
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??1narrowing_error@gsl@@UEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??1narrowing_error@gsl@@UEAA@XZ PROC			; gsl::narrowing_error::~narrowing_error, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 85
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR [rcx], rax
+; Line 86
+	add	rcx, 8
+	jmp	__std_exception_destroy
+??1narrowing_error@gsl@@UEAA@XZ ENDP			; gsl::narrowing_error::~narrowing_error
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0narrowing_error@gsl@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0narrowing_error@gsl@@QEAA@XZ PROC			; gsl::narrowing_error::narrowing_error, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 49
+	xor	eax, eax
+	mov	QWORD PTR [rcx+8], rax
+	mov	QWORD PTR [rcx+16], rax
+	lea	rax, OFFSET FLAT:??_7narrowing_error@gsl@@6B@
+	mov	QWORD PTR [rcx], rax
+	mov	rax, rcx
+	ret	0
+??0narrowing_error@gsl@@QEAA@XZ ENDP			; gsl::narrowing_error::narrowing_error
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??_Gfail_fast@gsl@@UEAAPEAXI@Z
@@ -1025,6 +4156,98 @@ $LN8:
 ??0logic_error@std@@QEAA@PEBD@Z ENDP			; std::logic_error::logic_error
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
+;	COMDAT ??$_Min_value@_K@std@@YAAEB_KAEB_K0@Z
+_TEXT	SEGMENT
+_Left$ = 8
+_Right$ = 16
+??$_Min_value@_K@std@@YAAEB_KAEB_K0@Z PROC		; std::_Min_value<unsigned __int64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\utility
+; Line 24
+	mov	rax, QWORD PTR [rcx]
+	cmp	QWORD PTR [rdx], rax
+	cmovb	rcx, rdx
+	mov	rax, rcx
+; Line 25
+	ret	0
+??$_Min_value@_K@std@@YAAEB_KAEB_K0@Z ENDP		; std::_Min_value<unsigned __int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Convert_size@_K@std@@YA_K_K@Z
+_TEXT	SEGMENT
+_Len$ = 8
+??$_Convert_size@_K@std@@YA_K_K@Z PROC			; std::_Convert_size<unsigned __int64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 1204
+	mov	rax, rcx
+; Line 1205
+	ret	0
+??$_Convert_size@_K@std@@YA_K_K@Z ENDP			; std::_Convert_size<unsigned __int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Adjust_manually_vector_aligned@std@@YAXAEAPEAXAEA_K@Z
+_TEXT	SEGMENT
+_Ptr$ = 48
+_Bytes$ = 56
+?_Adjust_manually_vector_aligned@std@@YAXAEAPEAXAEA_K@Z PROC ; std::_Adjust_manually_vector_aligned, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 114
+$LN13:
+	sub	rsp, 40					; 00000028H
+; Line 115
+	add	QWORD PTR [rdx], 39			; 00000027H
+; Line 118
+	mov	rax, QWORD PTR [rcx]
+	mov	rdx, QWORD PTR [rax-8]
+; Line 131
+	sub	rax, rdx
+; Line 132
+	add	rax, -8
+	cmp	rax, 31
+	ja	SHORT $LN7@Adjust_man
+; Line 133
+	mov	QWORD PTR [rcx], rdx
+; Line 134
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN7@Adjust_man:
+; Line 132
+	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
+	int	3
+$LN11@Adjust_man:
+?_Adjust_manually_vector_aligned@std@@YAXAEAPEAXAEA_K@Z ENDP ; std::_Adjust_manually_vector_aligned
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Allocate@_Default_allocate_traits@std@@SAPEAX_K@Z
+_TEXT	SEGMENT
+_Bytes$ = 8
+?_Allocate@_Default_allocate_traits@std@@SAPEAX_K@Z PROC ; std::_Default_allocate_traits::_Allocate, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
+; Line 52
+	jmp	??2@YAPEAX_K@Z				; operator new
+?_Allocate@_Default_allocate_traits@std@@SAPEAX_K@Z ENDP ; std::_Default_allocate_traits::_Allocate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Orphan_all@_Container_base0@std@@QEAAXXZ
+_TEXT	SEGMENT
+this$ = 8
+?_Orphan_all@_Container_base0@std@@QEAAXXZ PROC		; std::_Container_base0::_Orphan_all, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 43
+	ret	0
+?_Orphan_all@_Container_base0@std@@QEAAXXZ ENDP		; std::_Container_base0::_Orphan_all
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?max@?$numeric_limits@_J@std@@SA_JXZ
+_TEXT	SEGMENT
+?max@?$numeric_limits@_J@std@@SA_JXZ PROC		; std::numeric_limits<__int64>::max, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\limits
+; Line 894
+	mov	rax, 9223372036854775807		; 7fffffffffffffffH
+; Line 895
+	ret	0
+?max@?$numeric_limits@_J@std@@SA_JXZ ENDP		; std::numeric_limits<__int64>::max
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
 ;	COMDAT ??_Gexception@std@@UEAAPEAXI@Z
 _TEXT	SEGMENT
 this$ = 48
@@ -1146,5 +4369,22 @@ $LN5:
 	pop	rbx
 	ret	0
 ??0exception@std@@QEAA@QEBD@Z ENDP			; std::exception::exception
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0exception@std@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0exception@std@@QEAA@XZ PROC				; std::exception::exception, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 50
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR [rcx], rax
+	xor	eax, eax
+	mov	QWORD PTR [rcx+8], rax
+	mov	QWORD PTR [rcx+16], rax
+; Line 51
+	mov	rax, rcx
+	ret	0
+??0exception@std@@QEAA@XZ ENDP				; std::exception::exception
 _TEXT	ENDS
 END
