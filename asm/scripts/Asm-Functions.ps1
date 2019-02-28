@@ -5,7 +5,7 @@ function Get-AppVeyorBuild {
         throw "missing api token for AppVeyor."
     }
 
-    Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG" -Method GET -Headers @{
+    Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG/build/$($env:APPVEYOR_BUILD_VERSION)" -Method GET -Headers @{
         "Authorization" = "Bearer $env:APPVEYOR_API_TOKEN"
         "Content-type"  = "application/json"
     }
@@ -92,13 +92,14 @@ function travisFinished {
     throw "Travis build did not finished in $env:TIMEOUT_MINS minutes"
 }
 
+# Returns true if any Appveyor build is "failed" or "cancelled"
 function Get-Any-Appveyor-Failures {
     (Get-AppVeyorBuild).build.jobs | Foreach-Object `
     { 
         $job = $_
         switch ($job.status) {
-            "failed" { return $true }
-            Default { }
+            "failed"    { return $true }
+            "cancelled" { return $true }
         }
     }
     return $false
