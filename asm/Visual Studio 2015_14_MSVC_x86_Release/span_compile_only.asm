@@ -13,25 +13,47 @@ PUBLIC	??0exception@std@@QAE@ABV01@@Z			; std::exception::exception
 PUBLIC	??1exception@std@@UAE@XZ			; std::exception::~exception
 PUBLIC	?what@exception@std@@UBEPBDXZ			; std::exception::what
 PUBLIC	??_Gexception@std@@UAEPAXI@Z			; std::exception::`scalar deleting destructor'
+PUBLIC	?_Deallocate@std@@YAXPAXII@Z			; std::_Deallocate
 PUBLIC	??0logic_error@std@@QAE@ABV01@@Z		; std::logic_error::logic_error
 PUBLIC	??_Glogic_error@std@@UAEPAXI@Z			; std::logic_error::`scalar deleting destructor'
 PUBLIC	??1fail_fast@gsl@@UAE@XZ			; gsl::fail_fast::~fail_fast
 PUBLIC	??0fail_fast@gsl@@QAE@ABU01@@Z			; gsl::fail_fast::fail_fast
 PUBLIC	??_Gfail_fast@gsl@@UAEPAXI@Z			; gsl::fail_fast::`scalar deleting destructor'
+PUBLIC	??1narrowing_error@gsl@@UAE@XZ			; gsl::narrowing_error::~narrowing_error
+PUBLIC	??0narrowing_error@gsl@@QAE@ABU01@@Z		; gsl::narrowing_error::narrowing_error
+PUBLIC	??_Gnarrowing_error@gsl@@UAEPAXI@Z		; gsl::narrowing_error::`scalar deleting destructor'
+PUBLIC	??0?$extent_type@$0?0@details@gsl@@QAE@H@Z	; gsl::details::extent_type<-1>::extent_type<-1>
 PUBLIC	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
 PUBLIC	?foo@@YA_NXZ					; foo
+PUBLIC	?bar@@YA_NXZ					; bar
+PUBLIC	?allocate@?$allocator@H@std@@QAEPAHI@Z		; std::allocator<int>::allocate
+PUBLIC	??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+PUBLIC	??$narrow@HI@gsl@@YAHI@Z			; gsl::narrow<int,unsigned int>
+PUBLIC	??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const *>
+PUBLIC	??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+PUBLIC	??$narrow_cast@HAAI@gsl@@YAHAAI@Z		; gsl::narrow_cast<int,unsigned int &>
+PUBLIC	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
 PUBLIC	??_7exception@std@@6B@				; std::exception::`vftable'
 PUBLIC	??_C@_0BC@EOODALEL@Unknown?5exception?$AA@	; `string'
 PUBLIC	??_7logic_error@std@@6B@			; std::logic_error::`vftable'
 PUBLIC	??_7fail_fast@gsl@@6B@				; gsl::fail_fast::`vftable'
 PUBLIC	??_R0?AVexception@std@@@8			; std::exception `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12
+PUBLIC	??_7narrowing_error@gsl@@6B@			; gsl::narrowing_error::`vftable'
+PUBLIC	??_C@_0ED@HKMFEAN@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
 PUBLIC	__TI3?AUfail_fast@gsl@@
 PUBLIC	__CTA3?AUfail_fast@gsl@@
 PUBLIC	??_R0?AUfail_fast@gsl@@@8			; gsl::fail_fast `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AUfail_fast@gsl@@@8??0fail_fast@gsl@@QAE@ABU01@@Z12
 PUBLIC	??_R0?AVlogic_error@std@@@8			; std::logic_error `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z12
+PUBLIC	??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ ; `string'
+PUBLIC	__TI2?AUnarrowing_error@gsl@@
+PUBLIC	__CTA2?AUnarrowing_error@gsl@@
+PUBLIC	??_R0?AUnarrowing_error@gsl@@@8			; gsl::narrowing_error `RTTI Type Descriptor'
+PUBLIC	__CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12
 PUBLIC	??_R4exception@std@@6B@				; std::exception::`RTTI Complete Object Locator'
 PUBLIC	??_R3exception@std@@8				; std::exception::`RTTI Class Hierarchy Descriptor'
 PUBLIC	??_R2exception@std@@8				; std::exception::`RTTI Base Class Array'
@@ -44,18 +66,65 @@ PUBLIC	??_R4fail_fast@gsl@@6B@				; gsl::fail_fast::`RTTI Complete Object Locato
 PUBLIC	??_R3fail_fast@gsl@@8				; gsl::fail_fast::`RTTI Class Hierarchy Descriptor'
 PUBLIC	??_R2fail_fast@gsl@@8				; gsl::fail_fast::`RTTI Base Class Array'
 PUBLIC	??_R1A@?0A@EA@fail_fast@gsl@@8			; gsl::fail_fast::`RTTI Base Class Descriptor at (0,-1,0,64)'
+PUBLIC	??_R4narrowing_error@gsl@@6B@			; gsl::narrowing_error::`RTTI Complete Object Locator'
+PUBLIC	??_R3narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Class Hierarchy Descriptor'
+PUBLIC	??_R2narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Base Class Array'
+PUBLIC	??_R1A@?0A@EA@narrowing_error@gsl@@8		; gsl::narrowing_error::`RTTI Base Class Descriptor at (0,-1,0,64)'
+PUBLIC	__xmm@00000003000000020000000100000000
+EXTRN	??2@YAPAXI@Z:PROC				; operator new
+EXTRN	??3@YAXPAX@Z:PROC				; operator delete
 EXTRN	??3@YAXPAXI@Z:PROC				; operator delete
 EXTRN	___std_terminate:PROC
+EXTRN	__imp___invalid_parameter_noinfo_noreturn:PROC
 EXTRN	__imp____std_exception_copy:PROC
 EXTRN	__imp____std_exception_destroy:PROC
 EXTRN	??_Eexception@std@@UAEPAXI@Z:PROC		; std::exception::`vector deleting destructor'
+EXTRN	__imp__memmove:PROC
+EXTRN	__imp_?_Xbad_alloc@std@@YAXXZ:PROC
+EXTRN	__imp_?_Xlength_error@std@@YAXPBD@Z:PROC
 EXTRN	??_Elogic_error@std@@UAEPAXI@Z:PROC		; std::logic_error::`vector deleting destructor'
 EXTRN	??_Efail_fast@gsl@@UAEPAXI@Z:PROC		; gsl::fail_fast::`vector deleting destructor'
+EXTRN	??_Enarrowing_error@gsl@@UAEPAXI@Z:PROC		; gsl::narrowing_error::`vector deleting destructor'
 EXTRN	@__security_check_cookie@4:PROC
 EXTRN	__CxxThrowException@8:PROC
 EXTRN	___CxxFrameHandler3:PROC
 EXTRN	??_7type_info@@6B@:QWORD			; type_info::`vftable'
 EXTRN	___security_cookie:DWORD
+;	COMDAT __xmm@00000003000000020000000100000000
+CONST	SEGMENT
+__xmm@00000003000000020000000100000000 DB 00H, 00H, 00H, 00H, 01H, 00H, 00H
+	DB	00H, 02H, 00H, 00H, 00H, 03H, 00H, 00H, 00H
+CONST	ENDS
+;	COMDAT ??_R1A@?0A@EA@narrowing_error@gsl@@8
+rdata$r	SEGMENT
+??_R1A@?0A@EA@narrowing_error@gsl@@8 DD FLAT:??_R0?AUnarrowing_error@gsl@@@8 ; gsl::narrowing_error::`RTTI Base Class Descriptor at (0,-1,0,64)'
+	DD	01H
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+	DD	040H
+	DD	FLAT:??_R3narrowing_error@gsl@@8
+rdata$r	ENDS
+;	COMDAT ??_R2narrowing_error@gsl@@8
+rdata$r	SEGMENT
+??_R2narrowing_error@gsl@@8 DD FLAT:??_R1A@?0A@EA@narrowing_error@gsl@@8 ; gsl::narrowing_error::`RTTI Base Class Array'
+	DD	FLAT:??_R1A@?0A@EA@exception@std@@8
+rdata$r	ENDS
+;	COMDAT ??_R3narrowing_error@gsl@@8
+rdata$r	SEGMENT
+??_R3narrowing_error@gsl@@8 DD 00H			; gsl::narrowing_error::`RTTI Class Hierarchy Descriptor'
+	DD	00H
+	DD	02H
+	DD	FLAT:??_R2narrowing_error@gsl@@8
+rdata$r	ENDS
+;	COMDAT ??_R4narrowing_error@gsl@@6B@
+rdata$r	SEGMENT
+??_R4narrowing_error@gsl@@6B@ DD 00H			; gsl::narrowing_error::`RTTI Complete Object Locator'
+	DD	00H
+	DD	00H
+	DD	FLAT:??_R0?AUnarrowing_error@gsl@@@8
+	DD	FLAT:??_R3narrowing_error@gsl@@8
+rdata$r	ENDS
 ;	COMDAT ??_R1A@?0A@EA@fail_fast@gsl@@8
 rdata$r	SEGMENT
 ??_R1A@?0A@EA@fail_fast@gsl@@8 DD FLAT:??_R0?AUfail_fast@gsl@@@8 ; gsl::fail_fast::`RTTI Base Class Descriptor at (0,-1,0,64)'
@@ -146,6 +215,50 @@ rdata$r	SEGMENT
 	DD	FLAT:??_R0?AVexception@std@@@8
 	DD	FLAT:??_R3exception@std@@8
 rdata$r	ENDS
+;	COMDAT __CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12
+xdata$x	SEGMENT
+__CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12 DD 00H
+	DD	FLAT:??_R0?AUnarrowing_error@gsl@@@8
+	DD	00H
+	DD	0ffffffffH
+	ORG $+4
+	DD	0cH
+	DD	FLAT:??0narrowing_error@gsl@@QAE@ABU01@@Z
+xdata$x	ENDS
+;	COMDAT ??_R0?AUnarrowing_error@gsl@@@8
+data$r	SEGMENT
+??_R0?AUnarrowing_error@gsl@@@8 DD FLAT:??_7type_info@@6B@ ; gsl::narrowing_error `RTTI Type Descriptor'
+	DD	00H
+	DB	'.?AUnarrowing_error@gsl@@', 00H
+data$r	ENDS
+;	COMDAT __CTA2?AUnarrowing_error@gsl@@
+xdata$x	SEGMENT
+__CTA2?AUnarrowing_error@gsl@@ DD 02H
+	DD	FLAT:__CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12
+	DD	FLAT:__CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12
+xdata$x	ENDS
+;	COMDAT __TI2?AUnarrowing_error@gsl@@
+xdata$x	SEGMENT
+__TI2?AUnarrowing_error@gsl@@ DD 00H
+	DD	FLAT:??1narrowing_error@gsl@@UAE@XZ
+	DD	00H
+	DD	FLAT:__CTA2?AUnarrowing_error@gsl@@
+xdata$x	ENDS
+;	COMDAT ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
+CONST	SEGMENT
+??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ DB 'vector<T> too long'
+	DB	00H						; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 599', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 598', 00H ; `string'
+CONST	ENDS
 ;	COMDAT __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z12
 xdata$x	SEGMENT
 __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z12 DD 00H
@@ -192,6 +305,17 @@ __TI3?AUfail_fast@gsl@@ DD 00H
 	DD	00H
 	DD	FLAT:__CTA3?AUfail_fast@gsl@@
 xdata$x	ENDS
+;	COMDAT ??_C@_0ED@HKMFEAN@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@HKMFEAN@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Preco'
+	DB	'ndition failure at C:\projects\gsl\include\gsl/span: 336', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_7narrowing_error@gsl@@6B@
+CONST	SEGMENT
+??_7narrowing_error@gsl@@6B@ DD FLAT:??_R4narrowing_error@gsl@@6B@ ; gsl::narrowing_error::`vftable'
+	DD	FLAT:??_Enarrowing_error@gsl@@UAEPAXI@Z
+	DD	FLAT:?what@exception@std@@UBEPBDXZ
+CONST	ENDS
 ;	COMDAT __CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12
 xdata$x	SEGMENT
 __CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12 DD 00H
@@ -232,6 +356,34 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
+__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$0
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$1
+__ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$narrow@HI@gsl@@YAHI@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$narrow@HI@gsl@@YAHI@Z$1
+__ehfuncinfo$??$narrow@HI@gsl@@YAHI@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$narrow@HI@gsl@@YAHI@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
 __unwindtable$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z DD 0ffffffffH
 	DD	00H
 	DD	0ffffffffH
@@ -253,6 +405,36 @@ __unwindtable$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_ty
 __ehfuncinfo$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z DD 019930522H
 	DD	02H
 	DD	FLAT:__unwindtable$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z$8
+__ehfuncinfo$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?bar@@YA_NXZ DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$0
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$15
+__ehfuncinfo$?bar@@YA_NXZ DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$?bar@@YA_NXZ
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
@@ -294,6 +476,409 @@ __ehfuncinfo$?foo@@YA_NXZ DD 019930522H
 	DD	00H
 	DD	01H
 xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z$0
+__ehfuncinfo$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_memmove@PBHPAH@std@@YAPAHPBH0PAH@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+??$_Copy_memmove@PBHPAH@std@@YAPAHPBH0PAH@Z PROC	; std::_Copy_memmove<int const *,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2301
+	push	ebp
+	mov	ebp, esp
+; Line 2305
+	mov	eax, DWORD PTR __First$[ebp]
+	push	esi
+; Line 2306
+	mov	esi, DWORD PTR __Dest$[ebp]
+	push	edi
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+	push	edi
+	push	eax
+	push	esi
+	call	DWORD PTR __imp__memmove
+	add	esp, 12					; 0000000cH
+; Line 2307
+	lea	eax, DWORD PTR [edi+esi]
+	pop	edi
+	pop	esi
+; Line 2308
+	pop	ebp
+	ret	0
+??$_Copy_memmove@PBHPAH@std@@YAPAHPBH0PAH@Z ENDP	; std::_Copy_memmove<int const *,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+___formal$ = 20						; size = 4
+___formal$ = 24						; size = 1
+___formal$ = 28						; size = 1
+??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Uninitialized_copy_al_unchecked1<int const ,int,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
+; Line 239
+	push	ebp
+	mov	ebp, esp
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2305
+	mov	eax, DWORD PTR __First$[ebp]
+	push	esi
+; Line 2306
+	mov	esi, DWORD PTR __Dest$[ebp]
+	push	edi
+; Line 2305
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2306
+	push	edi
+	push	eax
+	push	esi
+	call	DWORD PTR __imp__memmove
+	add	esp, 12					; 0000000cH
+; Line 2307
+	lea	eax, DWORD PTR [edi+esi]
+	pop	edi
+	pop	esi
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
+; Line 241
+	pop	ebp
+	ret	0
+??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Uninitialized_copy_al_unchecked1<int const ,int,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBHABQAH@Z
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+___formal$ = 12						; size = 4
+___formal$ = 16						; size = 4
+??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBHABQAH@Z PROC ; std::_Ptr_copy_cat<int const ,int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 792
+	push	ebp
+	mov	ebp, esp
+; Line 793
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 794
+	pop	ebp
+	ret	0
+??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBHABQAH@Z ENDP ; std::_Ptr_copy_cat<int const ,int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Rechecked@PAHPAH@std@@YAAAPAHAAPAHPAH@Z
+_TEXT	SEGMENT
+__Dest$ = 8						; size = 4
+__Src$ = 12						; size = 4
+??$_Rechecked@PAHPAH@std@@YAAAPAHAAPAHPAH@Z PROC	; std::_Rechecked<int *,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 457
+	push	ebp
+	mov	ebp, esp
+; Line 458
+	mov	eax, DWORD PTR __Dest$[ebp]
+	mov	ecx, DWORD PTR __Src$[ebp]
+	mov	DWORD PTR [eax], ecx
+; Line 460
+	pop	ebp
+	ret	0
+??$_Rechecked@PAHPAH@std@@YAAAPAHAAPAHPAH@Z ENDP	; std::_Rechecked<int *,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Uninitialized_copy_al_unchecked@PBHPAHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+__Al$ = 20						; size = 4
+??$_Uninitialized_copy_al_unchecked@PBHPAHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z PROC ; std::_Uninitialized_copy_al_unchecked<int const *,int *,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
+; Line 248
+	push	ebp
+	mov	ebp, esp
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2305
+	mov	eax, DWORD PTR __First$[ebp]
+	push	esi
+; Line 2306
+	mov	esi, DWORD PTR __Dest$[ebp]
+	push	edi
+; Line 2305
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2306
+	push	edi
+	push	eax
+	push	esi
+	call	DWORD PTR __imp__memmove
+	add	esp, 12					; 0000000cH
+; Line 2307
+	lea	eax, DWORD PTR [edi+esi]
+	pop	edi
+	pop	esi
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
+; Line 252
+	pop	ebp
+	ret	0
+??$_Uninitialized_copy_al_unchecked@PBHPAHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z ENDP ; std::_Uninitialized_copy_al_unchecked<int const *,int *,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Unchecked@PAH@std@@YAPAHPAH@Z
+_TEXT	SEGMENT
+__Src$ = 8						; size = 4
+??$_Unchecked@PAH@std@@YAPAHPAH@Z PROC			; std::_Unchecked<int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 427
+	push	ebp
+	mov	ebp, esp
+; Line 428
+	mov	eax, DWORD PTR __Src$[ebp]
+; Line 429
+	pop	ebp
+	ret	0
+??$_Unchecked@PAH@std@@YAPAHPAH@Z ENDP			; std::_Unchecked<int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Unchecked@PBH@std@@YAPBHPBH@Z
+_TEXT	SEGMENT
+__Src$ = 8						; size = 4
+??$_Unchecked@PBH@std@@YAPBHPBH@Z PROC			; std::_Unchecked<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 427
+	push	ebp
+	mov	ebp, esp
+; Line 428
+	mov	eax, DWORD PTR __Src$[ebp]
+; Line 429
+	pop	ebp
+	ret	0
+??$_Unchecked@PBH@std@@YAPBHPBH@Z ENDP			; std::_Unchecked<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Uninitialized_copy@PBHPAHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+__Al$ = 20						; size = 4
+??$_Uninitialized_copy@PBHPAHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z PROC ; std::_Uninitialized_copy<int const *,int *,std::allocator<int> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
+; Line 259
+	push	ebp
+	mov	ebp, esp
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2305
+	mov	eax, DWORD PTR __First$[ebp]
+	push	esi
+; Line 2306
+	mov	esi, DWORD PTR __Dest$[ebp]
+	push	edi
+; Line 2305
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2306
+	push	edi
+	push	eax
+	push	esi
+	call	DWORD PTR __imp__memmove
+	add	esp, 12					; 0000000cH
+; Line 2307
+	lea	eax, DWORD PTR [edi+esi]
+	pop	edi
+	pop	esi
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
+; Line 265
+	pop	ebp
+	ret	0
+??$_Uninitialized_copy@PBHPAHV?$allocator@H@std@@@std@@YAPAHPBH0PAHAAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z ENDP ; std::_Uninitialized_copy<int const *,int *,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Distance1@PBH@std@@YAHPBH0Urandom_access_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+___formal$ = 16						; size = 1
+??$_Distance1@PBH@std@@YAHPBH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Distance1<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 1110
+	push	ebp
+	mov	ebp, esp
+; Line 1119
+	mov	eax, DWORD PTR __Last$[ebp]
+	sub	eax, DWORD PTR __First$[ebp]
+	sar	eax, 2
+; Line 1120
+	pop	ebp
+	ret	0
+??$_Distance1@PBH@std@@YAHPBH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Distance1<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z PROC ; std::forward<gsl::narrowing_error>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
+; Line 1275
+	push	ebp
+	mov	ebp, esp
+; Line 1276
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1277
+	pop	ebp
+	ret	0
+??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z ENDP ; std::forward<gsl::narrowing_error>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@AAI@std@@YAAAIAAI@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@AAI@std@@YAAAIAAI@Z PROC			; std::forward<unsigned int &>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
+; Line 1275
+	push	ebp
+	mov	ebp, esp
+; Line 1276
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1277
+	pop	ebp
+	ret	0
+??$forward@AAI@std@@YAAAIAAI@Z ENDP			; std::forward<unsigned int &>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Ucopy@PBH@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPBH0PAH@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Ptr$ = 16						; size = 4
+??$_Ucopy@PBH@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPBH0PAH@Z PROC ; std::vector<int,std::allocator<int> >::_Ucopy<int const *>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1651
+	push	ebp
+	mov	ebp, esp
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2305
+	mov	eax, DWORD PTR __First$[ebp]
+	push	esi
+; Line 2306
+	mov	esi, DWORD PTR __Ptr$[ebp]
+	push	edi
+; Line 2305
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2306
+	push	edi
+	push	eax
+	push	esi
+	call	DWORD PTR __imp__memmove
+	add	esp, 12					; 0000000cH
+; Line 2307
+	lea	eax, DWORD PTR [edi+esi]
+	pop	edi
+	pop	esi
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1654
+	pop	ebp
+	ret	12					; 0000000cH
+??$_Ucopy@PBH@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPBH0PAH@Z ENDP ; std::vector<int,std::allocator<int> >::_Ucopy<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$distance@PBH@std@@YAHPBH0@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+??$distance@PBH@std@@YAHPBH0@Z PROC			; std::distance<int const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 1125
+	push	ebp
+	mov	ebp, esp
+; Line 1119
+	mov	eax, DWORD PTR __Last$[ebp]
+	sub	eax, DWORD PTR __First$[ebp]
+	sar	eax, 2
+; Line 1127
+	pop	ebp
+	ret	0
+??$distance@PBH@std@@YAHPBH0@Z ENDP			; std::distance<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0ABV?$allocator@H@std@@@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAE@ABV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+__Right$ = 8						; size = 4
+??$?0ABV?$allocator@H@std@@@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAE@ABV?$allocator@H@1@@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::_Wrap_alloc<std::allocator<int> ><std::allocator<int> const &>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 953
+	mov	eax, ecx
+	ret	4
+??$?0ABV?$allocator@H@std@@@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAE@ABV?$allocator@H@1@@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::_Wrap_alloc<std::allocator<int> ><std::allocator<int> const &>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z
+_TEXT	SEGMENT
+$T1 = -12						; size = 12
+_exception$ = 8						; size = 4
+??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z PROC ; gsl::details::throw_exception<gsl::narrowing_error>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 143
+	push	ebp
+	mov	ebp, esp
+	sub	esp, 12					; 0000000cH
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 67
+	lea	eax, DWORD PTR $T1[ebp+4]
+	mov	DWORD PTR $T1[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+	mov	eax, DWORD PTR _exception$[ebp]
+	xorps	xmm0, xmm0
+	add	eax, 4
+	movq	QWORD PTR $T1[ebp+4], xmm0
+	push	eax
+	call	DWORD PTR __imp____std_exception_copy
+	add	esp, 8
+	mov	DWORD PTR $T1[ebp], OFFSET ??_7narrowing_error@gsl@@6B@
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 144
+	lea	eax, DWORD PTR $T1[ebp]
+	push	OFFSET __TI2?AUnarrowing_error@gsl@@
+	push	eax
+	call	__CxxThrowException@8
+$LN12@throw_exce:
+$LN11@throw_exce:
+	int	3
+??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ENDP ; gsl::details::throw_exception<gsl::narrowing_error>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$narrow_cast@HAAI@gsl@@YAHAAI@Z
+_TEXT	SEGMENT
+_u$ = 8							; size = 4
+??$narrow_cast@HAAI@gsl@@YAHAAI@Z PROC			; gsl::narrow_cast<int,unsigned int &>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 99
+	push	ebp
+	mov	ebp, esp
+; Line 100
+	mov	eax, DWORD PTR _u$[ebp]
+	mov	eax, DWORD PTR [eax]
+; Line 101
+	pop	ebp
+	ret	0
+??$narrow_cast@HAAI@gsl@@YAHAAI@Z ENDP			; gsl::narrow_cast<int,unsigned int &>
+_TEXT	ENDS
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$0A@@12@@Z
 _TEXT	SEGMENT
@@ -308,6 +893,368 @@ _ext$ = 8						; size = 1
 	ret	4
 ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$0A@@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><0>
 _TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
+_TEXT	SEGMENT
+$T2 = -36						; size = 12
+$T3 = -36						; size = 12
+__InitData$4 = -24					; size = 8
+__InitData$5 = -24					; size = 8
+$T6 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 4
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 24					; 00000018H
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	esi, ecx
+; Line 596
+	push	DWORD PTR _ext$[ebp]
+	mov	DWORD PTR $T6[ebp], 0
+	call	??0?$extent_type@$0?0@details@gsl@@QAE@H@Z ; gsl::details::extent_type<-1>::extent_type<-1>
+; Line 338
+	mov	ecx, DWORD PTR [esi]
+; Line 596
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [esi+4], eax
+; Line 598
+	test	ecx, ecx
+	js	SHORT $LN3@extent_typ
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN5@extent_typ
+	test	ecx, ecx
+	je	SHORT $LN5@extent_typ
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 55
+	lea	eax, DWORD PTR $T2[ebp+4]
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+	lea	eax, DWORD PTR __InitData$4[ebp]
+	mov	DWORD PTR __InitData$4[ebp], OFFSET ??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	xorps	xmm0, xmm0
+; Line 54
+	mov	BYTE PTR __InitData$4[ebp+4], 1
+; Line 55
+	push	eax
+	movq	QWORD PTR $T2[ebp+4], xmm0
+	call	DWORD PTR __imp____std_exception_copy
+	add	esp, 8
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7fail_fast@gsl@@6B@
+; File c:\projects\gsl\include\gsl\span
+; Line 599
+	lea	eax, DWORD PTR $T2[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	push	eax
+	mov	DWORD PTR $T6[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN49@extent_typ:
+$LN5@extent_typ:
+; Line 600
+	mov	eax, esi
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN3@extent_typ:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 55
+	lea	eax, DWORD PTR $T3[ebp+4]
+	mov	DWORD PTR $T3[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+	lea	eax, DWORD PTR __InitData$5[ebp]
+	mov	DWORD PTR __InitData$5[ebp], OFFSET ??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	xorps	xmm0, xmm0
+; Line 54
+	mov	BYTE PTR __InitData$5[ebp+4], 1
+; Line 55
+	push	eax
+	movq	QWORD PTR $T3[ebp+4], xmm0
+	call	DWORD PTR __imp____std_exception_copy
+	add	esp, 8
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	mov	DWORD PTR $T3[ebp], OFFSET ??_7fail_fast@gsl@@6B@
+; File c:\projects\gsl\include\gsl\span
+; Line 598
+	lea	eax, DWORD PTR $T3[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	push	eax
+	mov	DWORD PTR $T6[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN50@extent_typ:
+$LN48@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$1:
+	mov	eax, DWORD PTR $T6[ebp]
+	and	eax, 2
+	je	$LN11@extent_typ
+	and	DWORD PTR $T6[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN11@extent_typ:
+	ret	0
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$0:
+	mov	eax, DWORD PTR $T6[ebp]
+	and	eax, 1
+	je	$LN8@extent_typ
+	and	DWORD PTR $T6[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN8@extent_typ:
+	ret	0
+__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-32]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Unfancy@H@std@@YAPAHPAH@Z
+_TEXT	SEGMENT
+__Ptr$ = 8						; size = 4
+??$_Unfancy@H@std@@YAPAHPAH@Z PROC			; std::_Unfancy<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstddef
+; Line 739
+	push	ebp
+	mov	ebp, esp
+; Line 740
+	mov	eax, DWORD PTR __Ptr$[ebp]
+; Line 741
+	pop	ebp
+	ret	0
+??$_Unfancy@H@std@@YAPAHPAH@Z ENDP			; std::_Unfancy<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Destroy_range1@V?$allocator@H@std@@PAH@std@@YAXPAH0AAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U?$integral_constant@_N$00@0@@Z
+_TEXT	SEGMENT
+___formal$ = 8						; size = 4
+___formal$ = 12						; size = 4
+___formal$ = 16						; size = 4
+___formal$ = 20						; size = 1
+??$_Destroy_range1@V?$allocator@H@std@@PAH@std@@YAXPAH0AAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Destroy_range1<std::allocator<int>,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 1109
+	ret	0
+??$_Destroy_range1@V?$allocator@H@std@@PAH@std@@YAXPAH0AAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Destroy_range1<std::allocator<int>,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+___formal$ = 16						; size = 1
+??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z PROC ; std::vector<int,std::allocator<int> >::_Construct<int const *>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 814
+	push	ebp
+	mov	ebp, esp
+	push	ebx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 1119
+	mov	ebx, DWORD PTR __Last$[ebp]
+	sub	ebx, DWORD PTR __First$[ebp]
+	push	esi
+	push	edi
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 814
+	mov	edi, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 1119
+	mov	esi, ebx
+	sar	esi, 2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1562
+	mov	DWORD PTR [edi], 0
+; Line 1563
+	mov	DWORD PTR [edi+4], 0
+; Line 1564
+	mov	DWORD PTR [edi+8], 0
+; Line 1566
+	test	esi, esi
+	je	SHORT $LN5@Construct
+; Line 1568
+	cmp	esi, 1073741823				; 3fffffffH
+	jbe	SHORT $LN16@Construct
+; Line 1765
+	push	OFFSET ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
+	call	DWORD PTR __imp_?_Xlength_error@std@@YAXPBD@Z
+$LN168@Construct:
+$LN16@Construct:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 976
+	push	esi
+	call	?allocate@?$allocator@H@std@@QAEPAHI@Z	; std::allocator<int>::allocate
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1572
+	mov	DWORD PTR [edi], eax
+; Line 1573
+	mov	DWORD PTR [edi+4], eax
+; Line 1574
+	mov	eax, DWORD PTR [edi]
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2306
+	push	ebx
+	push	DWORD PTR __First$[ebp]
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1574
+	lea	eax, DWORD PTR [eax+esi*4]
+	mov	DWORD PTR [edi+8], eax
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2304
+	mov	esi, DWORD PTR [edi]
+; Line 2306
+	push	esi
+	call	DWORD PTR __imp__memmove
+; Line 2307
+	lea	eax, DWORD PTR [ebx+esi]
+	add	esp, 12					; 0000000cH
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 818
+	mov	DWORD PTR [edi+4], eax
+$LN5@Construct:
+	pop	edi
+	pop	esi
+	pop	ebx
+; Line 824
+	pop	ebp
+	ret	12					; 0000000cH
+$LN167@Construct:
+??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z ENDP ; std::vector<int,std::allocator<int> >::_Construct<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0ABV?$allocator@H@std@@$$V@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAE@U_One_then_variadic_args_t@1@ABV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+___formal$ = 8						; size = 1
+__Val1$ = 12						; size = 4
+??$?0ABV?$allocator@H@std@@$$V@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAE@U_One_then_variadic_args_t@1@ABV?$allocator@H@1@@Z PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const &>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 485
+	mov	DWORD PTR [ecx], 0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 290
+	mov	eax, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 486
+	mov	DWORD PTR [ecx+4], 0
+; Line 487
+	mov	DWORD PTR [ecx+8], 0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 290
+	ret	8
+??$?0ABV?$allocator@H@std@@$$V@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAE@U_One_then_variadic_args_t@1@ABV?$allocator@H@1@@Z ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const &>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@ABV?$allocator@H@std@@@std@@YAABV?$allocator@H@0@ABV10@@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@ABV?$allocator@H@std@@@std@@YAABV?$allocator@H@0@ABV10@@Z PROC ; std::forward<std::allocator<int> const &>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
+; Line 1275
+	push	ebp
+	mov	ebp, esp
+; Line 1276
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1277
+	pop	ebp
+	ret	0
+??$forward@ABV?$allocator@H@std@@@std@@YAABV?$allocator@H@0@ABV10@@Z ENDP ; std::forward<std::allocator<int> const &>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$narrow@HI@gsl@@YAHI@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_u$ = 8							; size = 4
+??$narrow@HI@gsl@@YAHI@Z PROC				; gsl::narrow<int,unsigned int>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 124
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$narrow@HI@gsl@@YAHI@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 127
+	mov	eax, DWORD PTR _u$[ebp]
+	test	eax, eax
+	jns	SHORT $LN4@narrow
+; Line 128
+	xorps	xmm0, xmm0
+	mov	DWORD PTR $T2[ebp+8], 0
+	movq	QWORD PTR $T2[ebp], xmm0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 47
+	movq	QWORD PTR $T2[ebp+4], xmm0
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7narrowing_error@gsl@@6B@
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 128
+	lea	eax, DWORD PTR $T2[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	push	eax
+	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+$LN35@narrow:
+$LN4@narrow:
+; Line 130
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN34@narrow:
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$narrow@HI@gsl@@YAHI@Z$1:
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1narrowing_error@gsl@@UAE@XZ
+__ehhandler$??$narrow@HI@gsl@@YAHI@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$narrow@HI@gsl@@YAHI@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$narrow@HI@gsl@@YAHI@Z ENDP				; gsl::narrow<int,unsigned int>
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z
 _TEXT	SEGMENT
@@ -448,6 +1395,958 @@ __Arg$ = 8						; size = 4
 	ret	0
 ??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z ENDP ; std::forward<gsl::fail_fast>
 _TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Destroy_range@V?$allocator@H@std@@PAH@std@@YAXPAH0AAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Al$ = 16						; size = 4
+??$_Destroy_range@V?$allocator@H@std@@PAH@std@@YAXPAH0AAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z PROC ; std::_Destroy_range<std::allocator<int>,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 1121
+	ret	0
+??$_Destroy_range@V?$allocator@H@std@@PAH@std@@YAXPAH0AAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z ENDP ; std::_Destroy_range<std::allocator<int>,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0@Z
+_TEXT	SEGMENT
+$T1 = -4						; size = 1
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0@Z PROC ; std::vector<int,std::allocator<int> >::_Construct<int const *>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 792
+	push	ebp
+	mov	ebp, esp
+	push	ecx
+; Line 793
+	mov	BYTE PTR $T1[ebp], 0
+	push	DWORD PTR $T1[ebp]
+	push	DWORD PTR __Last$[ebp]
+	push	DWORD PTR __First$[ebp]
+	call	??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const *>
+; Line 794
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0@Z ENDP ; std::vector<int,std::allocator<int> >::_Construct<int const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0ABV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAE@ABV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+__Al$ = 8						; size = 4
+??$?0ABV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAE@ABV?$allocator@H@1@@Z PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const &,void>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 485
+	mov	DWORD PTR [ecx], 0
+; Line 529
+	mov	eax, ecx
+; Line 486
+	mov	DWORD PTR [ecx+4], 0
+; Line 487
+	mov	DWORD PTR [ecx+8], 0
+; Line 529
+	ret	4
+??$?0ABV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAE@ABV?$allocator@H@1@@Z ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const &,void>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_cont$ = 8						; size = 4
+??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z PROC ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 428
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	esi, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 658
+	mov	eax, DWORD PTR _cont$[ebp]
+; Line 1180
+	mov	ecx, DWORD PTR [eax]
+	mov	eax, DWORD PTR [eax+4]
+	sub	eax, ecx
+	sar	eax, 2
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 127
+	test	eax, eax
+	jns	SHORT $LN52@span
+	xorps	xmm0, xmm0
+; Line 128
+	mov	DWORD PTR $T2[ebp+8], 0
+	movq	QWORD PTR $T2[ebp], xmm0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 47
+	movq	QWORD PTR $T2[ebp+4], xmm0
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7narrowing_error@gsl@@6B@
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 128
+	lea	eax, DWORD PTR $T2[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	push	eax
+	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+$LN75@span:
+$LN52@span:
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	push	eax
+	push	ecx
+	mov	ecx, esi
+	call	??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+; Line 428
+	mov	eax, esi
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+$LN74@span:
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z$8:
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1narrowing_error@gsl@@UAE@XZ
+__ehhandler$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z ENDP ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>
+; Function compile flags: /Ogtp
+;	COMDAT ?end@?$initializer_list@H@std@@QBEPBHXZ
+_TEXT	SEGMENT
+?end@?$initializer_list@H@std@@QBEPBHXZ PROC		; std::initializer_list<int>::end, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\initializer_list
+; Line 45
+	mov	eax, DWORD PTR [ecx+4]
+; Line 46
+	ret	0
+?end@?$initializer_list@H@std@@QBEPBHXZ ENDP		; std::initializer_list<int>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?begin@?$initializer_list@H@std@@QBEPBHXZ
+_TEXT	SEGMENT
+?begin@?$initializer_list@H@std@@QBEPBHXZ PROC		; std::initializer_list<int>::begin, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\initializer_list
+; Line 40
+	mov	eax, DWORD PTR [ecx]
+; Line 41
+	ret	0
+?begin@?$initializer_list@H@std@@QBEPBHXZ ENDP		; std::initializer_list<int>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$initializer_list@H@std@@QAE@PBH0@Z
+_TEXT	SEGMENT
+__First_arg$ = 8					; size = 4
+__Last_arg$ = 12					; size = 4
+??0?$initializer_list@H@std@@QAE@PBH0@Z PROC		; std::initializer_list<int>::initializer_list<int>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\initializer_list
+; Line 35
+	push	ebp
+	mov	ebp, esp
+; Line 34
+	mov	eax, DWORD PTR __First_arg$[ebp]
+	mov	DWORD PTR [ecx], eax
+	mov	eax, DWORD PTR __Last_arg$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 36
+	mov	eax, ecx
+	pop	ebp
+	ret	8
+??0?$initializer_list@H@std@@QAE@PBH0@Z ENDP		; std::initializer_list<int>::initializer_list<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ
+_TEXT	SEGMENT
+?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ PROC	; std::vector<int,std::allocator<int> >::_Xlen, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1765
+	push	OFFSET ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
+	call	DWORD PTR __imp_?_Xlength_error@std@@YAXPBD@Z
+$LN4@Xlen:
+$LN3@Xlen:
+	int	3
+?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ ENDP	; std::vector<int,std::allocator<int> >::_Xlen
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IAEXXZ
+_TEXT	SEGMENT
+?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IAEXXZ PROC	; std::vector<int,std::allocator<int> >::_Tidy, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1636
+	push	esi
+	mov	esi, ecx
+; Line 1637
+	mov	ecx, DWORD PTR [esi]
+	test	ecx, ecx
+	je	SHORT $LN2@Tidy
+; Line 1641
+	mov	eax, DWORD PTR [esi+8]
+	sub	eax, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	push	4
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1641
+	sar	eax, 2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	push	eax
+	push	ecx
+	call	?_Deallocate@std@@YAXPAXII@Z		; std::_Deallocate
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1643
+	mov	DWORD PTR [esi], 0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	add	esp, 12					; 0000000cH
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1644
+	mov	DWORD PTR [esi+4], 0
+; Line 1645
+	mov	DWORD PTR [esi+8], 0
+$LN2@Tidy:
+	pop	esi
+; Line 1647
+	ret	0
+?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IAEXXZ ENDP	; std::vector<int,std::allocator<int> >::_Tidy
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Destroy@?$vector@HV?$allocator@H@std@@@std@@IAEXPAH0@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+?_Destroy@?$vector@HV?$allocator@H@std@@@std@@IAEXPAH0@Z PROC ; std::vector<int,std::allocator<int> >::_Destroy, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1582
+	ret	8
+?_Destroy@?$vector@HV?$allocator@H@std@@@std@@IAEXPAH0@Z ENDP ; std::vector<int,std::allocator<int> >::_Destroy
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Buy@?$vector@HV?$allocator@H@std@@@std@@IAE_NI@Z
+_TEXT	SEGMENT
+__Capacity$ = 8						; size = 4
+?_Buy@?$vector@HV?$allocator@H@std@@@std@@IAE_NI@Z PROC	; std::vector<int,std::allocator<int> >::_Buy, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1561
+	push	ebp
+	mov	ebp, esp
+	push	esi
+	mov	esi, ecx
+	push	edi
+; Line 1566
+	mov	edi, DWORD PTR __Capacity$[ebp]
+	mov	DWORD PTR [esi], 0
+	mov	DWORD PTR [esi+4], 0
+	mov	DWORD PTR [esi+8], 0
+	test	edi, edi
+	jne	SHORT $LN2@Buy
+; Line 1567
+	pop	edi
+	xor	al, al
+	pop	esi
+; Line 1577
+	pop	ebp
+	ret	4
+$LN2@Buy:
+; Line 1568
+	cmp	edi, 1073741823				; 3fffffffH
+	jbe	SHORT $LN4@Buy
+; Line 1765
+	push	OFFSET ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
+	call	DWORD PTR __imp_?_Xlength_error@std@@YAXPBD@Z
+$LN110@Buy:
+$LN4@Buy:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 976
+	push	edi
+	call	?allocate@?$allocator@H@std@@QAEPAHI@Z	; std::allocator<int>::allocate
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1572
+	mov	DWORD PTR [esi], eax
+; Line 1573
+	mov	DWORD PTR [esi+4], eax
+; Line 1574
+	mov	eax, DWORD PTR [esi]
+	lea	eax, DWORD PTR [eax+edi*4]
+	mov	DWORD PTR [esi+8], eax
+; Line 1576
+	mov	al, 1
+	pop	edi
+	pop	esi
+; Line 1577
+	pop	ebp
+	ret	4
+$LN109@Buy:
+?_Buy@?$vector@HV?$allocator@H@std@@@std@@IAE_NI@Z ENDP	; std::vector<int,std::allocator<int> >::_Buy
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$vector@HV?$allocator@H@std@@@std@@QAEPAHXZ
+_TEXT	SEGMENT
+?data@?$vector@HV?$allocator@H@std@@@std@@QAEPAHXZ PROC	; std::vector<int,std::allocator<int> >::data, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1247
+	mov	eax, DWORD PTR [ecx]
+; Line 1248
+	ret	0
+?data@?$vector@HV?$allocator@H@std@@@std@@QAEPAHXZ ENDP	; std::vector<int,std::allocator<int> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?max_size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ
+_TEXT	SEGMENT
+?max_size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ PROC ; std::vector<int,std::allocator<int> >::max_size, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1185
+	mov	eax, 1073741823				; 3fffffffH
+; Line 1186
+	ret	0
+?max_size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ ENDP ; std::vector<int,std::allocator<int> >::max_size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ
+_TEXT	SEGMENT
+?size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ PROC	; std::vector<int,std::allocator<int> >::size, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1180
+	mov	eax, DWORD PTR [ecx+4]
+	sub	eax, DWORD PTR [ecx]
+	sar	eax, 2
+; Line 1181
+	ret	0
+?size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ ENDP	; std::vector<int,std::allocator<int> >::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ
+_TEXT	SEGMENT
+??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ PROC	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 975
+	push	esi
+	mov	esi, ecx
+; Line 1637
+	mov	ecx, DWORD PTR [esi]
+	test	ecx, ecx
+	je	SHORT $LN4@vector
+; Line 1641
+	mov	eax, DWORD PTR [esi+8]
+	sub	eax, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	push	4
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1641
+	sar	eax, 2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	push	eax
+	push	ecx
+	call	?_Deallocate@std@@YAXPAXII@Z		; std::_Deallocate
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1643
+	mov	DWORD PTR [esi], 0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	add	esp, 12					; 0000000cH
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1644
+	mov	DWORD PTR [esi+4], 0
+; Line 1645
+	mov	DWORD PTR [esi+8], 0
+$LN4@vector:
+	pop	esi
+; Line 977
+	ret	0
+??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ ENDP	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$vector@HV?$allocator@H@std@@@std@@QAE@V?$initializer_list@H@1@ABV?$allocator@H@1@@Z
+_TEXT	SEGMENT
+$T1 = -4						; size = 1
+__Ilist$ = 8						; size = 8
+__Al$ = 16						; size = 4
+??0?$vector@HV?$allocator@H@std@@@std@@QAE@V?$initializer_list@H@1@ABV?$allocator@H@1@@Z PROC ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 953
+	push	ebp
+	mov	ebp, esp
+	push	ecx
+	push	esi
+; Line 793
+	mov	BYTE PTR $T1[ebp], 0
+; Line 953
+	mov	esi, ecx
+; Line 793
+	push	DWORD PTR $T1[ebp]
+	push	DWORD PTR __Ilist$[ebp+4]
+; Line 485
+	mov	DWORD PTR [esi], 0
+; Line 793
+	push	DWORD PTR __Ilist$[ebp]
+; Line 486
+	mov	DWORD PTR [esi+4], 0
+; Line 487
+	mov	DWORD PTR [esi+8], 0
+; Line 793
+	call	??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const *>
+; Line 955
+	mov	eax, esi
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	12					; 0000000cH
+??0?$vector@HV?$allocator@H@std@@@std@@QAE@V?$initializer_list@H@1@ABV?$allocator@H@1@@Z ENDP ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 320
+	mov	eax, ecx
+; Line 321
+	ret	0
+?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 315
+	mov	eax, ecx
+; Line 316
+	ret	0
+?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 300
+	mov	eax, ecx
+; Line 301
+	ret	0
+?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 295
+	mov	eax, ecx
+; Line 296
+	ret	0
+?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QAE@XZ
+_TEXT	SEGMENT
+??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QAE@XZ PROC ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 485
+	mov	DWORD PTR [ecx], 0
+; Line 489
+	mov	eax, ecx
+	mov	DWORD PTR [ecx+4], 0
+	mov	DWORD PTR [ecx+8], 0
+	ret	0
+??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QAE@XZ ENDP ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ
+_TEXT	SEGMENT
+?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 663
+	lea	eax, DWORD PTR [ecx+8]
+; Line 664
+	ret	0
+?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ
+_TEXT	SEGMENT
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 658
+	lea	eax, DWORD PTR [ecx+4]
+; Line 659
+	ret	0
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ
+_TEXT	SEGMENT
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 653
+	lea	eax, DWORD PTR [ecx+4]
+; Line 654
+	ret	0
+?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ
+_TEXT	SEGMENT
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 648
+	mov	eax, ecx
+; Line 649
+	ret	0
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ
+_TEXT	SEGMENT
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 643
+	mov	eax, ecx
+; Line 644
+	ret	0
+?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 638
+	mov	eax, ecx
+; Line 639
+	ret	0
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 633
+	mov	eax, ecx
+; Line 634
+	ret	0
+?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 628
+	mov	eax, ecx
+; Line 629
+	ret	0
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
+_TEXT	SEGMENT
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 623
+	mov	eax, ecx
+; Line 624
+	ret	0
+?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEXXZ
+_TEXT	SEGMENT
+?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEXXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 614
+	ret	0
+?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEXXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?max_size@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QBEIU_Nil@2@@Z
+_TEXT	SEGMENT
+___formal$ = 8						; size = 1
+?max_size@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QBEIU_Nil@2@@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::max_size, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 1008
+	mov	eax, 1073741823				; 3fffffffH
+; Line 1009
+	ret	4
+?max_size@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QBEIU_Nil@2@@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::max_size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?deallocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAEXPAHI@Z
+_TEXT	SEGMENT
+__Ptr$ = 8						; size = 4
+__Count$ = 12						; size = 4
+?deallocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAEXPAHI@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::deallocate, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 986
+	push	ebp
+	mov	ebp, esp
+; Line 720
+	push	4
+	push	DWORD PTR __Count$[ebp]
+	push	DWORD PTR __Ptr$[ebp]
+	call	?_Deallocate@std@@YAXPAXII@Z		; std::_Deallocate
+	add	esp, 12					; 0000000cH
+; Line 988
+	pop	ebp
+	ret	8
+?deallocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAEXPAHI@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::deallocate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?allocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAEPAHI@Z
+_TEXT	SEGMENT
+__Count$ = 8						; size = 4
+?allocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAEPAHI@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::allocate, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 975
+	push	ebp
+	mov	ebp, esp
+; Line 977
+	pop	ebp
+; Line 976
+	jmp	?allocate@?$allocator@H@std@@QAEPAHI@Z	; std::allocator<int>::allocate
+?allocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QAEPAHI@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::allocate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?max_size@?$allocator_traits@V?$allocator@H@std@@@std@@SAIABV?$allocator@H@2@@Z
+_TEXT	SEGMENT
+__Al$ = 8						; size = 4
+?max_size@?$allocator_traits@V?$allocator@H@std@@@std@@SAIABV?$allocator@H@2@@Z PROC ; std::allocator_traits<std::allocator<int> >::max_size, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 869
+	mov	eax, 1073741823				; 3fffffffH
+; Line 870
+	ret	0
+?max_size@?$allocator_traits@V?$allocator@H@std@@@std@@SAIABV?$allocator@H@2@@Z ENDP ; std::allocator_traits<std::allocator<int> >::max_size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?max_size@?$allocator@H@std@@QBEIXZ
+_TEXT	SEGMENT
+?max_size@?$allocator@H@std@@QBEIXZ PROC		; std::allocator<int>::max_size, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 749
+	mov	eax, 1073741823				; 3fffffffH
+; Line 750
+	ret	0
+?max_size@?$allocator@H@std@@QBEIXZ ENDP		; std::allocator<int>::max_size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?allocate@?$allocator@H@std@@QAEPAHI@Z
+_TEXT	SEGMENT
+__Count$ = 8						; size = 4
+?allocate@?$allocator@H@std@@QAEPAHI@Z PROC		; std::allocator<int>::allocate, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 724
+	push	ebp
+	mov	ebp, esp
+; Line 51
+	mov	eax, DWORD PTR __Count$[ebp]
+	test	eax, eax
+	jne	SHORT $LN4@allocate
+$LN12@allocate:
+; Line 726
+	pop	ebp
+	ret	4
+$LN4@allocate:
+; Line 55
+	cmp	eax, 1073741823				; 3fffffffH
+	jbe	SHORT $LN5@allocate
+; Line 56
+	call	DWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
+$LN15@allocate:
+$LN5@allocate:
+; Line 57
+	shl	eax, 2
+; Line 61
+	cmp	eax, 4096				; 00001000H
+	jb	SHORT $LN6@allocate
+; Line 65
+	lea	ecx, DWORD PTR [eax+35]
+; Line 66
+	cmp	ecx, eax
+	ja	SHORT $LN8@allocate
+; Line 67
+	call	DWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
+$LN16@allocate:
+$LN8@allocate:
+; Line 69
+	push	ecx
+	call	??2@YAPAXI@Z				; operator new
+	mov	ecx, eax
+	add	esp, 4
+; Line 70
+	test	ecx, ecx
+	jne	SHORT $LN9@allocate
+	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN17@allocate:
+$LN9@allocate:
+; Line 71
+	lea	eax, DWORD PTR [ecx+35]
+	and	eax, -32				; ffffffe0H
+; Line 73
+	mov	DWORD PTR [eax-4], ecx
+; Line 726
+	pop	ebp
+	ret	4
+$LN6@allocate:
+; Line 83
+	push	eax
+	call	??2@YAPAXI@Z				; operator new
+	add	esp, 4
+; Line 84
+	test	eax, eax
+	jne	SHORT $LN12@allocate
+	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN18@allocate:
+$LN14@allocate:
+	int	3
+?allocate@?$allocator@H@std@@QAEPAHI@Z ENDP		; std::allocator<int>::allocate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?deallocate@?$allocator@H@std@@QAEXPAHI@Z
+_TEXT	SEGMENT
+__Ptr$ = 8						; size = 4
+__Count$ = 12						; size = 4
+?deallocate@?$allocator@H@std@@QAEXPAHI@Z PROC		; std::allocator<int>::deallocate, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 719
+	push	ebp
+	mov	ebp, esp
+; Line 720
+	push	4
+	push	DWORD PTR __Count$[ebp]
+	push	DWORD PTR __Ptr$[ebp]
+	call	?_Deallocate@std@@YAXPAXII@Z		; std::_Deallocate
+	add	esp, 12					; 0000000cH
+; Line 721
+	pop	ebp
+	ret	8
+?deallocate@?$allocator@H@std@@QAEXPAHI@Z ENDP		; std::allocator<int>::deallocate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$allocator@H@std@@QAE@ABV01@@Z
+_TEXT	SEGMENT
+___formal$ = 8						; size = 4
+??0?$allocator@H@std@@QAE@ABV01@@Z PROC			; std::allocator<int>::allocator<int>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 705
+	mov	eax, ecx
+	ret	4
+??0?$allocator@H@std@@QAE@ABV01@@Z ENDP			; std::allocator<int>::allocator<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$allocator@H@std@@QAE@XZ
+_TEXT	SEGMENT
+??0?$allocator@H@std@@QAE@XZ PROC			; std::allocator<int>::allocator<int>, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 701
+	mov	eax, ecx
+	ret	0
+??0?$allocator@H@std@@QAE@XZ ENDP			; std::allocator<int>::allocator<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?bar@@YA_NXZ
+_TEXT	SEGMENT
+_s$2 = -64						; size = 8
+$T3 = -60						; size = 1
+$T4 = -56						; size = 12
+_v$5 = -44						; size = 12
+$T6 = -32						; size = 16
+__$ArrayPad$ = -16					; size = 4
+__$EHRec$ = -12						; size = 12
+?bar@@YA_NXZ PROC					; bar, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 61
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?bar@@YA_NXZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 52					; 00000034H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	mov	DWORD PTR __$ArrayPad$[ebp], eax
+	push	esi
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	movaps	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 793
+	lea	eax, DWORD PTR $T6[ebp+16]
+	mov	BYTE PTR $T3[ebp], 0
+	lea	ecx, DWORD PTR _v$5[ebp]
+	push	DWORD PTR $T3[ebp]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 64
+	movups	XMMWORD PTR $T6[ebp], xmm0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 793
+	push	eax
+	lea	eax, DWORD PTR $T6[ebp]
+; Line 485
+	mov	DWORD PTR _v$5[ebp], 0
+; Line 793
+	push	eax
+; Line 486
+	mov	DWORD PTR _v$5[ebp+4], 0
+; Line 487
+	mov	DWORD PTR _v$5[ebp+8], 0
+; Line 793
+	call	??$_Construct@PBH@?$vector@HV?$allocator@H@std@@@std@@QAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const *>
+; Line 1180
+	mov	eax, DWORD PTR _v$5[ebp+4]
+	mov	esi, DWORD PTR _v$5[ebp]
+	sub	eax, esi
+	sar	eax, 2
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 64
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 127
+	test	eax, eax
+	jns	SHORT $LN86@bar
+	xorps	xmm0, xmm0
+; Line 128
+	mov	DWORD PTR $T4[ebp+8], 0
+	movq	QWORD PTR $T4[ebp], xmm0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 47
+	movq	QWORD PTR $T4[ebp+4], xmm0
+	mov	DWORD PTR $T4[ebp], OFFSET ??_7narrowing_error@gsl@@6B@
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 128
+	lea	eax, DWORD PTR $T4[ebp]
+	mov	BYTE PTR __$EHRec$[ebp+8], 2
+	push	eax
+	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+$LN228@bar:
+$LN86@bar:
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	push	eax
+	push	esi
+	lea	ecx, DWORD PTR _s$2[ebp]
+	call	??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1637
+	test	esi, esi
+	je	SHORT $LN124@bar
+; Line 1641
+	mov	eax, DWORD PTR _v$5[ebp+8]
+	sub	eax, esi
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	push	4
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
+; Line 1641
+	sar	eax, 2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 720
+	push	eax
+	push	esi
+	call	?_Deallocate@std@@YAXPAXII@Z		; std::_Deallocate
+	add	esp, 12					; 0000000cH
+$LN124@bar:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 68
+	mov	al, 1
+; Line 70
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	ecx, DWORD PTR __$ArrayPad$[ebp]
+	xor	ecx, ebp
+	call	@__security_check_cookie@4
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN227@bar:
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?bar@@YA_NXZ$0:
+	lea	ecx, DWORD PTR _v$5[ebp]
+	jmp	??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ ; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
+__unwindfunclet$?bar@@YA_NXZ$15:
+	lea	ecx, DWORD PTR $T4[ebp]
+	jmp	??1narrowing_error@gsl@@UAE@XZ
+__ehhandler$?bar@@YA_NXZ:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-60]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?bar@@YA_NXZ
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?bar@@YA_NXZ ENDP					; bar
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ
 _TEXT	SEGMENT
@@ -609,6 +2508,28 @@ _TEXT	SEGMENT
 ?size@?$span@H$0?0@gsl@@QBEHXZ ENDP			; gsl::span<int,-1>::size
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
+;	COMDAT ??0?$span@H$0?0@gsl@@QAE@PAHH@Z
+_TEXT	SEGMENT
+_ptr$ = 8						; size = 4
+_count$ = 12						; size = 4
+??0?$span@H$0?0@gsl@@QAE@PAHH@Z PROC			; gsl::span<int,-1>::span<int,-1>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	push	ebp
+	mov	ebp, esp
+	push	esi
+	push	DWORD PTR _count$[ebp]
+	mov	esi, ecx
+	push	DWORD PTR _ptr$[ebp]
+	call	??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+	mov	eax, esi
+	pop	esi
+	pop	ebp
+	ret	8
+??0?$span@H$0?0@gsl@@QAE@PAHH@Z ENDP			; gsl::span<int,-1>::span<int,-1>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
 ;	COMDAT ?foo@@YA_NXZ
 _TEXT	SEGMENT
 $T2 = -16						; size = 4
@@ -705,6 +2626,212 @@ _TEXT	SEGMENT
 	mov	eax, DWORD PTR [ecx]
 	ret	0
 ?size@?$extent_type@$0?0@details@gsl@@QBEHXZ ENDP	; gsl::details::extent_type<-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$extent_type@$0?0@details@gsl@@QAE@H@Z
+_TEXT	SEGMENT
+$T2 = -36						; size = 12
+__InitData$3 = -24					; size = 8
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_size$ = 8						; size = 4
+??0?$extent_type@$0?0@details@gsl@@QAE@H@Z PROC		; gsl::details::extent_type<-1>::extent_type<-1>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 24					; 00000018H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	eax, DWORD PTR _size$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	mov	DWORD PTR [ecx], eax
+	test	eax, eax
+	js	SHORT $LN3@extent_typ
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+$LN3@extent_typ:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 55
+	lea	eax, DWORD PTR $T2[ebp+4]
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+	lea	eax, DWORD PTR __InitData$3[ebp]
+	mov	DWORD PTR __InitData$3[ebp], OFFSET ??_C@_0ED@HKMFEAN@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	xorps	xmm0, xmm0
+; Line 54
+	mov	BYTE PTR __InitData$3[ebp+4], 1
+; Line 55
+	push	eax
+	movq	QWORD PTR $T2[ebp+4], xmm0
+	call	DWORD PTR __imp____std_exception_copy
+	add	esp, 8
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7fail_fast@gsl@@6B@
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	lea	eax, DWORD PTR $T2[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	push	eax
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN24@extent_typ:
+$LN23@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN6@extent_typ
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@extent_typ:
+	ret	0
+__ehhandler$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-28]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??0?$extent_type@$0?0@details@gsl@@QAE@H@Z ENDP		; gsl::details::extent_type<-1>::extent_type<-1>
+; Function compile flags: /Ogtp
+;	COMDAT ??_Gnarrowing_error@gsl@@UAEPAXI@Z
+_TEXT	SEGMENT
+___flags$ = 8						; size = 4
+??_Gnarrowing_error@gsl@@UAEPAXI@Z PROC			; gsl::narrowing_error::`scalar deleting destructor', COMDAT
+; _this$ = ecx
+	push	ebp
+	mov	ebp, esp
+	push	esi
+	mov	esi, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 84
+	lea	eax, DWORD PTR [esi+4]
+	mov	DWORD PTR [esi], OFFSET ??_7exception@std@@6B@
+	push	eax
+	call	DWORD PTR __imp____std_exception_destroy
+	add	esp, 4
+	test	BYTE PTR ___flags$[ebp], 1
+	je	SHORT $LN9@scalar
+	push	12					; 0000000cH
+	push	esi
+	call	??3@YAXPAXI@Z				; operator delete
+	add	esp, 8
+$LN9@scalar:
+	mov	eax, esi
+	pop	esi
+	pop	ebp
+	ret	4
+??_Gnarrowing_error@gsl@@UAEPAXI@Z ENDP			; gsl::narrowing_error::`scalar deleting destructor'
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0narrowing_error@gsl@@QAE@$$QAU01@@Z
+_TEXT	SEGMENT
+___that$ = 8						; size = 4
+??0narrowing_error@gsl@@QAE@$$QAU01@@Z PROC		; gsl::narrowing_error::narrowing_error, COMDAT
+; _this$ = ecx
+	push	ebp
+	mov	ebp, esp
+	push	esi
+	mov	esi, ecx
+	xorps	xmm0, xmm0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 65
+	lea	eax, DWORD PTR [esi+4]
+; Line 67
+	push	eax
+	mov	DWORD PTR [esi], OFFSET ??_7exception@std@@6B@
+	movq	QWORD PTR [eax], xmm0
+	mov	eax, DWORD PTR ___that$[ebp]
+	add	eax, 4
+	push	eax
+	call	DWORD PTR __imp____std_exception_copy
+	add	esp, 8
+	mov	DWORD PTR [esi], OFFSET ??_7narrowing_error@gsl@@6B@
+	mov	eax, esi
+	pop	esi
+	pop	ebp
+	ret	4
+??0narrowing_error@gsl@@QAE@$$QAU01@@Z ENDP		; gsl::narrowing_error::narrowing_error
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0narrowing_error@gsl@@QAE@ABU01@@Z
+_TEXT	SEGMENT
+___that$ = 8						; size = 4
+??0narrowing_error@gsl@@QAE@ABU01@@Z PROC		; gsl::narrowing_error::narrowing_error, COMDAT
+; _this$ = ecx
+	push	ebp
+	mov	ebp, esp
+	push	esi
+	mov	esi, ecx
+	xorps	xmm0, xmm0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 65
+	lea	eax, DWORD PTR [esi+4]
+; Line 67
+	push	eax
+	mov	DWORD PTR [esi], OFFSET ??_7exception@std@@6B@
+	movq	QWORD PTR [eax], xmm0
+	mov	eax, DWORD PTR ___that$[ebp]
+	add	eax, 4
+	push	eax
+	call	DWORD PTR __imp____std_exception_copy
+	add	esp, 8
+	mov	DWORD PTR [esi], OFFSET ??_7narrowing_error@gsl@@6B@
+	mov	eax, esi
+	pop	esi
+	pop	ebp
+	ret	4
+??0narrowing_error@gsl@@QAE@ABU01@@Z ENDP		; gsl::narrowing_error::narrowing_error
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??1narrowing_error@gsl@@UAE@XZ
+_TEXT	SEGMENT
+??1narrowing_error@gsl@@UAE@XZ PROC			; gsl::narrowing_error::~narrowing_error, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 84
+	lea	eax, DWORD PTR [ecx+4]
+	mov	DWORD PTR [ecx], OFFSET ??_7exception@std@@6B@
+	push	eax
+	call	DWORD PTR __imp____std_exception_destroy
+	pop	ecx
+	ret	0
+??1narrowing_error@gsl@@UAE@XZ ENDP			; gsl::narrowing_error::~narrowing_error
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0narrowing_error@gsl@@QAE@XZ
+_TEXT	SEGMENT
+??0narrowing_error@gsl@@QAE@XZ PROC			; gsl::narrowing_error::narrowing_error, COMDAT
+; _this$ = ecx
+	xorps	xmm0, xmm0
+	mov	eax, ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 47
+	movq	QWORD PTR [ecx+4], xmm0
+	mov	DWORD PTR [ecx], OFFSET ??_7narrowing_error@gsl@@6B@
+	ret	0
+??0narrowing_error@gsl@@QAE@XZ ENDP			; gsl::narrowing_error::narrowing_error
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ;	COMDAT ??_Gfail_fast@gsl@@UAEPAXI@Z
@@ -1010,6 +3137,152 @@ __Message$ = 8						; size = 4
 ??0logic_error@std@@QAE@PBD@Z ENDP			; std::logic_error::logic_error
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
+;	COMDAT ?_Deallocate@std@@YAXPAXII@Z
+_TEXT	SEGMENT
+__Ptr$ = 8						; size = 4
+__Count$ = 12						; size = 4
+__Sz$ = 16						; size = 4
+?_Deallocate@std@@YAXPAXII@Z PROC			; std::_Deallocate, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 92
+	push	ebp
+	mov	ebp, esp
+; Line 94
+	or	eax, -1
+	mov	ecx, DWORD PTR __Count$[ebp]
+	xor	edx, edx
+	div	DWORD PTR __Sz$[ebp]
+	cmp	ecx, eax
+	jbe	SHORT $LN2@Deallocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN2@Deallocate:
+; Line 95
+	imul	ecx, DWORD PTR __Sz$[ebp]
+; Line 96
+	cmp	ecx, 4096				; 00001000H
+	jb	SHORT $LN9@Deallocate
+; Line 99
+	mov	eax, DWORD PTR __Ptr$[ebp]
+	test	al, 31					; 0000001fH
+	je	SHORT $LN4@Deallocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN4@Deallocate:
+; Line 103
+	mov	ecx, DWORD PTR [eax-4]
+; Line 114
+	cmp	ecx, eax
+	jb	SHORT $LN5@Deallocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN5@Deallocate:
+; Line 121
+	sub	eax, ecx
+	cmp	eax, 4
+	jae	SHORT $LN6@Deallocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN6@Deallocate:
+; Line 125
+	cmp	eax, 35					; 00000023H
+	jbe	SHORT $LN3@Deallocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN9@Deallocate:
+; Line 128
+	mov	ecx, DWORD PTR __Ptr$[ebp]
+$LN3@Deallocate:
+; Line 132
+	push	ecx
+	call	??3@YAXPAX@Z				; operator delete
+	add	esp, 4
+; Line 133
+	pop	ebp
+	ret	0
+?_Deallocate@std@@YAXPAXII@Z ENDP			; std::_Deallocate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Allocate@std@@YAPAXII_N@Z
+_TEXT	SEGMENT
+__Count$ = 8						; size = 4
+__Sz$ = 12						; size = 4
+__Try_aligned_allocation$ = 16				; size = 1
+?_Allocate@std@@YAPAXII_N@Z PROC			; std::_Allocate, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
+; Line 48
+	push	ebp
+	mov	ebp, esp
+; Line 51
+	mov	ecx, DWORD PTR __Count$[ebp]
+	test	ecx, ecx
+	jne	SHORT $LN2@Allocate
+; Line 52
+	xor	eax, eax
+$LN1@Allocate:
+; Line 87
+	pop	ebp
+	ret	0
+$LN2@Allocate:
+; Line 55
+	or	eax, -1
+	xor	edx, edx
+	div	DWORD PTR __Sz$[ebp]
+	cmp	eax, ecx
+	jae	SHORT $LN3@Allocate
+; Line 56
+	jmp	DWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
+$LN3@Allocate:
+; Line 57
+	imul	ecx, DWORD PTR __Sz$[ebp]
+; Line 61
+	cmp	BYTE PTR __Try_aligned_allocation$[ebp], 0
+	je	SHORT $LN4@Allocate
+	cmp	ecx, 4096				; 00001000H
+	jb	SHORT $LN4@Allocate
+; Line 65
+	lea	eax, DWORD PTR [ecx+35]
+; Line 66
+	cmp	eax, ecx
+	ja	SHORT $LN6@Allocate
+; Line 67
+	jmp	DWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
+$LN6@Allocate:
+; Line 69
+	push	eax
+	call	??2@YAPAXI@Z				; operator new
+	mov	ecx, eax
+	add	esp, 4
+; Line 70
+	test	ecx, ecx
+	jne	SHORT $LN7@Allocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+$LN7@Allocate:
+; Line 71
+	lea	eax, DWORD PTR [ecx+35]
+	and	eax, -32				; ffffffe0H
+; Line 73
+	mov	DWORD PTR [eax-4], ecx
+; Line 87
+	pop	ebp
+	ret	0
+$LN4@Allocate:
+; Line 83
+	push	ecx
+	call	??2@YAPAXI@Z				; operator new
+	add	esp, 4
+; Line 84
+	test	eax, eax
+	jne	SHORT $LN1@Allocate
+	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
+?_Allocate@std@@YAPAXII_N@Z ENDP			; std::_Allocate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Orphan_all@_Container_base0@std@@QAEXXZ
+_TEXT	SEGMENT
+?_Orphan_all@_Container_base0@std@@QAEXXZ PROC		; std::_Container_base0::_Orphan_all, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 44
+	ret	0
+?_Orphan_all@_Container_base0@std@@QAEXXZ ENDP		; std::_Container_base0::_Orphan_all
+_TEXT	ENDS
+; Function compile flags: /Ogtp
 ;	COMDAT ??_Gexception@std@@UAEPAXI@Z
 _TEXT	SEGMENT
 ___flags$ = 8						; size = 4
@@ -1135,5 +3408,20 @@ __Message$ = 8						; size = 4
 	pop	ebp
 	ret	4
 ??0exception@std@@QAE@QBD@Z ENDP			; std::exception::exception
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0exception@std@@QAE@XZ
+_TEXT	SEGMENT
+??0exception@std@@QAE@XZ PROC				; std::exception::exception, COMDAT
+; _this$ = ecx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 48
+	xorps	xmm0, xmm0
+	mov	DWORD PTR [ecx], OFFSET ??_7exception@std@@6B@
+	movq	QWORD PTR [ecx+4], xmm0
+; Line 49
+	mov	eax, ecx
+	ret	0
+??0exception@std@@QAE@XZ ENDP				; std::exception::exception
 _TEXT	ENDS
 END
