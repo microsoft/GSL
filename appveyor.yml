@@ -129,7 +129,7 @@ before_build:
 
 build_script:
   - echo %CMakeBuildFlags%
-  - cmake --build . %CMakeBuildFlags%
+  - cmake --build . %CMakeBuildFlags% -DCMAKE_VERBOSE_MAKEFILE=ON
 
 test_script:
   - ctest -j2
