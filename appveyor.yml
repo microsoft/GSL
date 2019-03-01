@@ -125,11 +125,11 @@ before_build:
   - cd build
   - if %USE_GENERATOR%==Ninja (call %VCVARSALL%)
   - echo %CMakeGenFlags%
-  - cmake .. %CMakeGenFlags%
+  - cmake .. %CMakeGenFlags% -DCMAKE_VERBOSE_MAKEFILE=ON
 
 build_script:
   - echo %CMakeBuildFlags%
-  - cmake --build . %CMakeBuildFlags% -DCMAKE_VERBOSE_MAKEFILE=ON
+  - cmake --build . %CMakeBuildFlags%
 
 test_script:
   - ctest -j2
