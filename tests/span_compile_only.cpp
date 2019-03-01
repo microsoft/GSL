@@ -65,6 +65,8 @@ bool bar()
         span<int> s{v};
         ret = ret || (s.size() == 4 && s.data() != nullptr);
 
-        return ret;
+        int x = s.size() + v.size();
+
+        return ret || x > 23;
     }
 }
