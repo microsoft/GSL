@@ -20,18 +20,43 @@ PUBLIC	??1fail_fast@gsl@@UAE@XZ			; gsl::fail_fast::~fail_fast
 PUBLIC	??0fail_fast@gsl@@QAE@ABU01@@Z			; gsl::fail_fast::fail_fast
 PUBLIC	??0fail_fast@gsl@@QAE@$$QAU01@@Z		; gsl::fail_fast::fail_fast
 PUBLIC	??_Gfail_fast@gsl@@UAEPAXI@Z			; gsl::fail_fast::`scalar deleting destructor'
-PUBLIC	??0narrowing_error@gsl@@QAE@XZ			; gsl::narrowing_error::narrowing_error
 PUBLIC	??1narrowing_error@gsl@@UAE@XZ			; gsl::narrowing_error::~narrowing_error
 PUBLIC	??0narrowing_error@gsl@@QAE@ABU01@@Z		; gsl::narrowing_error::narrowing_error
 PUBLIC	??0narrowing_error@gsl@@QAE@$$QAU01@@Z		; gsl::narrowing_error::narrowing_error
 PUBLIC	??_Gnarrowing_error@gsl@@UAEPAXI@Z		; gsl::narrowing_error::`scalar deleting destructor'
 PUBLIC	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-PUBLIC	?foo@@YA_NXZ					; foo
-PUBLIC	?bar@@YA_NXZ					; bar
-PUBLIC	??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-PUBLIC	?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ; std::vector<int,std::allocator<int> >::_Xlength
-PUBLIC	??$_Range_construct_or_tidy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
+PUBLIC	?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z ; test_span_unoptimizable_rangecheck
+PUBLIC	??0?$span@H$0?0@gsl@@QAE@PAHH@Z			; gsl::span<int,-1>::span<int,-1>
+PUBLIC	??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z	; gsl::span<int,-1>::span<int,-1>
+PUBLIC	?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+PUBLIC	?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z	; test_span_for
+PUBLIC	?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z	; test_span_iter
+PUBLIC	?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z	; test_span_rangeiter
+PUBLIC	?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z ; static_size_array_span
+PUBLIC	?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z ; test_convert_span_Joe
+PUBLIC	??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z ; convert_span<unsigned char,gsl::span<unsigned short,-1> >
+PUBLIC	?mysubspan1@@YAHXZ				; mysubspan1
+PUBLIC	?mysubspan2@@YAHH@Z				; mysubspan2
+PUBLIC	?mysubspan3@@YAHXZ				; mysubspan3
+PUBLIC	?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z	; mysubspan4
+PUBLIC	?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z	; mysubspan5
+PUBLIC	?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z	; mysubspan6
+PUBLIC	?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z	; mysubspan7
+PUBLIC	?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z	; mysubspan8
+PUBLIC	?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z	; mysubspan9
+PUBLIC	?doterminate@@YAXXZ				; doterminate
+PUBLIC	?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z		; copy_span
+PUBLIC	?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z	; gsl_copy_span
+PUBLIC	??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z	; gsl::copy<int,-1,int,-1>
+PUBLIC	?test_string_std_copy@@YAXXZ			; test_string_std_copy
+PUBLIC	??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z		; gsl::span<char const ,-1>::span<char const ,-1>
+PUBLIC	??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z ; gsl::ensure_z<char const ,11>
+PUBLIC	?test_string_gsl_copy@@YAXXZ			; test_string_gsl_copy
+PUBLIC	??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z ; gsl::copy<char const ,-1,unsigned char,-1>
+PUBLIC	??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ; gsl::span<int,6>::make_subspan<6>
 PUBLIC	??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z ; std::forward<gsl::fail_fast>
+PUBLIC	??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z ; gsl::ensure_z<char const >
+PUBLIC	??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z ; gsl::ensure_sentinel<char const ,0>
 PUBLIC	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
 PUBLIC	??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z ; std::forward<gsl::narrowing_error>
 PUBLIC	??_7exception@std@@6B@				; std::exception::`vftable'
@@ -42,19 +67,29 @@ PUBLIC	??_R0?AVexception@std@@@8			; std::exception `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12
 PUBLIC	??_7narrowing_error@gsl@@6B@			; gsl::narrowing_error::`vftable'
 PUBLIC	??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0L@CCAJJBND@iVtrau?5lDC@			; `string'
 PUBLIC	??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0ED@PLCCJGML@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0ED@GHOHAFBM@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0ED@MMILCDJF@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
 PUBLIC	__TI3?AUfail_fast@gsl@@
 PUBLIC	__CTA3?AUfail_fast@gsl@@
 PUBLIC	??_R0?AUfail_fast@gsl@@@8			; gsl::fail_fast `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AUfail_fast@gsl@@@8??0fail_fast@gsl@@QAE@ABU01@@Z12
 PUBLIC	??_R0?AVlogic_error@std@@@8			; std::logic_error `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z12
-PUBLIC	??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@	; `string'
+PUBLIC	??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
 PUBLIC	??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0ED@JOPLHMJE@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
+PUBLIC	??_C@_0EL@HEMMNCGC@GSL?3?5Postcondition?5failure?5at?5c@ ; `string'
+PUBLIC	??_C@_0EL@CANAMLLN@GSL?3?5Postcondition?5failure?5at?5c@ ; `string'
 PUBLIC	__TI2?AUnarrowing_error@gsl@@
 PUBLIC	__CTA2?AUnarrowing_error@gsl@@
 PUBLIC	??_R0?AUnarrowing_error@gsl@@@8			; gsl::narrowing_error `RTTI Type Descriptor'
 PUBLIC	__CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12
+PUBLIC	??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@ ; `string'
 PUBLIC	??_R4exception@std@@6B@				; std::exception::`RTTI Complete Object Locator'
 PUBLIC	??_R3exception@std@@8				; std::exception::`RTTI Class Hierarchy Descriptor'
 PUBLIC	??_R2exception@std@@8				; std::exception::`RTTI Base Class Array'
@@ -71,18 +106,18 @@ PUBLIC	??_R4narrowing_error@gsl@@6B@			; gsl::narrowing_error::`RTTI Complete Ob
 PUBLIC	??_R3narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Class Hierarchy Descriptor'
 PUBLIC	??_R2narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Base Class Array'
 PUBLIC	??_R1A@?0A@EA@narrowing_error@gsl@@8		; gsl::narrowing_error::`RTTI Base Class Descriptor at (0,-1,0,64)'
+PUBLIC	__xmm@00000001000000010000000100000001
 PUBLIC	__xmm@00000003000000020000000100000000
-EXTRN	??2@YAPAXI@Z:PROC				; operator new
 EXTRN	??3@YAXPAXI@Z:PROC				; operator delete
 EXTRN	___std_terminate:PROC
-EXTRN	__imp___invalid_parameter_noinfo_noreturn:PROC
+EXTRN	__imp__terminate:PROC
 EXTRN	___std_exception_copy:PROC
 EXTRN	___std_exception_destroy:PROC
 EXTRN	??_Eexception@std@@UAEPAXI@Z:PROC		; std::exception::`vector deleting destructor'
-EXTRN	?_Xlength_error@std@@YAXPBD@Z:PROC		; std::_Xlength_error
 EXTRN	??_Elogic_error@std@@UAEPAXI@Z:PROC		; std::logic_error::`vector deleting destructor'
 EXTRN	??_Efail_fast@gsl@@UAEPAXI@Z:PROC		; gsl::fail_fast::`vector deleting destructor'
 EXTRN	??_Enarrowing_error@gsl@@UAEPAXI@Z:PROC		; gsl::narrowing_error::`vector deleting destructor'
+EXTRN	?bar@@YAXV?$span@E$0?0@gsl@@@Z:PROC		; bar
 EXTRN	@__security_check_cookie@4:PROC
 EXTRN	__CxxThrowException@8:PROC
 EXTRN	___CxxFrameHandler3:PROC
@@ -93,6 +128,11 @@ EXTRN	___security_cookie:DWORD
 CONST	SEGMENT
 __xmm@00000003000000020000000100000000 DB 00H, 00H, 00H, 00H, 01H, 00H, 00H
 	DB	00H, 02H, 00H, 00H, 00H, 03H, 00H, 00H, 00H
+CONST	ENDS
+;	COMDAT __xmm@00000001000000010000000100000001
+CONST	SEGMENT
+__xmm@00000001000000010000000100000001 DB 01H, 00H, 00H, 00H, 01H, 00H, 00H
+	DB	00H, 01H, 00H, 00H, 00H, 01H, 00H, 00H, 00H
 CONST	ENDS
 ;	COMDAT ??_R1A@?0A@EA@narrowing_error@gsl@@8
 rdata$r	SEGMENT
@@ -214,6 +254,11 @@ rdata$r	SEGMENT
 	DD	FLAT:??_R0?AVexception@std@@@8
 	DD	FLAT:??_R3exception@std@@8
 rdata$r	ENDS
+;	COMDAT ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 266', 00H ; `string'
+CONST	ENDS
 ;	COMDAT __CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12
 xdata$x	SEGMENT
 __CT??_R0?AUnarrowing_error@gsl@@@8??0narrowing_error@gsl@@QAE@ABU01@@Z12 DD 00H
@@ -243,14 +288,38 @@ __TI2?AUnarrowing_error@gsl@@ DD 00H
 	DD	00H
 	DD	FLAT:__CTA2?AUnarrowing_error@gsl@@
 xdata$x	ENDS
+;	COMDAT ??_C@_0EL@CANAMLLN@GSL?3?5Postcondition?5failure?5at?5c@
+CONST	SEGMENT
+??_C@_0EL@CANAMLLN@GSL?3?5Postcondition?5failure?5at?5c@ DB 'GSL: Postcon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\string_span: 12'
+	DB	'2', 00H					; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0EL@HEMMNCGC@GSL?3?5Postcondition?5failure?5at?5c@
+CONST	SEGMENT
+??_C@_0EL@HEMMNCGC@GSL?3?5Postcondition?5failure?5at?5c@ DB 'GSL: Postcon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\string_span: 11'
+	DB	'4', 00H					; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@JOPLHMJE@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@JOPLHMJE@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 321', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precond'
+	DB	'ition failure at c:\projects\gsl\include\gsl\span: 272', 00H ; `string'
+CONST	ENDS
 ;	COMDAT ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
 CONST	SEGMENT
 ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
 	DB	'dition failure at c:\projects\gsl\include\gsl\span: 599', 00H ; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@
+;	COMDAT ??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@
 CONST	SEGMENT
-??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@ DB 'vector<T> too long', 00H ; `string'
+??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\gsl_algorithm: '
+	DB	'50', 00H					; `string'
 CONST	ENDS
 ;	COMDAT __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z12
 xdata$x	SEGMENT
@@ -298,10 +367,34 @@ __TI3?AUfail_fast@gsl@@ DD 00H
 	DD	00H
 	DD	FLAT:__CTA3?AUfail_fast@gsl@@
 xdata$x	ENDS
+;	COMDAT ??_C@_0ED@MMILCDJF@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@MMILCDJF@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 635', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 631', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@GHOHAFBM@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@GHOHAFBM@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 157', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@PLCCJGML@GSL?3?5Precondition?5failure?5at?5c?3@
+CONST	SEGMENT
+??_C@_0ED@PLCCJGML@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
+	DB	'dition failure at c:\projects\gsl\include\gsl\span: 169', 00H ; `string'
+CONST	ENDS
 ;	COMDAT ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
 CONST	SEGMENT
 ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@ DB 'GSL: Precon'
 	DB	'dition failure at c:\projects\gsl\include\gsl\span: 509', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0L@CCAJJBND@iVtrau?5lDC@
+CONST	SEGMENT
+??_C@_0L@CCAJJBND@iVtrau?5lDC@ DB 'iVtrau lDC', 00H	; `string'
 CONST	ENDS
 ;	COMDAT ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
 CONST	SEGMENT
@@ -354,15 +447,41 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z DD 0ffffffffH
-	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$2
+__unwindtable$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z$1
+__ehfuncinfo$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z$0
 	DD	0ffffffffH
 	DD	00H
 	DD	0ffffffffH
-	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$1
-__ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z DD 019930522H
+	DD	FLAT:__unwindfunclet$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z$2
+__ehfuncinfo$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z DD 019930522H
 	DD	03H
-	DD	FLAT:__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
+	DD	FLAT:__unwindtable$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
@@ -370,13 +489,11 @@ __ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__unwindtable$??$narrow@HI@gsl@@YAHI@Z DD 0ffffffffH
-	DD	00H
-	DD	0ffffffffH
-	DD	FLAT:__unwindfunclet$??$narrow@HI@gsl@@YAHI@Z$1
-__ehfuncinfo$??$narrow@HI@gsl@@YAHI@Z DD 019930522H
-	DD	02H
-	DD	FLAT:__unwindtable$??$narrow@HI@gsl@@YAHI@Z
+__unwindtable$??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
@@ -384,13 +501,137 @@ __ehfuncinfo$??$narrow@HI@gsl@@YAHI@Z DD 019930522H
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__unwindtable$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z DD 0ffffffffH
+__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z$1
+__ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$1
+__ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z DD 0ffffffffH
 	DD	00H
 	DD	0ffffffffH
 	DD	00H
-__ehfuncinfo$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z DD 019930522H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z$4
+__ehfuncinfo$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$narrow@HH@gsl@@YAHH@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+__ehfuncinfo$??$narrow@HH@gsl@@YAHH@Z DD 019930522H
 	DD	02H
-	DD	FLAT:__unwindtable$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z
+	DD	FLAT:__unwindtable$??$narrow@HH@gsl@@YAHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z$0
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z$2
+__ehfuncinfo$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z DD 0ffffffffH
+	DD	00H
+__ehfuncinfo$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
@@ -412,61 +653,337 @@ __ehfuncinfo$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_typ
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__ehfuncinfo$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 019930522H
-	DD	05H
-	DD	FLAT:__unwindtable$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
+__unwindtable$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD 0ffffffffH
+	DD	00H
+__ehfuncinfo$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
 	DD	01H
-__unwindtable$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 0ffffffffH
-	DD	00H
-	DD	0ffffffffH
-	DD	FLAT:__unwindfunclet$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z$1
-	DD	0ffffffffH
-	DD	00H
-	DD	0ffffffffH
-	DD	00H
-	DD	0ffffffffH
-	DD	FLAT:__unwindfunclet$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z$5
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__ehfuncinfo$?bar@@YA_NXZ DD 019930522H
-	DD	09H
-	DD	FLAT:__unwindtable$?bar@@YA_NXZ
+__unwindtable$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD 0ffffffffH
+	DD	00H
+__ehfuncinfo$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
 	DD	01H
-__unwindtable$?bar@@YA_NXZ DD 0ffffffffH
-	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$0
-	DD	00H
-	DD	00H
-	DD	00H
-	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$2
-	DD	00H
-	DD	00H
-	DD	00H
-	DD	00H
-	DD	00H
-	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$6
-	DD	00H
-	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$14
-	DD	00H
-	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$17
-	DD	00H
-	DD	FLAT:__unwindfunclet$?bar@@YA_NXZ$20
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__ehfuncinfo$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ DD 019930522H
+__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z$1
+	DD	0ffffffffH
+	DD	00H
+__ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z$1
+__ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z$4
+__ehfuncinfo$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z$0
+__ehfuncinfo$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+__ehfuncinfo$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?test_string_gsl_copy@@YAXXZ DD 0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_string_gsl_copy@@YAXXZ$8
+__ehfuncinfo$?test_string_gsl_copy@@YAXXZ DD 019930522H
+	DD	04H
+	DD	FLAT:__unwindtable$?test_string_gsl_copy@@YAXXZ
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z DD 019930522H
 	DD	00H
 	DD	00H
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
 	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z$0
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z$2
+__ehfuncinfo$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$1
+__ehfuncinfo$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?test_string_std_copy@@YAXXZ DD 0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?test_string_std_copy@@YAXXZ DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$?test_string_std_copy@@YAXXZ
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z$0
+__ehfuncinfo$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z$0
+__ehfuncinfo$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 019930522H
+	DD	05H
+	DD	FLAT:__unwindtable$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+__unwindtable$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$0
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$1
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z$0
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$0
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
@@ -480,11 +997,283 @@ __ehfuncinfo$??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ DD 019930522H
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
+__unwindtable$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$0
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan3@@YAHXZ DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan3@@YAHXZ DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?mysubspan3@@YAHXZ
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan2@@YAHH@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan2@@YAHH@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?mysubspan2@@YAHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??0?$extent_type@$05@details@gsl@@QAE@H@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$extent_type@$05@details@gsl@@QAE@H@Z$0
+__ehfuncinfo$??0?$extent_type@$05@details@gsl@@QAE@H@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??0?$extent_type@$05@details@gsl@@QAE@H@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?mysubspan1@@YAHXZ DD 0ffffffffH
+	DD	FLAT:___std_terminate
+__ehfuncinfo$?mysubspan1@@YAHXZ DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?mysubspan1@@YAHXZ
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z$1
+__ehfuncinfo$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z$1
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z$9
+__ehfuncinfo$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z DD 019930522H
+	DD	04H
+	DD	FLAT:__unwindtable$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??A?$span@E$0?0@gsl@@QBEAAEH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??A?$span@E$0?0@gsl@@QBEAAEH@Z$0
+__ehfuncinfo$??A?$span@E$0?0@gsl@@QBEAAEH@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??A?$span@E$0?0@gsl@@QBEAAEH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??0?$span@E$0?0@gsl@@QAE@PAEH@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$span@E$0?0@gsl@@QAE@PAEH@Z$2
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$span@E$0?0@gsl@@QAE@PAEH@Z$1
+__ehfuncinfo$??0?$span@E$0?0@gsl@@QAE@PAEH@Z DD 019930522H
+	DD	03H
+	DD	FLAT:__unwindtable$??0?$span@E$0?0@gsl@@QAE@PAEH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z DD 0ffffffffH
+	DD	FLAT:___std_terminate
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z$4
+__ehfuncinfo$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__ehfuncinfo$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	05H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ$0
+__ehfuncinfo$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ$0
+__ehfuncinfo$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z$0
+	DD	0ffffffffH
+	DD	00H
+__ehfuncinfo$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z$0
+__ehfuncinfo$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z$0
+	DD	0ffffffffH
+	DD	FLAT:__unwindfunclet$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z$1
+__ehfuncinfo$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z$1
+	DD	0ffffffffH
+	DD	00H
+__ehfuncinfo$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
 __unwindtable$??A?$span@H$0?0@gsl@@QBEAAHH@Z DD 0ffffffffH
 	DD	FLAT:__unwindfunclet$??A?$span@H$0?0@gsl@@QBEAAHH@Z$0
 __ehfuncinfo$??A?$span@H$0?0@gsl@@QBEAAHH@Z DD 019930522H
 	DD	01H
 	DD	FLAT:__unwindtable$??A?$span@H$0?0@gsl@@QBEAAHH@Z
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	DD	00H
+	DD	01H
+xdata$x	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+__unwindtable$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z$0
+	DD	0ffffffffH
+	DD	00H
+__ehfuncinfo$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z DD 019930522H
+	DD	02H
+	DD	FLAT:__unwindtable$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
@@ -508,15 +1297,11 @@ __ehfuncinfo$??0?$span@H$0?0@gsl@@QAE@PAHH@Z DD 019930522H
 xdata$x	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-__unwindtable$?foo@@YA_NXZ DD 0ffffffffH
-	DD	FLAT:___std_terminate
-	DD	0ffffffffH
-	DD	FLAT:___std_terminate
-	DD	0ffffffffH
-	DD	FLAT:___std_terminate
-__ehfuncinfo$?foo@@YA_NXZ DD 019930522H
-	DD	03H
-	DD	FLAT:__unwindtable$?foo@@YA_NXZ
+__unwindtable$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD 0ffffffffH
+	DD	FLAT:__unwindfunclet$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z$0
+__ehfuncinfo$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD 019930522H
+	DD	01H
+	DD	FLAT:__unwindtable$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	DD	00H
@@ -535,12 +1320,62 @@ __ehfuncinfo$??0?$extent_type@$0?0@details@gsl@@QAE@H@Z DD 019930522H
 	DD	01H
 xdata$x	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Copy_memmove@PBHPAH@std@@YAPAHPBH0PAH@Z
+;	COMDAT ??$_Copy_n_unchecked4@PBDHPAE@std@@YAPAEPBDHPAEU_Trivially_copyable_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Count$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+___formal$ = 20						; size = 1
+??$_Copy_n_unchecked4@PBDHPAE@std@@YAPAEPBDHPAEU_Trivially_copyable_ptr_iterator_tag@0@@Z PROC ; std::_Copy_n_unchecked4<char const *,int,unsigned char *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2516
+	push	ebp
+	mov	ebp, esp
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2516
+	push	edi
+; Line 2403
+	mov	edi, DWORD PTR __Count$[ebp]
+	push	edi
+	push	DWORD PTR __First$[ebp]
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2518
+	pop	edi
+	pop	esi
+; Line 2519
+	pop	ebp
+	ret	0
+??$_Copy_n_unchecked4@PBDHPAE@std@@YAPAEPBDHPAEU_Trivially_copyable_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_n_unchecked4<char const *,int,unsigned char *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z PROC ; std::forward<gsl::narrowing_error>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1573
+	push	ebp
+	mov	ebp, esp
+; Line 1574
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1575
+	pop	ebp
+	ret	0
+??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z ENDP ; std::forward<gsl::narrowing_error>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_memmove@PBDPAE@std@@YAPAEPBD0PAE@Z
 _TEXT	SEGMENT
 __First$ = 8						; size = 4
 __Last$ = 12						; size = 4
 __Dest$ = 16						; size = 4
-??$_Copy_memmove@PBHPAH@std@@YAPAHPBH0PAH@Z PROC	; std::_Copy_memmove<int const *,int *>, COMDAT
+??$_Copy_memmove@PBDPAE@std@@YAPAEPBD0PAE@Z PROC	; std::_Copy_memmove<char const *,unsigned char *>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
 ; Line 2398
 	push	ebp
@@ -565,14 +1400,162 @@ __Dest$ = 16						; size = 4
 ; Line 2405
 	pop	ebp
 	ret	0
-??$_Copy_memmove@PBHPAH@std@@YAPAHPBH0PAH@Z ENDP	; std::_Copy_memmove<int const *,int *>
+??$_Copy_memmove@PBDPAE@std@@YAPAEPBD0PAE@Z ENDP	; std::_Copy_memmove<char const *,unsigned char *>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Seek_wrapped@H@std@@YAXAAPAHQAH@Z
+;	COMDAT ??$_Copy_n_unchecked4@PAHHPAH@std@@YAPAHPAHH0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Count$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+___formal$ = 20						; size = 1
+??$_Copy_n_unchecked4@PAHHPAH@std@@YAPAHPAHH0U_Trivially_copyable_ptr_iterator_tag@0@@Z PROC ; std::_Copy_n_unchecked4<int *,int,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2516
+	push	ebp
+	mov	ebp, esp
+; Line 2518
+	mov	eax, DWORD PTR __Count$[ebp]
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2516
+	push	edi
+; Line 2518
+	lea	edi, DWORD PTR [eax*4]
+; Line 2403
+	push	edi
+	push	DWORD PTR __First$[ebp]
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2518
+	pop	edi
+	pop	esi
+; Line 2519
+	pop	ebp
+	ret	0
+??$_Copy_n_unchecked4@PAHHPAH@std@@YAPAHPAHH0U_Trivially_copyable_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_n_unchecked4<int *,int,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_memmove@PAHPAH@std@@YAPAHPAH00@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+??$_Copy_memmove@PAHPAH@std@@YAPAHPAH00@Z PROC		; std::_Copy_memmove<int *,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2398
+	push	ebp
+	mov	ebp, esp
+; Line 2402
+	mov	eax, DWORD PTR __First$[ebp]
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+	push	edi
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+	push	edi
+	push	eax
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+	pop	edi
+	pop	esi
+; Line 2405
+	pop	ebp
+	ret	0
+??$_Copy_memmove@PAHPAH@std@@YAPAHPAH00@Z ENDP		; std::_Copy_memmove<int *,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 1
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 596
+	mov	eax, DWORD PTR _data$[ebp]
+; Line 597
+	mov	DWORD PTR $T3[ebp], 0
+; Line 333
+	mov	DWORD PTR [ecx], 6
+; Line 596
+	mov	DWORD PTR [ecx+4], eax
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	je	SHORT $LN40@extent_typ
+; Line 600
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN40@extent_typ:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	mov	DWORD PTR $T3[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN38@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z$1:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 2
+	je	$LN11@extent_typ
+	and	DWORD PTR $T3[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN11@extent_typ:
+	ret	0
+__ehhandler$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$05@details@2@@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Seek_wrapped@E@std@@YAXAAPAEQAE@Z
 _TEXT	SEGMENT
 __It$ = 8						; size = 4
 __UIt$ = 12						; size = 4
-??$_Seek_wrapped@H@std@@YAXAAPAHQAH@Z PROC		; std::_Seek_wrapped<int>, COMDAT
+??$_Seek_wrapped@E@std@@YAXAAPAEQAE@Z PROC		; std::_Seek_wrapped<unsigned char>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
 ; Line 871
 	push	ebp
@@ -584,79 +1567,47 @@ __UIt$ = 12						; size = 4
 ; Line 873
 	pop	ebp
 	ret	0
-??$_Seek_wrapped@H@std@@YAXAAPAHQAH@Z ENDP		; std::_Seek_wrapped<int>
+??$_Seek_wrapped@E@std@@YAXAAPAEQAE@Z ENDP		; std::_Seek_wrapped<unsigned char>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPAHQBH0QAHAAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z
+;	COMDAT ??$_Copy_n_unchecked3@PBDHPAE@std@@YAPAEPBDHPAE@Z
 _TEXT	SEGMENT
 __First$ = 8						; size = 4
-__Last$ = 12						; size = 4
+__Count$ = 12						; size = 4
 __Dest$ = 16						; size = 4
-___formal$ = 20						; size = 4
-___formal$ = 24						; size = 1
-___formal$ = 28						; size = 1
-??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPAHQBH0QAHAAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Uninitialized_copy_al_unchecked<int const ,int,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 201
+??$_Copy_n_unchecked3@PBDHPAE@std@@YAPAEPBDHPAE@Z PROC	; std::_Copy_n_unchecked3<char const *,int,unsigned char *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2526
 	push	ebp
 	mov	ebp, esp
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2402
-	mov	eax, DWORD PTR __First$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 201
 	push	esi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
 ; Line 2403
 	mov	esi, DWORD PTR __Dest$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 201
+; Line 2526
 	push	edi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2402
-	mov	edi, DWORD PTR __Last$[ebp]
-	sub	edi, eax
 ; Line 2403
+	mov	edi, DWORD PTR __Count$[ebp]
 	push	edi
-	push	eax
+	push	DWORD PTR __First$[ebp]
 	push	esi
 	call	_memmove
 	add	esp, 12					; 0000000cH
 ; Line 2404
 	lea	eax, DWORD PTR [edi+esi]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 202
+; Line 2528
 	pop	edi
 	pop	esi
-; Line 203
+; Line 2530
 	pop	ebp
 	ret	0
-??$_Uninitialized_copy_al_unchecked@$$CBHHV?$allocator@H@std@@@std@@YAPAHQBH0QAHAAV?$allocator@H@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Uninitialized_copy_al_unchecked<int const ,int,std::allocator<int> >
+??$_Copy_n_unchecked3@PBDHPAE@std@@YAPAEPBDHPAE@Z ENDP	; std::_Copy_n_unchecked3<char const *,int,unsigned char *>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBHABQAH@Z
-_TEXT	SEGMENT
-___$ReturnUdt$ = 8					; size = 4
-___formal$ = 12						; size = 4
-___formal$ = 16						; size = 4
-??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBHABQAH@Z PROC ; std::_Ptr_copy_cat<int const ,int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 1069
-	push	ebp
-	mov	ebp, esp
-; Line 1070
-	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
-; Line 1071
-	pop	ebp
-	ret	0
-??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBHABQAH@Z ENDP ; std::_Ptr_copy_cat<int const ,int>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Get_unwrapped_n@HH$0A@@std@@YAPAHQAHH@Z
+;	COMDAT ??$_Get_unwrapped_n@EH$0A@@std@@YAPAEQAEH@Z
 _TEXT	SEGMENT
 __Src$ = 8						; size = 4
 ___formal$ = 12						; size = 4
-??$_Get_unwrapped_n@HH$0A@@std@@YAPAHQAHH@Z PROC	; std::_Get_unwrapped_n<int,int,0>, COMDAT
+??$_Get_unwrapped_n@EH$0A@@std@@YAPAEQAEH@Z PROC	; std::_Get_unwrapped_n<unsigned char,int,0>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
 ; Line 808
 	push	ebp
@@ -666,163 +1617,24 @@ ___formal$ = 12						; size = 4
 ; Line 810
 	pop	ebp
 	ret	0
-??$_Get_unwrapped_n@HH$0A@@std@@YAPAHQAHH@Z ENDP	; std::_Get_unwrapped_n<int,int,0>
+??$_Get_unwrapped_n@EH$0A@@std@@YAPAEQAEH@Z ENDP	; std::_Get_unwrapped_n<unsigned char,int,0>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Idl_distance1@PBHPBH@std@@YAHABQBH0Urandom_access_iterator_tag@0@@Z
+;	COMDAT ??$_Get_unwrapped_n@$$CBDH$0A@@std@@YAPBDQBDH@Z
 _TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-___formal$ = 16						; size = 1
-??$_Idl_distance1@PBHPBH@std@@YAHABQBH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Idl_distance1<int const *,int const *>, COMDAT
+__Src$ = 8						; size = 4
+___formal$ = 12						; size = 4
+??$_Get_unwrapped_n@$$CBDH$0A@@std@@YAPBDQBDH@Z PROC	; std::_Get_unwrapped_n<char const ,int,0>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 967
+; Line 808
 	push	ebp
 	mov	ebp, esp
-; Line 968
-	mov	eax, DWORD PTR __Last$[ebp]
-	mov	ecx, DWORD PTR __First$[ebp]
-	mov	eax, DWORD PTR [eax]
-	sub	eax, DWORD PTR [ecx]
-	sar	eax, 2
-; Line 969
+; Line 809
+	mov	eax, DWORD PTR __Src$[ebp]
+; Line 810
 	pop	ebp
 	ret	0
-??$_Idl_distance1@PBHPBH@std@@YAHABQBH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Idl_distance1<int const *,int const *>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Idl_distance@PBHPBH@std@@YAHABQBH0@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-??$_Idl_distance@PBHPBH@std@@YAHABQBH0@Z PROC		; std::_Idl_distance<int const *,int const *>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 974
-	push	ebp
-	mov	ebp, esp
-; Line 968
-	mov	eax, DWORD PTR __Last$[ebp]
-	mov	ecx, DWORD PTR __First$[ebp]
-	mov	eax, DWORD PTR [eax]
-	sub	eax, DWORD PTR [ecx]
-	sar	eax, 2
-; Line 976
-	pop	ebp
-	ret	0
-??$_Idl_distance@PBHPBH@std@@YAHABQBH0@Z ENDP		; std::_Idl_distance<int const *,int const *>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Get_unwrapped@$$CBH@std@@YAPBHQBH@Z
-_TEXT	SEGMENT
-__Ptr$ = 8						; size = 4
-??$_Get_unwrapped@$$CBH@std@@YAPBHQBH@Z PROC		; std::_Get_unwrapped<int const >, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 662
-	push	ebp
-	mov	ebp, esp
-; Line 663
-	mov	eax, DWORD PTR __Ptr$[ebp]
-; Line 664
-	pop	ebp
-	ret	0
-??$_Get_unwrapped@$$CBH@std@@YAPBHQBH@Z ENDP		; std::_Get_unwrapped<int const >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z
-_TEXT	SEGMENT
-__Arg$ = 8						; size = 4
-??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z PROC ; std::forward<gsl::narrowing_error>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
-; Line 1573
-	push	ebp
-	mov	ebp, esp
-; Line 1574
-	mov	eax, DWORD PTR __Arg$[ebp]
-; Line 1575
-	pop	ebp
-	ret	0
-??$forward@Unarrowing_error@gsl@@@std@@YA$$QAUnarrowing_error@gsl@@AAU12@@Z ENDP ; std::forward<gsl::narrowing_error>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$forward@AAI@std@@YAAAIAAI@Z
-_TEXT	SEGMENT
-__Arg$ = 8						; size = 4
-??$forward@AAI@std@@YAAAIAAI@Z PROC			; std::forward<unsigned int &>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
-; Line 1573
-	push	ebp
-	mov	ebp, esp
-; Line 1574
-	mov	eax, DWORD PTR __Arg$[ebp]
-; Line 1575
-	pop	ebp
-	ret	0
-??$forward@AAI@std@@YAAAIAAI@Z ENDP			; std::forward<unsigned int &>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Uninitialized_copy@PBHPAHV?$allocator@H@std@@@std@@YAPAHQBH0PAHAAV?$allocator@H@0@@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-__Dest$ = 16						; size = 4
-__Al$ = 20						; size = 4
-??$_Uninitialized_copy@PBHPAHV?$allocator@H@std@@@std@@YAPAHQBH0PAHAAV?$allocator@H@0@@Z PROC ; std::_Uninitialized_copy<int const *,int *,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 209
-	push	ebp
-	mov	ebp, esp
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2402
-	mov	eax, DWORD PTR __First$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 209
-	push	esi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2403
-	mov	esi, DWORD PTR __Dest$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 209
-	push	edi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2402
-	mov	edi, DWORD PTR __Last$[ebp]
-	sub	edi, eax
-; Line 2403
-	push	edi
-	push	eax
-	push	esi
-	call	_memmove
-	add	esp, 12					; 0000000cH
-; Line 2404
-	lea	eax, DWORD PTR [edi+esi]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory
-; Line 219
-	pop	edi
-	pop	esi
-; Line 220
-	pop	ebp
-	ret	0
-??$_Uninitialized_copy@PBHPAHV?$allocator@H@std@@@std@@YAPAHQBH0PAHAAV?$allocator@H@0@@Z ENDP ; std::_Uninitialized_copy<int const *,int *,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Distance1@PBH@std@@YAHPBH0Urandom_access_iterator_tag@0@@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-___formal$ = 16						; size = 1
-??$_Distance1@PBH@std@@YAHPBH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Distance1<int const *>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 1234
-	push	ebp
-	mov	ebp, esp
-; Line 1235
-	mov	eax, DWORD PTR __Last$[ebp]
-	sub	eax, DWORD PTR __First$[ebp]
-	sar	eax, 2
-; Line 1236
-	pop	ebp
-	ret	0
-??$_Distance1@PBH@std@@YAHPBH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Distance1<int const *>
+??$_Get_unwrapped_n@$$CBDH$0A@@std@@YAPBDQBDH@Z ENDP	; std::_Get_unwrapped_n<char const ,int,0>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z
@@ -851,10 +1663,10 @@ $LN3@throw_exce:
 ??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ENDP ; gsl::details::throw_exception<gsl::narrowing_error>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$narrow_cast@HAAI@gsl@@YAHAAI@Z
+;	COMDAT ??$narrow_cast@HAAH@gsl@@YAHAAH@Z
 _TEXT	SEGMENT
 _u$ = 8							; size = 4
-??$narrow_cast@HAAI@gsl@@YAHAAI@Z PROC			; gsl::narrow_cast<int,unsigned int &>, COMDAT
+??$narrow_cast@HAAH@gsl@@YAHAAH@Z PROC			; gsl::narrow_cast<int,int &>, COMDAT
 ; File c:\projects\gsl\include\gsl\gsl_util
 ; Line 99
 	push	ebp
@@ -865,8 +1677,476 @@ _u$ = 8							; size = 4
 ; Line 101
 	pop	ebp
 	ret	0
-??$narrow_cast@HAAI@gsl@@YAHAAI@Z ENDP			; gsl::narrow_cast<int,unsigned int &>
+??$narrow_cast@HAAH@gsl@@YAHAAH@Z ENDP			; gsl::narrow_cast<int,int &>
 _TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_unchecked1@PBDPAE@std@@YAPAEPBD0PAEU_Trivially_copyable_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+___formal$ = 20						; size = 1
+??$_Copy_unchecked1@PBDPAE@std@@YAPAEPBD0PAEU_Trivially_copyable_ptr_iterator_tag@0@@Z PROC ; std::_Copy_unchecked1<char const *,unsigned char *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2424
+	push	ebp
+	mov	ebp, esp
+; Line 2402
+	mov	eax, DWORD PTR __First$[ebp]
+; Line 2424
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2424
+	push	edi
+; Line 2402
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2403
+	push	edi
+	push	eax
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2425
+	pop	edi
+	pop	esi
+; Line 2426
+	pop	ebp
+	ret	0
+??$_Copy_unchecked1@PBDPAE@std@@YAPAEPBD0PAEU_Trivially_copyable_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_unchecked1<char const *,unsigned char *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Ptr_copy_cat@$$CBDE@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBDABQAE@Z
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+___formal$ = 12						; size = 4
+___formal$ = 16						; size = 4
+??$_Ptr_copy_cat@$$CBDE@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBDABQAE@Z PROC ; std::_Ptr_copy_cat<char const ,unsigned char>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 1069
+	push	ebp
+	mov	ebp, esp
+; Line 1070
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 1071
+	pop	ebp
+	ret	0
+??$_Ptr_copy_cat@$$CBDE@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQBDABQAE@Z ENDP ; std::_Ptr_copy_cat<char const ,unsigned char>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+___formal$ = 16						; size = 1
+??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z PROC ; std::_Adl_verify_range1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<char const ,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 602
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 603
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR [eax]
+	mov	edx, DWORD PTR [eax+4]
+	mov	eax, DWORD PTR __First$[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+; Line 265
+	cmp	DWORD PTR [eax], ecx
+	jne	SHORT $LN5@Adl_verify
+	cmp	DWORD PTR [eax+4], edx
+	jg	SHORT $LN5@Adl_verify
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 604
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN5@Adl_verify:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN19@Adl_verify:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$_Adl_verify_range1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z ENDP ; std::_Adl_verify_range1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<char const ,-1>,0> >
+; Function compile flags: /Ogtp
+;	COMDAT ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_seq$ = 12						; size = 4
+_max$ = 16						; size = 4
+??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z PROC ; gsl::ensure_sentinel<char const ,0>, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 113
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 114
+	mov	esi, DWORD PTR _seq$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	test	esi, esi
+	je	SHORT $LN5@ensure_sen
+; Line 121
+	mov	edx, DWORD PTR _max$[ebp]
+	mov	eax, esi
+	test	edx, edx
+	jle	SHORT $LN3@ensure_sen
+	xor	ecx, ecx
+	npad	1
+$LL2@ensure_sen:
+	cmp	BYTE PTR [eax], 0
+	je	SHORT $LN48@ensure_sen
+	inc	ecx
+	inc	eax
+	cmp	ecx, edx
+	jl	SHORT $LL2@ensure_sen
+$LN3@ensure_sen:
+; Line 122
+	cmp	BYTE PTR [eax], 0
+	jne	SHORT $LN9@ensure_sen
+$LN48@ensure_sen:
+; Line 123
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	sub	eax, esi
+	push	eax
+	push	esi
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	call	??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z	; gsl::span<char const ,-1>::span<char const ,-1>
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 124
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN5@ensure_sen:
+; Line 114
+	push	OFFSET ??_C@_0EL@HEMMNCGC@GSL?3?5Postcondition?5failure?5at?5c@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN9@ensure_sen:
+; Line 122
+	push	OFFSET ??_C@_0EL@CANAMLLN@GSL?3?5Postcondition?5failure?5at?5c@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN50@ensure_sen:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN12@ensure_sen
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN12@ensure_sen:
+	ret	0
+__unwindfunclet$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN18@ensure_sen
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN18@ensure_sen:
+	ret	0
+__ehhandler$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PBDH@Z ENDP ; gsl::ensure_sentinel<char const ,0>
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@I@std@@YA$$QAIAAI@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@I@std@@YA$$QAIAAI@Z PROC			; std::forward<unsigned int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1573
+	push	ebp
+	mov	ebp, esp
+; Line 1574
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1575
+	pop	ebp
+	ret	0
+??$forward@I@std@@YA$$QAIAAI@Z ENDP			; std::forward<unsigned int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0$09@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$09@12@@Z
+_TEXT	SEGMENT
+_ext$ = 8						; size = 1
+??$?0$09@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$09@12@@Z PROC ; gsl::details::extent_type<-1>::extent_type<-1><10>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	DWORD PTR [ecx], 10			; 0000000aH
+; Line 334
+	mov	eax, ecx
+	ret	4
+??$?0$09@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$09@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><10>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Seek_wrapped@H@std@@YAXAAPAHQAH@Z
+_TEXT	SEGMENT
+__It$ = 8						; size = 4
+__UIt$ = 12						; size = 4
+??$_Seek_wrapped@H@std@@YAXAAPAHQAH@Z PROC		; std::_Seek_wrapped<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 871
+	push	ebp
+	mov	ebp, esp
+; Line 872
+	mov	eax, DWORD PTR __It$[ebp]
+	mov	ecx, DWORD PTR __UIt$[ebp]
+	mov	DWORD PTR [eax], ecx
+; Line 873
+	pop	ebp
+	ret	0
+??$_Seek_wrapped@H@std@@YAXAAPAHQAH@Z ENDP		; std::_Seek_wrapped<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_n_unchecked3@PAHHPAH@std@@YAPAHPAHH0@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Count$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+??$_Copy_n_unchecked3@PAHHPAH@std@@YAPAHPAHH0@Z PROC	; std::_Copy_n_unchecked3<int *,int,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2526
+	push	ebp
+	mov	ebp, esp
+; Line 2518
+	mov	eax, DWORD PTR __Count$[ebp]
+; Line 2526
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2526
+	push	edi
+; Line 2518
+	lea	edi, DWORD PTR [eax*4]
+; Line 2403
+	push	edi
+	push	DWORD PTR __First$[ebp]
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2528
+	pop	edi
+	pop	esi
+; Line 2530
+	pop	ebp
+	ret	0
+??$_Copy_n_unchecked3@PAHHPAH@std@@YAPAHPAHH0@Z ENDP	; std::_Copy_n_unchecked3<int *,int,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Get_unwrapped_n@HH$0A@@std@@YAPAHQAHH@Z
+_TEXT	SEGMENT
+__Src$ = 8						; size = 4
+___formal$ = 12						; size = 4
+??$_Get_unwrapped_n@HH$0A@@std@@YAPAHQAHH@Z PROC	; std::_Get_unwrapped_n<int,int,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 808
+	push	ebp
+	mov	ebp, esp
+; Line 809
+	mov	eax, DWORD PTR __Src$[ebp]
+; Line 810
+	pop	ebp
+	ret	0
+??$_Get_unwrapped_n@HH$0A@@std@@YAPAHQAHH@Z ENDP	; std::_Get_unwrapped_n<int,int,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_unchecked1@PAHPAH@std@@YAPAHPAH00U_Trivially_copyable_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+___formal$ = 20						; size = 1
+??$_Copy_unchecked1@PAHPAH@std@@YAPAHPAH00U_Trivially_copyable_ptr_iterator_tag@0@@Z PROC ; std::_Copy_unchecked1<int *,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2424
+	push	ebp
+	mov	ebp, esp
+; Line 2402
+	mov	eax, DWORD PTR __First$[ebp]
+; Line 2424
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2424
+	push	edi
+; Line 2402
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2403
+	push	edi
+	push	eax
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2425
+	pop	edi
+	pop	esi
+; Line 2426
+	pop	ebp
+	ret	0
+??$_Copy_unchecked1@PAHPAH@std@@YAPAHPAH00U_Trivially_copyable_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_unchecked1<int *,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Ptr_copy_cat@HH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQAH0@Z
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+___formal$ = 12						; size = 4
+___formal$ = 16						; size = 4
+??$_Ptr_copy_cat@HH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQAH0@Z PROC ; std::_Ptr_copy_cat<int,int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 1069
+	push	ebp
+	mov	ebp, esp
+; Line 1070
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 1071
+	pop	ebp
+	ret	0
+??$_Ptr_copy_cat@HH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@ABQAH0@Z ENDP ; std::_Ptr_copy_cat<int,int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+___formal$ = 16						; size = 1
+??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z PROC ; std::_Adl_verify_range1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 602
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 603
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR [eax]
+	mov	edx, DWORD PTR [eax+4]
+	mov	eax, DWORD PTR __First$[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+; Line 265
+	cmp	DWORD PTR [eax], ecx
+	jne	SHORT $LN5@Adl_verify
+	cmp	DWORD PTR [eax+4], edx
+	jg	SHORT $LN5@Adl_verify
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 604
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN5@Adl_verify:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN19@Adl_verify:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$_Adl_verify_range1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0U?$integral_constant@_N$00@0@@Z ENDP ; std::_Adl_verify_range1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$0A@@12@@Z
 _TEXT	SEGMENT
@@ -882,26 +2162,1462 @@ _ext$ = 8						; size = 1
 ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$0A@@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><0>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Get_size_of_n@$03@std@@YAII@Z
+;	COMDAT ??$?0$05@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$05@12@@Z
 _TEXT	SEGMENT
-__Count$ = 8						; size = 4
-??$_Get_size_of_n@$03@std@@YAII@Z PROC			; std::_Get_size_of_n<4>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 23
+_ext$ = 8						; size = 1
+??$?0$05@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$05@12@@Z PROC ; gsl::details::extent_type<-1>::extent_type<-1><6>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	DWORD PTR [ecx], 6
+; Line 334
+	mov	eax, ecx
+	ret	4
+??$?0$05@?$extent_type@$0?0@details@gsl@@QAE@V?$extent_type@$05@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><6>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 4
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 597
 	push	ebp
 	mov	ebp, esp
-; Line 25
-	mov	ecx, DWORD PTR __Count$[ebp]
-; Line 26
-	or	edx, -1
-	cmp	ecx, 1073741823				; 3fffffffH
-	lea	eax, DWORD PTR [ecx*4]
-	cmova	eax, edx
-; Line 33
+	push	-1
+	push	__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 336
+	mov	edx, DWORD PTR _ext$[ebp]
+; Line 597
+	mov	DWORD PTR $T4[ebp], 0
+; Line 336
+	mov	DWORD PTR [ecx], edx
+	test	edx, edx
+	js	SHORT $LN15@extent_typ
+; Line 596
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN5@extent_typ
+	test	edx, edx
+	jne	SHORT $LN52@extent_typ
+$LN5@extent_typ:
+; Line 600
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN15@extent_typ:
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN52@extent_typ:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN50@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN18@extent_typ
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN18@extent_typ:
+	ret	0
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z$1:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 2
+	je	$LN11@extent_typ
+	and	DWORD PTR $T4[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN11@extent_typ:
+	ret	0
+__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@PAEH@Z ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 4
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z PROC ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 336
+	mov	edx, DWORD PTR _ext$[ebp]
+; Line 597
+	mov	DWORD PTR $T4[ebp], 0
+; Line 336
+	mov	DWORD PTR [ecx], edx
+	test	edx, edx
+	js	SHORT $LN15@extent_typ
+; Line 596
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN5@extent_typ
+	test	edx, edx
+	jne	SHORT $LN52@extent_typ
+$LN5@extent_typ:
+; Line 600
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN15@extent_typ:
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN52@extent_typ:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN50@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN18@extent_typ
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN18@extent_typ:
+	ret	0
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$1:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 2
+	je	$LN11@extent_typ
+	and	DWORD PTR $T4[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN11@extent_typ:
+	ret	0
+__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z ENDP ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_other$ = 8						; size = 4
+??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z PROC ; gsl::span<int,-1>::span<int,-1><int,6,void>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 448
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 515
+	mov	eax, DWORD PTR _other$[ebp]
+; Line 448
+	mov	DWORD PTR $T3[ebp], 0
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 515
+	mov	eax, DWORD PTR [eax]
+; Line 333
+	mov	DWORD PTR [ecx], 6
+; Line 596
+	mov	DWORD PTR [ecx+4], eax
+; Line 599
+	test	eax, eax
+	je	SHORT $LN66@span
+; Line 448
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+$LN66@span:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T3[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN64@span:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z$4:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 4
+	je	$LN37@span
+	and	DWORD PTR $T3[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN37@span:
+	ret	0
+__ehhandler$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0H$05X@?$span@H$0?0@gsl@@QAE@ABV?$span@H$05@1@@Z ENDP ; gsl::span<int,-1>::span<int,-1><int,6,void>
+; Function compile flags: /Ogtp
+;	COMDAT ??$copy_n@PBDHPAE@std@@YAPAEPBDHPAE@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Count_raw$ = 12					; size = 4
+__Dest$ = 16						; size = 4
+??$copy_n@PBDHPAE@std@@YAPAEPBDHPAE@Z PROC		; std::copy_n<char const *,int,unsigned char *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2536
+	push	ebp
+	mov	ebp, esp
+	push	edi
+; Line 2538
+	mov	edi, DWORD PTR __Count_raw$[ebp]
+	test	edi, edi
+	jle	SHORT $LN18@copy_n
+; Line 2403
+	push	esi
+	mov	esi, DWORD PTR __Dest$[ebp]
+	push	edi
+	push	DWORD PTR __First$[ebp]
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 872
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2544
+	pop	esi
+	pop	edi
+; Line 2545
 	pop	ebp
 	ret	0
-??$_Get_size_of_n@$03@std@@YAII@Z ENDP			; std::_Get_size_of_n<4>
+$LN18@copy_n:
+; Line 2544
+	mov	eax, DWORD PTR __Dest$[ebp]
+	pop	edi
+; Line 2545
+	pop	ebp
+	ret	0
+??$copy_n@PBDHPAE@std@@YAPAEPBDHPAE@Z ENDP		; std::copy_n<char const *,int,unsigned char *>
 _TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$narrow@HH@gsl@@YAHH@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_u$ = 8							; size = 4
+??$narrow@HH@gsl@@YAHH@Z PROC				; gsl::narrow<int,int>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 124
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$narrow@HH@gsl@@YAHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 129
+	mov	eax, DWORD PTR _u$[ebp]
+; Line 130
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$narrow@HH@gsl@@YAHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$narrow@HH@gsl@@YAHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$narrow@HH@gsl@@YAHH@Z ENDP				; gsl::narrow<int,int>
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Seek_wrapped@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@PAE$0A@@std@@YAXAAV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@ABQAE@Z
+_TEXT	SEGMENT
+__It$ = 8						; size = 4
+__UIt$ = 12						; size = 4
+??$_Seek_wrapped@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@PAE$0A@@std@@YAXAAV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@ABQAE@Z PROC ; std::_Seek_wrapped<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>,unsigned char *,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 856
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 294
+	mov	edx, DWORD PTR __It$[ebp]
+	mov	eax, DWORD PTR __UIt$[ebp]
+	mov	ecx, DWORD PTR [edx]
+	mov	eax, DWORD PTR [eax]
+	sub	eax, DWORD PTR [ecx+4]
+	mov	DWORD PTR [edx+4], eax
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 858
+	pop	ebp
+	ret	0
+??$_Seek_wrapped@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@PAE$0A@@std@@YAXAAV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@ABQAE@Z ENDP ; std::_Seek_wrapped<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>,unsigned char *,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_unchecked@PBDPAE@std@@YAPAEPBD0PAE@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+??$_Copy_unchecked@PBDPAE@std@@YAPAEPBD0PAE@Z PROC	; std::_Copy_unchecked<char const *,unsigned char *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2432
+	push	ebp
+	mov	ebp, esp
+; Line 2402
+	mov	eax, DWORD PTR __First$[ebp]
+; Line 2432
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2432
+	push	edi
+; Line 2402
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2403
+	push	edi
+	push	eax
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2434
+	pop	edi
+	pop	esi
+; Line 2435
+	pop	ebp
+	ret	0
+??$_Copy_unchecked@PBDPAE@std@@YAPAEPBD0PAE@Z ENDP	; std::_Copy_unchecked<char const *,unsigned char *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+__It$ = 8						; size = 4
+__Off$ = 12						; size = 4
+??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z PROC ; std::_Get_unwrapped_n<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>,int,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 760
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 272
+	mov	ecx, DWORD PTR __It$[ebp]
+	mov	eax, DWORD PTR __Off$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	edx, DWORD PTR [ecx+4]
+	add	eax, edx
+	js	SHORT $LN5@Get_unwrap
+; Line 338
+	mov	ecx, DWORD PTR [ecx]
+; Line 272
+	cmp	eax, DWORD PTR [ecx]
+	jg	SHORT $LN5@Get_unwrap
+; Line 280
+	mov	eax, DWORD PTR [ecx+4]
+	add	eax, edx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 772
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN5@Get_unwrap:
+; File c:\projects\gsl\include\gsl\span
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN29@Get_unwrap:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$_Get_unwrapped_n@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAEABV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@H@Z ENDP ; std::_Get_unwrapped_n<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>,int,0>
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Idl_distance1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@PBD@std@@YAHABQBD0Urandom_access_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+___formal$ = 16						; size = 1
+??$_Idl_distance1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@PBD@std@@YAHABQBD0Urandom_access_iterator_tag@0@@Z PROC ; std::_Idl_distance1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,char const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 967
+	push	ebp
+	mov	ebp, esp
+; Line 968
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR __First$[ebp]
+	mov	eax, DWORD PTR [eax]
+	sub	eax, DWORD PTR [ecx]
+; Line 969
+	pop	ebp
+	ret	0
+??$_Idl_distance1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@PBD@std@@YAHABQBD0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Idl_distance1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,char const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Idl_distance@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@PBD@std@@YAHABQBD0@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+??$_Idl_distance@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@PBD@std@@YAHABQBD0@Z PROC ; std::_Idl_distance<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,char const *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 974
+	push	ebp
+	mov	ebp, esp
+; Line 968
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR __First$[ebp]
+	mov	eax, DWORD PTR [eax]
+	sub	eax, DWORD PTR [ecx]
+; Line 976
+	pop	ebp
+	ret	0
+??$_Idl_distance@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@PBD@std@@YAHABQBD0@Z ENDP ; std::_Idl_distance<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,char const *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Get_unwrapped@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@$0A@@std@@YAPBDABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@@Z
+_TEXT	SEGMENT
+__It$ = 8						; size = 4
+??$_Get_unwrapped@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@$0A@@std@@YAPBDABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@@Z PROC ; std::_Get_unwrapped<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 642
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	mov	ecx, DWORD PTR __It$[ebp]
+	mov	eax, DWORD PTR [ecx]
+	mov	eax, DWORD PTR [eax+4]
+	add	eax, DWORD PTR [ecx+4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 644
+	pop	ebp
+	ret	0
+??$_Get_unwrapped@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@$0A@@std@@YAPBDABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@@Z ENDP ; std::_Get_unwrapped<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z PROC ; std::_Adl_verify_range<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<char const ,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 615
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 603
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR [eax]
+	mov	edx, DWORD PTR [eax+4]
+	mov	eax, DWORD PTR __First$[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+; Line 265
+	cmp	DWORD PTR [eax], ecx
+	jne	SHORT $LN7@Adl_verify
+	cmp	DWORD PTR [eax+4], edx
+	jg	SHORT $LN7@Adl_verify
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 617
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN7@Adl_verify:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN22@Adl_verify:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$_Adl_verify_range@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@0@Z ENDP ; std::_Adl_verify_range<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<char const ,-1>,0> >
+; Function compile flags: /Ogtp
+;	COMDAT ??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_sz$ = 12						; size = 4
+_max$ = 16						; size = 4
+??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z PROC ; gsl::ensure_z<char const >, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 133
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 134
+	mov	eax, DWORD PTR _sz$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	mov	esi, DWORD PTR [eax]
+; Line 114
+	test	esi, esi
+	je	SHORT $LN7@ensure_z
+; Line 121
+	mov	edx, DWORD PTR _max$[ebp]
+	mov	eax, esi
+	test	edx, edx
+	jle	SHORT $LN5@ensure_z
+	xor	ecx, ecx
+$LL4@ensure_z:
+	cmp	BYTE PTR [eax], 0
+	je	SHORT $LN51@ensure_z
+	inc	ecx
+	inc	eax
+	cmp	ecx, edx
+	jl	SHORT $LL4@ensure_z
+$LN5@ensure_z:
+; Line 122
+	cmp	BYTE PTR [eax], 0
+	jne	SHORT $LN11@ensure_z
+$LN51@ensure_z:
+; Line 123
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	sub	eax, esi
+	push	eax
+	push	esi
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	call	??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z	; gsl::span<char const ,-1>::span<char const ,-1>
+; Line 134
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 135
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN7@ensure_z:
+; Line 114
+	push	OFFSET ??_C@_0EL@HEMMNCGC@GSL?3?5Postcondition?5failure?5at?5c@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN11@ensure_z:
+; Line 122
+	push	OFFSET ??_C@_0EL@CANAMLLN@GSL?3?5Postcondition?5failure?5at?5c@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN53@ensure_z:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN14@ensure_z
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN14@ensure_z:
+	ret	0
+__unwindfunclet$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN20@ensure_z
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN20@ensure_z:
+	ret	0
+__ehhandler$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@ABQBDH@Z ENDP ; gsl::ensure_z<char const >
+; Function compile flags: /Ogtp
+;	COMDAT ??$narrow_cast@HI@gsl@@YAH$$QAI@Z
+_TEXT	SEGMENT
+_u$ = 8							; size = 4
+??$narrow_cast@HI@gsl@@YAH$$QAI@Z PROC			; gsl::narrow_cast<int,unsigned int>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 99
+	push	ebp
+	mov	ebp, esp
+; Line 100
+	mov	eax, DWORD PTR _u$[ebp]
+	mov	eax, DWORD PTR [eax]
+; Line 101
+	pop	ebp
+	ret	0
+??$narrow_cast@HI@gsl@@YAH$$QAI@Z ENDP			; gsl::narrow_cast<int,unsigned int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 1
+??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<10> >, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 590
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 593
+	mov	eax, ecx
+; Line 333
+	mov	DWORD PTR [ecx], 10			; 0000000aH
+; Line 593
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<10> >
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$extent_type@$09@details@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$extent_type@$09@details@gsl@@QBEHXZ PROC	; gsl::details::extent_type<10>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 323
+	mov	eax, 10					; 0000000aH
+	ret	0
+?size@?$extent_type@$09@details@gsl@@QBEHXZ ENDP	; gsl::details::extent_type<10>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$extent_type@$09@details@gsl@@QAE@XZ
+_TEXT	SEGMENT
+??0?$extent_type@$09@details@gsl@@QAE@XZ PROC		; gsl::details::extent_type<10>::extent_type<10>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 311
+	mov	eax, ecx
+	ret	0
+??0?$extent_type@$09@details@gsl@@QAE@XZ ENDP		; gsl::details::extent_type<10>::extent_type<10>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$copy_n@PAHHPAH@std@@YAPAHPAHH0@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Count_raw$ = 12					; size = 4
+__Dest$ = 16						; size = 4
+??$copy_n@PAHHPAH@std@@YAPAHPAHH0@Z PROC		; std::copy_n<int *,int,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2536
+	push	ebp
+	mov	ebp, esp
+	push	edi
+; Line 2538
+	mov	edi, DWORD PTR __Count_raw$[ebp]
+	test	edi, edi
+	jle	SHORT $LN18@copy_n
+; Line 2518
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2518
+	shl	edi, 2
+; Line 2403
+	push	edi
+	push	DWORD PTR __First$[ebp]
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 872
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2544
+	pop	esi
+	pop	edi
+; Line 2545
+	pop	ebp
+	ret	0
+$LN18@copy_n:
+; Line 2544
+	mov	eax, DWORD PTR __Dest$[ebp]
+	pop	edi
+; Line 2545
+	pop	ebp
+	ret	0
+??$copy_n@PAHHPAH@std@@YAPAHPAHH0@Z ENDP		; std::copy_n<int *,int,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Seek_wrapped@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH$0A@@std@@YAXAAV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@ABQAH@Z
+_TEXT	SEGMENT
+__It$ = 8						; size = 4
+__UIt$ = 12						; size = 4
+??$_Seek_wrapped@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH$0A@@std@@YAXAAV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@ABQAH@Z PROC ; std::_Seek_wrapped<gsl::details::span_iterator<gsl::span<int,-1>,0>,int *,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 856
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 294
+	mov	edx, DWORD PTR __It$[ebp]
+	mov	eax, DWORD PTR __UIt$[ebp]
+	mov	ecx, DWORD PTR [edx]
+	mov	eax, DWORD PTR [eax]
+	sub	eax, DWORD PTR [ecx+4]
+	sar	eax, 2
+	mov	DWORD PTR [edx+4], eax
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 858
+	pop	ebp
+	ret	0
+??$_Seek_wrapped@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH$0A@@std@@YAXAAV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@ABQAH@Z ENDP ; std::_Seek_wrapped<gsl::details::span_iterator<gsl::span<int,-1>,0>,int *,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Copy_unchecked@PAHPAH@std@@YAPAHPAH00@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+__Dest$ = 16						; size = 4
+??$_Copy_unchecked@PAHPAH@std@@YAPAHPAH00@Z PROC	; std::_Copy_unchecked<int *,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2432
+	push	ebp
+	mov	ebp, esp
+; Line 2402
+	mov	eax, DWORD PTR __First$[ebp]
+; Line 2432
+	push	esi
+; Line 2403
+	mov	esi, DWORD PTR __Dest$[ebp]
+; Line 2432
+	push	edi
+; Line 2402
+	mov	edi, DWORD PTR __Last$[ebp]
+	sub	edi, eax
+; Line 2403
+	push	edi
+	push	eax
+	push	esi
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; Line 2404
+	lea	eax, DWORD PTR [edi+esi]
+; Line 2434
+	pop	edi
+	pop	esi
+; Line 2435
+	pop	ebp
+	ret	0
+??$_Copy_unchecked@PAHPAH@std@@YAPAHPAH00@Z ENDP	; std::_Copy_unchecked<int *,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+__It$ = 8						; size = 4
+__Off$ = 12						; size = 4
+??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z PROC ; std::_Get_unwrapped_n<gsl::details::span_iterator<gsl::span<int,-1>,0>,int,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 760
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 272
+	mov	ecx, DWORD PTR __It$[ebp]
+	mov	eax, DWORD PTR __Off$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	edx, DWORD PTR [ecx+4]
+	add	eax, edx
+	js	SHORT $LN5@Get_unwrap
+; Line 338
+	mov	ecx, DWORD PTR [ecx]
+; Line 272
+	cmp	eax, DWORD PTR [ecx]
+	jg	SHORT $LN5@Get_unwrap
+; Line 280
+	mov	eax, DWORD PTR [ecx+4]
+	lea	eax, DWORD PTR [eax+edx*4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 772
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN5@Get_unwrap:
+; File c:\projects\gsl\include\gsl\span
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN29@Get_unwrap:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$_Get_unwrapped_n@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@H@Z ENDP ; std::_Get_unwrapped_n<gsl::details::span_iterator<gsl::span<int,-1>,0>,int,0>
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Idl_distance1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH@std@@YAHABQAH0Urandom_access_iterator_tag@0@@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+___formal$ = 16						; size = 1
+??$_Idl_distance1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH@std@@YAHABQAH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Idl_distance1<gsl::details::span_iterator<gsl::span<int,-1>,0>,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 967
+	push	ebp
+	mov	ebp, esp
+; Line 968
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR __First$[ebp]
+	mov	eax, DWORD PTR [eax]
+	sub	eax, DWORD PTR [ecx]
+	sar	eax, 2
+; Line 969
+	pop	ebp
+	ret	0
+??$_Idl_distance1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH@std@@YAHABQAH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Idl_distance1<gsl::details::span_iterator<gsl::span<int,-1>,0>,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Idl_distance@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH@std@@YAHABQAH0@Z
+_TEXT	SEGMENT
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+??$_Idl_distance@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH@std@@YAHABQAH0@Z PROC ; std::_Idl_distance<gsl::details::span_iterator<gsl::span<int,-1>,0>,int *>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 974
+	push	ebp
+	mov	ebp, esp
+; Line 968
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR __First$[ebp]
+	mov	eax, DWORD PTR [eax]
+	sub	eax, DWORD PTR [ecx]
+	sar	eax, 2
+; Line 976
+	pop	ebp
+	ret	0
+??$_Idl_distance@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@PAH@std@@YAHABQAH0@Z ENDP ; std::_Idl_distance<gsl::details::span_iterator<gsl::span<int,-1>,0>,int *>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Get_unwrapped@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@Z
+_TEXT	SEGMENT
+__It$ = 8						; size = 4
+??$_Get_unwrapped@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@Z PROC ; std::_Get_unwrapped<gsl::details::span_iterator<gsl::span<int,-1>,0>,0>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 642
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	mov	eax, DWORD PTR __It$[ebp]
+	mov	ecx, DWORD PTR [eax+4]
+	mov	eax, DWORD PTR [eax]
+	mov	eax, DWORD PTR [eax+4]
+	lea	eax, DWORD PTR [eax+ecx*4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 644
+	pop	ebp
+	ret	0
+??$_Get_unwrapped@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@$0A@@std@@YAPAHABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@Z ENDP ; std::_Get_unwrapped<gsl::details::span_iterator<gsl::span<int,-1>,0>,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+__First$ = 8						; size = 4
+__Last$ = 12						; size = 4
+??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z PROC ; std::_Adl_verify_range<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 615
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 603
+	mov	eax, DWORD PTR __Last$[ebp]
+	mov	ecx, DWORD PTR [eax]
+	mov	edx, DWORD PTR [eax+4]
+	mov	eax, DWORD PTR __First$[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+; Line 265
+	cmp	DWORD PTR [eax], ecx
+	jne	SHORT $LN7@Adl_verify
+	cmp	DWORD PTR [eax+4], edx
+	jg	SHORT $LN7@Adl_verify
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 617
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN7@Adl_verify:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN22@Adl_verify:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$_Adl_verify_range@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAXABV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z ENDP ; std::_Adl_verify_range<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 1
+??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 596
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 600
+	mov	eax, ecx
+; Line 333
+	mov	DWORD PTR [ecx], 0
+; Line 600
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$extent_type@$0A@@details@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$extent_type@$0A@@details@gsl@@QBEHXZ PROC	; gsl::details::extent_type<0>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 323
+	xor	eax, eax
+	ret	0
+?size@?$extent_type@$0A@@details@gsl@@QBEHXZ ENDP	; gsl::details::extent_type<0>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$extent_type@$0A@@details@gsl@@QAE@XZ
+_TEXT	SEGMENT
+??0?$extent_type@$0A@@details@gsl@@QAE@XZ PROC		; gsl::details::extent_type<0>::extent_type<0>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 311
+	mov	eax, ecx
+	ret	0
+??0?$extent_type@$0A@@details@gsl@@QAE@XZ ENDP		; gsl::details::extent_type<0>::extent_type<0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 1
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z PROC ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::storage_type<gsl::details::extent_type<6> ><gsl::details::extent_type<6> >, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 590
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx], eax
+; Line 593
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z ENDP ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::storage_type<gsl::details::extent_type<6> ><gsl::details::extent_type<6> >
+; Function compile flags: /Ogtp
+;	COMDAT ??$addressof@H@std@@YAPAHAAH@Z
+_TEXT	SEGMENT
+__Val$ = 8						; size = 4
+??$addressof@H@std@@YAPAHAAH@Z PROC			; std::addressof<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstddef
+; Line 329
+	push	ebp
+	mov	ebp, esp
+; Line 330
+	mov	eax, DWORD PTR __Val$[ebp]
+; Line 331
+	pop	ebp
+	ret	0
+??$addressof@H@std@@YAPAHAAH@Z ENDP			; std::addressof<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 1
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 590
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 593
+	mov	eax, ecx
+; Line 333
+	mov	DWORD PTR [ecx], 6
+; Line 593
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QAE@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Function compile flags: /Ogtp
+;	COMDAT ??$addressof@E@std@@YAPAEAAE@Z
+_TEXT	SEGMENT
+__Val$ = 8						; size = 4
+??$addressof@E@std@@YAPAEAAE@Z PROC			; std::addressof<unsigned char>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstddef
+; Line 329
+	push	ebp
+	mov	ebp, esp
+; Line 330
+	mov	eax, DWORD PTR __Val$[ebp]
+; Line 331
+	pop	ebp
+	ret	0
+??$addressof@E@std@@YAPAEAAE@Z ENDP			; std::addressof<unsigned char>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@AAH@std@@YAAAHAAH@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@AAH@std@@YAAAHAAH@Z PROC			; std::forward<int &>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1573
+	push	ebp
+	mov	ebp, esp
+; Line 1574
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1575
+	pop	ebp
+	ret	0
+??$forward@AAH@std@@YAAAHAAH@Z ENDP			; std::forward<int &>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z
+_TEXT	SEGMENT
+__Arg$ = 8						; size = 4
+??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z PROC ; std::forward<gsl::fail_fast>, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
+; Line 1573
+	push	ebp
+	mov	ebp, esp
+; Line 1574
+	mov	eax, DWORD PTR __Arg$[ebp]
+; Line 1575
+	pop	ebp
+	ret	0
+??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z ENDP ; std::forward<gsl::fail_fast>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_data$ = 8						; size = 4
+_ext$ = 12						; size = 4
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 336
+	mov	eax, DWORD PTR _ext$[ebp]
+; Line 591
+	mov	DWORD PTR $T3[ebp], 0
+; Line 336
+	mov	DWORD PTR [ecx], eax
+	test	eax, eax
+	js	SHORT $LN10@extent_typ
+; Line 590
+	mov	eax, DWORD PTR _data$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 593
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN10@extent_typ:
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN35@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z$1:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 2
+	je	$LN13@extent_typ
+	and	DWORD PTR $T3[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN13@extent_typ:
+	ret	0
+__ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@UKnownNotNull@12@H@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z
 _TEXT	SEGMENT
@@ -1006,190 +3722,521 @@ __ehhandler$??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0
 text$x	ENDS
 ??$?0H@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHH@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><int>
 ; Function compile flags: /Ogtp
-;	COMDAT ??$_Unfancy_maybe_null@H@std@@YAPAHPAH@Z
+;	COMDAT ??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z
 _TEXT	SEGMENT
-__Ptr$ = 8						; size = 4
-??$_Unfancy_maybe_null@H@std@@YAPAHPAH@Z PROC		; std::_Unfancy_maybe_null<int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 617
-	push	ebp
-	mov	ebp, esp
-; Line 618
-	mov	eax, DWORD PTR __Ptr$[ebp]
-; Line 619
-	pop	ebp
-	ret	0
-??$_Unfancy_maybe_null@H@std@@YAPAHPAH@Z ENDP		; std::_Unfancy_maybe_null<int>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Destroy_range1@V?$allocator@H@std@@@std@@YAXPAH0AAV?$allocator@H@0@U?$integral_constant@_N$00@0@@Z
-_TEXT	SEGMENT
-___formal$ = 8						; size = 4
-___formal$ = 12						; size = 4
-___formal$ = 16						; size = 4
-___formal$ = 20						; size = 1
-??$_Destroy_range1@V?$allocator@H@std@@@std@@YAXPAH0AAV?$allocator@H@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Destroy_range1<std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 1147
-	ret	0
-??$_Destroy_range1@V?$allocator@H@std@@@std@@YAXPAH0AAV?$allocator@H@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Destroy_range1<std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPAXI@Z
-_TEXT	SEGMENT
-__Bytes$ = 8						; size = 4
-??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPAXI@Z PROC ; std::_Allocate_manually_vector_aligned<std::_Default_allocate_traits>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 92
-	push	ebp
-	mov	ebp, esp
-; Line 93
-	mov	eax, DWORD PTR __Bytes$[ebp]
-; Line 94
-	or	edx, -1
-	lea	ecx, DWORD PTR [eax+35]
-	cmp	ecx, eax
-	cmovbe	ecx, edx
-; Line 52
-	push	ecx
-	call	??2@YAPAXI@Z				; operator new
-; Line 100
-	mov	ecx, eax
-; Line 52
-	add	esp, 4
-; Line 101
-	test	ecx, ecx
-	je	SHORT $LN7@Allocate_m
-; Line 103
-	lea	eax, DWORD PTR [ecx+35]
-	and	eax, -32				; ffffffe0H
-; Line 104
-	mov	DWORD PTR [eax-4], ecx
-; Line 110
-	pop	ebp
-	ret	0
-$LN7@Allocate_m:
-; Line 101
-	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPAXI@Z ENDP ; std::_Allocate_manually_vector_aligned<std::_Default_allocate_traits>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Ucopy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEPAHPBH0PAH@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-__Dest$ = 16						; size = 4
-??$_Ucopy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEPAHPBH0PAH@Z PROC ; std::vector<int,std::allocator<int> >::_Ucopy<int const *>, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1822
-	push	ebp
-	mov	ebp, esp
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2402
-	mov	eax, DWORD PTR __First$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1822
-	push	esi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2403
-	mov	esi, DWORD PTR __Dest$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1822
-	push	edi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2402
-	mov	edi, DWORD PTR __Last$[ebp]
-	sub	edi, eax
-; Line 2403
-	push	edi
-	push	eax
-	push	esi
-	call	_memmove
-	add	esp, 12					; 0000000cH
-; Line 2404
-	lea	eax, DWORD PTR [edi+esi]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1823
-	pop	edi
-	pop	esi
-; Line 1824
-	pop	ebp
-	ret	12					; 0000000cH
-??$_Ucopy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEPAHPBH0PAH@Z ENDP ; std::vector<int,std::allocator<int> >::_Ucopy<int const *>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$distance@PBH@std@@YAHPBH0@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-??$distance@PBH@std@@YAHPBH0@Z PROC			; std::distance<int const *>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 1240
-	push	ebp
-	mov	ebp, esp
-; Line 1235
-	mov	eax, DWORD PTR __Last$[ebp]
-	sub	eax, DWORD PTR __First$[ebp]
-	sar	eax, 2
-; Line 1242
-	pop	ebp
-	ret	0
-??$distance@PBH@std@@YAHPBH0@Z ENDP			; std::distance<int const *>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$?0ABV?$allocator@H@std@@$$V@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAE@U_One_then_variadic_args_t@1@ABV?$allocator@H@1@@Z
-_TEXT	SEGMENT
-___formal$ = 8						; size = 1
-__Val1$ = 12						; size = 4
-??$?0ABV?$allocator@H@std@@$$V@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAE@U_One_then_variadic_args_t@1@ABV?$allocator@H@1@@Z PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const &>, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 389
-	mov	DWORD PTR [ecx], 0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 288
-	mov	eax, ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 390
-	mov	DWORD PTR [ecx+4], 0
-; Line 391
-	mov	DWORD PTR [ecx+8], 0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 288
-	ret	8
-??$?0ABV?$allocator@H@std@@$$V@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAE@U_One_then_variadic_args_t@1@ABV?$allocator@H@1@@Z ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const &>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$forward@ABV?$allocator@H@std@@@std@@YAABV?$allocator@H@0@ABV10@@Z
-_TEXT	SEGMENT
-__Arg$ = 8						; size = 4
-??$forward@ABV?$allocator@H@std@@@std@@YAABV?$allocator@H@0@ABV10@@Z PROC ; std::forward<std::allocator<int> const &>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
-; Line 1573
-	push	ebp
-	mov	ebp, esp
-; Line 1574
-	mov	eax, DWORD PTR __Arg$[ebp]
-; Line 1575
-	pop	ebp
-	ret	0
-??$forward@ABV?$allocator@H@std@@@std@@YAABV?$allocator@H@0@ABV10@@Z ENDP ; std::forward<std::allocator<int> const &>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$narrow@HI@gsl@@YAHI@Z
-_TEXT	SEGMENT
-$T2 = -24						; size = 12
+$T2 = -36						; size = 12
+_tmp$ = -24						; size = 8
+$T3 = -16						; size = 1
+$T4 = -16						; size = 4
 __$EHRec$ = -12						; size = 12
-_u$ = 8							; size = 4
-??$narrow@HI@gsl@@YAHI@Z PROC				; gsl::narrow<int,unsigned int>, COMDAT
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 124
+___$ReturnUdt$ = 8					; size = 4
+_offset$ = 12						; size = 4
+_count$ = 16						; size = 4
+___formal$ = 20						; size = 1
+??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z PROC ; gsl::span<int,6>::make_subspan<6>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 622
 	push	ebp
 	mov	ebp, esp
 	push	-1
-	push	__ehhandler$??$narrow@HI@gsl@@YAHI@Z
+	push	__ehhandler$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 24					; 00000018H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	DWORD PTR $T4[ebp], 0
+; Line 515
+	mov	eax, DWORD PTR [ecx]
+; Line 333
+	mov	DWORD PTR _tmp$[ebp], 6
+; Line 596
+	mov	DWORD PTR _tmp$[ebp+4], eax
+; Line 599
+	test	eax, eax
+	je	SHORT $LN71@make_subsp
+; Line 494
+	mov	BYTE PTR $T3[ebp], 0
+	lea	ecx, DWORD PTR _tmp$[ebp]
+	push	DWORD PTR $T3[ebp]
+; Line 599
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 494
+	push	DWORD PTR _count$[ebp]
+	push	DWORD PTR _offset$[ebp]
+	push	DWORD PTR ___$ReturnUdt$[ebp]
+	call	?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; Line 624
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 625
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	16					; 00000010H
+$LN71@make_subsp:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN69@make_subsp:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z$4:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN39@make_subsp
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN39@make_subsp:
+	ret	0
+__ehhandler$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-28]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ENDP ; gsl::span<int,6>::make_subspan<6>
+; Function compile flags: /Ogtp
+;	COMDAT ??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_src$ = 8						; size = 8
+_dest$ = 16						; size = 8
+??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z PROC ; gsl::copy<char const ,-1,unsigned char,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 43
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	DWORD PTR $T3[ebp], 0
+; Line 50
+	mov	eax, DWORD PTR _src$[ebp]
+	cmp	DWORD PTR _dest$[ebp], eax
+	jl	SHORT $LN3@copy
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2538
+	test	eax, eax
+	jle	SHORT $LN37@copy
+; Line 2403
+	push	eax
+	push	DWORD PTR _src$[ebp+4]
+	push	DWORD PTR _dest$[ebp+4]
+	call	_memmove
+	add	esp, 12					; 0000000cH
+$LN37@copy:
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 53
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN3@copy:
+; Line 50
+	push	OFFSET ??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN54@copy:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN6@copy
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@copy:
+	ret	0
+__ehhandler$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z ENDP ; gsl::copy<char const ,-1,unsigned char,-1>
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_cont$ = 8						; size = 4
+??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z PROC ; gsl::span<char const ,-1>::span<char const ,-1><gsl::basic_string_span<char const ,-1>,void>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 428
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	esi, ecx
+; Line 427
+	mov	eax, DWORD PTR _cont$[ebp]
+	push	DWORD PTR [eax]
+	push	DWORD PTR [eax+4]
+	call	??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z	; gsl::span<char const ,-1>::span<char const ,-1>
+; Line 428
+	mov	eax, esi
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-8]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QAE@AAV?$basic_string_span@$$CBD$0?0@1@@Z ENDP ; gsl::span<char const ,-1>::span<char const ,-1><gsl::basic_string_span<char const ,-1>,void>
+; Function compile flags: /Ogtp
+;	COMDAT ?test_string_gsl_copy@@YAXXZ
+_TEXT	SEGMENT
+$T2 = -48						; size = 12
+$T3 = -36						; size = 8
+$T4 = -36						; size = 8
+$T5 = -32						; size = 4
+_bytes$ = -28						; size = 10
+__$ArrayPad$ = -16					; size = 4
+__$EHRec$ = -12						; size = 12
+?test_string_gsl_copy@@YAXXZ PROC			; test_string_gsl_copy, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 333
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?test_string_gsl_copy@@YAXXZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 36					; 00000024H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	mov	DWORD PTR __$ArrayPad$[ebp], eax
+	push	esi
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	DWORD PTR $T5[ebp], 0
+; Line 337
+	lea	eax, DWORD PTR $T4[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 337
+	push	OFFSET ??_C@_0L@CCAJJBND@iVtrau?5lDC@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 590
+	lea	esi, DWORD PTR _bytes$[ebp]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 337
+	call	??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z ; gsl::ensure_z<char const ,11>
+	add	esp, 8
+; File c:\projects\gsl\include\gsl\span
+; Line 427
+	lea	ecx, DWORD PTR $T3[ebp]
+	push	DWORD PTR [eax]
+	push	DWORD PTR [eax+4]
+	call	??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z	; gsl::span<char const ,-1>::span<char const ,-1>
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	mov	eax, DWORD PTR $T3[ebp]
+	cmp	eax, 10					; 0000000aH
+	jg	SHORT $LN72@test_strin
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2538
+	test	eax, eax
+	jle	SHORT $LN106@test_strin
+; Line 2403
+	push	eax
+	push	DWORD PTR $T3[ebp+4]
+	mov	eax, esi
+	push	eax
+	call	_memmove
+	add	esp, 12					; 0000000cH
+$LN106@test_strin:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 340
+	push	esi
+	push	10					; 0000000aH
+	call	?bar@@YAXV?$span@E$0?0@gsl@@@Z		; bar
+	add	esp, 8
+; Line 341
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	ecx, DWORD PTR __$ArrayPad$[ebp]
+	xor	ecx, ebp
+	call	@__security_check_cookie@4
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN72@test_strin:
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	push	OFFSET ??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 3
+	mov	DWORD PTR $T5[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN123@test_strin:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?test_string_gsl_copy@@YAXXZ$8:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 2
+	je	$LN75@test_strin
+	and	DWORD PTR $T5[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN75@test_strin:
+	ret	0
+__ehhandler$?test_string_gsl_copy@@YAXXZ:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-44]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?test_string_gsl_copy@@YAXXZ
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?test_string_gsl_copy@@YAXXZ ENDP			; test_string_gsl_copy
+; Function compile flags: /Ogtp
+;	COMDAT ??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+_TEXT	SEGMENT
+$T2 = -36						; size = 12
+$T3 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+__First$ = 12						; size = 8
+__Last$ = 20						; size = 8
+__Dest$ = 28						; size = 8
+??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z PROC ; std::copy<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2440
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 24					; 00000018H
+	push	esi
+	push	edi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	mov	eax, DWORD PTR __First$[ebp]
+	mov	ecx, DWORD PTR __Last$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	cmp	eax, ecx
+	jne	SHORT $LN9@copy
+	mov	edx, DWORD PTR __First$[ebp+4]
+	mov	esi, DWORD PTR __Last$[ebp+4]
+	cmp	edx, esi
+	jg	SHORT $LN9@copy
+; Line 515
+	mov	edi, DWORD PTR [ecx+4]
+	mov	eax, DWORD PTR [eax+4]
+; Line 280
+	add	edi, esi
+	add	edx, eax
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 968
+	sub	edi, edx
+; File c:\projects\gsl\include\gsl\span
+; Line 272
+	mov	ecx, DWORD PTR __Dest$[ebp+4]
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	lea	eax, DWORD PTR [edi+ecx]
+	test	eax, eax
+	js	SHORT $LN48@copy
+	mov	esi, DWORD PTR __Dest$[ebp]
+	cmp	eax, DWORD PTR [esi]
+	jg	SHORT $LN48@copy
+; Line 280
+	mov	esi, DWORD PTR [esi+4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	push	edi
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	add	esi, ecx
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	push	edx
+	push	esi
+	call	_memmove
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	ecx, DWORD PTR __Dest$[ebp]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	add	esp, 12					; 0000000cH
+; Line 2446
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	sub	edi, DWORD PTR [ecx+4]
+; Line 294
+	add	edi, esi
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2446
+	mov	DWORD PTR [eax], ecx
+	mov	DWORD PTR [eax+4], edi
+; Line 2447
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	edi
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN9@copy:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN48@copy:
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN88@copy:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-36]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z ENDP ; std::copy<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+; Function compile flags: /Ogtp
+;	COMDAT ?_Seek_to@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QAEXQAE@Z
+_TEXT	SEGMENT
+_p$ = 8							; size = 4
+?_Seek_to@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QAEXQAE@Z PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::_Seek_to, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 292
+	push	ebp
+	mov	ebp, esp
+; Line 294
+	mov	eax, DWORD PTR [ecx]
+	mov	edx, DWORD PTR _p$[ebp]
+	sub	edx, DWORD PTR [eax+4]
+	mov	DWORD PTR [ecx+4], edx
+; Line 295
+	pop	ebp
+	ret	4
+?_Seek_to@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QAEXQAE@Z ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::_Seek_to
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Unwrapped@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEPAEXZ
+_TEXT	SEGMENT
+?_Unwrapped@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEPAEXZ PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::_Unwrapped, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	mov	eax, DWORD PTR [ecx]
+	mov	eax, DWORD PTR [eax+4]
+	add	eax, DWORD PTR [ecx+4]
+; Line 281
+	ret	0
+?_Unwrapped@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEPAEXZ ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::_Unwrapped
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_n$ = 8							; size = 4
+?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::_Verify_offset, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 270
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z
 	mov	eax, DWORD PTR fs:0
 	push	eax
 	sub	esp, 12					; 0000000cH
@@ -1198,1424 +4245,670 @@ _u$ = 8							; size = 4
 	push	eax
 	lea	eax, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, eax
-; Line 127
-	mov	eax, DWORD PTR _u$[ebp]
-	test	eax, eax
-	js	SHORT $LN24@narrow
-; Line 130
+; Line 272
+	mov	edx, DWORD PTR [ecx+4]
+	add	edx, DWORD PTR _n$[ebp]
+	js	SHORT $LN3@Verify_off
+; Line 338
+	mov	eax, DWORD PTR [ecx]
+; Line 272
+	cmp	edx, DWORD PTR [eax]
+	jg	SHORT $LN3@Verify_off
+; Line 273
 	mov	ecx, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, ecx
 	pop	ecx
 	mov	esp, ebp
 	pop	ebp
-	ret	0
-$LN24@narrow:
-	xorps	xmm0, xmm0
-; Line 128
-	mov	DWORD PTR $T2[ebp+8], 0
+	ret	4
+$LN3@Verify_off:
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
 	lea	ecx, DWORD PTR $T2[ebp]
-	movq	QWORD PTR $T2[ebp], xmm0
-	call	??0narrowing_error@gsl@@QAE@XZ
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
 	push	eax
-	mov	DWORD PTR __$EHRec$[ebp+8], 1
-	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
-$LN22@narrow:
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN19@Verify_off:
 	int	3
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-__unwindfunclet$??$narrow@HI@gsl@@YAHI@Z$1:
-	lea	ecx, DWORD PTR $T2[ebp]
-	jmp	??1narrowing_error@gsl@@UAE@XZ
-__ehhandler$??$narrow@HI@gsl@@YAHI@Z:
+__ehhandler$?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z:
 	mov	edx, DWORD PTR [esp+8]
 	lea	eax, DWORD PTR [edx+12]
 	mov	ecx, DWORD PTR [edx-16]
 	xor	ecx, eax
 	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$??$narrow@HI@gsl@@YAHI@Z
+	mov	eax, OFFSET __ehfuncinfo$?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z
 	jmp	___CxxFrameHandler3
 text$x	ENDS
-??$narrow@HI@gsl@@YAHI@Z ENDP				; gsl::narrow<int,unsigned int>
+?_Verify_offset@?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::_Verify_offset
 ; Function compile flags: /Ogtp
-;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z
+;	COMDAT ??0?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@E$0?0@2@H@Z
 _TEXT	SEGMENT
-__$EHRec$ = -12						; size = 12
-_data$ = 8						; size = 4
-_ext$ = 12						; size = 1
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z PROC ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >, COMDAT
+_span$ = 8						; size = 4
+_idx$ = 12						; size = 4
+??0?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@E$0?0@2@H@Z PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::span_iterator<gsl::span<unsigned char,-1>,0>, COMDAT
 ; _this$ = ecx
 ; File c:\projects\gsl\include\gsl\span
-; Line 597
+; Line 146
 	push	ebp
 	mov	ebp, esp
-	push	-1
-	push	__ehhandler$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z
-	mov	eax, DWORD PTR fs:0
-	push	eax
-	mov	eax, DWORD PTR ___security_cookie
-	xor	eax, ebp
-	push	eax
-	lea	eax, DWORD PTR __$EHRec$[ebp]
-	mov	DWORD PTR fs:0, eax
-; Line 596
-	mov	eax, DWORD PTR _data$[ebp]
-	mov	DWORD PTR [ecx+4], eax
-; Line 600
-	mov	eax, ecx
-; Line 333
-	mov	DWORD PTR [ecx], 0
-; Line 600
-	mov	ecx, DWORD PTR __$EHRec$[ebp]
-	mov	DWORD PTR fs:0, ecx
-	pop	ecx
-	mov	esp, ebp
-	pop	ebp
-	ret	8
-_TEXT	ENDS
-;	COMDAT text$x
-text$x	SEGMENT
-__ehhandler$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z:
-	mov	edx, DWORD PTR [esp+8]
-	lea	eax, DWORD PTR [edx+12]
-	mov	ecx, DWORD PTR [edx-4]
-	xor	ecx, eax
-	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z
-	jmp	___CxxFrameHandler3
-text$x	ENDS
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QAE@PBHV?$extent_type@$0A@@details@2@@Z ENDP ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >
-; Function compile flags: /Ogtp
-;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
-_TEXT	SEGMENT
-__$EHRec$ = -12						; size = 12
-_data$ = 8						; size = 4
-_ext$ = 12						; size = 1
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >, COMDAT
-; _this$ = ecx
-; File c:\projects\gsl\include\gsl\span
-; Line 597
-	push	ebp
-	mov	ebp, esp
-	push	-1
-	push	__ehhandler$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
-	mov	eax, DWORD PTR fs:0
-	push	eax
-	mov	eax, DWORD PTR ___security_cookie
-	xor	eax, ebp
-	push	eax
-	lea	eax, DWORD PTR __$EHRec$[ebp]
-	mov	DWORD PTR fs:0, eax
-; Line 596
-	mov	eax, DWORD PTR _data$[ebp]
-	mov	DWORD PTR [ecx+4], eax
-; Line 600
-	mov	eax, ecx
-; Line 333
-	mov	DWORD PTR [ecx], 0
-; Line 600
-	mov	ecx, DWORD PTR __$EHRec$[ebp]
-	mov	DWORD PTR fs:0, ecx
-	pop	ecx
-	mov	esp, ebp
-	pop	ebp
-	ret	8
-_TEXT	ENDS
-;	COMDAT text$x
-text$x	SEGMENT
-__ehhandler$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z:
-	mov	edx, DWORD PTR [esp+8]
-	lea	eax, DWORD PTR [edx+12]
-	mov	ecx, DWORD PTR [edx-4]
-	xor	ecx, eax
-	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z
-	jmp	___CxxFrameHandler3
-text$x	ENDS
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QAE@PAHV?$extent_type@$0A@@details@2@@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >
-; Function compile flags: /Ogtp
-;	COMDAT ?size@?$extent_type@$0A@@details@gsl@@QBEHXZ
-_TEXT	SEGMENT
-?size@?$extent_type@$0A@@details@gsl@@QBEHXZ PROC	; gsl::details::extent_type<0>::size, COMDAT
-; _this$ = ecx
-; File c:\projects\gsl\include\gsl\span
-; Line 323
-	xor	eax, eax
-	ret	0
-?size@?$extent_type@$0A@@details@gsl@@QBEHXZ ENDP	; gsl::details::extent_type<0>::size
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??0?$extent_type@$0A@@details@gsl@@QAE@XZ
-_TEXT	SEGMENT
-??0?$extent_type@$0A@@details@gsl@@QAE@XZ PROC		; gsl::details::extent_type<0>::extent_type<0>, COMDAT
-; _this$ = ecx
-; File c:\projects\gsl\include\gsl\span
-; Line 311
-	mov	eax, ecx
-	ret	0
-??0?$extent_type@$0A@@details@gsl@@QAE@XZ ENDP		; gsl::details::extent_type<0>::extent_type<0>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$forward@AAH@std@@YAAAHAAH@Z
-_TEXT	SEGMENT
-__Arg$ = 8						; size = 4
-??$forward@AAH@std@@YAAAHAAH@Z PROC			; std::forward<int &>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
-; Line 1573
-	push	ebp
-	mov	ebp, esp
-; Line 1574
-	mov	eax, DWORD PTR __Arg$[ebp]
-; Line 1575
-	pop	ebp
-	ret	0
-??$forward@AAH@std@@YAAAHAAH@Z ENDP			; std::forward<int &>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z
-_TEXT	SEGMENT
-__Arg$ = 8						; size = 4
-??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z PROC ; std::forward<gsl::fail_fast>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\type_traits
-; Line 1573
-	push	ebp
-	mov	ebp, esp
-; Line 1574
-	mov	eax, DWORD PTR __Arg$[ebp]
-; Line 1575
-	pop	ebp
-	ret	0
-??$forward@Ufail_fast@gsl@@@std@@YA$$QAUfail_fast@gsl@@AAU12@@Z ENDP ; std::forward<gsl::fail_fast>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Destroy_range@V?$allocator@H@std@@@std@@YAXPAH0AAV?$allocator@H@0@@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-__Al$ = 16						; size = 4
-??$_Destroy_range@V?$allocator@H@std@@@std@@YAXPAH0AAV?$allocator@H@0@@Z PROC ; std::_Destroy_range<std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 1161
-	ret	0
-??$_Destroy_range@V?$allocator@H@std@@@std@@YAXPAH0AAV?$allocator@H@0@@Z ENDP ; std::_Destroy_range<std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Deallocate@$07$0A@@std@@YAXPAXI@Z
-_TEXT	SEGMENT
-__Ptr$ = 8						; size = 4
-__Bytes$ = 12						; size = 4
-??$_Deallocate@$07$0A@@std@@YAXPAXI@Z PROC		; std::_Deallocate<8,0>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 199
-	push	ebp
-	mov	ebp, esp
-; Line 201
-	mov	ecx, DWORD PTR __Bytes$[ebp]
-	cmp	ecx, 4096				; 00001000H
-	jb	SHORT $LN15@Deallocate
-; Line 118
-	mov	eax, DWORD PTR __Ptr$[ebp]
-	add	ecx, 35					; 00000023H
-	mov	edx, DWORD PTR [eax-4]
-; Line 131
-	sub	eax, edx
-; Line 132
-	add	eax, -4					; fffffffcH
-	cmp	eax, 31					; 0000001fH
-	jbe	SHORT $LN13@Deallocate
-	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN15@Deallocate:
-; Line 201
-	mov	edx, DWORD PTR __Ptr$[ebp]
-$LN13@Deallocate:
-; Line 207
-	mov	DWORD PTR __Bytes$[ebp], ecx
-	mov	DWORD PTR __Ptr$[ebp], edx
-; Line 208
-	pop	ebp
-; Line 207
-	jmp	??3@YAXPAXI@Z				; operator delete
-??$_Deallocate@$07$0A@@std@@YAXPAXI@Z ENDP		; std::_Deallocate<8,0>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Allocate@$07U_Default_allocate_traits@std@@$0A@@std@@YAPAXI@Z
-_TEXT	SEGMENT
-__Bytes$ = 8						; size = 4
-??$_Allocate@$07U_Default_allocate_traits@std@@$0A@@std@@YAPAXI@Z PROC ; std::_Allocate<8,std::_Default_allocate_traits,0>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 180
-	push	ebp
-	mov	ebp, esp
-; Line 182
-	mov	ecx, DWORD PTR __Bytes$[ebp]
-	cmp	ecx, 4096				; 00001000H
-	jb	SHORT $LN2@Allocate
-; Line 93
-	lea	eax, DWORD PTR [ecx+35]
-; Line 94
-	or	edx, -1
-	cmp	eax, ecx
-	cmovbe	eax, edx
-; Line 52
-	push	eax
-	call	??2@YAPAXI@Z				; operator new
-; Line 100
-	mov	ecx, eax
-; Line 52
-	add	esp, 4
-; Line 101
-	test	ecx, ecx
-	je	SHORT $LN11@Allocate
-; Line 103
-	lea	eax, DWORD PTR [ecx+35]
-	and	eax, -32				; ffffffe0H
-; Line 104
-	mov	DWORD PTR [eax-4], ecx
-; Line 194
-	pop	ebp
-	ret	0
-$LN11@Allocate:
-; Line 101
-	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN2@Allocate:
-; Line 188
-	test	ecx, ecx
-	je	SHORT $LN3@Allocate
-; Line 52
-	mov	DWORD PTR __Bytes$[ebp], ecx
-; Line 194
-	pop	ebp
-; Line 52
-	jmp	??2@YAPAXI@Z				; operator new
-$LN3@Allocate:
-; Line 193
-	xor	eax, eax
-; Line 194
-	pop	ebp
-	ret	0
-??$_Allocate@$07U_Default_allocate_traits@std@@$0A@@std@@YAPAXI@Z ENDP ; std::_Allocate<8,std::_Default_allocate_traits,0>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Range_construct_or_tidy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEXPBH0Uforward_iterator_tag@1@@Z
-_TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-___formal$ = 16						; size = 1
-??$_Range_construct_or_tidy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEXPBH0Uforward_iterator_tag@1@@Z PROC ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 704
-	push	ebp
-	mov	ebp, esp
-	push	ebx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 1235
-	mov	ebx, DWORD PTR __Last$[ebp]
-	sub	ebx, DWORD PTR __First$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 704
-	push	edi
-	mov	edi, ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 1235
-	mov	eax, ebx
-	sar	eax, 2
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1873
-	mov	DWORD PTR [edi], 0
-; Line 1874
-	mov	DWORD PTR [edi+4], 0
-; Line 1875
-	mov	DWORD PTR [edi+8], 0
-; Line 1877
-	test	eax, eax
-	je	SHORT $LN5@Range_cons
-; Line 1882
-	cmp	eax, 1073741823				; 3fffffffH
-	ja	SHORT $LN153@Range_cons
-	push	esi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 25
-	lea	esi, DWORD PTR [eax*4]
-; Line 182
-	cmp	esi, 4096				; 00001000H
-	jb	SHORT $LN59@Range_cons
-; Line 93
-	lea	eax, DWORD PTR [esi+35]
-; Line 94
-	or	ecx, -1
-	cmp	eax, esi
-	cmovbe	eax, ecx
-; Line 52
-	push	eax
-	call	??2@YAPAXI@Z				; operator new
-; Line 100
-	mov	ecx, eax
-; Line 52
-	add	esp, 4
-; Line 101
-	test	ecx, ecx
-	je	SHORT $LN68@Range_cons
-; Line 103
-	lea	eax, DWORD PTR [ecx+35]
-	and	eax, -32				; ffffffe0H
-; Line 104
-	mov	DWORD PTR [eax-4], ecx
-; Line 184
-	jmp	SHORT $LN58@Range_cons
-$LN68@Range_cons:
-; Line 101
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN59@Range_cons:
-; Line 188
-	test	esi, esi
-	je	SHORT $LN60@Range_cons
-; Line 52
-	push	esi
-	call	??2@YAPAXI@Z				; operator new
-	add	esp, 4
-; Line 190
-	jmp	SHORT $LN58@Range_cons
-$LN60@Range_cons:
-; Line 193
-	xor	eax, eax
-$LN58@Range_cons:
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1887
-	mov	DWORD PTR [edi], eax
-; Line 1888
-	mov	DWORD PTR [edi+4], eax
-; Line 1889
-	mov	eax, DWORD PTR [edi]
-	add	eax, esi
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2403
-	push	ebx
-	push	DWORD PTR __First$[ebp]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1889
-	mov	DWORD PTR [edi+8], eax
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 2401
-	mov	esi, DWORD PTR [edi]
-; Line 2403
-	push	esi
-	call	_memmove
-	add	esp, 12					; 0000000cH
-; Line 2404
-	lea	eax, DWORD PTR [ebx+esi]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 708
-	mov	DWORD PTR [edi+4], eax
-	pop	esi
-$LN5@Range_cons:
-; Line 714
-	pop	edi
-	pop	ebx
-	pop	ebp
-	ret	12					; 0000000cH
-$LN153@Range_cons:
-; Line 1884
-	call	?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ; std::vector<int,std::allocator<int> >::_Xlength
-$LN151@Range_cons:
-	int	3
-??$_Range_construct_or_tidy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEXPBH0Uforward_iterator_tag@1@@Z ENDP ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$?0ABV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAE@ABV?$allocator@H@1@@Z
-_TEXT	SEGMENT
-__Al$ = 8						; size = 4
-??$?0ABV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAE@ABV?$allocator@H@1@@Z PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const &,void>, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 389
-	mov	DWORD PTR [ecx], 0
-; Line 431
-	mov	eax, ecx
-; Line 390
-	mov	DWORD PTR [ecx+4], 0
-; Line 391
-	mov	DWORD PTR [ecx+8], 0
-; Line 431
-	ret	4
-??$?0ABV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAE@ABV?$allocator@H@1@@Z ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const &,void>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
-_TEXT	SEGMENT
-$T2 = -40						; size = 12
-$T3 = -28						; size = 12
-$T4 = -16						; size = 4
-__$EHRec$ = -12						; size = 12
-_cont$ = 8						; size = 4
-??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z PROC ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>, COMDAT
-; _this$ = ecx
-; File c:\projects\gsl\include\gsl\span
-; Line 428
-	push	ebp
-	mov	ebp, esp
-	push	-1
-	push	__ehhandler$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
-	mov	eax, DWORD PTR fs:0
-	push	eax
-	sub	esp, 28					; 0000001cH
-	mov	eax, DWORD PTR ___security_cookie
-	xor	eax, ebp
-	push	eax
-	lea	eax, DWORD PTR __$EHRec$[ebp]
-	mov	DWORD PTR fs:0, eax
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 591
-	mov	eax, DWORD PTR _cont$[ebp]
-; File c:\projects\gsl\include\gsl\span
-; Line 428
-	mov	DWORD PTR $T4[ebp], 0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1704
-	mov	edx, DWORD PTR [eax]
-	mov	eax, DWORD PTR [eax+4]
-	sub	eax, edx
-	sar	eax, 2
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 127
-	test	eax, eax
-	js	SHORT $LN102@span
-; File c:\projects\gsl\include\gsl\span
-; Line 336
+; Line 145
+	mov	eax, DWORD PTR _span$[ebp]
 	mov	DWORD PTR [ecx], eax
-; Line 596
-	mov	DWORD PTR [ecx+4], edx
-; Line 598
-	mov	DWORD PTR __$EHRec$[ebp+8], -1
-; Line 599
-	test	edx, edx
-	jne	SHORT $LN54@span
-	test	eax, eax
-	jne	SHORT $LN103@span
-$LN54@span:
-; Line 428
+	mov	eax, DWORD PTR _idx$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 146
 	mov	eax, ecx
+	pop	ebp
+	ret	8
+??0?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@E$0?0@2@H@Z ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::span_iterator<gsl::span<unsigned char,-1>,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Unwrapped@?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QBEPBDXZ
+_TEXT	SEGMENT
+?_Unwrapped@?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QBEPBDXZ PROC ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::_Unwrapped, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	mov	eax, DWORD PTR [ecx]
+	mov	eax, DWORD PTR [eax+4]
+	add	eax, DWORD PTR [ecx+4]
+; Line 281
+	ret	0
+?_Unwrapped@?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QBEPBDXZ ENDP ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::_Unwrapped
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_lhs$ = 8						; size = 8
+_rhs$ = 16						; size = 8
+?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z PROC ; gsl::details::_Verify_range, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 265
+	mov	eax, DWORD PTR _lhs$[ebp]
+	cmp	eax, DWORD PTR _rhs$[ebp]
+	jne	SHORT $LN3@Verify_ran
+	mov	eax, DWORD PTR _lhs$[ebp+4]
+	cmp	eax, DWORD PTR _rhs$[ebp+4]
+	jg	SHORT $LN3@Verify_ran
+; Line 267
 	mov	ecx, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, ecx
 	pop	ecx
 	mov	esp, ebp
 	pop	ebp
-	ret	4
-$LN102@span:
-	xorps	xmm0, xmm0
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 128
-	mov	DWORD PTR $T3[ebp+8], 0
-	lea	ecx, DWORD PTR $T3[ebp]
-	movq	QWORD PTR $T3[ebp], xmm0
-	call	??0narrowing_error@gsl@@QAE@XZ
-	push	eax
-	mov	DWORD PTR __$EHRec$[ebp+8], 1
-	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
-$LN103@span:
-; File c:\projects\gsl\include\gsl\span
-; Line 599
-	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	ret	0
+$LN3@Verify_ran:
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
 	lea	ecx, DWORD PTR $T2[ebp]
 	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
 	push	eax
-	mov	DWORD PTR __$EHRec$[ebp+8], 4
-	mov	DWORD PTR $T4[ebp], 2
 	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-$LN100@span:
+$LN15@Verify_ran:
 	int	3
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-__unwindfunclet$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z$1:
-	lea	ecx, DWORD PTR $T3[ebp]
-	jmp	??1narrowing_error@gsl@@UAE@XZ
-__unwindfunclet$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z$5:
-	mov	eax, DWORD PTR $T4[ebp]
-	and	eax, 2
-	je	$LN60@span
-	and	DWORD PTR $T4[ebp], -3			; fffffffdH
-	lea	ecx, DWORD PTR $T2[ebp]
-	jmp	??1fail_fast@gsl@@UAE@XZ
-$LN60@span:
-	ret	0
-__ehhandler$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z:
+__ehhandler$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z:
 	mov	edx, DWORD PTR [esp+8]
 	lea	eax, DWORD PTR [edx+12]
-	mov	ecx, DWORD PTR [edx-32]
+	mov	ecx, DWORD PTR [edx-16]
 	xor	ecx, eax
 	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z
+	mov	eax, OFFSET __ehfuncinfo$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z
 	jmp	___CxxFrameHandler3
 text$x	ENDS
-??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QAE@AAV?$vector@HV?$allocator@H@std@@@std@@@Z ENDP ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>
+?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@12@0@Z ENDP ; gsl::details::_Verify_range
 ; Function compile flags: /Ogtp
-;	COMDAT ?end@?$initializer_list@H@std@@QBEPBHXZ
+;	COMDAT ??0?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@$$CBD$0?0@2@H@Z
 _TEXT	SEGMENT
-?end@?$initializer_list@H@std@@QBEPBHXZ PROC		; std::initializer_list<int>::end, COMDAT
+_span$ = 8						; size = 4
+_idx$ = 12						; size = 4
+??0?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@$$CBD$0?0@2@H@Z PROC ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::span_iterator<gsl::span<char const ,-1>,0>, COMDAT
 ; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\initializer_list
-; Line 47
-	mov	eax, DWORD PTR [ecx+4]
-; Line 48
-	ret	0
-?end@?$initializer_list@H@std@@QBEPBHXZ ENDP		; std::initializer_list<int>::end
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?begin@?$initializer_list@H@std@@QBEPBHXZ
-_TEXT	SEGMENT
-?begin@?$initializer_list@H@std@@QBEPBHXZ PROC		; std::initializer_list<int>::begin, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\initializer_list
-; Line 42
-	mov	eax, DWORD PTR [ecx]
-; Line 43
-	ret	0
-?begin@?$initializer_list@H@std@@QBEPBHXZ ENDP		; std::initializer_list<int>::begin
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??0?$initializer_list@H@std@@QAE@PBH0@Z
-_TEXT	SEGMENT
-__First_arg$ = 8					; size = 4
-__Last_arg$ = 12					; size = 4
-??0?$initializer_list@H@std@@QAE@PBH0@Z PROC		; std::initializer_list<int>::initializer_list<int>, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\initializer_list
-; Line 37
+; File c:\projects\gsl\include\gsl\span
+; Line 146
 	push	ebp
 	mov	ebp, esp
-; Line 36
-	mov	eax, DWORD PTR __First_arg$[ebp]
+; Line 145
+	mov	eax, DWORD PTR _span$[ebp]
 	mov	DWORD PTR [ecx], eax
-	mov	eax, DWORD PTR __Last_arg$[ebp]
+	mov	eax, DWORD PTR _idx$[ebp]
 	mov	DWORD PTR [ecx+4], eax
-; Line 38
+; Line 146
 	mov	eax, ecx
 	pop	ebp
 	ret	8
-??0?$initializer_list@H@std@@QAE@PBH0@Z ENDP		; std::initializer_list<int>::initializer_list<int>
+??0?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@$$CBD$0?0@2@H@Z ENDP ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::span_iterator<gsl::span<char const ,-1>,0>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ
+;	COMDAT ??$?0V?$span@$$CBD$0?0@gsl@@X@?$basic_string_span@$$CBD$0?0@gsl@@QAE@ABV?$span@$$CBD$0?0@1@@Z
 _TEXT	SEGMENT
-?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ PROC ; std::vector<int,std::allocator<int> >::_Xlength, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1926
-	push	OFFSET ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long@
-	call	?_Xlength_error@std@@YAXPBD@Z		; std::_Xlength_error
-$LN3@Xlength:
-	int	3
-?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ENDP ; std::vector<int,std::allocator<int> >::_Xlength
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AAEXXZ
-_TEXT	SEGMENT
-?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AAEXXZ PROC	; std::vector<int,std::allocator<int> >::_Tidy, COMDAT
+_cont$ = 8						; size = 4
+??$?0V?$span@$$CBD$0?0@gsl@@X@?$basic_string_span@$$CBD$0?0@gsl@@QAE@ABV?$span@$$CBD$0?0@1@@Z PROC ; gsl::basic_string_span<char const ,-1>::basic_string_span<char const ,-1><gsl::span<char const ,-1>,void>, COMDAT
 ; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1910
-	push	esi
-	mov	esi, ecx
-; Line 1913
-	mov	eax, DWORD PTR [esi]
-	test	eax, eax
-	je	SHORT $LN2@Tidy
-; Line 1715
-	mov	edx, DWORD PTR [esi+8]
-	sub	edx, eax
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 992
-	and	edx, -4					; fffffffcH
-; Line 201
-	cmp	edx, 4096				; 00001000H
-	jb	SHORT $LN78@Tidy
-; Line 118
-	mov	ecx, DWORD PTR [eax-4]
-	add	edx, 35					; 00000023H
-; Line 131
-	sub	eax, ecx
-; Line 132
-	add	eax, -4					; fffffffcH
-	cmp	eax, 31					; 0000001fH
-	ja	SHORT $LN75@Tidy
-; Line 133
-	mov	eax, ecx
-$LN78@Tidy:
-; Line 207
-	push	edx
-	push	eax
-	call	??3@YAXPAXI@Z				; operator delete
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1918
-	mov	DWORD PTR [esi], 0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 207
-	add	esp, 8
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1919
-	mov	DWORD PTR [esi+4], 0
-; Line 1920
-	mov	DWORD PTR [esi+8], 0
-$LN2@Tidy:
-; Line 1922
-	pop	esi
-	ret	0
-$LN75@Tidy:
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 132
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN100@Tidy:
-	int	3
-?_Tidy@?$vector@HV?$allocator@H@std@@@std@@AAEXXZ ENDP	; std::vector<int,std::allocator<int> >::_Tidy
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Buy@?$vector@HV?$allocator@H@std@@@std@@AAE_NI@Z
-_TEXT	SEGMENT
-__Newcapacity$ = 8					; size = 4
-?_Buy@?$vector@HV?$allocator@H@std@@@std@@AAE_NI@Z PROC	; std::vector<int,std::allocator<int> >::_Buy, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1872
+; File c:\projects\gsl\include\gsl\string_span
+; Line 244
 	push	ebp
 	mov	ebp, esp
-	push	esi
-	mov	esi, ecx
-	push	edi
-; Line 1877
-	mov	edi, DWORD PTR __Newcapacity$[ebp]
-	mov	DWORD PTR [esi], 0
-	mov	DWORD PTR [esi+4], 0
-	mov	DWORD PTR [esi+8], 0
-	test	edi, edi
-	jne	SHORT $LN2@Buy
-; Line 1879
-	pop	edi
-	xor	al, al
-; Line 1892
-	pop	esi
+; Line 243
+	mov	edx, DWORD PTR _cont$[ebp]
+	mov	eax, DWORD PTR [edx]
+	mov	DWORD PTR [ecx], eax
+	mov	eax, DWORD PTR [edx+4]
+	mov	DWORD PTR [ecx+4], eax
+; Line 244
+	mov	eax, ecx
 	pop	ebp
 	ret	4
-$LN2@Buy:
-; Line 1882
-	cmp	edi, 1073741823				; 3fffffffH
-	ja	SHORT $LN99@Buy
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 25
-	shl	edi, 2
-; Line 182
-	cmp	edi, 4096				; 00001000H
-	jb	SHORT $LN45@Buy
-; Line 93
-	lea	eax, DWORD PTR [edi+35]
-; Line 94
-	or	ecx, -1
-	cmp	eax, edi
-	cmovbe	eax, ecx
-; Line 52
-	push	eax
-	call	??2@YAPAXI@Z				; operator new
-; Line 100
-	mov	ecx, eax
-; Line 52
-	add	esp, 4
-; Line 101
-	test	ecx, ecx
-	je	SHORT $LN54@Buy
-; Line 103
-	lea	eax, DWORD PTR [ecx+35]
-	and	eax, -32				; ffffffe0H
-; Line 104
-	mov	DWORD PTR [eax-4], ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1887
-	mov	DWORD PTR [esi], eax
-; Line 1888
-	mov	DWORD PTR [esi+4], eax
-; Line 1889
-	mov	eax, DWORD PTR [esi]
-	add	eax, edi
-	mov	DWORD PTR [esi+8], eax
-; Line 1891
-	mov	al, 1
-	pop	edi
-; Line 1892
-	pop	esi
-	pop	ebp
-	ret	4
-$LN54@Buy:
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 101
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN45@Buy:
-; Line 188
-	test	edi, edi
-	je	SHORT $LN46@Buy
-; Line 52
-	push	edi
-	call	??2@YAPAXI@Z				; operator new
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1887
-	mov	DWORD PTR [esi], eax
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 52
-	add	esp, 4
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1888
-	mov	DWORD PTR [esi+4], eax
-; Line 1889
-	mov	eax, DWORD PTR [esi]
-	add	eax, edi
-	mov	DWORD PTR [esi+8], eax
-; Line 1891
-	mov	al, 1
-	pop	edi
-; Line 1892
-	pop	esi
-	pop	ebp
-	ret	4
-$LN46@Buy:
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 193
-	xor	eax, eax
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1887
-	mov	DWORD PTR [esi], eax
-; Line 1888
-	mov	DWORD PTR [esi+4], eax
-; Line 1889
-	mov	eax, DWORD PTR [esi]
-	add	eax, edi
-	mov	DWORD PTR [esi+8], eax
-; Line 1891
-	mov	al, 1
-	pop	edi
-; Line 1892
-	pop	esi
-	pop	ebp
-	ret	4
-$LN99@Buy:
-; Line 1884
-	call	?_Xlength@?$vector@HV?$allocator@H@std@@@std@@CAXXZ ; std::vector<int,std::allocator<int> >::_Xlength
-$LN97@Buy:
-	int	3
-?_Buy@?$vector@HV?$allocator@H@std@@@std@@AAE_NI@Z ENDP	; std::vector<int,std::allocator<int> >::_Buy
+??$?0V?$span@$$CBD$0?0@gsl@@X@?$basic_string_span@$$CBD$0?0@gsl@@QAE@ABV?$span@$$CBD$0?0@1@@Z ENDP ; gsl::basic_string_span<char const ,-1>::basic_string_span<char const ,-1><gsl::span<char const ,-1>,void>
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
-;	COMDAT ?_Destroy@?$vector@HV?$allocator@H@std@@@std@@AAEXPAH0@Z
+;	COMDAT ??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z
 _TEXT	SEGMENT
-__First$ = 8						; size = 4
-__Last$ = 12						; size = 4
-?_Destroy@?$vector@HV?$allocator@H@std@@@std@@AAEXPAH0@Z PROC ; std::vector<int,std::allocator<int> >::_Destroy, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1850
-	ret	8
-?_Destroy@?$vector@HV?$allocator@H@std@@@std@@AAEXPAH0@Z ENDP ; std::vector<int,std::allocator<int> >::_Destroy
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?capacity@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ
-_TEXT	SEGMENT
-?capacity@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ PROC ; std::vector<int,std::allocator<int> >::capacity, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1715
-	mov	eax, DWORD PTR [ecx+8]
-	sub	eax, DWORD PTR [ecx]
-	sar	eax, 2
-; Line 1716
-	ret	0
-?capacity@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ ENDP ; std::vector<int,std::allocator<int> >::capacity
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?max_size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ
-_TEXT	SEGMENT
-?max_size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ PROC ; std::vector<int,std::allocator<int> >::max_size, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1709
-	mov	eax, 1073741823				; 3fffffffH
-; Line 1711
-	ret	0
-?max_size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ ENDP ; std::vector<int,std::allocator<int> >::max_size
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ
-_TEXT	SEGMENT
-?size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ PROC	; std::vector<int,std::allocator<int> >::size, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1704
-	mov	eax, DWORD PTR [ecx+4]
-	sub	eax, DWORD PTR [ecx]
-	sar	eax, 2
-; Line 1705
-	ret	0
-?size@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ ENDP	; std::vector<int,std::allocator<int> >::size
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?data@?$vector@HV?$allocator@H@std@@@std@@QAEPAHXZ
-_TEXT	SEGMENT
-?data@?$vector@HV?$allocator@H@std@@@std@@QAEPAHXZ PROC	; std::vector<int,std::allocator<int> >::data, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1609
-	mov	eax, DWORD PTR [ecx]
-; Line 1610
-	ret	0
-?data@?$vector@HV?$allocator@H@std@@@std@@QAEPAHXZ ENDP	; std::vector<int,std::allocator<int> >::data
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ
-_TEXT	SEGMENT
-??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ PROC	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 893
-	push	esi
-	mov	esi, ecx
-; Line 1913
-	mov	eax, DWORD PTR [esi]
-	test	eax, eax
-	je	SHORT $LN4@vector
-; Line 1715
-	mov	edx, DWORD PTR [esi+8]
-	sub	edx, eax
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 992
-	and	edx, -4					; fffffffcH
-; Line 201
-	cmp	edx, 4096				; 00001000H
-	jb	SHORT $LN80@vector
-; Line 118
-	mov	ecx, DWORD PTR [eax-4]
-	add	edx, 35					; 00000023H
-; Line 131
-	sub	eax, ecx
-; Line 132
-	add	eax, -4					; fffffffcH
-	cmp	eax, 31					; 0000001fH
-	ja	SHORT $LN77@vector
-; Line 133
-	mov	eax, ecx
-$LN80@vector:
-; Line 207
-	push	edx
-	push	eax
-	call	??3@YAXPAXI@Z				; operator delete
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1918
-	mov	DWORD PTR [esi], 0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 207
-	add	esp, 8
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1919
-	mov	DWORD PTR [esi+4], 0
-; Line 1920
-	mov	DWORD PTR [esi+8], 0
-$LN4@vector:
-	pop	esi
-; Line 895
-	ret	0
-$LN77@vector:
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 132
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN103@vector:
-	int	3
-??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ ENDP	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??0?$vector@HV?$allocator@H@std@@@std@@QAE@V?$initializer_list@H@1@ABV?$allocator@H@1@@Z
-_TEXT	SEGMENT
-__Ilist$ = 8						; size = 8
-$T1 = 12						; size = 1
-__Al$ = 16						; size = 4
-??0?$vector@HV?$allocator@H@std@@@std@@QAE@V?$initializer_list@H@1@ABV?$allocator@H@1@@Z PROC ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 728
-	push	ebp
-	mov	ebp, esp
-	push	esi
-; Line 729
-	push	DWORD PTR $T1[ebp]
-	mov	esi, ecx
-	push	DWORD PTR __Ilist$[ebp+4]
-	push	DWORD PTR __Ilist$[ebp]
-; Line 389
-	mov	DWORD PTR [esi], 0
-; Line 390
-	mov	DWORD PTR [esi+4], 0
-; Line 391
-	mov	DWORD PTR [esi+8], 0
-; Line 729
-	call	??$_Range_construct_or_tidy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
-; Line 730
-	mov	eax, esi
-	pop	esi
-	pop	ebp
-	ret	12					; 0000000cH
-??0?$vector@HV?$allocator@H@std@@@std@@QAE@V?$initializer_list@H@1@ABV?$allocator@H@1@@Z ENDP ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 307
-	mov	eax, ecx
-; Line 308
-	ret	0
-?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 302
-	mov	eax, ecx
-; Line 303
-	ret	0
-?_Get_second@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$allocator@H@2@XZ
-_TEXT	SEGMENT
-?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$allocator@H@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 297
-	mov	eax, ecx
-; Line 298
-	ret	0
-?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QBEABV?$allocator@H@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$allocator@H@2@XZ
-_TEXT	SEGMENT
-?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$allocator@H@2@XZ PROC ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 292
-	mov	eax, ecx
-; Line 293
-	ret	0
-?_Get_first@?$_Compressed_pair@V?$allocator@H@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QAEAAV?$allocator@H@2@XZ ENDP ; std::_Compressed_pair<std::allocator<int>,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QAE@XZ
-_TEXT	SEGMENT
-??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QAE@XZ PROC ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 389
-	mov	DWORD PTR [ecx], 0
-; Line 393
-	mov	eax, ecx
-	mov	DWORD PTR [ecx+4], 0
-	mov	DWORD PTR [ecx+8], 0
-	ret	0
-??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QAE@XZ ENDP ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ
-_TEXT	SEGMENT
-?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 601
-	lea	eax, DWORD PTR [ecx+8]
-; Line 602
-	ret	0
-?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ
-_TEXT	SEGMENT
-?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 596
-	lea	eax, DWORD PTR [ecx+8]
-; Line 597
-	ret	0
-?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ
-_TEXT	SEGMENT
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 591
-	lea	eax, DWORD PTR [ecx+4]
-; Line 592
-	ret	0
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ
-_TEXT	SEGMENT
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 586
-	lea	eax, DWORD PTR [ecx+4]
-; Line 587
-	ret	0
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ
-_TEXT	SEGMENT
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 581
-	mov	eax, ecx
-; Line 582
-	ret	0
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABQAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ
-_TEXT	SEGMENT
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 576
-	mov	eax, ecx
-; Line 577
-	ret	0
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAPAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 560
-	mov	eax, ecx
-; Line 561
-	ret	0
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 555
-	mov	eax, ecx
-; Line 556
-	ret	0
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$allocator@H@2@XZ
-_TEXT	SEGMENT
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$allocator@H@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 550
-	mov	eax, ecx
-; Line 551
-	ret	0
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QBEABV?$allocator@H@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$allocator@H@2@XZ
-_TEXT	SEGMENT
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$allocator@H@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 545
-	mov	eax, ecx
-; Line 546
-	ret	0
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEAAV?$allocator@H@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEXXZ
-_TEXT	SEGMENT
-?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEXXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 536
-	ret	0
-?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QAEXXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?max_size@?$_Default_allocator_traits@V?$allocator@H@std@@@std@@SAIABV?$allocator@H@2@@Z
-_TEXT	SEGMENT
-___formal$ = 8						; size = 4
-?max_size@?$_Default_allocator_traits@V?$allocator@H@std@@@std@@SAIABV?$allocator@H@2@@Z PROC ; std::_Default_allocator_traits<std::allocator<int> >::max_size, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 892
-	mov	eax, 1073741823				; 3fffffffH
-; Line 893
-	ret	0
-?max_size@?$_Default_allocator_traits@V?$allocator@H@std@@@std@@SAIABV?$allocator@H@2@@Z ENDP ; std::_Default_allocator_traits<std::allocator<int> >::max_size
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?allocate@?$allocator@H@std@@QAEPAHI@Z
-_TEXT	SEGMENT
-__Count$ = 8						; size = 4
-?allocate@?$allocator@H@std@@QAEPAHI@Z PROC		; std::allocator<int>::allocate, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 996
-	push	ebp
-	mov	ebp, esp
-; Line 25
-	mov	eax, DWORD PTR __Count$[ebp]
-	lea	ecx, DWORD PTR [eax*4]
-; Line 26
-	cmp	eax, 1073741823				; 3fffffffH
-	jbe	SHORT $LN4@allocate
-; Line 29
-	or	ecx, -1
-; Line 182
-	jmp	SHORT $LN27@allocate
-$LN4@allocate:
-	cmp	ecx, 4096				; 00001000H
-	jb	SHORT $LN7@allocate
-$LN27@allocate:
-; Line 93
-	lea	eax, DWORD PTR [ecx+35]
-; Line 94
-	or	edx, -1
-	cmp	eax, ecx
-	cmovbe	eax, edx
-; Line 52
-	push	eax
-	call	??2@YAPAXI@Z				; operator new
-; Line 100
-	mov	ecx, eax
-; Line 52
-	add	esp, 4
-; Line 101
-	test	ecx, ecx
-	je	SHORT $LN16@allocate
-; Line 103
-	lea	eax, DWORD PTR [ecx+35]
-	and	eax, -32				; ffffffe0H
-; Line 104
-	mov	DWORD PTR [eax-4], ecx
-; Line 998
-	pop	ebp
-	ret	4
-$LN16@allocate:
-; Line 101
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN7@allocate:
-; Line 188
-	test	ecx, ecx
-	je	SHORT $LN8@allocate
-; Line 52
-	push	ecx
-	call	??2@YAPAXI@Z				; operator new
-	add	esp, 4
-; Line 998
-	pop	ebp
-	ret	4
-$LN8@allocate:
-; Line 193
-	xor	eax, eax
-; Line 998
-	pop	ebp
-	ret	4
-$LN28@allocate:
-?allocate@?$allocator@H@std@@QAEPAHI@Z ENDP		; std::allocator<int>::allocate
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?deallocate@?$allocator@H@std@@QAEXQAHI@Z
-_TEXT	SEGMENT
-__Ptr$ = 8						; size = 4
-__Count$ = 12						; size = 4
-?deallocate@?$allocator@H@std@@QAEXQAHI@Z PROC		; std::allocator<int>::deallocate, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 990
-	push	ebp
-	mov	ebp, esp
-; Line 992
-	mov	eax, DWORD PTR __Count$[ebp]
-	lea	ecx, DWORD PTR [eax*4]
-	mov	eax, DWORD PTR __Ptr$[ebp]
-; Line 201
-	cmp	ecx, 4096				; 00001000H
-	jb	SHORT $LN15@deallocate
-; Line 118
-	mov	edx, DWORD PTR [eax-4]
-	add	ecx, 35					; 00000023H
-; Line 131
-	sub	eax, edx
-; Line 132
-	add	eax, -4					; fffffffcH
-	cmp	eax, 31					; 0000001fH
-	ja	SHORT $LN12@deallocate
-; Line 133
-	mov	eax, edx
-$LN15@deallocate:
-; Line 207
-	push	ecx
-	push	eax
-	call	??3@YAXPAXI@Z				; operator delete
-	add	esp, 8
-; Line 993
-	pop	ebp
-	ret	8
-$LN12@deallocate:
-; Line 132
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN18@deallocate:
-	int	3
-?deallocate@?$allocator@H@std@@QAEXQAHI@Z ENDP		; std::allocator<int>::deallocate
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??0?$allocator@H@std@@QAE@XZ
-_TEXT	SEGMENT
-??0?$allocator@H@std@@QAE@XZ PROC			; std::allocator<int>::allocator<int>, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 981
-	mov	eax, ecx
-	ret	0
-??0?$allocator@H@std@@QAE@XZ ENDP			; std::allocator<int>::allocator<int>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?bar@@YA_NXZ
-_TEXT	SEGMENT
-$T4 = -84						; size = 12
-$T5 = -72						; size = 12
-$T6 = -72						; size = 12
-$T7 = -60						; size = 12
-$T8 = -60						; size = 12
-_v$9 = -48						; size = 12
-$T10 = -36						; size = 1
-$T11 = -36						; size = 4
-$T12 = -32						; size = 16
-__$ArrayPad$ = -16					; size = 4
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
 __$EHRec$ = -12						; size = 12
-?bar@@YA_NXZ PROC					; bar, COMDAT
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 61
+___$ReturnUdt$ = 8					; size = 4
+_sz$ = 12						; size = 4
+??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z PROC ; gsl::ensure_z<char const ,11>, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 139
 	push	ebp
 	mov	ebp, esp
 	push	-1
-	push	__ehhandler$?bar@@YA_NXZ
+	push	__ehhandler$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z
 	mov	eax, DWORD PTR fs:0
 	push	eax
-	sub	esp, 72					; 00000048H
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 114
+	mov	edx, DWORD PTR _sz$[ebp]
+; Line 139
+	mov	DWORD PTR $T4[ebp], 0
+; Line 114
+	test	edx, edx
+	je	SHORT $LN13@ensure_z
+; Line 117
+	mov	eax, edx
+	xor	ecx, ecx
+$LL10@ensure_z:
+; Line 121
+	cmp	BYTE PTR [eax], 0
+	je	SHORT $LN58@ensure_z
+	inc	ecx
+	inc	eax
+	cmp	ecx, 11					; 0000000bH
+	jl	SHORT $LL10@ensure_z
+; Line 122
+	cmp	BYTE PTR [eax], 0
+	jne	SHORT $LN63@ensure_z
+$LN58@ensure_z:
+; Line 123
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	sub	eax, edx
+	push	eax
+	push	edx
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	call	??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z	; gsl::span<char const ,-1>::span<char const ,-1>
+; Line 140
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 141
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN13@ensure_z:
+; Line 114
+	push	OFFSET ??_C@_0EL@HEMMNCGC@GSL?3?5Postcondition?5failure?5at?5c@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN63@ensure_z:
+; Line 122
+	push	OFFSET ??_C@_0EL@CANAMLLN@GSL?3?5Postcondition?5failure?5at?5c@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN61@ensure_z:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN20@ensure_z
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN20@ensure_z:
+	ret	0
+__unwindfunclet$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN26@ensure_z
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN26@ensure_z:
+	ret	0
+__ehhandler$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z ENDP ; gsl::ensure_z<char const ,11>
+; Function compile flags: /Ogtp
+;	COMDAT ?end@?$basic_string_span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?end@?$basic_string_span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::basic_string_span<char const ,-1>::end, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 301
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	ecx, DWORD PTR [ecx]
+	mov	DWORD PTR [eax+4], ecx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 301
+	pop	ebp
+	ret	4
+?end@?$basic_string_span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::basic_string_span<char const ,-1>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?begin@?$basic_string_span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?begin@?$basic_string_span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::basic_string_span<char const ,-1>::begin, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 300
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\include\gsl\string_span
+; Line 300
+	pop	ebp
+	ret	4
+?begin@?$basic_string_span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::basic_string_span<char const ,-1>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$basic_string_span@$$CBD$0?0@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$basic_string_span@$$CBD$0?0@gsl@@QBEHXZ PROC	; gsl::basic_string_span<char const ,-1>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 295
+	mov	eax, DWORD PTR [ecx]
+	ret	0
+?size@?$basic_string_span@$$CBD$0?0@gsl@@QBEHXZ ENDP	; gsl::basic_string_span<char const ,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$basic_string_span@$$CBD$0?0@gsl@@QBEPBDXZ
+_TEXT	SEGMENT
+?data@?$basic_string_span@$$CBD$0?0@gsl@@QBEPBDXZ PROC	; gsl::basic_string_span<char const ,-1>::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 292
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$basic_string_span@$$CBD$0?0@gsl@@QBEPBDXZ ENDP	; gsl::basic_string_span<char const ,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QBEPBDXZ
+_TEXT	SEGMENT
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QBEPBDXZ PROC ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QBEPBDXZ ENDP ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?end@?$span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?end@?$span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<char const ,-1>::end, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 519
+	push	ebp
+	mov	ebp, esp
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	ecx, DWORD PTR [ecx]
+	mov	DWORD PTR [eax+4], ecx
+; Line 519
+	pop	ebp
+	ret	4
+?end@?$span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<char const ,-1>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?begin@?$span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?begin@?$span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<char const ,-1>::begin, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 518
+	push	ebp
+	mov	ebp, esp
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	DWORD PTR [eax+4], 0
+; Line 518
+	pop	ebp
+	ret	4
+?begin@?$span@$$CBD$0?0@gsl@@QBE?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<char const ,-1>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$span@$$CBD$0?0@gsl@@QBEPBDXZ
+_TEXT	SEGMENT
+?data@?$span@$$CBD$0?0@gsl@@QBEPBDXZ PROC		; gsl::span<char const ,-1>::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$span@$$CBD$0?0@gsl@@QBEPBDXZ ENDP		; gsl::span<char const ,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$span@$$CBD$0?0@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$span@$$CBD$0?0@gsl@@QBEHXZ PROC			; gsl::span<char const ,-1>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	eax, DWORD PTR [ecx]
+	ret	0
+?size@?$span@$$CBD$0?0@gsl@@QBEHXZ ENDP			; gsl::span<char const ,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_ptr$ = 8						; size = 4
+_count$ = 12						; size = 4
+??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z PROC		; gsl::span<char const ,-1>::span<char const ,-1>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 336
+	mov	edx, DWORD PTR _count$[ebp]
+; Line 386
+	mov	DWORD PTR $T4[ebp], 0
+; Line 336
+	mov	DWORD PTR [ecx], edx
+	test	edx, edx
+	js	SHORT $LN17@span
+; Line 596
+	mov	eax, DWORD PTR _ptr$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN7@span
+	test	edx, edx
+	jne	SHORT $LN55@span
+$LN7@span:
+; Line 386
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN17@span:
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN55@span:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN53@span:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN20@span
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN20@span:
+	ret	0
+__unwindfunclet$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z$1:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 2
+	je	$LN13@span
+	and	DWORD PTR $T4[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN13@span:
+	ret	0
+__ehhandler$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??0?$span@$$CBD$0?0@gsl@@QAE@PBDH@Z ENDP		; gsl::span<char const ,-1>::span<char const ,-1>
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_arr$ = 8						; size = 4
+??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z PROC		; gsl::span<unsigned char,-1>::span<unsigned char,-1><10>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 590
+	mov	eax, DWORD PTR _arr$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 395
+	mov	eax, ecx
+; Line 333
+	mov	DWORD PTR [ecx], 10			; 0000000aH
+; Line 395
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0$09@?$span@E$0?0@gsl@@QAE@AAY09E@Z ENDP		; gsl::span<unsigned char,-1>::span<unsigned char,-1><10>
+; Function compile flags: /Ogtp
+;	COMDAT ?test_string_std_copy@@YAXXZ
+_TEXT	SEGMENT
+$T2 = -68						; size = 12
+$T3 = -56						; size = 12
+$T4 = -52						; size = 8
+_cdModelType$ = -44					; size = 8
+_byteSpan$ = -36					; size = 8
+_bytes$ = -28						; size = 10
+__$ArrayPad$ = -16					; size = 4
+__$EHRec$ = -12						; size = 12
+?test_string_std_copy@@YAXXZ PROC			; test_string_std_copy, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 322
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?test_string_std_copy@@YAXXZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 56					; 00000038H
 	mov	eax, DWORD PTR ___security_cookie
 	xor	eax, ebp
 	mov	DWORD PTR __$ArrayPad$[ebp], eax
 	push	eax
 	lea	eax, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, eax
-	mov	DWORD PTR $T11[ebp], 0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 729
-	lea	eax, DWORD PTR $T12[ebp+16]
-	push	DWORD PTR $T10[ebp]
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 64
-	movaps	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 729
-	lea	ecx, DWORD PTR _v$9[ebp]
-	push	eax
-	lea	eax, DWORD PTR $T12[ebp]
-; Line 389
-	mov	DWORD PTR _v$9[ebp], 0
-; Line 729
-	push	eax
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 64
-	movups	XMMWORD PTR $T12[ebp], xmm0
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 390
-	mov	DWORD PTR _v$9[ebp+4], 0
-; Line 391
-	mov	DWORD PTR _v$9[ebp+8], 0
-; Line 729
-	call	??$_Range_construct_or_tidy@PBH@?$vector@HV?$allocator@H@std@@@std@@AAEXPBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Range_construct_or_tidy<int const *>
-; Line 1704
-	mov	eax, DWORD PTR _v$9[ebp+4]
-	mov	edx, DWORD PTR _v$9[ebp]
-	sub	eax, edx
-	sar	eax, 2
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 64
-	mov	DWORD PTR __$EHRec$[ebp+8], 0
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 127
-	test	eax, eax
-	js	$LN355@bar
 ; File c:\projects\gsl\include\gsl\span
-; Line 598
-	mov	DWORD PTR __$EHRec$[ebp+8], 0
-; Line 599
-	test	edx, edx
-	jne	SHORT $LN82@bar
-	test	eax, eax
-	jne	$LN356@bar
-$LN82@bar:
-	mov	DWORD PTR __$EHRec$[ebp+8], 0
-; Line 509
-	test	eax, eax
-	je	SHORT $LN138@bar
-	mov	DWORD PTR __$EHRec$[ebp+8], 0
-	cmp	eax, 1
-	jbe	$LN173@bar
-	mov	DWORD PTR __$EHRec$[ebp+8], 0
-	cmp	eax, 2
-	jbe	$LN208@bar
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1913
-	test	edx, edx
-	je	SHORT $LN244@bar
-; Line 1715
-	mov	ecx, DWORD PTR _v$9[ebp+8]
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 992
-	mov	eax, edx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector
-; Line 1715
-	sub	ecx, edx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 992
-	and	ecx, -4					; fffffffcH
-; Line 201
-	cmp	ecx, 4096				; 00001000H
-	jb	SHORT $LN320@bar
-; Line 118
-	mov	edx, DWORD PTR [edx-4]
-	add	ecx, 35					; 00000023H
-	sub	eax, edx
-; Line 132
-	add	eax, -4					; fffffffcH
-	cmp	eax, 31					; 0000001fH
-	jbe	SHORT $LN320@bar
-	call	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-$LN320@bar:
-; Line 207
-	push	ecx
-	push	edx
-	call	??3@YAXPAXI@Z				; operator delete
-	add	esp, 8
-$LN244@bar:
+; Line 590
+	lea	eax, DWORD PTR _bytes$[ebp]
+; Line 333
+	mov	DWORD PTR _byteSpan$[ebp], 10		; 0000000aH
+; Line 590
+	mov	DWORD PTR _byteSpan$[ebp+4], eax
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 70
-	mov	al, 1
-; Line 72
+; Line 326
+	lea	eax, DWORD PTR $T4[ebp]
+	push	OFFSET ??_C@_0L@CCAJJBND@iVtrau?5lDC@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 326
+	call	??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AAY0L@$$CBD@Z ; gsl::ensure_z<char const ,11>
+	add	esp, 8
+; File c:\projects\gsl\include\gsl\string_span
+; Line 243
+	mov	edx, DWORD PTR [eax]
+	mov	DWORD PTR _cdModelType$[ebp], edx
+	mov	ecx, DWORD PTR [eax+4]
+	mov	DWORD PTR _cdModelType$[ebp+4], ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+; Line 265
+	test	edx, edx
+	js	SHORT $LN63@test_strin
+; Line 280
+	lea	eax, DWORD PTR [ecx+edx]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 968
+	sub	eax, ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 270
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+; Line 272
+	js	SHORT $LN102@test_strin
+	cmp	eax, DWORD PTR _byteSpan$[ebp]
+	jg	SHORT $LN102@test_strin
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	push	eax
+	push	ecx
+	push	DWORD PTR _byteSpan$[ebp+4]
+; File c:\projects\gsl\include\gsl\span
+; Line 273
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	call	_memmove
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 329
+	push	DWORD PTR _byteSpan$[ebp+4]
+	push	DWORD PTR _byteSpan$[ebp]
+	call	?bar@@YAXV?$span@E$0?0@gsl@@@Z		; bar
+	add	esp, 20					; 00000014H
+; Line 330
 	mov	ecx, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, ecx
 	pop	ecx
@@ -2625,140 +4918,500 @@ $LN244@bar:
 	mov	esp, ebp
 	pop	ebp
 	ret	0
-$LN138@bar:
+$LN63@test_strin:
 ; File c:\projects\gsl\include\gsl\span
-; Line 509
-	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
-	lea	ecx, DWORD PTR $T4[ebp]
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
 	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
 	push	eax
-	mov	BYTE PTR __$EHRec$[ebp+8], 6
-	mov	DWORD PTR $T11[ebp], 8
 	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-$LN355@bar:
-	xorps	xmm0, xmm0
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 128
-	mov	DWORD PTR $T8[ebp+8], 0
-	lea	ecx, DWORD PTR $T8[ebp]
-	movq	QWORD PTR $T8[ebp], xmm0
-	call	??0narrowing_error@gsl@@QAE@XZ
-	push	eax
-	mov	BYTE PTR __$EHRec$[ebp+8], 2
-	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
-$LN356@bar:
-; File c:\projects\gsl\include\gsl\span
-; Line 599
-	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
-	lea	ecx, DWORD PTR $T6[ebp]
+$LN102@test_strin:
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
 	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
 	push	eax
-	mov	BYTE PTR __$EHRec$[ebp+8], 5
-	mov	DWORD PTR $T11[ebp], 2
 	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-$LN208@bar:
-; Line 509
-	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
-	lea	ecx, DWORD PTR $T5[ebp]
-	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
-	push	eax
-	mov	BYTE PTR __$EHRec$[ebp+8], 8
-	mov	DWORD PTR $T11[ebp], 32			; 00000020H
-	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-$LN173@bar:
-	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
-	lea	ecx, DWORD PTR $T7[ebp]
-	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
-	push	eax
-	mov	BYTE PTR __$EHRec$[ebp+8], 7
-	mov	DWORD PTR $T11[ebp], 16			; 00000010H
-	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-$LN353@bar:
+$LN142@test_strin:
 	int	3
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-__unwindfunclet$?bar@@YA_NXZ$0:
-	lea	ecx, DWORD PTR _v$9[ebp]
-	jmp	??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ ; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-__unwindfunclet$?bar@@YA_NXZ$14:
-	mov	eax, DWORD PTR $T11[ebp]
-	and	eax, 8
-	je	$LN141@bar
-	and	DWORD PTR $T11[ebp], -9			; fffffff7H
-	lea	ecx, DWORD PTR $T4[ebp]
-	jmp	??1fail_fast@gsl@@UAE@XZ
-$LN141@bar:
-	ret	0
-__unwindfunclet$?bar@@YA_NXZ$2:
-	lea	ecx, DWORD PTR $T8[ebp]
-	jmp	??1narrowing_error@gsl@@UAE@XZ
-__unwindfunclet$?bar@@YA_NXZ$6:
-	mov	eax, DWORD PTR $T11[ebp]
-	and	eax, 2
-	je	$LN88@bar
-	and	DWORD PTR $T11[ebp], -3			; fffffffdH
-	lea	ecx, DWORD PTR $T6[ebp]
-	jmp	??1fail_fast@gsl@@UAE@XZ
-$LN88@bar:
-	ret	0
-__unwindfunclet$?bar@@YA_NXZ$20:
-	mov	eax, DWORD PTR $T11[ebp]
-	and	eax, 32					; 00000020H
-	je	$LN211@bar
-	and	DWORD PTR $T11[ebp], -33		; ffffffdfH
-	lea	ecx, DWORD PTR $T5[ebp]
-	jmp	??1fail_fast@gsl@@UAE@XZ
-$LN211@bar:
-	ret	0
-__unwindfunclet$?bar@@YA_NXZ$17:
-	mov	eax, DWORD PTR $T11[ebp]
-	and	eax, 16					; 00000010H
-	je	$LN176@bar
-	and	DWORD PTR $T11[ebp], -17		; ffffffefH
-	lea	ecx, DWORD PTR $T7[ebp]
-	jmp	??1fail_fast@gsl@@UAE@XZ
-$LN176@bar:
-	ret	0
-__ehhandler$?bar@@YA_NXZ:
+__ehhandler$?test_string_std_copy@@YAXXZ:
 	mov	edx, DWORD PTR [esp+8]
 	lea	eax, DWORD PTR [edx+12]
-	mov	ecx, DWORD PTR [edx-76]
+	mov	ecx, DWORD PTR [edx-60]
 	xor	ecx, eax
 	call	@__security_check_cookie@4
 	mov	ecx, DWORD PTR [edx-4]
 	xor	ecx, eax
 	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$?bar@@YA_NXZ
+	mov	eax, OFFSET __ehfuncinfo$?test_string_std_copy@@YAXXZ
 	jmp	___CxxFrameHandler3
 text$x	ENDS
-?bar@@YA_NXZ ENDP					; bar
+?test_string_std_copy@@YAXXZ ENDP			; test_string_std_copy
 ; Function compile flags: /Ogtp
-;	COMDAT ??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ
+;	COMDAT ??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
 _TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
 __$EHRec$ = -12						; size = 12
-??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ PROC		; gsl::span<int const ,-1>::span<int const ,-1><0,void>, COMDAT
-; _this$ = ecx
-; File c:\projects\gsl\include\gsl\span
-; Line 384
+_src$ = 8						; size = 8
+_dest$ = 16						; size = 8
+??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z PROC	; gsl::copy<int,-1,int,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 43
 	push	ebp
 	mov	ebp, esp
 	push	-1
-	push	__ehhandler$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ
+	push	__ehhandler$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
 	mov	eax, DWORD PTR fs:0
 	push	eax
+	sub	esp, 16					; 00000010H
 	mov	eax, DWORD PTR ___security_cookie
 	xor	eax, ebp
 	push	eax
 	lea	eax, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, eax
-; Line 333
-	mov	DWORD PTR [ecx], 0
-; Line 384
+	mov	DWORD PTR $T3[ebp], 0
+; Line 50
+	mov	eax, DWORD PTR _src$[ebp]
+	cmp	DWORD PTR _dest$[ebp], eax
+	jl	SHORT $LN3@copy
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2538
+	test	eax, eax
+	jle	SHORT $LN37@copy
+; Line 2518
+	shl	eax, 2
+; Line 2403
+	push	eax
+	push	DWORD PTR _src$[ebp+4]
+	push	DWORD PTR _dest$[ebp+4]
+	call	_memmove
+	add	esp, 12					; 0000000cH
+$LN37@copy:
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 53
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN3@copy:
+; Line 50
+	push	OFFSET ??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN54@copy:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN6@copy
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@copy:
+	ret	0
+__ehhandler$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z ENDP	; gsl::copy<int,-1,int,-1>
+; Function compile flags: /Ogtp
+;	COMDAT ?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_x$ = 8							; size = 8
+_y$ = 16						; size = 8
+?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z PROC		; gsl_copy_span, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 317
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	DWORD PTR $T3[ebp], 0
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	mov	eax, DWORD PTR _x$[ebp]
+	cmp	DWORD PTR _y$[ebp], eax
+	jl	SHORT $LN5@gsl_copy_s
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2538
+	test	eax, eax
+	jle	SHORT $LN39@gsl_copy_s
+; Line 2518
+	shl	eax, 2
+; Line 2403
+	push	eax
+	push	DWORD PTR _x$[ebp+4]
+	push	DWORD PTR _y$[ebp+4]
+	call	_memmove
+	add	esp, 12					; 0000000cH
+$LN39@gsl_copy_s:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 319
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN5@gsl_copy_s:
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	push	OFFSET ??_C@_0EL@EPJEKFNE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN57@gsl_copy_s:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN8@gsl_copy_s
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN8@gsl_copy_s:
+	ret	0
+__ehhandler$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z ENDP		; gsl_copy_span
+; Function compile flags: /Ogtp
+;	COMDAT ??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+_TEXT	SEGMENT
+$T2 = -36						; size = 12
+$T3 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+__First$ = 12						; size = 8
+__Last$ = 20						; size = 8
+__Dest$ = 28						; size = 8
+??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z PROC ; std::copy<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2440
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 24					; 00000018H
+	push	esi
+	push	edi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	mov	eax, DWORD PTR __First$[ebp]
+	mov	ecx, DWORD PTR __Last$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	cmp	eax, ecx
+	jne	SHORT $LN9@copy
+	mov	edx, DWORD PTR __First$[ebp+4]
+	mov	esi, DWORD PTR __Last$[ebp+4]
+	cmp	edx, esi
+	jg	SHORT $LN9@copy
+; Line 515
+	mov	eax, DWORD PTR [eax+4]
+; Line 280
+	lea	edx, DWORD PTR [eax+edx*4]
+; Line 515
+	mov	eax, DWORD PTR [ecx+4]
+; Line 280
+	lea	edi, DWORD PTR [eax+esi*4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 968
+	sub	edi, edx
+	mov	ecx, edi
+	sar	ecx, 2
+; File c:\projects\gsl\include\gsl\span
+; Line 272
+	mov	esi, DWORD PTR __Dest$[ebp+4]
+	add	ecx, esi
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	js	SHORT $LN48@copy
+	mov	eax, DWORD PTR __Dest$[ebp]
+	cmp	ecx, DWORD PTR [eax]
+	jg	SHORT $LN48@copy
+; Line 280
+	mov	eax, DWORD PTR [eax+4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	push	edi
+	push	edx
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	lea	esi, DWORD PTR [eax+esi*4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	push	esi
+	call	_memmove
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	ecx, DWORD PTR __Dest$[ebp]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	add	esp, 12					; 0000000cH
+; Line 2446
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	sub	edi, DWORD PTR [ecx+4]
+; Line 294
+	add	edi, esi
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2446
+	mov	DWORD PTR [eax], ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 294
+	sar	edi, 2
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2446
+	mov	DWORD PTR [eax+4], edi
+; Line 2447
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	edi
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN9@copy:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN48@copy:
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN88@copy:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-36]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z ENDP ; std::copy<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+; Function compile flags: /Ogtp
+;	COMDAT ?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+_TEXT	SEGMENT
+$T2 = -36						; size = 12
+$T3 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_x$ = 8							; size = 8
+_y$ = 16						; size = 8
+?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z PROC		; copy_span, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 312
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 24					; 00000018H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	mov	eax, DWORD PTR _x$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	test	eax, eax
+	js	SHORT $LN27@copy_span
+; Line 280
+	mov	edx, DWORD PTR _x$[ebp+4]
+	lea	ecx, DWORD PTR [edx+eax*4]
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 968
+	sub	ecx, edx
 	mov	eax, ecx
+	sar	eax, 2
+; File c:\projects\gsl\include\gsl\span
+; Line 270
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+; Line 272
+	test	eax, eax
+	js	SHORT $LN66@copy_span
+	cmp	eax, DWORD PTR _y$[ebp]
+	jg	SHORT $LN66@copy_span
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
+; Line 2403
+	push	ecx
+	push	edx
+	push	DWORD PTR _y$[ebp+4]
+	call	_memmove
+	add	esp, 12					; 0000000cH
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 314
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN27@copy_span:
+; File c:\projects\gsl\include\gsl\span
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN66@copy_span:
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN107@copy_span:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-28]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z ENDP		; copy_span
+; Function compile flags: /Ogtp
+;	COMDAT ?doterminate@@YAXXZ
+_TEXT	SEGMENT
+?doterminate@@YAXXZ PROC				; doterminate, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 306
+	jmp	DWORD PTR __imp__terminate
+?doterminate@@YAXXZ ENDP				; doterminate
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+_TEXT	SEGMENT
+_s$2 = -20						; size = 8
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+$T3 = 12						; size = 1
+_p$ = 12						; size = 4
+_size$ = 16						; size = 4
+_i$ = 20						; size = 4
+?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z PROC	; mysubspan9, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 246
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 8
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 247
+	mov	eax, DWORD PTR _p$[ebp]
+	test	eax, eax
+	je	SHORT $LN2@mysubspan9
+; Line 249
+	push	DWORD PTR _size$[ebp]
+	lea	ecx, DWORD PTR _s$2[ebp]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@QAE@PAHH@Z		; gsl::span<int,-1>::span<int,-1>
+; File c:\projects\gsl\include\gsl\span
+; Line 494
+	mov	BYTE PTR $T3[ebp], 0
+	lea	ecx, DWORD PTR _s$2[ebp]
+	push	DWORD PTR $T3[ebp]
+	push	DWORD PTR _i$[ebp]
+	push	3
+	push	DWORD PTR ___$ReturnUdt$[ebp]
+	call	?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 250
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 254
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN2@mysubspan9:
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 0
 ; Line 596
-	mov	DWORD PTR [ecx+4], 0
-; Line 384
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 254
 	mov	ecx, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, ecx
 	pop	ecx
@@ -2768,49 +5421,458 @@ __$EHRec$ = -12						; size = 12
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-__ehhandler$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ:
+__ehhandler$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z:
 	mov	edx, DWORD PTR [esp+8]
 	lea	eax, DWORD PTR [edx+12]
-	mov	ecx, DWORD PTR [edx-4]
+	mov	ecx, DWORD PTR [edx-12]
 	xor	ecx, eax
 	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
 	jmp	___CxxFrameHandler3
 text$x	ENDS
-??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QAE@XZ ENDP		; gsl::span<int const ,-1>::span<int const ,-1><0,void>
+?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z ENDP	; mysubspan9
 ; Function compile flags: /Ogtp
-;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QBEPBHXZ
+;	COMDAT ?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
 _TEXT	SEGMENT
-?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QBEPBHXZ PROC ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
-; _this$ = ecx
+_s$2 = -20						; size = 8
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+$T3 = 12						; size = 1
+_p$ = 12						; size = 4
+_size$ = 16						; size = 4
+_i$ = 20						; size = 4
+?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z PROC	; mysubspan8, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 234
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 8
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 235
+	mov	eax, DWORD PTR _p$[ebp]
+	test	eax, eax
+	je	SHORT $LN2@mysubspan8
+; Line 237
+	mov	esi, DWORD PTR _size$[ebp]
+	lea	ecx, DWORD PTR _s$2[ebp]
+	push	esi
+	push	eax
+	call	??0?$span@H$0?0@gsl@@QAE@PAHH@Z		; gsl::span<int,-1>::span<int,-1>
+; Line 238
+	mov	eax, DWORD PTR _i$[ebp]
 ; File c:\projects\gsl\include\gsl\span
-; Line 602
-	mov	eax, DWORD PTR [ecx+4]
+; Line 494
+	lea	ecx, DWORD PTR _s$2[ebp]
+	mov	BYTE PTR $T3[ebp], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 238
+	sub	esi, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 494
+	push	DWORD PTR $T3[ebp]
+	push	esi
+	mov	esi, DWORD PTR ___$ReturnUdt$[ebp]
+	push	eax
+	push	esi
+	call	?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 238
+	mov	eax, esi
+; Line 242
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
 	ret	0
-?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QBEPBHXZ ENDP ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::data
+$LN2@mysubspan8:
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 0
+; Line 596
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 242
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	0
 _TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z ENDP	; mysubspan8
 ; Function compile flags: /Ogtp
-;	COMDAT ?data@?$span@$$CBH$0?0@gsl@@QBEPBHXZ
+;	COMDAT ?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
 _TEXT	SEGMENT
-?data@?$span@$$CBH$0?0@gsl@@QBEPBHXZ PROC		; gsl::span<int const ,-1>::data, COMDAT
-; _this$ = ecx
+$T2 = -32						; size = 12
+$T3 = -32						; size = 12
+_s$4 = -20						; size = 8
+$T5 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_p$ = 12						; size = 4
+_size$ = 16						; size = 4
+_i$ = 20						; size = 4
+?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z PROC	; mysubspan7, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 223
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 20					; 00000014H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 224
+	mov	eax, DWORD PTR _p$[ebp]
+	mov	DWORD PTR $T5[ebp], 0
+	test	eax, eax
+	je	SHORT $LN2@mysubspan7
+; Line 226
+	push	DWORD PTR _size$[ebp]
+	lea	ecx, DWORD PTR _s$4[ebp]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@QAE@PAHH@Z		; gsl::span<int,-1>::span<int,-1>
 ; File c:\projects\gsl\include\gsl\span
-; Line 515
-	mov	eax, DWORD PTR [ecx+4]
+; Line 631
+	mov	ecx, DWORD PTR _i$[ebp]
+	test	ecx, ecx
+	js	SHORT $LN9@mysubspan7
+	mov	eax, DWORD PTR _s$4[ebp]
+	sub	eax, ecx
+	js	SHORT $LN9@mysubspan7
+; Line 635
+	cmp	eax, 3
+	jl	SHORT $LN11@mysubspan7
+; Line 636
+	mov	eax, DWORD PTR _s$4[ebp+4]
+	lea	ecx, DWORD PTR [eax+ecx*4]
+; Line 336
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 3
+; Line 590
+	mov	DWORD PTR [eax+4], ecx
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 231
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
 	ret	0
-?data@?$span@$$CBH$0?0@gsl@@QBEPBHXZ ENDP		; gsl::span<int const ,-1>::data
+$LN2@mysubspan7:
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 0
+; Line 596
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 231
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN11@mysubspan7:
+; File c:\projects\gsl\include\gsl\span
+; Line 635
+	push	OFFSET ??_C@_0ED@MMILCDJF@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	mov	DWORD PTR $T5[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN9@mysubspan7:
+; Line 631
+	push	OFFSET ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T5[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN137@mysubspan7:
+	int	3
 _TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$1:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 2
+	je	$LN17@mysubspan7
+	and	DWORD PTR $T5[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN17@mysubspan7:
+	ret	0
+__unwindfunclet$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$0:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 1
+	je	$LN14@mysubspan7
+	and	DWORD PTR $T5[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN14@mysubspan7:
+	ret	0
+__ehhandler$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z ENDP	; mysubspan7
 ; Function compile flags: /Ogtp
-;	COMDAT ?size@?$span@$$CBH$0?0@gsl@@QBEHXZ
+;	COMDAT ?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z
 _TEXT	SEGMENT
-?size@?$span@$$CBH$0?0@gsl@@QBEHXZ PROC			; gsl::span<int const ,-1>::size, COMDAT
-; _this$ = ecx
+$T2 = -32						; size = 12
+_s$3 = -20						; size = 8
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_p$ = 12						; size = 4
+_size$ = 16						; size = 4
+?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z PROC		; mysubspan6, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 211
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 20					; 00000014H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 212
+	mov	eax, DWORD PTR _p$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	test	eax, eax
+	je	SHORT $LN2@mysubspan6
+; Line 214
+	push	DWORD PTR _size$[ebp]
+	lea	ecx, DWORD PTR _s$3[ebp]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@QAE@PAHH@Z		; gsl::span<int,-1>::span<int,-1>
 ; File c:\projects\gsl\include\gsl\span
-; Line 498
-	mov	eax, DWORD PTR [ecx]
+; Line 631
+	mov	ecx, DWORD PTR _s$3[ebp]
+	add	ecx, -3					; fffffffdH
+	js	SHORT $LN9@mysubspan6
+; Line 633
+	mov	eax, DWORD PTR _s$3[ebp+4]
+	push	ecx
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	add	eax, 12					; 0000000cH
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	call	??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z ; gsl::span<int,-1>::span<int,-1>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 215
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 219
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
 	ret	0
-?size@?$span@$$CBH$0?0@gsl@@QBEHXZ ENDP			; gsl::span<int const ,-1>::size
+$LN2@mysubspan6:
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 0
+; Line 596
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 219
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN9@mysubspan6:
+; File c:\projects\gsl\include\gsl\span
+; Line 631
+	push	OFFSET ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN100@mysubspan6:
+	int	3
 _TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN14@mysubspan6
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN14@mysubspan6:
+	ret	0
+__ehhandler$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PAHH@Z ENDP		; mysubspan6
+; Function compile flags: /Ogtp
+;	COMDAT ?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+_TEXT	SEGMENT
+$T2 = -32						; size = 12
+_s$3 = -20						; size = 8
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_p$ = 12						; size = 4
+_size$ = 16						; size = 4
+_i$ = 20						; size = 4
+?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z PROC	; mysubspan5, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 199
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 20					; 00000014H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 200
+	mov	eax, DWORD PTR _p$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	test	eax, eax
+	je	SHORT $LN2@mysubspan5
+; Line 202
+	push	DWORD PTR _size$[ebp]
+	lea	ecx, DWORD PTR _s$3[ebp]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@QAE@PAHH@Z		; gsl::span<int,-1>::span<int,-1>
+; File c:\projects\gsl\include\gsl\span
+; Line 631
+	mov	edx, DWORD PTR _i$[ebp]
+	test	edx, edx
+	js	SHORT $LN9@mysubspan5
+	mov	ecx, DWORD PTR _s$3[ebp]
+	sub	ecx, edx
+	js	SHORT $LN9@mysubspan5
+; Line 633
+	mov	eax, DWORD PTR _s$3[ebp+4]
+	push	ecx
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	lea	eax, DWORD PTR [eax+edx*4]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z ; gsl::span<int,-1>::span<int,-1>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 203
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 207
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN2@mysubspan5:
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 0
+; Line 596
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 207
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN9@mysubspan5:
+; File c:\projects\gsl\include\gsl\span
+; Line 631
+	push	OFFSET ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN100@mysubspan5:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN14@mysubspan5
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN14@mysubspan5:
+	ret	0
+__ehhandler$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z ENDP	; mysubspan5
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ
 _TEXT	SEGMENT
@@ -2857,6 +5919,2160 @@ __ehhandler$??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ:
 text$x	ENDS
 ??$?0$0A@X@?$span@H$0?0@gsl@@QAE@XZ ENDP		; gsl::span<int,-1>::span<int,-1><0,void>
 ; Function compile flags: /Ogtp
+;	COMDAT ?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+_TEXT	SEGMENT
+$T2 = -32						; size = 12
+_s$3 = -20						; size = 8
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_p$ = 12						; size = 4
+_size$ = 16						; size = 4
+_i$ = 20						; size = 4
+?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z PROC	; mysubspan4, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 188
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 20					; 00000014H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 189
+	mov	eax, DWORD PTR _p$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	test	eax, eax
+	je	SHORT $LN2@mysubspan4
+; Line 191
+	push	DWORD PTR _size$[ebp]
+	lea	ecx, DWORD PTR _s$3[ebp]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@QAE@PAHH@Z		; gsl::span<int,-1>::span<int,-1>
+; File c:\projects\gsl\include\gsl\span
+; Line 488
+	mov	ecx, DWORD PTR _s$3[ebp]
+	mov	edx, ecx
+	sub	edx, DWORD PTR _i$[ebp]
+; Line 631
+	js	SHORT $LN13@mysubspan4
+	sub	ecx, edx
+	js	SHORT $LN13@mysubspan4
+; Line 633
+	mov	eax, DWORD PTR _s$3[ebp+4]
+	push	ecx
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	lea	eax, DWORD PTR [eax+edx*4]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z ; gsl::span<int,-1>::span<int,-1>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 192
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 196
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN2@mysubspan4:
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], 0
+; Line 596
+	mov	DWORD PTR [eax+4], 0
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 196
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN13@mysubspan4:
+; File c:\projects\gsl\include\gsl\span
+; Line 631
+	push	OFFSET ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN104@mysubspan4:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN18@mysubspan4
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN18@mysubspan4:
+	ret	0
+__ehhandler$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PAHHH@Z ENDP	; mysubspan4
+; Function compile flags: /Ogtp
+;	COMDAT ?mysubspan3@@YAHXZ
+_TEXT	SEGMENT
+_s$ = -52						; size = 4
+_subspan$ = -48						; size = 8
+$T2 = -44						; size = 1
+_x$ = -40						; size = 24
+__$ArrayPad$ = -16					; size = 4
+__$EHRec$ = -12						; size = 12
+?mysubspan3@@YAHXZ PROC					; mysubspan3, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 177
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan3@@YAHXZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 40					; 00000028H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	mov	DWORD PTR __$ArrayPad$[ebp], eax
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 178
+	movaps	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movups	XMMWORD PTR _x$[ebp], xmm0
+	mov	DWORD PTR _x$[ebp+16], 4
+	mov	DWORD PTR _x$[ebp+20], 5
+; File c:\projects\gsl\include\gsl\span
+; Line 494
+	mov	BYTE PTR $T2[ebp], 0
+; Line 590
+	lea	eax, DWORD PTR _x$[ebp]
+; Line 494
+	push	DWORD PTR $T2[ebp]
+; Line 590
+	mov	DWORD PTR _s$[ebp], eax
+; Line 494
+	lea	ecx, DWORD PTR _s$[ebp]
+	push	-1
+	push	3
+	lea	eax, DWORD PTR _subspan$[ebp]
+; Line 395
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 494
+	push	eax
+	call	??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ; gsl::span<int,6>::make_subspan<6>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 183
+	mov	eax, DWORD PTR _subspan$[ebp]
+; Line 184
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	ecx, DWORD PTR __$ArrayPad$[ebp]
+	xor	ecx, ebp
+	call	@__security_check_cookie@4
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?mysubspan3@@YAHXZ:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-44]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan3@@YAHXZ
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan3@@YAHXZ ENDP					; mysubspan3
+; Function compile flags: /Ogtp
+;	COMDAT ?mysubspan2@@YAHH@Z
+_TEXT	SEGMENT
+_s$ = -52						; size = 4
+_subspan$ = -48						; size = 8
+$T2 = -44						; size = 1
+_x$ = -40						; size = 24
+__$ArrayPad$ = -16					; size = 4
+__$EHRec$ = -12						; size = 12
+_i$ = 8							; size = 4
+?mysubspan2@@YAHH@Z PROC				; mysubspan2, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 166
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan2@@YAHH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 40					; 00000028H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	mov	DWORD PTR __$ArrayPad$[ebp], eax
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 167
+	movaps	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movups	XMMWORD PTR _x$[ebp], xmm0
+	mov	DWORD PTR _x$[ebp+16], 4
+	mov	DWORD PTR _x$[ebp+20], 5
+; File c:\projects\gsl\include\gsl\span
+; Line 590
+	lea	eax, DWORD PTR _x$[ebp]
+; Line 488
+	mov	BYTE PTR $T2[ebp], 0
+	push	DWORD PTR $T2[ebp]
+; Line 590
+	mov	DWORD PTR _s$[ebp], eax
+; Line 488
+	lea	ecx, DWORD PTR _s$[ebp]
+	push	-1
+	mov	eax, 6
+; Line 395
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 488
+	sub	eax, DWORD PTR _i$[ebp]
+	push	eax
+	lea	eax, DWORD PTR _subspan$[ebp]
+	push	eax
+	call	??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ; gsl::span<int,6>::make_subspan<6>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 172
+	mov	eax, DWORD PTR _subspan$[ebp]
+; Line 173
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	ecx, DWORD PTR __$ArrayPad$[ebp]
+	xor	ecx, ebp
+	call	@__security_check_cookie@4
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?mysubspan2@@YAHH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-44]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan2@@YAHH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan2@@YAHH@Z ENDP				; mysubspan2
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_arr$ = 8						; size = 4
+??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z PROC		; gsl::span<int,6>::span<int,6><6>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 590
+	mov	eax, DWORD PTR _arr$[ebp]
+	mov	DWORD PTR [ecx], eax
+; Line 395
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0$05@?$span@H$05@gsl@@QAE@AAY05H@Z ENDP		; gsl::span<int,6>::span<int,6><6>
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QBEPAHXZ
+_TEXT	SEGMENT
+?data@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QBEPAHXZ PROC ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	eax, DWORD PTR [ecx]
+	ret	0
+?data@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QBEPAHXZ ENDP ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$extent_type@$05@details@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$extent_type@$05@details@gsl@@QBEHXZ PROC	; gsl::details::extent_type<6>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 323
+	mov	eax, 6
+	ret	0
+?size@?$extent_type@$05@details@gsl@@QBEHXZ ENDP	; gsl::details::extent_type<6>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$extent_type@$05@details@gsl@@QAE@H@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_size$ = 8						; size = 4
+??0?$extent_type@$05@details@gsl@@QAE@H@Z PROC		; gsl::details::extent_type<6>::extent_type<6>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 321
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??0?$extent_type@$05@details@gsl@@QAE@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	cmp	DWORD PTR _size$[ebp], 6
+	mov	DWORD PTR $T3[ebp], 0
+	jne	SHORT $LN3@extent_typ
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+$LN3@extent_typ:
+	push	OFFSET ??_C@_0ED@JOPLHMJE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN17@extent_typ:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??0?$extent_type@$05@details@gsl@@QAE@H@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN6@extent_typ
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@extent_typ:
+	ret	0
+__ehhandler$??0?$extent_type@$05@details@gsl@@QAE@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??0?$extent_type@$05@details@gsl@@QAE@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??0?$extent_type@$05@details@gsl@@QAE@H@Z ENDP		; gsl::details::extent_type<6>::extent_type<6>
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$extent_type@$05@details@gsl@@QAE@XZ
+_TEXT	SEGMENT
+??0?$extent_type@$05@details@gsl@@QAE@XZ PROC		; gsl::details::extent_type<6>::extent_type<6>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 311
+	mov	eax, ecx
+	ret	0
+??0?$extent_type@$05@details@gsl@@QAE@XZ ENDP		; gsl::details::extent_type<6>::extent_type<6>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$span@H$05@gsl@@QBEPAHXZ
+_TEXT	SEGMENT
+?data@?$span@H$05@gsl@@QBEPAHXZ PROC			; gsl::span<int,6>::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	eax, DWORD PTR [ecx]
+	ret	0
+?data@?$span@H$05@gsl@@QBEPAHXZ ENDP			; gsl::span<int,6>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$span@H$05@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$span@H$05@gsl@@QBEHXZ PROC			; gsl::span<int,6>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	eax, 6
+	ret	0
+?size@?$span@H$05@gsl@@QBEHXZ ENDP			; gsl::span<int,6>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?subspan@?$span@H$05@gsl@@QBE?AV?$span@H$0?0@2@HH@Z
+_TEXT	SEGMENT
+$T1 = -4						; size = 1
+___$ReturnUdt$ = 8					; size = 4
+_offset$ = 12						; size = 4
+_count$ = 16						; size = 4
+?subspan@?$span@H$05@gsl@@QBE?AV?$span@H$0?0@2@HH@Z PROC ; gsl::span<int,6>::subspan, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 493
+	push	ebp
+	mov	ebp, esp
+	push	ecx
+; Line 494
+	mov	BYTE PTR $T1[ebp], 0
+	push	DWORD PTR $T1[ebp]
+	push	DWORD PTR _count$[ebp]
+	push	DWORD PTR _offset$[ebp]
+	push	DWORD PTR ___$ReturnUdt$[ebp]
+	call	??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ; gsl::span<int,6>::make_subspan<6>
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 495
+	mov	esp, ebp
+	pop	ebp
+	ret	12					; 0000000cH
+?subspan@?$span@H$05@gsl@@QBE?AV?$span@H$0?0@2@HH@Z ENDP ; gsl::span<int,6>::subspan
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?last@?$span@H$05@gsl@@QBE?AV?$span@H$0?0@2@H@Z
+_TEXT	SEGMENT
+$T1 = -4						; size = 1
+___$ReturnUdt$ = 8					; size = 4
+_count$ = 12						; size = 4
+?last@?$span@H$05@gsl@@QBE?AV?$span@H$0?0@2@H@Z PROC	; gsl::span<int,6>::last, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 487
+	push	ebp
+	mov	ebp, esp
+	push	ecx
+; Line 488
+	mov	BYTE PTR $T1[ebp], 0
+	mov	eax, 6
+	push	DWORD PTR $T1[ebp]
+	sub	eax, DWORD PTR _count$[ebp]
+	push	-1
+	push	eax
+	push	DWORD PTR ___$ReturnUdt$[ebp]
+	call	??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ; gsl::span<int,6>::make_subspan<6>
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 489
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+?last@?$span@H$05@gsl@@QBE?AV?$span@H$0?0@2@H@Z ENDP	; gsl::span<int,6>::last
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?mysubspan1@@YAHXZ
+_TEXT	SEGMENT
+_s$ = -52						; size = 4
+_subspan$ = -48						; size = 8
+$T2 = -44						; size = 1
+_x$ = -40						; size = 24
+__$ArrayPad$ = -16					; size = 4
+__$EHRec$ = -12						; size = 12
+?mysubspan1@@YAHXZ PROC					; mysubspan1, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 155
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?mysubspan1@@YAHXZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 40					; 00000028H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	mov	DWORD PTR __$ArrayPad$[ebp], eax
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 156
+	movaps	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movups	XMMWORD PTR _x$[ebp], xmm0
+	mov	DWORD PTR _x$[ebp+16], 4
+	mov	DWORD PTR _x$[ebp+20], 5
+; File c:\projects\gsl\include\gsl\span
+; Line 488
+	mov	BYTE PTR $T2[ebp], 0
+; Line 590
+	lea	eax, DWORD PTR _x$[ebp]
+; Line 488
+	push	DWORD PTR $T2[ebp]
+; Line 590
+	mov	DWORD PTR _s$[ebp], eax
+; Line 488
+	lea	ecx, DWORD PTR _s$[ebp]
+	push	-1
+	push	3
+	lea	eax, DWORD PTR _subspan$[ebp]
+; Line 395
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 488
+	push	eax
+	call	??$make_subspan@$05@?$span@H$05@gsl@@ABE?AV?$span@H$0?0@1@HHV?$subspan_selector@$05@01@@Z ; gsl::span<int,6>::make_subspan<6>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 161
+	mov	eax, DWORD PTR _subspan$[ebp]
+; Line 162
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	ecx, DWORD PTR __$ArrayPad$[ebp]
+	xor	ecx, ebp
+	call	@__security_check_cookie@4
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?mysubspan1@@YAHXZ:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-44]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?mysubspan1@@YAHXZ
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?mysubspan1@@YAHXZ ENDP					; mysubspan1
+; Function compile flags: /Ogtp
+;	COMDAT ??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_s$ = 12						; size = 8
+??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z PROC ; convert_span<unsigned char,gsl::span<unsigned short,-1> >, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 129
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 129
+	mov	DWORD PTR $T4[ebp], 0
+; File c:\projects\gsl\include\gsl\span
+; Line 501
+	mov	eax, DWORD PTR _s$[ebp]
+	lea	edx, DWORD PTR [eax+eax]
+; Line 336
+	mov	DWORD PTR [ecx], edx
+	test	edx, edx
+	js	SHORT $LN33@convert_sp
+; Line 596
+	mov	eax, DWORD PTR _s$[ebp+4]
+	mov	DWORD PTR [ecx+4], eax
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN23@convert_sp
+	test	edx, edx
+	jne	SHORT $LN72@convert_sp
+$LN23@convert_sp:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 133
+	mov	eax, ecx
+; Line 134
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN33@convert_sp:
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN72@convert_sp:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN70@convert_sp:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN36@convert_sp
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN36@convert_sp:
+	ret	0
+__unwindfunclet$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z$1:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 2
+	je	$LN29@convert_sp
+	and	DWORD PTR $T4[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN29@convert_sp:
+	ret	0
+__ehhandler$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z ENDP ; convert_span<unsigned char,gsl::span<unsigned short,-1> >
+; Function compile flags: /Ogtp
+;	COMDAT ?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -28						; size = 12
+$T5 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_Drive$ = 8						; size = 4
+?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z PROC	; test_convert_span_Joe, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 145
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 146
+	mov	eax, DWORD PTR _Drive$[ebp]
+	mov	DWORD PTR $T5[ebp], 0
+	mov	ecx, DWORD PTR [eax+8]
+; File c:\projects\gsl\include\gsl\span
+; Line 501
+	add	ecx, ecx
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 146
+	mov	eax, DWORD PTR [eax+12]
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	js	SHORT $LN35@test_conve
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN25@test_conve
+	test	ecx, ecx
+	jne	SHORT $LN110@test_conve
+$LN25@test_conve:
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 509
+	test	ecx, ecx
+	je	SHORT $LN74@test_conve
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 148
+	mov	al, BYTE PTR [eax]
+; Line 149
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN35@test_conve:
+; File c:\projects\gsl\include\gsl\span
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T5[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN110@test_conve:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T5[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN74@test_conve:
+; Line 509
+	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T4[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 3
+	mov	DWORD PTR $T5[ebp], 8
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN108@test_conve:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z$2:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 4
+	je	$LN38@test_conve
+	and	DWORD PTR $T5[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN38@test_conve:
+	ret	0
+__unwindfunclet$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z$1:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 2
+	je	$LN31@test_conve
+	and	DWORD PTR $T5[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN31@test_conve:
+	ret	0
+__unwindfunclet$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z$9:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 8
+	je	$LN77@test_conve
+	and	DWORD PTR $T5[ebp], -9			; fffffff7H
+	lea	ecx, DWORD PTR $T4[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN77@test_conve:
+	ret	0
+__ehhandler$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?test_convert_span_Joe@@YAEAAUIDE_DRIVE_STATE@@@Z ENDP	; test_convert_span_Joe
+; Function compile flags: /Ogtp
+;	COMDAT ??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z
+_TEXT	SEGMENT
+__$EHRec$ = -12						; size = 12
+_arr$ = 8						; size = 4
+??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z PROC		; gsl::span<unsigned char,-1>::span<unsigned char,-1><6>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 590
+	mov	eax, DWORD PTR _arr$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 395
+	mov	eax, ecx
+; Line 333
+	mov	DWORD PTR [ecx], 6
+; Line 395
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-4]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??$?0$05@?$span@E$0?0@gsl@@QAE@AAY05E@Z ENDP		; gsl::span<unsigned char,-1>::span<unsigned char,-1><6>
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QBEPAEXZ
+_TEXT	SEGMENT
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QBEPAEXZ PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QBEPAEXZ ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?CheckRange@?$span@E$0?0@gsl@@CA_NHH@Z
+_TEXT	SEGMENT
+_idx$ = 8						; size = 4
+_size$ = 12						; size = 4
+?CheckRange@?$span@E$0?0@gsl@@CA_NHH@Z PROC		; gsl::span<unsigned char,-1>::CheckRange, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 548
+	push	ebp
+	mov	ebp, esp
+; Line 565
+	mov	eax, DWORD PTR _idx$[ebp]
+	cmp	eax, DWORD PTR _size$[ebp]
+	setb	al
+; Line 571
+	pop	ebp
+	ret	0
+?CheckRange@?$span@E$0?0@gsl@@CA_NHH@Z ENDP		; gsl::span<unsigned char,-1>::CheckRange
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?begin@?$span@E$0?0@gsl@@QBE?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?begin@?$span@E$0?0@gsl@@QBE?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<unsigned char,-1>::begin, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 518
+	push	ebp
+	mov	ebp, esp
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	DWORD PTR [eax+4], 0
+; Line 518
+	pop	ebp
+	ret	4
+?begin@?$span@E$0?0@gsl@@QBE?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<unsigned char,-1>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$span@E$0?0@gsl@@QBEPAEXZ
+_TEXT	SEGMENT
+?data@?$span@E$0?0@gsl@@QBEPAEXZ PROC			; gsl::span<unsigned char,-1>::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$span@E$0?0@gsl@@QBEPAEXZ ENDP			; gsl::span<unsigned char,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??A?$span@E$0?0@gsl@@QBEAAEH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_idx$ = 8						; size = 4
+??A?$span@E$0?0@gsl@@QBEAAEH@Z PROC			; gsl::span<unsigned char,-1>::operator[], COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 508
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??A?$span@E$0?0@gsl@@QBEAAEH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 509
+	mov	edx, DWORD PTR _idx$[ebp]
+	mov	DWORD PTR $T3[ebp], 0
+	cmp	edx, DWORD PTR [ecx]
+	jae	SHORT $LN3@operator
+; Line 510
+	mov	eax, DWORD PTR [ecx+4]
+	add	eax, edx
+; Line 511
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+$LN3@operator:
+; Line 509
+	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN37@operator:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??A?$span@E$0?0@gsl@@QBEAAEH@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN6@operator
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@operator:
+	ret	0
+__ehhandler$??A?$span@E$0?0@gsl@@QBEAAEH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??A?$span@E$0?0@gsl@@QBEAAEH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??A?$span@E$0?0@gsl@@QBEAAEH@Z ENDP			; gsl::span<unsigned char,-1>::operator[]
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$span@E$0?0@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$span@E$0?0@gsl@@QBEHXZ PROC			; gsl::span<unsigned char,-1>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	eax, DWORD PTR [ecx]
+	ret	0
+?size@?$span@E$0?0@gsl@@QBEHXZ ENDP			; gsl::span<unsigned char,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$span@E$0?0@gsl@@QAE@PAEH@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_ptr$ = 8						; size = 4
+_count$ = 12						; size = 4
+??0?$span@E$0?0@gsl@@QAE@PAEH@Z PROC			; gsl::span<unsigned char,-1>::span<unsigned char,-1>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??0?$span@E$0?0@gsl@@QAE@PAEH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 336
+	mov	edx, DWORD PTR _count$[ebp]
+; Line 386
+	mov	DWORD PTR $T4[ebp], 0
+; Line 336
+	mov	DWORD PTR [ecx], edx
+	test	edx, edx
+	js	SHORT $LN17@span
+; Line 596
+	mov	eax, DWORD PTR _ptr$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 598
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+; Line 599
+	test	eax, eax
+	jne	SHORT $LN7@span
+	test	edx, edx
+	jne	SHORT $LN55@span
+$LN7@span:
+; Line 386
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN17@span:
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 4
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN55@span:
+; Line 599
+	push	OFFSET ??_C@_0ED@HPBMEGKB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 2
+	mov	DWORD PTR $T4[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN53@span:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??0?$span@E$0?0@gsl@@QAE@PAEH@Z$2:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 4
+	je	$LN20@span
+	and	DWORD PTR $T4[ebp], -5			; fffffffbH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN20@span:
+	ret	0
+__unwindfunclet$??0?$span@E$0?0@gsl@@QAE@PAEH@Z$1:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 2
+	je	$LN13@span
+	and	DWORD PTR $T4[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN13@span:
+	ret	0
+__ehhandler$??0?$span@E$0?0@gsl@@QAE@PAEH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??0?$span@E$0?0@gsl@@QAE@PAEH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??0?$span@E$0?0@gsl@@QAE@PAEH@Z ENDP			; gsl::span<unsigned char,-1>::span<unsigned char,-1>
+; Function compile flags: /Ogtp
+;	COMDAT ?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_Drive$ = 8						; size = 4
+?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z PROC	; static_size_array_span, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 96
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	push	ebx
+	push	esi
+	push	edi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	xor	ebx, ebx
+	mov	DWORD PTR $T3[ebp], ebx
+; Line 99
+	mov	edi, DWORD PTR _Drive$[ebp]
+	xor	esi, esi
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	cmp	esi, 6
+$LN77@static_siz:
+	jae	SHORT $LN38@static_siz
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	test	bl, 2
+	je	SHORT $LN66@static_siz
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	lea	eax, DWORD PTR $T2[ebp+4]
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	and	ebx, -3					; fffffffdH
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	call	___std_exception_destroy
+	add	esp, 4
+$LN66@static_siz:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 101
+	mov	BYTE PTR [esi+edi], 1
+	inc	esi
+	cmp	esi, 6
+	jl	SHORT $LN77@static_siz
+; Line 103
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	edi
+	pop	esi
+	pop	ebx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN38@static_siz:
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	or	ebx, 2
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	push	eax
+	mov	DWORD PTR $T3[ebp], ebx
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN76@static_siz:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z$4:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 2
+	je	$LN41@static_siz
+	and	DWORD PTR $T3[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN41@static_siz:
+	ret	0
+__ehhandler$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-32]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?static_size_array_span@@YAXAAUIDE_DRIVE_STATE@@@Z ENDP	; static_size_array_span
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@G$0?0@gsl@@QBEPAGXZ
+_TEXT	SEGMENT
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@G$0?0@gsl@@QBEPAGXZ PROC ; gsl::span<unsigned short,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@G$0?0@gsl@@QBEPAGXZ ENDP ; gsl::span<unsigned short,-1>::storage_type<gsl::details::extent_type<-1> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?data@?$span@G$0?0@gsl@@QBEPAGXZ
+_TEXT	SEGMENT
+?data@?$span@G$0?0@gsl@@QBEPAGXZ PROC			; gsl::span<unsigned short,-1>::data, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?data@?$span@G$0?0@gsl@@QBEPAGXZ ENDP			; gsl::span<unsigned short,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size_bytes@?$span@G$0?0@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size_bytes@?$span@G$0?0@gsl@@QBEHXZ PROC		; gsl::span<unsigned short,-1>::size_bytes, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 501
+	mov	eax, DWORD PTR [ecx]
+	add	eax, eax
+; Line 502
+	ret	0
+?size_bytes@?$span@G$0?0@gsl@@QBEHXZ ENDP		; gsl::span<unsigned short,-1>::size_bytes
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?size@?$span@G$0?0@gsl@@QBEHXZ
+_TEXT	SEGMENT
+?size@?$span@G$0?0@gsl@@QBEHXZ PROC			; gsl::span<unsigned short,-1>::size, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	eax, DWORD PTR [ecx]
+	ret	0
+?size@?$span@G$0?0@gsl@@QBEHXZ ENDP			; gsl::span<unsigned short,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+_TEXT	SEGMENT
+_s$ = 8							; size = 8
+?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z PROC	; test_span_rangeiter, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 69
+	push	ebp
+	mov	ebp, esp
+; File c:\projects\gsl\include\gsl\span
+; Line 542
+	mov	eax, DWORD PTR _s$[ebp+4]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 70
+	xor	edx, edx
+; File c:\projects\gsl\include\gsl\span
+; Line 542
+	mov	ecx, DWORD PTR _s$[ebp]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 69
+	push	esi
+	push	edi
+; Line 70
+	xor	edi, edi
+; File c:\projects\gsl\include\gsl\span
+; Line 542
+	lea	ecx, DWORD PTR [eax+ecx*4]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 70
+	mov	esi, ecx
+	sub	esi, eax
+	add	esi, 3
+	shr	esi, 2
+	cmp	eax, ecx
+	cmova	esi, edi
+	test	esi, esi
+	je	SHORT $LN3@test_span_
+	cmp	esi, 16					; 00000010H
+	jb	SHORT $LN25@test_span_
+	movaps	xmm1, XMMWORD PTR __xmm@00000001000000010000000100000001
+	mov	ecx, esi
+	and	ecx, -16				; fffffff0H
+$LL4@test_span_:
+; Line 72
+	movups	xmm0, XMMWORD PTR [eax]
+	add	edx, 16					; 00000010H
+	paddd	xmm0, xmm1
+	movups	XMMWORD PTR [eax], xmm0
+	movups	xmm0, XMMWORD PTR [eax+16]
+	paddd	xmm0, xmm1
+	movups	XMMWORD PTR [eax+16], xmm0
+	movups	xmm0, XMMWORD PTR [eax+32]
+	paddd	xmm0, xmm1
+	movups	XMMWORD PTR [eax+32], xmm0
+	movups	xmm0, XMMWORD PTR [eax+48]
+	paddd	xmm0, xmm1
+	movups	XMMWORD PTR [eax+48], xmm0
+	add	eax, 64					; 00000040H
+	cmp	edx, ecx
+	jne	SHORT $LL4@test_span_
+$LN25@test_span_:
+; Line 70
+	cmp	edx, esi
+	je	SHORT $LN3@test_span_
+$LL24@test_span_:
+; Line 72
+	inc	DWORD PTR [eax]
+	lea	eax, DWORD PTR [eax+4]
+	inc	edx
+	cmp	edx, esi
+	jne	SHORT $LL24@test_span_
+$LN3@test_span_:
+	pop	edi
+; Line 74
+	pop	esi
+	pop	ebp
+	ret	0
+?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z ENDP	; test_span_rangeiter
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Seek_to@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEXQAH@Z
+_TEXT	SEGMENT
+_p$ = 8							; size = 4
+?_Seek_to@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEXQAH@Z PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::_Seek_to, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 292
+	push	ebp
+	mov	ebp, esp
+; Line 294
+	mov	eax, DWORD PTR [ecx]
+	mov	edx, DWORD PTR _p$[ebp]
+	sub	edx, DWORD PTR [eax+4]
+	sar	edx, 2
+	mov	DWORD PTR [ecx+4], edx
+; Line 295
+	pop	ebp
+	ret	4
+?_Seek_to@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEXQAH@Z ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::_Seek_to
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Unwrapped@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEPAHXZ
+_TEXT	SEGMENT
+?_Unwrapped@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEPAHXZ PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::_Unwrapped, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 280
+	mov	eax, DWORD PTR [ecx]
+	mov	edx, DWORD PTR [ecx+4]
+	mov	eax, DWORD PTR [eax+4]
+	lea	eax, DWORD PTR [eax+edx*4]
+; Line 281
+	ret	0
+?_Unwrapped@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEPAHXZ ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::_Unwrapped
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_n$ = 8							; size = 4
+?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::_Verify_offset, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 270
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 272
+	mov	edx, DWORD PTR [ecx+4]
+	add	edx, DWORD PTR _n$[ebp]
+	js	SHORT $LN3@Verify_off
+; Line 338
+	mov	eax, DWORD PTR [ecx]
+; Line 272
+	cmp	edx, DWORD PTR [eax]
+	jg	SHORT $LN3@Verify_off
+; Line 273
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	4
+$LN3@Verify_off:
+; Line 272
+	push	OFFSET ??_C@_0ED@LKBIKNJ@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN19@Verify_off:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?_Verify_offset@?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEXH@Z ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::_Verify_offset
+; Function compile flags: /Ogtp
+;	COMDAT ?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+_lhs$ = 8						; size = 8
+_rhs$ = 16						; size = 8
+?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z PROC ; gsl::details::_Verify_range, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 264
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 265
+	mov	eax, DWORD PTR _lhs$[ebp]
+	cmp	eax, DWORD PTR _rhs$[ebp]
+	jne	SHORT $LN3@Verify_ran
+	mov	eax, DWORD PTR _lhs$[ebp+4]
+	cmp	eax, DWORD PTR _rhs$[ebp+4]
+	jg	SHORT $LN3@Verify_ran
+; Line 267
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN3@Verify_ran:
+; Line 265
+	push	OFFSET ??_C@_0ED@GOAPCFOK@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN15@Verify_ran:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__ehhandler$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-16]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?_Verify_range@details@gsl@@YAXV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@12@0@Z ENDP ; gsl::details::_Verify_range
+; Function compile flags: /Ogtp
+;	COMDAT ??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z
+_TEXT	SEGMENT
+_lhs$ = 8						; size = 8
+_rhs$ = 16						; size = 8
+??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z PROC ; gsl::details::operator!=, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 235
+	push	ebp
+	mov	ebp, esp
+; Line 231
+	mov	eax, DWORD PTR _lhs$[ebp]
+	cmp	eax, DWORD PTR _rhs$[ebp]
+	jne	SHORT $LN5@operator
+	mov	eax, DWORD PTR _lhs$[ebp+4]
+	cmp	eax, DWORD PTR _rhs$[ebp+4]
+	jne	SHORT $LN5@operator
+	xor	al, al
+; Line 237
+	pop	ebp
+	ret	0
+$LN5@operator:
+; Line 231
+	mov	al, 1
+; Line 237
+	pop	ebp
+	ret	0
+??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z ENDP ; gsl::details::operator!=
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??8details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z
+_TEXT	SEGMENT
+_lhs$ = 8						; size = 8
+_rhs$ = 16						; size = 8
+??8details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z PROC ; gsl::details::operator==, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 230
+	push	ebp
+	mov	ebp, esp
+; Line 231
+	mov	eax, DWORD PTR _lhs$[ebp]
+	cmp	eax, DWORD PTR _rhs$[ebp]
+	jne	SHORT $LN3@operator
+	mov	eax, DWORD PTR _lhs$[ebp+4]
+	cmp	eax, DWORD PTR _rhs$[ebp+4]
+	jne	SHORT $LN3@operator
+	mov	al, 1
+; Line 232
+	pop	ebp
+	ret	0
+$LN3@operator:
+; Line 231
+	xor	al, al
+; Line 232
+	pop	ebp
+	ret	0
+??8details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z ENDP ; gsl::details::operator==
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 168
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	DWORD PTR $T3[ebp], 0
+; Line 169
+	mov	edx, DWORD PTR [ecx+4]
+	test	edx, edx
+	js	SHORT $LN3@operator
+; Line 338
+	mov	eax, DWORD PTR [ecx]
+; Line 169
+	cmp	edx, DWORD PTR [eax]
+	je	SHORT $LN3@operator
+; Line 170
+	lea	eax, DWORD PTR [edx+1]
+	mov	DWORD PTR [ecx+4], eax
+; Line 171
+	mov	eax, ecx
+; Line 172
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN3@operator:
+; Line 169
+	push	OFFSET ??_C@_0ED@PLCCJGML@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN21@operator:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN6@operator
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@operator:
+	ret	0
+__ehhandler$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAEAAV012@XZ ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++
+; Function compile flags: /Ogtp
+;	COMDAT ??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 156
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	DWORD PTR $T3[ebp], 0
+; Line 338
+	mov	eax, DWORD PTR [ecx]
+; Line 157
+	mov	ecx, DWORD PTR [ecx+4]
+	cmp	ecx, DWORD PTR [eax]
+	je	SHORT $LN3@operator
+; Line 158
+	mov	eax, DWORD PTR [eax+4]
+	lea	eax, DWORD PTR [eax+ecx*4]
+; Line 159
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN3@operator:
+; Line 157
+	push	OFFSET ??_C@_0ED@GHOHAFBM@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN25@operator:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN6@operator
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN6@operator:
+	ret	0
+__ehhandler$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QBEAAHXZ ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@H$0?0@2@H@Z
+_TEXT	SEGMENT
+_span$ = 8						; size = 4
+_idx$ = 12						; size = 4
+??0?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@H$0?0@2@H@Z PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::span_iterator<gsl::span<int,-1>,0>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 146
+	push	ebp
+	mov	ebp, esp
+; Line 145
+	mov	eax, DWORD PTR _span$[ebp]
+	mov	DWORD PTR [ecx], eax
+	mov	eax, DWORD PTR _idx$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 146
+	mov	eax, ecx
+	pop	ebp
+	ret	8
+??0?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QAE@PBV?$span@H$0?0@2@H@Z ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::span_iterator<gsl::span<int,-1>,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+_TEXT	SEGMENT
+$T3 = -40						; size = 12
+$T4 = -28						; size = 12
+$T5 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_s$ = 8							; size = 8
+?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z PROC		; test_span_iter, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 60
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 28					; 0000001cH
+	push	ebx
+	push	esi
+	push	edi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	xor	ebx, ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	xor	esi, esi
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 60
+	mov	DWORD PTR $T5[ebp], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	xor	edi, edi
+	mov	eax, DWORD PTR _s$[ebp]
+$LL11@test_span_:
+; Line 231
+	cmp	esi, eax
+	je	SHORT $LN3@test_span_
+; Line 157
+	test	bl, 2
+	je	SHORT $LN62@test_span_
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	lea	eax, DWORD PTR $T3[ebp+4]
+	mov	DWORD PTR $T3[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	and	ebx, -3					; fffffffdH
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	call	___std_exception_destroy
+	add	esp, 4
+$LN62@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 158
+	mov	eax, DWORD PTR _s$[ebp+4]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 63
+	inc	DWORD PTR [edi+eax]
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	test	edi, edi
+	js	SHORT $LN12@test_span_
+	mov	eax, DWORD PTR _s$[ebp]
+	cmp	esi, eax
+	je	SHORT $LN12@test_span_
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	test	bl, 1
+	je	SHORT $LN28@test_span_
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	lea	eax, DWORD PTR $T4[ebp+4]
+	mov	DWORD PTR $T4[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	and	ebx, -2					; fffffffeH
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	call	___std_exception_destroy
+	mov	eax, DWORD PTR _s$[ebp]
+	add	esp, 4
+$LN28@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 170
+	inc	esi
+	add	edi, 4
+	jmp	SHORT $LL11@test_span_
+$LN3@test_span_:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 65
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	edi
+	pop	esi
+	pop	ebx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN12@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	push	OFFSET ??_C@_0ED@PLCCJGML@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T4[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	or	ebx, 1
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	push	eax
+	mov	DWORD PTR $T5[ebp], ebx
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN73@test_span_:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z$0:
+	mov	eax, DWORD PTR $T5[ebp]
+	and	eax, 1
+	je	$LN15@test_span_
+	and	DWORD PTR $T5[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T4[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN15@test_span_:
+	ret	0
+__ehhandler$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-44]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z ENDP		; test_span_iter
+; Function compile flags: /Ogtp
+;	COMDAT ?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_s$ = 8							; size = 8
+?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z PROC		; test_span_for, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 51
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	push	ebx
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	xor	ebx, ebx
+; Line 52
+	xor	esi, esi
+	mov	DWORD PTR $T3[ebp], ebx
+	mov	eax, DWORD PTR _s$[ebp]
+	test	eax, eax
+	jle	SHORT $LN3@test_span_
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	cmp	esi, eax
+$LN52@test_span_:
+	jae	SHORT $LN12@test_span_
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	test	bl, 1
+	je	SHORT $LN40@test_span_
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	lea	eax, DWORD PTR $T2[ebp+4]
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	and	ebx, -2					; fffffffeH
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	call	___std_exception_destroy
+	add	esp, 4
+$LN40@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 510
+	mov	eax, DWORD PTR _s$[ebp+4]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 54
+	inc	DWORD PTR [eax+esi*4]
+	inc	esi
+	mov	eax, DWORD PTR _s$[ebp]
+	cmp	esi, eax
+	jl	SHORT $LN52@test_span_
+$LN3@test_span_:
+; Line 56
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	pop	ebx
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+$LN12@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	or	ebx, 1
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	push	eax
+	mov	DWORD PTR $T3[ebp], ebx
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN51@test_span_:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN15@test_span_
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN15@test_span_:
+	ret	0
+__ehhandler$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-28]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z ENDP		; test_span_for
+; Function compile flags: /Ogtp
+;	COMDAT ?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -28						; size = 12
+$T4 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+_offset$ = 12						; size = 4
+_count$ = 16						; size = 4
+___formal$ = 20						; size = 1
+?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z PROC ; gsl::span<int,-1>::make_subspan, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 630
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	eax, ecx
+; Line 631
+	mov	esi, DWORD PTR _offset$[ebp]
+	mov	DWORD PTR $T4[ebp], 0
+	test	esi, esi
+	js	SHORT $LN4@make_subsp
+; Line 498
+	mov	edx, DWORD PTR [eax]
+; Line 631
+	sub	edx, esi
+	js	SHORT $LN4@make_subsp
+; Line 633
+	mov	ecx, DWORD PTR _count$[ebp]
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	cmp	ecx, -1
+	jne	SHORT $LN2@make_subsp
+	mov	eax, DWORD PTR [eax+4]
+	push	edx
+	lea	eax, DWORD PTR [eax+esi*4]
+$LN52@make_subsp:
+; Line 637
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z ; gsl::span<int,-1>::span<int,-1>
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	16					; 00000010H
+$LN2@make_subsp:
+; Line 635
+	test	ecx, ecx
+	js	SHORT $LN6@make_subsp
+	cmp	edx, ecx
+	jl	SHORT $LN6@make_subsp
+; Line 636
+	mov	eax, DWORD PTR [eax+4]
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	push	ecx
+	lea	eax, DWORD PTR [eax+esi*4]
+	jmp	SHORT $LN52@make_subsp
+$LN4@make_subsp:
+; Line 631
+	push	OFFSET ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T3[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T4[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN6@make_subsp:
+; Line 635
+	push	OFFSET ??_C@_0ED@MMILCDJF@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 1
+	mov	DWORD PTR $T4[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN51@make_subsp:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z$0:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 1
+	je	$LN9@make_subsp
+	and	DWORD PTR $T4[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T3[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN9@make_subsp:
+	ret	0
+__unwindfunclet$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z$1:
+	mov	eax, DWORD PTR $T4[ebp]
+	and	eax, 2
+	je	$LN12@make_subsp
+	and	DWORD PTR $T4[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN12@make_subsp:
+	ret	0
+__ehhandler$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-24]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z ENDP ; gsl::span<int,-1>::make_subspan
+; Function compile flags: /Ogtp
+;	COMDAT ??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z
+_TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
+__$EHRec$ = -12						; size = 12
+_ptr$ = 8						; size = 4
+_count$ = 12						; size = 4
+??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z PROC	; gsl::span<int,-1>::span<int,-1>, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 612
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 16					; 00000010H
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+; Line 336
+	mov	eax, DWORD PTR _count$[ebp]
+; Line 612
+	mov	DWORD PTR $T3[ebp], 0
+; Line 336
+	mov	DWORD PTR [ecx], eax
+	test	eax, eax
+	js	SHORT $LN12@span
+; Line 590
+	mov	eax, DWORD PTR _ptr$[ebp]
+	mov	DWORD PTR [ecx+4], eax
+; Line 612
+	mov	eax, ecx
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN12@span:
+; Line 336
+	push	OFFSET ??_C@_0ED@NAHIIAGE@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 2
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN38@span:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z$1:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 2
+	je	$LN15@span
+	and	DWORD PTR $T3[ebp], -3			; fffffffdH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN15@span:
+	ret	0
+__ehhandler$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z ENDP	; gsl::span<int,-1>::span<int,-1>
+; Function compile flags: /Ogtp
 ;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QBEPAHXZ
 _TEXT	SEGMENT
 ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QBEPAHXZ PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
@@ -2885,6 +8101,70 @@ _size$ = 12						; size = 4
 	pop	ebp
 	ret	0
 ?CheckRange@?$span@H$0?0@gsl@@CA_NHH@Z ENDP		; gsl::span<int,-1>::CheckRange
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Unchecked_end@?$span@H$0?0@gsl@@QBEPAHXZ
+_TEXT	SEGMENT
+?_Unchecked_end@?$span@H$0?0@gsl@@QBEPAHXZ PROC		; gsl::span<int,-1>::_Unchecked_end, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 542
+	mov	edx, DWORD PTR [ecx]
+	mov	eax, DWORD PTR [ecx+4]
+	lea	eax, DWORD PTR [eax+edx*4]
+; Line 543
+	ret	0
+?_Unchecked_end@?$span@H$0?0@gsl@@QBEPAHXZ ENDP		; gsl::span<int,-1>::_Unchecked_end
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?_Unchecked_begin@?$span@H$0?0@gsl@@QBEPAHXZ
+_TEXT	SEGMENT
+?_Unchecked_begin@?$span@H$0?0@gsl@@QBEPAHXZ PROC	; gsl::span<int,-1>::_Unchecked_begin, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 538
+	mov	eax, DWORD PTR [ecx+4]
+	ret	0
+?_Unchecked_begin@?$span@H$0?0@gsl@@QBEPAHXZ ENDP	; gsl::span<int,-1>::_Unchecked_begin
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?end@?$span@H$0?0@gsl@@QBE?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?end@?$span@H$0?0@gsl@@QBE?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<int,-1>::end, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 519
+	push	ebp
+	mov	ebp, esp
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	ecx, DWORD PTR [ecx]
+	mov	DWORD PTR [eax+4], ecx
+; Line 519
+	pop	ebp
+	ret	4
+?end@?$span@H$0?0@gsl@@QBE?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<int,-1>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?begin@?$span@H$0?0@gsl@@QBE?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+___$ReturnUdt$ = 8					; size = 4
+?begin@?$span@H$0?0@gsl@@QBE?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<int,-1>::begin, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 518
+	push	ebp
+	mov	ebp, esp
+; Line 145
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+	mov	DWORD PTR [eax], ecx
+	mov	DWORD PTR [eax+4], 0
+; Line 518
+	pop	ebp
+	ret	4
+?begin@?$span@H$0?0@gsl@@QBE?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<int,-1>::begin
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ;	COMDAT ?data@?$span@H$0?0@gsl@@QBEPAHXZ
@@ -2979,6 +8259,119 @@ _TEXT	SEGMENT
 	ret	0
 ?size@?$span@H$0?0@gsl@@QBEHXZ ENDP			; gsl::span<int,-1>::size
 _TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?subspan@?$span@H$0?0@gsl@@QBE?AV12@HH@Z
+_TEXT	SEGMENT
+$T1 = -4						; size = 1
+___$ReturnUdt$ = 8					; size = 4
+_offset$ = 12						; size = 4
+_count$ = 16						; size = 4
+?subspan@?$span@H$0?0@gsl@@QBE?AV12@HH@Z PROC		; gsl::span<int,-1>::subspan, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 493
+	push	ebp
+	mov	ebp, esp
+	push	ecx
+; Line 494
+	mov	BYTE PTR $T1[ebp], 0
+	push	DWORD PTR $T1[ebp]
+	push	DWORD PTR _count$[ebp]
+	push	DWORD PTR _offset$[ebp]
+	push	DWORD PTR ___$ReturnUdt$[ebp]
+	call	?make_subspan@?$span@H$0?0@gsl@@ABE?AV12@HHV?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 495
+	mov	esp, ebp
+	pop	ebp
+	ret	12					; 0000000cH
+?subspan@?$span@H$0?0@gsl@@QBE?AV12@HH@Z ENDP		; gsl::span<int,-1>::subspan
+_TEXT	ENDS
+; Function compile flags: /Ogtp
+;	COMDAT ?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z
+_TEXT	SEGMENT
+$T2 = -24						; size = 12
+__$EHRec$ = -12						; size = 12
+___$ReturnUdt$ = 8					; size = 4
+$T3 = 12						; size = 4
+_count$ = 12						; size = 4
+?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z PROC		; gsl::span<int,-1>::last, COMDAT
+; _this$ = ecx
+; File c:\projects\gsl\include\gsl\span
+; Line 487
+	push	ebp
+	mov	ebp, esp
+	push	-1
+	push	__ehhandler$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z
+	mov	eax, DWORD PTR fs:0
+	push	eax
+	sub	esp, 12					; 0000000cH
+	push	esi
+	mov	eax, DWORD PTR ___security_cookie
+	xor	eax, ebp
+	push	eax
+	lea	eax, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, eax
+	mov	edx, DWORD PTR _count$[ebp]
+	mov	DWORD PTR $T3[ebp], 0
+; Line 488
+	mov	esi, DWORD PTR [ecx]
+	sub	esi, edx
+; Line 631
+	js	SHORT $LN10@last
+	test	edx, edx
+	js	SHORT $LN10@last
+; Line 633
+	mov	eax, DWORD PTR [ecx+4]
+	mov	ecx, DWORD PTR ___$ReturnUdt$[ebp]
+	push	edx
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	lea	eax, DWORD PTR [eax+esi*4]
+	push	eax
+	call	??0?$span@H$0?0@gsl@@AAE@UKnownNotNull@01@H@Z ; gsl::span<int,-1>::span<int,-1>
+; Line 488
+	mov	eax, DWORD PTR ___$ReturnUdt$[ebp]
+; Line 489
+	mov	ecx, DWORD PTR __$EHRec$[ebp]
+	mov	DWORD PTR fs:0, ecx
+	pop	ecx
+	pop	esi
+	mov	esp, ebp
+	pop	ebp
+	ret	8
+$LN10@last:
+; Line 631
+	push	OFFSET ??_C@_0ED@KIOHOGJB@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	push	eax
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	mov	DWORD PTR $T3[ebp], 1
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN58@last:
+	int	3
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+__unwindfunclet$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN15@last
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN15@last:
+	ret	0
+__ehhandler$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z:
+	mov	edx, DWORD PTR [esp+8]
+	lea	eax, DWORD PTR [edx+12]
+	mov	ecx, DWORD PTR [edx-20]
+	xor	ecx, eax
+	call	@__security_check_cookie@4
+	mov	eax, OFFSET __ehfuncinfo$?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z
+	jmp	___CxxFrameHandler3
+text$x	ENDS
+?last@?$span@H$0?0@gsl@@QBE?AV12@H@Z ENDP		; gsl::span<int,-1>::last
 ; Function compile flags: /Ogtp
 ;	COMDAT ??0?$span@H$0?0@gsl@@QAE@PAHH@Z
 _TEXT	SEGMENT
@@ -3083,45 +8476,114 @@ __ehhandler$??0?$span@H$0?0@gsl@@QAE@PAHH@Z:
 text$x	ENDS
 ??0?$span@H$0?0@gsl@@QAE@PAHH@Z ENDP			; gsl::span<int,-1>::span<int,-1>
 ; Function compile flags: /Ogtp
-;	COMDAT ?foo@@YA_NXZ
+;	COMDAT ?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 _TEXT	SEGMENT
+$T2 = -28						; size = 12
+$T3 = -16						; size = 4
 __$EHRec$ = -12						; size = 12
-?foo@@YA_NXZ PROC					; foo, COMDAT
+_s$ = 8							; size = 8
+_len$ = 16						; size = 4
+?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z PROC ; test_span_unoptimizable_rangecheck, COMDAT
 ; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 42
+; Line 41
 	push	ebp
 	mov	ebp, esp
 	push	-1
-	push	__ehhandler$?foo@@YA_NXZ
+	push	__ehhandler$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 	mov	eax, DWORD PTR fs:0
 	push	eax
+	sub	esp, 16					; 00000010H
+	push	ebx
+	push	esi
+	push	edi
 	mov	eax, DWORD PTR ___security_cookie
 	xor	eax, ebp
 	push	eax
 	lea	eax, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, eax
-; Line 54
-	mov	al, 1
-; Line 56
+; Line 42
+	mov	edi, DWORD PTR _len$[ebp]
+	xor	ebx, ebx
+	xor	esi, esi
+	mov	DWORD PTR $T3[ebp], ebx
+	test	edi, edi
+	jle	SHORT $LN3@test_span_
+$LL4@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	cmp	esi, DWORD PTR _s$[ebp]
+	jae	SHORT $LN8@test_span_
+	mov	DWORD PTR __$EHRec$[ebp+8], -1
+	test	bl, 1
+	je	SHORT $LN36@test_span_
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	lea	eax, DWORD PTR $T2[ebp+4]
+	mov	DWORD PTR $T2[ebp], OFFSET ??_7exception@std@@6B@
+	push	eax
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	and	ebx, -2					; fffffffeH
+; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vcruntime_exception.h
+; Line 86
+	call	___std_exception_destroy
+	add	esp, 4
+$LN36@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 510
+	mov	eax, DWORD PTR _s$[ebp+4]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 44
+	inc	DWORD PTR [eax+esi*4]
+	inc	esi
+	cmp	esi, edi
+	jl	SHORT $LL4@test_span_
+$LN3@test_span_:
+; Line 46
 	mov	ecx, DWORD PTR __$EHRec$[ebp]
 	mov	DWORD PTR fs:0, ecx
 	pop	ecx
+	pop	edi
+	pop	esi
+	pop	ebx
 	mov	esp, ebp
 	pop	ebp
 	ret	0
+$LN8@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	push	OFFSET ??_C@_0ED@HAMNHNCO@GSL?3?5Precondition?5failure?5at?5c?3@
+	lea	ecx, DWORD PTR $T2[ebp]
+	call	??0fail_fast@gsl@@QAE@QBD@Z		; gsl::fail_fast::fail_fast
+	or	ebx, 1
+	mov	DWORD PTR __$EHRec$[ebp+8], 0
+	push	eax
+	mov	DWORD PTR $T3[ebp], ebx
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+$LN47@test_span_:
+	int	3
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-__ehhandler$?foo@@YA_NXZ:
+__unwindfunclet$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z$0:
+	mov	eax, DWORD PTR $T3[ebp]
+	and	eax, 1
+	je	$LN11@test_span_
+	and	DWORD PTR $T3[ebp], -2			; fffffffeH
+	lea	ecx, DWORD PTR $T2[ebp]
+	jmp	??1fail_fast@gsl@@UAE@XZ
+$LN11@test_span_:
+	ret	0
+__ehhandler$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z:
 	mov	edx, DWORD PTR [esp+8]
 	lea	eax, DWORD PTR [edx+12]
-	mov	ecx, DWORD PTR [edx-4]
+	mov	ecx, DWORD PTR [edx-32]
 	xor	ecx, eax
 	call	@__security_check_cookie@4
-	mov	eax, OFFSET __ehfuncinfo$?foo@@YA_NXZ
+	mov	eax, OFFSET __ehfuncinfo$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 	jmp	___CxxFrameHandler3
 text$x	ENDS
-?foo@@YA_NXZ ENDP					; foo
+?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z ENDP ; test_span_unoptimizable_rangecheck
 ; Function compile flags: /Ogtp
 ;	COMDAT ??$narrow_cast@IAAH@gsl@@YAIAAH@Z
 _TEXT	SEGMENT
@@ -3673,112 +9135,6 @@ __Message$ = 8						; size = 4
 	pop	ebp
 	ret	4
 ??0logic_error@std@@QAE@PBD@Z ENDP			; std::logic_error::logic_error
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Min_value@I@std@@YAABIABI0@Z
-_TEXT	SEGMENT
-__Left$ = 8						; size = 4
-__Right$ = 12						; size = 4
-??$_Min_value@I@std@@YAABIABI0@Z PROC			; std::_Min_value<unsigned int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\utility
-; Line 23
-	push	ebp
-	mov	ebp, esp
-; Line 24
-	mov	edx, DWORD PTR __Right$[ebp]
-	mov	eax, DWORD PTR __Left$[ebp]
-	mov	ecx, DWORD PTR [edx]
-	cmp	ecx, DWORD PTR [eax]
-	cmovb	eax, edx
-; Line 25
-	pop	ebp
-	ret	0
-??$_Min_value@I@std@@YAABIABI0@Z ENDP			; std::_Min_value<unsigned int>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ??$_Convert_size@I@std@@YAII@Z
-_TEXT	SEGMENT
-__Len$ = 8						; size = 4
-??$_Convert_size@I@std@@YAII@Z PROC			; std::_Convert_size<unsigned int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 1203
-	push	ebp
-	mov	ebp, esp
-; Line 1204
-	mov	eax, DWORD PTR __Len$[ebp]
-; Line 1205
-	pop	ebp
-	ret	0
-??$_Convert_size@I@std@@YAII@Z ENDP			; std::_Convert_size<unsigned int>
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Adjust_manually_vector_aligned@std@@YAXAAPAXAAI@Z
-_TEXT	SEGMENT
-__Ptr$ = 8						; size = 4
-__Bytes$ = 12						; size = 4
-?_Adjust_manually_vector_aligned@std@@YAXAAPAXAAI@Z PROC ; std::_Adjust_manually_vector_aligned, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 114
-	push	ebp
-	mov	ebp, esp
-; Line 115
-	mov	eax, DWORD PTR __Bytes$[ebp]
-; Line 118
-	mov	ecx, DWORD PTR __Ptr$[ebp]
-	add	DWORD PTR [eax], 35			; 00000023H
-	mov	eax, DWORD PTR [ecx]
-	mov	edx, DWORD PTR [eax-4]
-; Line 131
-	sub	eax, edx
-; Line 132
-	add	eax, -4					; fffffffcH
-	cmp	eax, 31					; 0000001fH
-	ja	SHORT $LN7@Adjust_man
-; Line 133
-	mov	DWORD PTR [ecx], edx
-; Line 134
-	pop	ebp
-	ret	0
-$LN7@Adjust_man:
-; Line 132
-	jmp	DWORD PTR __imp___invalid_parameter_noinfo_noreturn
-?_Adjust_manually_vector_aligned@std@@YAXAAPAXAAI@Z ENDP ; std::_Adjust_manually_vector_aligned
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Allocate@_Default_allocate_traits@std@@SAPAXI@Z
-_TEXT	SEGMENT
-__Bytes$ = 8						; size = 4
-?_Allocate@_Default_allocate_traits@std@@SAPAXI@Z PROC	; std::_Default_allocate_traits::_Allocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xmemory0
-; Line 51
-	push	ebp
-	mov	ebp, esp
-; Line 53
-	pop	ebp
-; Line 52
-	jmp	??2@YAPAXI@Z				; operator new
-?_Allocate@_Default_allocate_traits@std@@SAPAXI@Z ENDP	; std::_Default_allocate_traits::_Allocate
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?_Orphan_all@_Container_base0@std@@QAEXXZ
-_TEXT	SEGMENT
-?_Orphan_all@_Container_base0@std@@QAEXXZ PROC		; std::_Container_base0::_Orphan_all, COMDAT
-; _this$ = ecx
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xutility
-; Line 43
-	ret	0
-?_Orphan_all@_Container_base0@std@@QAEXXZ ENDP		; std::_Container_base0::_Orphan_all
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-;	COMDAT ?max@?$numeric_limits@H@std@@SAHXZ
-_TEXT	SEGMENT
-?max@?$numeric_limits@H@std@@SAHXZ PROC			; std::numeric_limits<int>::max, COMDAT
-; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\limits
-; Line 617
-	mov	eax, 2147483647				; 7fffffffH
-; Line 618
-	ret	0
-?max@?$numeric_limits@H@std@@SAHXZ ENDP			; std::numeric_limits<int>::max
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ;	COMDAT ??_Gexception@std@@UAEPAXI@Z

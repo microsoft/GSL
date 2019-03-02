@@ -19,17 +19,48 @@ PUBLIC	??0narrowing_error@gsl@@QEAA@AEBU01@@Z		; gsl::narrowing_error::narrowing
 PUBLIC	??_Gnarrowing_error@gsl@@UEAAPEAXI@Z		; gsl::narrowing_error::`scalar deleting destructor'
 PUBLIC	??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z	; gsl::details::extent_type<-1>::extent_type<-1>
 PUBLIC	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-PUBLIC	?foo@@YA_NXZ					; foo
-PUBLIC	?bar@@YA_NXZ					; bar
-PUBLIC	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z	; std::allocator<int>::deallocate
-PUBLIC	?allocate@?$allocator@H@std@@QEAAPEAH_K@Z	; std::allocator<int>::allocate
-PUBLIC	??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-PUBLIC	??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z		; gsl::narrow_cast<unsigned __int64,__int64 & __ptr64>
-PUBLIC	??$narrow@_J_K@gsl@@YA_J_K@Z			; gsl::narrow<__int64,unsigned __int64>
-PUBLIC	??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>
+PUBLIC	?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z ; test_span_unoptimizable_rangecheck
+PUBLIC	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+PUBLIC	?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z	; test_span_for
+PUBLIC	?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z	; test_span_iter
+PUBLIC	??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++
+PUBLIC	?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z	; test_span_rangeiter
+PUBLIC	?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z ; static_size_array_span
+PUBLIC	?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z ; test_convert_span_Joe
+PUBLIC	??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z ; convert_span<unsigned char,gsl::span<unsigned short,-1> >
+PUBLIC	?mysubspan1@@YA_JXZ				; mysubspan1
+PUBLIC	?mysubspan2@@YA_J_J@Z				; mysubspan2
+PUBLIC	?mysubspan3@@YA_JXZ				; mysubspan3
+PUBLIC	?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z	; mysubspan4
+PUBLIC	?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z	; mysubspan5
+PUBLIC	?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z	; mysubspan6
+PUBLIC	?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z	; mysubspan7
+PUBLIC	?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z	; mysubspan8
+PUBLIC	?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z	; mysubspan9
+PUBLIC	?doterminate@@YAXXZ				; doterminate
+PUBLIC	?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z		; copy_span
+PUBLIC	?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z	; gsl_copy_span
+PUBLIC	??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z	; gsl::copy<int,-1,int,-1>
+PUBLIC	?test_string_std_copy@@YAXXZ			; test_string_std_copy
+PUBLIC	??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z ; gsl::ensure_z<char const ,11>
+PUBLIC	??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++
+PUBLIC	??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++
+PUBLIC	?test_string_gsl_copy@@YAXXZ			; test_string_gsl_copy
+PUBLIC	??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z ; gsl::copy<char const ,-1,unsigned char,-1>
 PUBLIC	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
-PUBLIC	??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z		; gsl::narrow_cast<__int64,unsigned __int64 & __ptr64>
+PUBLIC	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+PUBLIC	??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z		; gsl::narrow_cast<unsigned __int64,__int64 & __ptr64>
+PUBLIC	??$narrow_cast@_J_K@gsl@@YA_J$$QEA_K@Z		; gsl::narrow_cast<__int64,unsigned __int64>
+PUBLIC	??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z ; gsl::ensure_z<char const >
+PUBLIC	??$narrow@_J_J@gsl@@YA_J_J@Z			; gsl::narrow<__int64,__int64>
+PUBLIC	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+PUBLIC	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+PUBLIC	??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z ; gsl::ensure_sentinel<char const ,0>
+PUBLIC	??$narrow_cast@_JAEA_J@gsl@@YA_JAEA_J@Z		; gsl::narrow_cast<__int64,__int64 & __ptr64>
 PUBLIC	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
+PUBLIC	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+PUBLIC	??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+PUBLIC	??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
 PUBLIC	??_7exception@std@@6B@				; std::exception::`vftable'
 PUBLIC	??_C@_0BC@EOODALEL@Unknown?5exception?$AA@	; `string'
 PUBLIC	??_7logic_error@std@@6B@			; std::logic_error::`vftable'
@@ -38,16 +69,25 @@ PUBLIC	??_R0?AVexception@std@@@8			; std::exception `RTTI Type Descriptor'
 PUBLIC	_CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24
 PUBLIC	??_7narrowing_error@gsl@@6B@			; gsl::narrowing_error::`vftable'
 PUBLIC	??_C@_0ED@HKMFEAN@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0L@CCAJJBND@iVtrau?5lDC?$AA@		; `string'
 PUBLIC	??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0ED@HPDDDCPI@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0ED@BLFPPHPM@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
 PUBLIC	_TI3?AUfail_fast@gsl@@
 PUBLIC	_CTA3?AUfail_fast@gsl@@
 PUBLIC	??_R0?AUfail_fast@gsl@@@8			; gsl::fail_fast `RTTI Type Descriptor'
 PUBLIC	_CT??_R0?AUfail_fast@gsl@@@8??0fail_fast@gsl@@QEAA@AEBU01@@Z24
 PUBLIC	??_R0?AVlogic_error@std@@@8			; std::logic_error `RTTI Type Descriptor'
 PUBLIC	_CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z24
+PUBLIC	??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
 PUBLIC	??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
 PUBLIC	??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
-PUBLIC	??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ ; `string'
+PUBLIC	??_C@_0ED@ELDMELAD@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0ED@EJCPKIPN@GSL?3?5Precondition?5failure?5at?5C?3?2@ ; `string'
+PUBLIC	??_C@_0EL@CELLNNNE@GSL?3?5Postcondition?5failure?5at?5C?3@ ; `string'
+PUBLIC	??_C@_0EL@HAKHMEAL@GSL?3?5Postcondition?5failure?5at?5C?3@ ; `string'
 PUBLIC	_TI2?AUnarrowing_error@gsl@@
 PUBLIC	_CTA2?AUnarrowing_error@gsl@@
 PUBLIC	??_R0?AUnarrowing_error@gsl@@@8			; gsl::narrowing_error `RTTI Type Descriptor'
@@ -69,20 +109,17 @@ PUBLIC	??_R3narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Class Hierarc
 PUBLIC	??_R2narrowing_error@gsl@@8			; gsl::narrowing_error::`RTTI Base Class Array'
 PUBLIC	??_R1A@?0A@EA@narrowing_error@gsl@@8		; gsl::narrowing_error::`RTTI Base Class Descriptor at (0,-1,0,64)'
 PUBLIC	__xmm@00000003000000020000000100000000
-EXTRN	??2@YAPEAX_K@Z:PROC				; operator new
-EXTRN	??3@YAXPEAX@Z:PROC				; operator delete
 EXTRN	??3@YAXPEAX_K@Z:PROC				; operator delete
 EXTRN	__std_terminate:PROC
-EXTRN	__imp__invalid_parameter_noinfo_noreturn:PROC
+EXTRN	__imp_terminate:PROC
 EXTRN	__imp___std_exception_copy:PROC
 EXTRN	__imp___std_exception_destroy:PROC
 EXTRN	??_Eexception@std@@UEAAPEAXI@Z:PROC		; std::exception::`vector deleting destructor'
 EXTRN	__imp_memmove:PROC
-EXTRN	__imp_?_Xbad_alloc@std@@YAXXZ:PROC
-EXTRN	__imp_?_Xlength_error@std@@YAXPEBD@Z:PROC
 EXTRN	??_Elogic_error@std@@UEAAPEAXI@Z:PROC		; std::logic_error::`vector deleting destructor'
 EXTRN	??_Efail_fast@gsl@@UEAAPEAXI@Z:PROC		; gsl::fail_fast::`vector deleting destructor'
 EXTRN	??_Enarrowing_error@gsl@@UEAAPEAXI@Z:PROC	; gsl::narrowing_error::`vector deleting destructor'
+EXTRN	?bar@@YAXV?$span@E$0?0@gsl@@@Z:PROC		; bar
 EXTRN	_CxxThrowException:PROC
 EXTRN	__CxxFrameHandler3:PROC
 EXTRN	__GSHandlerCheck_EH:PROC
@@ -106,18 +143,6 @@ pdata	SEGMENT
 $pdata$??_Gexception@std@@UEAAPEAXI@Z DD imagerel $LN8
 	DD	imagerel $LN8+67
 	DD	imagerel $unwind$??_Gexception@std@@UEAAPEAXI@Z
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$?_Allocate@std@@YAPEAX_K0_N@Z DD imagerel $LN12
-	DD	imagerel $LN12+131
-	DD	imagerel $unwind$?_Allocate@std@@YAPEAX_K0_N@Z
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$?_Deallocate@std@@YAXPEAX_K1@Z DD imagerel $LN11
-	DD	imagerel $LN11+110
-	DD	imagerel $unwind$?_Deallocate@std@@YAXPEAX_K1@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -205,15 +230,33 @@ $pdata$??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z 
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?foo@@YA_NXZ DD imagerel $LN223
-	DD	imagerel $LN223+27
-	DD	imagerel $unwind$?foo@@YA_NXZ
+$pdata$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD imagerel $LN62
+	DD	imagerel $LN62+203
+	DD	imagerel $unwind$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA DD imagerel ?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA
+	DD	imagerel ?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD imagerel $LN4
 	DD	imagerel $LN4+23
 	DD	imagerel $unwind$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?last@?$span@H$0?0@gsl@@QEBA?AV12@_J@Z DD imagerel $LN23
+	DD	imagerel $LN23+53
+	DD	imagerel $unwind$?last@?$span@H$0?0@gsl@@QEBA?AV12@_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?subspan@?$span@H$0?0@gsl@@QEBA?AV12@_J0@Z DD imagerel $LN4
+	DD	imagerel $LN4+29
+	DD	imagerel $unwind$?subspan@?$span@H$0?0@gsl@@QEBA?AV12@_J0@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -229,117 +272,405 @@ $pdata$?dtor$0@?0???A?$span@H$0?0@gsl@@QEBAAEAH_J@Z@4HA DD imagerel ?dtor$0@?0??
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
+$pdata$??0?$span@H$0?0@gsl@@AEAA@UKnownNotNull@01@_J@Z DD imagerel $LN4
+	DD	imagerel $LN4+23
+	DD	imagerel $unwind$??0?$span@H$0?0@gsl@@AEAA@UKnownNotNull@01@_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z DD imagerel $LN78
+	DD	imagerel $LN78+294
+	DD	imagerel $unwind$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA DD imagerel ?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA
+	DD	imagerel ?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA DD imagerel ?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA
+	DD	imagerel ?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD imagerel $LN68
+	DD	imagerel $LN68+210
+	DD	imagerel $unwind$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD imagerel ?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+	DD	imagerel ?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD imagerel $LN99
+	DD	imagerel $LN99+242
+	DD	imagerel $unwind$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD imagerel ?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+	DD	imagerel ?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ DD imagerel $LN35
+	DD	imagerel $LN35+136
+	DD	imagerel $unwind$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA DD imagerel ?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA
+	DD	imagerel ?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD imagerel $LN29
+	DD	imagerel $LN29+144
+	DD	imagerel $unwind$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA DD imagerel ?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+	DD	imagerel ?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z DD imagerel $LN9
+	DD	imagerel $LN9+63
+	DD	imagerel $unwind$??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z DD imagerel $LN97
+	DD	imagerel $LN97+322
+	DD	imagerel $unwind$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD imagerel ?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+	DD	imagerel ?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA+44
+	DD	imagerel $unwind$?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD imagerel ?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+	DD	imagerel ?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA+44
+	DD	imagerel $unwind$?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z DD imagerel $LN101
+	DD	imagerel $LN101+195
+	DD	imagerel $unwind$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA DD imagerel ?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA
+	DD	imagerel ?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??0?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD imagerel $LN4
+	DD	imagerel $LN4+23
+	DD	imagerel $unwind$??0?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z DD imagerel $LN51
+	DD	imagerel $LN51+128
+	DD	imagerel $unwind$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA DD imagerel ?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z DD imagerel $LN51
+	DD	imagerel $LN51+39
+	DD	imagerel $unwind$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z DD imagerel $LN79
+	DD	imagerel $LN79+165
+	DD	imagerel $unwind$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA DD imagerel ?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA
+	DD	imagerel ?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z DD imagerel $LN27
+	DD	imagerel $LN27+33
+	DD	imagerel $unwind$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?mysubspan1@@YA_JXZ DD imagerel $LN107
+	DD	imagerel $LN107+145
+	DD	imagerel $unwind$?mysubspan1@@YA_JXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?last@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J@Z DD imagerel $LN64
+	DD	imagerel $LN64+99
+	DD	imagerel $unwind$?last@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?subspan@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J0@Z DD imagerel $LN45
+	DD	imagerel $LN45+105
+	DD	imagerel $unwind$?subspan@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z DD imagerel $LN23
+	DD	imagerel $LN23+125
+	DD	imagerel $unwind$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA DD imagerel ?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z DD imagerel $LN46
+	DD	imagerel $LN46+31
+	DD	imagerel $unwind$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?mysubspan2@@YA_J_J@Z DD imagerel $LN107
+	DD	imagerel $LN107+156
+	DD	imagerel $unwind$?mysubspan2@@YA_J_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?mysubspan3@@YA_JXZ DD imagerel $LN101
+	DD	imagerel $LN101+145
+	DD	imagerel $unwind$?mysubspan3@@YA_JXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel $LN87
+	DD	imagerel $LN87+101
+	DD	imagerel $unwind$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
 $pdata$??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ DD imagerel $LN81
 	DD	imagerel $LN81+33
 	DD	imagerel $unwind$??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ DD imagerel $LN81
-	DD	imagerel $LN81+33
-	DD	imagerel $unwind$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ
+$pdata$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel $LN81
+	DD	imagerel $LN81+96
+	DD	imagerel $unwind$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?bar@@YA_NXZ DD imagerel $LN374
-	DD	imagerel $LN374+482
-	DD	imagerel $unwind$?bar@@YA_NXZ
+$pdata$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z DD imagerel $LN81
+	DD	imagerel $LN81+84
+	DD	imagerel $unwind$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?dtor$30@?0??bar@@YA_NXZ@4HA DD imagerel ?dtor$30@?0??bar@@YA_NXZ@4HA
-	DD	imagerel ?dtor$30@?0??bar@@YA_NXZ@4HA+41
-	DD	imagerel $unwind$?dtor$30@?0??bar@@YA_NXZ@4HA
+$pdata$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel $LN81
+	DD	imagerel $LN81+96
+	DD	imagerel $unwind$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?dtor$41@?0??bar@@YA_NXZ@4HA DD imagerel ?dtor$41@?0??bar@@YA_NXZ@4HA
-	DD	imagerel ?dtor$41@?0??bar@@YA_NXZ@4HA+41
-	DD	imagerel $unwind$?dtor$41@?0??bar@@YA_NXZ@4HA
+$pdata$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel $LN68
+	DD	imagerel $LN68+111
+	DD	imagerel $unwind$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?dtor$52@?0??bar@@YA_NXZ@4HA DD imagerel ?dtor$52@?0??bar@@YA_NXZ@4HA
-	DD	imagerel ?dtor$52@?0??bar@@YA_NXZ@4HA+38
-	DD	imagerel $unwind$?dtor$52@?0??bar@@YA_NXZ@4HA
+$pdata$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel $LN68
+	DD	imagerel $LN68+96
+	DD	imagerel $unwind$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z DD imagerel $LN14
-	DD	imagerel $LN14+114
-	DD	imagerel $unwind$?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z
+$pdata$?doterminate@@YAXXZ DD imagerel $LN4
+	DD	imagerel $LN4+11
+	DD	imagerel $unwind$?doterminate@@YAXXZ
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?allocate@?$allocator@H@std@@QEAAPEAH_K@Z DD imagerel $LN15
-	DD	imagerel $LN15+128
-	DD	imagerel $unwind$?allocate@?$allocator@H@std@@QEAAPEAH_K@Z
+$pdata$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD imagerel $LN50
+	DD	imagerel $LN50+101
+	DD	imagerel $unwind$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z DD imagerel $LN24
-	DD	imagerel $LN24+47
-	DD	imagerel $unwind$??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z
+$pdata$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD imagerel $LN24
+	DD	imagerel $LN24+77
+	DD	imagerel $unwind$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ DD imagerel $LN96
-	DD	imagerel $LN96+52
-	DD	imagerel $unwind$??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ
+$pdata$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD imagerel $LN81
+	DD	imagerel $LN81+176
+	DD	imagerel $unwind$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?_Buy@?$vector@HV?$allocator@H@std@@@std@@IEAA_N_K@Z DD imagerel $LN110
-	DD	imagerel $LN110+99
-	DD	imagerel $unwind$?_Buy@?$vector@HV?$allocator@H@std@@@std@@IEAA_N_K@Z
+$pdata$?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA DD imagerel ?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA
+	DD	imagerel ?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IEAAXXZ DD imagerel $LN94
-	DD	imagerel $LN94+52
-	DD	imagerel $unwind$?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IEAAXXZ
+$pdata$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD imagerel $LN78
+	DD	imagerel $LN78+154
+	DD	imagerel $unwind$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IEBAXXZ DD imagerel $LN4
-	DD	imagerel $LN4+18
-	DD	imagerel $unwind$?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IEBAXXZ
+$pdata$?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA DD imagerel ?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA
+	DD	imagerel ?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD imagerel $LN74
-	DD	imagerel $LN74+89
-	DD	imagerel $unwind$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+$pdata$?test_string_std_copy@@YAXXZ DD imagerel $LN107
+	DD	imagerel $LN107+228
+	DD	imagerel $unwind$?test_string_std_copy@@YAXXZ
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z DD imagerel $LN52
-	DD	imagerel $LN52+33
-	DD	imagerel $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z
+$pdata$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z DD imagerel $LN51
+	DD	imagerel $LN51+39
+	DD	imagerel $unwind$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z DD imagerel $LN52
-	DD	imagerel $LN52+33
-	DD	imagerel $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z
+$pdata$??0?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD imagerel $LN4
+	DD	imagerel $LN4+23
+	DD	imagerel $unwind$??0?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$narrow@_J_K@gsl@@YA_J_K@Z DD imagerel $LN34
-	DD	imagerel $LN34+61
-	DD	imagerel $unwind$??$narrow@_J_K@gsl@@YA_J_K@Z
+$pdata$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z DD imagerel $LN12
+	DD	imagerel $LN12+29
+	DD	imagerel $unwind$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD imagerel $LN259
-	DD	imagerel $LN259+175
-	DD	imagerel $unwind$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
+$pdata$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ DD imagerel $LN35
+	DD	imagerel $LN35+135
+	DD	imagerel $unwind$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA DD imagerel ?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
-	DD	imagerel ?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA+78
-	DD	imagerel $unwind$?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
+$pdata$?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA DD imagerel ?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA
+	DD	imagerel ?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD imagerel $LN29
+	DD	imagerel $LN29+144
+	DD	imagerel $unwind$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA DD imagerel ?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+	DD	imagerel ?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??9details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z DD imagerel $LN9
+	DD	imagerel $LN9+63
+	DD	imagerel $unwind$??9details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ DD imagerel $LN35
+	DD	imagerel $LN35+135
+	DD	imagerel $unwind$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA DD imagerel ?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA
+	DD	imagerel ?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD imagerel $LN29
+	DD	imagerel $LN29+144
+	DD	imagerel $unwind$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA DD imagerel ?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+	DD	imagerel ?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD imagerel $LN24
+	DD	imagerel $LN24+77
+	DD	imagerel $unwind$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?test_string_gsl_copy@@YAXXZ DD imagerel $LN186
+	DD	imagerel $LN186+238
+	DD	imagerel $unwind$?test_string_gsl_copy@@YAXXZ
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA DD imagerel ?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA
+	DD	imagerel ?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA+38
+	DD	imagerel $unwind$?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QEAA@AEAV?$basic_string_span@$$CBD$0?0@1@@Z DD imagerel $LN55
+	DD	imagerel $LN55+39
+	DD	imagerel $unwind$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QEAA@AEAV?$basic_string_span@$$CBD$0?0@1@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD imagerel $LN78
+	DD	imagerel $LN78+146
+	DD	imagerel $unwind$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA DD imagerel ?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA
+	DD	imagerel ?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$make_subspan@$05@?$span@H$05@gsl@@AEBA?AV?$span@H$0?0@1@_J0V?$subspan_selector@$05@01@@Z DD imagerel $LN42
+	DD	imagerel $LN42+105
+	DD	imagerel $unwind$??$make_subspan@$05@?$span@H$05@gsl@@AEBA?AV?$span@H$0?0@1@_J0V?$subspan_selector@$05@01@@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -361,39 +692,285 @@ $pdata$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$spa
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
+$pdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z DD imagerel $LN26
+	DD	imagerel $LN26+152
+	DD	imagerel $unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA DD imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD imagerel $LN30
+	DD	imagerel $LN30+39
+	DD	imagerel $unwind$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD imagerel $LN25
+	DD	imagerel $LN25+31
+	DD	imagerel $unwind$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z DD imagerel $LN52
+	DD	imagerel $LN52+33
+	DD	imagerel $unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_no_deprecate@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD imagerel $LN18
+	DD	imagerel $LN18+77
+	DD	imagerel $unwind$??$_Copy_no_deprecate@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD imagerel $LN27
+	DD	imagerel $LN27+14
+	DD	imagerel $unwind$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$0$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD imagerel $LN27+14
+	DD	imagerel $LN27+57
+	DD	imagerel $chain$0$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$1$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD imagerel $LN27+57
+	DD	imagerel $LN27+66
+	DD	imagerel $chain$1$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z DD imagerel $LN30
+	DD	imagerel $LN30+39
+	DD	imagerel $unwind$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z DD imagerel $LN4
+	DD	imagerel $LN4+26
+	DD	imagerel $unwind$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_no_deprecate@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD imagerel $LN18
+	DD	imagerel $LN18+77
+	DD	imagerel $unwind$??$_Copy_no_deprecate@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$narrow@_J_J@gsl@@YA_J_J@Z DD imagerel $LN33
+	DD	imagerel $LN33+20
+	DD	imagerel $unwind$??$narrow@_J_J@gsl@@YA_J_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z DD imagerel $LN27
+	DD	imagerel $LN27+65
+	DD	imagerel $unwind$??$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0H$05X@?$span@H$0?0@gsl@@QEAA@AEBV?$span@H$05@1@@Z DD imagerel $LN37
+	DD	imagerel $LN37+49
+	DD	imagerel $unwind$??$?0H$05X@?$span@H$0?0@gsl@@QEAA@AEBV?$span@H$05@1@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD imagerel $LN48
+	DD	imagerel $LN48+256
+	DD	imagerel $unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA DD imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA DD imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA
+	DD	imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD imagerel $LN48
+	DD	imagerel $LN48+256
+	DD	imagerel $unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA DD imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA DD imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA
+	DD	imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_no_deprecate1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00Urandom_access_iterator_tag@0@1@Z DD imagerel $LN12
+	DD	imagerel $LN12+95
+	DD	imagerel $unwind$??$_Copy_no_deprecate1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00Urandom_access_iterator_tag@0@1@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD imagerel $LN11
+	DD	imagerel $LN11+14
+	DD	imagerel $unwind$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$0$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD imagerel $LN11+14
+	DD	imagerel $LN11+57
+	DD	imagerel $chain$0$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$1$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD imagerel $LN11+57
+	DD	imagerel $LN11+66
+	DD	imagerel $chain$1$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z DD imagerel $LN70
+	DD	imagerel $LN70+274
+	DD	imagerel $unwind$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA DD imagerel ?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA
+	DD	imagerel ?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA DD imagerel ?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA
+	DD	imagerel ?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA+38
+	DD	imagerel $unwind$?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_no_deprecate1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@Urandom_access_iterator_tag@0@2@Z DD imagerel $LN12
+	DD	imagerel $LN12+95
+	DD	imagerel $unwind$??$_Copy_no_deprecate1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@Urandom_access_iterator_tag@0@2@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
 $pdata$??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z DD imagerel $LN12
 	DD	imagerel $LN12+73
 	DD	imagerel $unwind$??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@IEAAPEAHPEBH0PEAH@Z DD imagerel $LN28
-	DD	imagerel $LN28+46
-	DD	imagerel $unwind$??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@IEAAPEAHPEBH0PEAH@Z
+$pdata$??$_Copy_n_unchecked@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z DD imagerel $LN11
+	DD	imagerel $LN11+65
+	DD	imagerel $unwind$??$_Copy_n_unchecked@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z DD imagerel $LN20
-	DD	imagerel $LN20+49
-	DD	imagerel $unwind$??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
+$pdata$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z DD imagerel $LN53
+	DD	imagerel $LN53+129
+	DD	imagerel $unwind$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$_Uninitialized_copy_al_unchecked@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z DD imagerel $LN10
-	DD	imagerel $LN10+49
-	DD	imagerel $unwind$??$_Uninitialized_copy_al_unchecked@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
+$pdata$?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA DD imagerel ?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA
+	DD	imagerel ?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA+38
+	DD	imagerel $unwind$?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z DD imagerel $LN6
-	DD	imagerel $LN6+49
-	DD	imagerel $unwind$??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z
+$pdata$??$_Copy_unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD imagerel $LN6
+	DD	imagerel $LN6+68
+	DD	imagerel $unwind$??$_Copy_unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z DD imagerel $LN4
+$pdata$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z DD imagerel $LN7
+	DD	imagerel $LN7+14
+	DD	imagerel $unwind$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$0$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z DD imagerel $LN7+14
+	DD	imagerel $LN7+57
+	DD	imagerel $chain$0$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$1$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z DD imagerel $LN7+57
+	DD	imagerel $LN7+66
+	DD	imagerel $chain$1$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD imagerel $LN6
+	DD	imagerel $LN6+68
+	DD	imagerel $unwind$??$_Copy_unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_n_unchecked1@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAEU_Trivially_copyable_ptr_iterator_tag@0@@Z DD imagerel $LN7
+	DD	imagerel $LN7+65
+	DD	imagerel $unwind$??$_Copy_n_unchecked1@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAEU_Trivially_copyable_ptr_iterator_tag@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z DD imagerel $LN85
+	DD	imagerel $LN85+443
+	DD	imagerel $unwind$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA DD imagerel ?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA
+	DD	imagerel ?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA+44
+	DD	imagerel $unwind$?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA DD imagerel ?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA
+	DD	imagerel ?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA+44
+	DD	imagerel $unwind$?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_memmove@PEAHPEAH@std@@YAPEAHPEAH00@Z DD imagerel $LN4
 	DD	imagerel $LN4+49
-	DD	imagerel $unwind$??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z
+	DD	imagerel $unwind$??$_Copy_memmove@PEAHPEAH@std@@YAPEAHPEAH00@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z DD imagerel $LN85
+	DD	imagerel $LN85+440
+	DD	imagerel $unwind$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA DD imagerel ?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA
+	DD	imagerel ?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA+44
+	DD	imagerel $unwind$?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA DD imagerel ?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA
+	DD	imagerel ?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA+44
+	DD	imagerel $unwind$?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$??$_Copy_memmove@PEBDPEAE@std@@YAPEAEPEBD0PEAE@Z DD imagerel $LN4
+	DD	imagerel $LN4+49
+	DD	imagerel $unwind$??$_Copy_memmove@PEBDPEAE@std@@YAPEAEPEBD0PEAE@Z
 pdata	ENDS
 ;	COMDAT __xmm@00000003000000020000000100000000
 CONST	SEGMENT
@@ -557,10 +1134,27 @@ _TI2?AUnarrowing_error@gsl@@ DD 00H
 	DD	00H
 	DD	imagerel _CTA2?AUnarrowing_error@gsl@@
 xdata$x	ENDS
-;	COMDAT ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
+;	COMDAT ??_C@_0EL@HAKHMEAL@GSL?3?5Postcondition?5failure?5at?5C?3@
 CONST	SEGMENT
-??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ DB 'vector<T> too long'
-	DB	00H						; `string'
+??_C@_0EL@HAKHMEAL@GSL?3?5Postcondition?5failure?5at?5C?3@ DB 'GSL: Postc'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/string_span: '
+	DB	'122', 00H					; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0EL@CELLNNNE@GSL?3?5Postcondition?5failure?5at?5C?3@
+CONST	SEGMENT
+??_C@_0EL@CELLNNNE@GSL?3?5Postcondition?5failure?5at?5C?3@ DB 'GSL: Postc'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/string_span: '
+	DB	'114', 00H					; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@EJCPKIPN@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@EJCPKIPN@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 321', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@ELDMELAD@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@ELDMELAD@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 592', 00H ; `string'
 CONST	ENDS
 ;	COMDAT ??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@
 CONST	SEGMENT
@@ -571,6 +1165,12 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
 	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 598', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/gsl_algorithm'
+	DB	': 50', 00H					; `string'
 CONST	ENDS
 ;	COMDAT _CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z24
 xdata$x	SEGMENT
@@ -618,10 +1218,34 @@ _TI3?AUfail_fast@gsl@@ DD 00H
 	DD	00H
 	DD	imagerel _CTA3?AUfail_fast@gsl@@
 xdata$x	ENDS
+;	COMDAT ??_C@_0ED@BLFPPHPM@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@BLFPPHPM@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 635', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@HPDDDCPI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@HPDDDCPI@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 631', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 157', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+CONST	SEGMENT
+??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
+	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 169', 00H ; `string'
+CONST	ENDS
 ;	COMDAT ??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
 CONST	SEGMENT
 ??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@ DB 'GSL: Prec'
 	DB	'ondition failure at C:\projects\gsl\include\gsl/span: 509', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0L@CCAJJBND@iVtrau?5lDC?$AA@
+CONST	SEGMENT
+??_C@_0L@CCAJJBND@iVtrau?5lDC?$AA@ DB 'iVtrau lDC', 00H	; `string'
 CONST	ENDS
 ;	COMDAT ??_C@_0ED@HKMFEAN@GSL?3?5Precondition?5failure?5at?5C?3?2@
 CONST	SEGMENT
@@ -674,31 +1298,208 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z DD 040a01H
+$unwind$??$_Copy_memmove@PEBDPEAE@std@@YAPEAEPEBD0PEAE@Z DD 040a01H
 	DD	06340aH
 	DD	07006320aH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z DD 040a01H
+$unwind$?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z DD imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z
+	DD	0ffffffffH
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z+311
+	DD	01H
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z+327
+	DD	0ffffffffH
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z+381
+	DD	00H
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z+397
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA
+	DD	0ffffffffH
+	DD	imagerel ?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z DD 0d2b11H
+	DD	01b742bH
+	DD	01a6427H
+	DD	0183423H
+	DD	0120117H
+	DD	0e00af00cH
+	DD	0c006d008H
+	DD	05004H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_memmove@PEAHPEAH@std@@YAPEAHPEAH00@Z DD 040a01H
 	DD	06340aH
 	DD	07006320aH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$_Uninitialized_copy_al_unchecked@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z DD 040a01H
+$unwind$?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z DD imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z
+	DD	0ffffffffH
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z+314
+	DD	01H
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z+330
+	DD	0ffffffffH
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z+384
+	DD	00H
+	DD	imagerel ??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z+400
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA
+	DD	0ffffffffH
+	DD	imagerel ?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z DD 0d2b11H
+	DD	01b742bH
+	DD	01a6427H
+	DD	0183423H
+	DD	0120117H
+	DD	0e00af00cH
+	DD	0c006d008H
+	DD	05004H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_n_unchecked1@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAEU_Trivially_copyable_ptr_iterator_tag@0@@Z DD 040a01H
 	DD	06340aH
 	DD	07006320aH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z DD 040a01H
-	DD	06340aH
-	DD	07006320aH
+$unwind$??$_Copy_unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD 020801H
+	DD	03004b208H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@IEAAPEAHPEBH0PEAH@Z DD 040a01H
+$chain$1$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z DD 021H
+	DD	imagerel $LN7
+	DD	imagerel $LN7+14
+	DD	imagerel $unwind$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$0$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z DD 020521H
+	DD	063405H
+	DD	imagerel $LN7
+	DD	imagerel $LN7+14
+	DD	imagerel $unwind$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z DD 020601H
+	DD	070023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD 020801H
+	DD	03004b208H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z DD imagerel ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z
+	DD	0ffffffffH
+	DD	imagerel ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z+102
+	DD	01H
+	DD	imagerel ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z+121
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z DD 0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z DD 010f11H
+	DD	0a207H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_n_unchecked@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z DD 040a01H
 	DD	06340aH
 	DD	07006320aH
 xdata	ENDS
@@ -706,6 +1507,302 @@ xdata	ENDS
 xdata	SEGMENT
 $unwind$??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z DD 010401H
 	DD	08204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_no_deprecate1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@Urandom_access_iterator_tag@0@2@Z DD 040c01H
+	DD	010340cH
+	DD	07008d20cH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z DD imagerel ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z
+	DD	0ffffffffH
+	DD	imagerel ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z+161
+	DD	02H
+	DD	imagerel ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z+180
+	DD	0ffffffffH
+	DD	imagerel ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z+249
+	DD	00H
+	DD	imagerel ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z+268
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA
+	DD	0ffffffffH
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z DD 019930522H
+	DD	03H
+	DD	imagerel $stateUnwindMap$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z DD 020f11H
+	DD	030029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$1$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD 021H
+	DD	imagerel $LN11
+	DD	imagerel $LN11+14
+	DD	imagerel $unwind$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$0$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD 020521H
+	DD	063405H
+	DD	imagerel $LN11
+	DD	imagerel $LN11+14
+	DD	imagerel $unwind$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD 020601H
+	DD	070023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_no_deprecate1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00Urandom_access_iterator_tag@0@1@Z DD 040c01H
+	DD	010340cH
+	DD	07008d20cH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+	DD	0ffffffffH
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z+133
+	DD	01H
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z+152
+	DD	0ffffffffH
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z+226
+	DD	00H
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z+245
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD 041411H
+	DD	0d3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+	DD	0ffffffffH
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z+133
+	DD	01H
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z+152
+	DD	0ffffffffH
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z+226
+	DD	00H
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z+245
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD 041411H
+	DD	0d3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0H$05X@?$span@H$0?0@gsl@@QEAA@AEBV?$span@H$05@1@@Z DD 020f01H
+	DD	030025206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z DD 040a01H
+	DD	06340aH
+	DD	07006320aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$narrow@_J_J@gsl@@YA_J_J@Z DD 010c01H
+	DD	02204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_no_deprecate@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD 020801H
+	DD	03004d208H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z DD 010c01H
+	DD	02204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$1$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD 021H
+	DD	imagerel $LN27
+	DD	imagerel $LN27+14
+	DD	imagerel $unwind$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$chain$0$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD 020521H
+	DD	063405H
+	DD	imagerel $LN27
+	DD	imagerel $LN27+14
+	DD	imagerel $unwind$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z DD 020601H
+	DD	070023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$_Copy_no_deprecate@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD 020801H
+	DD	03004d208H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z DD 010c01H
+	DD	02204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD 010c01H
+	DD	02204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z DD 010c01H
+	DD	02204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z DD imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z
+	DD	0ffffffffH
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z+127
+	DD	00H
+	DD	imagerel ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z+146
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z DD 021311H
+	DD	03006920aH
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -760,293 +1857,609 @@ $unwind$??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gs
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA DD 030b19H
-	DD	05007420bH
-	DD	03006H
-	DD	imagerel __CxxFrameHandler3
-	DD	imagerel $cppxdata$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
+$unwind$??$make_subspan@$05@?$span@H$05@gsl@@AEBA?AV?$span@H$0?0@1@_J0V?$subspan_selector@$05@01@@Z DD 061901H
+	DD	0d6419H
+	DD	0c3414H
+	DD	070029206H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$ip2state$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD imagerel ??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
+$unwind$?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD imagerel ??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
 	DD	0ffffffffH
-	DD	imagerel ??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z+127
+	DD	imagerel ??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z+122
 	DD	00H
-	DD	imagerel ??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z+153
+	DD	imagerel ??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z+141
 	DD	0ffffffffH
-	DD	imagerel ?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
-	DD	00H
-	DD	imagerel ?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA+14
-	DD	01H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$handlerMap$0$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD 040H
-	DD	00H
-	DD	00H
-	DD	imagerel ?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA
-	DD	048H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$tryMap$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD 00H
-	DD	00H
-	DD	01H
-	DD	01H
-	DD	imagerel $handlerMap$0$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$stateUnwindMap$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD 0ffffffffH
-	DD	00H
-	DD	0ffffffffH
-	DD	00H
+$stateUnwindMap$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-$cppxdata$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD 019930522H
-	DD	02H
-	DD	imagerel $stateUnwindMap$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
+$cppxdata$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD 019930522H
 	DD	01H
-	DD	imagerel $tryMap$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
-	DD	05H
-	DD	imagerel $ip2state$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
-	DD	020H
-	DD	00H
-	DD	01H
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z DD 082319H
-	DD	0b7423H
-	DD	0a641eH
-	DD	093419H
-	DD	0e007520bH
-	DD	imagerel __CxxFrameHandler3
-	DD	imagerel $cppxdata$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$ip2state$??$narrow@_J_K@gsl@@YA_J_K@Z DD imagerel ??$narrow@_J_K@gsl@@YA_J_K@Z
-	DD	0ffffffffH
-	DD	imagerel ??$narrow@_J_K@gsl@@YA_J_K@Z+42
-	DD	01H
-	DD	imagerel ??$narrow@_J_K@gsl@@YA_J_K@Z+53
-	DD	0ffffffffH
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$stateUnwindMap$??$narrow@_J_K@gsl@@YA_J_K@Z DD 0ffffffffH
-	DD	00H
-	DD	0ffffffffH
-	DD	imagerel ?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-$cppxdata$??$narrow@_J_K@gsl@@YA_J_K@Z DD 019930522H
-	DD	02H
-	DD	imagerel $stateUnwindMap$??$narrow@_J_K@gsl@@YA_J_K@Z
+	DD	imagerel $stateUnwindMap$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
 	DD	00H
 	DD	00H
 	DD	03H
-	DD	imagerel $ip2state$??$narrow@_J_K@gsl@@YA_J_K@Z
+	DD	imagerel $ip2state$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
 	DD	020H
 	DD	00H
 	DD	01H
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$narrow@_J_K@gsl@@YA_J_K@Z DD 010d11H
-	DD	08204H
+$unwind$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z DD 010d11H
+	DD	0a204H
 	DD	imagerel __CxxFrameHandler3
-	DD	imagerel $cppxdata$??$narrow@_J_K@gsl@@YA_J_K@Z
+	DD	imagerel $cppxdata$??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z DD 010c01H
-	DD	02204H
+$unwind$??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QEAA@AEAV?$basic_string_span@$$CBD$0?0@1@@Z DD 020f01H
+	DD	030025206H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z DD 010c01H
-	DD	02204H
+$unwind$?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA DD 020601H
+	DD	050023206H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$ip2state$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD imagerel ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
+$ip2state$?test_string_gsl_copy@@YAXXZ DD imagerel ?test_string_gsl_copy@@YAXXZ
 	DD	0ffffffffH
-	DD	imagerel ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z+61
-	DD	01H
-	DD	imagerel ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z+72
+	DD	imagerel ?test_string_gsl_copy@@YAXXZ+38
+	DD	00H
+	DD	imagerel ?test_string_gsl_copy@@YAXXZ+54
+	DD	0ffffffffH
+	DD	imagerel ?test_string_gsl_copy@@YAXXZ+203
+	DD	03H
+	DD	imagerel ?test_string_gsl_copy@@YAXXZ+220
 	DD	0ffffffffH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$stateUnwindMap$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 0ffffffffH
+$stateUnwindMap$?test_string_gsl_copy@@YAXXZ DD 0ffffffffH
+	DD	imagerel __std_terminate
+	DD	0ffffffffH
 	DD	00H
 	DD	0ffffffffH
-	DD	imagerel ?dtor$8@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA
+	DD	00H
+	DD	0ffffffffH
+	DD	imagerel ?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-$cppxdata$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 019930522H
-	DD	02H
-	DD	imagerel $stateUnwindMap$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
-	DD	00H
-	DD	00H
-	DD	03H
-	DD	imagerel $ip2state$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
-	DD	020H
-	DD	00H
-	DD	01H
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z DD 020f11H
-	DD	030027206H
-	DD	imagerel __CxxFrameHandler3
-	DD	imagerel $cppxdata$??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IEBAXXZ DD 010401H
-	DD	04204H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IEAAXXZ DD 020601H
-	DD	030023206H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?_Buy@?$vector@HV?$allocator@H@std@@@std@@IEAA_N_K@Z DD 040a01H
-	DD	06340aH
-	DD	07006320aH
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ DD 020601H
-	DD	030023206H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z DD 020601H
-	DD	030023206H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?allocate@?$allocator@H@std@@QEAAPEAH_K@Z DD 010401H
-	DD	04204H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z DD 010401H
-	DD	04204H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?dtor$52@?0??bar@@YA_NXZ@4HA DD 020601H
-	DD	050023206H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?dtor$41@?0??bar@@YA_NXZ@4HA DD 020601H
-	DD	050023206H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?dtor$30@?0??bar@@YA_NXZ@4HA DD 020601H
-	DD	050023206H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$ip2state$?bar@@YA_NXZ DD imagerel ?bar@@YA_NXZ
-	DD	0ffffffffH
-	DD	imagerel ?bar@@YA_NXZ+96
-	DD	00H
-	DD	imagerel ?bar@@YA_NXZ+137
-	DD	02H
-	DD	imagerel ?bar@@YA_NXZ+147
-	DD	00H
-	DD	imagerel ?bar@@YA_NXZ+184
-	DD	0ffffffffH
-	DD	imagerel ?bar@@YA_NXZ+219
-	DD	00H
-	DD	imagerel ?bar@@YA_NXZ+280
-	DD	05H
-	DD	imagerel ?bar@@YA_NXZ+297
-	DD	00H
-	DD	imagerel ?bar@@YA_NXZ+358
+$cppxdata$?test_string_gsl_copy@@YAXXZ DD 019930522H
 	DD	04H
-	DD	imagerel ?bar@@YA_NXZ+375
-	DD	00H
-	DD	imagerel ?bar@@YA_NXZ+436
-	DD	03H
-	DD	imagerel ?bar@@YA_NXZ+453
-	DD	0ffffffffH
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$stateUnwindMap$?bar@@YA_NXZ DD 0ffffffffH
-	DD	imagerel ?dtor$0@?0??bar@@YA_NXZ@4HA
+	DD	imagerel $stateUnwindMap$?test_string_gsl_copy@@YAXXZ
 	DD	00H
 	DD	00H
-	DD	00H
-	DD	imagerel ?dtor$15@?0??bar@@YA_NXZ@4HA
-	DD	00H
-	DD	imagerel ?dtor$30@?0??bar@@YA_NXZ@4HA
-	DD	00H
-	DD	imagerel ?dtor$41@?0??bar@@YA_NXZ@4HA
-	DD	00H
-	DD	imagerel ?dtor$52@?0??bar@@YA_NXZ@4HA
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-$cppxdata$?bar@@YA_NXZ DD 019930522H
-	DD	06H
-	DD	imagerel $stateUnwindMap$?bar@@YA_NXZ
-	DD	00H
-	DD	00H
-	DD	0cH
-	DD	imagerel $ip2state$?bar@@YA_NXZ
-	DD	0b0H
+	DD	05H
+	DD	imagerel $ip2state$?test_string_gsl_copy@@YAXXZ
+	DD	050H
 	DD	00H
 	DD	01H
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$?bar@@YA_NXZ DD 052c19H
-	DD	01c341eH
-	DD	01a010eH
+$unwind$?test_string_gsl_copy@@YAXXZ DD 021f19H
+	DD	05002d209H
+	DD	imagerel __GSHandlerCheck_EH
+	DD	imagerel $cppxdata$?test_string_gsl_copy@@YAXXZ
+	DD	06aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z DD 020801H
+	DD	03004d208H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD imagerel ??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	0ffffffffH
+	DD	imagerel ??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ+120
+	DD	00H
+	DD	imagerel ??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ+139
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ DD imagerel ??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ
+	DD	0ffffffffH
+	DD	imagerel ??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ+111
+	DD	00H
+	DD	imagerel ??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ+130
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??9details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD imagerel ??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	0ffffffffH
+	DD	imagerel ??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ+120
+	DD	00H
+	DD	imagerel ??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ+139
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ DD imagerel ??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ
+	DD	0ffffffffH
+	DD	imagerel ??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ+111
+	DD	00H
+	DD	imagerel ??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ+130
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z DD imagerel ??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z
+	DD	00H
+	DD	00H
+	DD	05H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z DD 010c19H
+	DD	02204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?test_string_std_copy@@YAXXZ DD imagerel ?test_string_std_copy@@YAXXZ
+	DD	0ffffffffH
+	DD	imagerel ?test_string_std_copy@@YAXXZ+43
+	DD	00H
+	DD	imagerel ?test_string_std_copy@@YAXXZ+59
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?test_string_std_copy@@YAXXZ DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?test_string_std_copy@@YAXXZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?test_string_std_copy@@YAXXZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?test_string_std_copy@@YAXXZ
+	DD	090H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?test_string_std_copy@@YAXXZ DD 032419H
+	DD	018010eH
 	DD	05002H
 	DD	imagerel __GSHandlerCheck_EH
-	DD	imagerel $cppxdata$?bar@@YA_NXZ
-	DD	0caH
+	DD	imagerel $cppxdata$?test_string_std_copy@@YAXXZ
+	DD	0baH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$ip2state$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ DD imagerel ??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ
+$unwind$?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD imagerel ??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
 	DD	0ffffffffH
+	DD	imagerel ??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z+130
+	DD	00H
+	DD	imagerel ??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z+149
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-$cppxdata$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ DD 019930522H
+$cppxdata$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
 	DD	00H
 	DD	00H
-	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
+	DD	020H
 	DD	00H
 	DD	01H
-	DD	imagerel $ip2state$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ
-	DD	00H
-	DD	00H
-	DD	05H
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ DD 010c19H
-	DD	02204H
+$unwind$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z DD 010d11H
+	DD	0a204H
 	DD	imagerel __CxxFrameHandler3
-	DD	imagerel $cppxdata$??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ
+	DD	imagerel $cppxdata$??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD imagerel ?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	DD	0ffffffffH
+	DD	imagerel ?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z+152
+	DD	00H
+	DD	imagerel ?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z+171
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 010d11H
+	DD	0c204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z DD 020801H
+	DD	03004d208H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z DD 010701H
+	DD	0e207H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?doterminate@@YAXXZ DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel ?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	0ffffffffH
+	DD	imagerel ?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+75
+	DD	00H
+	DD	imagerel ?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+82
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	030H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 041411H
+	DD	0c3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel ?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	0ffffffffH
+	DD	imagerel ?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+85
+	DD	00H
+	DD	imagerel ?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+92
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	030H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 061911H
+	DD	0e6419H
+	DD	0c3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel ?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	0ffffffffH
+	DD	imagerel ?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+75
+	DD	00H
+	DD	imagerel ?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+82
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	030H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 041411H
+	DD	0c3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z DD imagerel ?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z
+	DD	0ffffffffH
+	DD	imagerel ?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z+68
+	DD	00H
+	DD	imagerel ?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z+75
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z
+	DD	030H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z DD 020f11H
+	DD	030029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel ?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	0ffffffffH
+	DD	imagerel ?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+75
+	DD	00H
+	DD	imagerel ?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+82
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	030H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 041411H
+	DD	0c3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -1072,6 +2485,653 @@ $unwind$??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ DD 010c19H
 	DD	02204H
 	DD	imagerel __CxxFrameHandler3
 	DD	imagerel $cppxdata$??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD imagerel ?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	0ffffffffH
+	DD	imagerel ?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+80
+	DD	00H
+	DD	imagerel ?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z+87
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+	DD	030H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z DD 041411H
+	DD	0c3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan3@@YA_JXZ DD imagerel ?mysubspan3@@YA_JXZ
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan3@@YA_JXZ DD 0ffffffffH
+	DD	imagerel __std_terminate
+	DD	0ffffffffH
+	DD	00H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan3@@YA_JXZ DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?mysubspan3@@YA_JXZ
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$?mysubspan3@@YA_JXZ
+	DD	038H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan3@@YA_JXZ DD 021f19H
+	DD	0110107H
+	DD	imagerel __GSHandlerCheck_EH
+	DD	imagerel $cppxdata$?mysubspan3@@YA_JXZ
+	DD	07aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan2@@YA_J_J@Z DD imagerel ?mysubspan2@@YA_J_J@Z
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan2@@YA_J_J@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+	DD	0ffffffffH
+	DD	00H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan2@@YA_J_J@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?mysubspan2@@YA_J_J@Z
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$?mysubspan2@@YA_J_J@Z
+	DD	038H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan2@@YA_J_J@Z DD 022119H
+	DD	03002f209H
+	DD	imagerel __GSHandlerCheck_EH
+	DD	imagerel $cppxdata$?mysubspan2@@YA_J_J@Z
+	DD	07aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z DD imagerel ??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z
+	DD	00H
+	DD	00H
+	DD	05H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z DD 010c19H
+	DD	02204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z DD imagerel ??0?$extent_type@$05@details@gsl@@QEAA@_J@Z
+	DD	0ffffffffH
+	DD	imagerel ??0?$extent_type@$05@details@gsl@@QEAA@_J@Z+101
+	DD	00H
+	DD	imagerel ??0?$extent_type@$05@details@gsl@@QEAA@_J@Z+120
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??0?$extent_type@$05@details@gsl@@QEAA@_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?subspan@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J0@Z DD 061901H
+	DD	0d6419H
+	DD	0c3414H
+	DD	070029206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?last@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J@Z DD 041401H
+	DD	0c3414H
+	DD	070029206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?mysubspan1@@YA_JXZ DD imagerel ?mysubspan1@@YA_JXZ
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?mysubspan1@@YA_JXZ DD 0ffffffffH
+	DD	imagerel __std_terminate
+	DD	0ffffffffH
+	DD	00H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?mysubspan1@@YA_JXZ DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?mysubspan1@@YA_JXZ
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$?mysubspan1@@YA_JXZ
+	DD	038H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?mysubspan1@@YA_JXZ DD 021f19H
+	DD	0110107H
+	DD	imagerel __GSHandlerCheck_EH
+	DD	imagerel $cppxdata$?mysubspan1@@YA_JXZ
+	DD	07aH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z DD imagerel ?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z
+	DD	0ffffffffH
+	DD	imagerel ?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z+141
+	DD	00H
+	DD	imagerel ?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z+160
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z DD imagerel ??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z DD 019930522H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	00H
+	DD	01H
+	DD	imagerel $ip2state$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z
+	DD	00H
+	DD	00H
+	DD	05H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z DD 010c19H
+	DD	02204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z DD imagerel ??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z
+	DD	0ffffffffH
+	DD	imagerel ??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z+104
+	DD	00H
+	DD	imagerel ??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z+123
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$span@E$0?0@gsl@@QEAA@PEAE_J@Z DD 020601H
+	DD	030023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z DD imagerel ?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z
+	DD	0ffffffffH
+	DD	imagerel ?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z+156
+	DD	01H
+	DD	imagerel ?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z+174
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z DD 0ffffffffH
+	DD	imagerel __std_terminate
+	DD	0ffffffffH
+	DD	imagerel ?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z DD 081e11H
+	DD	0f641eH
+	DD	0e5419H
+	DD	0d3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z DD imagerel ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	0ffffffffH
+	DD	imagerel ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z+211
+	DD	00H
+	DD	imagerel ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z+227
+	DD	0ffffffffH
+	DD	imagerel ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z+281
+	DD	01H
+	DD	imagerel ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z+297
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+	DD	0ffffffffH
+	DD	imagerel ?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z DD 0a2211H
+	DD	0126422H
+	DD	011341eH
+	DD	0f00b9212H
+	DD	0c007e009H
+	DD	050047005H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z DD 010401H
+	DD	04204H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD imagerel ??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	0ffffffffH
+	DD	imagerel ??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ+120
+	DD	00H
+	DD	imagerel ??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ+139
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ DD imagerel ??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ
+	DD	0ffffffffH
+	DD	imagerel ??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ+112
+	DD	00H
+	DD	imagerel ??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ+131
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ DD 010d11H
+	DD	0a204H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD imagerel ?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	0ffffffffH
+	DD	imagerel ?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z+200
+	DD	00H
+	DD	imagerel ?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z+216
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+	DD	0ffffffffH
+	DD	00H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z DD 0a2311H
+	DD	0117423H
+	DD	010641fH
+	DD	0f341bH
+	DD	0f008920fH
+	DD	05004e006H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD imagerel ?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	0ffffffffH
+	DD	imagerel ?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z+171
+	DD	00H
+	DD	imagerel ?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z+189
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD 019930522H
+	DD	01H
+	DD	imagerel $stateUnwindMap$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	00H
+	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z DD 081e11H
+	DD	0f641eH
+	DD	0e5419H
+	DD	0d3414H
+	DD	070029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z DD imagerel ?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z
+	DD	0ffffffffH
+	DD	imagerel ?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z+170
+	DD	01H
+	DD	imagerel ?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z+189
+	DD	0ffffffffH
+	DD	imagerel ?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z+258
+	DD	00H
+	DD	imagerel ?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z+277
+	DD	0ffffffffH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$stateUnwindMap$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA
+	DD	0ffffffffH
+	DD	imagerel ?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+$cppxdata$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z DD 019930522H
+	DD	02H
+	DD	imagerel $stateUnwindMap$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z
+	DD	00H
+	DD	00H
+	DD	05H
+	DD	imagerel $ip2state$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z
+	DD	020H
+	DD	00H
+	DD	01H
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z DD 020f11H
+	DD	030029206H
+	DD	imagerel __CxxFrameHandler3
+	DD	imagerel $cppxdata$?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$??0?$span@H$0?0@gsl@@AEAA@UKnownNotNull@01@_J@Z DD 020601H
+	DD	030023206H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -1114,38 +3174,60 @@ $unwind$??A?$span@H$0?0@gsl@@QEBAAEAH_J@Z DD 010d11H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
+$unwind$?subspan@?$span@H$0?0@gsl@@QEBA?AV12@_J0@Z DD 020601H
+	DD	030025206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$?last@?$span@H$0?0@gsl@@QEBA?AV12@_J@Z DD 020601H
+	DD	030025206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
 $unwind$??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z DD 020601H
 	DD	030023206H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$ip2state$?foo@@YA_NXZ DD imagerel ?foo@@YA_NXZ
+$unwind$?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA DD 020601H
+	DD	050023206H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$ip2state$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD imagerel ?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
+	DD	0ffffffffH
+	DD	imagerel ?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z+163
+	DD	00H
+	DD	imagerel ?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z+181
 	DD	0ffffffffH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$stateUnwindMap$?foo@@YA_NXZ DD 0ffffffffH
-	DD	imagerel __std_terminate
+$stateUnwindMap$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD 0ffffffffH
+	DD	imagerel ?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-$cppxdata$?foo@@YA_NXZ DD 019930522H
+$cppxdata$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD 019930522H
 	DD	01H
-	DD	imagerel $stateUnwindMap$?foo@@YA_NXZ
+	DD	imagerel $stateUnwindMap$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 	DD	00H
 	DD	00H
-	DD	01H
-	DD	imagerel $ip2state$?foo@@YA_NXZ
-	DD	00H
+	DD	03H
+	DD	imagerel $ip2state$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
+	DD	020H
 	DD	00H
 	DD	01H
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$?foo@@YA_NXZ DD 010c11H
-	DD	02204H
+$unwind$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z DD 082311H
+	DD	0105423H
+	DD	0e341fH
+	DD	0e00f9213H
+	DD	0600c700dH
 	DD	imagerel __CxxFrameHandler3
-	DD	imagerel $cppxdata$?foo@@YA_NXZ
+	DD	imagerel $cppxdata$?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -1251,16 +3333,6 @@ $unwind$??0logic_error@std@@QEAA@PEBD@Z DD 020601H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$?_Deallocate@std@@YAXPEAX_K1@Z DD 010401H
-	DD	04204H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$?_Allocate@std@@YAPEAX_K0_N@Z DD 010401H
-	DD	04204H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
 $unwind$??_Gexception@std@@UEAAPEAXI@Z DD 040a01H
 	DD	06340aH
 	DD	07006320aH
@@ -1276,12 +3348,12 @@ $unwind$??0exception@std@@QEAA@QEBD@Z DD 020601H
 	DD	030025206H
 xdata	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z
+;	COMDAT ??$_Copy_memmove@PEBDPEAE@std@@YAPEAEPEBD0PEAE@Z
 _TEXT	SEGMENT
 _First$ = 48
 _Last$ = 56
 _Dest$ = 64
-??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z PROC	; std::_Copy_memmove<int const * __ptr64,int * __ptr64>, COMDAT
+??$_Copy_memmove@PEBDPEAE@std@@YAPEAEPEBD0PEAE@Z PROC	; std::_Copy_memmove<char const * __ptr64,unsigned char * __ptr64>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
 ; Line 2301
 $LN4:
@@ -1304,27 +3376,357 @@ $LN4:
 	add	rsp, 32					; 00000020H
 	pop	rdi
 	ret	0
-??$_Copy_memmove@PEBHPEAH@std@@YAPEAHPEBH0PEAH@Z ENDP	; std::_Copy_memmove<int const * __ptr64,int * __ptr64>
+??$_Copy_memmove@PEBDPEAE@std@@YAPEAEPEBD0PEAE@Z ENDP	; std::_Copy_memmove<char const * __ptr64,unsigned char * __ptr64>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z
+;	COMDAT ??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z PROC ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2314
+$LN85:
+	mov	rax, rsp
+	push	rbp
+	push	r12
+	push	r13
+	push	r14
+	push	r15
+	lea	rbp, QWORD PTR [rax-87]
+	sub	rsp, 144				; 00000090H
+	mov	QWORD PTR $T1[rbp-97], -2
+	mov	QWORD PTR [rax+8], rbx
+	mov	QWORD PTR [rax+24], rsi
+	mov	QWORD PTR [rax+32], rdi
+	mov	rsi, r9
+	mov	r12, r8
+	mov	rdi, rdx
+	mov	r15, rcx
+	xor	ebx, ebx
+	mov	DWORD PTR $T8[rbp-97], ebx
+	lea	r13, OFFSET FLAT:??_7exception@std@@6B@
+	npad	13
+$LL4@Copy_unche:
+; File c:\projects\gsl\include\gsl\span
+; Line 236
+	movups	xmm1, XMMWORD PTR [r12]
+	movaps	XMMWORD PTR $T5[rbp-97], xmm1
+	movups	xmm0, XMMWORD PTR [rdi]
+	movaps	XMMWORD PTR $T7[rbp-97], xmm0
+; Line 231
+	movq	rcx, xmm0
+	movq	rax, xmm1
+	cmp	rcx, rax
+	jne	SHORT $LN11@Copy_unche
+	mov	rax, QWORD PTR $T5[rbp-89]
+	cmp	QWORD PTR $T7[rbp-89], rax
+	jne	SHORT $LN11@Copy_unche
+	mov	al, 1
+	jmp	SHORT $LN12@Copy_unche
+$LN11@Copy_unche:
+	xor	al, al
+$LN12@Copy_unche:
+	test	al, al
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2315
+	jne	$LN3@Copy_unche
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	mov	rax, QWORD PTR [rdi]
+; Line 498
+	mov	rcx, QWORD PTR [rax]
+; Line 157
+	cmp	QWORD PTR [rdi+8], rcx
+	je	$LN16@Copy_unche
+	test	bl, 1
+	je	SHORT $LN37@Copy_unche
+	and	ebx, -2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T4[rbp-97], r13
+; Line 84
+	lea	rcx, QWORD PTR $T4[rbp-89]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN37@Copy_unche:
+; File c:\projects\gsl\include\gsl\span
+; Line 158
+	mov	rax, QWORD PTR [rdi]
+; Line 515
+	mov	r14, QWORD PTR [rax+8]
+; Line 158
+	add	r14, QWORD PTR [rdi+8]
+; Line 157
+	mov	rax, QWORD PTR [rsi]
+; Line 498
+	mov	rcx, QWORD PTR [rax]
+; Line 157
+	cmp	QWORD PTR [rsi+8], rcx
+	je	SHORT $LN50@Copy_unche
+	test	bl, 2
+	je	SHORT $LN71@Copy_unche
+	and	ebx, -3
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T6[rbp-97], r13
+; Line 84
+	lea	rcx, QWORD PTR $T6[rbp-89]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN71@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2316
+	mov	rax, QWORD PTR [rsi]
+	mov	rdx, QWORD PTR [rax+8]
+	mov	rcx, QWORD PTR [rsi+8]
+	movzx	eax, BYTE PTR [r14]
+	mov	BYTE PTR [rdx+rcx], al
+; Line 2315
+	mov	rcx, rsi
+	call	??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++
+	mov	rcx, rdi
+	call	??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++
+	jmp	$LL4@Copy_unche
+$LN50@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T6[rbp-97], r13
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T6[rbp-89], rax
+	mov	QWORD PTR $T6[rbp-81], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rbp-97], rax
+	mov	BYTE PTR _InitData$2[rbp-89], 1
+; Line 55
+	lea	rdx, QWORD PTR $T6[rbp-89]
+	lea	rcx, QWORD PTR _InitData$2[rbp-97]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T6[rbp-97], rax
+	or	ebx, 2
+	mov	DWORD PTR $T8[rbp-97], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T6[rbp-97]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN16@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T4[rbp-97], r13
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rbp-89], rax
+	mov	QWORD PTR $T4[rbp-81], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$3[rbp-97], rax
+	mov	BYTE PTR _InitData$3[rbp-89], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rbp-89]
+	lea	rcx, QWORD PTR _InitData$3[rbp-97]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rbp-97], rax
+	or	ebx, 1
+	mov	DWORD PTR $T8[rbp-97], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T4[rbp-97]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2317
+	movups	xmm0, XMMWORD PTR [rsi]
+	movups	XMMWORD PTR [r15], xmm0
+	mov	rax, r15
+; Line 2318
+	lea	r11, QWORD PTR [rsp+144]
+	mov	rbx, QWORD PTR [r11+48]
+	mov	rsi, QWORD PTR [r11+64]
+	mov	rdi, QWORD PTR [r11+72]
+	mov	rsp, r11
+	pop	r15
+	pop	r14
+	pop	r13
+	pop	r12
+	pop	rbp
+	ret	0
+$LN84@Copy_unche:
+??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN19@dtor$2
+	and	DWORD PTR $T8[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN19@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$2
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$9
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN53@dtor$9
+	and	DWORD PTR $T8[rbp], -3
+	lea	rcx, QWORD PTR $T6[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN53@dtor$9:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$9
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN19@dtor$2
+	and	DWORD PTR $T8[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN19@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$9
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN53@dtor$9
+	and	DWORD PTR $T8[rbp], -3
+	lea	rcx, QWORD PTR $T6[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN53@dtor$9:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`1'::dtor$9
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Ptr_copy_cat@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AU_General_ptr_iterator_tag@0@AEBV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@AEBV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@34@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+__formal$ = 16
+??$_Ptr_copy_cat@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AU_General_ptr_iterator_tag@0@AEBV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@AEBV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@34@@Z PROC ; std::_Ptr_copy_cat<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 783
+	xor	eax, eax
+; Line 784
+	ret	0
+??$_Ptr_copy_cat@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AU_General_ptr_iterator_tag@0@AEBV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@AEBV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@34@@Z ENDP ; std::_Ptr_copy_cat<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_memmove@PEAHPEAH@std@@YAPEAHPEAH00@Z
 _TEXT	SEGMENT
 _First$ = 48
 _Last$ = 56
 _Dest$ = 64
-__formal$ = 72
-__formal$ = 80
-__formal$ = 88
-??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Uninitialized_copy_al_unchecked1<int const ,int,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
-; Line 239
-$LN6:
+??$_Copy_memmove@PEAHPEAH@std@@YAPEAHPEAH00@Z PROC	; std::_Copy_memmove<int * __ptr64,int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2301
+$LN4:
 	mov	QWORD PTR [rsp+8], rbx
 	push	rdi
 	sub	rsp, 32					; 00000020H
 	mov	rbx, rdx
 	mov	rdi, r8
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
 ; Line 2305
 	sub	rbx, rcx
 ; Line 2306
@@ -1334,150 +3736,406 @@ $LN6:
 	call	QWORD PTR __imp_memmove
 ; Line 2307
 	lea	rax, QWORD PTR [rbx+rdi]
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
-; Line 241
+; Line 2308
 	mov	rbx, QWORD PTR [rsp+48]
 	add	rsp, 32					; 00000020H
 	pop	rdi
 	ret	0
-??$_Uninitialized_copy_al_unchecked1@$$CBHHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U_Really_trivial_ptr_iterator_tag@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Uninitialized_copy_al_unchecked1<int const ,int,std::allocator<int> >
+??$_Copy_memmove@PEAHPEAH@std@@YAPEAHPEAH00@Z ENDP	; std::_Copy_memmove<int * __ptr64,int * __ptr64>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBHAEBQEAH@Z
+;	COMDAT ??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z PROC ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2314
+$LN85:
+	mov	rax, rsp
+	push	rbp
+	push	r12
+	push	r13
+	push	r14
+	push	r15
+	lea	rbp, QWORD PTR [rax-87]
+	sub	rsp, 144				; 00000090H
+	mov	QWORD PTR $T1[rbp-97], -2
+	mov	QWORD PTR [rax+8], rbx
+	mov	QWORD PTR [rax+24], rsi
+	mov	QWORD PTR [rax+32], rdi
+	mov	rsi, r9
+	mov	r12, r8
+	mov	rdi, rdx
+	mov	r15, rcx
+	xor	ebx, ebx
+	mov	DWORD PTR $T8[rbp-97], ebx
+	lea	r13, OFFSET FLAT:??_7exception@std@@6B@
+	npad	13
+$LL4@Copy_unche:
+; File c:\projects\gsl\include\gsl\span
+; Line 236
+	movups	xmm1, XMMWORD PTR [r12]
+	movaps	XMMWORD PTR $T5[rbp-97], xmm1
+	movups	xmm0, XMMWORD PTR [rdi]
+	movaps	XMMWORD PTR $T7[rbp-97], xmm0
+; Line 231
+	movq	rcx, xmm0
+	movq	rax, xmm1
+	cmp	rcx, rax
+	jne	SHORT $LN11@Copy_unche
+	mov	rax, QWORD PTR $T5[rbp-89]
+	cmp	QWORD PTR $T7[rbp-89], rax
+	jne	SHORT $LN11@Copy_unche
+	mov	al, 1
+	jmp	SHORT $LN12@Copy_unche
+$LN11@Copy_unche:
+	xor	al, al
+$LN12@Copy_unche:
+	test	al, al
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2315
+	jne	$LN3@Copy_unche
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	mov	rax, QWORD PTR [rdi]
+; Line 498
+	mov	rcx, QWORD PTR [rax]
+; Line 157
+	cmp	QWORD PTR [rdi+8], rcx
+	je	$LN16@Copy_unche
+	test	bl, 1
+	je	SHORT $LN37@Copy_unche
+	and	ebx, -2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T4[rbp-97], r13
+; Line 84
+	lea	rcx, QWORD PTR $T4[rbp-89]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN37@Copy_unche:
+; File c:\projects\gsl\include\gsl\span
+; Line 158
+	mov	rax, QWORD PTR [rdi]
+; Line 515
+	mov	rcx, QWORD PTR [rax+8]
+; Line 158
+	mov	rax, QWORD PTR [rdi+8]
+	lea	r14, QWORD PTR [rcx+rax*4]
+; Line 157
+	mov	rax, QWORD PTR [rsi]
+; Line 498
+	mov	rcx, QWORD PTR [rax]
+; Line 157
+	cmp	QWORD PTR [rsi+8], rcx
+	je	SHORT $LN50@Copy_unche
+	test	bl, 2
+	je	SHORT $LN71@Copy_unche
+	and	ebx, -3
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T6[rbp-97], r13
+; Line 84
+	lea	rcx, QWORD PTR $T6[rbp-89]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN71@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2316
+	mov	rax, QWORD PTR [rsi]
+; File c:\projects\gsl\include\gsl\span
+; Line 158
+	mov	rdx, QWORD PTR [rsi+8]
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2316
+	mov	rcx, QWORD PTR [rax+8]
+	mov	eax, DWORD PTR [r14]
+	mov	DWORD PTR [rcx+rdx*4], eax
+; Line 2315
+	mov	rcx, rsi
+	call	??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++
+	mov	rcx, rdi
+	call	??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++
+	jmp	$LL4@Copy_unche
+$LN50@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T6[rbp-97], r13
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T6[rbp-89], rax
+	mov	QWORD PTR $T6[rbp-81], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rbp-97], rax
+	mov	BYTE PTR _InitData$2[rbp-89], 1
+; Line 55
+	lea	rdx, QWORD PTR $T6[rbp-89]
+	lea	rcx, QWORD PTR _InitData$2[rbp-97]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T6[rbp-97], rax
+	or	ebx, 2
+	mov	DWORD PTR $T8[rbp-97], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T6[rbp-97]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN16@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T4[rbp-97], r13
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rbp-89], rax
+	mov	QWORD PTR $T4[rbp-81], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$3[rbp-97], rax
+	mov	BYTE PTR _InitData$3[rbp-89], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rbp-89]
+	lea	rcx, QWORD PTR _InitData$3[rbp-97]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rbp-97], rax
+	or	ebx, 1
+	mov	DWORD PTR $T8[rbp-97], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T4[rbp-97]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@Copy_unche:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2317
+	movups	xmm0, XMMWORD PTR [rsi]
+	movups	XMMWORD PTR [r15], xmm0
+	mov	rax, r15
+; Line 2318
+	lea	r11, QWORD PTR [rsp+144]
+	mov	rbx, QWORD PTR [r11+48]
+	mov	rsi, QWORD PTR [r11+64]
+	mov	rdi, QWORD PTR [r11+72]
+	mov	rsp, r11
+	pop	r15
+	pop	r14
+	pop	r13
+	pop	r12
+	pop	rbp
+	ret	0
+$LN84@Copy_unche:
+??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN19@dtor$2
+	and	DWORD PTR $T8[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN19@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$2
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$9
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN53@dtor$9
+	and	DWORD PTR $T8[rbp], -3
+	lea	rcx, QWORD PTR $T6[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN53@dtor$9:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$9
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN19@dtor$2
+	and	DWORD PTR $T8[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN19@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 56
+$T4 = 80
+$T5 = 80
+$T6 = 112
+$T7 = 112
+__$ReturnUdt$ = 192
+$T8 = 200
+_First$ = 200
+_Last$ = 208
+_Dest$ = 216
+__formal$ = 224
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA PROC ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$9
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T8[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN53@dtor$9
+	and	DWORD PTR $T8[rbp], -3
+	lea	rcx, QWORD PTR $T6[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN53@dtor$9:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$9@?0???$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z@4HA ENDP ; `std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`1'::dtor$9
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Ptr_copy_cat@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AU_General_ptr_iterator_tag@0@AEBV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z
+_TEXT	SEGMENT
+__formal$ = 8
+__formal$ = 16
+??$_Ptr_copy_cat@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AU_General_ptr_iterator_tag@0@AEBV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z PROC ; std::_Ptr_copy_cat<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 783
+	xor	eax, eax
+; Line 784
+	ret	0
+??$_Ptr_copy_cat@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AU_General_ptr_iterator_tag@0@AEBV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@0@Z ENDP ; std::_Ptr_copy_cat<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_n_unchecked1@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAEU_Trivially_copyable_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Count$ = 56
+_Dest$ = 64
+__formal$ = 72
+??$_Copy_n_unchecked1@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAEU_Trivially_copyable_ptr_iterator_tag@0@@Z PROC ; std::_Copy_n_unchecked1<char const * __ptr64,__int64,unsigned char * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2435
+$LN7:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rbx, r8
+	mov	rdi, rdx
+; Line 2436
+	test	rdx, rdx
+	jle	SHORT $LN2@Copy_n_unc
+; Line 2306
+	mov	r8, rdx
+	mov	rdx, rcx
+	mov	rcx, rbx
+	call	QWORD PTR __imp_memmove
+; Line 2307
+	lea	rax, QWORD PTR [rdi+rbx]
+; Line 2439
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+$LN2@Copy_n_unc:
+; Line 2438
+	mov	rax, rbx
+; Line 2439
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Copy_n_unchecked1@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAEU_Trivially_copyable_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_n_unchecked1<char const * __ptr64,__int64,unsigned char * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Ptr_copy_cat@$$CBDE@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBDAEBQEAE@Z
 _TEXT	SEGMENT
 __$ReturnUdt$ = 8
 __formal$ = 16
 __formal$ = 24
-??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBHAEBQEAH@Z PROC ; std::_Ptr_copy_cat<int const ,int>, COMDAT
+??$_Ptr_copy_cat@$$CBDE@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBDAEBQEAE@Z PROC ; std::_Ptr_copy_cat<char const ,unsigned char>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
 ; Line 793
 	mov	rax, rcx
 ; Line 794
 	ret	0
-??$_Ptr_copy_cat@$$CBHH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBHAEBQEAH@Z ENDP ; std::_Ptr_copy_cat<int const ,int>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Rechecked@PEAHPEAH@std@@YAAEAPEAHAEAPEAHPEAH@Z
-_TEXT	SEGMENT
-_Dest$ = 8
-_Src$ = 16
-??$_Rechecked@PEAHPEAH@std@@YAAEAPEAHAEAPEAHPEAH@Z PROC	; std::_Rechecked<int * __ptr64,int * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 458
-	mov	QWORD PTR [rcx], rdx
-; Line 459
-	mov	rax, rcx
-; Line 460
-	ret	0
-??$_Rechecked@PEAHPEAH@std@@YAAEAPEAHAEAPEAHPEAH@Z ENDP	; std::_Rechecked<int * __ptr64,int * __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Uninitialized_copy_al_unchecked@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
-_TEXT	SEGMENT
-_First$ = 48
-_Last$ = 56
-_Dest$ = 64
-_Al$ = 72
-??$_Uninitialized_copy_al_unchecked@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z PROC ; std::_Uninitialized_copy_al_unchecked<int const * __ptr64,int * __ptr64,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
-; Line 248
-$LN10:
-	mov	QWORD PTR [rsp+8], rbx
-	push	rdi
-	sub	rsp, 32					; 00000020H
-	mov	rbx, rdx
-	mov	rdi, r8
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 2305
-	sub	rbx, rcx
-; Line 2306
-	mov	rdx, rcx
-	mov	r8, rbx
-	mov	rcx, rdi
-	call	QWORD PTR __imp_memmove
-; Line 2307
-	lea	rax, QWORD PTR [rbx+rdi]
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
-; Line 252
-	mov	rbx, QWORD PTR [rsp+48]
-	add	rsp, 32					; 00000020H
-	pop	rdi
-	ret	0
-??$_Uninitialized_copy_al_unchecked@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z ENDP ; std::_Uninitialized_copy_al_unchecked<int const * __ptr64,int * __ptr64,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Unchecked@PEAH@std@@YAPEAHPEAH@Z
-_TEXT	SEGMENT
-_Src$ = 8
-??$_Unchecked@PEAH@std@@YAPEAHPEAH@Z PROC		; std::_Unchecked<int * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 428
-	mov	rax, rcx
-; Line 429
-	ret	0
-??$_Unchecked@PEAH@std@@YAPEAHPEAH@Z ENDP		; std::_Unchecked<int * __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Unchecked@PEBH@std@@YAPEBHPEBH@Z
-_TEXT	SEGMENT
-_Src$ = 8
-??$_Unchecked@PEBH@std@@YAPEBHPEBH@Z PROC		; std::_Unchecked<int const * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 428
-	mov	rax, rcx
-; Line 429
-	ret	0
-??$_Unchecked@PEBH@std@@YAPEBHPEBH@Z ENDP		; std::_Unchecked<int const * __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
-_TEXT	SEGMENT
-_First$ = 48
-_Last$ = 56
-_Dest$ = 64
-_Al$ = 72
-??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z PROC ; std::_Uninitialized_copy<int const * __ptr64,int * __ptr64,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
-; Line 259
-$LN20:
-	mov	QWORD PTR [rsp+8], rbx
-	push	rdi
-	sub	rsp, 32					; 00000020H
-	mov	rbx, rdx
-	mov	rdi, r8
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 2305
-	sub	rbx, rcx
-; Line 2306
-	mov	rdx, rcx
-	mov	r8, rbx
-	mov	rcx, rdi
-	call	QWORD PTR __imp_memmove
-; Line 2307
-	lea	rax, QWORD PTR [rbx+rdi]
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory
-; Line 265
-	mov	rbx, QWORD PTR [rsp+48]
-	add	rsp, 32					; 00000020H
-	pop	rdi
-	ret	0
-??$_Uninitialized_copy@PEBHPEAHV?$allocator@H@std@@@std@@YAPEAHPEBH0PEAHAEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z ENDP ; std::_Uninitialized_copy<int const * __ptr64,int * __ptr64,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Distance1@PEBH@std@@YA_JPEBH0Urandom_access_iterator_tag@0@@Z
-_TEXT	SEGMENT
-_First$ = 8
-_Last$ = 16
-__formal$ = 24
-??$_Distance1@PEBH@std@@YA_JPEBH0Urandom_access_iterator_tag@0@@Z PROC ; std::_Distance1<int const * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 1119
-	sub	rdx, rcx
-	sar	rdx, 2
-	mov	rax, rdx
-; Line 1120
-	ret	0
-??$_Distance1@PEBH@std@@YA_JPEBH0Urandom_access_iterator_tag@0@@Z ENDP ; std::_Distance1<int const * __ptr64>
+??$_Ptr_copy_cat@$$CBDE@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEBDAEBQEAE@Z ENDP ; std::_Ptr_copy_cat<char const ,unsigned char>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z
@@ -1492,80 +4150,418 @@ _Arg$ = 8
 ??$forward@Unarrowing_error@gsl@@@std@@YA$$QEAUnarrowing_error@gsl@@AEAU12@@Z ENDP ; std::forward<gsl::narrowing_error>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$forward@AEA_K@std@@YAAEA_KAEA_K@Z
+;	COMDAT ??$_Rechecked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAAEAV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@AEAV123@V123@@Z
 _TEXT	SEGMENT
-_Arg$ = 8
-??$forward@AEA_K@std@@YAAEA_KAEA_K@Z PROC		; std::forward<unsigned __int64 & __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
-; Line 1276
+_Dest$ = 8
+_Src$ = 16
+??$_Rechecked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAAEAV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@AEAV123@V123@@Z PROC ; std::_Rechecked<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 458
+	movups	xmm0, XMMWORD PTR [rdx]
+; Line 459
 	mov	rax, rcx
-; Line 1277
+	movups	XMMWORD PTR [rcx], xmm0
+; Line 460
 	ret	0
-??$forward@AEA_K@std@@YAAEA_KAEA_K@Z ENDP		; std::forward<unsigned __int64 & __ptr64>
+??$_Rechecked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAAEAV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@AEAV123@V123@@Z ENDP ; std::_Rechecked<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@IEAAPEAHPEBH0PEAH@Z
+;	COMDAT ??$_Copy_unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
 _TEXT	SEGMENT
-this$ = 48
-_First$ = 56
-_Last$ = 64
-_Ptr$ = 72
-??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@IEAAPEAHPEBH0PEAH@Z PROC ; std::vector<int,std::allocator<int> >::_Ucopy<int const * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1651
-$LN28:
+__$ReturnUdt$ = 112
+_First$ = 120
+_Last$ = 128
+_Dest$ = 136
+??$_Copy_unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z PROC ; std::_Copy_unchecked<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2332
+$LN6:
+	mov	rax, rsp
+	push	rbx
+	sub	rsp, 96					; 00000060H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+	mov	rbx, rcx
+	lea	r9, QWORD PTR [rax-56]
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-72], cl
+	lea	r8, QWORD PTR [rax-40]
+	mov	rcx, rbx
+	movaps	XMMWORD PTR [rax-40], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-24], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+	mov	rax, rbx
+; Line 2336
+	add	rsp, 96					; 00000060H
+	pop	rbx
+	ret	0
+??$_Copy_unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z ENDP ; std::_Copy_unchecked<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V123@@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 8
+_Src$ = 16
+??$_Unchecked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V123@@Z PROC ; std::_Unchecked<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 428
+	movups	xmm0, XMMWORD PTR [rdx]
+	mov	rax, rcx
+	movups	XMMWORD PTR [rcx], xmm0
+; Line 429
+	ret	0
+??$_Unchecked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V123@@Z ENDP ; std::_Unchecked<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Count$ = 56
+_Dest$ = 64
+__formal$ = 72
+??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z PROC ; std::_Copy_n_unchecked1<int * __ptr64,__int64,int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2435
+$LN7:
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rdi, r8
+; Line 2436
+	test	rdx, rdx
+	jle	SHORT $LN2@Copy_n_unc
+; Line 2437
+	mov	QWORD PTR [rsp+48], rbx
+	lea	rbx, QWORD PTR [rdx*4]
+; Line 2306
+	mov	rdx, rcx
+	mov	r8, rbx
+	mov	rcx, rdi
+	call	QWORD PTR __imp_memmove
+; Line 2307
+	lea	rax, QWORD PTR [rbx+rdi]
+	mov	rbx, QWORD PTR [rsp+48]
+; Line 2439
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+$LN2@Copy_n_unc:
+; Line 2438
+	mov	rax, rdi
+; Line 2439
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Copy_n_unchecked1@PEAH_JPEAH@std@@YAPEAHPEAH_J0U_Trivially_copyable_ptr_iterator_tag@0@@Z ENDP ; std::_Copy_n_unchecked1<int * __ptr64,__int64,int * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Ptr_copy_cat@HH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEAH0@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 8
+__formal$ = 16
+__formal$ = 24
+??$_Ptr_copy_cat@HH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEAH0@Z PROC ; std::_Ptr_copy_cat<int,int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 793
+	mov	rax, rcx
+; Line 794
+	ret	0
+??$_Ptr_copy_cat@HH@std@@YA?AU_Really_trivial_ptr_iterator_tag@0@AEBQEAH0@Z ENDP ; std::_Ptr_copy_cat<int,int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Rechecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAAEAV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@AEAV123@V123@@Z
+_TEXT	SEGMENT
+_Dest$ = 8
+_Src$ = 16
+??$_Rechecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAAEAV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@AEAV123@V123@@Z PROC ; std::_Rechecked<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 458
+	movups	xmm0, XMMWORD PTR [rdx]
+; Line 459
+	mov	rax, rcx
+	movups	XMMWORD PTR [rcx], xmm0
+; Line 460
+	ret	0
+??$_Rechecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YAAEAV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@AEAV123@V123@@Z ENDP ; std::_Rechecked<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 112
+_First$ = 120
+_Last$ = 128
+_Dest$ = 136
+??$_Copy_unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z PROC ; std::_Copy_unchecked<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2332
+$LN6:
+	mov	rax, rsp
+	push	rbx
+	sub	rsp, 96					; 00000060H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+	mov	rbx, rcx
+	lea	r9, QWORD PTR [rax-56]
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-72], cl
+	lea	r8, QWORD PTR [rax-40]
+	mov	rcx, rbx
+	movaps	XMMWORD PTR [rax-40], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-24], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+	mov	rax, rbx
+; Line 2336
+	add	rsp, 96					; 00000060H
+	pop	rbx
+	ret	0
+??$_Copy_unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z ENDP ; std::_Copy_unchecked<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z
+_TEXT	SEGMENT
+_InitData$1 = 40
+$T2 = 56
+$T3 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+$LN53:
+	mov	r11, rsp
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR [r11-56], -2
+	mov	DWORD PTR $T3[rsp], 0
+; Line 333
+	mov	QWORD PTR [rcx], 6
+; Line 596
+	mov	QWORD PTR [rcx+8], rdx
+; Line 599
+	test	rdx, rdx
+	jne	SHORT $LN5@extent_typ
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR [r11-32], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR [r11-24], rax
+	mov	QWORD PTR [r11-16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR [r11-48], rax
+	mov	BYTE PTR _InitData$1[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR [r11-24]
+	lea	rcx, QWORD PTR [r11-48]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T2[rsp], rax
+	mov	DWORD PTR $T3[rsp], 2
+; File c:\projects\gsl\include\gsl\span
+; Line 599
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN5@extent_typ:
+; Line 600
+	mov	rax, rcx
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN52@extent_typ:
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+_InitData$1 = 40
+$T2 = 56
+$T3 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T3[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T3[rbp], -3
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+_InitData$1 = 40
+$T2 = 56
+$T3 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T3[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T3[rbp], -3
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Rechecked@PEAEPEAE@std@@YAAEAPEAEAEAPEAEPEAE@Z
+_TEXT	SEGMENT
+_Dest$ = 8
+_Src$ = 16
+??$_Rechecked@PEAEPEAE@std@@YAAEAPEAEAEAPEAEPEAE@Z PROC	; std::_Rechecked<unsigned char * __ptr64,unsigned char * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 458
+	mov	QWORD PTR [rcx], rdx
+; Line 459
+	mov	rax, rcx
+; Line 460
+	ret	0
+??$_Rechecked@PEAEPEAE@std@@YAAEAPEAEAEAPEAEPEAE@Z ENDP	; std::_Rechecked<unsigned char * __ptr64,unsigned char * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_n_unchecked@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Count$ = 56
+_Dest$ = 64
+??$_Copy_n_unchecked@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z PROC ; std::_Copy_n_unchecked<char const * __ptr64,__int64,unsigned char * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2446
+$LN11:
 	mov	QWORD PTR [rsp+8], rbx
 	push	rdi
 	sub	rsp, 32					; 00000020H
 	mov	rbx, r8
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+	mov	rdi, rdx
+; Line 2436
+	test	rdx, rdx
+	jle	SHORT $LN6@Copy_n_unc
 ; Line 2306
-	mov	rcx, r9
-	sub	rbx, rdx
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1651
-	mov	rdi, r9
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 2306
-	mov	r8, rbx
+	mov	r8, rdx
+	mov	rdx, rcx
+	mov	rcx, rbx
 	call	QWORD PTR __imp_memmove
 ; Line 2307
-	lea	rax, QWORD PTR [rbx+rdi]
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1654
+	lea	rax, QWORD PTR [rdi+rbx]
+; Line 2449
 	mov	rbx, QWORD PTR [rsp+48]
 	add	rsp, 32					; 00000020H
 	pop	rdi
 	ret	0
-??$_Ucopy@PEBH@?$vector@HV?$allocator@H@std@@@std@@IEAAPEAHPEBH0PEAH@Z ENDP ; std::vector<int,std::allocator<int> >::_Ucopy<int const * __ptr64>
+$LN6@Copy_n_unc:
+; Line 2447
+	mov	rax, rbx
+; Line 2449
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Copy_n_unchecked@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z ENDP ; std::_Copy_n_unchecked<char const * __ptr64,__int64,unsigned char * __ptr64>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$distance@PEBH@std@@YA_JPEBH0@Z
+;	COMDAT ??$_Unchecked@PEAE@std@@YAPEAEPEAE@Z
 _TEXT	SEGMENT
-_First$ = 8
-_Last$ = 16
-??$distance@PEBH@std@@YA_JPEBH0@Z PROC			; std::distance<int const * __ptr64>, COMDAT
+_Src$ = 8
+??$_Unchecked@PEAE@std@@YAPEAEPEAE@Z PROC		; std::_Unchecked<unsigned char * __ptr64>, COMDAT
 ; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 1119
-	sub	rdx, rcx
-	sar	rdx, 2
-; Line 1126
-	mov	rax, rdx
-; Line 1127
+; Line 428
+	mov	rax, rcx
+; Line 429
 	ret	0
-??$distance@PEBH@std@@YA_JPEBH0@Z ENDP			; std::distance<int const * __ptr64>
+??$_Unchecked@PEAE@std@@YAPEAEPEAE@Z ENDP		; std::_Unchecked<unsigned char * __ptr64>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$?0AEBV?$allocator@H@std@@@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z
+;	COMDAT ??$_Unchecked_n@PEAE_J@std@@YAPEAEPEAE_J@Z
 _TEXT	SEGMENT
-this$ = 8
-_Right$ = 16
-??$?0AEBV?$allocator@H@std@@@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::_Wrap_alloc<std::allocator<int> ><std::allocator<int> const & __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 953
+_Src$ = 8
+__formal$ = 16
+??$_Unchecked_n@PEAE_J@std@@YAPEAEPEAE_J@Z PROC		; std::_Unchecked_n<unsigned char * __ptr64,__int64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 680
 	mov	rax, rcx
+; Line 681
 	ret	0
-??$?0AEBV?$allocator@H@std@@@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::_Wrap_alloc<std::allocator<int> ><std::allocator<int> const & __ptr64>
+??$_Unchecked_n@PEAE_J@std@@YAPEAEPEAE_J@Z ENDP		; std::_Unchecked_n<unsigned char * __ptr64,__int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked@PEBD@std@@YAPEBDPEBD@Z
+_TEXT	SEGMENT
+_Src$ = 8
+??$_Unchecked@PEBD@std@@YAPEBDPEBD@Z PROC		; std::_Unchecked<char const * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 428
+	mov	rax, rcx
+; Line 429
+	ret	0
+??$_Unchecked@PEBD@std@@YAPEBDPEBD@Z ENDP		; std::_Unchecked<char const * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked_n@PEBD_J@std@@YAPEBDPEBD_J@Z
+_TEXT	SEGMENT
+_Src$ = 8
+__formal$ = 16
+??$_Unchecked_n@PEBD_J@std@@YAPEBDPEBD_J@Z PROC		; std::_Unchecked_n<char const * __ptr64,__int64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 680
+	mov	rax, rcx
+; Line 681
+	ret	0
+??$_Unchecked_n@PEBD_J@std@@YAPEBDPEBD_J@Z ENDP		; std::_Unchecked_n<char const * __ptr64,__int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Is_checked@PEAE@std@@YA?AU?$integral_constant@_N$0A@@0@PEAE@Z
+_TEXT	SEGMENT
+__formal$ = 8
+??$_Is_checked@PEAE@std@@YA?AU?$integral_constant@_N$0A@@0@PEAE@Z PROC ; std::_Is_checked<unsigned char * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 421
+	xor	eax, eax
+; Line 422
+	ret	0
+??$_Is_checked@PEAE@std@@YA?AU?$integral_constant@_N$0A@@0@PEAE@Z ENDP ; std::_Is_checked<unsigned char * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Deprecate@_Unchecked_iterators@?1???$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z@SAXU?$integral_constant@_N$0A@@2@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+?_Deprecate@_Unchecked_iterators@?1???$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z@SAXU?$integral_constant@_N$0A@@2@@Z PROC ; `std::copy_n<char const * __ptr64,__int64,unsigned char * __ptr64>'::`2'::_Unchecked_iterators::_Deprecate, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2458
+	ret	0
+?_Deprecate@_Unchecked_iterators@?1???$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z@SAXU?$integral_constant@_N$0A@@2@@Z ENDP ; `std::copy_n<char const * __ptr64,__int64,unsigned char * __ptr64>'::`2'::_Unchecked_iterators::_Deprecate
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z
@@ -1600,16 +4596,502 @@ $LN11@throw_exce:
 ??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ENDP ; gsl::details::throw_exception<gsl::narrowing_error>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z
+;	COMDAT ??$narrow_cast@_JAEA_J@gsl@@YA_JAEA_J@Z
 _TEXT	SEGMENT
 u$ = 8
-??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z PROC		; gsl::narrow_cast<__int64,unsigned __int64 & __ptr64>, COMDAT
+??$narrow_cast@_JAEA_J@gsl@@YA_JAEA_J@Z PROC		; gsl::narrow_cast<__int64,__int64 & __ptr64>, COMDAT
 ; File c:\projects\gsl\include\gsl\gsl_util
 ; Line 100
 	mov	rax, QWORD PTR [rcx]
 ; Line 101
 	ret	0
-??$narrow_cast@_JAEA_K@gsl@@YA_JAEA_K@Z ENDP		; gsl::narrow_cast<__int64,unsigned __int64 & __ptr64>
+??$narrow_cast@_JAEA_J@gsl@@YA_JAEA_J@Z ENDP		; gsl::narrow_cast<__int64,__int64 & __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_no_deprecate1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@Urandom_access_iterator_tag@0@2@Z
+_TEXT	SEGMENT
+$T1 = 96
+__$ReturnUdt$ = 128
+_First$ = 136
+_Last$ = 144
+_Dest$ = 152
+__formal$ = 160
+__formal$ = 168
+??$_Copy_no_deprecate1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@Urandom_access_iterator_tag@0@2@Z PROC ; std::_Copy_no_deprecate1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2351
+$LN12:
+	mov	rax, rsp
+	mov	QWORD PTR [rax+8], rbx
+	push	rdi
+	sub	rsp, 112				; 00000070H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+; Line 2351
+	mov	rdi, rcx
+	mov	rbx, r9
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	lea	r9, QWORD PTR [rax-72]
+	movaps	XMMWORD PTR [rax-72], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-88], cl
+	lea	r8, QWORD PTR [rax-56]
+	lea	rcx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-40]
+	movaps	XMMWORD PTR [rax-40], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+; Line 458
+	movups	xmm1, XMMWORD PTR $T1[rsp]
+; Line 2353
+	mov	rax, rdi
+; Line 458
+	movups	XMMWORD PTR [rbx], xmm1
+; Line 2355
+	mov	rbx, QWORD PTR [rsp+128]
+	movups	XMMWORD PTR [rdi], xmm1
+	add	rsp, 112				; 00000070H
+	pop	rdi
+	ret	0
+??$_Copy_no_deprecate1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@Urandom_access_iterator_tag@0@2@Z ENDP ; std::_Copy_no_deprecate1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 8
+_Src$ = 16
+??$_Unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@Z PROC ; std::_Unchecked<gsl::details::span_iterator<gsl::span<char const ,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 428
+	movups	xmm0, XMMWORD PTR [rdx]
+	mov	rax, rcx
+	movups	XMMWORD PTR [rcx], xmm0
+; Line 429
+	ret	0
+??$_Unchecked@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V123@@Z ENDP ; std::_Unchecked<gsl::details::span_iterator<gsl::span<char const ,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+__$ReturnUdt$ = 96
+$T6 = 104
+seq$ = 104
+max$ = 112
+??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z PROC ; gsl::ensure_sentinel<char const ,0>, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 113
+$LN70:
+	push	rbx
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	r10, r8
+	mov	rbx, rcx
+	mov	DWORD PTR $T6[rsp], 0
+; Line 114
+	test	rdx, rdx
+	je	$LN5@ensure_sen
+; Line 117
+	mov	r8, rdx
+; Line 121
+	test	r10, r10
+	jle	SHORT $LN3@ensure_sen
+	mov	r9, rdx
+	neg	r9
+$LL2@ensure_sen:
+	cmp	BYTE PTR [r8], 0
+	je	SHORT $LN68@ensure_sen
+	inc	r8
+	lea	rax, QWORD PTR [r9+r8]
+	cmp	rax, r10
+	jl	SHORT $LL2@ensure_sen
+$LN3@ensure_sen:
+; Line 122
+	cmp	BYTE PTR [r8], 0
+	jne	SHORT $LN9@ensure_sen
+$LN68@ensure_sen:
+; Line 123
+	sub	r8, rdx
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; File c:\projects\gsl\include\gsl\string_span
+; Line 123
+	mov	rax, rbx
+	jmp	$LN4@ensure_sen
+$LN9@ensure_sen:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rsp+8], rax
+	mov	QWORD PTR $T4[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0EL@HAKHMEAL@GSL?3?5Postcondition?5failure?5at?5C?3@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+	mov	DWORD PTR $T6[rsp], 4
+; File c:\projects\gsl\include\gsl\string_span
+; Line 122
+	lea	rcx, QWORD PTR $T4[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN5@ensure_sen:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T5[rsp+8], rax
+	mov	QWORD PTR $T5[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0EL@CELLNNNE@GSL?3?5Postcondition?5failure?5at?5C?3@
+	mov	QWORD PTR _InitData$3[rsp], rax
+	mov	BYTE PTR _InitData$3[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T5[rsp+8]
+	lea	rcx, QWORD PTR _InitData$3[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+	mov	DWORD PTR $T6[rsp], 1
+; File c:\projects\gsl\include\gsl\string_span
+; Line 114
+	lea	rcx, QWORD PTR $T5[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN4@ensure_sen:
+; Line 124
+	add	rsp, 80					; 00000050H
+	pop	rbx
+	ret	0
+$LN69@ensure_sen:
+??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z ENDP ; gsl::ensure_sentinel<char const ,0>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+__$ReturnUdt$ = 96
+$T6 = 104
+seq$ = 104
+max$ = 112
+?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA PROC ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN12@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN12@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA ENDP ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$0
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+__$ReturnUdt$ = 96
+$T6 = 104
+seq$ = 104
+max$ = 112
+?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA PROC ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 4
+	test	eax, eax
+	je	SHORT $LN18@dtor$2
+	and	DWORD PTR $T6[rbp], -5
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN18@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA ENDP ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+__$ReturnUdt$ = 96
+$T6 = 104
+seq$ = 104
+max$ = 112
+?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA PROC ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN12@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN12@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA ENDP ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+__$ReturnUdt$ = 96
+$T6 = 104
+seq$ = 104
+max$ = 112
+?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA PROC ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 4
+	test	eax, eax
+	je	SHORT $LN18@dtor$2
+	and	DWORD PTR $T6[rbp], -5
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN18@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0???$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z@4HA ENDP ; `gsl::ensure_sentinel<char const ,0>'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$forward@_K@std@@YA$$QEA_KAEA_K@Z
+_TEXT	SEGMENT
+_Arg$ = 8
+??$forward@_K@std@@YA$$QEA_KAEA_K@Z PROC		; std::forward<unsigned __int64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
+; Line 1276
+	mov	rax, rcx
+; Line 1277
+	ret	0
+??$forward@_K@std@@YA$$QEA_KAEA_K@Z ENDP		; std::forward<unsigned __int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0$09@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$09@12@@Z
+_TEXT	SEGMENT
+this$ = 8
+ext$ = 16
+??$?0$09@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$09@12@@Z PROC ; gsl::details::extent_type<-1>::extent_type<-1><10>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	QWORD PTR [rcx], 10
+; Line 334
+	mov	rax, rcx
+	ret	0
+??$?0$09@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$09@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><10>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Rechecked@PEAHPEAH@std@@YAAEAPEAHAEAPEAHPEAH@Z
+_TEXT	SEGMENT
+_Dest$ = 8
+_Src$ = 16
+??$_Rechecked@PEAHPEAH@std@@YAAEAPEAHAEAPEAHPEAH@Z PROC	; std::_Rechecked<int * __ptr64,int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 458
+	mov	QWORD PTR [rcx], rdx
+; Line 459
+	mov	rax, rcx
+; Line 460
+	ret	0
+??$_Rechecked@PEAHPEAH@std@@YAAEAPEAHAEAPEAHPEAH@Z ENDP	; std::_Rechecked<int * __ptr64,int * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Count$ = 56
+_Dest$ = 64
+??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z PROC ; std::_Copy_n_unchecked<int * __ptr64,__int64,int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2446
+$LN11:
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rdi, r8
+; Line 2436
+	test	rdx, rdx
+	jle	SHORT $LN6@Copy_n_unc
+	mov	QWORD PTR [rsp+48], rbx
+; Line 2437
+	lea	rbx, QWORD PTR [rdx*4]
+; Line 2306
+	mov	rdx, rcx
+	mov	r8, rbx
+	mov	rcx, rdi
+	call	QWORD PTR __imp_memmove
+; Line 2307
+	lea	rax, QWORD PTR [rbx+rdi]
+	mov	rbx, QWORD PTR [rsp+48]
+; Line 2449
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+$LN6@Copy_n_unc:
+; Line 2447
+	mov	rax, rdi
+; Line 2449
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$_Copy_n_unchecked@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z ENDP ; std::_Copy_n_unchecked<int * __ptr64,__int64,int * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked@PEAH@std@@YAPEAHPEAH@Z
+_TEXT	SEGMENT
+_Src$ = 8
+??$_Unchecked@PEAH@std@@YAPEAHPEAH@Z PROC		; std::_Unchecked<int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 428
+	mov	rax, rcx
+; Line 429
+	ret	0
+??$_Unchecked@PEAH@std@@YAPEAHPEAH@Z ENDP		; std::_Unchecked<int * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked_n@PEAH_J@std@@YAPEAHPEAH_J@Z
+_TEXT	SEGMENT
+_Src$ = 8
+__formal$ = 16
+??$_Unchecked_n@PEAH_J@std@@YAPEAHPEAH_J@Z PROC		; std::_Unchecked_n<int * __ptr64,__int64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 680
+	mov	rax, rcx
+; Line 681
+	ret	0
+??$_Unchecked_n@PEAH_J@std@@YAPEAHPEAH_J@Z ENDP		; std::_Unchecked_n<int * __ptr64,__int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Is_checked@PEAH@std@@YA?AU?$integral_constant@_N$0A@@0@PEAH@Z
+_TEXT	SEGMENT
+__formal$ = 8
+??$_Is_checked@PEAH@std@@YA?AU?$integral_constant@_N$0A@@0@PEAH@Z PROC ; std::_Is_checked<int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 421
+	xor	eax, eax
+; Line 422
+	ret	0
+??$_Is_checked@PEAH@std@@YA?AU?$integral_constant@_N$0A@@0@PEAH@Z ENDP ; std::_Is_checked<int * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Deprecate@_Unchecked_iterators@?1???$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z@SAXU?$integral_constant@_N$0A@@2@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+?_Deprecate@_Unchecked_iterators@?1???$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z@SAXU?$integral_constant@_N$0A@@2@@Z PROC ; `std::copy_n<int * __ptr64,__int64,int * __ptr64>'::`2'::_Unchecked_iterators::_Deprecate, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2458
+	ret	0
+?_Deprecate@_Unchecked_iterators@?1???$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z@SAXU?$integral_constant@_N$0A@@2@@Z ENDP ; `std::copy_n<int * __ptr64,__int64,int * __ptr64>'::`2'::_Unchecked_iterators::_Deprecate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_no_deprecate1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00Urandom_access_iterator_tag@0@1@Z
+_TEXT	SEGMENT
+$T1 = 96
+__$ReturnUdt$ = 128
+_First$ = 136
+_Last$ = 144
+_Dest$ = 152
+__formal$ = 160
+__formal$ = 168
+??$_Copy_no_deprecate1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00Urandom_access_iterator_tag@0@1@Z PROC ; std::_Copy_no_deprecate1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2351
+$LN12:
+	mov	rax, rsp
+	mov	QWORD PTR [rax+8], rbx
+	push	rdi
+	sub	rsp, 112				; 00000070H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+; Line 2351
+	mov	rdi, rcx
+	mov	rbx, r9
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	lea	r9, QWORD PTR [rax-72]
+	movaps	XMMWORD PTR [rax-72], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-88], cl
+	lea	r8, QWORD PTR [rax-56]
+	lea	rcx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-40]
+	movaps	XMMWORD PTR [rax-40], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+; Line 458
+	movups	xmm1, XMMWORD PTR $T1[rsp]
+; Line 2353
+	mov	rax, rdi
+; Line 458
+	movups	XMMWORD PTR [rbx], xmm1
+; Line 2355
+	mov	rbx, QWORD PTR [rsp+128]
+	movups	XMMWORD PTR [rdi], xmm1
+	add	rsp, 112				; 00000070H
+	pop	rdi
+	ret	0
+??$_Copy_no_deprecate1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00Urandom_access_iterator_tag@0@1@Z ENDP ; std::_Copy_no_deprecate1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 8
+_Src$ = 16
+??$_Unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@Z PROC ; std::_Unchecked<gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 428
+	movups	xmm0, XMMWORD PTR [rdx]
+	mov	rax, rcx
+	movups	XMMWORD PTR [rcx], xmm0
+; Line 429
+	ret	0
+??$_Unchecked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@Z ENDP ; std::_Unchecked<gsl::details::span_iterator<gsl::span<int,-1>,0> >
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z
@@ -1625,6 +5107,1067 @@ ext$ = 16
 	ret	0
 ??$?0$0A@@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$0A@@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><0>
 _TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0$05@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$05@12@@Z
+_TEXT	SEGMENT
+this$ = 8
+ext$ = 16
+??$?0$05@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$05@12@@Z PROC ; gsl::details::extent_type<-1>::extent_type<-1><6>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 333
+	mov	QWORD PTR [rcx], 6
+; Line 334
+	mov	rax, rcx
+	ret	0
+??$?0$05@?$extent_type@$0?0@details@gsl@@QEAA@V?$extent_type@$05@12@@Z ENDP ; gsl::details::extent_type<-1>::extent_type<-1><6>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+$LN48:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+104], rbx
+	mov	rdi, rdx
+	mov	rbx, rcx
+	mov	DWORD PTR $T6[rsp], 0
+; Line 596
+	mov	rdx, r8
+	call	??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z ; gsl::details::extent_type<-1>::extent_type<-1>
+	mov	QWORD PTR [rbx+8], rdi
+; Line 338
+	mov	rax, QWORD PTR [rbx]
+; Line 598
+	test	rax, rax
+	js	SHORT $LN3@extent_typ
+; Line 599
+	test	rdi, rdi
+	jne	SHORT $LN5@extent_typ
+	test	rax, rax
+	je	SHORT $LN5@extent_typ
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rsp+8], rax
+	mov	QWORD PTR $T4[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+	mov	DWORD PTR $T6[rsp], 2
+; File c:\projects\gsl\include\gsl\span
+; Line 599
+	lea	rcx, QWORD PTR $T4[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN5@extent_typ:
+; Line 600
+	mov	rax, rbx
+	jmp	SHORT $LN2@extent_typ
+$LN3@extent_typ:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T5[rsp+8], rax
+	mov	QWORD PTR $T5[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$3[rsp], rax
+	mov	BYTE PTR _InitData$3[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T5[rsp+8]
+	lea	rcx, QWORD PTR _InitData$3[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+	mov	DWORD PTR $T6[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 598
+	lea	rcx, QWORD PTR $T5[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@extent_typ:
+; Line 600
+	mov	rbx, QWORD PTR [rsp+104]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+$LN47@extent_typ:
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA PROC ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN8@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN8@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA ENDP ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA PROC ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA ENDP ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA PROC ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN8@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN8@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA ENDP ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA PROC ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z@4HA ENDP ; `gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z PROC ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+$LN48:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+104], rbx
+	mov	rdi, rdx
+	mov	rbx, rcx
+	mov	DWORD PTR $T6[rsp], 0
+; Line 596
+	mov	rdx, r8
+	call	??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z ; gsl::details::extent_type<-1>::extent_type<-1>
+	mov	QWORD PTR [rbx+8], rdi
+; Line 338
+	mov	rax, QWORD PTR [rbx]
+; Line 598
+	test	rax, rax
+	js	SHORT $LN3@extent_typ
+; Line 599
+	test	rdi, rdi
+	jne	SHORT $LN5@extent_typ
+	test	rax, rax
+	je	SHORT $LN5@extent_typ
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rsp+8], rax
+	mov	QWORD PTR $T4[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KIMIJCMI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+	mov	DWORD PTR $T6[rsp], 2
+; File c:\projects\gsl\include\gsl\span
+; Line 599
+	lea	rcx, QWORD PTR $T4[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN5@extent_typ:
+; Line 600
+	mov	rax, rbx
+	jmp	SHORT $LN2@extent_typ
+$LN3@extent_typ:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T5[rsp+8], rax
+	mov	QWORD PTR $T5[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LBNDKDIJ@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$3[rsp], rax
+	mov	BYTE PTR _InitData$3[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T5[rsp+8]
+	lea	rcx, QWORD PTR _InitData$3[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+	mov	DWORD PTR $T6[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 598
+	lea	rcx, QWORD PTR $T5[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@extent_typ:
+; Line 600
+	mov	rbx, QWORD PTR [rsp+104]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+$LN47@extent_typ:
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ENDP ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA PROC ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN8@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN8@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA ENDP ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA PROC ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA ENDP ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA PROC ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN8@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN8@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA ENDP ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA PROC ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN11@dtor$1
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z@4HA ENDP ; `gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$forward@AEA_J@std@@YAAEA_JAEA_J@Z
+_TEXT	SEGMENT
+_Arg$ = 8
+??$forward@AEA_J@std@@YAAEA_JAEA_J@Z PROC		; std::forward<__int64 & __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
+; Line 1276
+	mov	rax, rcx
+; Line 1277
+	ret	0
+??$forward@AEA_J@std@@YAAEA_JAEA_J@Z ENDP		; std::forward<__int64 & __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0H$05X@?$span@H$0?0@gsl@@QEAA@AEBV?$span@H$05@1@@Z
+_TEXT	SEGMENT
+$T1 = 32
+this$ = 64
+other$ = 72
+$T2 = 80
+$T3 = 80
+??$?0H$05X@?$span@H$0?0@gsl@@QEAA@AEBV?$span@H$05@1@@Z PROC ; gsl::span<int,-1>::span<int,-1><int,6,void>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 448
+$LN37:
+	push	rbx
+	sub	rsp, 48					; 00000030H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	rbx, rcx
+	mov	DWORD PTR $T2[rsp], 0
+; Line 447
+	movzx	r8d, BYTE PTR $T3[rsp]
+	mov	rdx, QWORD PTR [rdx]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 448
+	mov	rax, rbx
+	add	rsp, 48					; 00000030H
+	pop	rbx
+	ret	0
+??$?0H$05X@?$span@H$0?0@gsl@@QEAA@AEBV?$span@H$05@1@@Z ENDP ; gsl::span<int,-1>::span<int,-1><int,6,void>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Count$ = 56
+_Dest$ = 64
+??$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z PROC	; std::copy_n<char const * __ptr64,__int64,unsigned char * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2456
+$LN27:
+	mov	QWORD PTR [rsp+8], rbx
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rbx, r8
+	mov	rdi, rdx
+; Line 2436
+	test	rdx, rdx
+	jle	SHORT $LN20@copy_n
+; Line 2306
+	mov	r8, rdx
+	mov	rdx, rcx
+	mov	rcx, rbx
+	call	QWORD PTR __imp_memmove
+; Line 2307
+	lea	rax, QWORD PTR [rdi+rbx]
+; Line 2461
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+$LN20@copy_n:
+; Line 2459
+	mov	rax, rbx
+; Line 2461
+	mov	rbx, QWORD PTR [rsp+48]
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$copy_n@PEBD_JPEAE@std@@YAPEAEPEBD_JPEAE@Z ENDP	; std::copy_n<char const * __ptr64,__int64,unsigned char * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$narrow@_J_J@gsl@@YA_J_J@Z
+_TEXT	SEGMENT
+$T1 = 0
+u$ = 32
+??$narrow@_J_J@gsl@@YA_J_J@Z PROC			; gsl::narrow<__int64,__int64>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 124
+$LN33:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+; Line 129
+	mov	rax, rcx
+; Line 130
+	add	rsp, 24
+	ret	0
+??$narrow@_J_J@gsl@@YA_J_J@Z ENDP			; gsl::narrow<__int64,__int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_no_deprecate@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+_TEXT	SEGMENT
+$T1 = 96
+__$ReturnUdt$ = 128
+_First$ = 136
+_Last$ = 144
+_Dest$ = 152
+??$_Copy_no_deprecate@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z PROC ; std::_Copy_no_deprecate<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2361
+$LN18:
+	mov	rax, rsp
+	push	rbx
+	sub	rsp, 112				; 00000070H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+; Line 2361
+	mov	rbx, rcx
+; Line 2334
+	lea	r9, QWORD PTR [rax-72]
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	movaps	XMMWORD PTR [rax-72], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-88], cl
+	lea	r8, QWORD PTR [rax-56]
+	lea	rcx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-40]
+	movaps	XMMWORD PTR [rax-40], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+; Line 2353
+	movups	xmm0, XMMWORD PTR $T1[rsp]
+; Line 2363
+	mov	rax, rbx
+; Line 2353
+	movups	XMMWORD PTR [rbx], xmm0
+; Line 2365
+	add	rsp, 112				; 00000070H
+	pop	rbx
+	ret	0
+??$_Copy_no_deprecate@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z ENDP ; std::_Copy_no_deprecate<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Is_checked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AU?$integral_constant@_N$00@0@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+??$_Is_checked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AU?$integral_constant@_N$00@0@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@Z PROC ; std::_Is_checked<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 421
+	xor	eax, eax
+; Line 422
+	ret	0
+??$_Is_checked@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AU?$integral_constant@_N$00@0@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@@Z ENDP ; std::_Is_checked<gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Deprecate@_Unchecked_iterators@?1???$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@45@0V345@@Z@SAXU?$integral_constant@_N$00@2@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+?_Deprecate@_Unchecked_iterators@?1???$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@45@0V345@@Z@SAXU?$integral_constant@_N$00@2@@Z PROC ; `std::copy<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`2'::_Unchecked_iterators::_Deprecate, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2372
+	ret	0
+?_Deprecate@_Unchecked_iterators@?1???$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@45@0V345@@Z@SAXU?$integral_constant@_N$00@2@@Z ENDP ; `std::copy<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >'::`2'::_Unchecked_iterators::_Deprecate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 48
+sz$ = 56
+max$ = 64
+??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z PROC ; gsl::ensure_z<char const >, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 133
+$LN4:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+; Line 134
+	mov	rdx, QWORD PTR [rdx]
+	mov	rbx, rcx
+	call	??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z ; gsl::ensure_sentinel<char const ,0>
+	mov	rax, rbx
+; Line 135
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??$ensure_z@$$CBD@gsl@@YA?AV?$span@$$CBD$0?0@0@AEBQEBD_J@Z ENDP ; gsl::ensure_z<char const >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$narrow_cast@_J_K@gsl@@YA_J$$QEA_K@Z
+_TEXT	SEGMENT
+u$ = 8
+??$narrow_cast@_J_K@gsl@@YA_J$$QEA_K@Z PROC		; gsl::narrow_cast<__int64,unsigned __int64>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 100
+	mov	rax, QWORD PTR [rcx]
+; Line 101
+	ret	0
+??$narrow_cast@_J_K@gsl@@YA_J$$QEA_K@Z ENDP		; gsl::narrow_cast<__int64,unsigned __int64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z
+_TEXT	SEGMENT
+$T1 = 0
+this$ = 32
+data$ = 40
+$T2 = 48
+ext$ = 48
+??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<10> >, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+$LN30:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T2[rsp], 0
+; Line 333
+	mov	QWORD PTR [rcx], 10
+; Line 590
+	mov	QWORD PTR [rcx+8], rdx
+; Line 593
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0V?$extent_type@$09@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$09@details@2@@Z ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<10> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$extent_type@$09@details@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$extent_type@$09@details@gsl@@QEBA_JXZ PROC	; gsl::details::extent_type<10>::size, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 323
+	mov	eax, 10
+	ret	0
+?size@?$extent_type@$09@details@gsl@@QEBA_JXZ ENDP	; gsl::details::extent_type<10>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$extent_type@$09@details@gsl@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0?$extent_type@$09@details@gsl@@QEAA@XZ PROC		; gsl::details::extent_type<10>::extent_type<10>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 311
+	mov	rax, rcx
+	ret	0
+??0?$extent_type@$09@details@gsl@@QEAA@XZ ENDP		; gsl::details::extent_type<10>::extent_type<10>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z
+_TEXT	SEGMENT
+_First$ = 48
+_Count$ = 56
+_Dest$ = 64
+??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z PROC		; std::copy_n<int * __ptr64,__int64,int * __ptr64>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2456
+$LN27:
+	push	rdi
+	sub	rsp, 32					; 00000020H
+	mov	rdi, r8
+; Line 2436
+	test	rdx, rdx
+	jle	SHORT $LN20@copy_n
+	mov	QWORD PTR [rsp+48], rbx
+; Line 2437
+	lea	rbx, QWORD PTR [rdx*4]
+; Line 2306
+	mov	rdx, rcx
+	mov	r8, rbx
+	mov	rcx, rdi
+	call	QWORD PTR __imp_memmove
+; Line 2307
+	lea	rax, QWORD PTR [rbx+rdi]
+	mov	rbx, QWORD PTR [rsp+48]
+; Line 2461
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+$LN20@copy_n:
+; Line 2459
+	mov	rax, rdi
+; Line 2461
+	add	rsp, 32					; 00000020H
+	pop	rdi
+	ret	0
+??$copy_n@PEAH_JPEAH@std@@YAPEAHPEAH_J0@Z ENDP		; std::copy_n<int * __ptr64,__int64,int * __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Copy_no_deprecate@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+_TEXT	SEGMENT
+$T1 = 96
+__$ReturnUdt$ = 128
+_First$ = 136
+_Last$ = 144
+_Dest$ = 152
+??$_Copy_no_deprecate@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z PROC ; std::_Copy_no_deprecate<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2361
+$LN18:
+	mov	rax, rsp
+	push	rbx
+	sub	rsp, 112				; 00000070H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+; Line 2361
+	mov	rbx, rcx
+; Line 2334
+	lea	r9, QWORD PTR [rax-72]
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	movaps	XMMWORD PTR [rax-72], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-88], cl
+	lea	r8, QWORD PTR [rax-56]
+	lea	rcx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-40]
+	movaps	XMMWORD PTR [rax-40], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+; Line 2353
+	movups	xmm0, XMMWORD PTR $T1[rsp]
+; Line 2363
+	mov	rax, rbx
+; Line 2353
+	movups	XMMWORD PTR [rbx], xmm0
+; Line 2365
+	add	rsp, 112				; 00000070H
+	pop	rbx
+	ret	0
+??$_Copy_no_deprecate@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z ENDP ; std::_Copy_no_deprecate<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$_Is_checked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AU?$integral_constant@_N$00@0@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+??$_Is_checked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AU?$integral_constant@_N$00@0@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@Z PROC ; std::_Is_checked<gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 421
+	xor	eax, eax
+; Line 422
+	ret	0
+??$_Is_checked@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@std@@YA?AU?$integral_constant@_N$00@0@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@@Z ENDP ; std::_Is_checked<gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?_Deprecate@_Unchecked_iterators@?1???$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V345@00@Z@SAXU?$integral_constant@_N$00@2@@Z
+_TEXT	SEGMENT
+__formal$ = 8
+?_Deprecate@_Unchecked_iterators@?1???$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V345@00@Z@SAXU?$integral_constant@_N$00@2@@Z PROC ; `std::copy<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`2'::_Unchecked_iterators::_Deprecate, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2372
+	ret	0
+?_Deprecate@_Unchecked_iterators@?1???$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V345@00@Z@SAXU?$integral_constant@_N$00@2@@Z ENDP ; `std::copy<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >'::`2'::_Unchecked_iterators::_Deprecate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z
+_TEXT	SEGMENT
+$T1 = 0
+this$ = 32
+data$ = 40
+$T2 = 48
+ext$ = 48
+??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 597
+$LN52:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	xor	eax, eax
+	mov	DWORD PTR $T2[rsp], eax
+; Line 333
+	mov	QWORD PTR [rcx], rax
+; Line 596
+	mov	QWORD PTR [rcx+8], rdx
+; Line 600
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ PROC	; gsl::details::extent_type<0>::size, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 323
+	xor	eax, eax
+	ret	0
+?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ ENDP	; gsl::details::extent_type<0>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$extent_type@$0A@@details@gsl@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0?$extent_type@$0A@@details@gsl@@QEAA@XZ PROC		; gsl::details::extent_type<0>::extent_type<0>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 311
+	mov	rax, rcx
+	ret	0
+??0?$extent_type@$0A@@details@gsl@@QEAA@XZ ENDP		; gsl::details::extent_type<0>::extent_type<0>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+_TEXT	SEGMENT
+$T1 = 0
+$T2 = 32
+this$ = 32
+data$ = 40
+ext$ = 48
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z PROC ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::storage_type<gsl::details::extent_type<6> ><gsl::details::extent_type<6> >, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+$LN25:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T2[rsp], 0
+; Line 590
+	mov	QWORD PTR [rcx], rdx
+; Line 593
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z ENDP ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::storage_type<gsl::details::extent_type<6> ><gsl::details::extent_type<6> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$addressof@H@std@@YAPEAHAEAH@Z
+_TEXT	SEGMENT
+_Val$ = 8
+??$addressof@H@std@@YAPEAHAEAH@Z PROC			; std::addressof<int>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstddef
+; Line 725
+	mov	rax, rcx
+; Line 726
+	ret	0
+??$addressof@H@std@@YAPEAHAEAH@Z ENDP			; std::addressof<int>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z
+_TEXT	SEGMENT
+$T1 = 0
+this$ = 32
+data$ = 40
+$T2 = 48
+ext$ = 48
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+$LN30:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T2[rsp], 0
+; Line 333
+	mov	QWORD PTR [rcx], 6
+; Line 590
+	mov	QWORD PTR [rcx+8], rdx
+; Line 593
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@UKnownNotNull@12@V?$extent_type@$05@details@2@@Z ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$addressof@E@std@@YAPEAEAEAE@Z
+_TEXT	SEGMENT
+_Val$ = 8
+??$addressof@E@std@@YAPEAEAEAE@Z PROC			; std::addressof<unsigned char>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstddef
+; Line 725
+	mov	rax, rcx
+; Line 726
+	ret	0
+??$addressof@E@std@@YAPEAEAEAE@Z ENDP			; std::addressof<unsigned char>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z
+_TEXT	SEGMENT
+_Arg$ = 8
+??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z PROC ; std::forward<gsl::fail_fast>, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
+; Line 1276
+	mov	rax, rcx
+; Line 1277
+	ret	0
+??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z ENDP ; std::forward<gsl::fail_fast>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z
+_TEXT	SEGMENT
+u$ = 8
+??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z PROC		; gsl::narrow_cast<unsigned __int64,__int64 & __ptr64>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_util
+; Line 100
+	mov	rax, QWORD PTR [rcx]
+; Line 101
+	ret	0
+??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z ENDP		; gsl::narrow_cast<unsigned __int64,__int64 & __ptr64>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 591
+$LN26:
+	mov	QWORD PTR [rsp+16], rdx
+	push	rbx
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	rbx, rcx
+	mov	DWORD PTR $T4[rsp], 0
+; Line 590
+	mov	rdx, r8
+	call	??0?$extent_type@$0?0@details@gsl@@QEAA@_J@Z ; gsl::details::extent_type<-1>::extent_type<-1>
+	mov	rax, QWORD PTR data$[rsp]
+	mov	QWORD PTR [rbx+8], rax
+; Line 592
+	cmp	QWORD PTR [rbx], 0
+	jl	SHORT $LN3@extent_typ
+; Line 593
+	mov	rax, rbx
+	jmp	SHORT $LN2@extent_typ
+$LN3@extent_typ:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@ELDMELAD@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 592
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@extent_typ:
+; Line 593
+	add	rsp, 80					; 00000050H
+	pop	rbx
+	ret	0
+$LN25@extent_typ:
+??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+data$ = 104
+ext$ = 112
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA PROC ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$0
+text$x	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
 _TEXT	SEGMENT
@@ -1840,1708 +6383,1904 @@ $LN11@dtor$1:
 ?dtor$1@?0???$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z@4HA ENDP ; `gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>'::`1'::dtor$1
 text$x	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Unfancy@H@std@@YAPEAHPEAH@Z
+;	COMDAT ??$make_subspan@$05@?$span@H$05@gsl@@AEBA?AV?$span@H$0?0@1@_J0V?$subspan_selector@$05@01@@Z
 _TEXT	SEGMENT
-_Ptr$ = 8
-??$_Unfancy@H@std@@YAPEAHPEAH@Z PROC			; std::_Unfancy<int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstddef
-; Line 740
-	mov	rax, rcx
-; Line 741
+$T1 = 48
+$T2 = 52
+$T3 = 56
+tmp$ = 64
+this$ = 96
+__$ReturnUdt$ = 104
+offset$ = 112
+count$ = 120
+__formal$ = 128
+??$make_subspan@$05@?$span@H$05@gsl@@AEBA?AV?$span@H$0?0@1@_J0V?$subspan_selector@$05@01@@Z PROC ; gsl::span<int,6>::make_subspan<6>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 622
+$LN42:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T3[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	QWORD PTR [rsp+104], rsi
+	mov	rbx, r9
+	mov	rdi, r8
+	mov	rsi, rdx
+	mov	DWORD PTR $T2[rsp], 0
+; Line 447
+	movzx	r8d, BYTE PTR $T1[rsp]
+	mov	rdx, QWORD PTR [rcx]
+	lea	rcx, QWORD PTR tmp$[rsp]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	mov	r9, rbx
+	mov	r8, rdi
+	mov	rdx, rsi
+	lea	rcx, QWORD PTR tmp$[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; Line 624
+	mov	rax, rsi
+; Line 625
+	mov	rbx, QWORD PTR [rsp+96]
+	mov	rsi, QWORD PTR [rsp+104]
+	add	rsp, 80					; 00000050H
+	pop	rdi
 	ret	0
-??$_Unfancy@H@std@@YAPEAHPEAH@Z ENDP			; std::_Unfancy<int>
+??$make_subspan@$05@?$span@H$05@gsl@@AEBA?AV?$span@H$0?0@1@_J0V?$subspan_selector@$05@01@@Z ENDP ; gsl::span<int,6>::make_subspan<6>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Destroy_range1@V?$allocator@H@std@@PEAH@std@@YAXPEAH0AEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U?$integral_constant@_N$00@0@@Z
+;	COMDAT ??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z
 _TEXT	SEGMENT
-__formal$ = 8
-__formal$ = 16
-__formal$ = 24
-__formal$ = 32
-??$_Destroy_range1@V?$allocator@H@std@@PEAH@std@@YAXPEAH0AEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U?$integral_constant@_N$00@0@@Z PROC ; std::_Destroy_range1<std::allocator<int>,int * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 1109
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+src$ = 96
+dest$ = 104
+??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z PROC ; gsl::copy<char const ,-1,unsigned char,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 43
+$LN78:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	rax, rdx
+	mov	DWORD PTR $T4[rsp], 0
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	r8, QWORD PTR [rcx]
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	cmp	QWORD PTR [rdx], r8
+	jl	SHORT $LN3@copy
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2436
+	test	r8, r8
+	jle	SHORT $LN2@copy
+; Line 2306
+	mov	rdx, QWORD PTR [rcx+8]
+	mov	rcx, QWORD PTR [rax+8]
+	call	QWORD PTR __imp_memmove
+; Line 458
+	jmp	SHORT $LN2@copy
+$LN3@copy:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@copy:
+; Line 53
+	add	rsp, 88					; 00000058H
 	ret	0
-??$_Destroy_range1@V?$allocator@H@std@@PEAH@std@@YAXPEAH0AEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@U?$integral_constant@_N$00@0@@Z ENDP ; std::_Destroy_range1<std::allocator<int>,int * __ptr64>
+$LN77@copy:
+??$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z ENDP ; gsl::copy<char const ,-1,unsigned char,-1>
 _TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$forward@AEA_J@std@@YAAEA_JAEA_J@Z
-_TEXT	SEGMENT
-_Arg$ = 8
-??$forward@AEA_J@std@@YAAEA_JAEA_J@Z PROC		; std::forward<__int64 & __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
-; Line 1276
-	mov	rax, rcx
-; Line 1277
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+src$ = 96
+dest$ = 104
+?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA PROC ; `gsl::copy<char const ,-1,unsigned char,-1>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
 	ret	0
-??$forward@AEA_J@std@@YAAEA_JAEA_J@Z ENDP		; std::forward<__int64 & __ptr64>
-_TEXT	ENDS
+?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA ENDP ; `gsl::copy<char const ,-1,unsigned char,-1>'::`1'::dtor$0
+text$x	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+src$ = 96
+dest$ = 104
+?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA PROC ; `gsl::copy<char const ,-1,unsigned char,-1>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$copy@$$CBD$0?0E$0?0@gsl@@YAXV?$span@$$CBD$0?0@0@V?$span@E$0?0@0@@Z@4HA ENDP ; `gsl::copy<char const ,-1,unsigned char,-1>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QEAA@AEAV?$basic_string_span@$$CBD$0?0@1@@Z
 _TEXT	SEGMENT
 $T1 = 32
 this$ = 64
-_First$ = 72
-_Last$ = 80
-__formal$ = 88
-??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z PROC ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 814
-$LN259:
-	mov	QWORD PTR [rsp+8], rcx
-	push	r14
+cont$ = 72
+??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QEAA@AEAV?$basic_string_span@$$CBD$0?0@1@@Z PROC ; gsl::span<char const ,-1>::span<char const ,-1><gsl::basic_string_span<char const ,-1>,void>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 428
+$LN55:
+	push	rbx
 	sub	rsp, 48					; 00000030H
 	mov	QWORD PTR $T1[rsp], -2
-	mov	QWORD PTR [rsp+72], rbx
-	mov	QWORD PTR [rsp+80], rsi
-	mov	QWORD PTR [rsp+88], rdi
-	mov	rsi, r8
-	mov	r14, rdx
-	mov	rdi, rcx
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 1119
-	sub	rsi, rdx
-	mov	rbx, rsi
-	sar	rbx, 2
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1562
-	xor	eax, eax
-	mov	QWORD PTR [rcx], rax
-; Line 1563
-	mov	QWORD PTR [rcx+8], rax
-; Line 1564
-	mov	QWORD PTR [rcx+16], rax
-; Line 1566
-	test	rbx, rbx
-	je	SHORT $LN7@Construct
-; Line 1568
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-	cmp	rbx, rax
-	jbe	SHORT $LN16@Construct
-; Line 1765
-	lea	rcx, OFFSET FLAT:??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
-	call	QWORD PTR __imp_?_Xlength_error@std@@YAXPEBD@Z
-	int	3
-$LN16@Construct:
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 976
-	mov	rdx, rbx
-	call	?allocate@?$allocator@H@std@@QEAAPEAH_K@Z ; std::allocator<int>::allocate
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1572
-	mov	QWORD PTR [rdi], rax
-; Line 1573
-	mov	QWORD PTR [rdi+8], rax
-; Line 1574
-	mov	rax, QWORD PTR [rdi]
-	lea	rcx, QWORD PTR [rax+rbx*4]
-	mov	QWORD PTR [rdi+16], rcx
-; Line 818
-	mov	rbx, rax
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 2306
-	mov	r8, rsi
-	mov	rdx, r14
-	mov	rcx, rax
-	call	QWORD PTR __imp_memmove
-; Line 2307
-	lea	rax, QWORD PTR [rsi+rbx]
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 818
-	mov	QWORD PTR [rdi+8], rax
-$LN7@Construct:
-; Line 824
-	mov	rbx, QWORD PTR [rsp+72]
-	mov	rsi, QWORD PTR [rsp+80]
-	mov	rdi, QWORD PTR [rsp+88]
-	add	rsp, 48					; 00000030H
-	pop	r14
-	ret	0
-$LN258@Construct:
-??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z ENDP ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>
-_TEXT	ENDS
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-this$ = 64
-_First$ = 72
-_Last$ = 80
-__formal$ = 88
-?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA PROC ; `std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>'::`1'::catch$69
-; Line 819
-	mov	QWORD PTR [rsp+16], rdx
-	push	rbx
-	push	rbp
-	sub	rsp, 40					; 00000028H
-	mov	rbp, rdx
-__catch$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z$0:
-; Line 1637
-	mov	rbx, QWORD PTR this$[rbp]
-	mov	rdx, QWORD PTR [rbx]
-	test	rdx, rdx
-	je	SHORT $LN166@catch$69
-; Line 1641
-	mov	r8, QWORD PTR [rbx+16]
-	sub	r8, rdx
-	sar	r8, 2
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 987
-	mov	rcx, rbx
-	call	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ; std::allocator<int>::deallocate
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1643
-	mov	QWORD PTR [rbx], 0
-; Line 1644
-	mov	QWORD PTR [rbx+8], 0
-; Line 1645
-	mov	QWORD PTR [rbx+16], 0
-$LN166@catch$69:
-; Line 821
-	xor	edx, edx
-	xor	ecx, ecx
-	call	_CxxThrowException
-	npad	1
-?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA ENDP ; `std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>'::`1'::catch$69
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-this$ = 64
-_First$ = 72
-_Last$ = 80
-__formal$ = 88
-?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA PROC ; `std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>'::`1'::catch$69
-; Line 819
-	mov	QWORD PTR [rsp+16], rdx
-	push	rbx
-	push	rbp
-	sub	rsp, 40					; 00000028H
-	mov	rbp, rdx
-__catch$??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z$0:
-; Line 1637
-	mov	rbx, QWORD PTR this$[rbp]
-	mov	rdx, QWORD PTR [rbx]
-	test	rdx, rdx
-	je	SHORT $LN166@catch$69
-; Line 1641
-	mov	r8, QWORD PTR [rbx+16]
-	sub	r8, rdx
-	sar	r8, 2
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 987
-	mov	rcx, rbx
-	call	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ; std::allocator<int>::deallocate
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1643
-	mov	QWORD PTR [rbx], 0
-; Line 1644
-	mov	QWORD PTR [rbx+8], 0
-; Line 1645
-	mov	QWORD PTR [rbx+16], 0
-$LN166@catch$69:
-; Line 821
-	xor	edx, edx
-	xor	ecx, ecx
-	call	_CxxThrowException
-	npad	1
-?catch$69@?0???$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z@4HA ENDP ; `std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>'::`1'::catch$69
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$?0AEBV?$allocator@H@std@@$$V@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAA@U_One_then_variadic_args_t@1@AEBV?$allocator@H@1@@Z
-_TEXT	SEGMENT
-this$ = 8
-__formal$ = 16
-_Val1$ = 24
-??$?0AEBV?$allocator@H@std@@$$V@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAA@U_One_then_variadic_args_t@1@AEBV?$allocator@H@1@@Z PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const & __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 485
-	xor	eax, eax
-	mov	QWORD PTR [rcx], rax
-; Line 486
-	mov	QWORD PTR [rcx+8], rax
-; Line 487
-	mov	QWORD PTR [rcx+16], rax
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 290
-	mov	rax, rcx
-	ret	0
-??$?0AEBV?$allocator@H@std@@$$V@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAA@U_One_then_variadic_args_t@1@AEBV?$allocator@H@1@@Z ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1><std::allocator<int> const & __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$forward@AEBV?$allocator@H@std@@@std@@YAAEBV?$allocator@H@0@AEBV10@@Z
-_TEXT	SEGMENT
-_Arg$ = 8
-??$forward@AEBV?$allocator@H@std@@@std@@YAAEBV?$allocator@H@0@AEBV10@@Z PROC ; std::forward<std::allocator<int> const & __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
-; Line 1276
-	mov	rax, rcx
-; Line 1277
-	ret	0
-??$forward@AEBV?$allocator@H@std@@@std@@YAAEBV?$allocator@H@0@AEBV10@@Z ENDP ; std::forward<std::allocator<int> const & __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$narrow@_J_K@gsl@@YA_J_K@Z
-_TEXT	SEGMENT
-$T1 = 32
-$T2 = 40
-u$ = 80
-??$narrow@_J_K@gsl@@YA_J_K@Z PROC			; gsl::narrow<__int64,unsigned __int64>, COMDAT
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 124
-$LN34:
-	sub	rsp, 72					; 00000048H
-	mov	QWORD PTR $T1[rsp], -2
-; Line 127
-	test	rcx, rcx
-	jns	SHORT $LN29@narrow
-; Line 128
-	xor	eax, eax
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
-; Line 47
-	mov	QWORD PTR $T2[rsp+8], rax
-	mov	QWORD PTR $T2[rsp+16], rax
-	lea	rax, OFFSET FLAT:??_7narrowing_error@gsl@@6B@
-	mov	QWORD PTR $T2[rsp], rax
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 128
-	lea	rcx, QWORD PTR $T2[rsp]
-	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
-	npad	1
-$LN29@narrow:
-; Line 129
-	mov	rax, rcx
-; Line 130
-	add	rsp, 72					; 00000048H
-	ret	0
-$LN33@narrow:
-??$narrow@_J_K@gsl@@YA_J_K@Z ENDP			; gsl::narrow<__int64,unsigned __int64>
-_TEXT	ENDS
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-$T2 = 40
-u$ = 80
-?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA PROC	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
-	lea	rcx, QWORD PTR $T2[rdx]
-	jmp	??1narrowing_error@gsl@@UEAA@XZ
-?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA ENDP	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-$T2 = 40
-u$ = 80
-?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA PROC	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
-	lea	rcx, QWORD PTR $T2[rdx]
-	jmp	??1narrowing_error@gsl@@UEAA@XZ
-?dtor$1@?0???$narrow@_J_K@gsl@@YA_J_K@Z@4HA ENDP	; `gsl::narrow<__int64,unsigned __int64>'::`1'::dtor$1
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z
-_TEXT	SEGMENT
-$T1 = 0
-this$ = 32
-data$ = 40
-$T2 = 48
-ext$ = 48
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z PROC ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >, COMDAT
-; File c:\projects\gsl\include\gsl\span
-; Line 597
-$LN52:
-	sub	rsp, 24
-	mov	QWORD PTR $T1[rsp], -2
-	xor	eax, eax
-	mov	DWORD PTR $T2[rsp], eax
-; Line 333
-	mov	QWORD PTR [rcx], rax
-; Line 596
-	mov	QWORD PTR [rcx+8], rdx
-; Line 600
-	mov	rax, rcx
-	add	rsp, 24
-	ret	0
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEAA@PEBHV?$extent_type@$0A@@details@2@@Z ENDP ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z
-_TEXT	SEGMENT
-$T1 = 0
-this$ = 32
-data$ = 40
-$T2 = 48
-ext$ = 48
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z PROC ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >, COMDAT
-; File c:\projects\gsl\include\gsl\span
-; Line 597
-$LN52:
-	sub	rsp, 24
-	mov	QWORD PTR $T1[rsp], -2
-	xor	eax, eax
-	mov	DWORD PTR $T2[rsp], eax
-; Line 333
-	mov	QWORD PTR [rcx], rax
-; Line 596
-	mov	QWORD PTR [rcx+8], rdx
-; Line 600
-	mov	rax, rcx
-	add	rsp, 24
-	ret	0
-??$?0V?$extent_type@$0A@@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$0A@@details@2@@Z ENDP ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<0> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ
-_TEXT	SEGMENT
-this$ = 8
-?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ PROC	; gsl::details::extent_type<0>::size, COMDAT
-; File c:\projects\gsl\include\gsl\span
-; Line 323
-	xor	eax, eax
-	ret	0
-?size@?$extent_type@$0A@@details@gsl@@QEBA_JXZ ENDP	; gsl::details::extent_type<0>::size
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??0?$extent_type@$0A@@details@gsl@@QEAA@XZ
-_TEXT	SEGMENT
-this$ = 8
-??0?$extent_type@$0A@@details@gsl@@QEAA@XZ PROC		; gsl::details::extent_type<0>::extent_type<0>, COMDAT
-; File c:\projects\gsl\include\gsl\span
-; Line 311
-	mov	rax, rcx
-	ret	0
-??0?$extent_type@$0A@@details@gsl@@QEAA@XZ ENDP		; gsl::details::extent_type<0>::extent_type<0>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z
-_TEXT	SEGMENT
-_Arg$ = 8
-??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z PROC ; std::forward<gsl::fail_fast>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\type_traits
-; Line 1276
-	mov	rax, rcx
-; Line 1277
-	ret	0
-??$forward@Ufail_fast@gsl@@@std@@YA$$QEAUfail_fast@gsl@@AEAU12@@Z ENDP ; std::forward<gsl::fail_fast>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Destroy_range@V?$allocator@H@std@@PEAH@std@@YAXPEAH0AEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z
-_TEXT	SEGMENT
-_First$ = 8
-_Last$ = 16
-_Al$ = 24
-??$_Destroy_range@V?$allocator@H@std@@PEAH@std@@YAXPEAH0AEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z PROC ; std::_Destroy_range<std::allocator<int>,int * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 1121
-	ret	0
-??$_Destroy_range@V?$allocator@H@std@@PEAH@std@@YAXPEAH0AEAU?$_Wrap_alloc@V?$allocator@H@std@@@0@@Z ENDP ; std::_Destroy_range<std::allocator<int>,int * __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z
-_TEXT	SEGMENT
-u$ = 8
-??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z PROC		; gsl::narrow_cast<unsigned __int64,__int64 & __ptr64>, COMDAT
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 100
-	mov	rax, QWORD PTR [rcx]
-; Line 101
-	ret	0
-??$narrow_cast@_KAEA_J@gsl@@YA_KAEA_J@Z ENDP		; gsl::narrow_cast<unsigned __int64,__int64 & __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0@Z
-_TEXT	SEGMENT
-this$ = 8
-_First$ = 16
-_Last$ = 24
-??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0@Z PROC ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 793
-	xor	eax, eax
-	movzx	r9d, al
-	jmp	??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>
-??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0@Z ENDP ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$?0AEBV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z
-_TEXT	SEGMENT
-this$ = 8
-_Al$ = 16
-??$?0AEBV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const & __ptr64,void>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 485
-	xor	eax, eax
-	mov	QWORD PTR [rcx], rax
-; Line 486
-	mov	QWORD PTR [rcx+8], rax
-; Line 487
-	mov	QWORD PTR [rcx+16], rax
-; Line 529
-	mov	rax, rcx
-	ret	0
-??$?0AEBV?$allocator@H@std@@X@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAA@AEBV?$allocator@H@1@@Z ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > ><std::allocator<int> const & __ptr64,void>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z
-_TEXT	SEGMENT
-$T1 = 32
-$T2 = 40
-this$ = 80
-cont$ = 88
-??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z PROC ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>, COMDAT
-; File c:\projects\gsl\include\gsl\span
-; Line 428
-$LN74:
-	push	rbx
-	sub	rsp, 64					; 00000040H
-	mov	QWORD PTR $T1[rsp], -2
 	mov	rbx, rcx
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1180
-	mov	rax, QWORD PTR [rdx]
-	mov	r8, QWORD PTR [rdx+8]
-	sub	r8, rax
-	sar	r8, 2
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 127
-	test	r8, r8
-	jns	SHORT $LN52@span
-; Line 128
-	xor	eax, eax
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
-; Line 47
-	mov	QWORD PTR $T2[rsp+8], rax
-	mov	QWORD PTR $T2[rsp+16], rax
-	lea	rax, OFFSET FLAT:??_7narrowing_error@gsl@@6B@
-	mov	QWORD PTR $T2[rsp], rax
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 128
-	lea	rcx, QWORD PTR $T2[rsp]
-	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
-	npad	1
-$LN52@span:
-; File c:\projects\gsl\include\gsl\span
 ; Line 386
-	mov	rdx, rax
-	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+	mov	r8, QWORD PTR [rdx]
+	mov	rdx, QWORD PTR [rdx+8]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
 ; Line 428
 	mov	rax, rbx
-	add	rsp, 64					; 00000040H
+	add	rsp, 48					; 00000030H
 	pop	rbx
 	ret	0
-$LN73@span:
-??$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z ENDP ; gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>
+??$?0V?$basic_string_span@$$CBD$0?0@gsl@@X@?$span@$$CBD$0?0@gsl@@QEAA@AEAV?$basic_string_span@$$CBD$0?0@1@@Z ENDP ; gsl::span<char const ,-1>::span<char const ,-1><gsl::basic_string_span<char const ,-1>,void>
 _TEXT	ENDS
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-$T2 = 40
-this$ = 80
-cont$ = 88
-?dtor$8@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA PROC ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$8
-	lea	rcx, QWORD PTR $T2[rdx]
-	jmp	??1narrowing_error@gsl@@UEAA@XZ
-?dtor$8@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA ENDP ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$8
-text$x	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-$T2 = 40
-this$ = 80
-cont$ = 88
-?dtor$8@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA PROC ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$8
-	lea	rcx, QWORD PTR $T2[rdx]
-	jmp	??1narrowing_error@gsl@@UEAA@XZ
-?dtor$8@?0???$?0V?$vector@HV?$allocator@H@std@@@std@@X@?$span@H$0?0@gsl@@QEAA@AEAV?$vector@HV?$allocator@H@std@@@std@@@Z@4HA ENDP ; `gsl::span<int,-1>::span<int,-1><std::vector<int,std::allocator<int> >,void>'::`1'::dtor$8
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?end@?$initializer_list@H@std@@QEBAPEBHXZ
+;	COMDAT ?test_string_gsl_copy@@YAXXZ
 _TEXT	SEGMENT
-this$ = 8
-?end@?$initializer_list@H@std@@QEBAPEBHXZ PROC		; std::initializer_list<int>::end, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\initializer_list
-; Line 45
-	mov	rax, QWORD PTR [rcx+8]
-; Line 46
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 40
+_InitData$5 = 64
+$T6 = 64
+byteSpan$ = 64
+$T7 = 80
+bytes$ = 88
+__$ArrayPad$ = 104
+?test_string_gsl_copy@@YAXXZ PROC			; test_string_gsl_copy, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 333
+$LN186:
+	push	rbp
+	mov	rbp, rsp
+	sub	rsp, 112				; 00000070H
+	mov	QWORD PTR $T7[rbp-112], -2
+	mov	rax, QWORD PTR __security_cookie
+	xor	rax, rsp
+	mov	QWORD PTR __$ArrayPad$[rbp-112], rax
+	mov	DWORD PTR $T1[rbp-112], 0
+	mov	QWORD PTR byteSpan$[rbp-112], 10
+; File c:\projects\gsl\include\gsl\span
+; Line 590
+	lea	rax, QWORD PTR bytes$[rbp-112]
+	mov	QWORD PTR byteSpan$[rbp-104], rax
+; File c:\projects\gsl\include\gsl\string_span
+; Line 134
+	mov	r8d, 11
+	lea	rdx, OFFSET FLAT:??_C@_0L@CCAJJBND@iVtrau?5lDC?$AA@
+	lea	rcx, QWORD PTR $T4[rbp-112]
+	call	??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z ; gsl::ensure_sentinel<char const ,0>
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	mov	r8, QWORD PTR $T4[rbp-112]
+	mov	rdx, QWORD PTR $T4[rbp-104]
+	lea	rcx, QWORD PTR $T3[rbp-112]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	mov	r8, QWORD PTR $T3[rbp-112]
+	cmp	r8, 10
+	jg	SHORT $LN111@test_strin
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2436
+	test	r8, r8
+	jle	SHORT $LN179@test_strin
+; Line 2306
+	mov	rdx, QWORD PTR $T3[rbp-104]
+	lea	rcx, QWORD PTR bytes$[rbp-112]
+	call	QWORD PTR __imp_memmove
+$LN179@test_strin:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 340
+	movaps	xmm0, XMMWORD PTR byteSpan$[rbp-112]
+	movdqa	XMMWORD PTR $T6[rbp-112], xmm0
+	lea	rcx, QWORD PTR $T6[rbp-112]
+	call	?bar@@YAXV?$span@E$0?0@gsl@@@Z		; bar
+	jmp	SHORT $LN42@test_strin
+$LN111@test_strin:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T2[rbp-112], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T2[rbp-104], rax
+	mov	QWORD PTR $T2[rbp-96], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$5[rbp-112], rax
+	mov	BYTE PTR _InitData$5[rbp-104], 1
+; Line 55
+	lea	rdx, QWORD PTR $T2[rbp-104]
+	lea	rcx, QWORD PTR _InitData$5[rbp-112]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T2[rbp-112], rax
+	mov	DWORD PTR $T1[rbp-112], 2
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	lea	rcx, QWORD PTR $T2[rbp-112]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN42@test_strin:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 341
+	mov	rcx, QWORD PTR __$ArrayPad$[rbp-112]
+	xor	rcx, rsp
+	call	__security_check_cookie
+	add	rsp, 112				; 00000070H
+	pop	rbp
 	ret	0
-?end@?$initializer_list@H@std@@QEBAPEBHXZ ENDP		; std::initializer_list<int>::end
+$LN185@test_strin:
+?test_string_gsl_copy@@YAXXZ ENDP			; test_string_gsl_copy
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 40
+_InitData$5 = 64
+$T6 = 64
+byteSpan$ = 64
+$T7 = 80
+bytes$ = 88
+__$ArrayPad$ = 104
+?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA PROC	; `test_string_gsl_copy'::`1'::dtor$23
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T1[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN114@dtor$23
+	and	DWORD PTR $T1[rbp], -3
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN114@dtor$23:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA ENDP	; `test_string_gsl_copy'::`1'::dtor$23
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+$T2 = 40
+$T3 = 40
+$T4 = 40
+_InitData$5 = 64
+$T6 = 64
+byteSpan$ = 64
+$T7 = 80
+bytes$ = 88
+__$ArrayPad$ = 104
+?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA PROC	; `test_string_gsl_copy'::`1'::dtor$23
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T1[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN114@dtor$23
+	and	DWORD PTR $T1[rbp], -3
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN114@dtor$23:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$23@?0??test_string_gsl_copy@@YAXXZ@4HA ENDP	; `test_string_gsl_copy'::`1'::dtor$23
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z
+_TEXT	SEGMENT
+$T1 = 96
+__$ReturnUdt$ = 128
+_First$ = 136
+_Last$ = 144
+_Dest$ = 152
+??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z PROC ; std::copy<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2371
+$LN24:
+	mov	rax, rsp
+	push	rbx
+	sub	rsp, 112				; 00000070H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+; Line 2371
+	mov	rbx, rcx
+; Line 2334
+	lea	r9, QWORD PTR [rax-72]
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	movaps	XMMWORD PTR [rax-72], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-88], cl
+	lea	r8, QWORD PTR [rax-56]
+	lea	rcx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-40]
+	movaps	XMMWORD PTR [rax-40], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+; Line 2353
+	movups	xmm0, XMMWORD PTR $T1[rsp]
+; Line 2373
+	mov	rax, rbx
+; Line 2353
+	movups	XMMWORD PTR [rbx], xmm0
+; Line 2374
+	add	rsp, 112				; 00000070H
+	pop	rbx
+	ret	0
+??$copy@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@@Z ENDP ; std::copy<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ?begin@?$initializer_list@H@std@@QEBAPEBHXZ
+;	COMDAT ??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
 _TEXT	SEGMENT
-this$ = 8
-?begin@?$initializer_list@H@std@@QEBAPEBHXZ PROC	; std::initializer_list<int>::begin, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\initializer_list
-; Line 40
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 168
+$LN29:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 169
+	mov	rdx, QWORD PTR [rcx+8]
+	test	rdx, rdx
+	js	SHORT $LN3@operator
 	mov	rax, QWORD PTR [rcx]
-; Line 41
+	cmp	rdx, QWORD PTR [rax]
+	je	SHORT $LN3@operator
+; Line 170
+	lea	rax, QWORD PTR [rdx+1]
+	mov	QWORD PTR [rcx+8], rax
+; Line 171
+	mov	rax, rcx
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 172
+	add	rsp, 88					; 00000058H
 	ret	0
-?begin@?$initializer_list@H@std@@QEBAPEBHXZ ENDP	; std::initializer_list<int>::begin
+$LN28@operator:
+??E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++
 _TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++'::`1'::dtor$0
+text$x	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ??0?$initializer_list@H@std@@QEAA@PEBH0@Z
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???E?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator++'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator*, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 156
+$LN35:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 157
+	mov	rax, QWORD PTR [rcx]
+	mov	rdx, QWORD PTR [rcx+8]
+	cmp	rdx, QWORD PTR [rax]
+	je	SHORT $LN3@operator
+; Line 158
+	mov	rax, QWORD PTR [rax+8]
+	add	rax, rdx
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 159
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN34@operator:
+??D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator*
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator*'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator*'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator*'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???D?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEBAAEAEXZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::operator*'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@E$0?0@2@_J@Z
 _TEXT	SEGMENT
 this$ = 8
-_First_arg$ = 16
-_Last_arg$ = 24
-??0?$initializer_list@H@std@@QEAA@PEBH0@Z PROC		; std::initializer_list<int>::initializer_list<int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\initializer_list
-; Line 34
+span$ = 16
+idx$ = 24
+??0?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@E$0?0@2@_J@Z PROC ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::span_iterator<gsl::span<unsigned char,-1>,0>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
 	mov	QWORD PTR [rcx], rdx
-; Line 36
+; Line 146
 	mov	rax, rcx
 	mov	QWORD PTR [rcx+8], r8
 	ret	0
-??0?$initializer_list@H@std@@QEAA@PEBH0@Z ENDP		; std::initializer_list<int>::initializer_list<int>
+??0?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@E$0?0@2@_J@Z ENDP ; gsl::details::span_iterator<gsl::span<unsigned char,-1>,0>::span_iterator<gsl::span<unsigned char,-1>,0>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IEBAXXZ
-_TEXT	SEGMENT
-this$ = 48
-?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IEBAXXZ PROC	; std::vector<int,std::allocator<int> >::_Xlen, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1764
-$LN4:
-	sub	rsp, 40					; 00000028H
-; Line 1765
-	lea	rcx, OFFSET FLAT:??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
-	call	QWORD PTR __imp_?_Xlength_error@std@@YAXPEBD@Z
-	int	3
-$LN3@Xlen:
-?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IEBAXXZ ENDP	; std::vector<int,std::allocator<int> >::_Xlen
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IEAAXXZ
-_TEXT	SEGMENT
-this$ = 48
-?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IEAAXXZ PROC	; std::vector<int,std::allocator<int> >::_Tidy, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1636
-$LN94:
-	push	rbx
-	sub	rsp, 32					; 00000020H
-; Line 1637
-	mov	rdx, QWORD PTR [rcx]
-	mov	rbx, rcx
-	test	rdx, rdx
-	je	SHORT $LN2@Tidy
-; Line 1641
-	mov	r8, QWORD PTR [rcx+16]
-	sub	r8, rdx
-	sar	r8, 2
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 987
-	call	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ; std::allocator<int>::deallocate
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1643
-	xor	eax, eax
-	mov	QWORD PTR [rbx], rax
-; Line 1644
-	mov	QWORD PTR [rbx+8], rax
-; Line 1645
-	mov	QWORD PTR [rbx+16], rax
-$LN2@Tidy:
-; Line 1647
-	add	rsp, 32					; 00000020H
-	pop	rbx
-	ret	0
-?_Tidy@?$vector@HV?$allocator@H@std@@@std@@IEAAXXZ ENDP	; std::vector<int,std::allocator<int> >::_Tidy
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Destroy@?$vector@HV?$allocator@H@std@@@std@@IEAAXPEAH0@Z
-_TEXT	SEGMENT
-this$ = 8
-_First$ = 16
-_Last$ = 24
-?_Destroy@?$vector@HV?$allocator@H@std@@@std@@IEAAXPEAH0@Z PROC ; std::vector<int,std::allocator<int> >::_Destroy, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1582
-	ret	0
-?_Destroy@?$vector@HV?$allocator@H@std@@@std@@IEAAXPEAH0@Z ENDP ; std::vector<int,std::allocator<int> >::_Destroy
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Buy@?$vector@HV?$allocator@H@std@@@std@@IEAA_N_K@Z
-_TEXT	SEGMENT
-this$ = 48
-_Capacity$ = 56
-?_Buy@?$vector@HV?$allocator@H@std@@@std@@IEAA_N_K@Z PROC ; std::vector<int,std::allocator<int> >::_Buy, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1561
-$LN110:
-	mov	QWORD PTR [rsp+8], rbx
-	push	rdi
-	sub	rsp, 32					; 00000020H
-; Line 1562
-	xor	eax, eax
-	mov	rdi, rdx
-	mov	QWORD PTR [rcx], rax
-	mov	rbx, rcx
-; Line 1563
-	mov	QWORD PTR [rcx+8], rax
-; Line 1564
-	mov	QWORD PTR [rcx+16], rax
-; Line 1566
-	test	rdx, rdx
-	je	SHORT $LN1@Buy
-; Line 1568
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-	cmp	rdx, rax
-	jbe	SHORT $LN4@Buy
-; Line 1765
-	lea	rcx, OFFSET FLAT:??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@
-	call	QWORD PTR __imp_?_Xlength_error@std@@YAXPEBD@Z
-	int	3
-$LN4@Buy:
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 976
-	call	?allocate@?$allocator@H@std@@QEAAPEAH_K@Z ; std::allocator<int>::allocate
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1572
-	mov	QWORD PTR [rbx], rax
-; Line 1573
-	mov	QWORD PTR [rbx+8], rax
-; Line 1574
-	mov	rax, QWORD PTR [rbx]
-	lea	rcx, QWORD PTR [rax+rdi*4]
-; Line 1576
-	mov	al, 1
-	mov	QWORD PTR [rbx+16], rcx
-$LN1@Buy:
-; Line 1577
-	mov	rbx, QWORD PTR [rsp+48]
-	add	rsp, 32					; 00000020H
-	pop	rdi
-	ret	0
-$LN109@Buy:
-?_Buy@?$vector@HV?$allocator@H@std@@@std@@IEAA_N_K@Z ENDP ; std::vector<int,std::allocator<int> >::_Buy
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?data@?$vector@HV?$allocator@H@std@@@std@@QEAAPEAHXZ
-_TEXT	SEGMENT
-this$ = 8
-?data@?$vector@HV?$allocator@H@std@@@std@@QEAAPEAHXZ PROC ; std::vector<int,std::allocator<int> >::data, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1247
-	mov	rax, QWORD PTR [rcx]
-; Line 1248
-	ret	0
-?data@?$vector@HV?$allocator@H@std@@@std@@QEAAPEAHXZ ENDP ; std::vector<int,std::allocator<int> >::data
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?max_size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ
-_TEXT	SEGMENT
-this$ = 8
-?max_size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ PROC ; std::vector<int,std::allocator<int> >::max_size, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1185
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-; Line 1186
-	ret	0
-?max_size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ ENDP ; std::vector<int,std::allocator<int> >::max_size
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ
-_TEXT	SEGMENT
-this$ = 8
-?size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ PROC	; std::vector<int,std::allocator<int> >::size, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1180
-	mov	rax, QWORD PTR [rcx+8]
-	sub	rax, QWORD PTR [rcx]
-	sar	rax, 2
-; Line 1181
-	ret	0
-?size@?$vector@HV?$allocator@H@std@@@std@@QEBA_KXZ ENDP	; std::vector<int,std::allocator<int> >::size
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ
-_TEXT	SEGMENT
-this$ = 48
-??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ PROC	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 975
-$LN96:
-	push	rbx
-	sub	rsp, 32					; 00000020H
-; Line 1637
-	mov	rdx, QWORD PTR [rcx]
-; Line 975
-	mov	rbx, rcx
-; Line 1637
-	test	rdx, rdx
-	je	SHORT $LN4@vector
-; Line 1641
-	mov	r8, QWORD PTR [rcx+16]
-	sub	r8, rdx
-	sar	r8, 2
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 987
-	call	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ; std::allocator<int>::deallocate
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1643
-	xor	eax, eax
-	mov	QWORD PTR [rbx], rax
-; Line 1644
-	mov	QWORD PTR [rbx+8], rax
-; Line 1645
-	mov	QWORD PTR [rbx+16], rax
-$LN4@vector:
-; Line 977
-	add	rsp, 32					; 00000020H
-	pop	rbx
-	ret	0
-??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ ENDP	; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z
-_TEXT	SEGMENT
-this$ = 48
-_Ilist$ = 56
-_Al$ = 64
-??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z PROC ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 953
-$LN24:
-	push	rbx
-	sub	rsp, 32					; 00000020H
-; Line 485
-	xor	eax, eax
-; Line 953
-	mov	rbx, rcx
-; Line 485
-	mov	QWORD PTR [rcx], rax
-; Line 793
-	movzx	r9d, al
-; Line 486
-	mov	QWORD PTR [rcx+8], rax
-; Line 487
-	mov	QWORD PTR [rcx+16], rax
-; Line 793
-	mov	r8, QWORD PTR [rdx+8]
-	mov	rdx, QWORD PTR [rdx]
-	call	??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>
-; Line 955
-	mov	rax, rbx
-	add	rsp, 32					; 00000020H
-	pop	rbx
-	ret	0
-??0?$vector@HV?$allocator@H@std@@@std@@QEAA@V?$initializer_list@H@1@AEBV?$allocator@H@1@@Z ENDP ; std::vector<int,std::allocator<int> >::vector<int,std::allocator<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 320
-	mov	rax, rcx
-; Line 321
-	ret	0
-?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 315
-	mov	rax, rcx
-; Line 316
-	ret	0
-?_Get_second@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_second
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 300
-	mov	rax, rcx
-; Line 301
-	ret	0
-?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEBAAEBU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 295
-	mov	rax, rcx
-; Line 296
-	ret	0
-?_Get_first@?$_Compressed_pair@U?$_Wrap_alloc@V?$allocator@H@std@@@std@@V?$_Vector_val@U?$_Simple_types@H@std@@@2@$00@std@@QEAAAEAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Compressed_pair<std::_Wrap_alloc<std::allocator<int> >,std::_Vector_val<std::_Simple_types<int> >,1>::_Get_first
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QEAA@XZ
-_TEXT	SEGMENT
-this$ = 8
-??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QEAA@XZ PROC ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 485
-	xor	eax, eax
-	mov	QWORD PTR [rcx], rax
-; Line 486
-	mov	QWORD PTR [rcx+8], rax
-; Line 487
-	mov	QWORD PTR [rcx+16], rax
-; Line 489
-	mov	rax, rcx
-	ret	0
-??0?$_Vector_val@U?$_Simple_types@H@std@@@std@@QEAA@XZ ENDP ; std::_Vector_val<std::_Simple_types<int> >::_Vector_val<std::_Simple_types<int> >
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 663
-	lea	rax, QWORD PTR [rcx+16]
-; Line 664
-	ret	0
-?_Myend@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myend
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 658
-	lea	rax, QWORD PTR [rcx+8]
-; Line 659
-	ret	0
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 653
-	lea	rax, QWORD PTR [rcx+8]
-; Line 654
-	ret	0
-?_Mylast@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Mylast
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 648
-	mov	rax, rcx
-; Line 649
-	ret	0
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBQEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 643
-	mov	rax, rcx
-; Line 644
-	ret	0
-?_Myfirst@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAPEAHXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Myfirst
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 638
-	mov	rax, rcx
-; Line 639
-	ret	0
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 633
-	mov	rax, rcx
-; Line 634
-	ret	0
-?_Get_data@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAV?$_Vector_val@U?$_Simple_types@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Get_data
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 628
-	mov	rax, rcx
-; Line 629
-	ret	0
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEBAAEBU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ
-_TEXT	SEGMENT
-this$ = 8
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 623
-	mov	rax, rcx
-; Line 624
-	ret	0
-?_Getal@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAAEAU?$_Wrap_alloc@V?$allocator@H@std@@@2@XZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Getal
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAXXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAXXZ PROC ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 614
-	ret	0
-?_Orphan_all@?$_Vector_alloc@U?$_Vec_base_types@HV?$allocator@H@std@@@std@@@std@@QEAAXXZ ENDP ; std::_Vector_alloc<std::_Vec_base_types<int,std::allocator<int> > >::_Orphan_all
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?max_size@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEBA_KU_Nil@2@@Z
-_TEXT	SEGMENT
-this$ = 8
-__formal$ = 16
-?max_size@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEBA_KU_Nil@2@@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::max_size, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 1008
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-; Line 1009
-	ret	0
-?max_size@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEBA_KU_Nil@2@@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::max_size
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?deallocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAAXPEAH_K@Z
-_TEXT	SEGMENT
-this$ = 8
-_Ptr$ = 16
-_Count$ = 24
-?deallocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAAXPEAH_K@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::deallocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 987
-	jmp	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ; std::allocator<int>::deallocate
-?deallocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAAXPEAH_K@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::deallocate
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?allocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAAPEAH_K@Z
-_TEXT	SEGMENT
-this$ = 8
-_Count$ = 16
-?allocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAAPEAH_K@Z PROC ; std::_Wrap_alloc<std::allocator<int> >::allocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 976
-	jmp	?allocate@?$allocator@H@std@@QEAAPEAH_K@Z ; std::allocator<int>::allocate
-?allocate@?$_Wrap_alloc@V?$allocator@H@std@@@std@@QEAAPEAH_K@Z ENDP ; std::_Wrap_alloc<std::allocator<int> >::allocate
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?max_size@?$allocator_traits@V?$allocator@H@std@@@std@@SA_KAEBV?$allocator@H@2@@Z
-_TEXT	SEGMENT
-_Al$ = 8
-?max_size@?$allocator_traits@V?$allocator@H@std@@@std@@SA_KAEBV?$allocator@H@2@@Z PROC ; std::allocator_traits<std::allocator<int> >::max_size, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 869
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-; Line 870
-	ret	0
-?max_size@?$allocator_traits@V?$allocator@H@std@@@std@@SA_KAEBV?$allocator@H@2@@Z ENDP ; std::allocator_traits<std::allocator<int> >::max_size
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?max_size@?$allocator@H@std@@QEBA_KXZ
-_TEXT	SEGMENT
-this$ = 8
-?max_size@?$allocator@H@std@@QEBA_KXZ PROC		; std::allocator<int>::max_size, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 749
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-; Line 750
-	ret	0
-?max_size@?$allocator@H@std@@QEBA_KXZ ENDP		; std::allocator<int>::max_size
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?allocate@?$allocator@H@std@@QEAAPEAH_K@Z
-_TEXT	SEGMENT
-this$ = 48
-_Count$ = 56
-?allocate@?$allocator@H@std@@QEAAPEAH_K@Z PROC		; std::allocator<int>::allocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 724
-$LN15:
-	sub	rsp, 40					; 00000028H
-; Line 51
-	test	rdx, rdx
-	jne	SHORT $LN4@allocate
-; Line 52
-	xor	eax, eax
-$LN3@allocate:
-; Line 726
-	add	rsp, 40					; 00000028H
-	ret	0
-$LN4@allocate:
-; Line 55
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-	cmp	rdx, rax
-	jbe	SHORT $LN5@allocate
-; Line 56
-	call	QWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
-	int	3
-$LN5@allocate:
-; Line 57
-	lea	rcx, QWORD PTR [rdx*4]
-; Line 61
-	cmp	rcx, 4096				; 00001000H
-	jb	SHORT $LN6@allocate
-; Line 65
-	lea	rax, QWORD PTR [rcx+39]
-; Line 66
-	cmp	rax, rcx
-	ja	SHORT $LN8@allocate
-; Line 67
-	call	QWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
-	int	3
-$LN8@allocate:
-; Line 69
-	mov	rcx, rax
-	call	??2@YAPEAX_K@Z				; operator new
-	mov	rcx, rax
-; Line 70
-	test	rax, rax
-	jne	SHORT $LN9@allocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN9@allocate:
-; Line 71
-	add	rax, 39					; 00000027H
-	and	rax, -32				; ffffffffffffffe0H
-; Line 73
-	mov	QWORD PTR [rax-8], rcx
-; Line 726
-	add	rsp, 40					; 00000028H
-	ret	0
-$LN6@allocate:
-; Line 83
-	call	??2@YAPEAX_K@Z				; operator new
-; Line 84
-	test	rax, rax
-	jne	SHORT $LN3@allocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN14@allocate:
-?allocate@?$allocator@H@std@@QEAAPEAH_K@Z ENDP		; std::allocator<int>::allocate
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z
-_TEXT	SEGMENT
-this$ = 48
-_Ptr$ = 56
-_Count$ = 64
-?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z PROC	; std::allocator<int>::deallocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 719
-$LN14:
-	sub	rsp, 40					; 00000028H
-; Line 94
-	mov	rax, 4611686018427387903		; 3fffffffffffffffH
-	cmp	r8, rax
-	jbe	SHORT $LN4@deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN4@deallocate:
-; Line 95
-	lea	rax, QWORD PTR [r8*4]
-; Line 96
-	cmp	rax, 4096				; 00001000H
-	jb	SHORT $LN5@deallocate
-; Line 99
-	test	dl, 31
-	je	SHORT $LN6@deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN6@deallocate:
-; Line 103
-	mov	rax, QWORD PTR [rdx-8]
-; Line 114
-	cmp	rax, rdx
-	jb	SHORT $LN7@deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN7@deallocate:
-; Line 121
-	sub	rdx, rax
-	cmp	rdx, 8
-	jae	SHORT $LN8@deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN8@deallocate:
-; Line 125
-	cmp	rdx, 39					; 00000027H
-	jbe	SHORT $LN9@deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN9@deallocate:
-; Line 128
-	mov	rdx, rax
-$LN5@deallocate:
-; Line 132
-	mov	rcx, rdx
-; Line 721
-	add	rsp, 40					; 00000028H
-; Line 132
-	jmp	??3@YAXPEAX@Z				; operator delete
-$LN13@deallocate:
-?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ENDP	; std::allocator<int>::deallocate
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??0?$allocator@H@std@@QEAA@AEBV01@@Z
-_TEXT	SEGMENT
-this$ = 8
-__formal$ = 16
-??0?$allocator@H@std@@QEAA@AEBV01@@Z PROC		; std::allocator<int>::allocator<int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 705
-	mov	rax, rcx
-	ret	0
-??0?$allocator@H@std@@QEAA@AEBV01@@Z ENDP		; std::allocator<int>::allocator<int>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??0?$allocator@H@std@@QEAA@XZ
-_TEXT	SEGMENT
-this$ = 8
-??0?$allocator@H@std@@QEAA@XZ PROC			; std::allocator<int>::allocator<int>, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 701
-	mov	rax, rcx
-	ret	0
-??0?$allocator@H@std@@QEAA@XZ ENDP			; std::allocator<int>::allocator<int>
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?bar@@YA_NXZ
-_TEXT	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?bar@@YA_NXZ PROC					; bar, COMDAT
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 61
-$LN374:
-	push	rbp
-	lea	rbp, QWORD PTR [rsp-87]
-	sub	rsp, 208				; 000000d0H
-	mov	QWORD PTR $T10[rbp-121], -2
-	mov	QWORD PTR [rsp+224], rbx
-	mov	rax, QWORD PTR __security_cookie
-	xor	rax, rsp
-	mov	QWORD PTR __$ArrayPad$[rbp-121], rax
-	xor	eax, eax
-	mov	DWORD PTR $T1[rbp-121], eax
-	movdqa	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
-	movdqu	XMMWORD PTR $T12[rbp-121], xmm0
-	xorps	xmm1, xmm1
-	movdqu	XMMWORD PTR v$6[rbp-121], xmm1
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 487
-	mov	QWORD PTR v$6[rbp-105], rax
-; Line 793
-	movzx	r9d, al
-	lea	r8, QWORD PTR $T12[rbp-105]
-	lea	rdx, QWORD PTR $T12[rbp-121]
-	lea	rcx, QWORD PTR v$6[rbp-121]
-	call	??$_Construct@PEBH@?$vector@HV?$allocator@H@std@@@std@@QEAAXPEBH0Uforward_iterator_tag@1@@Z ; std::vector<int,std::allocator<int> >::_Construct<int const * __ptr64>
-	npad	1
-; Line 1180
-	mov	r8, QWORD PTR v$6[rbp-113]
-	mov	rbx, QWORD PTR v$6[rbp-121]
-	sub	r8, rbx
-	sar	r8, 2
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 127
-	test	r8, r8
-	jns	SHORT $LN88@bar
-; Line 128
-	xor	eax, eax
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
-; Line 47
-	mov	QWORD PTR $T3[rbp-113], rax
-	mov	QWORD PTR $T3[rbp-105], rax
-	lea	rax, OFFSET FLAT:??_7narrowing_error@gsl@@6B@
-	mov	QWORD PTR $T3[rbp-121], rax
-; File c:\projects\gsl\include\gsl\gsl_util
-; Line 128
-	lea	rcx, QWORD PTR $T3[rbp-121]
-	call	??$throw_exception@Unarrowing_error@gsl@@@details@gsl@@YAX$$QEAUnarrowing_error@1@@Z ; gsl::details::throw_exception<gsl::narrowing_error>
-	npad	1
-$LN88@bar:
-; File c:\projects\gsl\include\gsl\span
-; Line 386
-	mov	rdx, rbx
-	lea	rcx, QWORD PTR s$5[rbp-121]
-	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
-	mov	rax, QWORD PTR s$5[rbp-121]
-	test	rax, rax
-; Line 509
-	je	$LN124@bar
-	cmp	rax, 1
-	jbe	SHORT $LN173@bar
-	cmp	rax, 2
-	jbe	SHORT $LN222@bar
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector
-; Line 1637
-	test	rbx, rbx
-	je	SHORT $LN273@bar
-; Line 1641
-	mov	r8, QWORD PTR v$6[rbp-105]
-	sub	r8, rbx
-	sar	r8, 2
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 987
-	mov	rdx, rbx
-	lea	rcx, QWORD PTR v$6[rbp-121]
-	call	?deallocate@?$allocator@H@std@@QEAAXPEAH_K@Z ; std::allocator<int>::deallocate
-$LN273@bar:
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 70
-	mov	al, 1
-	jmp	$LN109@bar
-$LN222@bar:
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
-; Line 53
-	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
-	mov	QWORD PTR $T7[rbp-121], rax
-; Line 52
-	xor	eax, eax
-	mov	QWORD PTR $T7[rbp-113], rax
-	mov	QWORD PTR $T7[rbp-105], rax
-; Line 54
-	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
-	mov	QWORD PTR _InitData$11[rbp-121], rax
-	mov	BYTE PTR _InitData$11[rbp-113], 1
-; Line 55
-	lea	rdx, QWORD PTR $T7[rbp-113]
-	lea	rcx, QWORD PTR _InitData$11[rbp-121]
-	call	QWORD PTR __imp___std_exception_copy
-; File c:\projects\gsl\include\gsl\gsl_assert
-; Line 99
-	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
-	mov	QWORD PTR $T7[rbp-121], rax
-	mov	DWORD PTR $T1[rbp-121], 4
-; File c:\projects\gsl\include\gsl\span
-; Line 509
-	lea	rcx, QWORD PTR $T7[rbp-121]
-	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-	npad	1
-$LN173@bar:
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
-; Line 53
-	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
-	mov	QWORD PTR $T8[rbp-121], rax
-; Line 52
-	xor	eax, eax
-	mov	QWORD PTR $T8[rbp-113], rax
-	mov	QWORD PTR $T8[rbp-105], rax
-; Line 54
-	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
-	mov	QWORD PTR _InitData$2[rbp-121], rax
-	mov	BYTE PTR _InitData$2[rbp-113], 1
-; Line 55
-	lea	rdx, QWORD PTR $T8[rbp-113]
-	lea	rcx, QWORD PTR _InitData$2[rbp-121]
-	call	QWORD PTR __imp___std_exception_copy
-; File c:\projects\gsl\include\gsl\gsl_assert
-; Line 99
-	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
-	mov	QWORD PTR $T8[rbp-121], rax
-	mov	DWORD PTR $T1[rbp-121], 2
-; File c:\projects\gsl\include\gsl\span
-; Line 509
-	lea	rcx, QWORD PTR $T8[rbp-121]
-	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-	npad	1
-$LN124@bar:
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
-; Line 53
-	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
-	mov	QWORD PTR $T9[rbp-121], rax
-; Line 52
-	xor	eax, eax
-	mov	QWORD PTR $T9[rbp-113], rax
-	mov	QWORD PTR $T9[rbp-105], rax
-; Line 54
-	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
-	mov	QWORD PTR _InitData$4[rbp-121], rax
-	mov	BYTE PTR _InitData$4[rbp-113], 1
-; Line 55
-	lea	rdx, QWORD PTR $T9[rbp-113]
-	lea	rcx, QWORD PTR _InitData$4[rbp-121]
-	call	QWORD PTR __imp___std_exception_copy
-; File c:\projects\gsl\include\gsl\gsl_assert
-; Line 99
-	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
-	mov	QWORD PTR $T9[rbp-121], rax
-	mov	DWORD PTR $T1[rbp-121], 1
-; File c:\projects\gsl\include\gsl\span
-; Line 509
-	lea	rcx, QWORD PTR $T9[rbp-121]
-	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
-	npad	1
-$LN109@bar:
-; File c:\projects\gsl\tests\span_compile_only.cpp
-; Line 72
-	mov	rcx, QWORD PTR __$ArrayPad$[rbp-121]
-	xor	rcx, rsp
-	call	__security_check_cookie
-	mov	rbx, QWORD PTR [rsp+224]
-	add	rsp, 208				; 000000d0H
-	pop	rbp
-	ret	0
-$LN373@bar:
-?bar@@YA_NXZ ENDP					; bar
-_TEXT	ENDS
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$0@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$0
-	lea	rcx, QWORD PTR v$6[rdx]
-	jmp	??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ ; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-?dtor$0@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$0
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$15@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$15
-	lea	rcx, QWORD PTR $T3[rdx]
-	jmp	??1narrowing_error@gsl@@UEAA@XZ
-?dtor$15@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$15
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$30@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$30
-	push	rbp
-	sub	rsp, 32					; 00000020H
-	mov	rbp, rdx
-	mov	eax, DWORD PTR $T1[rbp]
-	and	eax, 1
-	test	eax, eax
-	je	SHORT $LN127@dtor$30
-	and	DWORD PTR $T1[rbp], -2
-	lea	rcx, QWORD PTR $T9[rbp]
-	call	??1fail_fast@gsl@@UEAA@XZ
-$LN127@dtor$30:
-	add	rsp, 32					; 00000020H
-	pop	rbp
-	ret	0
-?dtor$30@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$30
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$41@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$41
-	push	rbp
-	sub	rsp, 32					; 00000020H
-	mov	rbp, rdx
-	mov	eax, DWORD PTR $T1[rbp]
-	and	eax, 2
-	test	eax, eax
-	je	SHORT $LN176@dtor$41
-	and	DWORD PTR $T1[rbp], -3
-	lea	rcx, QWORD PTR $T8[rbp]
-	call	??1fail_fast@gsl@@UEAA@XZ
-$LN176@dtor$41:
-	add	rsp, 32					; 00000020H
-	pop	rbp
-	ret	0
-?dtor$41@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$41
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$52@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$52
-	push	rbp
-	sub	rsp, 32					; 00000020H
-	mov	rbp, rdx
-	mov	eax, DWORD PTR $T1[rbp]
-	and	eax, 4
-	test	eax, eax
-	je	SHORT $LN225@dtor$52
-	and	DWORD PTR $T1[rbp], -5
-	lea	rcx, QWORD PTR $T7[rbp]
-	call	??1fail_fast@gsl@@UEAA@XZ
-$LN225@dtor$52:
-	add	rsp, 32					; 00000020H
-	pop	rbp
-	ret	0
-?dtor$52@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$52
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$0@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$0
-	lea	rcx, QWORD PTR v$6[rdx]
-	jmp	??1?$vector@HV?$allocator@H@std@@@std@@QEAA@XZ ; std::vector<int,std::allocator<int> >::~vector<int,std::allocator<int> >
-?dtor$0@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$0
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$15@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$15
-	lea	rcx, QWORD PTR $T3[rdx]
-	jmp	??1narrowing_error@gsl@@UEAA@XZ
-?dtor$15@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$15
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$30@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$30
-	push	rbp
-	sub	rsp, 32					; 00000020H
-	mov	rbp, rdx
-	mov	eax, DWORD PTR $T1[rbp]
-	and	eax, 1
-	test	eax, eax
-	je	SHORT $LN127@dtor$30
-	and	DWORD PTR $T1[rbp], -2
-	lea	rcx, QWORD PTR $T9[rbp]
-	call	??1fail_fast@gsl@@UEAA@XZ
-$LN127@dtor$30:
-	add	rsp, 32					; 00000020H
-	pop	rbp
-	ret	0
-?dtor$30@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$30
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$41@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$41
-	push	rbp
-	sub	rsp, 32					; 00000020H
-	mov	rbp, rdx
-	mov	eax, DWORD PTR $T1[rbp]
-	and	eax, 2
-	test	eax, eax
-	je	SHORT $LN176@dtor$41
-	and	DWORD PTR $T1[rbp], -3
-	lea	rcx, QWORD PTR $T8[rbp]
-	call	??1fail_fast@gsl@@UEAA@XZ
-$LN176@dtor$41:
-	add	rsp, 32					; 00000020H
-	pop	rbp
-	ret	0
-?dtor$41@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$41
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT text$x
-text$x	SEGMENT
-$T1 = 32
-_InitData$2 = 40
-$T3 = 40
-_InitData$4 = 64
-s$5 = 64
-v$6 = 80
-$T7 = 104
-$T8 = 128
-$T9 = 152
-$T10 = 176
-_InitData$11 = 184
-$T12 = 184
-__$ArrayPad$ = 200
-?dtor$52@?0??bar@@YA_NXZ@4HA PROC			; `bar'::`1'::dtor$52
-	push	rbp
-	sub	rsp, 32					; 00000020H
-	mov	rbp, rdx
-	mov	eax, DWORD PTR $T1[rbp]
-	and	eax, 4
-	test	eax, eax
-	je	SHORT $LN225@dtor$52
-	and	DWORD PTR $T1[rbp], -5
-	lea	rcx, QWORD PTR $T7[rbp]
-	call	??1fail_fast@gsl@@UEAA@XZ
-$LN225@dtor$52:
-	add	rsp, 32					; 00000020H
-	pop	rbp
-	ret	0
-?dtor$52@?0??bar@@YA_NXZ@4HA ENDP			; `bar'::`1'::dtor$52
-text$x	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ
+;	COMDAT ??9details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z
 _TEXT	SEGMENT
 $T1 = 0
-$T2 = 32
-this$ = 32
-??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ PROC		; gsl::span<int const ,-1>::span<int const ,-1><0,void>, COMDAT
+$T2 = 16
+lhs$ = 48
+rhs$ = 56
+??9details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z PROC ; gsl::details::operator!=, COMDAT
 ; File c:\projects\gsl\include\gsl\span
-; Line 384
-$LN81:
-	sub	rsp, 24
-	mov	QWORD PTR $T1[rsp], -2
+; Line 235
+$LN9:
+	sub	rsp, 40					; 00000028H
+; Line 236
+	movups	xmm1, XMMWORD PTR [rdx]
+	movups	xmm0, XMMWORD PTR [rcx]
+; Line 231
+	movq	rax, xmm1
+; Line 236
+	movaps	XMMWORD PTR $T1[rsp], xmm1
+; Line 231
+	movq	rcx, xmm0
+; Line 236
+	movaps	XMMWORD PTR $T2[rsp], xmm0
+; Line 231
+	cmp	rcx, rax
+	jne	SHORT $LN5@operator
+	mov	rax, QWORD PTR $T1[rsp+8]
+	cmp	QWORD PTR $T2[rsp+8], rax
+	jne	SHORT $LN5@operator
 	xor	eax, eax
-	mov	DWORD PTR $T2[rsp], eax
-; Line 333
-	mov	QWORD PTR [rcx], rax
-; Line 596
-	mov	QWORD PTR [rcx+8], rax
-; Line 384
-	mov	rax, rcx
-	add	rsp, 24
+; Line 237
+	add	rsp, 40					; 00000028H
 	ret	0
-??$?0$0A@X@?$span@$$CBH$0?0@gsl@@QEAA@XZ ENDP		; gsl::span<int const ,-1>::span<int const ,-1><0,void>
+$LN5@operator:
+; Line 231
+	mov	eax, 1
+; Line 237
+	add	rsp, 40					; 00000028H
+	ret	0
+??9details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z ENDP ; gsl::details::operator!=
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ
+;	COMDAT ??8details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z
+_TEXT	SEGMENT
+lhs$ = 8
+rhs$ = 16
+??8details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z PROC ; gsl::details::operator==, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 231
+	mov	rax, QWORD PTR [rdx]
+	cmp	QWORD PTR [rcx], rax
+	jne	SHORT $LN3@operator
+	mov	rax, QWORD PTR [rdx+8]
+	cmp	QWORD PTR [rcx+8], rax
+	jne	SHORT $LN3@operator
+	mov	al, 1
+; Line 232
+	ret	0
+$LN3@operator:
+; Line 231
+	xor	al, al
+; Line 232
+	ret	0
+??8details@gsl@@YA_NV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@01@0@Z ENDP ; gsl::details::operator==
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ PROC ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 168
+$LN29:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 169
+	mov	rdx, QWORD PTR [rcx+8]
+	test	rdx, rdx
+	js	SHORT $LN3@operator
+	mov	rax, QWORD PTR [rcx]
+	cmp	rdx, QWORD PTR [rax]
+	je	SHORT $LN3@operator
+; Line 170
+	lea	rax, QWORD PTR [rdx+1]
+	mov	QWORD PTR [rcx+8], rax
+; Line 171
+	mov	rax, rcx
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 172
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN28@operator:
+??E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ENDP ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???E?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator++'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ PROC ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator*, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 156
+$LN35:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 157
+	mov	rax, QWORD PTR [rcx]
+	mov	rdx, QWORD PTR [rcx+8]
+	cmp	rdx, QWORD PTR [rax]
+	je	SHORT $LN3@operator
+; Line 158
+	mov	rax, QWORD PTR [rax+8]
+	add	rax, rdx
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 159
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN34@operator:
+??D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ ENDP ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator*
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator*'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator*'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator*'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???D?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEBAAEBDXZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<char const ,-1>,0>::operator*'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@$$CBD$0?0@2@_J@Z
 _TEXT	SEGMENT
 this$ = 8
-?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ PROC ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
+span$ = 16
+idx$ = 24
+??0?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@$$CBD$0?0@2@_J@Z PROC ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::span_iterator<gsl::span<char const ,-1>,0>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rcx], rdx
+; Line 146
+	mov	rax, rcx
+	mov	QWORD PTR [rcx+8], r8
+	ret	0
+??0?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@$$CBD$0?0@2@_J@Z ENDP ; gsl::details::span_iterator<gsl::span<char const ,-1>,0>::span_iterator<gsl::span<char const ,-1>,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0V?$span@$$CBD$0?0@gsl@@X@?$basic_string_span@$$CBD$0?0@gsl@@QEAA@AEBV?$span@$$CBD$0?0@1@@Z
+_TEXT	SEGMENT
+this$ = 8
+cont$ = 16
+??$?0V?$span@$$CBD$0?0@gsl@@X@?$basic_string_span@$$CBD$0?0@gsl@@QEAA@AEBV?$span@$$CBD$0?0@1@@Z PROC ; gsl::basic_string_span<char const ,-1>::basic_string_span<char const ,-1><gsl::span<char const ,-1>,void>, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 243
+	movups	xmm0, XMMWORD PTR [rdx]
+; Line 244
+	mov	rax, rcx
+	movups	XMMWORD PTR [rcx], xmm0
+	ret	0
+??$?0V?$span@$$CBD$0?0@gsl@@X@?$basic_string_span@$$CBD$0?0@gsl@@QEAA@AEBV?$span@$$CBD$0?0@1@@Z ENDP ; gsl::basic_string_span<char const ,-1>::basic_string_span<char const ,-1><gsl::span<char const ,-1>,void>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 48
+sz$ = 56
+??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z PROC ; gsl::ensure_z<char const ,11>, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 139
+$LN12:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+; Line 134
+	mov	r8d, 11
+; Line 139
+	mov	rbx, rcx
+; Line 134
+	call	??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z ; gsl::ensure_sentinel<char const ,0>
+; Line 140
+	mov	rax, rbx
+; Line 141
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??$ensure_z@$$CBD$0L@@gsl@@YA?AV?$span@$$CBD$0?0@0@AEAY0L@$$CBD@Z ENDP ; gsl::ensure_z<char const ,11>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?end@?$basic_string_span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+__$ReturnUdt$ = 16
+?end@?$basic_string_span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::basic_string_span<char const ,-1>::end, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	rax, QWORD PTR [rcx]
+	mov	QWORD PTR [rdx+8], rax
+; File c:\projects\gsl\include\gsl\string_span
+; Line 301
+	mov	rax, rdx
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 301
+	ret	0
+?end@?$basic_string_span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::basic_string_span<char const ,-1>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?begin@?$basic_string_span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+__$ReturnUdt$ = 16
+?begin@?$basic_string_span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::basic_string_span<char const ,-1>::begin, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; File c:\projects\gsl\include\gsl\string_span
+; Line 300
+	mov	rax, rdx
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rdx+8], 0
+; File c:\projects\gsl\include\gsl\string_span
+; Line 300
+	ret	0
+?begin@?$basic_string_span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::basic_string_span<char const ,-1>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$basic_string_span@$$CBD$0?0@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$basic_string_span@$$CBD$0?0@gsl@@QEBA_JXZ PROC	; gsl::basic_string_span<char const ,-1>::size, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 295
+	mov	rax, QWORD PTR [rcx]
+	ret	0
+?size@?$basic_string_span@$$CBD$0?0@gsl@@QEBA_JXZ ENDP	; gsl::basic_string_span<char const ,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$basic_string_span@$$CBD$0?0@gsl@@QEBAPEBDXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$basic_string_span@$$CBD$0?0@gsl@@QEBAPEBDXZ PROC ; gsl::basic_string_span<char const ,-1>::data, COMDAT
+; File c:\projects\gsl\include\gsl\string_span
+; Line 292
+	mov	rax, QWORD PTR [rcx+8]
+	ret	0
+?data@?$basic_string_span@$$CBD$0?0@gsl@@QEBAPEBDXZ ENDP ; gsl::basic_string_span<char const ,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEBAPEBDXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEBAPEBDXZ PROC ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
 ; File c:\projects\gsl\include\gsl\span
 ; Line 602
 	mov	rax, QWORD PTR [rcx+8]
 	ret	0
-?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ ENDP ; gsl::span<int const ,-1>::storage_type<gsl::details::extent_type<-1> >::data
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEBAPEBDXZ ENDP ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::data
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ
+;	COMDAT ?end@?$span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
 _TEXT	SEGMENT
 this$ = 8
-?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ PROC		; gsl::span<int const ,-1>::data, COMDAT
+__$ReturnUdt$ = 16
+?end@?$span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<char const ,-1>::end, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	rax, QWORD PTR [rcx]
+	mov	QWORD PTR [rdx+8], rax
+; Line 519
+	mov	rax, rdx
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; Line 519
+	ret	0
+?end@?$span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<char const ,-1>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?begin@?$span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+__$ReturnUdt$ = 16
+?begin@?$span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<char const ,-1>::begin, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; Line 518
+	mov	rax, rdx
+; Line 145
+	mov	QWORD PTR [rdx+8], 0
+; Line 518
+	ret	0
+?begin@?$span@$$CBD$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<char const ,-1>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$span@$$CBD$0?0@gsl@@QEBAPEBDXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$span@$$CBD$0?0@gsl@@QEBAPEBDXZ PROC		; gsl::span<char const ,-1>::data, COMDAT
 ; File c:\projects\gsl\include\gsl\span
 ; Line 515
 	mov	rax, QWORD PTR [rcx+8]
 	ret	0
-?data@?$span@$$CBH$0?0@gsl@@QEBAPEBHXZ ENDP		; gsl::span<int const ,-1>::data
+?data@?$span@$$CBD$0?0@gsl@@QEBAPEBDXZ ENDP		; gsl::span<char const ,-1>::data
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ
+;	COMDAT ?size@?$span@$$CBD$0?0@gsl@@QEBA_JXZ
 _TEXT	SEGMENT
 this$ = 8
-?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ PROC		; gsl::span<int const ,-1>::size, COMDAT
+?size@?$span@$$CBD$0?0@gsl@@QEBA_JXZ PROC		; gsl::span<char const ,-1>::size, COMDAT
 ; File c:\projects\gsl\include\gsl\span
 ; Line 498
 	mov	rax, QWORD PTR [rcx]
 	ret	0
-?size@?$span@$$CBH$0?0@gsl@@QEBA_JXZ ENDP		; gsl::span<int const ,-1>::size
+?size@?$span@$$CBD$0?0@gsl@@QEBA_JXZ ENDP		; gsl::span<char const ,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z
+_TEXT	SEGMENT
+this$ = 48
+ptr$ = 56
+count$ = 64
+??0?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z PROC		; gsl::span<char const ,-1>::span<char const ,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+$LN4:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ; gsl::span<char const ,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+	mov	rax, rbx
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??0?$span@$$CBD$0?0@gsl@@QEAA@PEBD_J@Z ENDP		; gsl::span<char const ,-1>::span<char const ,-1>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z
+_TEXT	SEGMENT
+$T1 = 0
+$T2 = 32
+this$ = 32
+arr$ = 40
+??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z PROC		; gsl::span<unsigned char,-1>::span<unsigned char,-1><10>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+$LN51:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T2[rsp], 0
+; Line 333
+	mov	QWORD PTR [rcx], 10
+; Line 590
+	mov	QWORD PTR [rcx+8], rdx
+; Line 395
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0$09@?$span@E$0?0@gsl@@QEAA@AEAY09E@Z ENDP		; gsl::span<unsigned char,-1>::span<unsigned char,-1><10>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?test_string_std_copy@@YAXXZ
+_TEXT	SEGMENT
+$T1 = 48
+$T2 = 48
+$T3 = 48
+$T4 = 48
+$T5 = 64
+$T6 = 64
+$T7 = 80
+$T8 = 80
+$T9 = 96
+byteSpan$ = 112
+cdModelType$ = 128
+$T10 = 144
+$T11 = 152
+bytes$ = 168
+__$ArrayPad$ = 184
+?test_string_std_copy@@YAXXZ PROC			; test_string_std_copy, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 322
+$LN107:
+	push	rbp
+	lea	rbp, QWORD PTR [rsp-87]
+	sub	rsp, 192				; 000000c0H
+	mov	QWORD PTR $T10[rbp-105], -2
+	mov	rax, QWORD PTR __security_cookie
+	xor	rax, rsp
+	mov	QWORD PTR __$ArrayPad$[rbp-105], rax
+	mov	DWORD PTR $T9[rbp-105], 0
+	mov	QWORD PTR byteSpan$[rbp-105], 10
+; File c:\projects\gsl\include\gsl\span
+; Line 590
+	lea	rax, QWORD PTR bytes$[rbp-105]
+	mov	QWORD PTR byteSpan$[rbp-97], rax
+; File c:\projects\gsl\include\gsl\string_span
+; Line 134
+	mov	r8d, 11
+	lea	rdx, OFFSET FLAT:??_C@_0L@CCAJJBND@iVtrau?5lDC?$AA@
+	lea	rcx, QWORD PTR $T4[rbp-105]
+	call	??$ensure_sentinel@$$CBD$0A@@gsl@@YA?AV?$span@$$CBD$0?0@0@PEBD_J@Z ; gsl::ensure_sentinel<char const ,0>
+; Line 243
+	movaps	xmm0, XMMWORD PTR $T4[rbp-105]
+	movdqa	XMMWORD PTR cdModelType$[rbp-105], xmm0
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	lea	rax, QWORD PTR byteSpan$[rbp-105]
+	mov	QWORD PTR $T6[rbp-105], rax
+	mov	QWORD PTR $T6[rbp-97], 0
+	lea	rax, QWORD PTR cdModelType$[rbp-105]
+	mov	QWORD PTR $T8[rbp-105], rax
+	movq	QWORD PTR $T8[rbp-97], xmm0
+	lea	rax, QWORD PTR cdModelType$[rbp-105]
+	mov	QWORD PTR $T3[rbp-105], rax
+	mov	QWORD PTR $T3[rbp-97], 0
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 783
+	xor	eax, eax
+; Line 2334
+	movaps	xmm0, XMMWORD PTR $T6[rbp-105]
+	movdqa	XMMWORD PTR $T5[rbp-105], xmm0
+	movaps	xmm1, XMMWORD PTR $T8[rbp-105]
+	movdqa	XMMWORD PTR $T7[rbp-105], xmm1
+	movaps	xmm0, XMMWORD PTR $T3[rbp-105]
+	movdqa	XMMWORD PTR $T1[rbp-105], xmm0
+	mov	BYTE PTR [rsp+32], al
+	lea	r9, QWORD PTR $T5[rbp-105]
+	lea	r8, QWORD PTR $T7[rbp-105]
+	lea	rdx, QWORD PTR $T1[rbp-105]
+	lea	rcx, QWORD PTR $T11[rbp-105]
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@E$0?0@gsl@@$0A@@23@@std@@YA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@gsl@@V?$span_iterator@V?$span@$$CBD$0?0@gsl@@$0A@@23@0V123@U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<char const ,-1>,0>,gsl::details::span_iterator<gsl::span<unsigned char,-1>,0> >
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 329
+	movaps	xmm0, XMMWORD PTR byteSpan$[rbp-105]
+	movdqa	XMMWORD PTR $T2[rbp-105], xmm0
+	lea	rcx, QWORD PTR $T2[rbp-105]
+	call	?bar@@YAXV?$span@E$0?0@gsl@@@Z		; bar
+; Line 330
+	mov	rcx, QWORD PTR __$ArrayPad$[rbp-105]
+	xor	rcx, rsp
+	call	__security_check_cookie
+	add	rsp, 192				; 000000c0H
+	pop	rbp
+	ret	0
+?test_string_std_copy@@YAXXZ ENDP			; test_string_std_copy
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+src$ = 96
+dest$ = 104
+??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z PROC	; gsl::copy<int,-1,int,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 43
+$LN78:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	rax, rdx
+	mov	DWORD PTR $T4[rsp], 0
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	r8, QWORD PTR [rcx]
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	cmp	QWORD PTR [rdx], r8
+	jl	SHORT $LN3@copy
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2436
+	test	r8, r8
+	jle	SHORT $LN2@copy
+; Line 2437
+	lea	r8, QWORD PTR [r8*4]
+; Line 2306
+	mov	rdx, QWORD PTR [rcx+8]
+	mov	rcx, QWORD PTR [rax+8]
+	call	QWORD PTR __imp_memmove
+; Line 458
+	jmp	SHORT $LN2@copy
+$LN3@copy:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@copy:
+; Line 53
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN77@copy:
+??$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z ENDP	; gsl::copy<int,-1,int,-1>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+src$ = 96
+dest$ = 104
+?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA PROC ; `gsl::copy<int,-1,int,-1>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA ENDP ; `gsl::copy<int,-1,int,-1>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+src$ = 96
+dest$ = 104
+?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA PROC ; `gsl::copy<int,-1,int,-1>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???$copy@H$0?0H$0?0@gsl@@YAXV?$span@H$0?0@0@0@Z@4HA ENDP ; `gsl::copy<int,-1,int,-1>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 48
+$T3 = 48
+$T4 = 64
+$T5 = 64
+$T6 = 112
+x$ = 112
+y$ = 120
+?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z PROC		; gsl_copy_span, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 317
+$LN81:
+	sub	rsp, 104				; 00000068H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T6[rsp], 0
+; Line 318
+	movups	xmm1, XMMWORD PTR [rdx]
+	movaps	XMMWORD PTR $T5[rsp], xmm1
+	movups	xmm0, XMMWORD PTR [rcx]
+	movaps	XMMWORD PTR $T3[rsp], xmm0
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	movq	rax, xmm1
+	movq	r8, xmm0
+	cmp	rax, r8
+	jl	SHORT $LN5@gsl_copy_s
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2436
+	test	r8, r8
+	jle	SHORT $LN4@gsl_copy_s
+; Line 2437
+	lea	r8, QWORD PTR [r8*4]
+; Line 2306
+	mov	rdx, QWORD PTR $T3[rsp+8]
+	mov	rcx, QWORD PTR $T5[rsp+8]
+	call	QWORD PTR __imp_memmove
+; Line 458
+	jmp	SHORT $LN4@gsl_copy_s
+$LN5@gsl_copy_s:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rsp+8], rax
+	mov	QWORD PTR $T4[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0EL@GNMGMEGC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+	mov	DWORD PTR $T6[rsp], 1
+; File c:\projects\gsl\include\gsl\gsl_algorithm
+; Line 50
+	lea	rcx, QWORD PTR $T4[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN4@gsl_copy_s:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 319
+	add	rsp, 104				; 00000068H
+	ret	0
+$LN80@gsl_copy_s:
+?gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z ENDP		; gsl_copy_span
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 48
+$T3 = 48
+$T4 = 64
+$T5 = 64
+$T6 = 112
+x$ = 112
+y$ = 120
+?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA PROC ; `gsl_copy_span'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN8@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN8@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA ENDP ; `gsl_copy_span'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 48
+$T3 = 48
+$T4 = 64
+$T5 = 64
+$T6 = 112
+x$ = 112
+y$ = 120
+?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA PROC ; `gsl_copy_span'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN8@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN8@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0??gsl_copy_span@@YAXV?$span@H$0?0@gsl@@0@Z@4HA ENDP ; `gsl_copy_span'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z
+_TEXT	SEGMENT
+$T1 = 96
+__$ReturnUdt$ = 128
+_First$ = 136
+_Last$ = 144
+_Dest$ = 152
+??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z PROC ; std::copy<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >, COMDAT
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2371
+$LN24:
+	mov	rax, rsp
+	push	rbx
+	sub	rsp, 112				; 00000070H
+; Line 2334
+	movups	xmm0, XMMWORD PTR [r9]
+; Line 2371
+	mov	rbx, rcx
+; Line 2334
+	lea	r9, QWORD PTR [rax-72]
+; Line 783
+	xor	ecx, ecx
+; Line 2334
+	movaps	XMMWORD PTR [rax-72], xmm0
+	movups	xmm0, XMMWORD PTR [r8]
+	mov	BYTE PTR [rax-88], cl
+	lea	r8, QWORD PTR [rax-56]
+	lea	rcx, QWORD PTR [rax-24]
+	movaps	XMMWORD PTR [rax-56], xmm0
+	movups	xmm0, XMMWORD PTR [rdx]
+	lea	rdx, QWORD PTR [rax-40]
+	movaps	XMMWORD PTR [rax-40], xmm0
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+; Line 2353
+	movups	xmm0, XMMWORD PTR $T1[rsp]
+; Line 2373
+	mov	rax, rbx
+; Line 2353
+	movups	XMMWORD PTR [rbx], xmm0
+; Line 2374
+	add	rsp, 112				; 00000070H
+	pop	rbx
+	ret	0
+??$copy@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00@Z ENDP ; std::copy<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z
+_TEXT	SEGMENT
+$T1 = 48
+$T2 = 48
+$T3 = 64
+$T4 = 64
+$T5 = 80
+$T6 = 80
+x$ = 128
+y$ = 136
+?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z PROC		; copy_span, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 312
+$LN50:
+	mov	r11, rsp
+	sub	rsp, 120				; 00000078H
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	rax, QWORD PTR [rcx]
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2334
+	lea	r9, QWORD PTR [r11-72]
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [r11-72], rdx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2334
+	lea	r8, QWORD PTR [r11-56]
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	xor	edx, edx
+	mov	QWORD PTR [r11-56], rcx
+	mov	QWORD PTR [r11-64], rdx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2334
+	movaps	xmm0, XMMWORD PTR $T2[rsp]
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [r11-48], rax
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 783
+	xor	eax, eax
+; Line 2334
+	movaps	xmm1, XMMWORD PTR $T4[rsp]
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [r11-40], rcx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2334
+	lea	rcx, QWORD PTR [r11-24]
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [r11-32], rdx
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
+; Line 2334
+	lea	rdx, QWORD PTR [r11-40]
+	movdqa	XMMWORD PTR $T1[rsp], xmm0
+	movaps	xmm0, XMMWORD PTR $T6[rsp]
+	movdqa	XMMWORD PTR $T5[rsp], xmm0
+	movdqa	XMMWORD PTR $T3[rsp], xmm1
+	mov	BYTE PTR [rsp+32], al
+	call	??$_Copy_unchecked1@V?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@@std@@YA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@V123@00U_General_ptr_iterator_tag@0@@Z ; std::_Copy_unchecked1<gsl::details::span_iterator<gsl::span<int,-1>,0>,gsl::details::span_iterator<gsl::span<int,-1>,0> >
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 314
+	add	rsp, 120				; 00000078H
+	ret	0
+?copy_span@@YAXV?$span@H$0?0@gsl@@0@Z ENDP		; copy_span
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?doterminate@@YAXXZ
+_TEXT	SEGMENT
+?doterminate@@YAXXZ PROC				; doterminate, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 305
+$LN4:
+	sub	rsp, 40					; 00000028H
+; Line 306
+	call	QWORD PTR __imp_terminate
+	int	3
+$LN3@doterminat:
+?doterminate@@YAXXZ ENDP				; doterminate
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+_TEXT	SEGMENT
+$T1 = 48
+s$2 = 56
+__$ReturnUdt$ = 96
+$T3 = 104
+p$ = 104
+size$ = 112
+i$ = 120
+?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z PROC	; mysubspan9, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 246
+$LN68:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	rdi, r9
+	mov	rbx, rcx
+	xor	eax, eax
+	mov	DWORD PTR $T3[rsp], eax
+; Line 247
+	test	rdx, rdx
+	je	SHORT $LN2@mysubspan9
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	mov	r9, rdi
+	lea	r8d, QWORD PTR [rax+3]
+	mov	rdx, rbx
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 250
+	jmp	SHORT $LN67@mysubspan9
+$LN2@mysubspan9:
+	mov	QWORD PTR [rcx], rax
+; File c:\projects\gsl\include\gsl\span
+; Line 596
+	mov	QWORD PTR [rcx+8], rax
+$LN67@mysubspan9:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 253
+	mov	rax, rbx
+; Line 254
+	mov	rbx, QWORD PTR [rsp+96]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?mysubspan9@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z ENDP	; mysubspan9
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+_TEXT	SEGMENT
+$T1 = 48
+s$2 = 56
+__$ReturnUdt$ = 96
+$T3 = 104
+p$ = 104
+size$ = 112
+i$ = 120
+?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z PROC	; mysubspan8, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 234
+$LN68:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	QWORD PTR [rsp+112], rsi
+	mov	rsi, r9
+	mov	rdi, r8
+	mov	rbx, rcx
+	xor	eax, eax
+	mov	DWORD PTR $T3[rsp], eax
+; Line 235
+	test	rdx, rdx
+	je	SHORT $LN2@mysubspan8
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 494
+	xor	eax, eax
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 238
+	sub	rdi, rsi
+; File c:\projects\gsl\include\gsl\span
+; Line 494
+	mov	BYTE PTR [rsp+32], al
+	mov	r9, rdi
+	mov	r8, rsi
+	mov	rdx, rbx
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 238
+	jmp	SHORT $LN67@mysubspan8
+$LN2@mysubspan8:
+	mov	QWORD PTR [rcx], rax
+; File c:\projects\gsl\include\gsl\span
+; Line 596
+	mov	QWORD PTR [rcx+8], rax
+$LN67@mysubspan8:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 241
+	mov	rax, rbx
+; Line 242
+	mov	rbx, QWORD PTR [rsp+96]
+	mov	rsi, QWORD PTR [rsp+112]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?mysubspan8@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z ENDP	; mysubspan8
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+_TEXT	SEGMENT
+$T1 = 48
+s$2 = 56
+__$ReturnUdt$ = 96
+$T3 = 104
+p$ = 104
+size$ = 112
+i$ = 120
+?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z PROC	; mysubspan7, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 223
+$LN81:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	rdi, r9
+	mov	rbx, rcx
+	xor	eax, eax
+	mov	DWORD PTR $T3[rsp], eax
+; Line 224
+	test	rdx, rdx
+	je	SHORT $LN2@mysubspan7
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	lea	r9d, QWORD PTR [rax+3]
+	mov	r8, rdi
+	mov	rdx, rbx
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 227
+	jmp	SHORT $LN80@mysubspan7
+$LN2@mysubspan7:
+	mov	QWORD PTR [rcx], rax
+; File c:\projects\gsl\include\gsl\span
+; Line 596
+	mov	QWORD PTR [rcx+8], rax
+$LN80@mysubspan7:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 230
+	mov	rax, rbx
+; Line 231
+	mov	rbx, QWORD PTR [rsp+96]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?mysubspan7@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z ENDP	; mysubspan7
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z
+_TEXT	SEGMENT
+$T1 = 48
+s$2 = 56
+__$ReturnUdt$ = 96
+$T3 = 104
+p$ = 104
+size$ = 112
+?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z PROC	; mysubspan6, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 211
+$LN81:
+	push	rbx
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	rbx, rcx
+	xor	eax, eax
+	mov	DWORD PTR $T3[rsp], eax
+; Line 212
+	test	rdx, rdx
+	je	SHORT $LN2@mysubspan6
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	lea	r8d, QWORD PTR [rax+3]
+	mov	rdx, rbx
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 215
+	jmp	SHORT $LN80@mysubspan6
+$LN2@mysubspan6:
+	mov	QWORD PTR [rcx], rax
+; File c:\projects\gsl\include\gsl\span
+; Line 596
+	mov	QWORD PTR [rcx+8], rax
+$LN80@mysubspan6:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 218
+	mov	rax, rbx
+; Line 219
+	add	rsp, 80					; 00000050H
+	pop	rbx
+	ret	0
+?mysubspan6@@YA?AV?$span@H$0?0@gsl@@PEAH_J@Z ENDP	; mysubspan6
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+_TEXT	SEGMENT
+$T1 = 48
+s$2 = 56
+__$ReturnUdt$ = 96
+$T3 = 104
+p$ = 104
+size$ = 112
+i$ = 120
+?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z PROC	; mysubspan5, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 199
+$LN81:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	rdi, r9
+	mov	rbx, rcx
+	xor	eax, eax
+	mov	DWORD PTR $T3[rsp], eax
+; Line 200
+	test	rdx, rdx
+	je	SHORT $LN2@mysubspan5
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	mov	r8, rdi
+	mov	rdx, rbx
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 203
+	jmp	SHORT $LN80@mysubspan5
+$LN2@mysubspan5:
+	mov	QWORD PTR [rcx], rax
+; File c:\projects\gsl\include\gsl\span
+; Line 596
+	mov	QWORD PTR [rcx+8], rax
+$LN80@mysubspan5:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 206
+	mov	rax, rbx
+; Line 207
+	mov	rbx, QWORD PTR [rsp+96]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?mysubspan5@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z ENDP	; mysubspan5
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ
@@ -3568,6 +8307,2174 @@ $LN81:
 ??$?0$0A@X@?$span@H$0?0@gsl@@QEAA@XZ ENDP		; gsl::span<int,-1>::span<int,-1><0,void>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z
+_TEXT	SEGMENT
+$T1 = 48
+s$2 = 56
+__$ReturnUdt$ = 96
+$T3 = 104
+p$ = 104
+size$ = 112
+i$ = 120
+?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z PROC	; mysubspan4, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 188
+$LN87:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	rdi, r9
+	mov	rbx, rcx
+	xor	eax, eax
+	mov	DWORD PTR $T3[rsp], eax
+; Line 189
+	test	rdx, rdx
+	je	SHORT $LN2@mysubspan4
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 488
+	xor	eax, eax
+	mov	r8, QWORD PTR s$2[rsp]
+	sub	r8, rdi
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	mov	rdx, rbx
+	lea	rcx, QWORD PTR s$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 192
+	jmp	SHORT $LN86@mysubspan4
+$LN2@mysubspan4:
+	mov	QWORD PTR [rcx], rax
+; File c:\projects\gsl\include\gsl\span
+; Line 596
+	mov	QWORD PTR [rcx+8], rax
+$LN86@mysubspan4:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 195
+	mov	rax, rbx
+; Line 196
+	mov	rbx, QWORD PTR [rsp+96]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?mysubspan4@@YA?AV?$span@H$0?0@gsl@@PEAH_J1@Z ENDP	; mysubspan4
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan3@@YA_JXZ
+_TEXT	SEGMENT
+$T1 = 48
+$T2 = 52
+$T3 = 56
+tmp$4 = 64
+subspan$ = 80
+x$ = 96
+__$ArrayPad$ = 120
+?mysubspan3@@YA_JXZ PROC				; mysubspan3, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 177
+$LN101:
+	sub	rsp, 136				; 00000088H
+	mov	QWORD PTR $T3[rsp], -2
+	mov	rax, QWORD PTR __security_cookie
+	xor	rax, rsp
+	mov	QWORD PTR __$ArrayPad$[rsp], rax
+	mov	DWORD PTR $T2[rsp], 0
+	movdqa	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movdqu	XMMWORD PTR x$[rsp], xmm0
+; Line 178
+	mov	DWORD PTR x$[rsp+16], 4
+	mov	DWORD PTR x$[rsp+20], 5
+; File c:\projects\gsl\include\gsl\span
+; Line 447
+	movzx	r8d, BYTE PTR $T1[rsp]
+	lea	rdx, QWORD PTR x$[rsp]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	lea	r8d, QWORD PTR [rax+3]
+	lea	rdx, QWORD PTR subspan$[rsp]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 183
+	mov	rax, QWORD PTR subspan$[rsp]
+; Line 184
+	mov	rcx, QWORD PTR __$ArrayPad$[rsp]
+	xor	rcx, rsp
+	call	__security_check_cookie
+	add	rsp, 136				; 00000088H
+	ret	0
+?mysubspan3@@YA_JXZ ENDP				; mysubspan3
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan2@@YA_J_J@Z
+_TEXT	SEGMENT
+$T1 = 48
+$T2 = 52
+$T3 = 56
+tmp$4 = 64
+subspan$ = 80
+x$ = 96
+__$ArrayPad$ = 120
+i$ = 144
+?mysubspan2@@YA_J_J@Z PROC				; mysubspan2, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 166
+$LN107:
+	push	rbx
+	sub	rsp, 128				; 00000080H
+	mov	QWORD PTR $T3[rsp], -2
+	mov	rax, QWORD PTR __security_cookie
+	xor	rax, rsp
+	mov	QWORD PTR __$ArrayPad$[rsp], rax
+	mov	rbx, rcx
+	mov	DWORD PTR $T2[rsp], 0
+	movdqa	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movdqu	XMMWORD PTR x$[rsp], xmm0
+; Line 167
+	mov	DWORD PTR x$[rsp+16], 4
+	mov	DWORD PTR x$[rsp+20], 5
+; File c:\projects\gsl\include\gsl\span
+; Line 447
+	movzx	r8d, BYTE PTR $T1[rsp]
+	lea	rdx, QWORD PTR x$[rsp]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 494
+	xor	eax, eax
+; Line 488
+	mov	r8d, 6
+	sub	r8, rbx
+; Line 494
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	lea	rdx, QWORD PTR subspan$[rsp]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 172
+	mov	rax, QWORD PTR subspan$[rsp]
+; Line 173
+	mov	rcx, QWORD PTR __$ArrayPad$[rsp]
+	xor	rcx, rsp
+	call	__security_check_cookie
+	add	rsp, 128				; 00000080H
+	pop	rbx
+	ret	0
+?mysubspan2@@YA_J_J@Z ENDP				; mysubspan2
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z
+_TEXT	SEGMENT
+$T1 = 0
+$T2 = 32
+this$ = 32
+arr$ = 40
+??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z PROC		; gsl::span<int,6>::span<int,6><6>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+$LN46:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T2[rsp], 0
+; Line 590
+	mov	QWORD PTR [rcx], rdx
+; Line 395
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0$05@?$span@H$05@gsl@@QEAA@AEAY05H@Z ENDP		; gsl::span<int,6>::span<int,6><6>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEBAPEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEBAPEAHXZ PROC ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::data, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	rax, QWORD PTR [rcx]
+	ret	0
+?data@?$storage_type@V?$extent_type@$05@details@gsl@@@?$span@H$05@gsl@@QEBAPEAHXZ ENDP ; gsl::span<int,6>::storage_type<gsl::details::extent_type<6> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$extent_type@$05@details@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$extent_type@$05@details@gsl@@QEBA_JXZ PROC	; gsl::details::extent_type<6>::size, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 323
+	mov	eax, 6
+	ret	0
+?size@?$extent_type@$05@details@gsl@@QEBA_JXZ ENDP	; gsl::details::extent_type<6>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$extent_type@$05@details@gsl@@QEAA@_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+this$ = 96
+$T4 = 104
+size$ = 104
+??0?$extent_type@$05@details@gsl@@QEAA@_J@Z PROC	; gsl::details::extent_type<6>::extent_type<6>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 321
+$LN23:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+	cmp	rdx, 6
+	jne	SHORT $LN3@extent_typ
+	mov	rax, rcx
+	jmp	SHORT $LN2@extent_typ
+$LN3@extent_typ:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@EJCPKIPN@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 321
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@extent_typ:
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN22@extent_typ:
+??0?$extent_type@$05@details@gsl@@QEAA@_J@Z ENDP	; gsl::details::extent_type<6>::extent_type<6>
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+this$ = 96
+$T4 = 104
+size$ = 104
+?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA PROC ; `gsl::details::extent_type<6>::extent_type<6>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA ENDP ; `gsl::details::extent_type<6>::extent_type<6>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+this$ = 96
+$T4 = 104
+size$ = 104
+?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA PROC ; `gsl::details::extent_type<6>::extent_type<6>'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???0?$extent_type@$05@details@gsl@@QEAA@_J@Z@4HA ENDP ; `gsl::details::extent_type<6>::extent_type<6>'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$extent_type@$05@details@gsl@@QEAA@XZ
+_TEXT	SEGMENT
+this$ = 8
+??0?$extent_type@$05@details@gsl@@QEAA@XZ PROC		; gsl::details::extent_type<6>::extent_type<6>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 311
+	mov	rax, rcx
+	ret	0
+??0?$extent_type@$05@details@gsl@@QEAA@XZ ENDP		; gsl::details::extent_type<6>::extent_type<6>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$span@H$05@gsl@@QEBAPEAHXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$span@H$05@gsl@@QEBAPEAHXZ PROC			; gsl::span<int,6>::data, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	rax, QWORD PTR [rcx]
+	ret	0
+?data@?$span@H$05@gsl@@QEBAPEAHXZ ENDP			; gsl::span<int,6>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$span@H$05@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$span@H$05@gsl@@QEBA_JXZ PROC			; gsl::span<int,6>::size, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	eax, 6
+	ret	0
+?size@?$span@H$05@gsl@@QEBA_JXZ ENDP			; gsl::span<int,6>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?subspan@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J0@Z
+_TEXT	SEGMENT
+$T1 = 48
+$T2 = 52
+$T3 = 56
+tmp$4 = 64
+this$ = 96
+__$ReturnUdt$ = 104
+offset$ = 112
+count$ = 120
+?subspan@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J0@Z PROC ; gsl::span<int,6>::subspan, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 493
+$LN45:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T3[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	QWORD PTR [rsp+104], rsi
+	mov	rbx, r9
+	mov	rdi, r8
+	mov	rsi, rdx
+	mov	DWORD PTR $T2[rsp], 0
+; Line 447
+	movzx	r8d, BYTE PTR $T1[rsp]
+	mov	rdx, QWORD PTR [rcx]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	mov	r9, rbx
+	mov	r8, rdi
+	mov	rdx, rsi
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+	mov	rax, rsi
+; Line 495
+	mov	rbx, QWORD PTR [rsp+96]
+	mov	rsi, QWORD PTR [rsp+104]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?subspan@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J0@Z ENDP ; gsl::span<int,6>::subspan
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?last@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J@Z
+_TEXT	SEGMENT
+$T1 = 48
+tmp$2 = 56
+this$ = 96
+__$ReturnUdt$ = 104
+count$ = 112
+$T3 = 120
+$T4 = 120
+?last@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J@Z PROC	; gsl::span<int,6>::last, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 487
+$LN64:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+96], rbx
+	mov	rbx, r8
+	mov	rdi, rdx
+	mov	DWORD PTR $T3[rsp], 0
+; Line 447
+	movzx	r8d, BYTE PTR $T4[rsp]
+	mov	rdx, QWORD PTR [rcx]
+	lea	rcx, QWORD PTR tmp$2[rsp]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 494
+	xor	eax, eax
+; Line 488
+	mov	r8d, 6
+	sub	r8, rbx
+; Line 494
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	mov	rdx, rdi
+	lea	rcx, QWORD PTR tmp$2[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; Line 488
+	mov	rax, rdi
+; Line 489
+	mov	rbx, QWORD PTR [rsp+96]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+?last@?$span@H$05@gsl@@QEBA?AV?$span@H$0?0@2@_J@Z ENDP	; gsl::span<int,6>::last
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?mysubspan1@@YA_JXZ
+_TEXT	SEGMENT
+$T1 = 48
+$T2 = 52
+$T3 = 56
+tmp$4 = 64
+subspan$ = 80
+x$ = 96
+__$ArrayPad$ = 120
+?mysubspan1@@YA_JXZ PROC				; mysubspan1, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 155
+$LN107:
+	sub	rsp, 136				; 00000088H
+	mov	QWORD PTR $T3[rsp], -2
+	mov	rax, QWORD PTR __security_cookie
+	xor	rax, rsp
+	mov	QWORD PTR __$ArrayPad$[rsp], rax
+	mov	DWORD PTR $T2[rsp], 0
+	movdqa	xmm0, XMMWORD PTR __xmm@00000003000000020000000100000000
+	movdqu	XMMWORD PTR x$[rsp], xmm0
+; Line 156
+	mov	DWORD PTR x$[rsp+16], 4
+	mov	DWORD PTR x$[rsp+20], 5
+; File c:\projects\gsl\include\gsl\span
+; Line 447
+	movzx	r8d, BYTE PTR $T1[rsp]
+	lea	rdx, QWORD PTR x$[rsp]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	??$?0V?$extent_type@$05@details@gsl@@@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@PEAHV?$extent_type@$05@details@2@@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><gsl::details::extent_type<6> >
+; Line 494
+	xor	eax, eax
+	mov	BYTE PTR [rsp+32], al
+	or	r9, -1
+	lea	r8d, QWORD PTR [rax+3]
+	lea	rdx, QWORD PTR subspan$[rsp]
+	lea	rcx, QWORD PTR tmp$4[rsp]
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 161
+	mov	rax, QWORD PTR subspan$[rsp]
+; Line 162
+	mov	rcx, QWORD PTR __$ArrayPad$[rsp]
+	xor	rcx, rsp
+	call	__security_check_cookie
+	add	rsp, 136				; 00000088H
+	ret	0
+?mysubspan1@@YA_JXZ ENDP				; mysubspan1
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z
+_TEXT	SEGMENT
+__$ReturnUdt$ = 48
+s$ = 56
+??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z PROC ; convert_span<unsigned char,gsl::span<unsigned short,-1> >, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 129
+$LN27:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+; File c:\projects\gsl\include\gsl\span
+; Line 501
+	mov	r8, QWORD PTR [rdx]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 129
+	mov	rbx, rcx
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+	mov	rdx, QWORD PTR [rdx+8]
+; Line 501
+	add	r8, r8
+; Line 386
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 133
+	mov	rax, rbx
+; Line 134
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??$convert_span@EV?$span@G$0?0@gsl@@@@YA?AV?$span@E$0?0@gsl@@V?$span@G$0?0@1@@Z ENDP ; convert_span<unsigned char,gsl::span<unsigned short,-1> >
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+curBuffer$ = 40
+$T3 = 56
+$T4 = 96
+Drive$ = 96
+?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z PROC	; test_convert_span_Joe, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 145
+$LN79:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 146
+	movups	xmm0, XMMWORD PTR [rcx+8]
+; File c:\projects\gsl\include\gsl\span
+; Line 501
+	movq	rax, xmm0
+	lea	r8, QWORD PTR [rax+rax]
+; Line 386
+	psrldq	xmm0, 8
+	movq	rdx, xmm0
+	lea	rcx, QWORD PTR curBuffer$[rsp]
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+	cmp	QWORD PTR curBuffer$[rsp], 0
+; Line 509
+	jbe	SHORT $LN30@test_conve
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 148
+	mov	rax, QWORD PTR curBuffer$[rsp+8]
+	movzx	eax, BYTE PTR [rax]
+	jmp	SHORT $LN77@test_conve
+$LN30@test_conve:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN77@test_conve:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 149
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN78@test_conve:
+?test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z ENDP	; test_convert_span_Joe
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+curBuffer$ = 40
+$T3 = 56
+$T4 = 96
+Drive$ = 96
+?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA PROC ; `test_convert_span_Joe'::`1'::dtor$7
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN33@dtor$7
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN33@dtor$7:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA ENDP ; `test_convert_span_Joe'::`1'::dtor$7
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+curBuffer$ = 40
+$T3 = 56
+$T4 = 96
+Drive$ = 96
+?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA PROC ; `test_convert_span_Joe'::`1'::dtor$7
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN33@dtor$7
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN33@dtor$7:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$7@?0??test_convert_span_Joe@@YAEAEAUIDE_DRIVE_STATE@@@Z@4HA ENDP ; `test_convert_span_Joe'::`1'::dtor$7
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z
+_TEXT	SEGMENT
+$T1 = 0
+$T2 = 32
+this$ = 32
+arr$ = 40
+??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z PROC		; gsl::span<unsigned char,-1>::span<unsigned char,-1><6>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 395
+$LN51:
+	sub	rsp, 24
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T2[rsp], 0
+; Line 333
+	mov	QWORD PTR [rcx], 6
+; Line 590
+	mov	QWORD PTR [rcx+8], rdx
+; Line 395
+	mov	rax, rcx
+	add	rsp, 24
+	ret	0
+??$?0$05@?$span@E$0?0@gsl@@QEAA@AEAY05E@Z ENDP		; gsl::span<unsigned char,-1>::span<unsigned char,-1><6>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEBAPEAEXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEBAPEAEXZ PROC ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	rax, QWORD PTR [rcx+8]
+	ret	0
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEBAPEAEXZ ENDP ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?CheckRange@?$span@E$0?0@gsl@@CA_N_J0@Z
+_TEXT	SEGMENT
+idx$ = 8
+size$ = 16
+?CheckRange@?$span@E$0?0@gsl@@CA_N_J0@Z PROC		; gsl::span<unsigned char,-1>::CheckRange, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 565
+	cmp	rcx, rdx
+	setb	al
+; Line 571
+	ret	0
+?CheckRange@?$span@E$0?0@gsl@@CA_N_J0@Z ENDP		; gsl::span<unsigned char,-1>::CheckRange
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?begin@?$span@E$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+__$ReturnUdt$ = 16
+?begin@?$span@E$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<unsigned char,-1>::begin, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; Line 518
+	mov	rax, rdx
+; Line 145
+	mov	QWORD PTR [rdx+8], 0
+; Line 518
+	ret	0
+?begin@?$span@E$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@E$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<unsigned char,-1>::begin
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$span@E$0?0@gsl@@QEBAPEAEXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$span@E$0?0@gsl@@QEBAPEAEXZ PROC			; gsl::span<unsigned char,-1>::data, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	rax, QWORD PTR [rcx+8]
+	ret	0
+?data@?$span@E$0?0@gsl@@QEBAPEAEXZ ENDP			; gsl::span<unsigned char,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+idx$ = 104
+??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z PROC			; gsl::span<unsigned char,-1>::operator[], COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 508
+$LN51:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+	cmp	rdx, QWORD PTR [rcx]
+; Line 509
+	jae	SHORT $LN3@operator
+; Line 510
+	mov	rax, QWORD PTR [rcx+8]
+	add	rax, rdx
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 511
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN50@operator:
+??A?$span@E$0?0@gsl@@QEBAAEAE_J@Z ENDP			; gsl::span<unsigned char,-1>::operator[]
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+idx$ = 104
+?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA PROC	; `gsl::span<unsigned char,-1>::operator[]'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA ENDP	; `gsl::span<unsigned char,-1>::operator[]'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+idx$ = 104
+?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA PROC	; `gsl::span<unsigned char,-1>::operator[]'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???A?$span@E$0?0@gsl@@QEBAAEAE_J@Z@4HA ENDP	; `gsl::span<unsigned char,-1>::operator[]'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$span@E$0?0@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$span@E$0?0@gsl@@QEBA_JXZ PROC			; gsl::span<unsigned char,-1>::size, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	rax, QWORD PTR [rcx]
+	ret	0
+?size@?$span@E$0?0@gsl@@QEBA_JXZ ENDP			; gsl::span<unsigned char,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span@E$0?0@gsl@@QEAA@PEAE_J@Z
+_TEXT	SEGMENT
+this$ = 48
+ptr$ = 56
+count$ = 64
+??0?$span@E$0?0@gsl@@QEAA@PEAE_J@Z PROC			; gsl::span<unsigned char,-1>::span<unsigned char,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 386
+$LN4:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@E$0?0@gsl@@QEAA@PEAE_J@Z ; gsl::span<unsigned char,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+	mov	rax, rbx
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??0?$span@E$0?0@gsl@@QEAA@PEAE_J@Z ENDP			; gsl::span<unsigned char,-1>::span<unsigned char,-1>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+Drive$ = 96
+?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z PROC ; static_size_array_span, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 96
+$LN101:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+104], rbx
+	mov	QWORD PTR [rsp+112], rbp
+	mov	QWORD PTR [rsp+120], rsi
+	mov	rsi, rcx
+	xor	edi, edi
+	mov	DWORD PTR $T4[rsp], edi
+; Line 99
+	mov	ebx, edi
+	lea	rbp, OFFSET FLAT:??_7exception@std@@6B@
+	cmp	rbx, 6
+$LN100@static_siz:
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	jae	SHORT $LN48@static_siz
+	test	dil, 2
+	je	SHORT $LN85@static_siz
+	and	edi, -3
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T3[rsp], rbp
+; Line 84
+	lea	rcx, QWORD PTR $T3[rsp+8]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN85@static_siz:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 101
+	mov	BYTE PTR [rbx+rsi], 1
+; Line 99
+	inc	rbx
+	cmp	rbx, 6
+	jl	SHORT $LN100@static_siz
+	jmp	SHORT $LN3@static_siz
+$LN48@static_siz:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T3[rsp], rbp
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	or	edi, 2
+	mov	DWORD PTR $T4[rsp], edi
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@static_siz:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 103
+	mov	rbx, QWORD PTR [rsp+104]
+	mov	rbp, QWORD PTR [rsp+112]
+	mov	rsi, QWORD PTR [rsp+120]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+$LN99@static_siz:
+?static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z ENDP ; static_size_array_span
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+Drive$ = 96
+?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA PROC ; `static_size_array_span'::`1'::dtor$8
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN51@dtor$8
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN51@dtor$8:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA ENDP ; `static_size_array_span'::`1'::dtor$8
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+Drive$ = 96
+?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA PROC ; `static_size_array_span'::`1'::dtor$8
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN51@dtor$8
+	and	DWORD PTR $T4[rbp], -3
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN51@dtor$8:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$8@?0??static_size_array_span@@YAXAEAUIDE_DRIVE_STATE@@@Z@4HA ENDP ; `static_size_array_span'::`1'::dtor$8
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@G$0?0@gsl@@QEBAPEAGXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@G$0?0@gsl@@QEBAPEAGXZ PROC ; gsl::span<unsigned short,-1>::storage_type<gsl::details::extent_type<-1> >::data, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 602
+	mov	rax, QWORD PTR [rcx+8]
+	ret	0
+?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@G$0?0@gsl@@QEBAPEAGXZ ENDP ; gsl::span<unsigned short,-1>::storage_type<gsl::details::extent_type<-1> >::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?data@?$span@G$0?0@gsl@@QEBAPEAGXZ
+_TEXT	SEGMENT
+this$ = 8
+?data@?$span@G$0?0@gsl@@QEBAPEAGXZ PROC			; gsl::span<unsigned short,-1>::data, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	rax, QWORD PTR [rcx+8]
+	ret	0
+?data@?$span@G$0?0@gsl@@QEBAPEAGXZ ENDP			; gsl::span<unsigned short,-1>::data
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size_bytes@?$span@G$0?0@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size_bytes@?$span@G$0?0@gsl@@QEBA_JXZ PROC		; gsl::span<unsigned short,-1>::size_bytes, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 501
+	mov	rax, QWORD PTR [rcx]
+	add	rax, rax
+; Line 502
+	ret	0
+?size_bytes@?$span@G$0?0@gsl@@QEBA_JXZ ENDP		; gsl::span<unsigned short,-1>::size_bytes
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?size@?$span@G$0?0@gsl@@QEBA_JXZ
+_TEXT	SEGMENT
+this$ = 8
+?size@?$span@G$0?0@gsl@@QEBA_JXZ PROC			; gsl::span<unsigned short,-1>::size, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	rax, QWORD PTR [rcx]
+	ret	0
+?size@?$span@G$0?0@gsl@@QEBA_JXZ ENDP			; gsl::span<unsigned short,-1>::size
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 128
+s$ = 128
+?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z PROC	; test_span_rangeiter, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 69
+$LN97:
+	mov	rax, rsp
+	push	rbp
+	push	rdi
+	push	r12
+	push	r14
+	push	r15
+	mov	rbp, rsp
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rbp-80], -2
+	mov	QWORD PTR [rax+16], rbx
+	mov	QWORD PTR [rax+24], rsi
+	mov	r14, rcx
+	xor	ebx, ebx
+	mov	DWORD PTR $T6[rbp-80], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	edi, ebx
+; Line 519
+	mov	r15, QWORD PTR [rcx]
+	mov	esi, ebx
+	lea	r12, OFFSET FLAT:??_7exception@std@@6B@
+	npad	8
+$LL25@test_span_:
+; Line 231
+	cmp	rdi, r15
+	sete	al
+	test	al, al
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 70
+	jne	$LN3@test_span_
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	cmp	rdi, QWORD PTR [r14]
+	je	$LN62@test_span_
+	test	bl, 2
+	je	SHORT $LN83@test_span_
+	and	ebx, -3
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T4[rbp-80], r12
+; Line 84
+	lea	rcx, QWORD PTR $T4[rbp-72]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN83@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	rax, QWORD PTR [r14+8]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 72
+	inc	DWORD PTR [rsi+rax]
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	test	rsi, rsi
+	js	SHORT $LN26@test_span_
+	cmp	rdi, QWORD PTR [r14]
+	je	SHORT $LN26@test_span_
+	test	bl, 1
+	je	SHORT $LN47@test_span_
+	and	ebx, -2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T5[rbp-80], r12
+; Line 84
+	lea	rcx, QWORD PTR $T5[rbp-72]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN47@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 170
+	inc	rdi
+	add	rsi, 4
+	jmp	SHORT $LL25@test_span_
+$LN26@test_span_:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T5[rbp-80], r12
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T5[rbp-72], rax
+	mov	QWORD PTR $T5[rbp-64], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$3[rbp-80], rax
+	mov	BYTE PTR _InitData$3[rbp-72], 1
+; Line 55
+	lea	rdx, QWORD PTR $T5[rbp-72]
+	lea	rcx, QWORD PTR _InitData$3[rbp-80]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T5[rbp-80], rax
+	or	ebx, 1
+	mov	DWORD PTR $T6[rbp-80], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	lea	rcx, QWORD PTR $T5[rbp-80]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN62@test_span_:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T4[rbp-80], r12
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rbp-72], rax
+	mov	QWORD PTR $T4[rbp-64], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rbp-80], rax
+	mov	BYTE PTR _InitData$2[rbp-72], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rbp-72]
+	lea	rcx, QWORD PTR _InitData$2[rbp-80]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rbp-80], rax
+	or	ebx, 2
+	mov	DWORD PTR $T6[rbp-80], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T4[rbp-80]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@test_span_:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 74
+	lea	r11, QWORD PTR [rsp+80]
+	mov	rbx, QWORD PTR [r11+56]
+	mov	rsi, QWORD PTR [r11+64]
+	mov	rsp, r11
+	pop	r15
+	pop	r14
+	pop	r12
+	pop	rdi
+	pop	rbp
+	ret	0
+$LN96@test_span_:
+?test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z ENDP	; test_span_rangeiter
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 128
+s$ = 128
+?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_rangeiter'::`1'::dtor$6
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN29@dtor$6
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN29@dtor$6:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_rangeiter'::`1'::dtor$6
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 128
+s$ = 128
+?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_rangeiter'::`1'::dtor$13
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN65@dtor$13
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN65@dtor$13:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_rangeiter'::`1'::dtor$13
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 128
+s$ = 128
+?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_rangeiter'::`1'::dtor$6
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN29@dtor$6
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN29@dtor$6:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$6@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_rangeiter'::`1'::dtor$6
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+$T6 = 128
+s$ = 128
+?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_rangeiter'::`1'::dtor$13
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN65@dtor$13
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN65@dtor$13:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$13@?0??test_span_rangeiter@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_rangeiter'::`1'::dtor$13
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z
+_TEXT	SEGMENT
+$T1 = 0
+$T2 = 16
+lhs$ = 48
+rhs$ = 56
+??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z PROC ; gsl::details::operator!=, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 235
+$LN9:
+	sub	rsp, 40					; 00000028H
+; Line 236
+	movups	xmm1, XMMWORD PTR [rdx]
+	movups	xmm0, XMMWORD PTR [rcx]
+; Line 231
+	movq	rax, xmm1
+; Line 236
+	movaps	XMMWORD PTR $T1[rsp], xmm1
+; Line 231
+	movq	rcx, xmm0
+; Line 236
+	movaps	XMMWORD PTR $T2[rsp], xmm0
+; Line 231
+	cmp	rcx, rax
+	jne	SHORT $LN5@operator
+	mov	rax, QWORD PTR $T1[rsp+8]
+	cmp	QWORD PTR $T2[rsp+8], rax
+	jne	SHORT $LN5@operator
+	xor	eax, eax
+; Line 237
+	add	rsp, 40					; 00000028H
+	ret	0
+$LN5@operator:
+; Line 231
+	mov	eax, 1
+; Line 237
+	add	rsp, 40					; 00000028H
+	ret	0
+??9details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z ENDP ; gsl::details::operator!=
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??8details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z
+_TEXT	SEGMENT
+lhs$ = 8
+rhs$ = 16
+??8details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z PROC ; gsl::details::operator==, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 231
+	mov	rax, QWORD PTR [rdx]
+	cmp	QWORD PTR [rcx], rax
+	jne	SHORT $LN3@operator
+	mov	rax, QWORD PTR [rdx+8]
+	cmp	QWORD PTR [rcx+8], rax
+	jne	SHORT $LN3@operator
+	mov	al, 1
+; Line 232
+	ret	0
+$LN3@operator:
+; Line 231
+	xor	al, al
+; Line 232
+	ret	0
+??8details@gsl@@YA_NV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@01@0@Z ENDP ; gsl::details::operator==
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 168
+$LN29:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 169
+	mov	rdx, QWORD PTR [rcx+8]
+	test	rdx, rdx
+	js	SHORT $LN3@operator
+	mov	rax, QWORD PTR [rcx]
+	cmp	rdx, QWORD PTR [rax]
+	je	SHORT $LN3@operator
+; Line 170
+	lea	rax, QWORD PTR [rdx+1]
+	mov	QWORD PTR [rcx+8], rax
+; Line 171
+	mov	rax, rcx
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 172
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN28@operator:
+??E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???E?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAAAEAV012@XZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator++'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 156
+$LN35:
+	sub	rsp, 88					; 00000058H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	DWORD PTR $T4[rsp], 0
+; Line 157
+	mov	rax, QWORD PTR [rcx]
+	mov	rdx, QWORD PTR [rcx+8]
+	cmp	rdx, QWORD PTR [rax]
+	je	SHORT $LN3@operator
+; Line 158
+	mov	rax, QWORD PTR [rax+8]
+	lea	rax, QWORD PTR [rax+rdx*4]
+	jmp	SHORT $LN2@operator
+$LN3@operator:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@LADDNBHF@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	mov	DWORD PTR $T4[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 157
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN2@operator:
+; Line 159
+	add	rsp, 88					; 00000058H
+	ret	0
+$LN34@operator:
+??D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+this$ = 96
+?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA PROC ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN6@dtor$0
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN6@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0???D?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEBAAEAHXZ@4HA ENDP ; `gsl::details::span_iterator<gsl::span<int,-1>,0>::operator*'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@H$0?0@2@_J@Z
+_TEXT	SEGMENT
+this$ = 8
+span$ = 16
+idx$ = 24
+??0?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@H$0?0@2@_J@Z PROC ; gsl::details::span_iterator<gsl::span<int,-1>,0>::span_iterator<gsl::span<int,-1>,0>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rcx], rdx
+; Line 146
+	mov	rax, rcx
+	mov	QWORD PTR [rcx+8], r8
+	ret	0
+??0?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@gsl@@QEAA@PEBV?$span@H$0?0@2@_J@Z ENDP ; gsl::details::span_iterator<gsl::span<int,-1>,0>::span_iterator<gsl::span<int,-1>,0>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 56
+$T5 = 112
+s$ = 112
+?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z PROC		; test_span_iter, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 60
+$LN99:
+	mov	rax, rsp
+	push	rbp
+	push	r14
+	push	r15
+	mov	rbp, rsp
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rbp-80], -2
+	mov	QWORD PTR [rax+16], rbx
+	mov	QWORD PTR [rax+24], rsi
+	mov	QWORD PTR [rax+32], rdi
+	mov	r14, rcx
+	xor	ebx, ebx
+	mov	DWORD PTR $T5[rbp-80], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	edi, ebx
+	mov	esi, ebx
+	lea	r15, OFFSET FLAT:??_7exception@std@@6B@
+	npad	10
+$LL13@test_span_:
+; Line 519
+	mov	rax, QWORD PTR [r14]
+; Line 231
+	cmp	rdi, rax
+	je	$LN3@test_span_
+; Line 157
+	test	bl, 2
+	je	SHORT $LN83@test_span_
+	and	ebx, -3
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T3[rbp-80], r15
+; Line 84
+	lea	rcx, QWORD PTR $T3[rbp-72]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN83@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 515
+	mov	rax, QWORD PTR [r14+8]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 63
+	inc	DWORD PTR [rsi+rax]
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	test	rsi, rsi
+	js	SHORT $LN14@test_span_
+	cmp	rdi, QWORD PTR [r14]
+	je	SHORT $LN14@test_span_
+	test	bl, 1
+	je	SHORT $LN35@test_span_
+	and	ebx, -2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T4[rbp-80], r15
+; Line 84
+	lea	rcx, QWORD PTR $T4[rbp-72]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN35@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 170
+	inc	rdi
+	add	rsi, 4
+	jmp	SHORT $LL13@test_span_
+$LN14@test_span_:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T4[rbp-80], r15
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rbp-72], rax
+	mov	QWORD PTR $T4[rbp-64], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@CMPGECKC@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rbp-80], rax
+	mov	BYTE PTR _InitData$2[rbp-72], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rbp-72]
+	lea	rcx, QWORD PTR _InitData$2[rbp-80]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rbp-80], rax
+	or	ebx, 1
+	mov	DWORD PTR $T5[rbp-80], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 169
+	lea	rcx, QWORD PTR $T4[rbp-80]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@test_span_:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 65
+	lea	r11, QWORD PTR [rsp+80]
+	mov	rbx, QWORD PTR [r11+40]
+	mov	rsi, QWORD PTR [r11+48]
+	mov	rdi, QWORD PTR [r11+56]
+	mov	rsp, r11
+	pop	r15
+	pop	r14
+	pop	rbp
+	ret	0
+$LN98@test_span_:
+?test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z ENDP		; test_span_iter
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 56
+$T5 = 112
+s$ = 112
+?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_iter'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T5[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN17@dtor$2
+	and	DWORD PTR $T5[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN17@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_iter'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 56
+$T5 = 112
+s$ = 112
+?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_iter'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T5[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN17@dtor$2
+	and	DWORD PTR $T5[rbp], -2
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN17@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0??test_span_iter@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_iter'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+s$ = 96
+?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z PROC		; test_span_for, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 51
+$LN68:
+	push	rdi
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	QWORD PTR [rsp+104], rbx
+	mov	QWORD PTR [rsp+112], rbp
+	mov	QWORD PTR [rsp+120], rsi
+	mov	rsi, rcx
+	xor	ebx, ebx
+	mov	DWORD PTR $T4[rsp], ebx
+; Line 52
+	mov	edi, ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 498
+	mov	rax, QWORD PTR [rcx]
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 52
+	test	rax, rax
+	jle	$LN3@test_span_
+	lea	rbp, OFFSET FLAT:??_7exception@std@@6B@
+	cmp	rbx, rax
+$LN67@test_span_:
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	jae	SHORT $LN14@test_span_
+	test	bl, 1
+	je	SHORT $LN51@test_span_
+	and	ebx, -2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T3[rsp], rbp
+; Line 84
+	lea	rcx, QWORD PTR $T3[rsp+8]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN51@test_span_:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 52
+	mov	rax, QWORD PTR [rsi+8]
+; Line 54
+	inc	DWORD PTR [rax+rdi*4]
+; Line 52
+	inc	rdi
+	mov	rax, QWORD PTR [rsi]
+	cmp	rdi, rax
+	jl	SHORT $LN67@test_span_
+	jmp	SHORT $LN3@test_span_
+$LN14@test_span_:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T3[rsp], rbp
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T3[rsp+8], rax
+	mov	QWORD PTR $T3[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T3[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T3[rsp], rax
+	or	ebx, 1
+	mov	DWORD PTR $T4[rsp], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	lea	rcx, QWORD PTR $T3[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@test_span_:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 56
+	mov	rbx, QWORD PTR [rsp+104]
+	mov	rbp, QWORD PTR [rsp+112]
+	mov	rsi, QWORD PTR [rsp+120]
+	add	rsp, 80					; 00000050H
+	pop	rdi
+	ret	0
+$LN66@test_span_:
+?test_span_for@@YAXV?$span@H$0?0@gsl@@@Z ENDP		; test_span_for
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+s$ = 96
+?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_for'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN17@dtor$2
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN17@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_for'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+$T3 = 56
+$T4 = 96
+s$ = 96
+?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA PROC ; `test_span_for'::`1'::dtor$2
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T4[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN17@dtor$2
+	and	DWORD PTR $T4[rbp], -2
+	lea	rcx, QWORD PTR $T3[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN17@dtor$2:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$2@?0??test_span_for@@YAXV?$span@H$0?0@gsl@@@Z@4HA ENDP ; `test_span_for'::`1'::dtor$2
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z
+_TEXT	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+this$ = 96
+__$ReturnUdt$ = 104
+$T6 = 112
+offset$ = 112
+count$ = 120
+__formal$ = 128
+?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z PROC ; gsl::span<int,-1>::make_subspan, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 630
+$LN78:
+	push	rbx
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR $T1[rsp], -2
+	mov	r10, r8
+	mov	rbx, rdx
+	mov	DWORD PTR $T6[rsp], 0
+; Line 631
+	test	r8, r8
+	js	$LN4@make_subsp
+; Line 498
+	mov	r8, QWORD PTR [rcx]
+; Line 631
+	cmp	r8, r10
+	js	$LN4@make_subsp
+; Line 633
+	cmp	r9, -1
+	jne	SHORT $LN2@make_subsp
+	mov	rax, QWORD PTR [rcx+8]
+	lea	rdx, QWORD PTR [rax+r10*4]
+	sub	r8, r10
+	jmp	$LN77@make_subsp
+$LN2@make_subsp:
+; Line 635
+	test	r9, r9
+	js	SHORT $LN6@make_subsp
+	sub	r8, r10
+	cmp	r8, r9
+	jl	SHORT $LN6@make_subsp
+; Line 636
+	mov	rax, QWORD PTR [rcx+8]
+	lea	rdx, QWORD PTR [rax+r10*4]
+; Line 612
+	mov	r8, r9
+; Line 636
+	jmp	$LN77@make_subsp
+$LN6@make_subsp:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T4[rsp+8], rax
+	mov	QWORD PTR $T4[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@BLFPPHPM@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$2[rsp], rax
+	mov	BYTE PTR _InitData$2[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T4[rsp+8]
+	lea	rcx, QWORD PTR _InitData$2[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T4[rsp], rax
+	mov	DWORD PTR $T6[rsp], 2
+; File c:\projects\gsl\include\gsl\span
+; Line 635
+	lea	rcx, QWORD PTR $T4[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN4@make_subsp:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	lea	rax, OFFSET FLAT:??_7exception@std@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T5[rsp+8], rax
+	mov	QWORD PTR $T5[rsp+16], rax
+; Line 54
+	lea	rax, OFFSET FLAT:??_C@_0ED@HPDDDCPI@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$3[rsp], rax
+	mov	BYTE PTR _InitData$3[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T5[rsp+8]
+	lea	rcx, QWORD PTR _InitData$3[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T5[rsp], rax
+	mov	DWORD PTR $T6[rsp], 1
+; File c:\projects\gsl\include\gsl\span
+; Line 631
+	lea	rcx, QWORD PTR $T5[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN77@make_subsp:
+; Line 612
+	mov	rcx, rbx
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+; Line 636
+	mov	rax, rbx
+; Line 637
+	add	rsp, 80					; 00000050H
+	pop	rbx
+	ret	0
+$LN76@make_subsp:
+?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ENDP ; gsl::span<int,-1>::make_subspan
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+this$ = 96
+__$ReturnUdt$ = 104
+$T6 = 112
+offset$ = 112
+count$ = 120
+__formal$ = 128
+?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA PROC ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN9@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN9@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA ENDP ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$0
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+this$ = 96
+__$ReturnUdt$ = 104
+$T6 = 112
+offset$ = 112
+count$ = 120
+__formal$ = 128
+?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA PROC ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN12@dtor$1
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN12@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA ENDP ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+this$ = 96
+__$ReturnUdt$ = 104
+$T6 = 112
+offset$ = 112
+count$ = 120
+__formal$ = 128
+?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA PROC ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN9@dtor$0
+	and	DWORD PTR $T6[rbp], -2
+	lea	rcx, QWORD PTR $T5[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN9@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA ENDP ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+$T1 = 32
+_InitData$2 = 40
+_InitData$3 = 40
+$T4 = 56
+$T5 = 56
+this$ = 96
+__$ReturnUdt$ = 104
+$T6 = 112
+offset$ = 112
+count$ = 120
+__formal$ = 128
+?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA PROC ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$1
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T6[rbp]
+	and	eax, 2
+	test	eax, eax
+	je	SHORT $LN12@dtor$1
+	and	DWORD PTR $T6[rbp], -3
+	lea	rcx, QWORD PTR $T4[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN12@dtor$1:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$1@?0??make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z@4HA ENDP ; `gsl::span<int,-1>::make_subspan'::`1'::dtor$1
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ??0?$span@H$0?0@gsl@@AEAA@UKnownNotNull@01@_J@Z
+_TEXT	SEGMENT
+this$ = 48
+ptr$ = 56
+count$ = 64
+??0?$span@H$0?0@gsl@@AEAA@UKnownNotNull@01@_J@Z PROC	; gsl::span<int,-1>::span<int,-1>, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 612
+$LN4:
+	push	rbx
+	sub	rsp, 32					; 00000020H
+	mov	rbx, rcx
+	call	??$?0_J@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEAA@UKnownNotNull@12@_J@Z ; gsl::span<int,-1>::storage_type<gsl::details::extent_type<-1> >::storage_type<gsl::details::extent_type<-1> ><__int64>
+	mov	rax, rbx
+	add	rsp, 32					; 00000020H
+	pop	rbx
+	ret	0
+??0?$span@H$0?0@gsl@@AEAA@UKnownNotNull@01@_J@Z ENDP	; gsl::span<int,-1>::span<int,-1>
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
 ;	COMDAT ?data@?$storage_type@V?$extent_type@$0?0@details@gsl@@@?$span@H$0?0@gsl@@QEBAPEAHXZ
 _TEXT	SEGMENT
 this$ = 8
@@ -3591,6 +10498,41 @@ size$ = 16
 ; Line 571
 	ret	0
 ?CheckRange@?$span@H$0?0@gsl@@CA_N_J0@Z ENDP		; gsl::span<int,-1>::CheckRange
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?end@?$span@H$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+__$ReturnUdt$ = 16
+?end@?$span@H$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<int,-1>::end, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	rax, QWORD PTR [rcx]
+	mov	QWORD PTR [rdx+8], rax
+; Line 519
+	mov	rax, rdx
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; Line 519
+	ret	0
+?end@?$span@H$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<int,-1>::end
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?begin@?$span@H$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ
+_TEXT	SEGMENT
+this$ = 8
+__$ReturnUdt$ = 16
+?begin@?$span@H$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ PROC ; gsl::span<int,-1>::begin, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 145
+	mov	QWORD PTR [rdx], rcx
+; Line 518
+	mov	rax, rdx
+; Line 145
+	mov	QWORD PTR [rdx+8], 0
+; Line 518
+	ret	0
+?begin@?$span@H$0?0@gsl@@QEBA?AV?$span_iterator@V?$span@H$0?0@gsl@@$0A@@details@2@XZ ENDP ; gsl::span<int,-1>::begin
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ?data@?$span@H$0?0@gsl@@QEBAPEAHXZ
@@ -3723,6 +10665,62 @@ this$ = 8
 ?size@?$span@H$0?0@gsl@@QEBA_JXZ ENDP			; gsl::span<int,-1>::size
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
+;	COMDAT ?subspan@?$span@H$0?0@gsl@@QEBA?AV12@_J0@Z
+_TEXT	SEGMENT
+this$ = 64
+__$ReturnUdt$ = 72
+offset$ = 80
+count$ = 88
+?subspan@?$span@H$0?0@gsl@@QEBA?AV12@_J0@Z PROC		; gsl::span<int,-1>::subspan, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 493
+$LN4:
+	push	rbx
+	sub	rsp, 48					; 00000030H
+; Line 494
+	xor	eax, eax
+	mov	rbx, rdx
+	mov	BYTE PTR [rsp+32], al
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+	mov	rax, rbx
+; Line 495
+	add	rsp, 48					; 00000030H
+	pop	rbx
+	ret	0
+?subspan@?$span@H$0?0@gsl@@QEBA?AV12@_J0@Z ENDP		; gsl::span<int,-1>::subspan
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT ?last@?$span@H$0?0@gsl@@QEBA?AV12@_J@Z
+_TEXT	SEGMENT
+$T1 = 64
+this$ = 64
+__$ReturnUdt$ = 72
+count$ = 80
+?last@?$span@H$0?0@gsl@@QEBA?AV12@_J@Z PROC		; gsl::span<int,-1>::last, COMDAT
+; File c:\projects\gsl\include\gsl\span
+; Line 487
+$LN23:
+	push	rbx
+	sub	rsp, 48					; 00000030H
+	mov	rbx, rdx
+	mov	DWORD PTR $T1[rsp], 0
+; Line 488
+	xor	edx, edx
+	mov	rax, r8
+	mov	r8, QWORD PTR [rcx]
+	or	r9, -1
+	mov	BYTE PTR [rsp+32], dl
+	sub	r8, rax
+	mov	rdx, rbx
+	call	?make_subspan@?$span@H$0?0@gsl@@AEBA?AV12@_J0V?$subspan_selector@$0?0@12@@Z ; gsl::span<int,-1>::make_subspan
+	mov	rax, rbx
+; Line 489
+	add	rsp, 48					; 00000030H
+	pop	rbx
+	ret	0
+?last@?$span@H$0?0@gsl@@QEBA?AV12@_J@Z ENDP		; gsl::span<int,-1>::last
+_TEXT	ENDS
+; Function compile flags: /Ogtpy
 ;	COMDAT ??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z
 _TEXT	SEGMENT
 this$ = 48
@@ -3743,24 +10741,151 @@ $LN4:
 ??0?$span@H$0?0@gsl@@QEAA@PEAH_J@Z ENDP			; gsl::span<int,-1>::span<int,-1>
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
-;	COMDAT ?foo@@YA_NXZ
+;	COMDAT ?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z
 _TEXT	SEGMENT
-$T1 = 0
-$T2 = 32
-?foo@@YA_NXZ PROC					; foo, COMDAT
+_InitData$1 = 40
+$T2 = 56
+s$ = 112
+$T3 = 120
+len$ = 120
+?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z PROC ; test_span_unoptimizable_rangecheck, COMDAT
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 41
+$LN62:
+	test	edx, edx
+; Line 42
+	jle	$LN61@test_span_
+	mov	rax, rsp
+	push	rsi
+	push	rdi
+	push	r14
+	sub	rsp, 80					; 00000050H
+	mov	QWORD PTR [rax-72], -2
+	mov	QWORD PTR [rax+8], rbx
+	mov	QWORD PTR [rax+24], rbp
+; Line 41
+	movsxd	rbp, edx
+	mov	rsi, rcx
+	xor	ebx, ebx
+	mov	DWORD PTR [rax+16], ebx
+; Line 42
+	mov	edi, ebx
+	lea	r14, OFFSET FLAT:??_7exception@std@@6B@
+$LL4@test_span_:
+	cmp	rdi, QWORD PTR [rsi]
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	jae	SHORT $LN8@test_span_
+	test	bl, 1
+	je	SHORT $LN45@test_span_
+	and	ebx, -2
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 83
+	mov	QWORD PTR $T2[rsp], r14
+; Line 84
+	lea	rcx, QWORD PTR $T2[rsp+8]
+	call	QWORD PTR __imp___std_exception_destroy
+$LN45@test_span_:
 ; File c:\projects\gsl\tests\span_compile_only.cpp
 ; Line 42
-$LN223:
-	sub	rsp, 24
-	mov	QWORD PTR $T1[rsp], -2
-	mov	DWORD PTR $T2[rsp], 0
+	mov	rax, QWORD PTR [rsi+8]
+; Line 44
+	inc	DWORD PTR [rax+rdi*4]
+; Line 42
+	inc	rdi
+	cmp	rdi, rbp
+	jl	SHORT $LL4@test_span_
+	jmp	SHORT $LN3@test_span_
+$LN8@test_span_:
+; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h
+; Line 53
+	mov	QWORD PTR $T2[rsp], r14
+; Line 52
+	xor	eax, eax
+	mov	QWORD PTR $T2[rsp+8], rax
+	mov	QWORD PTR $T2[rsp+16], rax
 ; Line 54
-	mov	al, 1
-; Line 56
-	add	rsp, 24
+	lea	rax, OFFSET FLAT:??_C@_0ED@KHBJKJEH@GSL?3?5Precondition?5failure?5at?5C?3?2@
+	mov	QWORD PTR _InitData$1[rsp], rax
+	mov	BYTE PTR _InitData$1[rsp+8], 1
+; Line 55
+	lea	rdx, QWORD PTR $T2[rsp+8]
+	lea	rcx, QWORD PTR _InitData$1[rsp]
+	call	QWORD PTR __imp___std_exception_copy
+; File c:\projects\gsl\include\gsl\gsl_assert
+; Line 99
+	lea	rax, OFFSET FLAT:??_7fail_fast@gsl@@6B@
+	mov	QWORD PTR $T2[rsp], rax
+	or	ebx, 1
+	mov	DWORD PTR $T3[rsp], ebx
+; File c:\projects\gsl\include\gsl\span
+; Line 509
+	lea	rcx, QWORD PTR $T2[rsp]
+	call	??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z ; gsl::details::throw_exception<gsl::fail_fast>
+	npad	1
+$LN3@test_span_:
+; File c:\projects\gsl\tests\span_compile_only.cpp
+; Line 46
+	mov	rbx, QWORD PTR [rsp+112]
+	mov	rbp, QWORD PTR [rsp+128]
+	add	rsp, 80					; 00000050H
+	pop	r14
+	pop	rdi
+	pop	rsi
+$LN61@test_span_:
 	ret	0
-?foo@@YA_NXZ ENDP					; foo
+$LN60@test_span_:
+?test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z ENDP ; test_span_unoptimizable_rangecheck
 _TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+_InitData$1 = 40
+$T2 = 56
+s$ = 112
+$T3 = 120
+len$ = 120
+?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA PROC ; `test_span_unoptimizable_rangecheck'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T3[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN11@dtor$0
+	and	DWORD PTR $T3[rbp], -2
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA ENDP ; `test_span_unoptimizable_rangecheck'::`1'::dtor$0
+text$x	ENDS
+; Function compile flags: /Ogtpy
+;	COMDAT text$x
+text$x	SEGMENT
+_InitData$1 = 40
+$T2 = 56
+s$ = 112
+$T3 = 120
+len$ = 120
+?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA PROC ; `test_span_unoptimizable_rangecheck'::`1'::dtor$0
+	push	rbp
+	sub	rsp, 32					; 00000020H
+	mov	rbp, rdx
+	mov	eax, DWORD PTR $T3[rbp]
+	and	eax, 1
+	test	eax, eax
+	je	SHORT $LN11@dtor$0
+	and	DWORD PTR $T3[rbp], -2
+	lea	rcx, QWORD PTR $T2[rbp]
+	call	??1fail_fast@gsl@@UEAA@XZ
+$LN11@dtor$0:
+	add	rsp, 32					; 00000020H
+	pop	rbp
+	ret	0
+?dtor$0@?0??test_span_unoptimizable_rangecheck@@YAXV?$span@H$0?0@gsl@@H@Z@4HA ENDP ; `test_span_unoptimizable_rangecheck'::`1'::dtor$0
+text$x	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??$throw_exception@Ufail_fast@gsl@@@details@gsl@@YAX$$QEAUfail_fast@1@@Z
 _TEXT	SEGMENT
@@ -4333,156 +11458,6 @@ $LN7:
 	pop	rbx
 	ret	0
 ??0logic_error@std@@QEAA@PEBD@Z ENDP			; std::logic_error::logic_error
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Deallocate@std@@YAXPEAX_K1@Z
-_TEXT	SEGMENT
-_Ptr$ = 48
-_Count$ = 56
-_Sz$ = 64
-?_Deallocate@std@@YAXPEAX_K1@Z PROC			; std::_Deallocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 92
-$LN11:
-	sub	rsp, 40					; 00000028H
-	mov	r9, rdx
-; Line 94
-	or	rax, -1
-	xor	edx, edx
-	div	r8
-	cmp	r9, rax
-	jbe	SHORT $LN2@Deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN2@Deallocate:
-; Line 95
-	imul	r9, r8
-; Line 96
-	cmp	r9, 4096				; 00001000H
-	jb	SHORT $LN3@Deallocate
-; Line 99
-	test	cl, 31
-	je	SHORT $LN4@Deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN4@Deallocate:
-; Line 103
-	mov	rax, QWORD PTR [rcx-8]
-; Line 114
-	cmp	rax, rcx
-	jb	SHORT $LN5@Deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN5@Deallocate:
-; Line 121
-	sub	rcx, rax
-	cmp	rcx, 8
-	jae	SHORT $LN6@Deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN6@Deallocate:
-; Line 125
-	cmp	rcx, 39					; 00000027H
-	jbe	SHORT $LN7@Deallocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN7@Deallocate:
-; Line 128
-	mov	rcx, rax
-$LN3@Deallocate:
-; Line 133
-	add	rsp, 40					; 00000028H
-; Line 132
-	jmp	??3@YAXPEAX@Z				; operator delete
-$LN10@Deallocate:
-?_Deallocate@std@@YAXPEAX_K1@Z ENDP			; std::_Deallocate
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Allocate@std@@YAPEAX_K0_N@Z
-_TEXT	SEGMENT
-_Count$ = 48
-_Sz$ = 56
-_Try_aligned_allocation$ = 64
-?_Allocate@std@@YAPEAX_K0_N@Z PROC			; std::_Allocate, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0
-; Line 48
-$LN12:
-	sub	rsp, 40					; 00000028H
-	mov	r9, rdx
-; Line 51
-	test	rcx, rcx
-	jne	SHORT $LN2@Allocate
-; Line 52
-	xor	eax, eax
-$LN8@Allocate:
-; Line 87
-	add	rsp, 40					; 00000028H
-	ret	0
-$LN2@Allocate:
-; Line 55
-	xor	edx, edx
-	or	rax, -1
-	div	r9
-	cmp	rax, rcx
-	jae	SHORT $LN3@Allocate
-; Line 56
-	call	QWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
-	int	3
-$LN3@Allocate:
-; Line 57
-	imul	rcx, r9
-; Line 61
-	test	r8b, r8b
-	je	SHORT $LN4@Allocate
-	cmp	rcx, 4096				; 00001000H
-	jb	SHORT $LN4@Allocate
-; Line 65
-	lea	rax, QWORD PTR [rcx+39]
-; Line 66
-	cmp	rax, rcx
-	ja	SHORT $LN6@Allocate
-; Line 67
-	call	QWORD PTR __imp_?_Xbad_alloc@std@@YAXXZ
-	int	3
-$LN6@Allocate:
-; Line 69
-	mov	rcx, rax
-	call	??2@YAPEAX_K@Z				; operator new
-	mov	rcx, rax
-; Line 70
-	test	rax, rax
-	jne	SHORT $LN7@Allocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN7@Allocate:
-; Line 71
-	add	rax, 39					; 00000027H
-	and	rax, -32				; ffffffffffffffe0H
-; Line 73
-	mov	QWORD PTR [rax-8], rcx
-; Line 87
-	add	rsp, 40					; 00000028H
-	ret	0
-$LN4@Allocate:
-; Line 83
-	call	??2@YAPEAX_K@Z				; operator new
-; Line 84
-	test	rax, rax
-	jne	SHORT $LN8@Allocate
-	call	QWORD PTR __imp__invalid_parameter_noinfo_noreturn
-	int	3
-$LN11@Allocate:
-?_Allocate@std@@YAPEAX_K0_N@Z ENDP			; std::_Allocate
-_TEXT	ENDS
-; Function compile flags: /Ogtpy
-;	COMDAT ?_Orphan_all@_Container_base0@std@@QEAAXXZ
-_TEXT	SEGMENT
-this$ = 8
-?_Orphan_all@_Container_base0@std@@QEAAXXZ PROC		; std::_Container_base0::_Orphan_all, COMDAT
-; File c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility
-; Line 44
-	ret	0
-?_Orphan_all@_Container_base0@std@@QEAAXXZ ENDP		; std::_Container_base0::_Orphan_all
 _TEXT	ENDS
 ; Function compile flags: /Ogtpy
 ;	COMDAT ??_Gexception@std@@UEAAPEAXI@Z
