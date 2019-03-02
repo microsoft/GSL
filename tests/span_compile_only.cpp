@@ -127,7 +127,7 @@ void static_size_array_span(IDE_DRIVE_STATE& Drive)
 template <class NewClass, class CurrentSpan>
 gsl::span<NewClass> convert_span(CurrentSpan s)
 {
-    Expects((s.size_bytes() % sizeof(NewClass)) == 0);
+    // Expects((s.size_bytes() % sizeof(NewClass)) == 0);
 
     NewClass* ptr = reinterpret_cast<NewClass*>(s.data());
     return { ptr, s.size_bytes() / static_cast<int>(sizeof(NewClass)) };
@@ -151,7 +151,7 @@ UINT8 test_convert_span_Joe(IDE_DRIVE_STATE& Drive)
 
 // issue #6
 // 0 branches in all compilers
-int mysubspan1(std::ptrdiff_t i)
+ptrdiff_t mysubspan1()
 {
     int x[] = { 0,1,2,3,4,5 };
     span<int, 6> s = { x };
@@ -162,7 +162,7 @@ int mysubspan1(std::ptrdiff_t i)
 }
 
 // 2 branches in msvc, 2 clang, ,2 gcc
-int mysubspan2(std::ptrdiff_t i)
+ptrdiff_t mysubspan2(std::ptrdiff_t i)
 {
     int x[] = { 0,1,2,3,4,5 };
     span<int, 6> s = { x };
@@ -173,7 +173,7 @@ int mysubspan2(std::ptrdiff_t i)
 }
 
 // 0
-int mysubspan3(std::ptrdiff_t i)
+ptrdiff_t mysubspan3()
 {
     int x[] = { 0,1,2,3,4,5 };
     span<int, 6> s = { x };
@@ -207,7 +207,7 @@ span<int> mysubspan5(int* p, std::ptrdiff_t size, std::ptrdiff_t i)
 }
 
 // 3
-span<int> mysubspan6(int* p, std::ptrdiff_t size, std::ptrdiff_t i)
+span<int> mysubspan6(int* p, std::ptrdiff_t size)
 {
     if (p != nullptr)
     {
@@ -253,55 +253,55 @@ span<int> mysubspan9(int* p, std::ptrdiff_t size, std::ptrdiff_t i)
     return { };
 }
 
-// issue #7
-// those iterations should be optimized into oblivion
+// // issue #7
+// // those iterations should be optimized into oblivion
 void bar(span<uint8_t>);
-void test_string_for0()
-{
-    uint8_t bytes[10];
-    span<uint8_t> byteSpan = { bytes };
+// void test_string_for0()
+// {
+//     uint8_t bytes[10];
+//     span<uint8_t> byteSpan = { bytes };
 
-    cstring_span<> cdModelType = ensure_z("iVtrau lDC");
-    for (int i = 0; i < 10; ++i)
-    {
-        byteSpan[i] = cdModelType[i];
-    }
+//     cstring_span<> cdModelType = ensure_z("iVtrau lDC");
+//     for (int i = 0; i < 10; ++i)
+//     {
+//         byteSpan[i] = cdModelType[i];
+//     }
 
-    bar(byteSpan);
-}
+//     bar(byteSpan);
+// }
 
-void test_string_for1()
-{
-    uint8_t bytes[10];
-    span<uint8_t> byteSpan = { bytes };
+// void test_string_for1()
+// {
+//     uint8_t bytes[10];
+//     span<uint8_t> byteSpan = { bytes };
 
-    cstring_span<> cdModelType = { "iVtrau lDC" };
-    for (int i = 0; i < 10; ++i)
-    {
-        byteSpan[i] = cdModelType[i];
-    }
-    bar(byteSpan);
-}
+//     cstring_span<> cdModelType = { "iVtrau lDC" };
+//     for (int i = 0; i < 10; ++i)
+//     {
+//         byteSpan[i] = cdModelType[i];
+//     }
+//     bar(byteSpan);
+// }
 
-void test_string_for2()
-{
-    uint8_t bytes[10];
-    span<uint8_t> byteSpan = { bytes };
+// void test_string_for2()
+// {
+//     uint8_t bytes[10];
+//     span<uint8_t> byteSpan = { bytes };
 
-    const char tmp[] = { 'i', 'V', 't', 'r', 'a', 'u', ' ', 'l','D', 'C' };
-    cstring_span<> cdModelType = { tmp };
-    for (int i = 0; i < 10; ++i)
-    {
-        byteSpan[i] = cdModelType[i];
-    }
+//     const char tmp[] = { 'i', 'V', 't', 'r', 'a', 'u', ' ', 'l','D', 'C' };
+//     cstring_span<> cdModelType = { tmp };
+//     for (int i = 0; i < 10; ++i)
+//     {
+//         byteSpan[i] = cdModelType[i];
+//     }
 
-    bar(byteSpan);
-}
+//     bar(byteSpan);
+// }
 
 
 // sanity check if terminate actually terminates 
 // Example: if compiling with no exceptions and /D_HAS_EXCEPTION=0, it does not!
-void doterminate()
+[[noreturn]] void doterminate()
 {
     std::terminate();
 }
