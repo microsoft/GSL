@@ -15,4 +15,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define CATCH_CONFIG_MAIN
+
+#ifdef _MSC_VER
+
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#include <CodeAnalysis/Warnings.h>
+#pragma warning(disable : ALL_CODE_ANALYSIS_WARNINGS) // from catch
+#endif // _MSC_VER
+
 #include <catch/catch.hpp>

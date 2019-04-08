@@ -14,6 +14,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
+// blanket turn off warnings from CppCoreCheck from catch
+// so people aren't annoyed by them when running the tool.
+#pragma warning(disable : 26440 26426) // from catch
+
+#endif
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_util> // for narrow, finally, narrow_cast, narrowing_e...
@@ -73,7 +80,7 @@ TEST_CASE("finally_function_with_bind")
     CHECK(i == 1);
 }
 
-int j = 0;
+static int j = 0;
 void g() { j += 1; }
 TEST_CASE("finally_function_ptr")
 {
@@ -85,6 +92,7 @@ TEST_CASE("finally_function_ptr")
     CHECK(j == 1);
 }
 
+GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("narrow_cast")
 {
     int n = 120;
@@ -96,6 +104,7 @@ TEST_CASE("narrow_cast")
     CHECK(uc == 44);
 }
 
+GSL_SUPPRESS(con.5) // NO-FORMAT: attribute
 TEST_CASE("narrow")
 {
     int n = 120;
@@ -117,4 +126,8 @@ TEST_CASE("narrow")
 
     n = -42;
     CHECK_THROWS_AS(narrow<unsigned>(n), narrowing_error);
+
+#if GSL_CONSTEXPR_NARROW
+    static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");
+#endif
 }
