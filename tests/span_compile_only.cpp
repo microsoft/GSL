@@ -41,7 +41,7 @@ void test_span_unoptimizable_rangecheck(span<int> s, int len)
 {
     for (ptrdiff_t i = 0; i < len; i++)
     {
-        s[i] += 2; // ORIGINALLY 1, change back before final checkin
+        s[i] += 1;
     }
 }
 
