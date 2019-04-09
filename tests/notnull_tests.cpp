@@ -440,7 +440,7 @@ TEST_CASE("TestNotNullUniquePtrComparison") {
         CHECK(p->i == NotNull1(std::make_unique<UniquePointerTestStruct>())->i);
     }
 }
-static_assert(!std::is_assignable<not_null<std::unique_ptr<int>>, std::unique_ptr<int>>::value, "not_null<std::unique_ptr> must be non assignable from std:unique_ptr");
+static_assert(!std::is_assignable<not_null<std::unique_ptr<int>>, std::unique_ptr<int>&>::value, "not_null<std::unique_ptr> must be non assignable from std:unique_ptr lvalues");
 static_assert(!std::is_copy_constructible<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be non copy constructible");
 static_assert(!std::is_copy_assignable<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be non copy assignable");
 static_assert(std::is_nothrow_move_constructible<not_null<std::unique_ptr<int>>>::value, "not_null<std::unique_ptr> must be no-throw move constructible");
@@ -492,7 +492,7 @@ TEST_CASE("TestNotNullSharedPtrValueComparison") {
         CHECK(p->i == NotNull1(std::make_shared<UniquePointerTestStruct>())->i);
     }
 }
-static_assert(!std::is_assignable<not_null<std::shared_ptr<int>>, std::shared_ptr<int>>::value, "not_null<std::shared_ptr> must be non assignable from std::shared_ptr");
+static_assert(std::is_assignable<not_null<std::shared_ptr<int>>, std::shared_ptr<int>>::value, "not_null<std::shared_ptr> must be assignable from std::shared_ptr");
 static_assert(std::is_copy_constructible<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be copy constructible");
 static_assert(std::is_copy_assignable<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be copy assignable");
 static_assert(std::is_nothrow_move_constructible<not_null<std::shared_ptr<int>>>::value, "not_null<std::shared_ptr> must be no-throw move constructible");
