@@ -133,9 +133,8 @@ test_script:
   - ctest -j2
 
 artifacts:
-  - path: asm\$(ASM_FOLDER)\*.asm
+  - path: asm\$(ASM_FOLDER)
     name: ASM
-    type: zip
 
 before_deploy:
   - ps: |
