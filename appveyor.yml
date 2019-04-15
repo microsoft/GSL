@@ -132,6 +132,9 @@ build_script:
 test_script:
   - ctest -j2
 
+artifacts:
+  - path: asm\$(ASM_FOLDER)
+
 before_deploy:
   - ps: |
       if(-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
