@@ -134,7 +134,6 @@ test_script:
 
 artifacts:
   - path: asm\$(ASM_FOLDER)
-    name: ASM
 
 before_deploy:
   - ps: |
