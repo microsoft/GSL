@@ -22,17 +22,17 @@
 
 //
 // make suppress attributes parse for some compilers
-// Hopefully temporary until suppresion standardization occurs
+// Hopefully temporary until suppression standardization occurs
 //
-#if defined (_MSC_VER)
-#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
-#else
 #if defined(__clang__)
 #define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
 #else
+#if defined(_MSC_VER)
+#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
+#else
 #define GSL_SUPPRESS(x)
-#endif // __clang__
 #endif // _MSC_VER
+#endif // __clang__
 
 //
 // Temporary until MSVC STL supports no-exceptions mode.
@@ -42,6 +42,12 @@
 #define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
 #include <intrin.h>
 #define RANGE_CHECKS_FAILURE 0
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-noreturn"
+#endif
+
 #endif
 
 //
@@ -98,7 +104,7 @@ namespace details
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
     typedef void  (__cdecl *terminate_handler)();
-    
+
     GSL_SUPPRESS(f.6) // NO-FORMAT: attribute
     [[noreturn]] inline void __cdecl default_terminate_handler()
     {
@@ -138,7 +144,7 @@ namespace details
         throw std::forward<Exception>(exception);
     }
 
-#endif
+#endif // GSL_TERMINATE_ON_CONTRACT_VIOLATION
 
 } // namespace details
 } // namespace gsl
@@ -159,9 +165,13 @@ namespace details
 
 #define GSL_CONTRACT_CHECK(type, cond) GSL_ASSUME(cond)
 
-#endif
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 #define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
 #define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
+
+#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND) && defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 
 #endif // GSL_CONTRACTS_H

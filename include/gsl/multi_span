@@ -37,7 +37,7 @@
 #include <type_traits> // for enable_if_t, remove_cv_t, is_same, is_co...
 #include <utility>
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 
 // turn off some warnings that are noisy about our Expects statements
 #pragma warning(push)
@@ -62,7 +62,7 @@
 // compiletime, so the compiler wouldn't have to warn indiscriminently, but
 // could check if the source value actually doesn't fit into the target type
 // and only warn in those cases.
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
@@ -315,33 +315,33 @@ namespace details
 
         // TODO : following signature is for work around VS bug
         template <typename OtherRange>
-        BoundsRanges(const OtherRange&, bool /* firstLevel */)
+        constexpr BoundsRanges(const OtherRange&, bool /* firstLevel */)
         {}
 
-        BoundsRanges(const std::ptrdiff_t* const) {}
-        BoundsRanges() noexcept = default;
+        constexpr BoundsRanges(const std::ptrdiff_t* const) {}
+        constexpr BoundsRanges() noexcept = default;
 
         template <typename T, std::size_t Dim>
-        void serialize(T&) const
+        constexpr void serialize(T&) const
         {}
 
         template <typename T, std::size_t Dim>
-        size_type linearize(const T&) const
+        constexpr size_type linearize(const T&) const
         {
             return 0;
         }
 
         template <typename T, std::size_t Dim>
-        size_type contains(const T&) const
+        constexpr size_type contains(const T&) const
         {
             return -1;
         }
 
-        size_type elementNum(std::size_t) const noexcept { return 0; }
+        constexpr size_type elementNum(std::size_t) const noexcept { return 0; }
 
-        size_type totalSize() const noexcept { return TotalSize; }
+        constexpr size_type totalSize() const noexcept { return TotalSize; }
 
-        bool operator==(const BoundsRanges&) const noexcept { return true; }
+        constexpr bool operator==(const BoundsRanges&) const noexcept { return true; }
     };
 
     template <std::ptrdiff_t... RestRanges>
@@ -360,23 +360,23 @@ namespace details
     public:
         GSL_SUPPRESS(f.23) // NO-FORMAT: attribute // this pointer type is cannot be assigned nullptr - issue in not_null
         GSL_SUPPRESS(bounds.1)  // NO-FORMAT: attribute
-        BoundsRanges(const std::ptrdiff_t* const arr)
+        constexpr BoundsRanges(const std::ptrdiff_t* const arr)
             : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
         {
             Expects(0 <= *arr);
         }
 
-        BoundsRanges() noexcept : m_bound(0) {}
+        constexpr BoundsRanges() noexcept : m_bound(0) {}
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
-        BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
+        constexpr BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
                      bool /* firstLevel */ = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
             , m_bound(other.totalSize())
         {}
 
         template <typename T, std::size_t Dim = 0>
-        void serialize(T& arr) const
+        constexpr void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
@@ -384,7 +384,7 @@ namespace details
 
         template <typename T, std::size_t Dim = 0>
         GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-        size_type linearize(const T& arr) const
+        constexpr size_type linearize(const T& arr) const
         {
             const size_type index = this->Base::totalSize() * arr[Dim];
             Expects(index < m_bound);
@@ -392,7 +392,7 @@ namespace details
         }
 
         template <typename T, std::size_t Dim = 0>
-        size_type contains(const T& arr) const
+        constexpr size_type contains(const T& arr) const
         {
             const ptrdiff_t last = this->Base::template contains<T, Dim + 1>(arr);
             if (last == -1) return -1;
@@ -401,18 +401,19 @@ namespace details
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type totalSize() const noexcept
+        constexpr size_type totalSize() const noexcept
         {
             return m_bound;
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type elementNum() const noexcept
+        constexpr size_type elementNum() const noexcept
         {
             return totalSize() / this->Base::totalSize();
         }
 
-        size_type elementNum(std::size_t dim) const noexcept
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -420,7 +421,7 @@ namespace details
                 return elementNum();
         }
 
-        bool operator==(const BoundsRanges& rhs) const noexcept
+        constexpr bool operator==(const BoundsRanges& rhs) const noexcept
         {
             return m_bound == rhs.m_bound &&
                    static_cast<const Base&>(*this) == static_cast<const Base&>(rhs);
@@ -438,11 +439,11 @@ namespace details
         static const size_type TotalSize =
             Base::TotalSize == dynamic_range ? dynamic_range : CurrentRange * Base::TotalSize;
 
-        BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) {}
-        BoundsRanges() = default;
+        constexpr BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr) {}
+        constexpr BoundsRanges() = default;
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
-        BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
+        constexpr BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
                      bool firstLevel = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
         {
@@ -451,25 +452,25 @@ namespace details
         }
 
         template <typename T, std::size_t Dim = 0>
-        void serialize(T& arr) const
+        constexpr void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
         }
 
         template <typename T, std::size_t Dim = 0>
-        size_type linearize(const T& arr) const
+        constexpr size_type linearize(const T& arr) const
         {
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
-
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-            return this->Base::totalSize() * arr[Dim] +
+            const ptrdiff_t d = arr[Dim];
+            return this->Base::totalSize() * d +
                    this->Base::template linearize<T, Dim + 1>(arr);
         }
 
         template <typename T, std::size_t Dim = 0>
-        size_type contains(const T& arr) const
+        constexpr size_type contains(const T& arr) const
         {
             if (arr[Dim] >= CurrentRange) return -1;
             const size_type last = this->Base::template contains<T, Dim + 1>(arr);
@@ -478,19 +479,19 @@ namespace details
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type totalSize() const noexcept
+        constexpr size_type totalSize() const noexcept
         {
             return CurrentRange * this->Base::totalSize();
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type elementNum() const noexcept
+        constexpr size_type elementNum() const noexcept
         {
             return CurrentRange;
         }
 
         GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        size_type elementNum(std::size_t dim) const noexcept
+        constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
                 return this->Base::elementNum(dim - 1);
@@ -498,7 +499,7 @@ namespace details
                 return elementNum();
         }
 
-        bool operator==(const BoundsRanges& rhs) const noexcept
+        constexpr bool operator==(const BoundsRanges& rhs) const noexcept
         {
             return static_cast<const Base&>(*this) == static_cast<const Base&>(rhs);
         }
@@ -595,7 +596,6 @@ public:
     using sliced_type = static_bounds<RestRanges...>;
     using mapping_type = contiguous_mapping_tag;
 
-    constexpr static_bounds(const static_bounds&) noexcept = default;
     constexpr static_bounds() /*noexcept*/ = default;
 
     template <typename SourceType, typename TargetType, std::size_t Rank>
@@ -1886,6 +1886,8 @@ public:
         auto d = narrow_cast<size_type>(sizeof(OtherValueType) / sizeof(value_type));
 
         const size_type size = this->bounds().total_size() / d;
+
+        GSL_SUPPRESS(type.3) // NO-FORMAT: attribute
         return {const_cast<OtherValueType*>(reinterpret_cast<const OtherValueType*>(this->data())),
                 size,
                 bounds_type{resize_extent(this->bounds().index_bounds(), d),
@@ -2273,7 +2275,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 
 #undef constexpr
@@ -2284,7 +2286,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 
 #endif // _MSC_VER
 
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
 

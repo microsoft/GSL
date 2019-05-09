@@ -30,7 +30,7 @@
 #include <string>      // for basic_string, allocator, char_traits
 #include <type_traits> // for declval, is_convertible, enable_if_t, add_...
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
 
 // Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
@@ -175,6 +175,7 @@ class basic_string_span
 {
 public:
     using element_type = CharT;
+    using value_type = std::remove_cv_t<element_type>;
     using pointer = std::add_pointer_t<element_type>;
     using reference = std::add_lvalue_reference_t<element_type>;
     using const_reference = std::add_lvalue_reference_t<std::add_const_t<element_type>>;
@@ -185,6 +186,8 @@ public:
     using const_iterator = typename impl_type::const_iterator;
     using reverse_iterator = typename impl_type::reverse_iterator;
     using const_reverse_iterator = typename impl_type::const_reverse_iterator;
+
+    using size_type = index_type;
 
     // default (empty)
     constexpr basic_string_span() noexcept = default;
@@ -706,7 +709,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 #endif
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(pop)
 
 #if _MSC_VER < 1910

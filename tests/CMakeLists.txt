@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.0.2)
 
 project(GSLTests CXX)
 
@@ -33,14 +33,24 @@ endif()
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
-target_compile_options(gsl_tests_config INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:
+if(MSVC) # MSVC or simulating MSVC
+    target_compile_options(gsl_tests_config INTERFACE
+        ${GSL_CPLUSPLUS_OPT}
         /EHsc
         /W4
         /WX
-    >
-    ${GSL_CPLUSPLUS_OPT}
-    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+        $<$<CXX_COMPILER_ID:Clang>:
+          -Weverything
+          -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-missing-braces
+          -Wno-missing-prototypes
+          -Wno-unknown-attributes
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
+        >
+    )
+else()
+    target_compile_options(gsl_tests_config INTERFACE
         -fno-strict-aliasing
         -Wall
         -Wcast-align
@@ -48,16 +58,25 @@ target_compile_options(gsl_tests_config INTERFACE
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-missing-braces
-        -Wno-unknown-attributes
-        -Wnon-virtual-dtor
-        -Wold-style-cast
-        -Woverloaded-virtual
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-    >
-)
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
+          -Weverything
+          -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-missing-braces
+          -Wno-missing-prototypes
+          -Wno-padded
+          -Wno-unknown-attributes
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
+          -Wno-weak-vtables
+        >
+        $<$<CXX_COMPILER_ID:Clang>:
+          $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
+        >
+    )
+endif(MSVC)
 
 # for tests to find the catch header
 target_include_directories(gsl_tests_config INTERFACE
@@ -107,7 +126,7 @@ add_gsl_test(utils_tests)
 add_gsl_test(owner_tests)
 add_gsl_test(byte_tests)
 add_gsl_test(algorithm_tests)
-add_gsl_test(sloppy_notnull_tests)
+add_gsl_test(strict_notnull_tests)
 
 
 # No exception tests
@@ -121,34 +140,49 @@ endforeach(flag_var)
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
 add_library(gsl_tests_config_noexcept INTERFACE)
-target_compile_options(gsl_tests_config_noexcept INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:
-        /D_HAS_EXCEPTIONS=0
-        /wd4702
-        /wd4577
+if(MSVC) # MSVC or simulating MSVC
+    target_compile_definitions(gsl_tests_config_noexcept INTERFACE
+        _HAS_EXCEPTIONS=0
+    )
+    target_compile_options(gsl_tests_config_noexcept INTERFACE
+        ${GSL_CPLUSPLUS_OPT}
         /W4
         /WX
-    >
-    ${GSL_CPLUSPLUS_OPT}
-    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
-        -fno-strict-aliasing
+        $<$<CXX_COMPILER_ID:MSVC>:
+          /wd4577
+          /wd4702
+        >
+        $<$<CXX_COMPILER_ID:Clang>:
+          -Weverything
+          -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
+          -Wno-unknown-attributes
+        >
+    )
+else()
+    target_compile_options(gsl_tests_config_noexcept INTERFACE
         -fno-exceptions
+        -fno-strict-aliasing
         -Wall
         -Wcast-align
         -Wconversion
         -Wctor-dtor-privacy
         -Werror
         -Wextra
-        -Wno-missing-braces
-        -Wno-unknown-attributes
-        -Wnon-virtual-dtor
-        -Wold-style-cast
-        -Woverloaded-virtual
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-    >
-)
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
+          -Weverything
+          -Wno-c++98-compat
+          -Wno-c++98-compat-pedantic
+          -Wno-missing-prototypes
+          -Wno-unknown-attributes
+          -Wno-weak-vtables
+        >
+    )
+endif(MSVC)
 
 # set definitions for tests
 target_compile_definitions(gsl_tests_config_noexcept INTERFACE

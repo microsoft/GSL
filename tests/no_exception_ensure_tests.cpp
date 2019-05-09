@@ -14,21 +14,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <cstdlib>      // for std::exit
-#include <gsl/span>     // for span
+#include <cstdlib>  // for std::exit
+#include <gsl/span> // for span
 
 int operator_subscript_no_throw() noexcept
 {
-    int arr[10]; 
-    const gsl::span<int> sp { arr };
+    int arr[10];
+    const gsl::span<int> sp{arr};
     return sp[11];
 }
 
-
-void test_terminate()
-{ 
-    std::exit(0);
-}
+[[noreturn]] void test_terminate() { std::exit(0); }
 
 void setup_termination_handler() noexcept
 {
@@ -43,7 +39,6 @@ void setup_termination_handler() noexcept
 
 #endif
 }
-
 
 int main() noexcept
 {

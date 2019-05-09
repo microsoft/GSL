@@ -1,6 +1,6 @@
-# GSL: Guideline Support Library [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL) [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+# GSL: Guidelines Support Library [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL) [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
 
-The Guideline Support Library (GSL) contains functions and types that are suggested for use by the
+The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
 This repo contains Microsoft's implementation of GSL.
 
@@ -27,9 +27,14 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * Windows using Visual Studio 2015
 * Windows using Visual Studio 2017
 * Windows using Clang/LLVM 3.6
+* Windows using Clang/LLVM 7.0.0
 * Windows using GCC 5.1
 * Windows using Intel C++ Compiler 18.0
-* GNU/Linux using Clang/LLVM 3.6
+* GNU/Linux using Clang/LLVM 3.6-3.9
+* GNU/Linux using Clang/LLVM 4.0
+* GNU/Linux using Clang/LLVM 5.0
+* GNU/Linux using Clang/LLVM 6.0
+* GNU/Linux using Clang/LLVM 7.0
 * GNU/Linux using GCC 5.1
 * OS X Yosemite using Xcode with Apple Clang 7.0.0.7000072
 * OS X Yosemite using GCC-5.2.0

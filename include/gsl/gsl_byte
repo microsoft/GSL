@@ -19,17 +19,17 @@
 
 //
 // make suppress attributes work for some compilers
-// Hopefully temporary until suppresion standardization occurs
+// Hopefully temporary until suppression standardization occurs
 //
-#if defined(_MSC_VER)
-#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
-#else
 #if defined(__clang__)
 #define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
 #else
+#if defined(_MSC_VER)
+#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
+#else
 #define GSL_SUPPRESS(x)
-#endif // __clang__
 #endif // _MSC_VER
+#endif // __clang__
 
 #include <type_traits>
 
@@ -79,7 +79,7 @@
 #endif // _MSC_VER
 
 // Use __may_alias__ attribute on gcc and clang
-#if defined __clang__ || (__GNUC__ > 5)
+#if defined __clang__ || (defined(__GNUC__) && __GNUC__ > 5)
 #define byte_may_alias __attribute__((__may_alias__))
 #else // defined __clang__ || defined __GNUC__
 #define byte_may_alias

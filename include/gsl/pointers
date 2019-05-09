@@ -25,7 +25,7 @@
 #include <system_error> // for hash
 #include <type_traits>  // for enable_if_t, is_convertible, is_assignable
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
@@ -72,13 +72,13 @@ public:
     static_assert(std::is_assignable<T&, std::nullptr_t>::value, "T cannot be assigned nullptr.");
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr explicit not_null(U&& u) : ptr_(std::forward<U>(u))
+    constexpr not_null(U&& u) : ptr_(std::forward<U>(u))
     {
         Expects(ptr_ != nullptr);
     }
 
     template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
-    constexpr explicit not_null(T u) : ptr_(u)
+    constexpr not_null(T u) : ptr_(u)
     {
         Expects(ptr_ != nullptr);
     }
@@ -121,7 +121,7 @@ private:
 
 template <class T>
 auto make_not_null(T&& t) {
-    return gsl::not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
+    return not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
 
 template <class T>
@@ -189,10 +189,106 @@ struct hash<gsl::not_null<T>>
 
 } // namespace std
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+namespace gsl
+{
+
+//
+// strict_not_null
+//
+// Restricts a pointer or smart pointer to only hold non-null values,
+//
+// - provides a strict (i.e. explicit contructor from T) wrapper of not_null
+// - to be used for new code that wishes the design to be cleaner and make not_null
+//   checks intentional, or in old code that would like to make the transition.
+//
+//   To make the transition from not_null, incrementally replace not_null
+//   by strict_not_null and fix compilation errors
+//
+//   Expect to
+//   - remove all unneded conversions from raw pointer to not_null and back
+//   - make API clear by specifyning not_null in parameters where needed
+//   - remove unnesessary asserts
+//
+template <class T>
+class strict_not_null: public not_null<T>
+{
+public:
+
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+    constexpr explicit strict_not_null(U&& u) :
+        not_null<T>(std::forward<U>(u))
+    {}
+
+    template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
+    constexpr explicit strict_not_null(T u) :
+        not_null<T>(u)
+    {}
+
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+    constexpr strict_not_null(const not_null<U>& other) :
+        not_null<T>(other)
+    {}
+
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+    constexpr strict_not_null(const strict_not_null<U>& other) :
+        not_null<T>(other)
+    {}
+
+    strict_not_null(strict_not_null&& other) = default;
+    strict_not_null(const strict_not_null& other) = default;
+    strict_not_null& operator=(const strict_not_null& other) = default;
+    strict_not_null& operator=(const not_null<T>& other)
+    {
+        not_null<T>::operator=(other);
+        return *this;
+    }
+
+    // prevents compilation when someone attempts to assign a null pointer constant
+    strict_not_null(std::nullptr_t) = delete;
+    strict_not_null& operator=(std::nullptr_t) = delete;
+
+    // unwanted operators...pointers only point to single objects!
+    strict_not_null& operator++() = delete;
+    strict_not_null& operator--() = delete;
+    strict_not_null operator++(int) = delete;
+    strict_not_null operator--(int) = delete;
+    strict_not_null& operator+=(std::ptrdiff_t) = delete;
+    strict_not_null& operator-=(std::ptrdiff_t) = delete;
+    void operator[](std::ptrdiff_t) const = delete;
+};
+
+// more unwanted operators
+template <class T, class U>
+std::ptrdiff_t operator-(const strict_not_null<T>&, const strict_not_null<U>&) = delete;
+template <class T>
+strict_not_null<T> operator-(const strict_not_null<T>&, std::ptrdiff_t) = delete;
+template <class T>
+strict_not_null<T> operator+(const strict_not_null<T>&, std::ptrdiff_t) = delete;
+template <class T>
+strict_not_null<T> operator+(std::ptrdiff_t, const strict_not_null<T>&) = delete;
+
+template <class T>
+auto make_strict_not_null(T&& t) {
+    return strict_not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
+}
+
+} // namespace gsl
+
+namespace std
+{
+template <class T>
+struct hash<gsl::strict_not_null<T>>
+{
+    std::size_t operator()(const gsl::strict_not_null<T>& value) const { return hash<T>{}(value); }
+};
+
+} // namespace std
+
+#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
+
 #undef constexpr
 #pragma pop_macro("constexpr")
 
-#endif // defined(_MSC_VER) && _MSC_VER < 1910
+#endif // defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
 
 #endif // GSL_POINTERS_H

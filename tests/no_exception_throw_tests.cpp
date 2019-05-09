@@ -14,20 +14,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <cstdlib>      // for std::exit
-#include <gsl/gsl_util> // for narrow
+#include <cstdlib>        // for std::exit
 #include <gsl/gsl_assert> // for get_terminate
+#include <gsl/gsl_util>   // for narrow
 
 int narrow_no_throw()
 {
     const long long bigNumber = 0x0fffffffffffffff;
-    return gsl::narrow<int>(bigNumber); 
+    return gsl::narrow<int>(bigNumber);
 }
 
-void test_terminate()
-{ 
-    std::exit(0);
-}
+[[noreturn]] void test_terminate() { std::exit(0); }
 
 void setup_termination_handler() noexcept
 {
@@ -42,7 +39,6 @@ void setup_termination_handler() noexcept
 
 #endif
 }
-
 
 int main()
 {

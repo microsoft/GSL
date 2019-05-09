@@ -31,7 +31,7 @@
 #include <utility>
 #include <memory> // for std::addressof
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
 
 // turn off some warnings that are noisy about our Expects statements
@@ -61,7 +61,7 @@
 // compiletime, so the compiler wouldn't have to warn indiscriminently, but
 // could check if the source value actually doesn't fit into the target type
 // and only warn in those cases.
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
@@ -394,17 +394,27 @@ public:
         : storage_(KnownNotNull{std::addressof(arr[0])}, details::extent_type<N>())
     {}
 
-    template <std::size_t N, class ArrayElementType = std::remove_const_t<element_type>>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
-    constexpr span(std::array<ArrayElementType, N>& arr) noexcept
-        : storage_(arr.data(), details::extent_type<N>())
-    {}
+    template <std::size_t N, class = std::enable_if_t<(N > 0)>>
+    constexpr span(std::array<std::remove_const_t<element_type>, N>& arr) noexcept
+        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
+    {
+    }
 
-    template <std::size_t N>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
+    constexpr span(std::array<std::remove_const_t<element_type>, 0>&) noexcept
+        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
+    {
+    }
+
+    template <std::size_t N, class = std::enable_if_t<(N > 0)>>
     constexpr span(const std::array<std::remove_const_t<element_type>, N>& arr) noexcept
-        : storage_(arr.data(), details::extent_type<N>())
-    {}
+        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
+    {
+    }
+
+    constexpr span(const std::array<std::remove_const_t<element_type>, 0>&) noexcept
+        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
+    {
+    }
 
     // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
     // on Container to be a contiguous sequence container.
@@ -534,7 +544,7 @@ public:
 #endif // _MSC_VER
 
 private:
-    static bool CheckRange(index_type idx, index_type size)
+    static constexpr bool CheckRange(index_type idx, index_type size) noexcept
     {
         // Optimization:
         //
@@ -546,7 +556,11 @@ private:
         // wrap around to a value always greater than size when casted.
 
         // check if we have enough space to wrap around
+#if defined(__cpp_if_constexpr)
+        if constexpr (sizeof(index_type) <= sizeof(size_t))
+#else
         if (sizeof(index_type) <= sizeof(size_t))
+#endif
         {
             return narrow_cast<size_t>(idx) < narrow_cast<size_t>(size);
         }
@@ -762,7 +776,7 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
 
 } // namespace gsl
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
 #undef constexpr
 #pragma pop_macro("constexpr")
@@ -772,7 +786,7 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
 #pragma warning(pop)
 #endif // _MSC_VER
 
-#if __GNUC__ > 6
+#if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
 

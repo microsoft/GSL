@@ -37,9 +37,10 @@
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <vector>      // for vector
 
-namespace gsl {
+namespace gsl
+{
 struct fail_fast;
-}  // namespace gsl
+} // namespace gsl
 
 using namespace std;
 using namespace gsl;
@@ -54,9 +55,12 @@ struct DerivedClass : BaseClass
 };
 struct AddressOverloaded
 {
+#if (__cplusplus > 201402L)
+    [[maybe_unused]]
+#endif
     AddressOverloaded operator&() const { return {}; }
 };
-}
+} // namespace
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 TEST_CASE("default_constructor")
@@ -452,7 +456,13 @@ TEST_CASE("from_std_array_constructor")
         CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) && cs.data() == arr.data()));
     }
 
-    std::array<AddressOverloaded, 4> ao_arr{};  
+    {
+        std::array<int, 0> empty_arr{};
+        span<int> s{empty_arr};
+        CHECK((s.size() == 0 && s.empty()));
+    }
+
+    std::array<AddressOverloaded, 4> ao_arr{};
 
     {
         span<AddressOverloaded, 4> fs{ao_arr};
@@ -500,15 +510,16 @@ TEST_CASE("from_std_array_constructor")
         CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) && s.data() == arr.data()));
     }
 
-    // This test checks for the bug found in gcc 6.1, 6.2, 6.3, 7.1, 7.2, 7.3 - issue #590
+    // This test checks for the bug found in gcc 6.1, 6.2, 6.3, 6.4, 6.5 7.1, 7.2, 7.3 - issue #590
     {
         span<int> s1 = make_span(arr);
 
         static span<int> s2;
         s2 = s1;
 
-    #if __GNUC__ == 6 && __GNUC_MINOR__ == 4 && __GNUC_PATCHLEVEL__ == 0 && defined(__OPTIMIZE__)
-        // Known to be broken in gcc 6.4 with optimizations
+    #if defined(__GNUC__) && __GNUC__ == 6 && (__GNUC_MINOR__ == 4 || __GNUC_MINOR__ == 5) &&      \
+    __GNUC_PATCHLEVEL__ == 0 && defined(__OPTIMIZE__)
+        // Known to be broken in gcc 6.4 and 6.5 with optimizations
         // Issue in gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83116
         CHECK(s1.size() == 4);
         CHECK(s2.size() == 0);
