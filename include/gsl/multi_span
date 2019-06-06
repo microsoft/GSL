@@ -518,31 +518,31 @@ namespace details
     struct TypeListIndexer
     {
         const TypeChain& obj_;
-        TypeListIndexer(const TypeChain& obj) : obj_(obj) {}
+        constexpr TypeListIndexer(const TypeChain& obj) : obj_(obj) {}
 
         template <std::size_t N>
-        const TypeChain& getObj(std::true_type)
+        constexpr const TypeChain& getObj(std::true_type)
         {
             return obj_;
         }
 
         template <std::size_t N, typename MyChain = TypeChain,
                   typename MyBase = typename MyChain::Base>
-        auto getObj(std::false_type)
+        constexpr auto getObj(std::false_type)
             -> decltype(TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>())
         {
             return TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>();
         }
 
         template <std::size_t N>
-        auto get() -> decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
+        constexpr auto get() -> decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
         {
             return getObj<N - 1>(std::integral_constant<bool, N == 0>());
         }
     };
 
     template <typename TypeChain>
-    TypeListIndexer<TypeChain> createTypeListIndexer(const TypeChain& obj)
+    constexpr TypeListIndexer<TypeChain> createTypeListIndexer(const TypeChain& obj)
     {
         return TypeListIndexer<TypeChain>(obj);
     }
