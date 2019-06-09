@@ -367,8 +367,6 @@ public:
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-    using size_type = index_type;
-
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
     static constexpr const index_type extent{Extent};
 #else
