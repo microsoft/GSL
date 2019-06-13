@@ -11,6 +11,7 @@ configuration:
 image:
   - Visual Studio 2015
   - Visual Studio 2017
+  - Visual Studio 2019
 
 environment:
   NINJA_TAG: v1.8.2
@@ -18,6 +19,7 @@ environment:
   NINJA_PATH: C:\Tools\ninja\ninja-%NINJA_TAG%
   VCVAR2015: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
   VCVAR2017: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat'
+  VCVAR2019: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat'
   matrix:
     - GSL_CXX_STANDARD: 14
       USE_TOOLSET: MSVC
@@ -41,7 +43,7 @@ matrix:
       USE_GENERATOR: MSBuild
 
 cache:
-  - C:\cmake-3.8.0-win32-x86
+  - C:\cmake-3.14.4-win32-x86
   - C:\Tools\ninja
 
 install:
@@ -58,11 +60,11 @@ install:
         $env:PATH = "$env:NINJA_PATH;$env:PATH"
       } else { Write-Warning "Failed to find ninja.exe in expected location." }
       if ($env:USE_TOOLSET -ne "LLVM") {
-        if (![IO.File]::Exists("C:\cmake-3.8.0-win32-x86\bin\cmake.exe")) {
-          Start-FileDownload 'https://cmake.org/files/v3.8/cmake-3.8.0-win32-x86.zip'
-          7z x -y -bso0 cmake-3.8.0-win32-x86.zip -oC:\
+        if (![IO.File]::Exists("C:\cmake-3.14.0-win32-x86\bin\cmake.exe")) {
+          Start-FileDownload 'https://cmake.org/files/v3.14/cmake-3.14.4-win32-x86.zip'
+          7z x -y -bso0 cmake-3.14.4-win32-x86.zip -oC:\
         }
-        $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
+        $env:PATH="C:\cmake-3.14.4-win32-x86\bin;$env:PATH"
       }
 
 before_build:
@@ -72,16 +74,20 @@ before_build:
         $Architecture = $env:PLATFORM
         if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
           $env:VCVARSALL = "`"$env:VCVAR2015`" $Architecture"
-        } else {
+        } elseif ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2017") {
           $env:VCVARSALL = "`"$env:VCVAR2017`" $Architecture"
+        } else {
+          $env:VCVARSALL = "`"$env:VCVAR2019`" $Architecture"
         }
         $env:CMakeGenFlags = "-G Ninja -DGSL_CXX_STANDARD=$env:GSL_CXX_STANDARD"
       } else {
         $GeneratorFlags = '/m /v:minimal'
         if ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2015") {
           $Generator = 'Visual Studio 14 2015'
-        } else {
+        } elseif ("$env:APPVEYOR_BUILD_WORKER_IMAGE" -eq "Visual Studio 2017") {
           $Generator = 'Visual Studio 15 2017'
+        } else {
+          $Generator = 'Visual Studio 16 2019'
         }
         if ("$env:PLATFORM" -eq "x86") { 
             $Architecture = "Win32"
