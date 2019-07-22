@@ -222,7 +222,7 @@ matrix:
     - env: COMPILER=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *gcc7
 
-    # GCC 7 c++17 
+    # GCC 7 c++17
     - env: COMPILER=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       addons: *gcc7
 
@@ -257,6 +257,20 @@ install:
   - cmake --version
 
   ############################################################################
+  # Install a bazelisk
+  ############################################################################
+  - BAZELISK_VERSION=0.8.0
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      BAZELISK_URL="https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-amd64"
+    else
+      BAZELISK_URL="https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-darwin-amd64"
+    fi
+    mkdir -p ${DEPS_DIR}/bazelisk/bin
+    travis_retry wget --no-check-certificate -O ${DEPS_DIR}/bazelisk/bin/bazel ${BAZELISK_URL}
+    export PATH=${DEPS_DIR}/bazelisk/bin:${PATH}
+
+  ############################################################################
   # [linux]: Install the right version of libc++
   ############################################################################
   - |
@@ -288,8 +302,10 @@ before_script:
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build && cd build
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGSL_CXX_STANDARD=$GSL_CXX_STANDARD
-  
+
 script:
   # build and run tests
   - cmake --build . -- -j${JOBS}
   - ctest --output-on-failure -j${JOBS}
+  - bazel build --cxxopt="-std=c++${DGSL_CXX_STANDARD}" --jobs ${JOBS} //...
+  - bazel test --cxxopt="-std=c++${DGSL_CXX_STANDARD}" --jobs ${JOBS} //...
