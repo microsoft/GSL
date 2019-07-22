@@ -44,8 +44,8 @@ cc_test(
     srcs = [
         "algorithm_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -59,8 +59,8 @@ cc_test(
     srcs = [
         "assertion_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -74,8 +74,8 @@ cc_test(
     srcs = [
         "at_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -89,8 +89,8 @@ cc_test(
     srcs = [
         "bounds_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -104,8 +104,8 @@ cc_test(
     srcs = [
         "byte_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -119,8 +119,8 @@ cc_test(
     srcs = [
         "multi_span_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -134,8 +134,8 @@ cc_test(
     srcs = [
         "notnull_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -149,8 +149,8 @@ cc_test(
     srcs = [
         "owner_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -164,8 +164,8 @@ cc_test(
     srcs = [
         "span_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -179,8 +179,8 @@ cc_test(
     srcs = [
         "strict_notnull_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -194,8 +194,8 @@ cc_test(
     srcs = [
         "strided_span_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -209,8 +209,8 @@ cc_test(
     srcs = [
         "string_span_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -224,8 +224,8 @@ cc_test(
     srcs = [
         "utils_tests.cpp",
     ],
-    defines = GSL_TESTS_DEFINES,
     copts = GSL_TESTS_COPTS,
+    defines = GSL_TESTS_DEFINES,
     deps = [
         ":test_main",
         "//include/gsl:gsl_library",
@@ -233,15 +233,14 @@ cc_test(
     ],
 )
 
-
 cc_test(
     name = "no_exception_ensure_tests",
     size = "small",
     srcs = [
         "no_exception_ensure_tests.cpp",
     ],
-    defines = GSL_TESTS_NOEXCEPT_DEFINES,
     copts = GSL_TESTS_NOEXCEPT_COPTS,
+    defines = GSL_TESTS_NOEXCEPT_DEFINES,
     nocopts = GSL_TESTS_NOEXCEPT_NOCOPTS,
     deps = [
         "//include/gsl:gsl_library",
@@ -255,8 +254,8 @@ cc_test(
     srcs = [
         "no_exception_throw_tests.cpp",
     ],
-    defines = GSL_TESTS_NOEXCEPT_DEFINES,
     copts = GSL_TESTS_NOEXCEPT_COPTS,
+    defines = GSL_TESTS_NOEXCEPT_DEFINES,
     nocopts = GSL_TESTS_NOEXCEPT_NOCOPTS,
     deps = [
         "//include/gsl:gsl_library",
