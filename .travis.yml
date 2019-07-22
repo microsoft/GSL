@@ -308,5 +308,11 @@ script:
   # build and run tests
   - cmake --build . -- -j${JOBS}
   - ctest --output-on-failure -j${JOBS}
-  - CC=${CXX} bazel build --cxxopt="-std=c++${GSL_CXX_STANDARD}" --jobs ${JOBS} //...
-  - CC=${CXX} bazel test --cxxopt="-std=c++${GSL_CXX_STANDARD}" --jobs ${JOBS} //...
+  - |
+    if [[ "${BUILD_TYPE}" == "Release" ]]; then
+      export COMPILATION_MODE=opt
+    else
+      export COMPILATION_MODE=dbg
+    fi
+  - CC=${CXX} bazel build --compilation_mode ${COMPILATION_MODE} --cxxopt="-std=c++${GSL_CXX_STANDARD}" --jobs ${JOBS} //...
+  - CC=${CXX} bazel test --compilation_mode ${COMPILATION_MODE} --cxxopt="-std=c++${GSL_CXX_STANDARD}" --jobs ${JOBS} //...
