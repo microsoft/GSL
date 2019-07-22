@@ -1,0 +1,19 @@
+cc_library(
+    name = "gsl_library",
+    hdrs = [
+        "gsl",
+        "gsl_algorithm",
+        "gsl_assert",
+        "gsl_byte",
+        "gsl_util",
+        "multi_span",
+        "pointers",
+        "span",
+        "string_span",
+    ],
+    include_prefix = "gsl",
+    strip_include_prefix = ".",
+    visibility = [
+        "//visibility:public",
+    ],
+)

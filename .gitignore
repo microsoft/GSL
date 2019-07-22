@@ -14,3 +14,4 @@ CMakeCache.txt
 *.suo
 .vs/
 .vscode/
+bazel-*

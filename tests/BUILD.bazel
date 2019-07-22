@@ -1,0 +1,265 @@
+# Keep align to //tests:CMakeLists.txt
+
+GSL_TESTS_COPTS = select({
+    "@bazel_tools//src/conditions:windows": [],
+    "//conditions:default": [
+        "-fno-strict-aliasing",
+    ],
+})
+
+GSL_TESTS_DEFINES = ["GSL_THROW_ON_CONTRACT_VIOLATION"]
+
+GSL_TESTS_NOEXCEPT_COPTS = select({
+    "@bazel_tools//src/conditions:windows": [],
+    "//conditions:default": [
+        "-fno-exceptions",
+        "-fno-strict-aliasing",
+    ],
+})
+
+GSL_TESTS_NOEXCEPT_NOCOPTS = select({
+    "@bazel_tools//src/conditions:windows": "/EHsc",
+    "//conditions:default": "",
+})
+
+GSL_TESTS_NOEXCEPT_DEFINES = ["GSL_TERMINATE_ON_CONTRACT_VIOLATION"] + select({
+    "@bazel_tools//src/conditions:windows": [
+        "_HAS_EXCEPTIONS=0",
+    ],
+    "//conditions:default": [],
+})
+
+cc_library(
+    name = "test_main",
+    srcs = ["test.cpp"],
+    deps = [
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+    alwayslink = True,
+)
+
+cc_test(
+    name = "algorithm_tests",
+    size = "small",
+    srcs = [
+        "algorithm_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "assertion_tests",
+    size = "small",
+    srcs = [
+        "assertion_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "at_tests",
+    size = "small",
+    srcs = [
+        "at_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "bounds_tests",
+    size = "small",
+    srcs = [
+        "bounds_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "byte_tests",
+    size = "small",
+    srcs = [
+        "byte_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "multi_span_tests",
+    size = "small",
+    srcs = [
+        "multi_span_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "notnull_tests",
+    size = "small",
+    srcs = [
+        "notnull_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "owner_tests",
+    size = "small",
+    srcs = [
+        "owner_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "span_tests",
+    size = "small",
+    srcs = [
+        "span_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "strict_notnull_tests",
+    size = "small",
+    srcs = [
+        "strict_notnull_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "strided_span_tests",
+    size = "small",
+    srcs = [
+        "strided_span_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "string_span_tests",
+    size = "small",
+    srcs = [
+        "string_span_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "utils_tests",
+    size = "small",
+    srcs = [
+        "utils_tests.cpp",
+    ],
+    defines = GSL_TESTS_DEFINES,
+    copts = GSL_TESTS_COPTS,
+    deps = [
+        ":test_main",
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+
+cc_test(
+    name = "no_exception_ensure_tests",
+    size = "small",
+    srcs = [
+        "no_exception_ensure_tests.cpp",
+    ],
+    defines = GSL_TESTS_NOEXCEPT_DEFINES,
+    copts = GSL_TESTS_NOEXCEPT_COPTS,
+    nocopts = GSL_TESTS_NOEXCEPT_NOCOPTS,
+    deps = [
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
+
+cc_test(
+    name = "no_exception_throw_tests",
+    size = "small",
+    srcs = [
+        "no_exception_throw_tests.cpp",
+    ],
+    defines = GSL_TESTS_NOEXCEPT_DEFINES,
+    copts = GSL_TESTS_NOEXCEPT_COPTS,
+    nocopts = GSL_TESTS_NOEXCEPT_NOCOPTS,
+    deps = [
+        "//include/gsl:gsl_library",
+        "@com_github_catchorg_catch2//:catch2",
+    ],
+)
