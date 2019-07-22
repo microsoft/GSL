@@ -259,7 +259,7 @@ install:
   ############################################################################
   # Install a bazelisk
   ############################################################################
-  - BAZELISK_VERSION=0.8.0
+  - BAZELISK_VERSION=0.0.8
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       BAZELISK_URL="https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-amd64"
