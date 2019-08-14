@@ -37,7 +37,7 @@
 #endif            // _MSC_VER < 1910
 #endif            // _MSC_VER
 
-#if (defined(_MSC_VER) && _MSC_VER < 1910) || (!defined(__clang__) && defined(__GNUC__) && __GUNC__ < 6)
+#if (defined(_MSC_VER) && _MSC_VER < 1910) || (!defined(__clang__) && defined(__GNUC__) && __GNUC__ < 6)
 #define GSL_CONSTEXPR_NARROW 0
 #else
 #define GSL_CONSTEXPR_NARROW 1
