@@ -1220,6 +1220,8 @@ TEST_CASE("md_access")
             expected += 3;
         }
     }
+
+    delete[] image_ptr;
 }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
@@ -1616,6 +1618,8 @@ TEST_CASE("span_structure_size")
     multi_span<const double, dynamic_range, 6, 4> av2 =
         as_multi_span(av1, dim(5), dim<6>(), dim<4>());
     (void) av2;
+
+    delete[] arr;
 }
 
 GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
