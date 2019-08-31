@@ -141,7 +141,7 @@ namespace details
 
         span_iterator() = default;
 
-        constexpr span_iterator(const Span* span, typename Span::index_type idx) noexcept
+        constexpr span_iterator(const Span* span, difference_type idx) noexcept
             : span_(span), index_(idx)
         {}
 
