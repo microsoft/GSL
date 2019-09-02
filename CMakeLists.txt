@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3)
 
-project(GSL CXX)
+project(gsl_catkin CXX)
 
 include(ExternalProject)
 find_package(Git)
@@ -92,3 +92,10 @@ if (GSL_TEST)
 	enable_testing()
 	add_subdirectory(tests)
 endif ()
+
+find_package(catkin REQUIRED)
+
+catkin_package(
+  INCLUDE_DIRS include
+)
+
