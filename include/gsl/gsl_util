@@ -43,6 +43,16 @@
 #define GSL_CONSTEXPR_NARROW 1
 #endif
 
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+
+#define GSL_NODISCARD [[nodiscard]]
+
+#else // defined(__cplusplus) && (__cplusplus >= 201703L)
+
+#define GSL_NODISCARD
+
+#endif // defined(__cplusplus) && (__cplusplus >= 201703L)
+
 namespace gsl
 {
 //
@@ -82,13 +92,13 @@ private:
 // finally() - convenience function to generate a final_action
 // [[nodiscard]] means it's returning value shouldn't be ignored
 template <class F>
-[[nodiscard]] final_action<F> finally(const F& f) noexcept
+GSL_NODISCARD final_action<F> finally(const F& f) noexcept
 {
     return final_action<F>(f);
 }
 
 template <class F>
-[[nodiscard]] final_action<F> finally(F&& f) noexcept
+GSL_NODISCARD final_action<F> finally(F&& f) noexcept
 {
     return final_action<F>(std::forward<F>(f));
 }
