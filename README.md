@@ -36,6 +36,8 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * GNU/Linux using Clang/LLVM 6.0
 * GNU/Linux using Clang/LLVM 7.0
 * GNU/Linux using GCC 5.1
+* OS X Mojave 10.14.4 using Apple LLVM version 10.0.0 (10.0.1.10010046)
+* OS X Mojave 10.14.3 using Apple LLVM version 10.0.0 (clang-1000.11.45.5)
 * OS X Yosemite using Xcode with Apple Clang 7.0.0.7000072
 * OS X Yosemite using GCC-5.2.0
 * OS X Sierra 10.12.4 using Apple LLVM version 8.1.0 (Clang-802.0.42)
