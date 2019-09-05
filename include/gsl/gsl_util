@@ -80,14 +80,15 @@ private:
 };
 
 // finally() - convenience function to generate a final_action
+// [[nodiscard]] means it's returning value shouldn't be ignored
 template <class F>
-final_action<F> finally(const F& f) noexcept
+[[nodiscard]] final_action<F> finally(const F& f) noexcept
 {
     return final_action<F>(f);
 }
 
 template <class F>
-final_action<F> finally(F&& f) noexcept
+[[nodiscard]] final_action<F> finally(F&& f) noexcept
 {
     return final_action<F>(std::forward<F>(f));
 }
