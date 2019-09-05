@@ -44,14 +44,10 @@
 #endif
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
-
 #define GSL_NODISCARD [[nodiscard]]
-
-#else // defined(__cplusplus) && (__cplusplus >= 201703L)
-
+#else
 #define GSL_NODISCARD
-
-#endif // defined(__cplusplus) && (__cplusplus >= 201703L)
+#endif
 
 namespace gsl
 {
