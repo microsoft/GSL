@@ -23,6 +23,7 @@
 #include <cstddef>          // for ptrdiff_t, size_t
 #include <exception>        // for exception
 #include <initializer_list> // for initializer_list
+#include <thread>           // for thread
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for forward
 
@@ -158,6 +159,42 @@ constexpr T at(const std::initializer_list<T> cont, const index i)
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     return *(cont.begin() + i);
 }
+
+// A RAII style version of std::thread that joins.
+class joining_thread : std::thread
+{
+public:
+    using std::thread::thread;
+    joining_thread() = default;
+    joining_thread(std::thread&& t) noexcept : std::thread(std::move(t)) {}
+    joining_thread(joining_thread&&) = default;
+    ~joining_thread()
+    {
+        if (joinable())
+            join();
+    }
+    joining_thread& operator=(joining_thread&& t) noexcept
+    {
+        // Expects(joinable() == false);
+        // above is guaranteed by std::thread
+        static_cast<std::thread&>(*this) = std::move(static_cast<std::thread&>(t));
+        // Ensures(get_id() == <prior t>.get_id());
+        // above is guaranteed by std::thread
+        return *this;
+    }
+
+    void detach() = delete;
+    using std::thread::get_id;
+    using std::thread::hardware_concurrency;
+    using std::thread::joinable;
+    using std::thread::join;
+    using std::thread::native_handle;
+
+    void swap(joining_thread& t) noexcept
+    {
+        std::thread::swap(t);
+    }
+};
 
 } // namespace gsl
 

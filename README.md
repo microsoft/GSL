@@ -67,7 +67,7 @@ finally                            | &#x2611;   | a helper function instantiatin
 GSL_SUPPRESS                       | &#x2611;   | a macro that takes an argument and tries to turn it into `[[gsl::suppress(x)]]`
 [[implicit]]                       | &#x2610;   | a "marker" to put on single-argument constructors to explicitly make them non-explicit
 index                              | &#x2611;   | a type to use for all container and array indexing (currently an alias for std::ptrdiff_t)
-joining_thread                     | &#x2610;   | a RAII style version of `std::thread` that joins
+joining_thread                     | &#x2611;   | a RAII style version of `std::thread` that joins
 narrow                             | &#x2611;   | a checked version of narrow_cast; it can throw `narrowing_error`
 narrow_cast                        | &#x2611;   | a narrowing cast for values and a synonym for static_cast
 narrowing_error                    | &#x2611;   | a custom exception type thrown by `narrow()`

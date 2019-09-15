@@ -82,6 +82,11 @@ if (CMAKE_VERSION VERSION_GREATER 3.7.8)
     endif()
 endif()
 
+find_package(Threads REQUIRED)
+target_link_libraries(GSL INTERFACE
+    ${CMAKE_THREAD_LIBS_INIT}
+)
+
 install(
     DIRECTORY include/gsl
     DESTINATION include

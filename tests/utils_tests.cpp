@@ -29,7 +29,9 @@
 #include <functional>  // for reference_wrapper, _Bind_helper<>::type
 #include <limits>      // for numeric_limits
 #include <stdint.h>    // for uint32_t, int32_t
-#include <type_traits> // for is_same
+#include <type_traits> // for is_same, is_copy_constructible, is_nothrow_default_constructible,
+                       // is_nothrow_move_constructible, is_copy_assignable, is_nothrow_move_assignable,
+                       // is_nothrow_swappable_v, is_swappable_with_v
 
 using namespace gsl;
 
@@ -131,3 +133,76 @@ TEST_CASE("narrow")
     static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");
 #endif
 }
+
+TEST_CASE("stateful joinable_thread joins upon destruction")
+{
+    // this test only checks if std::terminate() is called;
+    // unlike std::thread, this will not call terminate unless join()
+    // throws an exception in which case both terminate
+    joining_thread([]{});
+}
+
+TEST_CASE("joinable_thread constructors")
+{
+    // due to notion of immediate context, std::is_constructible
+    // cannot be used here as it returns wrong results
+
+    // deleted copy constructor
+    static_assert(std::is_copy_constructible<joining_thread>::value == false, "");
+
+    // non-spawning constructors
+    static_assert(std::is_nothrow_default_constructible<joining_thread>::value, "");
+    static_assert(std::is_nothrow_move_constructible<joining_thread>::value, "");
+    joining_thread(std::thread{}); // additional move c-tor from xvalue of std::thread
+
+    // spawning constructors
+    auto fun_no_parameters = []{};
+    auto fun_with_parameters = [](int){};
+
+    joining_thread(std::move(fun_no_parameters));
+    joining_thread(std::move(fun_with_parameters), 0);
+}
+
+TEST_CASE("joinable_thread assignment operators")
+{
+    // deleted copy assignment operator
+    static_assert(std::is_copy_assignable<joining_thread>::value == false, "");
+
+    // move assignment operator
+    static_assert(std::is_nothrow_move_assignable<joining_thread>::value, "");
+    std::thread t1;
+    joining_thread t2;
+    t2 = std::move(t1); // additional move assignment op from xvalue of std::thread
+}
+
+TEST_CASE("joinable_thread swap")
+{
+    // TODO: std::is_swappable from C++17 is a better replacement
+#if __cplusplus >= 201703L
+    // deleted swapping with std::thread
+    static_assert(std::is_swappable_with_v<joining_thread, std::thread> == false);
+
+    // swap with another joining_thread
+    static_assert(std::is_nothrow_swappable_v<joining_thread>);
+#else
+    std::thread t1;
+    joining_thread t2;
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+    // deleted swapping with std::thread
+    t1.swap(t2);
+    t2.swap(t1);
+#endif // CONFIRM_COMPILATION_ERRORS
+
+    // swap with another joining_thread
+    static_assert(noexcept(t2.swap(t2)), "swapping should be a nothrow operation");
+#endif // __cplusplus >= 201703L
+}
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+TEST_CAST("joinable_thread is undetachable")
+{
+    joining_thread().detach();
+    joining_thread([]{}).detach();
+}
+#endif // CONFIRM_COMPILATION_ERRORS
