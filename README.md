@@ -5,8 +5,6 @@ The Guidelines Support Library (GSL) contains functions and types that are sugge
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
 This repo contains Microsoft's implementation of GSL.
 
-The library includes types like `span<T>`, `string_span`, `owner<>` and others.
-
 The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support.
 
 While some types have been broken out into their own headers (e.g. [gsl/span](./include/gsl/span)),
@@ -20,6 +18,69 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 # Usage of Third Party Libraries
 This project makes use of the [Google Test](https://github.com/google/googletest) testing library. Please see the [ThirdPartyNotices.txt](./ThirdPartyNotices.txt) file for details regarding the licensing of Google Test.
+
+# Supported features
+GSL implements the following utilities:
+
+Feature                            | Supported? | Description
+-----------------------------------|:----------:|-------------
+[**1. Views**][cg-views]           |            |
+owner                              | &#x2611;   | an alias for a raw pointer for its better expressiveness
+not_null                           | &#x2611;   | restricts a pointer / smart pointer to hold non-null values
+strict_not_null                    | &#x2611;   | a stricter version of `not_null` with explicit constructors
+span                               | &#x2611;   | spans a range starting from a pointer to pointer + size
+span_p                             | &#x2610;   | spans a range starting from a pointer to the first place for which the predicate is true
+multi_span                         | &#x2611;   | spans a contiguous region of memory, which represents a multidimensional array
+strided_span                       | &#x2611;   | **I HAVE NO IDEA WHAT IT DOES, ANYONE???!!!**
+basic_zstring                      | &#x2611;   | a pointer to a C-string (zero-terminated array) with a templated char type
+zstring                            | &#x2611;   | an alias to `basic_zstring` where the char type is char
+wzstring                           | &#x2611;   | an alias to `basic_zstring` where the char type is wchar_t
+czstring                           | &#x2611;   | like `zstring` but the char type is also const
+cwzstring                          | &#x2611;   | like `wzstring` but the char type is also const
+u16zstring                         | &#x2611;   | an alias to `basic_zstring` where the char type is char16_t
+cu16zstring                        | &#x2611;   | like `u16zstring` but the char type is also const
+u32zstring                         | &#x2611;   | an alias to `basic_zstring` where the char type is char32_t
+cu32zstring                        | &#x2611;   | like `u32zstring` but the char type is also const
+basic_string_span                  | &#x2611;   | like `span` but for strings with a templated string type
+string_span                        | &#x2611;   | an alias to `basic_string_span` where the char type is char
+cstring_span                       | &#x2611;   | like `string_span` but the char type is also const
+wstring_span                       | &#x2611;   | an alias to `basic_string_span` where the char type is wchar_t
+cwstring_span                      | &#x2611;   | like `wstring_span` but the char type is also const
+u16string_span                     | &#x2611;   | an alias to `basic_string_span` where the char type is char16_t
+cu16string_span                    | &#x2611;   | like `u16string_span` but the char type is also const
+u32string_span                     | &#x2611;   | an alias to `basic_string_span` where the char type is char32_t
+cu32string_span                    | &#x2611;   | like `u32string_span` but the char type is also const
+[**2. Owners**][cg-owners]         |            |
+unique_ptr                         | &#x2611;   | an alias to `std::unique_ptr`
+shared_ptr                         | &#x2611;   | an alias to `std::shared_ptr`
+stack_array                        | &#x2610;   | a stack-allocated array
+dyn_array                          | &#x2610;   | a heap-allocated array
+[**3. Assertions**][cg-assertions] |            |
+Expects                            | &#x2611;   | a precondition assertion; on failure it either terminates or throws `fail_fast`
+Ensures                            | &#x2611;   | a postcondition assertion; on failure it either terminates or throws `fail_fast`
+[**4. Utitilies**][cg-utilities]   |            |
+move_owner                         | &#x2610;   | a helper function that moves one `owner` to the other
+release_owner                      | &#x2610;   | a helper function that releases ownership of the passed `owner` and returns a new `owner`
+byte                               | &#x2611;   | either an alias to std::byte or a byte type
+fail_fast                          | &#x2611;   | a custom exception type thrown by assertions
+final_action                       | &#x2611;   | a RAII style class that invokes a functor on its destruction
+finally                            | &#x2611;   | a helper function instantiating `final_action`
+GSL_SUPPRESS                       | &#x2611;   | a macro that takes an argument and tries to turn it into `[[gsl::suppress(x)]]`
+[[implicit]]                       | &#x2610;   | a "marker" to put on single-argument constructors to explicitly make them non-explicit
+index                              | &#x2611;   | a type to use for all container and array indexing (currently an alias for std::ptrdiff_t)
+joining_thread                     | &#x2610;   | a RAII style version of `std::thread` that joins
+narrow                             | &#x2611;   | a checked version of narrow_cast; it can throw `narrowing_error`
+narrow_cast                        | &#x2611;   | a narrowing cast for values and a synonym for static_cast
+narrowing_error                    | &#x2611;   | a custom exception type thrown by `narrow()`
+[**5. Concepts**][cg-concepts]     | &#x2610;   |
+
+This is based on [CppCoreGuidelines semi-specification](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gsl-guidelines-support-library).
+
+[cg-views]: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslview-views
+[cg-owners]: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslowner-ownership-pointers
+[cg-assertions]: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslassert-assertions
+[cg-utilities]: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslutil-utilities
+[cg-concepts]: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslconcept-concepts
 
 # Quick Start
 ## Supported Compilers
