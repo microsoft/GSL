@@ -43,10 +43,13 @@
 #define GSL_CONSTEXPR_NARROW 1
 #endif
 
-#if defined(__cplusplus) && (__cplusplus >= 201703L)
-#define GSL_NODISCARD [[nodiscard]]
-#else
-#define GSL_NODISCARD
+#ifdef __has_cpp_attribute
+#  if __has_cpp_attribute(nodiscard)
+#    define GSL_NODISCARD [[nodiscard]]
+#  endif
+#endif
+#ifndef GSL_NODISCARD
+#    define GSL_NODISCARD
 #endif
 
 namespace gsl
