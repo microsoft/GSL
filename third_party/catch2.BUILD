@@ -3,8 +3,8 @@ cc_library(
     hdrs = [
         "single_include/catch.hpp",
     ],
-    strip_include_prefix = "single_include",
     include_prefix = "catch",
+    strip_include_prefix = "single_include",
     visibility = [
         "//visibility:public",
     ],

@@ -1,19 +1,21 @@
 # Keep align to //tests:CMakeLists.txt
 
 GSL_TESTS_COPTS = select({
-    "@bazel_tools//src/conditions:windows": [],
+    "@bazel_tools//src/conditions:windows": [
+        "/std:c++17",
+    ],
     "//conditions:default": [
         "-fno-strict-aliasing",
+        "-std=c++17",
     ],
 })
 
 GSL_TESTS_DEFINES = ["GSL_THROW_ON_CONTRACT_VIOLATION"]
 
-GSL_TESTS_NOEXCEPT_COPTS = select({
+GSL_TESTS_NOEXCEPT_COPTS = GSL_TESTS_COPTS + select({
     "@bazel_tools//src/conditions:windows": [],
     "//conditions:default": [
         "-fno-exceptions",
-        "-fno-strict-aliasing",
     ],
 })
 
