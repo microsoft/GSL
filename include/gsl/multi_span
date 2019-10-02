@@ -23,7 +23,6 @@
 
 #include <algorithm> // for transform, lexicographical_compare
 #include <array>     // for array
-#include <cassert>
 #include <cstddef>          // for ptrdiff_t, size_t, nullptr_t
 #include <cstdint>          // for PTRDIFF_MAX
 #include <functional>       // for divides, multiplies, minus, negate, plus
