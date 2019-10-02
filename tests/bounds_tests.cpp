@@ -17,7 +17,9 @@
 #ifdef _MSC_VER
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426 4996) // from catch deprecated
+#pragma warning(disable : 26440 26426) // from catch
+#pragma warning(disable : 4996)  // use of function or classes marked [[deprecated]]
+
 #endif
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, TEST_CASE

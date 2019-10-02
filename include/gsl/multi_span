@@ -1781,7 +1781,7 @@ GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 // strided_span is an extension that is not strictly part of the GSL at this time.
 // It is kept here while the multidimensional interface is still being defined.
 template <typename ValueType, std::size_t Rank>
-class strided_span
+class [[deprecated]] strided_span
 {
 public:
     using bounds_type = strided_bounds<Rank>;
