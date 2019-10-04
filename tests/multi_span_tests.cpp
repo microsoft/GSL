@@ -18,7 +18,7 @@
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
 #pragma warning(disable : 26440 26426) // from catch 
-//#pragma warning(disable : 4996) // multi_span is in the process of being deprecated. 
+#pragma warning(disable : 4996) // multi_span is in the process of being deprecated. 
                                 // Suppressing warnings until it is completely removed
 #endif
 
