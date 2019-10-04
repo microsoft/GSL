@@ -20,7 +20,11 @@
 #pragma warning(disable : 26440 26426) // from catch deprecated
 #pragma warning(disable : 4996) // strided_span is in the process of being deprecated. 
                                 // Suppressing warnings until it is completely removed
+#endif
 
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
@@ -796,3 +800,7 @@ TEST_CASE("strided_span_conversion")
         i++;
     }
 }
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif
