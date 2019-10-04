@@ -1098,10 +1098,10 @@ constexpr dim_t<N> dim(std::ptrdiff_t n) noexcept
 
 template <typename ValueType, std::ptrdiff_t FirstDimension = dynamic_range,
           std::ptrdiff_t... RestDimensions>
-class [[deprecated]] multi_span;
+class [[deprecated("gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span;
 
 template <typename ValueType, std::size_t Rank>
-class [[deprecated]] strided_span;
+class [[deprecated("gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span;
 
 namespace details
 {
@@ -1205,7 +1205,7 @@ namespace details
 } // namespace details
 
 template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-class [[deprecated("This concept is not present in the C++ Core Guidelines")]] multi_span {
+class [[deprecated("gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span {
     // TODO do we still need this?
     template <typename ValueType2, std::ptrdiff_t FirstDimension2,
               std::ptrdiff_t... RestDimensions2>
@@ -1783,7 +1783,7 @@ constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>& str)
 // strided_span is an extension that is not strictly part of the GSL at this time.
 // It is kept here while the multidimensional interface is still being defined.
 template <typename ValueType, std::size_t Rank>
-class [[deprecated]] strided_span
+class [[deprecated("gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span
 {
 public:
     using bounds_type = strided_bounds<Rank>;
