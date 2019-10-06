@@ -197,7 +197,7 @@ namespace gsl
 //
 // Restricts a pointer or smart pointer to only hold non-null values,
 //
-// - provides a strict (i.e. explicit contructor from T) wrapper of not_null
+// - provides a strict (i.e. explicit constructor from T) wrapper of not_null
 // - to be used for new code that wishes the design to be cleaner and make not_null
 //   checks intentional, or in old code that would like to make the transition.
 //
@@ -205,9 +205,9 @@ namespace gsl
 //   by strict_not_null and fix compilation errors
 //
 //   Expect to
-//   - remove all unneded conversions from raw pointer to not_null and back
-//   - make API clear by specifyning not_null in parameters where needed
-//   - remove unnesessary asserts
+//   - remove all unneeded conversions from raw pointer to not_null and back
+//   - make API clear by specifying not_null in parameters where needed
+//   - remove unnecessary asserts
 //
 template <class T>
 class strict_not_null: public not_null<T>
