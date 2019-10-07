@@ -24,7 +24,7 @@
 #include <exception>        // for exception
 #include <initializer_list> // for initializer_list
 #include <type_traits>      // for is_signed, integral_constant
-#include <utility>          // for forward
+#include <utility>          // for exchange, forward
 
 #if defined(_MSC_VER) && !defined(__clang__)
 
@@ -59,10 +59,7 @@ class final_action
 public:
     explicit final_action(F f) noexcept : f_(std::move(f)) {}
 
-    final_action(final_action&& other) noexcept : f_(std::move(other.f_)), invoke_(other.invoke_)
-    {
-        other.invoke_ = false;
-    }
+    final_action(final_action&& other) noexcept : f_(std::move(other.f_)), invoke_(std::exchange(other.invoke_, false)) {}
 
     final_action(const final_action&) = delete;
     final_action& operator=(const final_action&) = delete;
