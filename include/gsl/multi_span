@@ -23,7 +23,6 @@
 
 #include <algorithm> // for transform, lexicographical_compare
 #include <array>     // for array
-#include <cassert>
 #include <cstddef>          // for ptrdiff_t, size_t, nullptr_t
 #include <cstdint>          // for PTRDIFF_MAX
 #include <functional>       // for divides, multiplies, minus, negate, plus
@@ -49,13 +48,19 @@
 #pragma warning(disable : 26473) // in some instantiations we cast to the same type
 #pragma warning(disable : 26490) // TODO: bug in parser - attributes and templates
 #pragma warning(disable : 26465) // TODO: bug - suppression does not work on template functions
+#pragma warning(disable : 4996)  // use of function or classes marked [[deprecated]]
 
 #if _MSC_VER < 1910
 #pragma push_macro("constexpr")
 #define constexpr /*constexpr*/
 
-#endif                          // _MSC_VER < 1910
-#endif                          // _MSC_VER
+#endif // _MSC_VER < 1910
+#endif // _MSC_VER
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 // GCC 7 does not like the signed unsigned missmatch (size_t ptrdiff_t)
 // While there is a conversion from signed to unsigned, it happens at
@@ -76,18 +81,18 @@ namespace gsl
 namespace details
 {
     template <typename SizeType>
-    struct SizeTypeTraits
+    struct [[deprecated]] SizeTypeTraits
     {
         static const SizeType max_value = std::numeric_limits<SizeType>::max();
     };
 
     template <typename... Ts>
-    class are_integral : public std::integral_constant<bool, true>
+    class [[deprecated]] are_integral : public std::integral_constant<bool, true>
     {
     };
 
     template <typename T, typename... Ts>
-    class are_integral<T, Ts...>
+    class [[deprecated]] are_integral<T, Ts...>
         : public std::integral_constant<bool,
                                         std::is_integral<T>::value && are_integral<Ts...>::value>
     {
@@ -95,8 +100,7 @@ namespace details
 } // namespace details
 
 template <std::size_t Rank>
-class multi_span_index final
-{
+class [[deprecated]] multi_span_index final {
     static_assert(Rank > 0, "Rank must be greater than 0!");
 
     template <std::size_t OtherRank>
@@ -111,7 +115,7 @@ public:
 
     constexpr multi_span_index() noexcept {}
 
-    constexpr multi_span_index(const value_type (&values)[Rank]) noexcept
+    constexpr multi_span_index(const value_type(&values)[Rank]) noexcept
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
@@ -139,7 +143,7 @@ public:
     // Preconditions: component_idx < rank
     GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-    constexpr const_reference operator[](std::size_t component_idx) const 
+    constexpr const_reference operator[](std::size_t component_idx) const
     {
         Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
@@ -152,10 +156,7 @@ public:
         return std::equal(elems, elems + rank, rhs.elems);
     }
 
-    constexpr bool operator!=(const multi_span_index& rhs) const
-    {
-        return !(*this == rhs);
-    }
+    constexpr bool operator!=(const multi_span_index& rhs) const { return !(*this == rhs); }
 
     constexpr multi_span_index operator+() const noexcept { return *this; }
 
@@ -184,8 +185,7 @@ public:
     {
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
-        std::transform(elems, elems + rank, rhs.elems, elems,
-                       std::plus<value_type>{});
+        std::transform(elems, elems + rank, rhs.elems, elems, std::plus<value_type>{});
         return *this;
     }
 
@@ -240,7 +240,7 @@ private:
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1910
 
-struct static_bounds_dynamic_range_t
+struct [[deprecated]] static_bounds_dynamic_range_t
 {
     template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
     constexpr operator T() const noexcept
@@ -288,25 +288,22 @@ constexpr static_bounds_dynamic_range_t dynamic_range{};
 const std::ptrdiff_t dynamic_range = -1;
 #endif
 
-struct generalized_mapping_tag
+struct [[deprecated]] generalized_mapping_tag
 {
 };
-struct contiguous_mapping_tag : generalized_mapping_tag
-{
-};
+struct[[deprecated]] contiguous_mapping_tag : generalized_mapping_tag{};
 
 namespace details
 {
 
     template <std::ptrdiff_t Left, std::ptrdiff_t Right>
-    struct LessThan
+    struct [[deprecated]] LessThan
     {
         static const bool value = Left < Right;
     };
 
     template <std::ptrdiff_t... Ranges>
-    struct BoundsRanges
-    {
+    struct [[deprecated]] BoundsRanges {
         using size_type = std::ptrdiff_t;
         static const size_type Depth = 0;
         static const size_type DynamicNum = 0;
@@ -345,7 +342,7 @@ namespace details
     };
 
     template <std::ptrdiff_t... RestRanges>
-    struct BoundsRanges<dynamic_range, RestRanges...> : BoundsRanges<RestRanges...>
+    struct[[deprecated]] BoundsRanges<dynamic_range, RestRanges...> : BoundsRanges<RestRanges...>
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
@@ -358,8 +355,9 @@ namespace details
         size_type m_bound;
 
     public:
-        GSL_SUPPRESS(f.23) // NO-FORMAT: attribute // this pointer type is cannot be assigned nullptr - issue in not_null
-        GSL_SUPPRESS(bounds.1)  // NO-FORMAT: attribute
+        GSL_SUPPRESS(
+            f.23) // NO-FORMAT: attribute // this pointer type is cannot be assigned nullptr - issue in not_null
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr BoundsRanges(const std::ptrdiff_t* const arr)
             : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
         {
@@ -370,13 +368,13 @@ namespace details
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
         constexpr BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
-                     bool /* firstLevel */ = true)
+                               bool /* firstLevel */ = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
             , m_bound(other.totalSize())
         {}
 
         template <typename T, std::size_t Dim = 0>
-        constexpr void serialize(T& arr) const
+        constexpr void serialize(T & arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
@@ -400,19 +398,19 @@ namespace details
             return cur < m_bound ? cur + last : -1;
         }
 
-        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        constexpr size_type totalSize() const noexcept
-        {
-            return m_bound;
-        }
+        GSL_SUPPRESS(
+            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        constexpr size_type totalSize() const noexcept { return m_bound; }
 
-        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        GSL_SUPPRESS(
+            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type elementNum() const noexcept
         {
             return totalSize() / this->Base::totalSize();
         }
 
-        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        GSL_SUPPRESS(
+            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
@@ -429,7 +427,7 @@ namespace details
     };
 
     template <std::ptrdiff_t CurRange, std::ptrdiff_t... RestRanges>
-    struct BoundsRanges<CurRange, RestRanges...> : BoundsRanges<RestRanges...>
+    struct[[deprecated]] BoundsRanges<CurRange, RestRanges...> : BoundsRanges<RestRanges...>
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
@@ -444,7 +442,7 @@ namespace details
 
         template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
         constexpr BoundsRanges(const BoundsRanges<OtherRange, RestOtherRanges...>& other,
-                     bool firstLevel = true)
+                               bool firstLevel = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
         {
             GSL_SUPPRESS(type.4) // NO-FORMAT: attribute // TODO: false positive
@@ -452,7 +450,7 @@ namespace details
         }
 
         template <typename T, std::size_t Dim = 0>
-        constexpr void serialize(T& arr) const
+        constexpr void serialize(T & arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
@@ -461,12 +459,11 @@ namespace details
         template <typename T, std::size_t Dim = 0>
         constexpr size_type linearize(const T& arr) const
         {
-            GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+            GSL_SUPPRESS(bounds.4)                            // NO-FORMAT: attribute
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
-            GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+            GSL_SUPPRESS(bounds.4)                            // NO-FORMAT: attribute
             const ptrdiff_t d = arr[Dim];
-            return this->Base::totalSize() * d +
-                   this->Base::template linearize<T, Dim + 1>(arr);
+            return this->Base::totalSize() * d + this->Base::template linearize<T, Dim + 1>(arr);
         }
 
         template <typename T, std::size_t Dim = 0>
@@ -478,19 +475,19 @@ namespace details
             return this->Base::totalSize() * arr[Dim] + last;
         }
 
-        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        GSL_SUPPRESS(
+            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type totalSize() const noexcept
         {
             return CurrentRange * this->Base::totalSize();
         }
 
-        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
-        constexpr size_type elementNum() const noexcept
-        {
-            return CurrentRange;
-        }
+        GSL_SUPPRESS(
+            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        constexpr size_type elementNum() const noexcept { return CurrentRange; }
 
-        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        GSL_SUPPRESS(
+            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
@@ -506,17 +503,14 @@ namespace details
     };
 
     template <typename SourceType, typename TargetType>
-    struct BoundsRangeConvertible
+    struct[[deprecated]] BoundsRangeConvertible
         : public std::integral_constant<bool, (SourceType::TotalSize >= TargetType::TotalSize ||
                                                TargetType::TotalSize == dynamic_range ||
                                                SourceType::TotalSize == dynamic_range ||
-                                               TargetType::TotalSize == 0)>
-    {
-    };
+                                               TargetType::TotalSize == 0)>{};
 
     template <typename TypeChain>
-    struct TypeListIndexer
-    {
+    struct [[deprecated]] TypeListIndexer {
         const TypeChain& obj_;
         constexpr TypeListIndexer(const TypeChain& obj) : obj_(obj) {}
 
@@ -529,13 +523,13 @@ namespace details
         template <std::size_t N, typename MyChain = TypeChain,
                   typename MyBase = typename MyChain::Base>
         constexpr auto getObj(std::false_type)
-            -> decltype(TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>())
+            ->decltype(TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>())
         {
             return TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>();
         }
 
         template <std::size_t N>
-        constexpr auto get() -> decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
+        constexpr auto get()->decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
         {
             return getObj<N - 1>(std::integral_constant<bool, N == 0>());
         }
@@ -555,24 +549,23 @@ namespace details
         for (std::size_t i = 0; i < Rank - 1; ++i)
         {
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-                ret[i] = other[i + 1];
+            ret[i] = other[i + 1];
         }
         return ret;
     }
 } // namespace details
 
 template <typename IndexType>
-class bounds_iterator;
+class [[deprecated]] bounds_iterator;
 
 template <std::ptrdiff_t... Ranges>
-class static_bounds
-{
+class [[deprecated]] static_bounds {
 public:
     static_bounds(const details::BoundsRanges<Ranges...>&) {}
 };
 
 template <std::ptrdiff_t FirstRange, std::ptrdiff_t... RestRanges>
-class static_bounds<FirstRange, RestRanges...>
+class[[deprecated]] static_bounds<FirstRange, RestRanges...>
 {
     using MyRanges = details::BoundsRanges<FirstRange, RestRanges...>;
 
@@ -604,10 +597,10 @@ public:
     template <std::size_t Rank, typename SourceType, typename TargetType,
               typename Ret = BoundsRangeConvertible2<typename SourceType::Base,
                                                      typename TargetType::Base, Rank>>
-    static auto helpBoundsRangeConvertible(SourceType, TargetType, std::true_type) -> Ret;
+    static auto helpBoundsRangeConvertible(SourceType, TargetType, std::true_type)->Ret;
 
     template <std::size_t Rank, typename SourceType, typename TargetType>
-    static auto helpBoundsRangeConvertible(SourceType, TargetType, ...) -> std::false_type;
+    static auto helpBoundsRangeConvertible(SourceType, TargetType, ...)->std::false_type;
 
     template <typename SourceType, typename TargetType, std::size_t Rank>
     struct BoundsRangeConvertible2
@@ -724,10 +717,7 @@ public:
         return !(*this == rhs);
     }
 
-    constexpr const_iterator begin() const noexcept
-    {
-        return const_iterator(*this, index_type{});
-    }
+    constexpr const_iterator begin() const noexcept { return const_iterator(*this, index_type{}); }
 
     constexpr const_iterator end() const noexcept
     {
@@ -736,7 +726,7 @@ public:
 };
 
 template <std::size_t Rank>
-class strided_bounds {
+class [[deprecated]] strided_bounds {
     template <std::size_t OtherRank>
     friend class strided_bounds;
 
@@ -760,14 +750,13 @@ public:
 
     constexpr strided_bounds& operator=(const strided_bounds&) noexcept = default;
 
-    constexpr strided_bounds(const value_type (&values)[rank], index_type strides)
+    constexpr strided_bounds(const value_type(&values)[rank], index_type strides)
         : m_extents(values), m_strides(std::move(strides))
     {}
 
     constexpr strided_bounds(const index_type& extents, const index_type& strides) noexcept
         : m_extents(extents), m_strides(strides)
-    {
-    }
+    {}
 
     constexpr index_type strides() const noexcept { return m_strides; }
 
@@ -839,21 +828,14 @@ private:
 };
 
 template <typename T>
-struct is_bounds : std::integral_constant<bool, false>
-{
-};
+struct[[deprecated]] is_bounds : std::integral_constant<bool, false>{};
 template <std::ptrdiff_t... Ranges>
-struct is_bounds<static_bounds<Ranges...>> : std::integral_constant<bool, true>
-{
-};
+struct[[deprecated]] is_bounds<static_bounds<Ranges...>> : std::integral_constant<bool, true>{};
 template <std::size_t Rank>
-struct is_bounds<strided_bounds<Rank>> : std::integral_constant<bool, true>
-{
-};
+struct[[deprecated]] is_bounds<strided_bounds<Rank>> : std::integral_constant<bool, true>{};
 
 template <typename IndexType>
-class bounds_iterator
-{
+class [[deprecated]] bounds_iterator {
 public:
     static const std::size_t rank = IndexType::rank;
     using iterator_category = std::random_access_iterator_tag;
@@ -974,7 +956,6 @@ public:
         return curr_ == rhs.curr_;
     }
 
-
     constexpr bool operator!=(const bounds_iterator& rhs) const noexcept { return !(*this == rhs); }
 
     constexpr bool operator<(const bounds_iterator& rhs) const noexcept
@@ -988,16 +969,15 @@ public:
 
     constexpr bool operator>=(const bounds_iterator& rhs) const noexcept { return !(rhs > *this); }
 
-    void swap(bounds_iterator& rhs) noexcept
+    void swap(bounds_iterator & rhs) noexcept
     {
         std::swap(boundary_, rhs.boundary_);
         std::swap(curr_, rhs.curr_);
     }
 
 private:
-
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-    constexpr bool less(index_type& one, index_type& other) const noexcept
+    constexpr bool less(index_type & one, index_type & other) const noexcept
     {
         for (std::size_t i = 0; i < rank; ++i)
         {
@@ -1092,17 +1072,17 @@ namespace details
 } // namespace details
 
 template <typename Span>
-class contiguous_span_iterator;
+class [[deprecated]] contiguous_span_iterator;
 template <typename Span>
-class general_span_iterator;
+class [[deprecated]] general_span_iterator;
 
 template <std::ptrdiff_t DimSize = dynamic_range>
-struct dim_t
+struct [[deprecated]] dim_t
 {
     static const std::ptrdiff_t value = DimSize;
 };
 template <>
-struct dim_t<dynamic_range>
+struct [[deprecated]] dim_t<dynamic_range>
 {
     static const std::ptrdiff_t value = dynamic_range;
     const std::ptrdiff_t dvalue;
@@ -1123,28 +1103,30 @@ constexpr dim_t<N> dim(std::ptrdiff_t n) noexcept
 
 template <typename ValueType, std::ptrdiff_t FirstDimension = dynamic_range,
           std::ptrdiff_t... RestDimensions>
-class multi_span;
+class [[deprecated("gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span;
+
 template <typename ValueType, std::size_t Rank>
-class strided_span;
+class [[deprecated("gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span;
 
 namespace details
 {
     template <typename T, typename = std::true_type>
-    struct SpanTypeTraits
+    struct [[deprecated]] SpanTypeTraits
     {
         using value_type = T;
         using size_type = std::size_t;
     };
 
     template <typename Traits>
-    struct SpanTypeTraits<Traits, typename std::is_reference<typename Traits::span_traits&>::type>
+    struct [[deprecated]] SpanTypeTraits<
+        Traits, typename std::is_reference<typename Traits::span_traits&>::type>
     {
         using value_type = typename Traits::span_traits::value_type;
         using size_type = typename Traits::span_traits::size_type;
     };
 
     template <typename T, std::ptrdiff_t... Ranks>
-    struct SpanArrayTraits
+    struct [[deprecated]] SpanArrayTraits
     {
         using type = multi_span<T, Ranks...>;
         using value_type = T;
@@ -1153,7 +1135,7 @@ namespace details
         using reference = T&;
     };
     template <typename T, std::ptrdiff_t N, std::ptrdiff_t... Ranks>
-    struct SpanArrayTraits<T[N], Ranks...> : SpanArrayTraits<T, Ranks..., N>
+    struct [[deprecated]] SpanArrayTraits<T[N], Ranks...> : SpanArrayTraits<T, Ranks..., N>
     {
     };
 
@@ -1177,7 +1159,7 @@ namespace details
             totalSize, std::integral_constant<bool, BoundsType::dynamic_rank == 1>());
     }
 
-    struct Sep
+    struct [[deprecated]] Sep
     {
     };
 
@@ -1200,36 +1182,35 @@ namespace details
     }
 
     template <typename... Dimensions>
-    struct static_as_multi_span_static_bounds_helper
+    struct [[deprecated]] static_as_multi_span_static_bounds_helper
     {
         using type = static_bounds<(Dimensions::value)...>;
     };
 
     template <typename T>
-    struct is_multi_span_oracle : std::false_type
+    struct [[deprecated]] is_multi_span_oracle : std::false_type
     {
     };
 
     template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-    struct is_multi_span_oracle<multi_span<ValueType, FirstDimension, RestDimensions...>>
+    struct [[deprecated]] is_multi_span_oracle<multi_span<ValueType, FirstDimension, RestDimensions...>>
         : std::true_type
     {
     };
 
     template <typename ValueType, std::ptrdiff_t Rank>
-    struct is_multi_span_oracle<strided_span<ValueType, Rank>> : std::true_type
+    struct [[deprecated]] is_multi_span_oracle<strided_span<ValueType, Rank>> : std::true_type
     {
     };
 
     template <typename T>
-    struct is_multi_span : is_multi_span_oracle<std::remove_cv_t<T>>
+    struct [[deprecated]] is_multi_span : is_multi_span_oracle<std::remove_cv_t<T>>
     {
     };
 } // namespace details
 
 template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-class multi_span
-{
+class [[deprecated("gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span {
     // TODO do we still need this?
     template <typename ValueType2, std::ptrdiff_t FirstDimension2,
               std::ptrdiff_t... RestDimensions2>
@@ -1262,8 +1243,7 @@ private:
 public:
     // default constructor - same as constructing from nullptr_t
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
-    constexpr multi_span() noexcept
-        : multi_span(nullptr, bounds_type{})
+    constexpr multi_span() noexcept : multi_span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
                           (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
@@ -1273,8 +1253,7 @@ public:
 
     // construct from nullptr - get an empty multi_span
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
-    constexpr multi_span(std::nullptr_t) noexcept
-        : multi_span(nullptr, bounds_type{})
+    constexpr multi_span(std::nullptr_t) noexcept : multi_span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
                           (bounds_type::dynamic_rank == 0 && bounds_type::static_size == 0),
@@ -1298,8 +1277,7 @@ public:
     // construct from a single element
 
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
-    constexpr multi_span(reference data) noexcept
-        : multi_span(&data, bounds_type{1})
+    constexpr multi_span(reference data) noexcept : multi_span(&data, bounds_type{1})
     {
         static_assert(bounds_type::dynamic_rank > 0 || bounds_type::static_size == 0 ||
                           bounds_type::static_size == 1,
@@ -1308,17 +1286,14 @@ public:
     }
 
     // prevent constructing from temporaries for single-elements
-    constexpr multi_span(value_type&&) = delete;
+    constexpr multi_span(value_type &&) = delete;
 
     // construct from pointer + length
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
-    constexpr multi_span(pointer ptr, size_type size)
-        : multi_span(ptr, bounds_type{size})
-    {}
+    constexpr multi_span(pointer ptr, size_type size) : multi_span(ptr, bounds_type{size}) {}
 
     // construct from pointer + length - multidimensional
-    constexpr multi_span(pointer data, bounds_type bounds)
-        : data_(data), bounds_(std::move(bounds))
+    constexpr multi_span(pointer data, bounds_type bounds) : data_(data), bounds_(std::move(bounds))
     {
         Expects((bounds_.size() > 0 && data != nullptr) || bounds_.size() == 0);
     }
@@ -1336,7 +1311,7 @@ public:
 
     // construct from n-dimensions static array
     template <typename T, std::size_t N, typename Helper = details::SpanArrayTraits<T, N>>
-    constexpr multi_span(T (&arr)[N])
+    constexpr multi_span(T(&arr)[N])
         : multi_span(reinterpret_cast<pointer>(arr), bounds_type{typename Helper::bounds_type{}})
     {
         static_assert(std::is_convertible<typename Helper::value_type(*)[], value_type(*)[]>::value,
@@ -1357,7 +1332,7 @@ public:
 
     // construct from std::array
     template <typename T, std::size_t N>
-    constexpr multi_span(std::array<T, N>& arr)
+    constexpr multi_span(std::array<T, N> & arr)
         : multi_span(arr.data(), bounds_type{static_bounds<N>{}})
     {
         static_assert(
@@ -1381,7 +1356,7 @@ public:
 
     // prevent constructing from temporary std::array
     template <typename T, std::size_t N>
-    constexpr multi_span(std::array<T, N>&& arr) = delete;
+    constexpr multi_span(std::array<T, N> && arr) = delete;
 
     // construct from containers
     // future: could use contiguous_iterator_traits to identify only contiguous containers
@@ -1389,11 +1364,11 @@ public:
     template <typename Cont, typename DataType = typename Cont::value_type,
               typename = std::enable_if_t<
                   !details::is_multi_span<Cont>::value &&
-                  std::is_convertible<DataType (*)[], value_type (*)[]>::value &&
+                  std::is_convertible<DataType(*)[], value_type(*)[]>::value &&
                   std::is_same<std::decay_t<decltype(std::declval<Cont>().size(),
                                                      *std::declval<Cont>().data())>,
                                DataType>::value>>
-    constexpr multi_span(Cont& cont)
+    constexpr multi_span(Cont & cont)
         : multi_span(static_cast<pointer>(cont.data()),
                      details::newBoundsHelper<bounds_type>(narrow_cast<size_type>(cont.size())))
     {}
@@ -1402,11 +1377,11 @@ public:
     template <typename Cont, typename DataType = typename Cont::value_type,
               typename = std::enable_if_t<
                   !details::is_multi_span<Cont>::value &&
-                  std::is_convertible<DataType (*)[], value_type (*)[]>::value &&
+                  std::is_convertible<DataType(*)[], value_type(*)[]>::value &&
                   std::is_same<std::decay_t<decltype(std::declval<Cont>().size(),
                                                      *std::declval<Cont>().data())>,
                                DataType>::value>>
-    explicit constexpr multi_span(Cont&& cont) = delete;
+    explicit constexpr multi_span(Cont && cont) = delete;
 
     // construct from a convertible multi_span
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
@@ -1419,7 +1394,7 @@ public:
 
     // trivial copy and move
     constexpr multi_span(const multi_span&) = default;
-    constexpr multi_span(multi_span&&) = default;
+    constexpr multi_span(multi_span &&) = default;
 
     // trivial assignment
     constexpr multi_span& operator=(const multi_span&) = default;
@@ -1493,8 +1468,7 @@ public:
     }
 
     // section - creates a non-contiguous, strided multi_span from a contiguous one
-    constexpr strided_span<ValueType, Rank> section(index_type origin,
-                                                    index_type extents) const
+    constexpr strided_span<ValueType, Rank> section(index_type origin, index_type extents) const
     {
         const size_type size = this->bounds().total_size() - this->bounds().linearize(origin);
         return {&this->operator[](origin), size,
@@ -1636,8 +1610,8 @@ public:
     template <typename OtherValueType, std::ptrdiff_t... OtherDimensions,
               typename = std::enable_if_t<std::is_same<std::remove_cv_t<value_type>,
                                                        std::remove_cv_t<OtherValueType>>::value>>
-    constexpr bool operator>(const multi_span<OtherValueType, OtherDimensions...>& other) const
-        noexcept
+    constexpr bool operator>(const multi_span<OtherValueType, OtherDimensions...>& other)
+        const noexcept
     {
         return (other < *this);
     }
@@ -1673,7 +1647,8 @@ constexpr auto as_multi_span(SpanType s, Dimensions2... dims)
 
 // convert a multi_span<T> to a multi_span<const byte>
 template <typename U, std::ptrdiff_t... Dimensions>
-multi_span<const byte, dynamic_range> as_bytes(multi_span<U, Dimensions...> s) noexcept
+multi_span<const byte, dynamic_range>
+as_bytes(multi_span<U, Dimensions...> s) noexcept
 {
     static_assert(std::is_trivial<std::decay_t<U>>::value,
                   "The value_type of multi_span must be a trivial type.");
@@ -1759,7 +1734,8 @@ constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
 }
 
 template <typename T, std::size_t N>
-constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
+constexpr auto as_multi_span(T (&arr)[N]) ->
+    typename details::SpanArrayTraits<T, N>::type
 {
     return {arr};
 }
@@ -1812,7 +1788,7 @@ constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>& str)
 // strided_span is an extension that is not strictly part of the GSL at this time.
 // It is kept here while the multidimensional interface is still being defined.
 template <typename ValueType, std::size_t Rank>
-class strided_span
+class [[deprecated("gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span
 {
 public:
     using bounds_type = strided_bounds<Rank>;
@@ -2055,8 +2031,7 @@ private:
 };
 
 template <class Span>
-class contiguous_span_iterator
-{
+class [[deprecated]] contiguous_span_iterator {
 public:
     using iterator_category = std::random_access_iterator_tag;
     using value_type = typename Span::value_type;
@@ -2072,7 +2047,8 @@ private:
     const Span* m_validator;
 
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-    void validateThis() const {
+    void validateThis() const
+    {
         // iterator is out of range of the array
         Expects(data_ >= m_validator->data_ && data_ < m_validator->data_ + m_validator->size());
     }
@@ -2161,7 +2137,7 @@ public:
     bool operator>(const contiguous_span_iterator& rhs) const { return rhs < *this; }
     bool operator>=(const contiguous_span_iterator& rhs) const { return !(rhs > *this); }
 
-    void swap(contiguous_span_iterator& rhs) noexcept
+    void swap(contiguous_span_iterator & rhs) noexcept
     {
         std::swap(data_, rhs.data_);
         std::swap(m_validator, rhs.m_validator);
@@ -2176,7 +2152,7 @@ contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>
 }
 
 template <typename Span>
-class general_span_iterator {
+class [[deprecated]] general_span_iterator {
 public:
     using iterator_category = std::random_access_iterator_tag;
     using value_type = typename Span::value_type;
@@ -2259,7 +2235,7 @@ public:
     bool operator<=(const general_span_iterator& rhs) const { return !(rhs < *this); }
     bool operator>(const general_span_iterator& rhs) const { return rhs < *this; }
     bool operator>=(const general_span_iterator& rhs) const { return !(rhs > *this); }
-    void swap(general_span_iterator& rhs) noexcept
+    void swap(general_span_iterator & rhs) noexcept
     {
         std::swap(m_itr, rhs.m_itr);
         std::swap(m_container, rhs.m_container);
@@ -2289,5 +2265,9 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 #if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 #endif // GSL_MULTI_SPAN_H

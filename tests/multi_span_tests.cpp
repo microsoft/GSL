@@ -17,8 +17,14 @@
 #ifdef _MSC_VER
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426) // from catch
+#pragma warning(disable : 26440 26426) // from catch 
+#pragma warning(disable : 4996) // multi_span is in the process of being deprecated. 
+                                // Suppressing warnings until it is completely removed
+#endif
 
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
@@ -1786,4 +1792,8 @@ TEST_CASE("iterator")
 
 #ifdef CONFIRM_COMPILATION_ERRORS
 copy(src_span_static, dst_span_static);
+#endif
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
 #endif
