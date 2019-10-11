@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.1.3)
 
-project(GSL CXX)
+project(GSL LANGUAGES CXX
+        VERSION 2.0.0.1)
 
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 include(ExternalProject)
 find_package(Git)
 
@@ -50,19 +53,19 @@ target_compile_definitions(GSL INTERFACE
     >
 )
 
+#message(FATAL_ERROR "GSL_INSTALL_INCLUDEDIR: ${CMAKE_INSTALL_INCLUDEDIR}/gsl")
+
 # add include folders to the library and targets that consume it
 # the SYSTEM keyword suppresses warnings for users of the library
 if(GSL_STANDALONE_PROJECT)
     target_include_directories(GSL INTERFACE
-        $<BUILD_INTERFACE:
-            ${CMAKE_CURRENT_SOURCE_DIR}/include
-        >
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
 else()
     target_include_directories(GSL SYSTEM INTERFACE
-        $<BUILD_INTERFACE:
-            ${CMAKE_CURRENT_SOURCE_DIR}/include
-        >
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
 endif()
 
@@ -82,13 +85,44 @@ if (CMAKE_VERSION VERSION_GREATER 3.7.8)
     endif()
 endif()
 
-install(
-    DIRECTORY include/gsl
-    DESTINATION include
+set(GSL_DESTINATION_NAME ms-gsl)
+set(GSL_CMAKE_DESTINATION_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${GSL_DESTINATION_NAME}")
+
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/${GSL_DESTINATION_NAME}-config-version.cmake"
+    VERSION "${CMAKE_PROJECT_VERSION}"
+    COMPATIBILITY SameMajorVersion
+)
+
+configure_package_config_file("${GSL_DESTINATION_NAME}-config.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${GSL_DESTINATION_NAME}-config.cmake"
+    INSTALL_DESTINATION "${GSL_CMAKE_DESTINATION_DIR}"
+    PATH_VARS CMAKE_INSTALL_INCLUDEDIR
+)
+
+install(TARGETS GSL
+    EXPORT "${GSL_DESTINATION_NAME}"
+    DESTINATION "${GSL_CMAKE_DESTINATION_DIR}"
+    COMPONENT "${CMAKE_PROJECT_NAME}"
+)
+
+install(EXPORT "${GSL_DESTINATION_NAME}"
+    NAMESPACE "${GSL_DESTINATION_NAME}::"
+    DESTINATION "${GSL_CMAKE_DESTINATION_DIR}"
+    COMPONENT "${CMAKE_PROJECT_NAME}"
+)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${GSL_DESTINATION_NAME}-config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/${GSL_DESTINATION_NAME}-config-version.cmake"
+    DESTINATION "${GSL_CMAKE_DESTINATION_DIR}"
+)
+
+install(DIRECTORY "include/gsl"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+    COMPONENT "${CMAKE_PROJECT_NAME}"
 )
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
-	enable_testing()
-	add_subdirectory(tests)
+    enable_testing()
+    add_subdirectory(tests)
 endif ()
