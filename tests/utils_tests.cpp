@@ -114,8 +114,8 @@ TEST_CASE("narrow")
     n = 300;
     CHECK_THROWS_AS(narrow<char>(n), narrowing_error);
 
-    const auto int32_max = std::numeric_limits<int32_t>::max();
-    const auto int32_min = std::numeric_limits<int32_t>::min();
+    const auto int32_max = (std::numeric_limits<int32_t>::max)();
+    const auto int32_min = (std::numeric_limits<int32_t>::min)();
 
     CHECK(narrow<uint32_t>(int32_t(0)) == 0);
     CHECK(narrow<uint32_t>(int32_t(1)) == 1);
