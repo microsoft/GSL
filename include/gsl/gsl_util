@@ -117,7 +117,12 @@ GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recogn
 #if GSL_CONSTEXPR_NARROW
 constexpr
 #endif
-T narrow(U u) noexcept(false)
+T narrow(U u)
+#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
+noexcept(false)
+#else
+noexcept
+#endif
 {
     T t = narrow_cast<T>(u);
     if (static_cast<U>(t) != u) gsl::details::throw_exception(narrowing_error());
