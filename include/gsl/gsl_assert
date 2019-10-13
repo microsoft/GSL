@@ -128,15 +128,7 @@ namespace details
 #endif
     }
 
-#if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
-
-    template <typename Exception>
-    [[noreturn]] void throw_exception(Exception&&) noexcept
-    {
-        gsl::details::terminate();
-    }
-
-#else
+#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
 
     template <typename Exception>
     [[noreturn]] void throw_exception(Exception&& exception)
@@ -144,7 +136,23 @@ namespace details
         throw std::forward<Exception>(exception);
     }
 
-#endif // GSL_TERMINATE_ON_CONTRACT_VIOLATION
+#elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
+
+    template <typename Exception>
+    [[noreturn]] void throw_exception(Exception&&) noexcept
+    {
+        gsl::details::terminate();
+    }
+
+#elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
+
+    template <typename Exception>
+    void throw_exception(Exception&&) noexcept
+    {
+        return;
+    }
+
+#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 } // namespace details
 } // namespace gsl
