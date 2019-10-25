@@ -33,6 +33,8 @@
 
 #include <type_traits>
 
+// VS2017 15.8 added support for the __cpp_lib_byte definition
+// To do: drop _HAS_STD_BYTE when support for pre 15.8 expires
 #ifdef _MSC_VER
 
 #pragma warning(push)
@@ -42,15 +44,15 @@
 
 #ifndef GSL_USE_STD_BYTE
 // this tests if we are under MSVC and the standard lib has std::byte and it is enabled
-#if defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
+#if (defined(_HAS_STD_BYTE) && _HAS_STD_BYTE) || (defined(__cpp_lib_byte) && __cpp_lib_byte >= 201603)
 
 #define GSL_USE_STD_BYTE 1
 
-#else // defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
+#else // (defined(_HAS_STD_BYTE) && _HAS_STD_BYTE) || (defined(__cpp_lib_byte) && __cpp_lib_byte >= 201603)
 
 #define GSL_USE_STD_BYTE 0
 
-#endif // defined(_HAS_STD_BYTE) && _HAS_STD_BYTE
+#endif // (defined(_HAS_STD_BYTE) && _HAS_STD_BYTE) || (defined(__cpp_lib_byte) && __cpp_lib_byte >= 201603)
 #endif // GSL_USE_STD_BYTE
 
 #else // _MSC_VER
