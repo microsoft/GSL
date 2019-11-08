@@ -87,6 +87,10 @@
 #define byte_may_alias
 #endif // defined __clang__ || defined __GNUC__
 
+#if GSL_USE_STD_BYTE
+#include <cstddef>
+#endif
+
 namespace gsl
 {
 #if GSL_USE_STD_BYTE
