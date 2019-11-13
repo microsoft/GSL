@@ -20,6 +20,8 @@
 #pragma warning(disable : 26440 26426) // from catch
 #endif
 
+#define GSL_TEST
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 
 #include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects

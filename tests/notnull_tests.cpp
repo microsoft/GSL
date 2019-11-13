@@ -23,6 +23,8 @@
 #pragma warning(disable : 4702) // unreachable code
 #endif
 
+#define GSL_TEST
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/pointers> // for not_null, operator<, operator<=, operator>

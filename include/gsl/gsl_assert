@@ -51,16 +51,31 @@
 #endif
 
 //
-// There are three configuration options for this GSL implementation's behavior
-// when pre/post conditions on the GSL types are violated:
-//
-// 1. GSL_TERMINATE_ON_CONTRACT_VIOLATION: std::terminate will be called (default)
-// 2. GSL_THROW_ON_CONTRACT_VIOLATION: a gsl::fail_fast exception will be thrown
-// 3. GSL_UNENFORCED_ON_CONTRACT_VIOLATION: nothing happens
-//
-#if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) || defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION) ||  \
-      defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION))
+// To align with the C++ Core Guidelines, contract violations will terminate in non-test environments.
+// Old behavior could fall into one of three categories that need to be updated.
+//   GSL_THROW_ON_CONTRACT_VIOLATION (kept for tests)
+//   GSL_TERMINATE_ON_CONTRACT_VIOLATION
+//   GSL_UNENFORCED_ON_CONTRACT_VIOLATION (removed)
+// We need to remove the throw logic for the test environment by switching test manager to use death tests
+
+// Determine whether we are in test-mode or production and set contract violation behavior accordingly.
+#if (defined(GSL_TEST))
+
+#if (!defined(GSL_THROW_ON_CONTRACT_VIOLATION))
+#define GSL_THROW_ON_CONTRACT_VIOLATION
+#endif // !defined(GSL_THROW_ON_CONTRACT_VIOLATION)
+
+#elif (defined(GSL_THROW_ON_CONTRACT_VIOLATION))
+
+// Disable throwing for non-test environments
+#undef GSL_THROW_ON_CONTRACT_VIOLATION
 #define GSL_TERMINATE_ON_CONTRACT_VIOLATION
+
+#elif (!defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION))
+
+// If for whatever reason termination behavior wasn't specified, force it
+#define GSL_TERMINATE_ON_CONTRACT_VIOLATION
+
 #endif
 
 #define GSL_STRINGIFY_DETAIL(x) #x
@@ -160,10 +175,6 @@ namespace details
 
 #define GSL_CONTRACT_CHECK(type, cond)                                                             \
     (GSL_LIKELY(cond) ? static_cast<void>(0) : gsl::details::terminate())
-
-#elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
-
-#define GSL_CONTRACT_CHECK(type, cond) GSL_ASSUME(cond)
 
 #endif // GSL_THROW_ON_CONTRACT_VIOLATION
 

@@ -21,6 +21,8 @@
 
 #endif
 
+#define GSL_TEST
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_byte> // for byte
@@ -893,7 +895,7 @@ TEST_CASE("subspan")
     {
         span<int, 5> av = arr;
         CHECK((av.subspan<1>().size() == 4));
-        CHECK(decltype(av.subspan<1>())::extent == 4);    
+        CHECK(decltype(av.subspan<1>())::extent == 4);
     }
 
     {

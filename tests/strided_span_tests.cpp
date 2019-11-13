@@ -18,7 +18,7 @@
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
 #pragma warning(disable : 26440 26426) // from catch deprecated
-#pragma warning(disable : 4996) // strided_span is in the process of being deprecated. 
+#pragma warning(disable : 4996) // strided_span is in the process of being deprecated.
                                 // Suppressing warnings until it is completely removed
 #endif
 
@@ -26,6 +26,8 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
+
+#define GSL_TEST
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 

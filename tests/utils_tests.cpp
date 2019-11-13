@@ -21,6 +21,8 @@
 
 #endif
 
+#define GSL_TEST
+
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_util> // for narrow, finally, narrow_cast, narrowing_e...
