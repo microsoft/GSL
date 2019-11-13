@@ -21,8 +21,6 @@
 
 #endif
 
-#define GSL_TEST
-
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
 
 #include <gsl/gsl_byte> // for byte

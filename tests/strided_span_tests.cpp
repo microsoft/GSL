@@ -27,8 +27,6 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#define GSL_TEST
-
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
 
 #include <gsl/gsl_byte>   // for byte

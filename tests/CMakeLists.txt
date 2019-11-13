@@ -39,6 +39,7 @@ if(MSVC) # MSVC or simulating MSVC
         /EHsc
         /W4
         /WX
+        /DGSL_TEST
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
           -Wno-c++98-compat
@@ -61,6 +62,7 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        -DGSL_TEST
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat

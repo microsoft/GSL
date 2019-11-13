@@ -26,8 +26,6 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#define GSL_TEST
-
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, TEST_CASE
 
 #include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t
