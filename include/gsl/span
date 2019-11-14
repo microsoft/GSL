@@ -774,6 +774,62 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
     return s[i];
 }
 
+// [span.obs] Free observer functions
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::index_type ssize(const span<ElementType, Extent> &span) noexcept
+{
+    return span.size();
+}
+
+// [span.iter] Free functions for begin/end functions
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::iterator begin(const span<ElementType, Extent> &span) noexcept
+{
+    return span.begin();
+}
+
+template <class ElementType, std::ptrdiff_t Extent = dynamic_extent>
+constexpr typename span<ElementType, Extent>::iterator end(const span<ElementType, Extent> &span) noexcept
+{
+    return span.end();
+}
+
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::const_iterator cbegin(const span<ElementType, Extent> &span) noexcept
+{
+    return span.cbegin();
+}
+
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::const_iterator cend(const span<ElementType, Extent> &span) noexcept
+{
+    return span.cend();
+}
+
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator rbegin(const span<ElementType, Extent> &span) noexcept
+{
+    return span.rbegin();
+}
+
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator rend(const span<ElementType, Extent> &span) noexcept
+{
+    return span.rend();
+}
+
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::const_reverse_iterator crbegin(const span<ElementType, Extent> &span) noexcept
+{
+    return span.crbegin();
+}
+
+template <class ElementType, std::ptrdiff_t Extent>
+constexpr typename span<ElementType, Extent>::const_reverse_iterator crend(const span<ElementType, Extent> &span) noexcept
+{
+    return span.crend();
+}
+
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)
