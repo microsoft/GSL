@@ -100,7 +100,7 @@ public:
 
     constexpr operator T() const { return get(); }
     constexpr T operator->() const { return get(); }
-    constexpr decltype(auto) operator*() const { return *get(); } 
+    constexpr decltype(auto) operator*() const { return *get(); }
 
     // prevents compilation when someone attempts to assign a null pointer constant
     not_null(std::nullptr_t) = delete;
@@ -118,6 +118,13 @@ public:
 private:
     T ptr_;
 };
+
+#if (defined(__cplusplus) && (__cplusplus >= 201703L))
+// deduction guide to prevent the ctad-maybe-unsupported warning
+template <class T>
+not_null(T ptr) -> not_null<T>;
+
+#endif (defined(__cplusplus) && (__cplusplus >= 201703L))
 
 template <class T>
 auto make_not_null(T&& t) {
