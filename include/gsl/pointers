@@ -124,7 +124,7 @@ private:
 template <class T>
 not_null(T ptr) -> not_null<T>;
 
-#endif (defined(__cplusplus) && (__cplusplus >= 201703L))
+#endif // (defined(__cplusplus) && (__cplusplus >= 201703L))
 
 template <class T>
 auto make_not_null(T&& t) {
