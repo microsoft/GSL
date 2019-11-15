@@ -119,13 +119,6 @@ private:
     T ptr_;
 };
 
-#if (defined(__cplusplus) && (__cplusplus >= 201703L))
-// deduction guide to prevent the ctad-maybe-unsupported warning
-template <class T>
-not_null(T ptr) -> not_null<T>;
-
-#endif // (defined(__cplusplus) && (__cplusplus >= 201703L))
-
 template <class T>
 auto make_not_null(T&& t) {
     return not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
@@ -278,6 +271,16 @@ template <class T>
 auto make_strict_not_null(T&& t) {
     return strict_not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
+
+#if (defined(__cplusplus) && (__cplusplus >= 201703L))
+
+// deduction guides to prevent the ctad-maybe-unsupported warning
+template <class T>
+not_null(T ptr) -> not_null<T>;
+template <class T>
+strict_not_null(T ptr) -> strict_not_null<T>;
+
+#endif // (defined(__cplusplus) && (__cplusplus >= 201703L))
 
 } // namespace gsl
 
