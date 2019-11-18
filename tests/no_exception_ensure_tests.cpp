@@ -28,7 +28,7 @@ int operator_subscript_no_throw() noexcept
 
 void setup_termination_handler() noexcept
 {
-#if defined(_MSC_VER)
+#if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
     auto& handler = gsl::details::get_terminate_handler();
     handler = &test_terminate;

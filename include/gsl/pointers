@@ -100,7 +100,7 @@ public:
 
     constexpr operator T() const { return get(); }
     constexpr T operator->() const { return get(); }
-    constexpr decltype(auto) operator*() const { return *get(); } 
+    constexpr decltype(auto) operator*() const { return *get(); }
 
     // prevents compilation when someone attempts to assign a null pointer constant
     not_null(std::nullptr_t) = delete;
@@ -271,6 +271,14 @@ template <class T>
 auto make_strict_not_null(T&& t) {
     return strict_not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
+
+#if ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
+
+// deduction guides to prevent the ctad-maybe-unsupported warning
+template <class T> not_null(T) -> not_null<T>;
+template <class T> strict_not_null(T) -> strict_not_null<T>;
+
+#endif // ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
 
 } // namespace gsl
 
