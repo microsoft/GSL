@@ -510,8 +510,12 @@ public:
         return data()[idx];
     }
 
+    // at and operator() are deprecated to align to the public member functions of std::span
+    [[deprecated("Use operator[]")]]
     constexpr reference at(index_type idx) const { return this->operator[](idx); }
+    [[deprecated("Use operator[]")]]
     constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
+
     constexpr pointer data() const noexcept { return storage_.data(); }
 
     // [span.iter], span iterator support

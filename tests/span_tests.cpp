@@ -18,7 +18,12 @@
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
 #pragma warning(disable : 26440 26426 26497) // from catch
+#pragma warning(disable : 4996)
+#endif
 
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 #include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
@@ -1562,3 +1567,6 @@ TEST_CASE("default_constructible")
     CHECK((!std::is_default_constructible<span<int, 42>>::value));
 }
 
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif
