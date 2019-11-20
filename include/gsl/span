@@ -512,6 +512,19 @@ public:
 
     constexpr reference at(index_type idx) const { return this->operator[](idx); }
     constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
+
+    constexpr reference front() const
+    {
+        Expects(size() > 0);
+        return data()[0];
+    }
+
+    constexpr reference back() const
+    {
+        Expects(size() > 0);
+        return data()[size() - 1];
+    }
+
     constexpr pointer data() const noexcept { return storage_.data(); }
 
     // [span.iter], span iterator support

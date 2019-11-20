@@ -893,7 +893,7 @@ TEST_CASE("subspan")
     {
         span<int, 5> av = arr;
         CHECK((av.subspan<1>().size() == 4));
-        CHECK(decltype(av.subspan<1>())::extent == 4);    
+        CHECK(decltype(av.subspan<1>())::extent == 4);
     }
 
     {
@@ -1560,5 +1560,18 @@ TEST_CASE("default_constructible")
     CHECK((std::is_default_constructible<span<int>>::value));
     CHECK((std::is_default_constructible<span<int, 0>>::value));
     CHECK((!std::is_default_constructible<span<int, 42>>::value));
+}
+
+
+TEST_CASE("front_back")
+{
+    int arr[5] = {1,2,3,4,5};
+    span<int> s{arr};
+    CHECK(s.front() == 1);
+    CHECK(s.back() == 5);
+
+    span<int> s2;
+    CHECK_THROWS_AS(s2.front(), fail_fast);
+    CHECK_THROWS_AS(s2.back(), fail_fast);
 }
 
