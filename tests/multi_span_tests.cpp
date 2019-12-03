@@ -69,11 +69,6 @@ void overloaded_func(multi_span<const char, dynamic_range, 3, 5> exp, char expec
     for (auto val : exp) { EXPECT_EQ(val, expected_value); }
 }
 
-void fixed_func(multi_span<int, 3, 3, 5> exp, int expected_value)
-{
-    for (auto val : exp) { EXPECT_EQ(val, expected_value); }
-}
-
 void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
 {
     auto length = av.size() / 2;
@@ -1288,7 +1283,6 @@ TEST(multi_span_test, span_parameter_test)
 
     overloaded_func(as_multi_span(av, dim(4), dim(3), dim(5)), 34);
 
-    // fixed_func(av, 34);
     delete[] data;
 }
 
