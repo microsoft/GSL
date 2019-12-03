@@ -24,4 +24,3 @@
 #pragma warning(disable : ALL_CODE_ANALYSIS_WARNINGS) // from catch
 #endif // _MSC_VER
 
-#include <catch/catch.hpp>

@@ -23,7 +23,7 @@
 #pragma warning(disable : 4702) // unreachable code
 #endif
 
-#include <catch/catch.hpp>    // for AssertionHandler, StringRef, CHECK, TEST_...
+#include <gtest/gtest.h>
 #include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
 
 namespace gsl
@@ -35,19 +35,20 @@ using namespace gsl;
 
 GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
 bool helper(not_null<int*> p) { return *p == 12; }
+
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper_const(not_null<const int*> p) { return *p == 12; }
 
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
+
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
 int* return_pointer() { return nullptr; }
 const int* return_pointer_const() { return nullptr; }
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("TestStrictNotNull")
+TEST(strict_notnull_tests, TestStrictNotNull)
 {
     {
         // raw ptr <-> strict_not_null
@@ -66,7 +67,7 @@ TEST_CASE("TestStrictNotNull")
         helper(snn1);
         helper_const(snn1);
 
-        CHECK(*snn1 == 42);
+        EXPECT_EQ(*snn1, 42);
     }
 
     {
@@ -80,7 +81,7 @@ TEST_CASE("TestStrictNotNull")
         strict_helper_const(snn1);
         strict_helper_const(snn2);
 
-        CHECK(snn1 == snn2);
+        EXPECT_EQ(snn1, snn2);
     }
 
     {
@@ -95,8 +96,8 @@ TEST_CASE("TestStrictNotNull")
         helper(snn);
         helper_const(snn);
 
-        CHECK(snn == nn1);
-        CHECK(snn == nn2);
+        EXPECT_EQ(snn, nn1);
+        EXPECT_EQ(snn, nn2);
     }
 
     {
@@ -111,16 +112,16 @@ TEST_CASE("TestStrictNotNull")
         strict_helper(nn);
         strict_helper_const(nn);
 
-        CHECK(snn1 == nn);
-        CHECK(snn2 == nn);
+        EXPECT_EQ(snn1, nn);
+        EXPECT_EQ(snn2, nn);
 
         std::hash<strict_not_null<int*>> hash_snn;
         std::hash<not_null<int*>> hash_nn;
 
-        CHECK(hash_nn(snn1) == hash_nn(nn));
-        CHECK(hash_snn(snn1) == hash_nn(nn));
-        CHECK(hash_nn(snn1) == hash_nn(snn2));
-        CHECK(hash_snn(snn1) == hash_snn(nn));
+        EXPECT_EQ(hash_nn(snn1), hash_nn(nn));
+        EXPECT_EQ(hash_snn(snn1), hash_nn(nn));
+        EXPECT_EQ(hash_nn(snn1), hash_nn(snn2));
+        EXPECT_EQ(hash_snn(snn1), hash_snn(nn));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -132,8 +133,7 @@ TEST_CASE("TestStrictNotNull")
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
+TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 {
     {
         int i = 42;
@@ -142,7 +142,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
         helper(strict_not_null{&i});
         helper_const(strict_not_null{&i});
 
-        CHECK(*x == 42);
+        EXPECT_EQ(*x, 42);
     }
 
     {
@@ -153,7 +153,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
         helper(strict_not_null{p});
         helper_const(strict_not_null{p});
 
-        CHECK(*x == 42);
+        EXPECT_EQ(*x, 42);
     }
 
     {
@@ -161,7 +161,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
             int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+        EXPECT_DEATH(workaround_macro(), ".*");
     }
 
     {
@@ -169,14 +169,14 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
             const int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+        EXPECT_DEATH(workaround_macro(), ".*");
     }
 
     {
         int* p = nullptr;
 
-        CHECK_THROWS_AS(helper(strict_not_null{p}), fail_fast);
-        CHECK_THROWS_AS(helper_const(strict_not_null{p}), fail_fast);
+        EXPECT_DEATH(helper(strict_not_null{p}), ".*");
+        EXPECT_DEATH(helper_const(strict_not_null{p}), ".*");
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS

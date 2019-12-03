@@ -21,7 +21,7 @@
 
 #endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
+#include <gtest/gtest.h>
 
 #include <gsl/gsl_util> // for narrow, finally, narrow_cast, narrowing_e...
 
@@ -33,101 +33,100 @@
 
 using namespace gsl;
 
-TEST_CASE("sanity check for gsl::index typedef")
+void f(int& i) { i += 1; }
+static int j = 0;
+void g() { j += 1; }
+
+TEST(utils_tests, sanity_check_for_gsl_index_typedef)
 {
     static_assert(std::is_same<gsl::index, std::ptrdiff_t>::value,
                   "gsl::index represents wrong arithmetic type");
 }
 
-void f(int& i) { i += 1; }
-
-TEST_CASE("finally_lambda")
+TEST(utils_tests, finally_lambda)
 {
     int i = 0;
     {
         auto _ = finally([&]() { f(i); });
-        CHECK(i == 0);
+        EXPECT_EQ(i, 0);
     }
-    CHECK(i == 1);
+    EXPECT_EQ(i, 1);
 }
 
-TEST_CASE("finally_lambda_move")
+TEST(utils_tests, finally_lambda_move)
 {
     int i = 0;
     {
         auto _1 = finally([&]() { f(i); });
         {
             auto _2 = std::move(_1);
-            CHECK(i == 0);
+            EXPECT_EQ(i, 0);
         }
-        CHECK(i == 1);
+        EXPECT_EQ(i, 1);
         {
             auto _2 = std::move(_1);
-            CHECK(i == 1);
+            EXPECT_EQ(i, 1);
         }
-        CHECK(i == 1);
+        EXPECT_EQ(i, 1);
     }
-    CHECK(i == 1);
+    EXPECT_EQ(i, 1);
 }
 
-TEST_CASE("finally_function_with_bind")
+TEST(utils_tests, finally_function_with_bind)
 {
     int i = 0;
     {
         auto _ = finally(std::bind(&f, std::ref(i)));
-        CHECK(i == 0);
+        EXPECT_EQ(i, 0);
     }
-    CHECK(i == 1);
+    EXPECT_EQ(i, 1);
 }
 
-static int j = 0;
-void g() { j += 1; }
-TEST_CASE("finally_function_ptr")
+TEST(utils_tests, finally_function_ptr)
 {
     j = 0;
     {
         auto _ = finally(&g);
-        CHECK(j == 0);
+        EXPECT_EQ(j, 0);
     }
-    CHECK(j == 1);
+    EXPECT_EQ(j, 1);
 }
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("narrow_cast")
+TEST(utils_tests, narrow_cast)
 {
     int n = 120;
     char c = narrow_cast<char>(n);
-    CHECK(c == 120);
+    EXPECT_EQ(c, 120);
 
     n = 300;
     unsigned char uc = narrow_cast<unsigned char>(n);
-    CHECK(uc == 44);
+    EXPECT_EQ(uc, 44);
 }
 
-GSL_SUPPRESS(con.5) // NO-FORMAT: attribute
-TEST_CASE("narrow")
+TEST(utils_tests, narrow)
 {
     int n = 120;
     const char c = narrow<char>(n);
-    CHECK(c == 120);
+    EXPECT_EQ(c, 120);
 
     n = 300;
-    CHECK_THROWS_AS(narrow<char>(n), narrowing_error);
+    EXPECT_DEATH(narrow<char>(n), ".*");
 
     const auto int32_max = std::numeric_limits<int32_t>::max();
     const auto int32_min = std::numeric_limits<int32_t>::min();
 
-    CHECK(narrow<uint32_t>(int32_t(0)) == 0);
-    CHECK(narrow<uint32_t>(int32_t(1)) == 1);
-    CHECK(narrow<uint32_t>(int32_max) == static_cast<uint32_t>(int32_max));
+    EXPECT_TRUE(narrow<uint32_t>(int32_t(0)) == 0);
+    EXPECT_TRUE(narrow<uint32_t>(int32_t(1)) == 1);
+    EXPECT_TRUE(narrow<uint32_t>(int32_max) == static_cast<uint32_t>(int32_max));
 
-    CHECK_THROWS_AS(narrow<uint32_t>(int32_t(-1)), narrowing_error);
-    CHECK_THROWS_AS(narrow<uint32_t>(int32_min), narrowing_error);
+    EXPECT_DEATH(narrow<uint32_t>(int32_t(-1)), ".*");
+    EXPECT_DEATH(narrow<uint32_t>(int32_min), ".*");
 
     n = -42;
-    CHECK_THROWS_AS(narrow<unsigned>(n), narrowing_error);
+    EXPECT_DEATH(narrow<unsigned>(n), ".*");
 
 #if GSL_CONSTEXPR_NARROW
     static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");
 #endif
+
 }

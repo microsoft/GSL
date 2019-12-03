@@ -21,7 +21,7 @@
 
 #endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
+#include <gtest/gtest.h>
 
 #include <gsl/pointers> // for owner
 
@@ -30,19 +30,16 @@ using namespace gsl;
 GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
 void f(int* i) { *i += 1; }
 
-GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
-GSL_SUPPRESS(r.3) // NO-FORMAT: attribute // TODO: false positive
-GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
-TEST_CASE("basic_test")
+TEST(owner_tests, basic_test)
 {
     owner<int*> p = new int(120);
-    CHECK(*p == 120);
+    EXPECT_EQ(*p, 120);
     f(p);
-    CHECK(*p == 121);
+    EXPECT_EQ(*p, 121);
     delete p;
 }
 
-TEST_CASE("check_pointer_constraint")
+TEST(owner_tests, check_pointer_constraint)
 {
     #ifdef CONFIRM_COMPILATION_ERRORS
     {

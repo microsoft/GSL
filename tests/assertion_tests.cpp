@@ -20,22 +20,18 @@
 #pragma warning(disable : 26440 26426) // from catch
 #endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
+#include <gtest/gtest.h>
 
 #include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
 
 using namespace gsl;
 
+namespace
+{
 int f(int i)
 {
     Expects(i > 0 && i < 10);
     return i;
-}
-
-TEST_CASE("expects")
-{
-    CHECK(f(2) == 2);
-    CHECK_THROWS_AS(f(10), fail_fast);
 }
 
 int g(int i)
@@ -44,9 +40,17 @@ int g(int i)
     Ensures(i > 0 && i < 10);
     return i;
 }
+} // namespace
 
-TEST_CASE("ensures")
+TEST(assertion_tests, expects)
 {
-    CHECK(g(2) == 3);
-    CHECK_THROWS_AS(g(9), fail_fast);
+    EXPECT_EQ(f(2), 2);
+    EXPECT_DEATH(f(10), ".*");
+}
+
+
+TEST(assertion_tests, ensures)
+{
+    EXPECT_EQ(g(2), 3);
+    EXPECT_DEATH(g(9), ".*");
 }
