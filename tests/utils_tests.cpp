@@ -57,9 +57,9 @@ TEST(utils_tests, finally_lambda)
     int i = 0;
     {
         auto _ = finally([&]() { f(i); });
-        EXPECT_EQ(i, 0);
+        EXPECT_TRUE(i == 0);
     }
-    EXPECT_EQ(i, 1);
+    EXPECT_TRUE(i == 1);
 }
 
 TEST(utils_tests, finally_lambda_move)
@@ -69,16 +69,16 @@ TEST(utils_tests, finally_lambda_move)
         auto _1 = finally([&]() { f(i); });
         {
             auto _2 = std::move(_1);
-            EXPECT_EQ(i, 0);
+            EXPECT_TRUE(i == 0);
         }
-        EXPECT_EQ(i, 1);
+        EXPECT_TRUE(i == 1);
         {
             auto _2 = std::move(_1);
-            EXPECT_EQ(i, 1);
+            EXPECT_TRUE(i == 1);
         }
-        EXPECT_EQ(i, 1);
+        EXPECT_TRUE(i == 1);
     }
-    EXPECT_EQ(i, 1);
+    EXPECT_TRUE(i == 1);
 }
 
 TEST(utils_tests, finally_function_with_bind)
@@ -86,9 +86,9 @@ TEST(utils_tests, finally_function_with_bind)
     int i = 0;
     {
         auto _ = finally(std::bind(&f, std::ref(i)));
-        EXPECT_EQ(i, 0);
+        EXPECT_TRUE(i == 0);
     }
-    EXPECT_EQ(i, 1);
+    EXPECT_TRUE(i == 1);
 }
 
 TEST(utils_tests, finally_function_ptr)
@@ -96,27 +96,27 @@ TEST(utils_tests, finally_function_ptr)
     j = 0;
     {
         auto _ = finally(&g);
-        EXPECT_EQ(j, 0);
+        EXPECT_TRUE(j == 0);
     }
-    EXPECT_EQ(j, 1);
+    EXPECT_TRUE(j == 1);
 }
 
 TEST(utils_tests, narrow_cast)
 {
     int n = 120;
     char c = narrow_cast<char>(n);
-    EXPECT_EQ(c, 120);
+    EXPECT_TRUE(c == 120);
 
     n = 300;
     unsigned char uc = narrow_cast<unsigned char>(n);
-    EXPECT_EQ(uc, 44);
+    EXPECT_TRUE(uc == 44);
 }
 
 TEST(utils_tests, narrow)
 {
     int n = 120;
     const char c = narrow<char>(n);
-    EXPECT_EQ(c, 120);
+    EXPECT_TRUE(c == 120);
 
     n = 300;
     EXPECT_DEATH(narrow<char>(n), ".*");

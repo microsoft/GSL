@@ -42,9 +42,9 @@ void f(int* i) { *i += 1; }
 TEST(owner_tests, basic_test)
 {
     owner<int*> p = new int(120);
-    EXPECT_EQ(*p, 120);
+    EXPECT_TRUE(*p == 120);
     f(p);
-    EXPECT_EQ(*p, 121);
+    EXPECT_TRUE(*p == 121);
     delete p;
 }
 

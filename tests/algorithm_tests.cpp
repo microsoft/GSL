@@ -57,8 +57,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 
@@ -74,8 +74,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 
@@ -91,8 +91,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 
@@ -108,8 +108,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 }
@@ -128,8 +128,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 
@@ -145,8 +145,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 
@@ -162,8 +162,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 
@@ -179,8 +179,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span.subspan(src_span.size()));
 
         for (std::size_t i = 0; i < src.size(); ++i) {
-            EXPECT_EQ(dst[i], src[i]);
-            EXPECT_EQ(dst[i + src.size()], src[i]);
+            EXPECT_TRUE(dst[i] == src[i]);
+            EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
     }
 }

@@ -76,7 +76,7 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         helper(snn1);
         helper_const(snn1);
 
-        EXPECT_EQ(*snn1, 42);
+        EXPECT_TRUE(*snn1 == 42);
     }
 
     {
@@ -90,7 +90,7 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         strict_helper_const(snn1);
         strict_helper_const(snn2);
 
-        EXPECT_EQ(snn1, snn2);
+        EXPECT_TRUE(snn1 == snn2);
     }
 
     {
@@ -105,8 +105,8 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         helper(snn);
         helper_const(snn);
 
-        EXPECT_EQ(snn, nn1);
-        EXPECT_EQ(snn, nn2);
+        EXPECT_TRUE(snn == nn1);
+        EXPECT_TRUE(snn == nn2);
     }
 
     {
@@ -121,16 +121,16 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         strict_helper(nn);
         strict_helper_const(nn);
 
-        EXPECT_EQ(snn1, nn);
-        EXPECT_EQ(snn2, nn);
+        EXPECT_TRUE(snn1 == nn);
+        EXPECT_TRUE(snn2 == nn);
 
         std::hash<strict_not_null<int*>> hash_snn;
         std::hash<not_null<int*>> hash_nn;
 
-        EXPECT_EQ(hash_nn(snn1), hash_nn(nn));
-        EXPECT_EQ(hash_snn(snn1), hash_nn(nn));
-        EXPECT_EQ(hash_nn(snn1), hash_nn(snn2));
-        EXPECT_EQ(hash_snn(snn1), hash_snn(nn));
+        EXPECT_TRUE(hash_nn(snn1) == hash_nn(nn));
+        EXPECT_TRUE(hash_snn(snn1) == hash_nn(nn));
+        EXPECT_TRUE(hash_nn(snn1) == hash_nn(snn2));
+        EXPECT_TRUE(hash_snn(snn1) == hash_snn(nn));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -151,7 +151,7 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
         helper(strict_not_null{&i});
         helper_const(strict_not_null{&i});
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -162,7 +162,7 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
         helper(strict_not_null{p});
         helper_const(strict_not_null{p});
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {

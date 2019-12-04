@@ -110,8 +110,8 @@ TEST(bounds_tests, bounds_convertible)
     b5 = static_bounds<34>();
     b6 = b5;
 
-    EXPECT_EQ(b5, b6);
-    EXPECT_EQ(b5.size(), b6.size());
+    EXPECT_TRUE(b5 == b6);
+    EXPECT_TRUE(b5.size() == b6.size());
 }
 
 #ifdef CONFIRM_COMPILATION_ERRORS

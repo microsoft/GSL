@@ -44,8 +44,8 @@ TEST(at_tests, static_array)
     const int(&c_a)[4] = a;
 
     for (int i = 0; i < 4; ++i) {
-        EXPECT_EQ(&gsl::at(a, i), &a[i]);
-        EXPECT_EQ(&gsl::at(c_a, i), &a[i]);
+        EXPECT_TRUE(&gsl::at(a, i) == &a[i]);
+        EXPECT_TRUE(&gsl::at(c_a, i) == &a[i]);
     }
 
     EXPECT_DEATH(gsl::at(a, -1), ".*");
@@ -60,8 +60,8 @@ TEST(at_tests, std_array)
     const std::array<int, 4>& c_a = a;
 
     for (int i = 0; i < 4; ++i) {
-        EXPECT_EQ(&gsl::at(a, i), &a[static_cast<std::size_t>(i)]);
-        EXPECT_EQ(&gsl::at(c_a, i), &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
     EXPECT_DEATH(gsl::at(a, -1), ".*");
@@ -76,8 +76,8 @@ TEST(at_tests, StdVector)
     const std::vector<int>& c_a = a;
 
     for (int i = 0; i < 4; ++i) {
-        EXPECT_EQ(&gsl::at(a, i), &a[static_cast<std::size_t>(i)]);
-        EXPECT_EQ(&gsl::at(c_a, i), &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
     EXPECT_DEATH(gsl::at(a, -1), ".*");
@@ -91,8 +91,8 @@ TEST(at_tests, InitializerList)
     const std::initializer_list<int> a = {1, 2, 3, 4};
 
     for (int i = 0; i < 4; ++i) {
-        EXPECT_EQ(gsl::at(a, i), i + 1);
-        EXPECT_EQ(gsl::at({1, 2, 3, 4}, i), i + 1);
+        EXPECT_TRUE(gsl::at(a, i) == i + 1);
+        EXPECT_TRUE(gsl::at({1, 2, 3, 4}, i) == i + 1);
     }
 
     EXPECT_DEATH(gsl::at(a, -1), ".*");

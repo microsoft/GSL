@@ -166,7 +166,7 @@ TEST(notnull_tests, TestNotNullConstructors)
         int i = 12;
         auto rp = RefCounted<int>(&i);
         not_null<int*> p(rp);
-        EXPECT_EQ(p.get(), &i);
+        EXPECT_TRUE(p.get() == &i);
 
         not_null<std::shared_ptr<int>> x(
             std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
@@ -183,7 +183,7 @@ TEST(notnull_tests, TestNotNullConstructors)
         helper(&t);
         helper_const(&t);
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -199,7 +199,7 @@ TEST(notnull_tests, TestNotNullConstructors)
         helper(x);
         helper_const(x);
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -213,7 +213,7 @@ TEST(notnull_tests, TestNotNullConstructors)
         helper_const(cp);
         helper_const(x);
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -223,7 +223,7 @@ TEST(notnull_tests, TestNotNullConstructors)
 
         auto x = not_null<const int*>{cp};
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -243,14 +243,14 @@ void ostream_helper(T v)
         std::ostringstream ref;
         os << static_cast<void*>(p);
         ref << static_cast<void*>(&v);
-        EXPECT_EQ(os.str(), ref.str());
+        EXPECT_TRUE(os.str() == ref.str());
     }
     {
         std::ostringstream os;
         std::ostringstream ref;
         os << *p;
         ref << v;
-        EXPECT_EQ(os.str(), ref.str());
+        EXPECT_TRUE(os.str() == ref.str());
     }
 }
 
@@ -275,7 +275,7 @@ TEST(notnull_tests, TestNotNullCasting)
     not_null<MyDerived*> p{&derived};
     not_null<MyBase*> q(&base);
     q = p; // allowed with heterogeneous copy ctor
-    EXPECT_EQ(q, p);
+    EXPECT_TRUE(q == p);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     q = u; // no viable conversion possible between MyBase* and Unrelated*
@@ -285,7 +285,7 @@ TEST(notnull_tests, TestNotNullCasting)
     not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
 #endif
     not_null<Unrelated*> t(reinterpret_cast<Unrelated*>(p.get()));
-    EXPECT_EQ(reinterpret_cast<void*>(p.get()), reinterpret_cast<void*>(t.get()));
+    EXPECT_TRUE(reinterpret_cast<void*>(p.get()) == reinterpret_cast<void*>(t.get()));
 }
 
 TEST(notnull_tests, TestNotNullAssignment)
@@ -307,23 +307,23 @@ TEST(notnull_tests, TestNotNullRawPointerComparison)
     using NotNull1 = not_null<decltype(p1)>;
     using NotNull2 = not_null<decltype(p2)>;
 
-    EXPECT_EQ((NotNull1(p1) == NotNull1(p1)), true);
-    EXPECT_EQ((NotNull1(p1) == NotNull2(p2)), false);
+    EXPECT_TRUE((NotNull1(p1) == NotNull1(p1)) == true);
+    EXPECT_TRUE((NotNull1(p1) == NotNull2(p2)) == false);
 
-    EXPECT_EQ((NotNull1(p1) != NotNull1(p1)), false);
-    EXPECT_EQ((NotNull1(p1) != NotNull2(p2)), true);
+    EXPECT_TRUE((NotNull1(p1) != NotNull1(p1)) == false);
+    EXPECT_TRUE((NotNull1(p1) != NotNull2(p2)) == true);
 
-    EXPECT_EQ((NotNull1(p1) < NotNull1(p1)), false);
-    EXPECT_EQ((NotNull1(p1) < NotNull2(p2)), (p1 < p2));
-    EXPECT_EQ((NotNull2(p2) < NotNull1(p1)), (p2 < p1));
+    EXPECT_TRUE((NotNull1(p1) < NotNull1(p1)) == false);
+    EXPECT_TRUE((NotNull1(p1) < NotNull2(p2)) == (p1 < p2));
+    EXPECT_TRUE((NotNull2(p2) < NotNull1(p1)) == (p2 < p1));
 
-    EXPECT_EQ((NotNull1(p1) > NotNull1(p1)), false);
-    EXPECT_EQ((NotNull1(p1) > NotNull2(p2)), (p1 > p2));
-    EXPECT_EQ((NotNull2(p2) > NotNull1(p1)), (p2 > p1));
+    EXPECT_TRUE((NotNull1(p1) > NotNull1(p1)) == false);
+    EXPECT_TRUE((NotNull1(p1) > NotNull2(p2)) == (p1 > p2));
+    EXPECT_TRUE((NotNull2(p2) > NotNull1(p1)) == (p2 > p1));
 
-    EXPECT_EQ((NotNull1(p1) <= NotNull1(p1)), true);
-    EXPECT_EQ((NotNull1(p1) <= NotNull2(p2)), (p1 <= p2));
-    EXPECT_EQ((NotNull2(p2) <= NotNull1(p1)), (p2 <= p1));
+    EXPECT_TRUE((NotNull1(p1) <= NotNull1(p1)) == true);
+    EXPECT_TRUE((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
+    EXPECT_TRUE((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
 }
 
 TEST(notnull_tests, TestNotNullDereferenceOperator)
@@ -332,8 +332,8 @@ TEST(notnull_tests, TestNotNullDereferenceOperator)
         auto sp1 = std::make_shared<NonCopyableNonMovable>();
 
         using NotNullSp1 = not_null<decltype(sp1)>;
-        EXPECT_EQ(typeid(*sp1), typeid(*NotNullSp1(sp1)));
-        EXPECT_EQ(std::addressof(*NotNullSp1(sp1)), std::addressof(*sp1));
+        EXPECT_TRUE(typeid(*sp1) == typeid(*NotNullSp1(sp1)));
+        EXPECT_TRUE(std::addressof(*NotNullSp1(sp1)) == std::addressof(*sp1));
     }
 
     {
@@ -341,18 +341,18 @@ TEST(notnull_tests, TestNotNullDereferenceOperator)
         CustomPtr<int> p1(&ints[0]);
 
         using NotNull1 = not_null<decltype(p1)>;
-        EXPECT_EQ(typeid(*NotNull1(p1)), typeid(*p1));
-        EXPECT_EQ(*NotNull1(p1), 42);
+        EXPECT_TRUE(typeid(*NotNull1(p1)) == typeid(*p1));
+        EXPECT_TRUE(*NotNull1(p1) == 42);
         *NotNull1(p1) = 43;
-        EXPECT_EQ(ints[0], 43);
+        EXPECT_TRUE(ints[0] == 43);
     }
 
     {
         int v = 42;
         gsl::not_null<int*> p(&v);
-        EXPECT_EQ(typeid(*p), typeid(*(&v)));
+        EXPECT_TRUE(typeid(*p) == typeid(*(&v)));
         *p = 43;
-        EXPECT_EQ(v, 43);
+        EXPECT_TRUE(v == 43);
     }
 }
 
@@ -364,27 +364,27 @@ TEST(notnull_tests, TestNotNullSharedPtrComparison)
     using NotNullSp1 = not_null<decltype(sp1)>;
     using NotNullSp2 = not_null<decltype(sp2)>;
 
-    EXPECT_EQ((NotNullSp1(sp1) == NotNullSp1(sp1)), true);
-    EXPECT_EQ((NotNullSp1(sp1) == NotNullSp2(sp2)), false);
+    EXPECT_TRUE((NotNullSp1(sp1) == NotNullSp1(sp1)) == true);
+    EXPECT_TRUE((NotNullSp1(sp1) == NotNullSp2(sp2)) == false);
 
-    EXPECT_EQ((NotNullSp1(sp1) != NotNullSp1(sp1)), false);
-    EXPECT_EQ((NotNullSp1(sp1) != NotNullSp2(sp2)), true);
+    EXPECT_TRUE((NotNullSp1(sp1) != NotNullSp1(sp1)) == false);
+    EXPECT_TRUE((NotNullSp1(sp1) != NotNullSp2(sp2)) == true);
 
-    EXPECT_EQ((NotNullSp1(sp1) < NotNullSp1(sp1)), false);
-    EXPECT_EQ((NotNullSp1(sp1) < NotNullSp2(sp2)), (sp1 < sp2));
-    EXPECT_EQ((NotNullSp2(sp2) < NotNullSp1(sp1)), (sp2 < sp1));
+    EXPECT_TRUE((NotNullSp1(sp1) < NotNullSp1(sp1)) == false);
+    EXPECT_TRUE((NotNullSp1(sp1) < NotNullSp2(sp2)) == (sp1 < sp2));
+    EXPECT_TRUE((NotNullSp2(sp2) < NotNullSp1(sp1)) == (sp2 < sp1));
 
-    EXPECT_EQ((NotNullSp1(sp1) > NotNullSp1(sp1)), false);
-    EXPECT_EQ((NotNullSp1(sp1) > NotNullSp2(sp2)), (sp1 > sp2));
-    EXPECT_EQ((NotNullSp2(sp2) > NotNullSp1(sp1)), (sp2 > sp1));
+    EXPECT_TRUE((NotNullSp1(sp1) > NotNullSp1(sp1)) == false);
+    EXPECT_TRUE((NotNullSp1(sp1) > NotNullSp2(sp2)) == (sp1 > sp2));
+    EXPECT_TRUE((NotNullSp2(sp2) > NotNullSp1(sp1)) == (sp2 > sp1));
 
-    EXPECT_EQ((NotNullSp1(sp1) <= NotNullSp1(sp1)), true);
-    EXPECT_EQ((NotNullSp1(sp1) <= NotNullSp2(sp2)), (sp1 <= sp2));
-    EXPECT_EQ((NotNullSp2(sp2) <= NotNullSp1(sp1)), (sp2 <= sp1));
+    EXPECT_TRUE((NotNullSp1(sp1) <= NotNullSp1(sp1)) == true);
+    EXPECT_TRUE((NotNullSp1(sp1) <= NotNullSp2(sp2)) == (sp1 <= sp2));
+    EXPECT_TRUE((NotNullSp2(sp2) <= NotNullSp1(sp1)) == (sp2 <= sp1));
 
-    EXPECT_EQ((NotNullSp1(sp1) >= NotNullSp1(sp1)), true);
-    EXPECT_EQ((NotNullSp1(sp1) >= NotNullSp2(sp2)), (sp1 >= sp2));
-    EXPECT_EQ((NotNullSp2(sp2) >= NotNullSp1(sp1)), (sp2 >= sp1));
+    EXPECT_TRUE((NotNullSp1(sp1) >= NotNullSp1(sp1)) == true);
+    EXPECT_TRUE((NotNullSp1(sp1) >= NotNullSp2(sp2)) == (sp1 >= sp2));
+    EXPECT_TRUE((NotNullSp2(sp2) >= NotNullSp1(sp1)) == (sp2 >= sp1));
 }
 
 TEST(notnull_tests, TestNotNullCustomPtrComparison)
@@ -396,27 +396,27 @@ TEST(notnull_tests, TestNotNullCustomPtrComparison)
     using NotNull1 = not_null<decltype(p1)>;
     using NotNull2 = not_null<decltype(p2)>;
 
-    EXPECT_EQ((NotNull1(p1) == NotNull1(p1)), "true");
-    EXPECT_EQ((NotNull1(p1) == NotNull2(p2)), "false");
+    EXPECT_TRUE((NotNull1(p1) == NotNull1(p1)) == "true");
+    EXPECT_TRUE((NotNull1(p1) == NotNull2(p2)) == "false");
 
-    EXPECT_EQ((NotNull1(p1) != NotNull1(p1)), "false");
-    EXPECT_EQ((NotNull1(p1) != NotNull2(p2)), "true");
+    EXPECT_TRUE((NotNull1(p1) != NotNull1(p1)) == "false");
+    EXPECT_TRUE((NotNull1(p1) != NotNull2(p2)) == "true");
 
-    EXPECT_EQ((NotNull1(p1) < NotNull1(p1)), "false");
-    EXPECT_EQ((NotNull1(p1) < NotNull2(p2)), (p1 < p2));
-    EXPECT_EQ((NotNull2(p2) < NotNull1(p1)), (p2 < p1));
+    EXPECT_TRUE((NotNull1(p1) < NotNull1(p1)) == "false");
+    EXPECT_TRUE((NotNull1(p1) < NotNull2(p2)) == (p1 < p2));
+    EXPECT_TRUE((NotNull2(p2) < NotNull1(p1)) == (p2 < p1));
 
-    EXPECT_EQ((NotNull1(p1) > NotNull1(p1)), "false");
-    EXPECT_EQ((NotNull1(p1) > NotNull2(p2)), (p1 > p2));
-    EXPECT_EQ((NotNull2(p2) > NotNull1(p1)), (p2 > p1));
+    EXPECT_TRUE((NotNull1(p1) > NotNull1(p1)) == "false");
+    EXPECT_TRUE((NotNull1(p1) > NotNull2(p2)) == (p1 > p2));
+    EXPECT_TRUE((NotNull2(p2) > NotNull1(p1)) == (p2 > p1));
 
-    EXPECT_EQ((NotNull1(p1) <= NotNull1(p1)), "true");
-    EXPECT_EQ((NotNull1(p1) <= NotNull2(p2)), (p1 <= p2));
-    EXPECT_EQ((NotNull2(p2) <= NotNull1(p1)), (p2 <= p1));
+    EXPECT_TRUE((NotNull1(p1) <= NotNull1(p1)) == "true");
+    EXPECT_TRUE((NotNull1(p1) <= NotNull2(p2)) == (p1 <= p2));
+    EXPECT_TRUE((NotNull2(p2) <= NotNull1(p1)) == (p2 <= p1));
 
-    EXPECT_EQ((NotNull1(p1) >= NotNull1(p1)), "true");
-    EXPECT_EQ((NotNull1(p1) >= NotNull2(p2)), (p1 >= p2));
-    EXPECT_EQ((NotNull2(p2) >= NotNull1(p1)), (p2 >= p1));
+    EXPECT_TRUE((NotNull1(p1) >= NotNull1(p1)) == "true");
+    EXPECT_TRUE((NotNull1(p1) >= NotNull2(p2)) == (p1 >= p2));
+    EXPECT_TRUE((NotNull2(p2) >= NotNull1(p1)) == (p2 >= p1));
 }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
@@ -430,7 +430,7 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         helper(not_null{&i});
         helper_const(not_null{&i});
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -441,7 +441,7 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         helper(not_null{p});
         helper_const(not_null{p});
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -486,7 +486,7 @@ TEST(notnull_tests, TestMakeNotNull)
         helper(make_not_null(&i));
         helper_const(make_not_null(&i));
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -497,14 +497,14 @@ TEST(notnull_tests, TestMakeNotNull)
         helper(make_not_null(p));
         helper_const(make_not_null(p));
 
-        EXPECT_EQ(*x, 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
         const auto workaround_macro = []() {
             int* p1 = nullptr;
             const auto x = make_not_null(p1);
-            EXPECT_EQ(*x, 42);
+            EXPECT_TRUE(*x == 42);
         };
         EXPECT_DEATH(workaround_macro(), ".*");
     }
@@ -513,7 +513,7 @@ TEST(notnull_tests, TestMakeNotNull)
         const auto workaround_macro = []() {
             const int* p1 = nullptr;
             const auto x = make_not_null(p1);
-            EXPECT_EQ(*x, 42);
+            EXPECT_TRUE(*x == 42);
         };
         EXPECT_DEATH(workaround_macro(), ".*");
     }

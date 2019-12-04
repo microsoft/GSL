@@ -53,14 +53,14 @@ int g(int i)
 
 TEST(assertion_tests, expects)
 {
-    EXPECT_EQ(f(2), 2);
+    EXPECT_TRUE(f(2) == 2);
     EXPECT_DEATH(f(10), ".*");
 }
 
 
 TEST(assertion_tests, ensures)
 {
-    EXPECT_EQ(g(2), 3);
+    EXPECT_TRUE(g(2) == 3);
     EXPECT_DEATH(g(9), ".*");
 }
 

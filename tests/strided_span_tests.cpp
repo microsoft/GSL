@@ -159,19 +159,21 @@ TEST(strided_span_tests, strided_span_constructors)
         strided_span<int, 1> sav1{arr, {{9}, {1}}}; // T -> T
         EXPECT_TRUE(sav1.bounds().index_bounds() == multi_span_index<1>{9});
         EXPECT_TRUE(sav1.bounds().stride() == 1);
-        EXPECT_EQ(sav1[0],  1); EXPECT_EQ(sav1[8], 9);
+        EXPECT_TRUE(sav1[0] == 1);
+        EXPECT_TRUE(sav1[8] == 9);
 
         strided_span<const int, 1> sav2{carr, {{4}, {2}}}; // const T -> const T
         EXPECT_TRUE(sav2.bounds().index_bounds() == multi_span_index<1>{4});
         EXPECT_TRUE(sav2.bounds().strides() == multi_span_index<1>{2});
-        EXPECT_EQ(sav2[0],  1); EXPECT_EQ(sav2[3], 7);
+        EXPECT_TRUE(sav2[0] == 1);
+        EXPECT_TRUE(sav2[3] == 7);
 
         strided_span<int, 2> sav3{arr, {{2, 2}, {6, 2}}}; // T -> const T
         EXPECT_TRUE((sav3.bounds().index_bounds() == multi_span_index<2>{2, 2}));
         EXPECT_TRUE((sav3.bounds().strides() == multi_span_index<2>{6, 2}));
-        EXPECT_EQ((sav3[{0, 0}]), 1);
-        EXPECT_EQ((sav3[{0, 1}]),  3);
-        EXPECT_EQ((sav3[{1, 0}]), 7);
+        EXPECT_TRUE((sav3[{0, 0}]) == 1);
+        EXPECT_TRUE((sav3[{0, 1}]) ==  3);
+        EXPECT_TRUE((sav3[{1, 0}]) == 7);
     }
 
     // EXPECT_TRUE multi_span constructor
@@ -310,8 +312,8 @@ TEST(strided_span_tests, strided_span_constructors)
         strided_span<const int, 2> sav2{src2};
         EXPECT_TRUE((sav2.bounds().index_bounds() == multi_span_index<2>{3, 2}));
         EXPECT_TRUE((sav2.bounds().strides() == multi_span_index<2>{2, 1}));
-        EXPECT_EQ((sav2[{0, 0}]),  1);
-        EXPECT_EQ((sav2[{2, 0}]), 5);
+        EXPECT_TRUE((sav2[{0, 0}]) ==  1);
+        EXPECT_TRUE((sav2[{2, 0}]) == 5);
     }
 
     // EXPECT_TRUE const-casting assignment operator

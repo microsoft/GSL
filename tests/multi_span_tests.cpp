@@ -68,12 +68,12 @@ struct DerivedClass : BaseClass
 
 void overloaded_func(multi_span<const int, dynamic_range, 3, 5> exp, int expected_value)
 {
-    for (auto val : exp) { EXPECT_EQ(val, expected_value); }
+    for (auto val : exp) { EXPECT_TRUE(val == expected_value); }
 }
 
 void overloaded_func(multi_span<const char, dynamic_range, 3, 5> exp, char expected_value)
 {
-    for (auto val : exp) { EXPECT_EQ(val, expected_value); }
+    for (auto val : exp) { EXPECT_TRUE(val == expected_value); }
 }
 
 void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
@@ -83,23 +83,23 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
     // view to the second column
     auto section = av.section({0, 1}, {length, 1});
 
-    EXPECT_EQ(section.size(), length);
-    for (auto i = 0; i < section.size(); ++i) { EXPECT_EQ(section[i][0], av[i][1]); }
+    EXPECT_TRUE(section.size() == length);
+    for (auto i = 0; i < section.size(); ++i) { EXPECT_TRUE(section[i][0] == av[i][1]); }
 
     for (auto i = 0; i < section.size(); ++i)
     {
         auto idx = multi_span_index<2>{i, 0}; // avoid braces inside the CHECK macro
-        EXPECT_EQ(section[idx], av[i][1]);
+        EXPECT_TRUE(section[idx] == av[i][1]);
     }
 
-    EXPECT_EQ(section.bounds().index_bounds()[0], length);
-    EXPECT_EQ(section.bounds().index_bounds()[1], 1);
+    EXPECT_TRUE(section.bounds().index_bounds()[0] == length);
+    EXPECT_TRUE(section.bounds().index_bounds()[1] == 1);
     for (auto i = 0; i < section.bounds().index_bounds()[0]; ++i)
     {
         for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j)
         {
             auto idx = multi_span_index<2>{i, j}; // avoid braces inside the CHECK macro
-            EXPECT_EQ(section[idx], av[i][1]);
+            EXPECT_TRUE(section[idx] == av[i][1]);
         }
     }
 
@@ -111,24 +111,24 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
         auto sum = 0;
         for (auto num : section)
         {
-            EXPECT_EQ(num, av[idx][1]);
+            EXPECT_TRUE(num == av[idx][1]);
             sum += num;
             idx++;
         }
 
-        EXPECT_EQ(sum, check_sum);
+        EXPECT_TRUE(sum == check_sum);
     }
     {
         auto idx = length - 1;
         auto sum = 0;
         for (auto iter = section.rbegin(); iter != section.rend(); ++iter)
         {
-            EXPECT_EQ(*iter, av[idx][1]);
+            EXPECT_TRUE(*iter == av[idx][1]);
             sum += *iter;
             idx--;
         }
 
-        EXPECT_EQ(sum, check_sum);
+        EXPECT_TRUE(sum == check_sum);
     }
 }
 template <class Bounds>
@@ -142,40 +142,40 @@ TEST(multi_span_test, default_constructor)
 {
     {
         multi_span<int> s;
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int> cs;
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
         multi_span<int, 0> s;
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int, 0> cs;
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         multi_span<int, 1> s;
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), nullptr); // explains why it can't compile
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == nullptr); // explains why it can't compile
 #endif
     }
 
     {
         multi_span<int> s{};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int> cs{};
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 }
 
@@ -183,72 +183,72 @@ TEST(multi_span_test, from_nullptr_constructor)
 {
     {
         multi_span<int> s = nullptr;
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int> cs = nullptr;
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
         multi_span<int, 0> s = nullptr;
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int, 0> cs = nullptr;
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         multi_span<int, 1> s = nullptr;
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), nullptr); // explains why it can't compile
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == nullptr); // explains why it can't compile
 #endif
     }
 
     {
         multi_span<int> s{nullptr};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int> cs{nullptr};
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
         multi_span<int*> s{nullptr};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int*> cs{nullptr};
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 }
 
 TEST(multi_span_test, from_nullptr_length_constructor) {
     {
         multi_span<int> s{nullptr, 0};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int> cs{nullptr, 0};
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
         multi_span<int, 0> s{nullptr, 0};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int, 0> cs{nullptr, 0};
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
@@ -269,19 +269,19 @@ TEST(multi_span_test, from_nullptr_length_constructor) {
 
     {
         multi_span<int*> s{nullptr, 0};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
 
         multi_span<const int*> cs{nullptr, 0};
-        EXPECT_EQ(cs.length(),  0);
-        EXPECT_EQ(cs.data(), nullptr);
+        EXPECT_TRUE(cs.length() ==  0);
+        EXPECT_TRUE(cs.data() == nullptr);
     }
 
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         multi_span<int, 1> s{nullptr, 0};
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), nullptr); // explains why it can't compile
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == nullptr); // explains why it can't compile
 #endif
     }
 }
@@ -292,14 +292,14 @@ TEST(multi_span_test, from_element_constructor)
 
     {
         multi_span<int> s = i;
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), &i);
-        EXPECT_EQ(s[0], 5);
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == &i);
+        EXPECT_TRUE(s[0] == 5);
 
         multi_span<const int> cs = i;
-        EXPECT_EQ(cs.length(),  1);
-        EXPECT_EQ(cs.data(), &i);
-        EXPECT_EQ(cs[0], 5);
+        EXPECT_TRUE(cs.length() ==  1);
+        EXPECT_TRUE(cs.data() == &i);
+        EXPECT_TRUE(cs[0] == 5);
     }
 
     {
@@ -312,23 +312,23 @@ TEST(multi_span_test, from_element_constructor)
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         multi_span<int, 0> s = i;
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &i);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &i);
 #endif
     }
 
     {
         multi_span<int, 1> s = i;
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), &i);
-        EXPECT_EQ(s[0], 5);
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == &i);
+        EXPECT_TRUE(s[0] == 5);
     }
 
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         multi_span<int, 2> s = i;
-        EXPECT_EQ(s.length(),  2);
-        EXPECT_EQ(s.data(), &i);
+        EXPECT_TRUE(s.length() ==  2);
+        EXPECT_TRUE(s.data() == &i);
 #endif
     }
 
@@ -347,25 +347,25 @@ TEST(multi_span_test, from_pointer_length_constructor)
 
     {
         multi_span<int> s{&arr[0], 2};
-        EXPECT_EQ(s.length(),  2);
-        EXPECT_EQ(s.data(), &arr[0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[1], 2);
+        EXPECT_TRUE(s.length() ==  2);
+        EXPECT_TRUE(s.data() == &arr[0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[1] == 2);
     }
 
     {
         multi_span<int, 2> s{&arr[0], 2};
-        EXPECT_EQ(s.length(),  2);
-        EXPECT_EQ(s.data(), &arr[0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[1], 2);
+        EXPECT_TRUE(s.length() ==  2);
+        EXPECT_TRUE(s.data() == &arr[0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[1] == 2);
     }
 
     {
         int* p = nullptr;
         multi_span<int> s{p, 0};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), nullptr);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == nullptr);
     }
 
     {
@@ -381,30 +381,30 @@ TEST(multi_span_test, from_pointer_pointer_constructor)
 
     {
         multi_span<int> s{&arr[0], &arr[2]};
-        EXPECT_EQ(s.length(),  2);
-        EXPECT_EQ(s.data(), &arr[0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[1], 2);
+        EXPECT_TRUE(s.length() ==  2);
+        EXPECT_TRUE(s.data() == &arr[0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[1] == 2);
     }
 
     {
         multi_span<int, 2> s{&arr[0], &arr[2]};
-        EXPECT_EQ(s.length(),  2);
-        EXPECT_EQ(s.data(), &arr[0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[1], 2);
+        EXPECT_TRUE(s.length() ==  2);
+        EXPECT_TRUE(s.data() == &arr[0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[1] == 2);
     }
 
     {
         multi_span<int> s{&arr[0], &arr[0]};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &arr[0]);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &arr[0]);
     }
 
     {
         multi_span<int, 0> s{&arr[0], &arr[0]};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &arr[0]);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &arr[0]);
     }
 
     {
@@ -437,14 +437,14 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int> s{arr};
-        EXPECT_EQ(s.length(),  5);
-        EXPECT_EQ(s.data(), &arr[0]);
+        EXPECT_TRUE(s.length() ==  5);
+        EXPECT_TRUE(s.data() == &arr[0]);
     }
 
     {
         multi_span<int, 5> s{arr};
-        EXPECT_EQ(s.length(),  5);
-        EXPECT_EQ(s.data(), &arr[0]);
+        EXPECT_TRUE(s.length() ==  5);
+        EXPECT_TRUE(s.data() == &arr[0]);
     }
 
     {
@@ -455,24 +455,24 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int, 0> s{arr};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &arr[0]);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &arr[0]);
     }
 
     int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
 
     {
         multi_span<int> s{arr2d};
-        EXPECT_EQ(s.length(),  6);
-        EXPECT_EQ(s.data(), &arr2d[0][0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[5], 6);
+        EXPECT_TRUE(s.length() ==  6);
+        EXPECT_TRUE(s.data() == &arr2d[0][0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[5] == 6);
     }
 
     {
         multi_span<int, 0> s{arr2d};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &arr2d[0][0]);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &arr2d[0][0]);
     }
 
     {
@@ -483,10 +483,10 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int, 6> s{arr2d};
-        EXPECT_EQ(s.length(),  6);
-        EXPECT_EQ(s.data(), &arr2d[0][0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[5], 6);
+        EXPECT_TRUE(s.length() ==  6);
+        EXPECT_TRUE(s.data() == &arr2d[0][0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[5] == 6);
     }
 
     {
@@ -497,14 +497,14 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int[3]> s{arr2d[0]};
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), &arr2d[0]);
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == &arr2d[0]);
     }
 
     {
         multi_span<int, 2, 3> s{arr2d};
-        EXPECT_EQ(s.length(),  6);
-        EXPECT_EQ(s.data(), &arr2d[0][0]);
+        EXPECT_TRUE(s.length() ==  6);
+        EXPECT_TRUE(s.data() == &arr2d[0][0]);
         auto workaround_macro = [&]() { return s[{1, 2}] == 6; };
         EXPECT_TRUE(workaround_macro());
     }
@@ -519,16 +519,16 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int> s{arr3d};
-        EXPECT_EQ(s.length(),  12);
-        EXPECT_EQ(s.data(), &arr3d[0][0][0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[11], 12);
+        EXPECT_TRUE(s.length() ==  12);
+        EXPECT_TRUE(s.data() == &arr3d[0][0][0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[11] == 12);
     }
 
     {
         multi_span<int, 0> s{arr3d};
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &arr3d[0][0][0]);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &arr3d[0][0][0]);
     }
 
     {
@@ -539,10 +539,10 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int, 12> s{arr3d};
-        EXPECT_EQ(s.length(),  12);
-        EXPECT_EQ(s.data(), &arr3d[0][0][0]);
-        EXPECT_EQ(s[0],  1);
-        EXPECT_EQ(s[5], 6);
+        EXPECT_TRUE(s.length() ==  12);
+        EXPECT_TRUE(s.data() == &arr3d[0][0][0]);
+        EXPECT_TRUE(s[0] ==  1);
+        EXPECT_TRUE(s[5] == 6);
     }
 
     {
@@ -553,14 +553,14 @@ TEST(multi_span_test, from_array_constructor)
 
     {
         multi_span<int[3][2]> s{arr3d[0]};
-        EXPECT_EQ(s.length(),  1);
-        EXPECT_EQ(s.data(), &arr3d[0]);
+        EXPECT_TRUE(s.length() ==  1);
+        EXPECT_TRUE(s.data() == &arr3d[0]);
     }
 
     {
         multi_span<int, 3, 2, 2> s{arr3d};
-        EXPECT_EQ(s.length(),  12);
-        EXPECT_EQ(s.data(), &arr3d[0][0][0]);
+        EXPECT_TRUE(s.length() ==  12);
+        EXPECT_TRUE(s.data() == &arr3d[0][0][0]);
         auto workaround_macro = [&]() { return s[{2, 1, 0}] == 11; };
         EXPECT_TRUE(workaround_macro());
     }
@@ -578,27 +578,27 @@ TEST(multi_span_test, from_dynamic_array_constructor)
 
     {
         multi_span<double, dynamic_range, 3, 4> s(arr, 10);
-        EXPECT_EQ(s.length(),  120);
-        EXPECT_EQ(s.data(), &arr[0][0][0]);
+        EXPECT_TRUE(s.length() ==  120);
+        EXPECT_TRUE(s.data() == &arr[0][0][0]);
         EXPECT_DEATH(s[10][3][4], ".*");
     }
 
     {
         multi_span<double, dynamic_range, 4, 3> s(arr, 10);
-        EXPECT_EQ(s.length(),  120);
-        EXPECT_EQ(s.data(), &arr[0][0][0]);
+        EXPECT_TRUE(s.length() ==  120);
+        EXPECT_TRUE(s.data() == &arr[0][0][0]);
     }
 
     {
         multi_span<double> s(arr, 10);
-        EXPECT_EQ(s.length(),  120);
-        EXPECT_EQ(s.data(), &arr[0][0][0]);
+        EXPECT_TRUE(s.length() ==  120);
+        EXPECT_TRUE(s.data() == &arr[0][0][0]);
     }
 
     {
         multi_span<double, dynamic_range, 3, 4> s(arr, 0);
-        EXPECT_EQ(s.length(),  0);
-        EXPECT_EQ(s.data(), &arr[0][0][0]);
+        EXPECT_TRUE(s.length() ==  0);
+        EXPECT_TRUE(s.data() == &arr[0][0][0]);
     }
 
     delete[] arr;
@@ -610,50 +610,50 @@ TEST(multi_span_test, from_std_array_constructor)
 
     {
         multi_span<int> s{arr};
-        EXPECT_EQ(s.size(),  narrow_cast<ptrdiff_t>(arr.size()));
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+        EXPECT_TRUE(s.data() == arr.data());
 
         multi_span<const int> cs{arr};
-        EXPECT_EQ(cs.size(),  narrow_cast<ptrdiff_t>(arr.size()));
-        EXPECT_EQ(cs.data(), arr.data());
+        EXPECT_TRUE(cs.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+        EXPECT_TRUE(cs.data() == arr.data());
     }
 
     {
         multi_span<int, 4> s{arr};
-        EXPECT_EQ(s.size(),  narrow_cast<ptrdiff_t>(arr.size()));
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+        EXPECT_TRUE(s.data() == arr.data());
 
         multi_span<const int, 4> cs{arr};
-        EXPECT_EQ(cs.size(),  narrow_cast<ptrdiff_t>(arr.size()));
-        EXPECT_EQ(cs.data(), arr.data());
+        EXPECT_TRUE(cs.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+        EXPECT_TRUE(cs.data() == arr.data());
     }
 
     {
         multi_span<int, 2> s{arr};
-        EXPECT_EQ(s.size(),  2);
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  2);
+        EXPECT_TRUE(s.data() == arr.data());
 
         multi_span<const int, 2> cs{arr};
-        EXPECT_EQ(cs.size(),  2);
-        EXPECT_EQ(cs.data(), arr.data());
+        EXPECT_TRUE(cs.size() ==  2);
+        EXPECT_TRUE(cs.data() == arr.data());
     }
 
     {
         multi_span<int, 0> s{arr};
-        EXPECT_EQ(s.size(),  0);
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  0);
+        EXPECT_TRUE(s.data() == arr.data());
 
         multi_span<const int, 0> cs{arr};
-        EXPECT_EQ(cs.size(),  0);
-        EXPECT_EQ(cs.data(), arr.data());
+        EXPECT_TRUE(cs.size() ==  0);
+        EXPECT_TRUE(cs.data() == arr.data());
     }
 
     // TODO This is currently an unsupported scenario. We will come back to it as we revise
     // the multidimensional interface and what transformations between dimensionality look like
     //{
     //    multi_span<int, 2, 2> s{arr};
-    //    EXPECT_EQ(s.size(), narrow_cast<ptrdiff_t>(arr.size()));
-    //    EXPECT_EQ(s.data(), arr.data());
+    //    EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+    //    EXPECT_TRUE(s.data() == arr.data());
     //}
 
     {
@@ -678,34 +678,34 @@ TEST(multi_span_test, from_const_std_array_constructor)
 
     {
         multi_span<const int> s{arr};
-        EXPECT_EQ(s.size(),  narrow_cast<ptrdiff_t>(arr.size()));
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+        EXPECT_TRUE(s.data() == arr.data());
     }
 
     {
         multi_span<const int, 4> s{arr};
-        EXPECT_EQ(s.size(),  narrow_cast<ptrdiff_t>(arr.size()));
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+        EXPECT_TRUE(s.data() == arr.data());
     }
 
     {
         multi_span<const int, 2> s{arr};
-        EXPECT_EQ(s.size(),  2);
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  2);
+        EXPECT_TRUE(s.data() == arr.data());
     }
 
     {
         multi_span<const int, 0> s{arr};
-        EXPECT_EQ(s.size(),  0);
-        EXPECT_EQ(s.data(), arr.data());
+        EXPECT_TRUE(s.size() ==  0);
+        EXPECT_TRUE(s.data() == arr.data());
     }
 
     // TODO This is currently an unsupported scenario. We will come back to it as we revise
     // the multidimensional interface and what transformations between dimensionality look like
     //{
     //    multi_span<int, 2, 2> s{arr};
-    //    EXPECT_EQ(s.size(), narrow_cast<ptrdiff_t>(arr.size()));
-    //    EXPECT_EQ(s.data(), arr.data());
+    //    EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+    //    EXPECT_TRUE(s.data() == arr.data());
     //}
 
     {
@@ -731,12 +731,12 @@ TEST(multi_span_test, from_container_constructor)
 
     {
         multi_span<int> s{v};
-        EXPECT_EQ(s.size(),  narrow_cast<std::ptrdiff_t>(v.size()));
-        EXPECT_EQ(s.data(), v.data());
+        EXPECT_TRUE(s.size() ==  narrow_cast<std::ptrdiff_t>(v.size()));
+        EXPECT_TRUE(s.data() == v.data());
 
         multi_span<const int> cs{v};
-        EXPECT_EQ(cs.size(),  narrow_cast<std::ptrdiff_t>(v.size()));
-        EXPECT_EQ(cs.data(), v.data());
+        EXPECT_TRUE(cs.size() ==  narrow_cast<std::ptrdiff_t>(v.size()));
+        EXPECT_TRUE(cs.data() == v.data());
     }
 
     std::string str = "hello";
@@ -745,12 +745,12 @@ TEST(multi_span_test, from_container_constructor)
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
         multi_span<char> s{str};
-        EXPECT_EQ(s.size(),  narrow_cast<std::ptrdiff_t>(str.size()));
-        EXPECT_EQ(s.data(), str.data());
+        EXPECT_TRUE(s.size() ==  narrow_cast<std::ptrdiff_t>(str.size()));
+        EXPECT_TRUE(s.data() == str.data());
 #endif
         multi_span<const char> cs{str};
-        EXPECT_EQ(cs.size(),  narrow_cast<std::ptrdiff_t>(str.size()));
-        EXPECT_EQ(cs.data(), str.data());
+        EXPECT_TRUE(cs.size() ==  narrow_cast<std::ptrdiff_t>(str.size()));
+        EXPECT_TRUE(cs.data() == str.data());
     }
 
     {
@@ -758,8 +758,8 @@ TEST(multi_span_test, from_container_constructor)
         multi_span<char> s{cstr};
 #endif
         multi_span<const char> cs{cstr};
-        EXPECT_EQ(cs.size(),  narrow_cast<std::ptrdiff_t>(cstr.size()));
-        EXPECT_EQ(cs.data(), cstr.data());
+        EXPECT_TRUE(cs.size() ==  narrow_cast<std::ptrdiff_t>(cstr.size()));
+        EXPECT_TRUE(cs.data() == cstr.data());
     }
 
     {
@@ -837,22 +837,22 @@ TEST(multi_span_test, copy_move_and_assignment)
     int arr[] = {3, 4, 5};
 
     multi_span<const int> s2 = arr;
-    EXPECT_EQ(s2.length(),  3);
-    EXPECT_EQ(s2.data(), &arr[0]);
+    EXPECT_TRUE(s2.length() ==  3);
+    EXPECT_TRUE(s2.data() == &arr[0]);
 
     s2 = s1;
     EXPECT_TRUE(s2.empty());
 
     auto get_temp_span = [&]() -> multi_span<int> { return {&arr[1], 2}; };
     auto use_span = [&](multi_span<const int> s) {
-        EXPECT_EQ(s.length(),  2);
-        EXPECT_EQ(s.data(), &arr[1]);
+        EXPECT_TRUE(s.length() ==  2);
+        EXPECT_TRUE(s.data() == &arr[1]);
     };
     use_span(get_temp_span());
 
     s1 = get_temp_span();
-    EXPECT_EQ(s1.length(),  2);
-    EXPECT_EQ(s1.data(), &arr[1]);
+    EXPECT_TRUE(s1.length() ==  2);
+    EXPECT_TRUE(s1.data() == &arr[1]);
 }
 
 TEST(multi_span_test, as_multi_span_reshape)
@@ -872,8 +872,8 @@ TEST(multi_span_test, as_multi_span_reshape)
 
     auto av8 = as_multi_span<int>(av7);
 
-    EXPECT_EQ(av8.size(), av6.size());
-    for (auto i = 0; i < av8.size(); i++) { EXPECT_EQ(av8[i], 1); }
+    EXPECT_TRUE(av8.size() == av6.size());
+    for (auto i = 0; i < av8.size(); i++) { EXPECT_TRUE(av8[i] == 1); }
 }
 
 TEST(multi_span_test, first)
@@ -882,40 +882,40 @@ TEST(multi_span_test, first)
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.first<2>().bounds(), static_bounds<2>());
-        EXPECT_EQ(av.first<2>().length(), 2);
-        EXPECT_EQ(av.first(2).length(), 2);
+        EXPECT_TRUE(av.first<2>().bounds() == static_bounds<2>());
+        EXPECT_TRUE(av.first<2>().length() == 2);
+        EXPECT_TRUE(av.first(2).length() == 2);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.first<0>().bounds(), static_bounds<0>());
-        EXPECT_EQ(av.first<0>().length(), 0);
-        EXPECT_EQ(av.first(0).length(), 0);
+        EXPECT_TRUE(av.first<0>().bounds() == static_bounds<0>());
+        EXPECT_TRUE(av.first<0>().length() == 0);
+        EXPECT_TRUE(av.first(0).length() == 0);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.first<5>().bounds(), static_bounds<5>());
-        EXPECT_EQ(av.first<5>().length(), 5);
-        EXPECT_EQ(av.first(5).length(), 5);
+        EXPECT_TRUE(av.first<5>().bounds() == static_bounds<5>());
+        EXPECT_TRUE(av.first<5>().length() == 5);
+        EXPECT_TRUE(av.first(5).length() == 5);
     }
 
     {
         multi_span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-        EXPECT_EQ(av.first<6>().bounds(), static_bounds<6>());
-        EXPECT_EQ(av.first<6>().length(), 6);
-        EXPECT_EQ(av.first<-1>().length(), -1);
+        EXPECT_TRUE(av.first<6>().bounds() == static_bounds<6>());
+        EXPECT_TRUE(av.first<6>().length() == 6);
+        EXPECT_TRUE(av.first<-1>().length() == -1);
 #endif
         EXPECT_DEATH(av.first(6).length(), ".*");
     }
 
     {
         multi_span<int, dynamic_range> av;
-        EXPECT_EQ(av.first<0>().bounds(), static_bounds<0>());
-        EXPECT_EQ(av.first<0>().length(), 0);
-        EXPECT_EQ(av.first(0).length(), 0);
+        EXPECT_TRUE(av.first<0>().bounds() == static_bounds<0>());
+        EXPECT_TRUE(av.first<0>().length() == 0);
+        EXPECT_TRUE(av.first(0).length() == 0);
     }
 }
 
@@ -925,39 +925,39 @@ TEST(multi_span_test, last)
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.last<2>().bounds(), static_bounds<2>());
-        EXPECT_EQ(av.last<2>().length(), 2);
-        EXPECT_EQ(av.last(2).length(), 2);
+        EXPECT_TRUE(av.last<2>().bounds() == static_bounds<2>());
+        EXPECT_TRUE(av.last<2>().length() == 2);
+        EXPECT_TRUE(av.last(2).length() == 2);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.last<0>().bounds(), static_bounds<0>());
-        EXPECT_EQ(av.last<0>().length(), 0);
-        EXPECT_EQ(av.last(0).length(), 0);
+        EXPECT_TRUE(av.last<0>().bounds() == static_bounds<0>());
+        EXPECT_TRUE(av.last<0>().length() == 0);
+        EXPECT_TRUE(av.last(0).length() == 0);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.last<5>().bounds(), static_bounds<5>());
-        EXPECT_EQ(av.last<5>().length(), 5);
-        EXPECT_EQ(av.last(5).length(), 5);
+        EXPECT_TRUE(av.last<5>().bounds() == static_bounds<5>());
+        EXPECT_TRUE(av.last<5>().length() == 5);
+        EXPECT_TRUE(av.last(5).length() == 5);
     }
 
     {
         multi_span<int, 5> av = arr;
 #ifdef CONFIRM_COMPILATION_ERRORS
-        EXPECT_EQ(av.last<6>().bounds(), static_bounds<6>());
-        EXPECT_EQ(av.last<6>().length(), 6);
+        EXPECT_TRUE(av.last<6>().bounds() == static_bounds<6>());
+        EXPECT_TRUE(av.last<6>().length() == 6);
 #endif
         EXPECT_DEATH(av.last(6).length(), ".*");
     }
 
     {
         multi_span<int, dynamic_range> av;
-        EXPECT_EQ(av.last<0>().bounds(), static_bounds<0>());
-        EXPECT_EQ(av.last<0>().length(), 0);
-        EXPECT_EQ(av.last(0).length(), 0);
+        EXPECT_TRUE(av.last<0>().bounds() == static_bounds<0>());
+        EXPECT_TRUE(av.last<0>().length() == 0);
+        EXPECT_TRUE(av.last(0).length() == 0);
     }
 }
 
@@ -967,70 +967,70 @@ TEST(multi_span_test, subspan)
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ((av.subspan<2, 2>().bounds()), static_bounds<2>());
-        EXPECT_EQ((av.subspan<2, 2>().length()), 2);
-        EXPECT_EQ(av.subspan(2, 2).length(), 2);
-        EXPECT_EQ(av.subspan(2, 3).length(), 3);
+        EXPECT_TRUE((av.subspan<2, 2>().bounds()) == static_bounds<2>());
+        EXPECT_TRUE((av.subspan<2, 2>().length()) == 2);
+        EXPECT_TRUE(av.subspan(2, 2).length() == 2);
+        EXPECT_TRUE(av.subspan(2, 3).length() == 3);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ((av.subspan<0, 0>().bounds()), static_bounds<0>());
-        EXPECT_EQ((av.subspan<0, 0>().length()), 0);
-        EXPECT_EQ(av.subspan(0, 0).length(), 0);
+        EXPECT_TRUE((av.subspan<0, 0>().bounds()) == static_bounds<0>());
+        EXPECT_TRUE((av.subspan<0, 0>().length()) == 0);
+        EXPECT_TRUE(av.subspan(0, 0).length() == 0);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ((av.subspan<0, 5>().bounds()), static_bounds<5>());
-        EXPECT_EQ((av.subspan<0, 5>().length()), 5);
-        EXPECT_EQ(av.subspan(0, 5).length(), 5);
+        EXPECT_TRUE((av.subspan<0, 5>().bounds()) == static_bounds<5>());
+        EXPECT_TRUE((av.subspan<0, 5>().length()) == 5);
+        EXPECT_TRUE(av.subspan(0, 5).length() == 5);
         EXPECT_DEATH(av.subspan(0, 6).length(), ".*");
         EXPECT_DEATH(av.subspan(1, 5).length(), ".*");
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ((av.subspan<5, 0>().bounds()), static_bounds<0>());
-        EXPECT_EQ((av.subspan<5, 0>().length()), 0);
-        EXPECT_EQ(av.subspan(5, 0).length(), 0);
+        EXPECT_TRUE((av.subspan<5, 0>().bounds()) == static_bounds<0>());
+        EXPECT_TRUE((av.subspan<5, 0>().length()) == 0);
+        EXPECT_TRUE(av.subspan(5, 0).length() == 0);
         EXPECT_DEATH(av.subspan(6, 0).length(), ".*");
     }
 
     {
         multi_span<int, dynamic_range> av;
-        EXPECT_EQ((av.subspan<0, 0>().bounds()), static_bounds<0>());
-        EXPECT_EQ((av.subspan<0, 0>().length()), 0);
-        EXPECT_EQ(av.subspan(0, 0).length(), 0);
+        EXPECT_TRUE((av.subspan<0, 0>().bounds()) == static_bounds<0>());
+        EXPECT_TRUE((av.subspan<0, 0>().length()) == 0);
+        EXPECT_TRUE(av.subspan(0, 0).length() == 0);
         EXPECT_DEATH((av.subspan<1, 0>().length()), ".*");
     }
 
     {
         multi_span<int> av;
-        EXPECT_EQ(av.subspan(0).length(), 0);
+        EXPECT_TRUE(av.subspan(0).length() == 0);
         EXPECT_DEATH(av.subspan(1).length(), ".*");
     }
 
     {
         multi_span<int> av = arr;
-        EXPECT_EQ(av.subspan(0).length(), 5);
-        EXPECT_EQ(av.subspan(1).length(), 4);
-        EXPECT_EQ(av.subspan(4).length(), 1);
-        EXPECT_EQ(av.subspan(5).length(), 0);
+        EXPECT_TRUE(av.subspan(0).length() == 5);
+        EXPECT_TRUE(av.subspan(1).length() == 4);
+        EXPECT_TRUE(av.subspan(4).length() == 1);
+        EXPECT_TRUE(av.subspan(5).length() == 0);
         EXPECT_DEATH(av.subspan(6).length(), ".*");
         auto av2 = av.subspan(1);
-        for (int i = 0; i < 4; ++i) EXPECT_EQ(av2[i], i + 2);
+        for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
     }
 
     {
         multi_span<int, 5> av = arr;
-        EXPECT_EQ(av.subspan(0).length(), 5);
-        EXPECT_EQ(av.subspan(1).length(), 4);
-        EXPECT_EQ(av.subspan(4).length(), 1);
-        EXPECT_EQ(av.subspan(5).length(), 0);
+        EXPECT_TRUE(av.subspan(0).length() == 5);
+        EXPECT_TRUE(av.subspan(1).length() == 4);
+        EXPECT_TRUE(av.subspan(4).length() == 1);
+        EXPECT_TRUE(av.subspan(5).length() == 0);
         EXPECT_DEATH(av.subspan(6).length(), ".*");
         auto av2 = av.subspan(1);
-        for (int i = 0; i < 4; ++i) EXPECT_EQ(av2[i], i + 2);
+        for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
     }
 }
 
@@ -1040,18 +1040,18 @@ TEST(multi_span_test, rank)
 
     {
         multi_span<int> s;
-        EXPECT_EQ(s.rank(), static_cast<size_t>(1));
+        EXPECT_TRUE(s.rank() == static_cast<size_t>(1));
     }
 
     {
         multi_span<int, 2> s = arr;
-        EXPECT_EQ(s.rank(), static_cast<size_t>(1));
+        EXPECT_TRUE(s.rank() == static_cast<size_t>(1));
     }
 
     int arr2d[1][1] = {};
     {
         multi_span<int, 1, 1> s = arr2d;
-        EXPECT_EQ(s.rank(), static_cast<size_t>(2));
+        EXPECT_TRUE(s.rank() == static_cast<size_t>(2));
     }
 }
 
@@ -1059,18 +1059,18 @@ TEST(multi_span_test, extent)
 {
     {
         multi_span<int> s;
-        EXPECT_EQ(s.extent(), 0);
-        EXPECT_EQ(s.extent(0), 0);
+        EXPECT_TRUE(s.extent() == 0);
+        EXPECT_TRUE(s.extent(0) == 0);
         EXPECT_DEATH(s.extent(1), ".*");
 #ifdef CONFIRM_COMPILATION_ERRORS
-        EXPECT_EQ(s.extent<1>(), 0);
+        EXPECT_TRUE(s.extent<1>() == 0);
 #endif
     }
 
     {
         multi_span<int, 0> s;
-        EXPECT_EQ(s.extent(), 0);
-        EXPECT_EQ(s.extent(0), 0);
+        EXPECT_TRUE(s.extent() == 0);
+        EXPECT_TRUE(s.extent(0) == 0);
         EXPECT_DEATH(s.extent(1), ".*");
     }
 
@@ -1078,11 +1078,11 @@ TEST(multi_span_test, extent)
         int arr2d[1][2] = {};
 
         multi_span<int, 1, 2> s = arr2d;
-        EXPECT_EQ(s.extent(), 1);
-        EXPECT_EQ(s.extent<0>(), 1);
-        EXPECT_EQ(s.extent<1>(), 2);
-        EXPECT_EQ(s.extent(0), 1);
-        EXPECT_EQ(s.extent(1), 2);
+        EXPECT_TRUE(s.extent() == 1);
+        EXPECT_TRUE(s.extent<0>() == 1);
+        EXPECT_TRUE(s.extent<1>() == 2);
+        EXPECT_TRUE(s.extent(0) == 1);
+        EXPECT_TRUE(s.extent(1) == 2);
         EXPECT_DEATH(s.extent(3), ".*");
     }
 
@@ -1090,11 +1090,11 @@ TEST(multi_span_test, extent)
         int arr2d[1][2] = {};
 
         multi_span<int, 0, 2> s = arr2d;
-        EXPECT_EQ(s.extent(), 0);
-        EXPECT_EQ(s.extent<0>(), 0);
-        EXPECT_EQ(s.extent<1>(), 2);
-        EXPECT_EQ(s.extent(0), 0);
-        EXPECT_EQ(s.extent(1), 2);
+        EXPECT_TRUE(s.extent() == 0);
+        EXPECT_TRUE(s.extent<0>() == 0);
+        EXPECT_TRUE(s.extent<1>() == 2);
+        EXPECT_TRUE(s.extent(0) == 0);
+        EXPECT_TRUE(s.extent(1) == 2);
         EXPECT_DEATH(s.extent(3), ".*");
     }
 }
@@ -1105,7 +1105,7 @@ TEST(multi_span_test, operator_function_call)
 
     {
         multi_span<int> s = arr;
-        EXPECT_EQ(s(0), 1);
+        EXPECT_TRUE(s(0) == 1);
         EXPECT_DEATH(s(5), ".*");
     }
 
@@ -1113,17 +1113,17 @@ TEST(multi_span_test, operator_function_call)
 
     {
         multi_span<int, 2, 3> s = arr2d;
-        EXPECT_EQ(s(0, 0), 1);
-        EXPECT_EQ(s(0, 1), 2);
-        EXPECT_EQ(s(1, 2), 6);
+        EXPECT_TRUE(s(0, 0) == 1);
+        EXPECT_TRUE(s(0, 1) == 2);
+        EXPECT_TRUE(s(1, 2) == 6);
     }
 
     int arr3d[2][2][2] = {1, 2, 3, 4, 5, 6, 7, 8};
 
     {
         multi_span<int, 2, 2, 2> s = arr3d;
-        EXPECT_EQ(s(0, 0, 0), 1);
-        EXPECT_EQ(s(1, 1, 1), 8);
+        EXPECT_TRUE(s(0, 0, 0) == 1);
+        EXPECT_TRUE(s(1, 1, 1) == 8);
     }
 }
 
@@ -1244,7 +1244,7 @@ TEST(multi_span_test, basics)
 {
     auto ptr = as_multi_span(new int[10], 10);
     fill(ptr.begin(), ptr.end(), 99);
-    for (int num : ptr) { EXPECT_EQ(num, 99); }
+    for (int num : ptr) { EXPECT_TRUE(num == 99); }
 
     delete[] ptr.data();
 }
@@ -1279,13 +1279,13 @@ TEST(multi_span_test, span_parameter_test)
 
     auto av = as_multi_span(data, 4);
 
-    EXPECT_EQ(av.size(), 60);
+    EXPECT_TRUE(av.size() == 60);
 
     fill(av.begin(), av.end(), 34);
 
     int count = 0;
     for_each(av.rbegin(), av.rend(), [&](int val) { count += val; });
-    EXPECT_EQ(count, 34 * 60);
+    EXPECT_TRUE(count == 34 * 60);
     overloaded_func(av, 34);
 
     overloaded_func(as_multi_span(av, dim(4), dim(3), dim(5)), 34);
@@ -1311,16 +1311,16 @@ TEST(multi_span_test, md_access)
     {
         for (auto j = 0; j < width; j++)
         {
-            EXPECT_EQ(expected + 1, image_view[i][j][0]);
-            EXPECT_EQ(expected + 2, image_view[i][j][1]);
-            EXPECT_EQ(expected + 3, image_view[i][j][2]);
+            EXPECT_TRUE(expected + 1 == image_view[i][j][0]);
+            EXPECT_TRUE(expected + 2 == image_view[i][j][1]);
+            EXPECT_TRUE(expected + 3 == image_view[i][j][2]);
 
             auto val = image_view[{i, j, 0}];
-            EXPECT_EQ(expected + 1, val);
+            EXPECT_TRUE(expected + 1 == val);
             val = image_view[{i, j, 1}];
-            EXPECT_EQ(expected + 2, val);
+            EXPECT_TRUE(expected + 2 == val);
             val = image_view[{i, j, 2}];
-            EXPECT_EQ(expected + 3, val);
+            EXPECT_TRUE(expected + 3 == val);
 
             expected += 3;
         }
@@ -1391,7 +1391,7 @@ TEST(multi_span_test, empty_spans)
     {
         multi_span<int, 0> empty_av(nullptr);
 
-        EXPECT_EQ(empty_av.bounds().index_bounds(), multi_span_index<1>{0});
+        EXPECT_TRUE(empty_av.bounds().index_bounds() == multi_span_index<1>{0});
         EXPECT_DEATH(empty_av[0], ".*");
         EXPECT_DEATH(empty_av.begin()[0], ".*");
         EXPECT_DEATH(empty_av.cbegin()[0], ".*");
@@ -1404,7 +1404,7 @@ TEST(multi_span_test, empty_spans)
 
     {
         multi_span<int> empty_av = {};
-        EXPECT_EQ(empty_av.bounds().index_bounds(), multi_span_index<1>{0});
+        EXPECT_TRUE(empty_av.bounds().index_bounds() == multi_span_index<1>{0});
         EXPECT_DEATH(empty_av[0], ".*");
         EXPECT_DEATH(empty_av.begin()[0], ".*");
         EXPECT_DEATH(empty_av.cbegin()[0], ".*");
@@ -1430,14 +1430,14 @@ TEST(multi_span_test, index_constructor)
     ptrdiff_t a[1] = {0};
     multi_span_index<1> i = a;
 
-    EXPECT_EQ(av[i], 4);
+    EXPECT_TRUE(av[i] == 4);
 
     auto av2 = as_multi_span(av, dim<4>(), dim(2));
     ptrdiff_t a2[2] = {0, 1};
     multi_span_index<2> i2 = a2;
 
-    EXPECT_EQ(av2[i2], 0);
-    EXPECT_EQ(av2[0][i], 4);
+    EXPECT_TRUE(av2[i2] == 0);
+    EXPECT_TRUE(av2[0][i] == 4);
 
     delete[] arr;
 }
@@ -1447,60 +1447,60 @@ TEST(multi_span_test, index_constructors)
     {
         // components of the same type
         multi_span_index<3> i1(0, 1, 2);
-        EXPECT_EQ(i1[0], 0);
+        EXPECT_TRUE(i1[0] == 0);
 
         // components of different types
         std::size_t c0 = 0;
         std::size_t c1 = 1;
         multi_span_index<3> i2(c0, c1, 2);
-        EXPECT_EQ(i2[0], 0);
+        EXPECT_TRUE(i2[0] == 0);
 
         // from array
         multi_span_index<3> i3 = {0, 1, 2};
-        EXPECT_EQ(i3[0], 0);
+        EXPECT_TRUE(i3[0] == 0);
 
         // from other index of the same size type
         multi_span_index<3> i4 = i3;
-        EXPECT_EQ(i4[0], 0);
+        EXPECT_TRUE(i4[0] == 0);
 
         // default
         multi_span_index<3> i7;
-        EXPECT_EQ(i7[0], 0);
+        EXPECT_TRUE(i7[0] == 0);
 
         // default
         multi_span_index<3> i9 = {};
-        EXPECT_EQ(i9[0], 0);
+        EXPECT_TRUE(i9[0] == 0);
     }
 
     {
         // components of the same type
         multi_span_index<1> i1(0);
-        EXPECT_EQ(i1[0], 0);
+        EXPECT_TRUE(i1[0] == 0);
 
         // components of different types
         std::size_t c0 = 0;
         multi_span_index<1> i2(c0);
-        EXPECT_EQ(i2[0], 0);
+        EXPECT_TRUE(i2[0] == 0);
 
         // from array
         multi_span_index<1> i3 = {0};
-        EXPECT_EQ(i3[0], 0);
+        EXPECT_TRUE(i3[0] == 0);
 
         // from int
         multi_span_index<1> i4 = 0;
-        EXPECT_EQ(i4[0], 0);
+        EXPECT_TRUE(i4[0] == 0);
 
         // from other index of the same size type
         multi_span_index<1> i5 = i3;
-        EXPECT_EQ(i5[0], 0);
+        EXPECT_TRUE(i5[0] == 0);
 
         // default
         multi_span_index<1> i8;
-        EXPECT_EQ(i8[0], 0);
+        EXPECT_TRUE(i8[0] == 0);
 
         // default
         multi_span_index<1> i9 = {};
-        EXPECT_EQ(i9[0], 0);
+        EXPECT_TRUE(i9[0] == 0);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -1521,51 +1521,51 @@ TEST(multi_span_test, index_operations)
     multi_span_index<3> i = a;
     multi_span_index<3> j = b;
 
-    EXPECT_EQ(i[0], 0);
-    EXPECT_EQ(i[1], 1);
-    EXPECT_EQ(i[2], 2);
+    EXPECT_TRUE(i[0] == 0);
+    EXPECT_TRUE(i[1] == 1);
+    EXPECT_TRUE(i[2] == 2);
 
     {
         multi_span_index<3> k = i + j;
 
-        EXPECT_EQ(i[0], 0);
-        EXPECT_EQ(i[1], 1);
-        EXPECT_EQ(i[2], 2);
-        EXPECT_EQ(k[0], 3);
-        EXPECT_EQ(k[1], 5);
-        EXPECT_EQ(k[2], 7);
+        EXPECT_TRUE(i[0] == 0);
+        EXPECT_TRUE(i[1] == 1);
+        EXPECT_TRUE(i[2] == 2);
+        EXPECT_TRUE(k[0] == 3);
+        EXPECT_TRUE(k[1] == 5);
+        EXPECT_TRUE(k[2] == 7);
     }
 
     {
         multi_span_index<3> k = i * 3;
 
-        EXPECT_EQ(i[0], 0);
-        EXPECT_EQ(i[1], 1);
-        EXPECT_EQ(i[2], 2);
-        EXPECT_EQ(k[0], 0);
-        EXPECT_EQ(k[1], 3);
-        EXPECT_EQ(k[2], 6);
+        EXPECT_TRUE(i[0] == 0);
+        EXPECT_TRUE(i[1] == 1);
+        EXPECT_TRUE(i[2] == 2);
+        EXPECT_TRUE(k[0] == 0);
+        EXPECT_TRUE(k[1] == 3);
+        EXPECT_TRUE(k[2] == 6);
     }
 
     {
         multi_span_index<3> k = 3 * i;
 
-        EXPECT_EQ(i[0], 0);
-        EXPECT_EQ(i[1], 1);
-        EXPECT_EQ(i[2], 2);
-        EXPECT_EQ(k[0], 0);
-        EXPECT_EQ(k[1], 3);
-        EXPECT_EQ(k[2], 6);
+        EXPECT_TRUE(i[0] == 0);
+        EXPECT_TRUE(i[1] == 1);
+        EXPECT_TRUE(i[2] == 2);
+        EXPECT_TRUE(k[0] == 0);
+        EXPECT_TRUE(k[1] == 3);
+        EXPECT_TRUE(k[2] == 6);
     }
 
     {
         multi_span_index<2> k = details::shift_left(i);
 
-        EXPECT_EQ(i[0], 0);
-        EXPECT_EQ(i[1], 1);
-        EXPECT_EQ(i[2], 2);
-        EXPECT_EQ(k[0], 1);
-        EXPECT_EQ(k[1], 2);
+        EXPECT_TRUE(i[0] == 0);
+        EXPECT_TRUE(i[1] == 1);
+        EXPECT_TRUE(i[2] == 2);
+        EXPECT_TRUE(k[0] == 1);
+        EXPECT_TRUE(k[1] == 2);
     }
 }
 
@@ -1635,7 +1635,7 @@ TEST(multi_span_test, span_structure_size)
         double* v1;
         ptrdiff_t v2;
     };
-    EXPECT_EQ(sizeof(av1), sizeof(EffectiveStructure));
+    EXPECT_TRUE(sizeof(av1) == sizeof(EffectiveStructure));
 
     EXPECT_DEATH(av1[10][3][4], ".*");
 
@@ -1652,7 +1652,7 @@ TEST(multi_span_test, fixed_size_conversions)
 
     // converting to an multi_span from an equal size array is ok
     multi_span<int, 4> av4 = arr;
-    EXPECT_EQ(av4.length(), 4);
+    EXPECT_TRUE(av4.length() == 4);
 
     // converting to dynamic_range a_v is always ok
     {
@@ -1757,16 +1757,16 @@ TEST(multi_span_test, as_writeable_bytes)
     {
         multi_span<int, dynamic_range> av;
         auto wav = as_writeable_bytes(av);
-        EXPECT_EQ(wav.length(), av.length());
-        EXPECT_EQ(wav.length(), 0);
-        EXPECT_EQ(wav.size_bytes(), 0);
+        EXPECT_TRUE(wav.length() == av.length());
+        EXPECT_TRUE(wav.length() == 0);
+        EXPECT_TRUE(wav.size_bytes() == 0);
     }
 
     {
         multi_span<int, dynamic_range> av = a;
         auto wav = as_writeable_bytes(av);
-        EXPECT_EQ(wav.data(), reinterpret_cast<byte*>(&a[0]));
-        EXPECT_EQ(static_cast<std::size_t>(wav.length()), sizeof(a));
+        EXPECT_TRUE(wav.data() == reinterpret_cast<byte*>(&a[0]));
+        EXPECT_TRUE(static_cast<std::size_t>(wav.length()) == sizeof(a));
     }
 }
 
@@ -1787,7 +1787,7 @@ TEST(multi_span_test, iterator)
         }
 
         for (std::size_t i = 0; i < 4; ++i) {
-            EXPECT_EQ(a[i], 0);
+            EXPECT_TRUE(a[i] == 0);
         }
     }
 
@@ -1797,7 +1797,7 @@ TEST(multi_span_test, iterator)
             n = 1;
         }
         for (std::size_t i = 0; i < 4; ++i) {
-            EXPECT_EQ(a[i], 1);
+            EXPECT_TRUE(a[i] == 1);
         }
     }
 }
