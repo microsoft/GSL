@@ -27,6 +27,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 //disable warnings from gtest
+#pragma GCC diagnostic ignored "-Wundef"
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"

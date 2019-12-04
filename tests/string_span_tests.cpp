@@ -24,6 +24,7 @@
 #if __clang__ || __GNUC__
 //disable warnings from gtest
 #pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
