@@ -21,7 +21,15 @@
 
 #endif
 
-#include <gtest/gtest.h> 
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+
+#include <gtest/gtest.h>
 
 #include <gsl/gsl_assert>  // for Expects, fail_fast (ptr only)
 #include <gsl/pointers>    // for owner
@@ -68,6 +76,9 @@ T move_wrapper(T&& t)
     return std::move(t);
 }
 
+// not used otherwise
+#ifdef CONFIRM_COMPILATION_ERRORS
+
 template <class T>
 T create()
 {
@@ -78,6 +89,7 @@ template <class T>
 void use(basic_string_span<T, gsl::dynamic_extent>)
 {
 }
+#endif
 
 czstring_span<> CreateTempName(string_span<> span)
 {
@@ -226,26 +238,26 @@ TEST(string_span_tests, TestConversionFromConst)
 TEST(string_span_tests, TestToString)
 {
     auto s = gsl::to_string(cstring_span<>{});
-    EXPECT_EQ(s.length(), 0);
+    EXPECT_EQ(s.length(), static_cast<size_t>(0));
 
     char stack_string[] = "Hello";
     cstring_span<> v = ensure_z(stack_string);
     auto s2 = gsl::to_string(v);
     EXPECT_EQ(static_cast<cstring_span<>::index_type>(s2.length()), v.length());
-    EXPECT_EQ(s2.length(), 5);
+    EXPECT_EQ(s2.length(), static_cast<size_t>(5));
 }
 
 TEST(string_span_tests, TestToBasicString)
 {
     auto s = gsl::to_basic_string<char, std::char_traits<char>, ::std::allocator<char>>(
         cstring_span<>{});
-    EXPECT_EQ(s.length(), 0);
+    EXPECT_EQ(s.length(), static_cast<size_t>(0));
 
     char stack_string[] = "Hello";
     cstring_span<> v = ensure_z(stack_string);
     auto s2 = gsl::to_basic_string<char, std::char_traits<char>, ::std::allocator<char>>(v);
     EXPECT_EQ(static_cast<cstring_span<>::index_type>(s2.length()), v.length());
-    EXPECT_EQ(s2.length(), 5);
+    EXPECT_EQ(s2.length(), static_cast<size_t>(5));
 }
 
 TEST(string_span_tests, EqualityAndImplicitConstructors)
@@ -1198,3 +1210,7 @@ TEST(string_span_tests, as_writeable_bytes)
     EXPECT_EQ(static_cast<const void*>(bs.data()), static_cast<const void*>(s.data()));
     EXPECT_EQ(bs.size(), s.size_bytes());
 }
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif

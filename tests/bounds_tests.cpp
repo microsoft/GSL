@@ -24,9 +24,14 @@
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+//disable warnings from gtest
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
 #endif
 
-#include <gtest/gtest.h> 
+#include <gtest/gtest.h>
 
 #include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t
 
@@ -95,8 +100,6 @@ TEST(bounds_tests, bounds_convertible)
     static_bounds<dynamic_range, dynamic_range, dynamic_range> b3 = b1;
     static_bounds<7, 4, 2> b4 = b3;
     (void) b4;
-
-    static_bounds<dynamic_range> b11;
 
     static_bounds<dynamic_range> b5;
     static_bounds<34> b6;

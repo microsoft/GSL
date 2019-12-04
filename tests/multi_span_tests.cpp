@@ -25,6 +25,12 @@
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+//disable warnings from gtest
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+
 #endif
 
 #include <gtest/gtest.h>
@@ -1033,18 +1039,18 @@ TEST(multi_span_test, rank)
 
     {
         multi_span<int> s;
-        EXPECT_EQ(s.rank(), 1);
+        EXPECT_EQ(s.rank(), static_cast<size_t>(1));
     }
 
     {
         multi_span<int, 2> s = arr;
-        EXPECT_EQ(s.rank(), 1);
+        EXPECT_EQ(s.rank(), static_cast<size_t>(1));
     }
 
     int arr2d[1][1] = {};
     {
         multi_span<int, 1, 1> s = arr2d;
-        EXPECT_EQ(s.rank(), 2);
+        EXPECT_EQ(s.rank(), static_cast<size_t>(2));
     }
 }
 

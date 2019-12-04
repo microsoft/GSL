@@ -21,6 +21,14 @@
 
 #endif
 
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+
 #include <gsl/gsl_byte> // for byte
 #include <gsl/gsl_util> // for narrow_cast, at
 #include <gsl/span>     // for span, span_iterator, operator==, operator!=
@@ -1548,3 +1556,7 @@ TEST(span_test, from_array_constructor)
      EXPECT_TRUE((std::is_default_constructible<span<int, 0>>::value));
      EXPECT_FALSE((std::is_default_constructible<span<int, 42>>::value));
  }
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif

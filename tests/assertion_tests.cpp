@@ -20,6 +20,14 @@
 #pragma warning(disable : 26440 26426) // from catch
 #endif
 
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
@@ -54,3 +62,7 @@ TEST(assertion_tests, ensures)
     EXPECT_EQ(g(2), 3);
     EXPECT_DEATH(g(9), ".*");
 }
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif

@@ -23,6 +23,14 @@
 #pragma warning(disable : 4702) // unreachable code
 #endif
 
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+
 #include <gtest/gtest.h>
 #include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
 
@@ -191,3 +199,7 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 
 static_assert(std::is_nothrow_move_constructible<strict_not_null<void*>>::value,
               "strict_not_null must be no-throw move constructible");
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif

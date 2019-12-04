@@ -21,6 +21,14 @@
 
 #endif
 
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_util> // for narrow, finally, narrow_cast, narrowing_e...
@@ -130,3 +138,7 @@ TEST(utils_tests, narrow)
 #endif
 
 }
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif
