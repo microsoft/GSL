@@ -25,6 +25,8 @@
 //disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
+#endif
+#if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
