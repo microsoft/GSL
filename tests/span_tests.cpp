@@ -17,7 +17,7 @@
 #ifdef _MSC_VER
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426 26497) // from catch
+#pragma warning(disable : 26440 26426 26497 4189) // from catch
 
 #endif
 
@@ -25,6 +25,7 @@
 //disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
@@ -1217,14 +1218,14 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.rend();
          EXPECT_TRUE(it != beyond);
-         //EXPECT_DEATH(*beyond, ".*");
+         EXPECT_DEATH(auto _ = *beyond , ".*");
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
          EXPECT_TRUE(beyond - beyond == 0);
 
          ++it;
-         EXPECT_TRUE(it - first == 1);
+         EXPECT_TRUE(it - s.rbegin() == 1);
          EXPECT_TRUE(*it == 3);
          *it = 22;
          EXPECT_TRUE(*it == 22);
@@ -1258,14 +1259,15 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.crend();
          EXPECT_TRUE(it != beyond);
-         //EXPECT_DEATH(*beyond, ".*");
+         EXPECT_DEATH(auto _ = *beyond, ".*");
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
          EXPECT_TRUE(beyond - beyond == 0);
 
+         std::cout << *first << std::endl;
          ++it;
-         EXPECT_TRUE(it - first == 1);
+         EXPECT_TRUE(it - s.crbegin() == 1);
          EXPECT_TRUE(*it == 3);
          EXPECT_TRUE(beyond - it == 3);
 
