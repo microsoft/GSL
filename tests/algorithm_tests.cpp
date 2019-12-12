@@ -35,11 +35,10 @@
 #include <gsl/gsl_algorithm> // for copy
 #include <gsl/span>          // for span
 #include <array>   // for array
-#include <string_view>
 #include <cstddef> // for size_t
 
 namespace{
-constexpr std::string_view deathstring("Expected Death");
+static const std::string deathstring("Expected Death");
 }
 
 namespace gsl
@@ -234,9 +233,9 @@ TEST(algorithm_tests, small_destination_span)
     const span<int> dst_span_dyn(dst);
     const span<int, 4> dst_span_static(dst);
 
-    EXPECT_DEATH(copy(src_span_dyn, dst_span_dyn), deathstring.data());
-    EXPECT_DEATH(copy(src_span_dyn, dst_span_static), deathstring.data());
-    EXPECT_DEATH(copy(src_span_static, dst_span_dyn), deathstring.data());
+    EXPECT_DEATH(copy(src_span_dyn, dst_span_dyn), deathstring);
+    EXPECT_DEATH(copy(src_span_dyn, dst_span_static), deathstring);
+    EXPECT_DEATH(copy(src_span_static, dst_span_dyn), deathstring);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     copy(src_span_static, dst_span_static);

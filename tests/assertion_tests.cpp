@@ -34,7 +34,6 @@
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
-#include <string_view>
 using namespace gsl;
 
 namespace
@@ -52,7 +51,7 @@ int g(int i)
     return i;
 }
 
-constexpr std::string_view deathstring("Expected Death");
+static const std::string deathstring("Expected Death");
 } // namespace
 
 TEST(assertion_tests, expects)
@@ -61,9 +60,9 @@ TEST(assertion_tests, expects)
         std::cerr << "Expected Death. expects";
         std::abort();
     });
-    
+
     EXPECT_TRUE(f(2) == 2);
-    EXPECT_DEATH(f(10), deathstring.data());
+    EXPECT_DEATH(f(10), deathstring);
 }
 
 
@@ -75,7 +74,7 @@ TEST(assertion_tests, ensures)
     });
 
     EXPECT_TRUE(g(2) == 3);
-    EXPECT_DEATH(g(9), deathstring.data());
+    EXPECT_DEATH(g(9), deathstring);
 }
 
 #if __clang__ || __GNUC__

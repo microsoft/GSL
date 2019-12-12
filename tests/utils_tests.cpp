@@ -45,7 +45,7 @@
 using namespace gsl;
 
 namespace{
-constexpr std::string_view deathstring("Expected Death");
+static const std::string deathstring("Expected Death");
 void f(int& i) { i += 1; }
 static int j = 0;
 void g() { j += 1; }
@@ -124,13 +124,13 @@ TEST(utils_tests, narrow)
         std::cerr << "Expected Death. narrow";
         std::abort();
     });
-    
+
     int n = 120;
     const char c = narrow<char>(n);
     EXPECT_TRUE(c == 120);
 
     n = 300;
-    EXPECT_DEATH(narrow<char>(n), deathstring.data());
+    EXPECT_DEATH(narrow<char>(n), deathstring);
 
     const auto int32_max = std::numeric_limits<int32_t>::max();
     const auto int32_min = std::numeric_limits<int32_t>::min();
@@ -139,11 +139,11 @@ TEST(utils_tests, narrow)
     EXPECT_TRUE(narrow<uint32_t>(int32_t(1)) == 1);
     EXPECT_TRUE(narrow<uint32_t>(int32_max) == static_cast<uint32_t>(int32_max));
 
-    EXPECT_DEATH(narrow<uint32_t>(int32_t(-1)), deathstring.data());
-    EXPECT_DEATH(narrow<uint32_t>(int32_min), deathstring.data());
+    EXPECT_DEATH(narrow<uint32_t>(int32_t(-1)), deathstring);
+    EXPECT_DEATH(narrow<uint32_t>(int32_min), deathstring);
 
     n = -42;
-    EXPECT_DEATH(narrow<unsigned>(n), deathstring.data());
+    EXPECT_DEATH(narrow<unsigned>(n), deathstring);
 
 #if GSL_CONSTEXPR_NARROW
     static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");

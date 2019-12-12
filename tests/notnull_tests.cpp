@@ -53,7 +53,7 @@ struct fail_fast;
 using namespace gsl;
 
 namespace{
-constexpr std::string_view deathstring("Expected Death");
+static const std::string deathstring("Expected Death");
 }
 
 struct MyBase
@@ -182,7 +182,7 @@ TEST(notnull_tests, TestNotNullConstructors)
             std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
 
         int* pi = nullptr;
-        EXPECT_DEATH((not_null<decltype(pi)>(pi)), deathstring.data());
+        EXPECT_DEATH((not_null<decltype(pi)>(pi)), deathstring);
     }
 
     {
@@ -239,8 +239,8 @@ TEST(notnull_tests, TestNotNullConstructors)
     {
         // from returned pointer
 
-        EXPECT_DEATH(helper(return_pointer()), deathstring.data());
-        EXPECT_DEATH(helper_const(return_pointer()), deathstring.data());
+        EXPECT_DEATH(helper(return_pointer()), deathstring);
+        EXPECT_DEATH(helper_const(return_pointer()), deathstring);
     }
 }
 
@@ -310,7 +310,7 @@ TEST(notnull_tests, TestNotNullAssignment)
     EXPECT_TRUE(helper(p));
 
     int* q = nullptr;
-    EXPECT_DEATH(p = not_null<int*>(q), deathstring.data());
+    EXPECT_DEATH(p = not_null<int*>(q), deathstring);
 }
 
 TEST(notnull_tests, TestNotNullRawPointerComparison)
@@ -469,7 +469,7 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
             int* p1 = nullptr;
             const not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring.data());
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
@@ -477,14 +477,14 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
             const int* p1 = nullptr;
             const not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring.data());
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
         int* p = nullptr;
 
-        EXPECT_DEATH(helper(not_null{p}), deathstring.data());
-        EXPECT_DEATH(helper_const(not_null{p}), deathstring.data());
+        EXPECT_DEATH(helper(not_null{p}), deathstring);
+        EXPECT_DEATH(helper_const(not_null{p}), deathstring);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -531,7 +531,7 @@ TEST(notnull_tests, TestMakeNotNull)
             const auto x = make_not_null(p1);
             EXPECT_TRUE(*x == 42);
         };
-        EXPECT_DEATH(workaround_macro(), deathstring.data());
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
@@ -540,21 +540,21 @@ TEST(notnull_tests, TestMakeNotNull)
             const auto x = make_not_null(p1);
             EXPECT_TRUE(*x == 42);
         };
-        EXPECT_DEATH(workaround_macro(), deathstring.data());
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
         int* p = nullptr;
 
-        EXPECT_DEATH(helper(make_not_null(p)), deathstring.data());
-        EXPECT_DEATH(helper_const(make_not_null(p)), deathstring.data());
+        EXPECT_DEATH(helper(make_not_null(p)), deathstring);
+        EXPECT_DEATH(helper_const(make_not_null(p)), deathstring);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     {
-        EXPECT_DEATH(make_not_null(nullptr), deathstring.data());
-        EXPECT_DEATH(helper(make_not_null(nullptr)), deathstring.data());
-        EXPECT_DEATH(helper_const(make_not_null(nullptr)), deathstring.data());
+        EXPECT_DEATH(make_not_null(nullptr), deathstring);
+        EXPECT_DEATH(helper(make_not_null(nullptr)), deathstring);
+        EXPECT_DEATH(helper_const(make_not_null(nullptr)), deathstring);
     }
 #endif
 }

@@ -43,7 +43,7 @@ struct fail_fast;
 } // namespace gsl
 
 namespace{
-constexpr std::string_view deathstring("Expected Death");
+static const std::string deathstring("Expected Death");
 }
 
 using namespace gsl;
@@ -154,7 +154,7 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
         std::cerr << "Expected Death. TestStrictNotNullConstructorTypeDeduction";
         std::abort();
     });
-    
+
     {
         int i = 42;
 
@@ -181,7 +181,7 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
             int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring.data());
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
@@ -189,14 +189,14 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
             const int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring.data());
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
         int* p = nullptr;
 
-        EXPECT_DEATH(helper(strict_not_null{p}), deathstring.data());
-        EXPECT_DEATH(helper_const(strict_not_null{p}), deathstring.data());
+        EXPECT_DEATH(helper(strict_not_null{p}), deathstring);
+        EXPECT_DEATH(helper_const(strict_not_null{p}), deathstring);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
