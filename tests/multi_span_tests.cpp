@@ -138,6 +138,8 @@ void fn(const Bounds&)
 {
     static_assert(Bounds::static_size == 60, "static bounds is wrong size");
 }
+
+constexpr std::string_view deathstring("Expected Death");
 } // namespace
 
 TEST(multi_span_test, default_constructor)
@@ -253,20 +255,25 @@ TEST(multi_span_test, from_nullptr_length_constructor) {
         EXPECT_TRUE(cs.data() == nullptr);
     }
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_nullptr_length_constructor";
+        std::abort();
+    });
+
     {
         auto workaround_macro = []() { const multi_span<int> s{nullptr, 1}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
 
         auto const_workaround_macro = []() { const multi_span<const int> cs{nullptr, 1}; };
-        EXPECT_DEATH(const_workaround_macro(), ".*");
+        EXPECT_DEATH(const_workaround_macro(), deathstring.data());
     }
 
     {
         auto workaround_macro = []() { const multi_span<int, 0> s{nullptr, 1}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
 
         auto const_workaround_macro = []() { const multi_span<const int, 0> s{nullptr, 1}; };
-        EXPECT_DEATH(const_workaround_macro(), ".*");
+        EXPECT_DEATH(const_workaround_macro(), deathstring.data());
     }
 
     {
@@ -370,10 +377,15 @@ TEST(multi_span_test, from_pointer_length_constructor)
         EXPECT_TRUE(s.data() == nullptr);
     }
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_pointer_length_constructor";
+        std::abort();
+    });
+
     {
         int* p = nullptr;
         auto workaround_macro = [=]() { const multi_span<int> s{p, 2}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 }
 
@@ -409,27 +421,33 @@ TEST(multi_span_test, from_pointer_pointer_constructor)
         EXPECT_TRUE(s.data() == &arr[0]);
     }
 
+
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_pointer_pointer_constructor";
+        std::abort();
+    });
+    
     {
         auto workaround_macro = [&]() { const multi_span<int> s{&arr[1], &arr[0]}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     {
         int* p = nullptr;
         auto workaround_macro = [&]() { const multi_span<int> s{&arr[0], p}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     {
         int* p = nullptr;
         auto workaround_macro = [&]() { const multi_span<int> s{p, p}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     {
         int* p = nullptr;
         auto workaround_macro = [&]() { const multi_span<int> s{&arr[0], p}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 }
 
@@ -578,11 +596,16 @@ TEST(multi_span_test, from_dynamic_array_constructor)
 {
     double(*arr)[3][4] = new double[100][3][4];
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_nullptr_length_constructor";
+        std::abort();
+    });
+
     {
         multi_span<double, dynamic_range, 3, 4> s(arr, 10);
         EXPECT_TRUE(s.length() ==  120);
         EXPECT_TRUE(s.data() == &arr[0][0][0]);
-        EXPECT_DEATH(s[10][3][4], ".*");
+        EXPECT_DEATH(s[10][3][4], deathstring.data());
     }
 
     {
@@ -809,8 +832,13 @@ TEST(multi_span_test, from_convertible_span_constructor)
 #ifdef CONFIRM_COMPILATION_ERRORS
     multi_span<int, 7, 4, 2> av1(nullptr, b1);
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_convertible_span_constructor";
+        std::abort();
+    });
+
     auto f = [&]() { multi_span<int, 7, 4, 2> av1(nullptr); };
-    EXPECT_DEATH(f(), ".*");
+    EXPECT_DEATH(f(), deathstring.data());
 #endif
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -910,7 +938,13 @@ TEST(multi_span_test, first)
         EXPECT_TRUE(av.first<6>().length() == 6);
         EXPECT_TRUE(av.first<-1>().length() == -1);
 #endif
-        EXPECT_DEATH(av.first(6).length(), ".*");
+
+        std::set_terminate([] {
+            std::cerr << "Expected Death. first";
+            std::abort();
+        });
+
+        EXPECT_DEATH(av.first(6).length(), deathstring.data());
     }
 
     {
@@ -952,7 +986,13 @@ TEST(multi_span_test, last)
         EXPECT_TRUE(av.last<6>().bounds() == static_bounds<6>());
         EXPECT_TRUE(av.last<6>().length() == 6);
 #endif
-        EXPECT_DEATH(av.last(6).length(), ".*");
+
+        std::set_terminate([] {
+            std::cerr << "Expected Death. last";
+            std::abort();
+        });
+
+        EXPECT_DEATH(av.last(6).length(), deathstring.data());
     }
 
     {
@@ -982,13 +1022,18 @@ TEST(multi_span_test, subspan)
         EXPECT_TRUE(av.subspan(0, 0).length() == 0);
     }
 
+
+    std::set_terminate([] {
+        std::cerr << "Expected Death. subspan";
+        std::abort();
+    });
     {
         multi_span<int, 5> av = arr;
         EXPECT_TRUE((av.subspan<0, 5>().bounds()) == static_bounds<5>());
         EXPECT_TRUE((av.subspan<0, 5>().length()) == 5);
         EXPECT_TRUE(av.subspan(0, 5).length() == 5);
-        EXPECT_DEATH(av.subspan(0, 6).length(), ".*");
-        EXPECT_DEATH(av.subspan(1, 5).length(), ".*");
+        EXPECT_DEATH(av.subspan(0, 6).length(), deathstring.data());
+        EXPECT_DEATH(av.subspan(1, 5).length(), deathstring.data());
     }
 
     {
@@ -996,7 +1041,7 @@ TEST(multi_span_test, subspan)
         EXPECT_TRUE((av.subspan<5, 0>().bounds()) == static_bounds<0>());
         EXPECT_TRUE((av.subspan<5, 0>().length()) == 0);
         EXPECT_TRUE(av.subspan(5, 0).length() == 0);
-        EXPECT_DEATH(av.subspan(6, 0).length(), ".*");
+        EXPECT_DEATH(av.subspan(6, 0).length(), deathstring.data());
     }
 
     {
@@ -1004,13 +1049,13 @@ TEST(multi_span_test, subspan)
         EXPECT_TRUE((av.subspan<0, 0>().bounds()) == static_bounds<0>());
         EXPECT_TRUE((av.subspan<0, 0>().length()) == 0);
         EXPECT_TRUE(av.subspan(0, 0).length() == 0);
-        EXPECT_DEATH((av.subspan<1, 0>().length()), ".*");
+        EXPECT_DEATH((av.subspan<1, 0>().length()), deathstring.data());
     }
 
     {
         multi_span<int> av;
         EXPECT_TRUE(av.subspan(0).length() == 0);
-        EXPECT_DEATH(av.subspan(1).length(), ".*");
+        EXPECT_DEATH(av.subspan(1).length(), deathstring.data());
     }
 
     {
@@ -1019,7 +1064,7 @@ TEST(multi_span_test, subspan)
         EXPECT_TRUE(av.subspan(1).length() == 4);
         EXPECT_TRUE(av.subspan(4).length() == 1);
         EXPECT_TRUE(av.subspan(5).length() == 0);
-        EXPECT_DEATH(av.subspan(6).length(), ".*");
+        EXPECT_DEATH(av.subspan(6).length(), deathstring.data());
         auto av2 = av.subspan(1);
         for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
     }
@@ -1030,7 +1075,7 @@ TEST(multi_span_test, subspan)
         EXPECT_TRUE(av.subspan(1).length() == 4);
         EXPECT_TRUE(av.subspan(4).length() == 1);
         EXPECT_TRUE(av.subspan(5).length() == 0);
-        EXPECT_DEATH(av.subspan(6).length(), ".*");
+        EXPECT_DEATH(av.subspan(6).length(), deathstring.data());
         auto av2 = av.subspan(1);
         for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
     }
@@ -1059,11 +1104,16 @@ TEST(multi_span_test, rank)
 
 TEST(multi_span_test, extent)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. extent";
+        std::abort();
+    });
+ 
     {
         multi_span<int> s;
         EXPECT_TRUE(s.extent() == 0);
         EXPECT_TRUE(s.extent(0) == 0);
-        EXPECT_DEATH(s.extent(1), ".*");
+        EXPECT_DEATH(s.extent(1), deathstring.data());
 #ifdef CONFIRM_COMPILATION_ERRORS
         EXPECT_TRUE(s.extent<1>() == 0);
 #endif
@@ -1073,7 +1123,7 @@ TEST(multi_span_test, extent)
         multi_span<int, 0> s;
         EXPECT_TRUE(s.extent() == 0);
         EXPECT_TRUE(s.extent(0) == 0);
-        EXPECT_DEATH(s.extent(1), ".*");
+        EXPECT_DEATH(s.extent(1), deathstring.data());
     }
 
     {
@@ -1085,7 +1135,7 @@ TEST(multi_span_test, extent)
         EXPECT_TRUE(s.extent<1>() == 2);
         EXPECT_TRUE(s.extent(0) == 1);
         EXPECT_TRUE(s.extent(1) == 2);
-        EXPECT_DEATH(s.extent(3), ".*");
+        EXPECT_DEATH(s.extent(3), deathstring.data());
     }
 
     {
@@ -1097,7 +1147,7 @@ TEST(multi_span_test, extent)
         EXPECT_TRUE(s.extent<1>() == 2);
         EXPECT_TRUE(s.extent(0) == 0);
         EXPECT_TRUE(s.extent(1) == 2);
-        EXPECT_DEATH(s.extent(3), ".*");
+        EXPECT_DEATH(s.extent(3), deathstring.data());
     }
 }
 
@@ -1105,10 +1155,15 @@ TEST(multi_span_test, operator_function_call)
 {
     int arr[4] = {1, 2, 3, 4};
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. operator_function_call";
+        std::abort();
+    });
+
     {
         multi_span<int> s = arr;
         EXPECT_TRUE(s(0) == 1);
-        EXPECT_DEATH(s(5), ".*");
+        EXPECT_DEATH(s(5), deathstring.data());
     }
 
     int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
@@ -1261,18 +1316,23 @@ TEST(multi_span_test, bounds_checks)
     av[2][0] = 1;
     av[1][1] = 3;
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. bounds_check";
+        std::abort();
+    });
+
     // out of bounds
-    EXPECT_DEATH(av[1][3] = 3, ".*");
-    EXPECT_DEATH((av[{1, 3}] = 3), ".*");
+    EXPECT_DEATH(av[1][3] = 3, deathstring.data());
+    EXPECT_DEATH((av[{1, 3}] = 3), deathstring.data());
 
-    EXPECT_DEATH(av[10][2], ".*");
-    EXPECT_DEATH((av[{10, 2}]), ".*");
+    EXPECT_DEATH(av[10][2], deathstring.data());
+    EXPECT_DEATH((av[{10, 2}]), deathstring.data());
 
-    EXPECT_DEATH(av[-1][0], ".*");
-    EXPECT_DEATH((av[{-1, 0}]), ".*");
+    EXPECT_DEATH(av[-1][0], deathstring.data());
+    EXPECT_DEATH((av[{-1, 0}]), deathstring.data());
 
-    EXPECT_DEATH(av[0][-1], ".*");
-    EXPECT_DEATH((av[{0, -1}]), ".*");
+    EXPECT_DEATH(av[0][-1], deathstring.data());
+    EXPECT_DEATH((av[{0, -1}]), deathstring.data());
 }
 
 TEST(multi_span_test, span_parameter_test)
@@ -1390,13 +1450,18 @@ TEST(multi_span_test, as_multi_span)
 
 TEST(multi_span_test, empty_spans)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. empty_spans";
+        std::abort();
+    });
+
     {
         multi_span<int, 0> empty_av(nullptr);
 
         EXPECT_TRUE(empty_av.bounds().index_bounds() == multi_span_index<1>{0});
-        EXPECT_DEATH(empty_av[0], ".*");
-        EXPECT_DEATH(empty_av.begin()[0], ".*");
-        EXPECT_DEATH(empty_av.cbegin()[0], ".*");
+        EXPECT_DEATH(empty_av[0], deathstring.data());
+        EXPECT_DEATH(empty_av.begin()[0], deathstring.data());
+        EXPECT_DEATH(empty_av.cbegin()[0], deathstring.data());
         for (auto& v : empty_av)
         {
             (void) v;
@@ -1407,9 +1472,9 @@ TEST(multi_span_test, empty_spans)
     {
         multi_span<int> empty_av = {};
         EXPECT_TRUE(empty_av.bounds().index_bounds() == multi_span_index<1>{0});
-        EXPECT_DEATH(empty_av[0], ".*");
-        EXPECT_DEATH(empty_av.begin()[0], ".*");
-        EXPECT_DEATH(empty_av.cbegin()[0], ".*");
+        EXPECT_DEATH(empty_av[0], deathstring.data());
+        EXPECT_DEATH(empty_av.begin()[0], deathstring.data());
+        EXPECT_DEATH(empty_av.cbegin()[0], deathstring.data());
         for (auto& v : empty_av)
         {
             (void) v;
@@ -1639,7 +1704,12 @@ TEST(multi_span_test, span_structure_size)
     };
     EXPECT_TRUE(sizeof(av1) == sizeof(EffectiveStructure));
 
-    EXPECT_DEATH(av1[10][3][4], ".*");
+    std::set_terminate([] {
+        std::cerr << "Expected Death. span_structure_size";
+        std::abort();
+    });
+
+    EXPECT_DEATH(av1[10][3][4], deathstring.data());
 
     multi_span<const double, dynamic_range, 6, 4> av2 =
         as_multi_span(av1, dim(5), dim<6>(), dim<4>());
@@ -1727,12 +1797,18 @@ TEST(multi_span_test, fixed_size_conversions)
         multi_span<int, 4> av4 = av2;
     }
 #endif
+
+    std::set_terminate([] {
+        std::cerr << "Expected Death. fixed_size_conversions";
+        std::abort();
+    });
+    
     {
         auto f = [&]() {
             const multi_span<int, 4> av9 = {arr2, 2};
             (void) av9;
         };
-        EXPECT_DEATH(f(), ".*");
+        EXPECT_DEATH(f(), deathstring.data());
     }
 
     // this should fail - we are trying to assign a small dynamic a_v to a fixed_size larger one
@@ -1741,7 +1817,7 @@ TEST(multi_span_test, fixed_size_conversions)
         const multi_span<int, 4> av2 = av;
         (void) av2;
     };
-    EXPECT_DEATH(f(), ".*");
+    EXPECT_DEATH(f(), deathstring.data());
 }
 
 TEST(multi_span_test, as_writeable_bytes)

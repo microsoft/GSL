@@ -18,7 +18,7 @@ other platforms. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more inform
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 # Usage of Third Party Libraries
-This project makes use of the [Catch](https://github.com/philsquared/catch) testing library. Please see the [ThirdPartyNotices.txt](./ThirdPartyNotices.txt) file for details regarding the licensing of Catch.
+This project makes use of the [Google Test](https://github.com/google/gooletest) testing library. Please see the [ThirdPartyNotices.txt](./ThirdPartyNotices.txt) file for details regarding the licensing of Google Test.
 
 # Quick Start
 ## Supported Platforms

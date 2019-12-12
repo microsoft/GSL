@@ -21,7 +21,7 @@
 #endif
 
 #if __clang__ || __GNUC__
-//disable warnings from gtest
+// disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
 #endif
@@ -34,13 +34,18 @@
 
 #include <gsl/gsl_algorithm> // for copy
 #include <gsl/span>          // for span
-
 #include <array>   // for array
+#include <string_view>
 #include <cstddef> // for size_t
 
-namespace gsl {
+namespace{
+constexpr std::string_view deathstring("Expected Death");
+}
+
+namespace gsl
+{
 struct fail_fast;
-}  // namespace gsl
+} // namespace gsl
 
 using namespace std;
 using namespace gsl;
@@ -58,7 +63,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -75,7 +81,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -92,7 +99,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -109,7 +117,8 @@ TEST(algorithm_tests, same_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -129,7 +138,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -146,7 +156,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -163,7 +174,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -180,7 +192,8 @@ TEST(algorithm_tests, compatible_type)
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));
 
-        for (std::size_t i = 0; i < src.size(); ++i) {
+        for (std::size_t i = 0; i < src.size(); ++i)
+        {
             EXPECT_TRUE(dst[i] == src[i]);
             EXPECT_TRUE(dst[i + src.size()] == src[i]);
         }
@@ -208,6 +221,11 @@ TEST(algorithm_tests, incompatible_type)
 
 TEST(algorithm_tests, small_destination_span)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. small_destination_span";
+        std::abort();
+    });
+
     std::array<int, 12> src{1, 2, 3, 4};
     std::array<int, 4> dst{};
 
@@ -216,9 +234,9 @@ TEST(algorithm_tests, small_destination_span)
     const span<int> dst_span_dyn(dst);
     const span<int, 4> dst_span_static(dst);
 
-    EXPECT_DEATH(copy(src_span_dyn, dst_span_dyn), ".*");
-    EXPECT_DEATH(copy(src_span_dyn, dst_span_static), ".*");
-    EXPECT_DEATH(copy(src_span_static, dst_span_dyn), ".*");
+    EXPECT_DEATH(copy(src_span_dyn, dst_span_dyn), deathstring.data());
+    EXPECT_DEATH(copy(src_span_dyn, dst_span_static), deathstring.data());
+    EXPECT_DEATH(copy(src_span_static, dst_span_dyn), deathstring.data());
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     copy(src_span_static, dst_span_static);

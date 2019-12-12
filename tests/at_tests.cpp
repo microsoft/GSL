@@ -40,6 +40,10 @@
 #include <initializer_list> // for initializer_list
 #include <vector>           // for vector
 
+namespace{
+constexpr std::string_view deathstring("Expected Death");
+}
+
 TEST(at_tests, static_array)
 {
     int a[4] = {1, 2, 3, 4};
@@ -50,10 +54,15 @@ TEST(at_tests, static_array)
         EXPECT_TRUE(&gsl::at(c_a, i) == &a[i]);
     }
 
-    EXPECT_DEATH(gsl::at(a, -1), ".*");
-    EXPECT_DEATH(gsl::at(a, 4), ".*");
-    EXPECT_DEATH(gsl::at(c_a, -1), ".*");
-    EXPECT_DEATH(gsl::at(c_a, 4), ".*");
+    std::set_terminate([] {
+        std::cerr << "Expected Death. static_array";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(a, 4), deathstring.data());
+    EXPECT_DEATH(gsl::at(c_a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(c_a, 4), deathstring.data());
 }
 
 TEST(at_tests, std_array)
@@ -66,13 +75,18 @@ TEST(at_tests, std_array)
         EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    EXPECT_DEATH(gsl::at(a, -1), ".*");
-    EXPECT_DEATH(gsl::at(a, 4), ".*");
-    EXPECT_DEATH(gsl::at(c_a, -1), ".*");
-    EXPECT_DEATH(gsl::at(c_a, 4), ".*");
+    std::set_terminate([] {
+        std::cerr << "Expected Death. std_array";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(a, 4), deathstring.data());
+    EXPECT_DEATH(gsl::at(c_a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(c_a, 4), deathstring.data());
 }
 
-TEST(at_tests, StdVector)
+TEST(at_tests, std_vector)
 {
     std::vector<int> a = {1, 2, 3, 4};
     const std::vector<int>& c_a = a;
@@ -82,10 +96,15 @@ TEST(at_tests, StdVector)
         EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    EXPECT_DEATH(gsl::at(a, -1), ".*");
-    EXPECT_DEATH(gsl::at(a, 4), ".*");
-    EXPECT_DEATH(gsl::at(c_a, -1), ".*");
-    EXPECT_DEATH(gsl::at(c_a, 4), ".*");
+    std::set_terminate([] {
+        std::cerr << "Expected Death. std_vector";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(a, 4), deathstring.data());
+    EXPECT_DEATH(gsl::at(c_a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(c_a, 4), deathstring.data());
 }
 
 TEST(at_tests, InitializerList)
@@ -96,11 +115,16 @@ TEST(at_tests, InitializerList)
         EXPECT_TRUE(gsl::at(a, i) == i + 1);
         EXPECT_TRUE(gsl::at({1, 2, 3, 4}, i) == i + 1);
     }
+    
+    std::set_terminate([] {
+        std::cerr << "Expected Death. InitializerList";
+        std::abort();
+    });
 
-    EXPECT_DEATH(gsl::at(a, -1), ".*");
-    EXPECT_DEATH(gsl::at(a, 4), ".*");
-    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, -1), ".*");
-    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), ".*");
+    EXPECT_DEATH(gsl::at(a, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at(a, 4), deathstring.data());
+    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, -1), deathstring.data());
+    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), deathstring.data());
 }
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910

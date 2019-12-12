@@ -72,6 +72,7 @@ auto strnlen(const CharT* s, std::size_t n)
 
 namespace
 {
+constexpr std::string_view deathstring("Expected Death");
 
 template <typename T>
 T move_wrapper(T&& t)
@@ -964,6 +965,10 @@ TEST(string_span_tests, Conversion)
 
 TEST(string_span_tests, zstring)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. zstring";
+        std::abort();
+    });
 
     // create zspan from zero terminated string
     {
@@ -983,7 +988,7 @@ TEST(string_span_tests, zstring)
         buf[0] = 'a';
 
         auto workaround_macro = [&]() { const zstring_span<> zspan({buf, 1}); };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     // usage scenario: create zero-terminated temp file name and pass to a legacy API
@@ -1001,7 +1006,11 @@ TEST(string_span_tests, zstring)
 
 TEST(string_span_tests, wzstring)
 {
-
+    std::set_terminate([] {
+        std::cerr << "Expected Death. wzstring";
+        std::abort();
+    });
+    
     // create zspan from zero terminated string
     {
         wchar_t buf[1];
@@ -1020,7 +1029,7 @@ TEST(string_span_tests, wzstring)
         buf[0] = L'a';
 
         const auto workaround_macro = [&]() { const wzstring_span<> zspan({buf, 1}); };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     // usage scenario: create zero-terminated temp file name and pass to a legacy API
@@ -1037,7 +1046,11 @@ TEST(string_span_tests, wzstring)
 }
 
 TEST(string_span_tests, u16zstring)
-{
+{    
+    std::set_terminate([] {
+        std::cerr << "Expected Death. u16zstring";
+        std::abort();
+    });
 
     // create zspan from zero terminated string
     {
@@ -1057,7 +1070,7 @@ TEST(string_span_tests, u16zstring)
         buf[0] = u'a';
 
         const auto workaround_macro = [&]() { const u16zstring_span<> zspan({buf, 1}); };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     // usage scenario: create zero-terminated temp file name and pass to a legacy API
@@ -1075,6 +1088,10 @@ TEST(string_span_tests, u16zstring)
 
 TEST(string_span_tests, u32zstring)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. u31zstring";
+        std::abort();
+    });
 
     // create zspan from zero terminated string
     {
@@ -1094,7 +1111,7 @@ TEST(string_span_tests, u32zstring)
         buf[0] = u'a';
 
         const auto workaround_macro = [&]() { const u32zstring_span<> zspan({buf, 1}); };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     // usage scenario: create zero-terminated temp file name and pass to a legacy API

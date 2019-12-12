@@ -56,6 +56,7 @@ using namespace gsl;
 
 namespace
 {
+constexpr std::string_view deathstring("Expected Death");
 struct BaseClass
 {
 };
@@ -419,19 +420,24 @@ TEST(strided_span_tests, strided_span_bounds)
 {
     int arr[] = {0, 1, 2, 3};
     multi_span<int> av(arr);
+    
+    std::set_terminate([] {
+        std::cerr << "Expected Death. strided_span_bounds";
+        std::abort();
+    });
 
     {
         // incorrect sections
 
-        EXPECT_DEATH(av.section(0, 0)[0], ".*");
-        EXPECT_DEATH(av.section(1, 0)[0], ".*");
-        EXPECT_DEATH(av.section(1, 1)[1], ".*");
+        EXPECT_DEATH(av.section(0, 0)[0], deathstring.data());
+        EXPECT_DEATH(av.section(1, 0)[0], deathstring.data());
+        EXPECT_DEATH(av.section(1, 1)[1], deathstring.data());
 
-        EXPECT_DEATH(av.section(2, 5), ".*");
-        EXPECT_DEATH(av.section(5, 2), ".*");
-        EXPECT_DEATH(av.section(5, 0), ".*");
-        EXPECT_DEATH(av.section(0, 5), ".*");
-        EXPECT_DEATH(av.section(5, 5), ".*");
+        EXPECT_DEATH(av.section(2, 5), deathstring.data());
+        EXPECT_DEATH(av.section(5, 2), deathstring.data());
+        EXPECT_DEATH(av.section(5, 0), deathstring.data());
+        EXPECT_DEATH(av.section(0, 5), deathstring.data());
+        EXPECT_DEATH(av.section(5, 5), deathstring.data());
     }
 
     {
@@ -439,19 +445,19 @@ TEST(strided_span_tests, strided_span_bounds)
         strided_span<int, 1> sav{av, {{4}, {}}};
         EXPECT_TRUE(sav[0] == 0);
         EXPECT_TRUE(sav[3] == 0);
-        EXPECT_DEATH(sav[4], ".*");
+        EXPECT_DEATH(sav[4], deathstring.data());
     }
 
     {
         // zero extent
         strided_span<int, 1> sav{av, {{}, {1}}};
-        EXPECT_DEATH(sav[0], ".*");
+        EXPECT_DEATH(sav[0], deathstring.data());
     }
 
     {
         // zero extent and stride
         strided_span<int, 1> sav{av, {{}, {}}};
-        EXPECT_DEATH(sav[0], ".*");
+        EXPECT_DEATH(sav[0], deathstring.data());
     }
 
     {
@@ -459,7 +465,7 @@ TEST(strided_span_tests, strided_span_bounds)
         strided_span<int, 1> sav{arr, {4, 1}};
         EXPECT_TRUE(sav.bounds().index_bounds() == multi_span_index<1>{4});
         EXPECT_TRUE(sav[3] == 3);
-        EXPECT_DEATH(sav[4], ".*");
+        EXPECT_DEATH(sav[4], deathstring.data());
     }
 
     {
@@ -467,7 +473,7 @@ TEST(strided_span_tests, strided_span_bounds)
         strided_span<int, 1> sav{arr, {2, 1}};
         EXPECT_TRUE(sav.bounds().index_bounds() == multi_span_index<1>{2});
         EXPECT_TRUE(sav[1] == 1);
-        EXPECT_DEATH(sav[2], ".*");
+        EXPECT_DEATH(sav[2], deathstring.data());
     }
 
     {
@@ -476,35 +482,35 @@ TEST(strided_span_tests, strided_span_bounds)
         EXPECT_TRUE(sav.bounds().index_bounds() == multi_span_index<1>{2});
         EXPECT_TRUE(sav[0] == 0);
         EXPECT_TRUE(sav[1] == 3);
-        EXPECT_DEATH(sav[2], ".*");
+        EXPECT_DEATH(sav[2], deathstring.data());
     }
 
     {
         // bounds cross data boundaries - from static arrays
-        EXPECT_DEATH((strided_span<int, 1>{arr, {3, 2}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{arr, {3, 3}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{arr, {4, 5}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{arr, {5, 1}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{arr, {5, 5}}), ".*");
+        EXPECT_DEATH((strided_span<int, 1>{arr, {3, 2}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{arr, {3, 3}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{arr, {4, 5}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{arr, {5, 1}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{arr, {5, 5}}), deathstring.data());
     }
 
     {
         // bounds cross data boundaries - from array view
-        EXPECT_DEATH((strided_span<int, 1>{av, {3, 2}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av, {3, 3}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av, {4, 5}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av, {5, 1}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av, {5, 5}}), ".*");
+        EXPECT_DEATH((strided_span<int, 1>{av, {3, 2}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av, {3, 3}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av, {4, 5}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av, {5, 1}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av, {5, 5}}), deathstring.data());
     }
 
     {
         // bounds cross data boundaries - from dynamic arrays
-        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {3, 2}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {3, 3}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {4, 5}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {5, 1}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {5, 5}}), ".*");
-        EXPECT_DEATH((strided_span<int, 1>{av.data(), 2, {2, 2}}), ".*");
+        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {3, 2}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {3, 3}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {4, 5}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {5, 1}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av.data(), 4, {5, 5}}), deathstring.data());
+        EXPECT_DEATH((strided_span<int, 1>{av.data(), 2, {2, 2}}), deathstring.data());
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -535,6 +541,11 @@ TEST(strided_span_tests, strided_span_type_conversion)
 {
     int arr[] = {0, 1, 2, 3};
     multi_span<int> av(arr);
+        
+    std::set_terminate([] {
+        std::cerr << "Expected Death. strided_span_type_conversion";
+        std::abort();
+    });
 
     {
         strided_span<int, 1> sav{av.data(), av.size(), {av.size() / 2, 2}};
@@ -558,8 +569,8 @@ TEST(strided_span_tests, strided_span_type_conversion)
         strided_span<const int, 2> sav3 = sav2.as_strided_span<const int>();
         EXPECT_TRUE(sav3[0][0] == 0);
         EXPECT_TRUE(sav3[1][0] == 2);
-        EXPECT_DEATH(sav3[1][1], ".*");
-        EXPECT_DEATH(sav3[0][1], ".*");
+        EXPECT_DEATH(sav3[1][1], deathstring.data());
+        EXPECT_DEATH(sav3[0][1], deathstring.data());
     }
 
     // retype strided array with regular strides - from multi_span
@@ -571,8 +582,8 @@ TEST(strided_span_tests, strided_span_type_conversion)
         strided_span<int, 2> sav3 = sav2.as_strided_span<int>();
         EXPECT_TRUE(sav3[0][0] == 0);
         EXPECT_TRUE(sav3[1][0] == 2);
-        EXPECT_DEATH(sav3[1][1], ".*");
-        EXPECT_DEATH(sav3[0][1], ".*");
+        EXPECT_DEATH(sav3[1][1], deathstring.data());
+        EXPECT_DEATH(sav3[0][1], deathstring.data());
     }
 
     // retype strided array with not enough elements - last dimension of the array is too small
@@ -581,7 +592,7 @@ TEST(strided_span_tests, strided_span_type_conversion)
         multi_span<const byte, 2, dynamic_range> bytes2 =
             as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
         strided_span<const byte, 2> sav2{bytes2, bounds};
-        EXPECT_DEATH(sav2.as_strided_span<int>(), ".*");
+        EXPECT_DEATH(sav2.as_strided_span<int>(), deathstring.data());
     }
 
     // retype strided array with not enough elements - strides are too small
@@ -590,7 +601,7 @@ TEST(strided_span_tests, strided_span_type_conversion)
         multi_span<const byte, 2, dynamic_range> bytes2 =
             as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
         strided_span<const byte, 2> sav2{bytes2, bounds};
-        EXPECT_DEATH(sav2.as_strided_span<int>(), ".*");
+        EXPECT_DEATH(sav2.as_strided_span<int>(), deathstring.data());
     }
 
     // retype strided array with not enough elements - last dimension does not divide by the new
@@ -600,7 +611,7 @@ TEST(strided_span_tests, strided_span_type_conversion)
         multi_span<const byte, 2, dynamic_range> bytes2 =
             as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
         strided_span<const byte, 2> sav2{bytes2, bounds};
-        EXPECT_DEATH(sav2.as_strided_span<int>(), ".*");
+        EXPECT_DEATH(sav2.as_strided_span<int>(), deathstring.data());
     }
 
     // retype strided array with not enough elements - strides does not divide by the new
@@ -610,35 +621,40 @@ TEST(strided_span_tests, strided_span_type_conversion)
         multi_span<const byte, 2, dynamic_range> bytes2 =
             as_multi_span(bytes, dim<2>(), dim(bytes.size() / 2));
         strided_span<const byte, 2> sav2{bytes2, bounds};
-        EXPECT_DEATH(sav2.as_strided_span<int>(), ".*");
+        EXPECT_DEATH(sav2.as_strided_span<int>(), deathstring.data());
     }
 
     // retype strided array with irregular strides - from raw data
     {
         strided_bounds<1> bounds{bytes.size() / 2, 2};
         strided_span<const byte, 1> sav2{bytes.data(), bytes.size(), bounds};
-        EXPECT_DEATH(sav2.as_strided_span<int>(), ".*");
+        EXPECT_DEATH(sav2.as_strided_span<int>(), deathstring.data());
     }
 
     // retype strided array with irregular strides - from multi_span
     {
         strided_bounds<1> bounds{bytes.size() / 2, 2};
         strided_span<const byte, 1> sav2{bytes, bounds};
-        EXPECT_DEATH(sav2.as_strided_span<int>(), ".*");
+        EXPECT_DEATH(sav2.as_strided_span<int>(), deathstring.data());
     }
 }
 
 TEST(strided_span_tests, empty_strided_spans)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. empty_strided_spans";
+        std::abort();
+    });
+
     {
         multi_span<int, 0> empty_av(nullptr);
         strided_span<int, 1> empty_sav{empty_av, {0, 1}};
 
         EXPECT_TRUE(empty_sav.bounds().index_bounds() == multi_span_index<1>{0});
         EXPECT_TRUE(empty_sav.empty());
-        EXPECT_DEATH(empty_sav[0], ".*");
-        EXPECT_DEATH(empty_sav.begin()[0], ".*");
-        EXPECT_DEATH(empty_sav.cbegin()[0], ".*");
+        EXPECT_DEATH(empty_sav[0], deathstring.data());
+        EXPECT_DEATH(empty_sav.begin()[0], deathstring.data());
+        EXPECT_DEATH(empty_sav.cbegin()[0], deathstring.data());
 
         for (const auto& v : empty_sav) {
             (void) v;
@@ -650,9 +666,9 @@ TEST(strided_span_tests, empty_strided_spans)
         strided_span<int, 1> empty_sav{nullptr, 0, {0, 1}};
 
         EXPECT_TRUE(empty_sav.bounds().index_bounds() == multi_span_index<1>{0});
-        EXPECT_DEATH(empty_sav[0], ".*");
-        EXPECT_DEATH(empty_sav.begin()[0], ".*");
-        EXPECT_DEATH(empty_sav.cbegin()[0], ".*");
+        EXPECT_DEATH(empty_sav[0], deathstring.data());
+        EXPECT_DEATH(empty_sav.begin()[0], deathstring.data());
+        EXPECT_DEATH(empty_sav.cbegin()[0], deathstring.data());
 
         for (const auto& v : empty_sav) {
             (void) v;
@@ -740,6 +756,11 @@ TEST(strided_span_tests, dynamic_strided_span_section_iteration_3d)
 
 TEST(strided_span_tests, strided_span_conversion)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. strided_span_conversion";
+        std::abort();
+    });
+    
     // get an multi_span of 'c' values from the list of X's
 
     struct X
@@ -783,7 +804,7 @@ TEST(strided_span_tests, strided_span_conversion)
     strided_span<int, 1> result = transposed[0];
 
     EXPECT_TRUE(result.bounds().index_bounds()[0] == 4);
-    EXPECT_DEATH(result.bounds().index_bounds()[1], ".*");
+    EXPECT_DEATH(result.bounds().index_bounds()[1], deathstring.data());
 
     int i = 0;
     for (auto& num : result) {

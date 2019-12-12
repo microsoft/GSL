@@ -75,6 +75,7 @@ struct AddressOverloaded
         return {};
     }
 };
+constexpr std::string_view deathstring("Expected Death");
 } // namespace
 
 TEST(span_test, constructors)
@@ -121,6 +122,10 @@ TEST(span_test, size_optimization)
 
 TEST(span_test, from_nullptr_size_constructor)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_nullptr_size_constructor";
+        std::abort();
+    });
     {
         span<int> s{nullptr, narrow_cast<span<int>::index_type>(0)};
         EXPECT_TRUE(s.size() == 0);
@@ -134,21 +139,21 @@ TEST(span_test, from_nullptr_size_constructor)
         auto workaround_macro = []() {
             const span<int, 1> s{nullptr, narrow_cast<span<int>::index_type>(0)};
         };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
     {
         auto workaround_macro = []() { const span<int> s{nullptr, 1}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
 
         auto const_workaround_macro = []() { const span<const int> s{nullptr, 1}; };
-        EXPECT_DEATH(const_workaround_macro(), ".*");
+        EXPECT_DEATH(const_workaround_macro(), deathstring.data());
     }
     {
         auto workaround_macro = []() { const span<int, 0> s{nullptr, 1}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
 
         auto const_workaround_macro = []() { const span<const int, 0> s{nullptr, 1}; };
-        EXPECT_DEATH(const_workaround_macro(), ".*");
+        EXPECT_DEATH(const_workaround_macro(), deathstring.data());
     }
     {
         span<int*> s{nullptr, narrow_cast<span<int>::index_type>(0)};
@@ -163,6 +168,10 @@ TEST(span_test, from_nullptr_size_constructor)
 
 TEST(span_test, from_pointer_length_constructor)
 {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. from_pointer_length_constructor";
+        std::abort();
+    });
     int arr[4] = {1, 2, 3, 4};
 
     {
@@ -214,7 +223,7 @@ TEST(span_test, from_pointer_length_constructor)
     {
         int* p = nullptr;
         auto workaround_macro = [=]() { const span<int> s{p, 2}; };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 
     {
@@ -235,7 +244,7 @@ TEST(span_test, from_pointer_length_constructor)
     {
         int* p = nullptr;
         auto workaround_macro = [=]() { make_span(p, 2); };
-        EXPECT_DEATH(workaround_macro(), ".*");
+        EXPECT_DEATH(workaround_macro(), deathstring.data());
     }
 }
 
@@ -273,14 +282,14 @@ TEST(span_test, from_pointer_pointer_construction)
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
     //{
     //    auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
-    //    EXPECT_DEATH(workaround_macro(), ".*");
+    //    EXPECT_DEATH(workaround_macro(), deathstring.data());
     //}
 
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
     //{
     //    int* p = nullptr;
     //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-    //    EXPECT_DEATH(workaround_macro(), ".*");
+    //    EXPECT_DEATH(workaround_macro(), deathstring.data());
     //}
 
     {
@@ -301,7 +310,7 @@ TEST(span_test, from_pointer_pointer_construction)
     //{
     //    int* p = nullptr;
     //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-    //    EXPECT_DEATH(workaround_macro(), ".*");
+    //    EXPECT_DEATH(workaround_macro(), deathstring.data());
     //}
 
     {
@@ -823,6 +832,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, first)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. first";
+        std::abort();
+    });
      int arr[5] = {1, 2, 3, 4, 5};
 
      {
@@ -849,7 +862,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.first<6>().size() == 6);
          EXPECT_TRUE(av.first<-1>().size() == -1);
  #endif
-         EXPECT_DEATH(av.first(6).size(), ".*");
+         EXPECT_DEATH(av.first(6).size(), deathstring.data());
      }
 
      {
@@ -861,6 +874,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, last)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. last";
+        std::abort();
+    });
      int arr[5] = {1, 2, 3, 4, 5};
 
      {
@@ -886,7 +903,7 @@ TEST(span_test, from_array_constructor)
  #ifdef CONFIRM_COMPILATION_ERRORS
          EXPECT_TRUE(av.last<6>().size() == 6);
  #endif
-         EXPECT_DEATH(av.last(6).size(), ".*");
+         EXPECT_DEATH(av.last(6).size(), deathstring.data());
      }
 
      {
@@ -898,6 +915,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, subspan)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. subspan";
+        std::abort();
+    });
      int arr[5] = {1, 2, 3, 4, 5};
 
      {
@@ -921,8 +942,8 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(decltype(av.subspan<0, 5>())::extent == 5);
          EXPECT_TRUE(av.subspan(0, 5).size() == 5);
 
-         EXPECT_DEATH(av.subspan(0, 6).size(), ".*");
-         EXPECT_DEATH(av.subspan(1, 5).size(), ".*");
+         EXPECT_DEATH(av.subspan(0, 6).size(), deathstring.data());
+         EXPECT_DEATH(av.subspan(1, 5).size(), deathstring.data());
      }
 
      {
@@ -931,7 +952,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(decltype(av.subspan<4, 0>())::extent == 0);
          EXPECT_TRUE(av.subspan(4, 0).size() == 0);
          EXPECT_TRUE(av.subspan(5, 0).size() == 0);
-         EXPECT_DEATH(av.subspan(6, 0).size(), ".*");
+         EXPECT_DEATH(av.subspan(6, 0).size(), deathstring.data());
      }
 
      {
@@ -945,13 +966,13 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE((av.subspan<0, 0>().size()) == 0);
          EXPECT_TRUE(decltype(av.subspan<0, 0>())::extent == 0);
          EXPECT_TRUE(av.subspan(0, 0).size() == 0);
-         EXPECT_DEATH((av.subspan<1, 0>().size()), ".*");
+         EXPECT_DEATH((av.subspan<1, 0>().size()), deathstring.data());
      }
 
      {
          span<int> av;
          EXPECT_TRUE(av.subspan(0).size() == 0);
-         EXPECT_DEATH(av.subspan(1).size(), ".*");
+         EXPECT_DEATH(av.subspan(1).size(), deathstring.data());
      }
 
      {
@@ -960,7 +981,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.subspan(1).size() == 4);
          EXPECT_TRUE(av.subspan(4).size() == 1);
          EXPECT_TRUE(av.subspan(5).size() == 0);
-         EXPECT_DEATH(av.subspan(6).size(), ".*");
+         EXPECT_DEATH(av.subspan(6).size(), deathstring.data());
          const auto av2 = av.subspan(1);
          for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
      }
@@ -971,7 +992,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.subspan(1).size() == 4);
          EXPECT_TRUE(av.subspan(4).size() == 1);
          EXPECT_TRUE(av.subspan(5).size() == 0);
-         EXPECT_DEATH(av.subspan(6).size(), ".*");
+         EXPECT_DEATH(av.subspan(6).size(), deathstring.data());
          const auto av2 = av.subspan(1);
          for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
      }
@@ -979,12 +1000,16 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, at_call)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. at_call";
+        std::abort();
+    });
      int arr[4] = {1, 2, 3, 4};
 
      {
          span<int> s = arr;
          EXPECT_TRUE(s.at(0) == 1);
-         EXPECT_DEATH(s.at(5), ".*");
+         EXPECT_DEATH(s.at(5), deathstring.data());
      }
 
      {
@@ -992,18 +1017,22 @@ TEST(span_test, from_array_constructor)
          span<int, 2> s = arr2d;
          EXPECT_TRUE(s.at(0) == 1);
          EXPECT_TRUE(s.at(1) == 6);
-         EXPECT_DEATH(s.at(2), ".*");
+         EXPECT_DEATH(s.at(2), deathstring.data());
      }
  }
 
  TEST(span_test, operator_function_call)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. operator_function_call";
+        std::abort();
+    });
      int arr[4] = {1, 2, 3, 4};
 
      {
          span<int> s = arr;
          EXPECT_TRUE(s(0) == 1);
-         EXPECT_DEATH(s(5), ".*");
+         EXPECT_DEATH(s(5), deathstring.data());
      }
 
      {
@@ -1011,7 +1040,7 @@ TEST(span_test, from_array_constructor)
          span<int, 2> s = arr2d;
          EXPECT_TRUE(s(0) == 1);
          EXPECT_TRUE(s(1) == 6);
-         EXPECT_DEATH(s(2), ".*");
+         EXPECT_DEATH(s(2), deathstring.data());
      }
  }
 
@@ -1100,6 +1129,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, begin_end)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. begin_end";
+        std::abort();
+    });
      {
          int a[] = {1, 2, 3, 4};
          span<int> s = a;
@@ -1124,7 +1157,7 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.end();
          EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(*beyond, ".*");
+         EXPECT_DEATH(*beyond, deathstring.data());
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
@@ -1154,6 +1187,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, cbegin_cend)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. cbegin_cend";
+        std::abort();
+    });
      {
          int a[] = {1, 2, 3, 4};
          span<int> s = a;
@@ -1178,7 +1215,7 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.cend();
          EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(*beyond, ".*");
+         EXPECT_DEATH(*beyond, deathstring.data());
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
@@ -1207,6 +1244,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, rbegin_rend)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. rbegin_rend";
+        std::abort();
+    });
      {
          int a[] = {1, 2, 3, 4};
          span<int> s = a;
@@ -1218,7 +1259,7 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.rend();
          EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(auto _ = *beyond , ".*");
+         EXPECT_DEATH(auto _ = *beyond , deathstring.data());
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
@@ -1248,6 +1289,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, crbegin_crend)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. crbegin_crend";
+        std::abort();
+    });
      {
          int a[] = {1, 2, 3, 4};
          span<int> s = a;
@@ -1259,7 +1304,7 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.crend();
          EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(auto _ = *beyond, ".*");
+         EXPECT_DEATH(auto _ = *beyond, deathstring.data());
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
@@ -1472,6 +1517,10 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, fixed_size_conversions)
  {
+    std::set_terminate([] {
+        std::cerr << "Expected Death. fixed_size_conversions";
+        std::abort();
+    });
      int arr[] = {1, 2, 3, 4};
 
      // converting to an span from an equal size array is ok
@@ -1503,7 +1552,7 @@ TEST(span_test, from_array_constructor)
              const span<int, 2> s2 = s;
              static_cast<void>(s2);
          };
-         EXPECT_DEATH(f(), ".*");
+         EXPECT_DEATH(f(), deathstring.data());
      }
 
      // but doing so explicitly is ok
@@ -1542,7 +1591,7 @@ TEST(span_test, from_array_constructor)
              const span<int, 4> _s4 = {arr2, 2};
              static_cast<void>(_s4);
          };
-         EXPECT_DEATH(f(), ".*");
+         EXPECT_DEATH(f(), deathstring.data());
      }
 
      // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
@@ -1550,7 +1599,7 @@ TEST(span_test, from_array_constructor)
          const span<int, 4> _s4 = av;
          static_cast<void>(_s4);
      };
-     EXPECT_DEATH(f(), ".*");
+     EXPECT_DEATH(f(), deathstring.data());
  }
 
  TEST(span_test, interop_with_std_regex)
