@@ -45,7 +45,7 @@
 using namespace gsl;
 
 namespace{
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 void f(int& i) { i += 1; }
 static int j = 0;
 void g() { j += 1; }
@@ -119,7 +119,7 @@ TEST(utils_tests, narrow_cast)
 }
 
 TEST(utils_tests, narrow)
-{    
+{
     std::set_terminate([] {
         std::cerr << "Expected Death. narrow";
         std::abort();

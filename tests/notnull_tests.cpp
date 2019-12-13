@@ -53,7 +53,7 @@ struct fail_fast;
 using namespace gsl;
 
 namespace{
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 }
 
 struct MyBase
@@ -458,7 +458,7 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
 
         EXPECT_TRUE(*x == 42);
     }
-    
+
     std::set_terminate([] {
         std::cerr << "Expected Death. TestNotNullConstructorTypeDeduction";
         std::abort();

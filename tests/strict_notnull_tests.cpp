@@ -42,10 +42,6 @@ namespace gsl
 struct fail_fast;
 } // namespace gsl
 
-namespace{
-static const std::string deathstring("Expected Death");
-}
-
 using namespace gsl;
 
 GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
@@ -147,6 +143,7 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
+static const char *deathstring("Expected Death");
 
 TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 {

@@ -41,7 +41,7 @@
 #include <vector>           // for vector
 
 namespace{
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 }
 
 TEST(at_tests, static_array)
@@ -115,7 +115,7 @@ TEST(at_tests, InitializerList)
         EXPECT_TRUE(gsl::at(a, i) == i + 1);
         EXPECT_TRUE(gsl::at({1, 2, 3, 4}, i) == i + 1);
     }
-    
+
     std::set_terminate([] {
         std::cerr << "Expected Death. InitializerList";
         std::abort();

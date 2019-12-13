@@ -139,7 +139,7 @@ void fn(const Bounds&)
     static_assert(Bounds::static_size == 60, "static bounds is wrong size");
 }
 
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 } // namespace
 
 TEST(multi_span_test, default_constructor)
@@ -426,7 +426,7 @@ TEST(multi_span_test, from_pointer_pointer_constructor)
         std::cerr << "Expected Death. from_pointer_pointer_constructor";
         std::abort();
     });
-    
+
     {
         auto workaround_macro = [&]() { const multi_span<int> s{&arr[1], &arr[0]}; };
         EXPECT_DEATH(workaround_macro(), deathstring);
@@ -1108,7 +1108,7 @@ TEST(multi_span_test, extent)
         std::cerr << "Expected Death. extent";
         std::abort();
     });
- 
+
     {
         multi_span<int> s;
         EXPECT_TRUE(s.extent() == 0);

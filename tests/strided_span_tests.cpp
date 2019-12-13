@@ -56,7 +56,7 @@ using namespace gsl;
 
 namespace
 {
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 struct BaseClass
 {
 };
@@ -420,7 +420,7 @@ TEST(strided_span_tests, strided_span_bounds)
 {
     int arr[] = {0, 1, 2, 3};
     multi_span<int> av(arr);
-    
+
     std::set_terminate([] {
         std::cerr << "Expected Death. strided_span_bounds";
         std::abort();
@@ -541,7 +541,7 @@ TEST(strided_span_tests, strided_span_type_conversion)
 {
     int arr[] = {0, 1, 2, 3};
     multi_span<int> av(arr);
-        
+
     std::set_terminate([] {
         std::cerr << "Expected Death. strided_span_type_conversion";
         std::abort();

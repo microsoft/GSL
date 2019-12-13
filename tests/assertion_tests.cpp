@@ -51,7 +51,7 @@ int g(int i)
     return i;
 }
 
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 } // namespace
 
 TEST(assertion_tests, expects)

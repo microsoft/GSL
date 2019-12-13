@@ -38,7 +38,7 @@
 #include <cstddef> // for size_t
 
 namespace{
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 }
 
 namespace gsl

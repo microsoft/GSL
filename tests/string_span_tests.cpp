@@ -72,7 +72,7 @@ auto strnlen(const CharT* s, std::size_t n)
 
 namespace
 {
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 
 template <typename T>
 T move_wrapper(T&& t)
@@ -1046,7 +1046,7 @@ TEST(string_span_tests, wzstring)
 }
 
 TEST(string_span_tests, u16zstring)
-{    
+{
     std::set_terminate([] {
         std::cerr << "Expected Death. u16zstring";
         std::abort();

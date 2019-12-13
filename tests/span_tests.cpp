@@ -75,7 +75,7 @@ struct AddressOverloaded
         return {};
     }
 };
-static const std::string deathstring("Expected Death");
+static const char *deathstring("Expected Death");
 } // namespace
 
 TEST(span_test, constructors)
