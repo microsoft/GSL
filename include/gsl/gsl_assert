@@ -18,7 +18,6 @@
 #define GSL_CONTRACTS_H
 
 #include <exception>
-#include <stdexcept> // for logic_error
 
 //
 // make suppress attributes parse for some compilers
@@ -111,8 +110,8 @@ namespace details
 #endif
     }
 
-
     template <typename Exception>
+    [[deprecated("GSL no longer supports throwing for contract violations. Use gsl::details::terminate() instead.")]]
     [[noreturn]] void throw_exception(Exception&&) noexcept
     {
         gsl::details::terminate();

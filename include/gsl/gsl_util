@@ -21,7 +21,6 @@
 
 #include <array>
 #include <cstddef>          // for ptrdiff_t, size_t
-#include <exception>        // for exception
 #include <initializer_list> // for initializer_list
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for exchange, forward
@@ -97,10 +96,6 @@ constexpr T narrow_cast(U&& u) noexcept
     return static_cast<T>(std::forward<U>(u));
 }
 
-struct narrowing_error : public std::exception
-{
-};
-
 namespace details
 {
     template <class T, class U>
@@ -120,9 +115,9 @@ constexpr
 T narrow(U u) noexcept(false)
 {
     T t = narrow_cast<T>(u);
-    if (static_cast<U>(t) != u) gsl::details::throw_exception(narrowing_error());
+    if (static_cast<U>(t) != u) gsl::details::terminate();
     if (!details::is_same_signedness<T, U>::value && ((t < T{}) != (u < U{})))
-        gsl::details::throw_exception(narrowing_error());
+        gsl::details::terminate();
     return t;
 }
 
