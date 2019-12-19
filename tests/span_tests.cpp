@@ -26,17 +26,19 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
 #pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#endif
+#endif // __clang__
+
+#include <gtest/gtest.h>
 
 #include <gsl/gsl_byte> // for byte
 #include <gsl/gsl_util> // for narrow_cast, at
 #include <gsl/span>     // for span, span_iterator, operator==, operator!=
-#include <gtest/gtest.h>
 
 #include <array>       // for array
 #include <iostream>    // for ptrdiff_t
@@ -58,6 +60,8 @@ using namespace gsl;
 
 namespace
 {
+static constexpr char deathstring[] = "Expected Death";
+
 struct BaseClass
 {
 };
@@ -75,7 +79,6 @@ struct AddressOverloaded
         return {};
     }
 };
-static const char *deathstring("Expected Death");
 } // namespace
 
 TEST(span_test, constructors)
@@ -1642,4 +1645,4 @@ TEST(span_test, from_array_constructor)
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

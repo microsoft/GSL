@@ -25,12 +25,13 @@
 //disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#endif
+#endif // __clang__
 
 #include <gtest/gtest.h>
 
@@ -49,6 +50,10 @@
 using namespace std;
 using namespace gsl;
 
+namespace
+{
+static constexpr char deathstring[] = "Expected Death";
+}
 // Generic string functions
 
 namespace generic
@@ -72,7 +77,6 @@ auto strnlen(const CharT* s, std::size_t n)
 
 namespace
 {
-static const char *deathstring("Expected Death");
 
 template <typename T>
 T move_wrapper(T&& t)
@@ -1233,4 +1237,4 @@ TEST(string_span_tests, as_writeable_bytes)
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

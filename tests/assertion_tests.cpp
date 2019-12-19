@@ -24,12 +24,13 @@
 //disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#endif
+#endif // __clang__
 
 #include <gtest/gtest.h>
 #include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
@@ -38,6 +39,8 @@ using namespace gsl;
 
 namespace
 {
+static constexpr char deathstring[] = "Expected Death";
+
 int f(int i)
 {
     Expects(i > 0 && i < 10);
@@ -50,8 +53,6 @@ int g(int i)
     Ensures(i > 0 && i < 10);
     return i;
 }
-
-static const char *deathstring("Expected Death");
 } // namespace
 
 TEST(assertion_tests, expects)
@@ -79,4 +80,4 @@ TEST(assertion_tests, ensures)
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

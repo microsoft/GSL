@@ -27,12 +27,13 @@
 //disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#endif
+#endif // __clang__
 
 #include <gtest/gtest.h>
 #include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
@@ -143,7 +144,10 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
-static const char *deathstring("Expected Death");
+namespace
+{
+static constexpr char deathstring[] = "Expected Death";
+}
 
 TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 {
@@ -211,4 +215,4 @@ static_assert(std::is_nothrow_move_constructible<strict_not_null<void*>>::value,
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

@@ -24,12 +24,13 @@
 //disable warnings from gtest
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#endif
+#endif // __clang__
 
 #include <gtest/gtest.h>
 
@@ -40,8 +41,9 @@
 #include <initializer_list> // for initializer_list
 #include <vector>           // for vector
 
-namespace{
-static const char *deathstring("Expected Death");
+namespace
+{
+    static constexpr char deathstring[] = "Expected Death";
 }
 
 TEST(at_tests, static_array)
@@ -152,4 +154,4 @@ static_assert(test_constexpr(), "FAIL");
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

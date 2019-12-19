@@ -27,22 +27,19 @@
 
 //disable warnings from gtest
 #pragma GCC diagnostic ignored "-Wundef"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#endif
+#endif // __clang__
 
 #include <gtest/gtest.h>
 
 #include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t
 
 #include <cstddef> // for ptrdiff_t, size_t
-
-namespace gsl {
-struct fail_fast;
-}  // namespace gsl
 
 using namespace std;
 using namespace gsl;
@@ -127,4 +124,4 @@ copy(src_span_static, dst_span_static);
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

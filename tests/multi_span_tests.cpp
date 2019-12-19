@@ -28,13 +28,13 @@
 
 //disable warnings from gtest
 #pragma GCC diagnostic ignored "-Wundef"
-#endif
+#endif // __clang__ || __GNUC__
+
 #if __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
-
-#endif
+#endif // __clang__
 
 #include <gtest/gtest.h>
 
@@ -61,6 +61,7 @@ using namespace gsl;
 
 namespace
 {
+static constexpr char deathstring[] = "Expected Death";
 struct BaseClass
 {
 };
@@ -139,7 +140,6 @@ void fn(const Bounds&)
     static_assert(Bounds::static_size == 60, "static bounds is wrong size");
 }
 
-static const char *deathstring("Expected Death");
 } // namespace
 
 TEST(multi_span_test, default_constructor)
@@ -1886,4 +1886,4 @@ copy(src_span_static, dst_span_static);
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__
