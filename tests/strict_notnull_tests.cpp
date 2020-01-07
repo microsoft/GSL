@@ -23,7 +23,19 @@
 #pragma warning(disable : 4702) // unreachable code
 #endif
 
-#include <catch/catch.hpp>    // for AssertionHandler, StringRef, CHECK, TEST_...
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
+#endif // __clang__ || __GNUC__
+
+#if __clang__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif // __clang__
+
+#include <gtest/gtest.h>
 #include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
 
 namespace gsl
@@ -35,19 +47,20 @@ using namespace gsl;
 
 GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
 bool helper(not_null<int*> p) { return *p == 12; }
+
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper_const(not_null<const int*> p) { return *p == 12; }
 
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
+
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
 int* return_pointer() { return nullptr; }
 const int* return_pointer_const() { return nullptr; }
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("TestStrictNotNull")
+TEST(strict_notnull_tests, TestStrictNotNull)
 {
     {
         // raw ptr <-> strict_not_null
@@ -66,7 +79,7 @@ TEST_CASE("TestStrictNotNull")
         helper(snn1);
         helper_const(snn1);
 
-        CHECK(*snn1 == 42);
+        EXPECT_TRUE(*snn1 == 42);
     }
 
     {
@@ -80,7 +93,7 @@ TEST_CASE("TestStrictNotNull")
         strict_helper_const(snn1);
         strict_helper_const(snn2);
 
-        CHECK(snn1 == snn2);
+        EXPECT_TRUE(snn1 == snn2);
     }
 
     {
@@ -95,8 +108,8 @@ TEST_CASE("TestStrictNotNull")
         helper(snn);
         helper_const(snn);
 
-        CHECK(snn == nn1);
-        CHECK(snn == nn2);
+        EXPECT_TRUE(snn == nn1);
+        EXPECT_TRUE(snn == nn2);
     }
 
     {
@@ -111,16 +124,16 @@ TEST_CASE("TestStrictNotNull")
         strict_helper(nn);
         strict_helper_const(nn);
 
-        CHECK(snn1 == nn);
-        CHECK(snn2 == nn);
+        EXPECT_TRUE(snn1 == nn);
+        EXPECT_TRUE(snn2 == nn);
 
         std::hash<strict_not_null<int*>> hash_snn;
         std::hash<not_null<int*>> hash_nn;
 
-        CHECK(hash_nn(snn1) == hash_nn(nn));
-        CHECK(hash_snn(snn1) == hash_nn(nn));
-        CHECK(hash_nn(snn1) == hash_nn(snn2));
-        CHECK(hash_snn(snn1) == hash_snn(nn));
+        EXPECT_TRUE(hash_nn(snn1) == hash_nn(nn));
+        EXPECT_TRUE(hash_snn(snn1) == hash_nn(nn));
+        EXPECT_TRUE(hash_nn(snn1) == hash_nn(snn2));
+        EXPECT_TRUE(hash_snn(snn1) == hash_snn(nn));
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -131,10 +144,18 @@ TEST_CASE("TestStrictNotNull")
 }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
-
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
+namespace
 {
+static constexpr char deathstring[] = "Expected Death";
+}
+
+TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
+{
+    std::set_terminate([] {
+        std::cerr << "Expected Death. TestStrictNotNullConstructorTypeDeduction";
+        std::abort();
+    });
+
     {
         int i = 42;
 
@@ -142,7 +163,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
         helper(strict_not_null{&i});
         helper_const(strict_not_null{&i});
 
-        CHECK(*x == 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -153,7 +174,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
         helper(strict_not_null{p});
         helper_const(strict_not_null{p});
 
-        CHECK(*x == 42);
+        EXPECT_TRUE(*x == 42);
     }
 
     {
@@ -161,7 +182,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
             int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
@@ -169,14 +190,14 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
             const int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        CHECK_THROWS_AS(workaround_macro(), fail_fast);
+        EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
     {
         int* p = nullptr;
 
-        CHECK_THROWS_AS(helper(strict_not_null{p}), fail_fast);
-        CHECK_THROWS_AS(helper_const(strict_not_null{p}), fail_fast);
+        EXPECT_DEATH(helper(strict_not_null{p}), deathstring);
+        EXPECT_DEATH(helper_const(strict_not_null{p}), deathstring);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -191,3 +212,7 @@ TEST_CASE("TestStrictNotNullConstructorTypeDeduction")
 
 static_assert(std::is_nothrow_move_constructible<strict_not_null<void*>>::value,
               "strict_not_null must be no-throw move constructible");
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif // __clang__ || __GNUC__

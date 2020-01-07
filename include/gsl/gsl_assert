@@ -18,7 +18,6 @@
 #define GSL_CONTRACTS_H
 
 #include <exception>
-#include <stdexcept> // for logic_error
 
 //
 // make suppress attributes parse for some compilers
@@ -48,19 +47,6 @@
 #pragma clang diagnostic ignored "-Winvalid-noreturn"
 #endif
 
-#endif
-
-//
-// There are three configuration options for this GSL implementation's behavior
-// when pre/post conditions on the GSL types are violated:
-//
-// 1. GSL_TERMINATE_ON_CONTRACT_VIOLATION: std::terminate will be called (default)
-// 2. GSL_THROW_ON_CONTRACT_VIOLATION: a gsl::fail_fast exception will be thrown
-// 3. GSL_UNENFORCED_ON_CONTRACT_VIOLATION: nothing happens
-//
-#if !(defined(GSL_THROW_ON_CONTRACT_VIOLATION) || defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION) ||  \
-      defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION))
-#define GSL_TERMINATE_ON_CONTRACT_VIOLATION
 #endif
 
 #define GSL_STRINGIFY_DETAIL(x) #x
@@ -94,10 +80,6 @@
 
 namespace gsl
 {
-struct fail_fast : public std::logic_error
-{
-    explicit fail_fast(char const* const message) : std::logic_error(message) {}
-};
 
 namespace details
 {
@@ -128,44 +110,20 @@ namespace details
 #endif
     }
 
-#if defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
-
     template <typename Exception>
+    [[deprecated("GSL no longer supports throwing for contract violations. Use gsl::details::terminate() instead.")]]
     [[noreturn]] void throw_exception(Exception&&) noexcept
     {
         gsl::details::terminate();
     }
 
-#else
-
-    template <typename Exception>
-    [[noreturn]] void throw_exception(Exception&& exception)
-    {
-        throw std::forward<Exception>(exception);
-    }
-
-#endif // GSL_TERMINATE_ON_CONTRACT_VIOLATION
 
 } // namespace details
 } // namespace gsl
 
-#if defined(GSL_THROW_ON_CONTRACT_VIOLATION)
-
-#define GSL_CONTRACT_CHECK(type, cond)                                                             \
-    (GSL_LIKELY(cond) ? static_cast<void>(0)                                                       \
-                      : gsl::details::throw_exception(gsl::fail_fast(                              \
-                            "GSL: " type " failure at " __FILE__ ": " GSL_STRINGIFY(__LINE__))))
-
-#elif defined(GSL_TERMINATE_ON_CONTRACT_VIOLATION)
 
 #define GSL_CONTRACT_CHECK(type, cond)                                                             \
     (GSL_LIKELY(cond) ? static_cast<void>(0) : gsl::details::terminate())
-
-#elif defined(GSL_UNENFORCED_ON_CONTRACT_VIOLATION)
-
-#define GSL_CONTRACT_CHECK(type, cond) GSL_ASSUME(cond)
-
-#endif // GSL_THROW_ON_CONTRACT_VIOLATION
 
 #define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
 #define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)

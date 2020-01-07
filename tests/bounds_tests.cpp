@@ -24,17 +24,22 @@
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, TEST_CASE
+//disable warnings from gtest
+#pragma GCC diagnostic ignored "-Wundef"
+#endif // __clang__ || __GNUC__
+
+#if __clang__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif // __clang__
+
+#include <gtest/gtest.h>
 
 #include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t
 
 #include <cstddef> // for ptrdiff_t, size_t
-
-namespace gsl {
-struct fail_fast;
-}  // namespace gsl
 
 using namespace std;
 using namespace gsl;
@@ -44,8 +49,7 @@ namespace
 void use(std::ptrdiff_t&) {}
 }
 
-GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
-TEST_CASE("basic_bounds")
+TEST(bounds_tests, basic_bounds)
 {
     for (auto point : static_bounds<dynamic_range, 3, 4>{2}) {
         for (decltype(point)::size_type j = 0;
@@ -57,9 +61,7 @@ TEST_CASE("basic_bounds")
     }
 }
 
-GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("bounds_basic")
+TEST(bounds_tests, bounds_basic)
 {
     static_bounds<3, 4, 5> b;
     const auto a = b.slice();
@@ -68,9 +70,7 @@ TEST_CASE("bounds_basic")
     x.slice().slice();
 }
 
-GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("arrayview_iterator")
+TEST(bounds_tests, arrayview_iterator)
 {
     static_bounds<4, dynamic_range, 2> bounds{3};
 
@@ -88,8 +88,7 @@ TEST_CASE("arrayview_iterator")
 #endif
 }
 
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
-TEST_CASE("bounds_convertible")
+TEST(bounds_tests, bounds_convertible)
 {
     static_bounds<7, 4, 2> b1;
     static_bounds<7, dynamic_range, 2> b2 = b1;
@@ -102,18 +101,21 @@ TEST_CASE("bounds_convertible")
     static_bounds<7, 4, 2> b4 = b3;
     (void) b4;
 
-    static_bounds<dynamic_range> b11;
-
     static_bounds<dynamic_range> b5;
     static_bounds<34> b6;
 
+    std::set_terminate([] {
+        std::cerr << "Expected Death. bounds_convertible";
+        std::abort();
+    });
+
     b5 = static_bounds<20>();
-    CHECK_THROWS_AS(b6 = b5, fail_fast);
+    EXPECT_DEATH(b6 = b5, ".*");
     b5 = static_bounds<34>();
     b6 = b5;
 
-    CHECK(b5 == b6);
-    CHECK(b5.size() == b6.size());
+    EXPECT_TRUE(b5 == b6);
+    EXPECT_TRUE(b5.size() == b6.size());
 }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -122,4 +124,4 @@ copy(src_span_static, dst_span_static);
 
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
-#endif
+#endif // __clang__ || __GNUC__

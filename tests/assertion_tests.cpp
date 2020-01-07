@@ -20,22 +20,31 @@
 #pragma warning(disable : 26440 26426) // from catch
 #endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, CHECK...
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
+#endif // __clang__ || __GNUC__
 
+#if __clang__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif // __clang__
+
+#include <gtest/gtest.h>
 #include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
 
 using namespace gsl;
+
+namespace
+{
+static constexpr char deathstring[] = "Expected Death";
 
 int f(int i)
 {
     Expects(i > 0 && i < 10);
     return i;
-}
-
-TEST_CASE("expects")
-{
-    CHECK(f(2) == 2);
-    CHECK_THROWS_AS(f(10), fail_fast);
 }
 
 int g(int i)
@@ -44,9 +53,31 @@ int g(int i)
     Ensures(i > 0 && i < 10);
     return i;
 }
+} // namespace
 
-TEST_CASE("ensures")
+TEST(assertion_tests, expects)
 {
-    CHECK(g(2) == 3);
-    CHECK_THROWS_AS(g(9), fail_fast);
+    std::set_terminate([] {
+        std::cerr << "Expected Death. expects";
+        std::abort();
+    });
+
+    EXPECT_TRUE(f(2) == 2);
+    EXPECT_DEATH(f(10), deathstring);
 }
+
+
+TEST(assertion_tests, ensures)
+{
+    std::set_terminate([] {
+        std::cerr << "Expected Death. ensures";
+        std::abort();
+    });
+
+    EXPECT_TRUE(g(2) == 3);
+    EXPECT_DEATH(g(9), deathstring);
+}
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif // __clang__ || __GNUC__

@@ -17,10 +17,22 @@
 #ifdef _MSC_VER
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426) // from catch
-#endif
+#pragma warning(disable : 26440 26426)
+#endif // _MSC_VER
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
+#endif // __clang__ || __GNUC__
+
+#if __clang__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif // __clang__
+
+#include <gtest/gtest.h>
 
 #include <gsl/gsl_byte> // for to_byte, to_integer, byte, operator&, ope...
 
@@ -29,104 +41,103 @@ using namespace gsl;
 
 namespace
 {
-TEST_CASE("construction")
-{
-    {
-        const byte b = static_cast<byte>(4);
-        CHECK(static_cast<unsigned char>(b) == 4);
-    }
-
-    GSL_SUPPRESS(es.49)
-    {
-        const byte b = byte(12);
-        CHECK(static_cast<unsigned char>(b) == 12);
-    }
-
-    {
-        const byte b = to_byte<12>();
-        CHECK(static_cast<unsigned char>(b) == 12);
-    }
-    {
-        const unsigned char uc = 12;
-        const byte b = to_byte(uc);
-        CHECK(static_cast<unsigned char>(b) == 12);
-    }
-
-#if defined(__cplusplus) && (__cplusplus >= 201703L)
-    {
-        const byte b { 14 };
-        CHECK(static_cast<unsigned char>(b) == 14);
-    }
-#endif
-}
-
-TEST_CASE("bitwise_operations")
-{
-    const byte b = to_byte<0xFF>();
-
-    byte a = to_byte<0x00>();
-    CHECK((b | a) == to_byte<0xFF>());
-    CHECK(a == to_byte<0x00>());
-
-    a |= b;
-    CHECK(a == to_byte<0xFF>());
-
-    a = to_byte<0x01>();
-    CHECK((b & a) == to_byte<0x01>());
-
-    a &= b;
-    CHECK(a == to_byte<0x01>());
-
-    CHECK((b ^ a) == to_byte<0xFE>());
-
-    CHECK(a == to_byte<0x01>());
-    a ^= b;
-    CHECK(a == to_byte<0xFE>());
-
-    a = to_byte<0x01>();
-    CHECK(~a == to_byte<0xFE>());
-
-    a = to_byte<0xFF>();
-    CHECK((a << 4) == to_byte<0xF0>());
-    CHECK((a >> 4) == to_byte<0x0F>());
-
-    a <<= 4;
-    CHECK(a == to_byte<0xF0>());
-    a >>= 4;
-    CHECK(a == to_byte<0x0F>());
-}
-
-TEST_CASE("to_integer")
-{
-    const byte b = to_byte<0x12>();
-
-    CHECK(0x12 == gsl::to_integer<char>(b));
-    CHECK(0x12 == gsl::to_integer<short>(b));
-    CHECK(0x12 == gsl::to_integer<long>(b));
-    CHECK(0x12 == gsl::to_integer<long long>(b));
-
-    CHECK(0x12 == gsl::to_integer<unsigned char>(b));
-    CHECK(0x12 == gsl::to_integer<unsigned short>(b));
-    CHECK(0x12 == gsl::to_integer<unsigned long>(b));
-    CHECK(0x12 == gsl::to_integer<unsigned long long>(b));
-
-    //      CHECK(0x12 == gsl::to_integer<float>(b));   // expect compile-time error
-    //      CHECK(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
-}
-
-int modify_both(gsl::byte & b, int& i)
+int modify_both(gsl::byte& b, int& i)
 {
     i = 10;
     b = to_byte<5>();
     return i;
 }
 
-GSL_SUPPRESS(type.1)
-TEST_CASE("aliasing")
+TEST(byte_tests, construction)
+{
+    {
+        const byte b = static_cast<byte>(4);
+        EXPECT_TRUE(static_cast<unsigned char>(b) == 4);
+    }
+
+    GSL_SUPPRESS(es.49)
+    {
+        const byte b = byte(12);
+        EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
+    }
+
+    {
+        const byte b = to_byte<12>();
+        EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
+    }
+    {
+        const unsigned char uc = 12;
+        const byte b = to_byte(uc);
+        EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
+    }
+
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+    {
+        const byte b { 14 };
+        EXPECT_TRUE(static_cast<unsigned char>(b) == 14);
+    }
+#endif
+}
+
+TEST(byte_tests, bitwise_operations)
+{
+    const byte b = to_byte<0xFF>();
+
+    byte a = to_byte<0x00>();
+    EXPECT_TRUE((b | a) == to_byte<0xFF>());
+    EXPECT_TRUE(a == to_byte<0x00>());
+
+    a |= b;
+    EXPECT_TRUE(a == to_byte<0xFF>());
+
+    a = to_byte<0x01>();
+    EXPECT_TRUE((b & a) == to_byte<0x01>());
+
+    a &= b;
+    EXPECT_TRUE(a == to_byte<0x01>());
+
+    EXPECT_TRUE((b ^ a) == to_byte<0xFE>());
+
+    EXPECT_TRUE(a == to_byte<0x01>());
+    a ^= b;
+    EXPECT_TRUE(a == to_byte<0xFE>());
+
+    a = to_byte<0x01>();
+    EXPECT_TRUE(~a == to_byte<0xFE>());
+
+    a = to_byte<0xFF>();
+    EXPECT_TRUE((a << 4) == to_byte<0xF0>());
+    EXPECT_TRUE((a >> 4) == to_byte<0x0F>());
+
+    a <<= 4;
+    EXPECT_TRUE(a == to_byte<0xF0>());
+    a >>= 4;
+    EXPECT_TRUE(a == to_byte<0x0F>());
+}
+
+TEST(byte_tests, to_integer)
+{
+    const byte b = to_byte<0x12>();
+
+    EXPECT_TRUE(0x12 == gsl::to_integer<char>(b));
+    EXPECT_TRUE(0x12 == gsl::to_integer<short>(b));
+    EXPECT_TRUE(0x12 == gsl::to_integer<long>(b));
+    EXPECT_TRUE(0x12 == gsl::to_integer<long long>(b));
+
+    EXPECT_TRUE(0x12 == gsl::to_integer<unsigned char>(b));
+    EXPECT_TRUE(0x12 == gsl::to_integer<unsigned short>(b));
+    EXPECT_TRUE(0x12 == gsl::to_integer<unsigned long>(b));
+    EXPECT_TRUE(0x12 == gsl::to_integer<unsigned long long>(b));
+
+    //      EXPECT_TRUE(0x12 == gsl::to_integer<float>(b));   // expect compile-time error
+    //      EXPECT_TRUE(0x12 == gsl::to_integer<double>(b));  // expect compile-time error
+}
+
+TEST(byte_tests, aliasing)
 {
     int i{0};
     const int res = modify_both(reinterpret_cast<byte&>(i), i);
-    CHECK(res == i);
+    EXPECT_TRUE(res == i);
 }
 
 }
@@ -134,3 +145,7 @@ TEST_CASE("aliasing")
 #ifdef CONFIRM_COMPILATION_ERRORS
 copy(src_span_static, dst_span_static);
 #endif
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif // __clang__ || __GNUC__

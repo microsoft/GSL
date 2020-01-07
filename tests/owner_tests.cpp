@@ -21,7 +21,19 @@
 
 #endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK, TEST_...
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
+#endif // __clang__ || __GNUC__
+
+#if __clang__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif // __clang__
+
+#include <gtest/gtest.h>
 
 #include <gsl/pointers> // for owner
 
@@ -30,19 +42,16 @@ using namespace gsl;
 GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
 void f(int* i) { *i += 1; }
 
-GSL_SUPPRESS(r.11) // NO-FORMAT: attribute
-GSL_SUPPRESS(r.3) // NO-FORMAT: attribute // TODO: false positive
-GSL_SUPPRESS(r.5) // NO-FORMAT: attribute
-TEST_CASE("basic_test")
+TEST(owner_tests, basic_test)
 {
     owner<int*> p = new int(120);
-    CHECK(*p == 120);
+    EXPECT_TRUE(*p == 120);
     f(p);
-    CHECK(*p == 121);
+    EXPECT_TRUE(*p == 121);
     delete p;
 }
 
-TEST_CASE("check_pointer_constraint")
+TEST(owner_tests, check_pointer_constraint)
 {
     #ifdef CONFIRM_COMPILATION_ERRORS
     {
@@ -51,3 +60,7 @@ TEST_CASE("check_pointer_constraint")
     }
     #endif
 }
+
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif // __clang__ || __GNUC__

@@ -20,7 +20,19 @@
 #pragma warning(disable : 26440 26426) // from catch
 #endif
 
-#include <catch/catch.hpp> // for AssertionHandler, StringRef, CHECK_THROW...
+#if __clang__ || __GNUC__
+//disable warnings from gtest
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wundef"
+#endif // __clang__ || __GNUC__
+
+#if __clang__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif // __clang__
+
+#include <gtest/gtest.h>
 
 #include <gsl/gsl_util> // for at
 
@@ -29,88 +41,95 @@
 #include <initializer_list> // for initializer_list
 #include <vector>           // for vector
 
+namespace
+{
+    static constexpr char deathstring[] = "Expected Death";
+}
 
-namespace gsl {
-struct fail_fast;
-}  // namespace gsl
-
-using gsl::fail_fast;
-
-GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-TEST_CASE("static_array")
+TEST(at_tests, static_array)
 {
     int a[4] = {1, 2, 3, 4};
     const int(&c_a)[4] = a;
 
     for (int i = 0; i < 4; ++i) {
-        CHECK(&gsl::at(a, i) == &a[i]);
-        CHECK(&gsl::at(c_a, i) == &a[i]);
+        EXPECT_TRUE(&gsl::at(a, i) == &a[i]);
+        EXPECT_TRUE(&gsl::at(c_a, i) == &a[i]);
     }
 
-    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
-    CHECK_THROWS_AS(gsl::at(c_a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
+    std::set_terminate([] {
+        std::cerr << "Expected Death. static_array";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(a, 4), deathstring);
+    EXPECT_DEATH(gsl::at(c_a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(c_a, 4), deathstring);
 }
 
-GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-TEST_CASE("std_array")
+TEST(at_tests, std_array)
 {
     std::array<int, 4> a = {1, 2, 3, 4};
     const std::array<int, 4>& c_a = a;
 
     for (int i = 0; i < 4; ++i) {
-        CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
-        CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
-    CHECK_THROWS_AS(gsl::at(c_a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
+    std::set_terminate([] {
+        std::cerr << "Expected Death. std_array";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(a, 4), deathstring);
+    EXPECT_DEATH(gsl::at(c_a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(c_a, 4), deathstring);
 }
 
-GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-TEST_CASE("StdVector")
+TEST(at_tests, std_vector)
 {
     std::vector<int> a = {1, 2, 3, 4};
     const std::vector<int>& c_a = a;
 
     for (int i = 0; i < 4; ++i) {
-        CHECK(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
-        CHECK(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
-    CHECK_THROWS_AS(gsl::at(c_a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(c_a, 4), fail_fast);
+    std::set_terminate([] {
+        std::cerr << "Expected Death. std_vector";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(a, 4), deathstring);
+    EXPECT_DEATH(gsl::at(c_a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(c_a, 4), deathstring);
 }
 
-GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-TEST_CASE("InitializerList")
+TEST(at_tests, InitializerList)
 {
     const std::initializer_list<int> a = {1, 2, 3, 4};
 
     for (int i = 0; i < 4; ++i) {
-        CHECK(gsl::at(a, i) == i + 1);
-        CHECK(gsl::at({1, 2, 3, 4}, i) == i + 1);
+        EXPECT_TRUE(gsl::at(a, i) == i + 1);
+        EXPECT_TRUE(gsl::at({1, 2, 3, 4}, i) == i + 1);
     }
 
-    CHECK_THROWS_AS(gsl::at(a, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at(a, 4), fail_fast);
-    CHECK_THROWS_AS(gsl::at({1, 2, 3, 4}, -1), fail_fast);
-    CHECK_THROWS_AS(gsl::at({1, 2, 3, 4}, 4), fail_fast);
+    std::set_terminate([] {
+        std::cerr << "Expected Death. InitializerList";
+        std::abort();
+    });
+
+    EXPECT_DEATH(gsl::at(a, -1), deathstring);
+    EXPECT_DEATH(gsl::at(a, 4), deathstring);
+    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, -1), deathstring);
+    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), deathstring);
 }
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
-GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
-GSL_SUPPRESS(con.4) // NO-FORMAT: attribute
 static constexpr bool test_constexpr()
 {
     int a1[4] = {1, 2, 3, 4};
@@ -133,3 +152,6 @@ static constexpr bool test_constexpr()
 static_assert(test_constexpr(), "FAIL");
 #endif
 
+#if __clang__ || __GNUC__
+#pragma GCC diagnostic pop
+#endif // __clang__ || __GNUC__
