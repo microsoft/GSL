@@ -164,67 +164,67 @@ namespace details
             return span_->data() + index_;
         }
 
-        constexpr span_iterator& operator++()
+        constexpr span_iterator& operator++() noexcept
         {
             Expects(0 <= index_ && index_ != span_->size());
             ++index_;
             return *this;
         }
 
-        constexpr span_iterator operator++(int)
+        constexpr span_iterator operator++(int) noexcept
         {
             auto ret = *this;
             ++(*this);
             return ret;
         }
 
-        constexpr span_iterator& operator--()
+        constexpr span_iterator& operator--() noexcept
         {
             Expects(index_ != 0 && index_ <= span_->size());
             --index_;
             return *this;
         }
 
-        constexpr span_iterator operator--(int)
+        constexpr span_iterator operator--(int) noexcept
         {
             auto ret = *this;
             --(*this);
             return ret;
         }
 
-        constexpr span_iterator operator+(difference_type n) const
+        constexpr span_iterator operator+(difference_type n) const noexcept
         {
             auto ret = *this;
             return ret += n;
         }
 
-        friend constexpr span_iterator operator+(difference_type n, span_iterator const& rhs)
+        friend constexpr span_iterator operator+(difference_type n, span_iterator const& rhs) noexcept
         {
             return rhs + n;
         }
 
-        constexpr span_iterator& operator+=(difference_type n)
+        constexpr span_iterator& operator+=(difference_type n) noexcept
         {
             Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
             index_ += n;
             return *this;
         }
 
-        constexpr span_iterator operator-(difference_type n) const
+        constexpr span_iterator operator-(difference_type n) const noexcept
         {
             auto ret = *this;
             return ret -= n;
         }
 
-        constexpr span_iterator& operator-=(difference_type n) { return *this += -n; }
+        constexpr span_iterator& operator-=(difference_type n) noexcept { return *this += -n; }
 
-        constexpr difference_type operator-(span_iterator rhs) const
+        constexpr difference_type operator-(span_iterator rhs) const noexcept
         {
             Expects(span_ == rhs.span_);
             return index_ - rhs.index_;
         }
 
-        constexpr reference operator[](difference_type n) const { return *(*this + n); }
+        constexpr reference operator[](difference_type n) const noexcept { return *(*this + n); }
 
         constexpr friend bool operator==(span_iterator lhs, span_iterator rhs) noexcept
         {
