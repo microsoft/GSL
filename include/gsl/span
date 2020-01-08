@@ -383,9 +383,9 @@ public:
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}
 
-    constexpr span(pointer ptr, index_type count) : storage_(ptr, count) {}
+    constexpr span(pointer ptr, index_type count) noexcept: storage_(ptr, count) {}
 
-    constexpr span(pointer firstElem, pointer lastElem)
+    constexpr span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, std::distance(firstElem, lastElem))
     {}
 
@@ -424,7 +424,7 @@ public:
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
-    constexpr span(Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
+    constexpr span(Container& cont) noexcept : span(cont.data(), narrow<index_type>(cont.size()))
     {}
 
     template <class Container,
@@ -433,7 +433,7 @@ public:
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
-    constexpr span(const Container& cont) : span(cont.data(), narrow<index_type>(cont.size()))
+    constexpr span(const Container& cont) noexcept : span(cont.data(), narrow<index_type>(cont.size()))
     {}
 
     constexpr span(const span& other) noexcept = default;
@@ -443,7 +443,7 @@ public:
         class = std::enable_if_t<
             details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
-    constexpr span(const span<OtherElementType, OtherExtent>& other)
+    constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
     {}
 
@@ -452,7 +452,7 @@ public:
 
     // [span.sub], span subviews
     template <std::ptrdiff_t Count>
-    constexpr span<element_type, Count> first() const
+    constexpr span<element_type, Count> first() const noexcept
     {
         Expects(Count >= 0 && Count <= size());
         return {data(), Count};
@@ -460,7 +460,7 @@ public:
 
     template <std::ptrdiff_t Count>
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-    constexpr span<element_type, Count> last() const
+    constexpr span<element_type, Count> last() const noexcept
     {
         Expects(Count >= 0 && size() - Count >= 0);
         return {data() + (size() - Count), Count};
@@ -468,7 +468,7 @@ public:
 
     template <std::ptrdiff_t Offset, std::ptrdiff_t Count = dynamic_extent>
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-    constexpr auto subspan() const ->
+    constexpr auto subspan() const noexcept ->
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((Offset >= 0 && size() - Offset >= 0) &&
@@ -477,19 +477,19 @@ public:
         return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
 
-    constexpr span<element_type, dynamic_extent> first(index_type count) const
+    constexpr span<element_type, dynamic_extent> first(index_type count) const noexcept
     {
         Expects(count >= 0 && count <= size());
         return {data(), count};
     }
 
-    constexpr span<element_type, dynamic_extent> last(index_type count) const
+    constexpr span<element_type, dynamic_extent> last(index_type count) const noexcept
     {
         return make_subspan(size() - count, dynamic_extent, subspan_selector<Extent>{});
     }
 
     constexpr span<element_type, dynamic_extent> subspan(index_type offset,
-                                                         index_type count = dynamic_extent) const
+                                                         index_type count = dynamic_extent) const noexcept
     {
         return make_subspan(offset, count, subspan_selector<Extent>{});
     }
@@ -504,14 +504,14 @@ public:
 
     // [span.elem], span element access
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-    constexpr reference operator[](index_type idx) const
+    constexpr reference operator[](index_type idx) const noexcept
     {
         Expects(CheckRange(idx, storage_.size()));
         return data()[idx];
     }
 
-    constexpr reference at(index_type idx) const { return this->operator[](idx); }
-    constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
+    constexpr reference at(index_type idx) const noexcept{ return this->operator[](idx); }
+    constexpr reference operator()(index_type idx) const noexcept{ return this->operator[](idx); }
     constexpr pointer data() const noexcept { return storage_.data(); }
 
     // [span.iter], span iterator support
