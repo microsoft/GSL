@@ -18,7 +18,7 @@
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
 #pragma warning(disable : 26440 26426 26497 4189 4996)
-#endif 
+#endif
 
 #if __clang__ || __GNUC__
 //disable warnings from gtest
