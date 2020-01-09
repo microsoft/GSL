@@ -513,13 +513,13 @@ public:
     constexpr reference at(index_type idx) const { return this->operator[](idx); }
     constexpr reference operator()(index_type idx) const { return this->operator[](idx); }
 
-    constexpr reference front() const
+    constexpr reference front() const noexcept
     {
         Expects(size() > 0);
         return data()[0];
     }
 
-    constexpr reference back() const
+    constexpr reference back() const noexcept
     {
         Expects(size() > 0);
         return data()[size() - 1];
