@@ -22,101 +22,42 @@ matrix:
     # so leave this first for the overall build to be faster
     ##########################################################################
 
-    # XCode 8.3
-    - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode8.3
-      compiler: clang
-
-    - env: COMPILER=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode8.3
-      compiler: clang
-
     # XCode 9.1
     - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode9.1
+      osx_image: xcode9.4.1
       compiler: clang
 
     - env: COMPILER=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode9.1
+      osx_image: xcode9.4.1
+      compiler: clang
+
+    # XCode 10.3
+    - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3
+      compiler: clang
+
+    - env: COMPILER=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3
+      compiler: clang
+
+    # XCode 11.3
+    - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode11.3
+      compiler: clang
+
+    - env: COMPILER=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode11.3
       compiler: clang
 
     ##########################################################################
     # Clang on Linux
     ##########################################################################
-
-    # Clang 3.6
-    - env: COMPILER=clang++-3.6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang36
-        apt:
-          packages:
-            - clang-3.6
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
-
-    - env: COMPILER=clang++-3.6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang36
-
-    # Clang 3.7
-    - env: COMPILER=clang++-3.7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang37
-        apt:
-          packages:
-            - clang-3.7
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-
-    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang37
-
-    # Clang 3.8
-    - env: COMPILER=clang++-3.8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang38
-        apt:
-          packages:
-            - clang-3.8
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-
-    - env: COMPILER=clang++-3.8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang38
-
-    # Clang 3.9
-    - env: COMPILER=clang++-3.9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang39
-        apt:
-          packages:
-            - clang-3.9
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
-
-    - env: COMPILER=clang++-3.9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang39
-
-    # Clang 4.0
-    - env: COMPILER=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang40
-        apt:
-          packages:
-            - clang-4.0
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-4.0
-
-    - env: COMPILER=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang40
 
     # Clang 5.0
     - env: COMPILER=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
@@ -222,7 +163,7 @@ matrix:
     - env: COMPILER=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *gcc7
 
-    # GCC 7 c++17 
+    # GCC 7 c++17
     - env: COMPILER=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       addons: *gcc7
 
@@ -288,7 +229,7 @@ before_script:
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build && cd build
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGSL_CXX_STANDARD=$GSL_CXX_STANDARD
-  
+
 script:
   # build and run tests
   - cmake --build . -- -j${JOBS}
