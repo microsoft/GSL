@@ -34,7 +34,9 @@
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#if __clang_major__ > 4
 #pragma GCC diagnostic ignored "-Winconsistent-missing-destructor-override"
+#endif // __clang_major__ > 4
 #endif // __clang__
 
 #include <gtest/gtest.h>

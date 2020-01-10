@@ -32,7 +32,9 @@
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
 #pragma GCC diagnostic ignored "-Wused-but-marked-unused"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#if __clang_major__ > 4
 #pragma GCC diagnostic ignored "-Winconsistent-missing-destructor-override"
+#endif // __clang_major__ > 4
 #endif // __clang__
 
 #include <gtest/gtest.h>
@@ -1088,28 +1090,28 @@ TEST(span_test, from_array_constructor)
  {
      int a[] = {1, 2, 3, 4};
      span<int> s{a};
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.begin()), decltype(begin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.end()), decltype(end(s))>::value));
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.cbegin()), decltype(cbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.cend()), decltype(cend(s))>::value));
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.rbegin()), decltype(rbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.rend()), decltype(rend(s))>::value));
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.crbegin()), decltype(crbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.crend()), decltype(crend(s))>::value));
- 
+
      EXPECT_TRUE(s.begin() == begin(s));
      EXPECT_TRUE(s.end() == end(s));
- 
+
      EXPECT_TRUE(s.cbegin() == cbegin(s));
      EXPECT_TRUE(s.cend() == cend(s));
- 
+
      EXPECT_TRUE(s.rbegin() == rbegin(s));
      EXPECT_TRUE(s.rend() == rend(s));
- 
+
      EXPECT_TRUE(s.crbegin() == crbegin(s));
      EXPECT_TRUE(s.crend() == crend(s));
  }
@@ -1118,7 +1120,7 @@ TEST(span_test, from_array_constructor)
  {
      int a[] = {1, 2, 3, 4};
      span<int> s{a};
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.size()), decltype(ssize(s))>::value));
      EXPECT_TRUE(s.size() == ssize(s));
  }
