@@ -17,8 +17,7 @@
 #ifdef _MSC_VER
 // blanket turn off warnings from CppCoreCheck from catch
 // so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426 26497 4189) // from catch
-
+#pragma warning(disable : 26440 26426 26497 4189 4996)
 #endif
 
 #if __clang__ || __GNUC__
@@ -26,6 +25,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wundef"
 #pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif // __clang__ || __GNUC__
 
 #if __clang__
