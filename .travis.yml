@@ -7,7 +7,7 @@ notifications:
 
 # Use Linux unless specified otherwise
 os: linux
-dist: trusty
+dist: bionic
 
 cache:
   directories:
@@ -58,6 +58,20 @@ matrix:
     ##########################################################################
     # Clang on Linux
     ##########################################################################
+    # Clang 4.0
+
+    - env: COMPILER=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang40
+        apt:
+          packages:
+            - clang-4.0
+            - g++-5
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-4.0
+
+    - env: COMPILER=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang40
 
     # Clang 5.0
     - env: COMPILER=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
@@ -115,7 +129,6 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-7
 
-
     - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang70
 
@@ -125,6 +138,46 @@ matrix:
 
     - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang70
+
+    # Clang 8.0
+    - env: COMPILER=clang++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang80
+        apt:
+          packages:
+            - clang-8
+            - g++-8
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-8
+
+    - env: COMPILER=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang80
+
+    - env: COMPILER=clang++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang80
+
+    - env: COMPILER=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang80
+
+    # Clang 9.0
+    - env: COMPILER=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang90
+        apt:
+          packages:
+            - clang-9
+            - g++-9
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-9
+
+    - env: COMPILER=clang++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang90
+
+    - env: COMPILER=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang90
+
+    - env: COMPILER=clang++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang90
 
     ##########################################################################
     # GCC on Linux
@@ -204,11 +257,6 @@ install:
     LLVM_INSTALL=${DEPS_DIR}/llvm/install
     # if in linux and compiler clang and llvm not installed
     if [[ "${TRAVIS_OS_NAME}" == "linux" && "${CXX%%+*}" == "clang" && -n "$(ls -A ${LLVM_INSTALL})" ]]; then
-      if   [[ "${CXX}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2";
-      elif [[ "${CXX}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.1";
-      elif [[ "${CXX}" == "clang++-3.8" ]]; then LLVM_VERSION="3.8.1";
-      elif [[ "${CXX}" == "clang++-3.9" ]]; then LLVM_VERSION="3.9.1";
-      fi
       LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
       LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
       LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
