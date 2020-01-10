@@ -30,15 +30,23 @@ matrix:
       os: osx
       osx_image: xcode8.3
 
-    # XCode 9.1
-    - name: AppleClang Xcode-9.1 C++14 Debug
+    # XCode 9.0 earliest C++17 support
+    - name: AppleClang Xcode-9.0 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode9 # AppleClang 9.1.0 same compiler in Xcode 9.0, 9.1 and 9.2
+    - name: AppleClang Xcode-9.0 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode9
+    - name: AppleClang Xcode-9.0 C++14 Debug
       env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode9.1 # AppleClang 9.1.0 same compiler in Xcode 9.0, 9.1 and 9.2
-    - name: AppleClang Xcode-9.1 C++14 Release
+      osx_image: xcode9
+    - name: AppleClang Xcode-9.0 C++14 Release
       env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode9.1
+      osx_image: xcode9
 
     # XCode 9.4
     - name: AppleClang Xcode-9.4 C++14 Debug
@@ -47,6 +55,14 @@ matrix:
       osx_image: xcode9.4 # AppleClang 9.1.0 same compiler as Xcode 9.3
     - name: AppleClang Xcode-9.4 C++14 Release
       env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode9.4
+    - name: AppleClang Xcode-9.4 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode9.4
+    - name: AppleClang Xcode-9.4 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
       os: osx
       osx_image: xcode9.4
 
@@ -59,6 +75,14 @@ matrix:
       env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode10.1
+    - name: AppleClang Xcode-10.1 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.1
+    - name: AppleClang Xcode-10.1 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.1
 
     # XCode 10.3
     - name: AppleClang Xcode-10.3 C++14 Debug
@@ -67,6 +91,14 @@ matrix:
       osx_image: xcode10.3 # AppleClang 10.0.1 same compiler as Xcode 10.2
     - name: AppleClang Xcode-10.3 C++14 Release
       env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3
+    - name: AppleClang Xcode-10.3 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.3
+    - name: AppleClang Xcode-10.3 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
       os: osx
       osx_image: xcode10.3
 
