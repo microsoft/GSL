@@ -509,13 +509,27 @@ public:
         Expects(CheckRange(idx, storage_.size()));
         return data()[idx];
     }
+
+    constexpr reference front() const noexcept
+    {
+        Expects(size() > 0);
+        return data()[0];
+    }
+
+    constexpr reference back() const noexcept
+    {
+        Expects(size() > 0);
+        return data()[size() - 1];
+    }
     
     // at and operator() are deprecated to align to the public member functions of std::span
     [[deprecated("Use operator[]")]]
     constexpr reference at(index_type idx) const noexcept{ return this->operator[](idx); }
     [[deprecated("Use operator[]")]]
     constexpr reference operator()(index_type idx) const noexcept{ return this->operator[](idx); }
-    
+
+
+
     constexpr pointer data() const noexcept { return storage_.data(); }
 
     // [span.iter], span iterator support

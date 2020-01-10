@@ -1683,6 +1683,22 @@ TEST(span_test, from_array_constructor)
      EXPECT_FALSE((std::is_default_constructible<span<int, 42>>::value));
  }
 
+ TEST(span_test, front_back)
+ {
+    int arr[5] = {1,2,3,4,5};
+    span<int> s{arr};
+    EXPECT_TRUE(s.front() == 1);
+    EXPECT_TRUE(s.back() == 5);
+
+    std::set_terminate([] {
+        std::cerr << "Expected Death. front_back";
+        std::abort();
+    });
+    span<int> s2;
+    EXPECT_DEATH(s2.front(), deathstring);
+    EXPECT_DEATH(s2.back(), deathstring);
+ }
+
 #if __clang__ || __GNUC__
 #pragma GCC diagnostic pop
 #endif // __clang__ || __GNUC__
