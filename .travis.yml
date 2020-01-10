@@ -17,28 +17,76 @@ matrix:
   include:
 
     ##########################################################################
-    # Clang on OSX
-    # Travis seems to take longer to start OSX instances,
-    # so leave this first for the overall build to be faster
+    # AppleClang on OSX
     ##########################################################################
 
     # XCode 8.3
-    - env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: AppleClang Xcode-8.3 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode8.3
-
-    - env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: AppleClang Xcode-8.3 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode8.3
 
     # XCode 9.1
-    - env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: AppleClang Xcode-9.1 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode9.1 # AppleClang 9.1.0 same compiler in Xcode 9.0, 9.1 and 9.2
+    - name: AppleClang Xcode-9.1 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode9.1
 
-    - env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    # XCode 9.4
+    - name: AppleClang Xcode-9.4 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode9.1
+      osx_image: xcode9.4 # AppleClang 9.1.0 same compiler as Xcode 9.3
+    - name: AppleClang Xcode-9.4 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode9.4
+
+    # XCode 10.1
+    - name: AppleClang Xcode-10.1 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.1 # AppleClang 10.0.0 same compiler as Xcode 10.0
+    - name: AppleClang Xcode-10.1 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.1
+
+    # XCode 10.3
+    - name: AppleClang Xcode-10.3 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3 # AppleClang 10.0.1 same compiler as Xcode 10.2
+    - name: AppleClang Xcode-10.3 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3
+
+    # XCode 11.3
+    - name: AppleClang Xcode-11.3 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode11.3 # AppleClang 11.0.0 linker update / same as Xcode 11.2
+    - name: AppleClang Xcode-11.3 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode11.3
+    - name: AppleClang Xcode-11.3 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode11.3
+    - name: AppleClang Xcode-11.3 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode11.3
 
     ##########################################################################
     # Clang on Linux
