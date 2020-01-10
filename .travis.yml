@@ -7,7 +7,7 @@ notifications:
 
 # Use Linux unless specified otherwise
 os: linux
-dist: trusty
+dist: bionic
 
 cache:
   directories:
@@ -125,185 +125,141 @@ matrix:
     ##########################################################################
 
     # Clang 3.6
-    - env: CXX=clang++-3.6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.6 C++14 Debug
+      dist: xenial
+      env: CXX=clang++-3.6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang36
         apt:
           packages:
             - clang-3.6
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
-
-    - env: CXX=clang++-3.6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.6 C++14 Release
+      dist: xenial
+      env: CXX=clang++-3.6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang36
 
     # Clang 3.7
-    - env: CXX=clang++-3.7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.7 C++14 Debug
+      dist: xenial
+      env: CXX=clang++-3.7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang37
         apt:
           packages:
             - clang-3.7
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-
-    - env: CXX=clang++-3.7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.7 C++14 Release
+      dist: xenial
+      env: CXX=clang++-3.7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang37
 
     # Clang 3.8
-    - env: CXX=clang++-3.8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.8 C++14 Debug
+      dist: xenial
+      env: CXX=clang++-3.8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang38
         apt:
           packages:
             - clang-3.8
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-
-    - env: CXX=clang++-3.8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.8 C++14 Release
+      dist: xenial
+      env: CXX=clang++-3.8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang38
 
     # Clang 3.9
-    - env: CXX=clang++-3.9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.9 C++14 Debug
+      env: CXX=clang++-3.9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang39
         apt:
           packages:
             - clang-3.9
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
-
-    - env: CXX=clang++-3.9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.9 C++14 Release
+      env: CXX=clang++-3.9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang39
 
     # Clang 4.0
-    - env: CXX=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-4.0 C++14 Debug
+      env: CXX=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang40
         apt:
           packages:
             - clang-4.0
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-4.0
-
-    - env: CXX=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-4.0 C++14 Release
+      env: CXX=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang40
 
     # Clang 5.0
-    - env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-5.0 C++14 Debug
+      env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang50
         apt:
           packages:
             - clang-5.0
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
-            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-
-    - env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-5.0 C++14 Release
+      env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang50
-
-    - env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+    - name: Clang-5.0 C++17 Debug
+      env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       addons: *clang50
-
-    - env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+    - name: Clang 5.0 C++17 Release
+      env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang50
 
     # Clang 6.0
-    - env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-6.0 C++14 Debug
+      env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang60
         apt:
           packages:
             - clang-6.0
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
-            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-
-    - env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang 6.0 C++14 Release
+      env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang60
+    - name: Clang-6.0 C++17 Debug
+      env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang60
+    - name: Clang 6.0 C++17 Release
+      env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang60
 
-    # Clang 6.0 c++17
-    - env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang60
-
-    - env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang60
-
-    # Clang 7.0
-    - env: CXX=clang++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang70
-        apt:
-          packages:
-            - clang-7
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-7
-
-
-    - env: CXX=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang70
-
-    # Clang 7.0 c++17
-    - env: CXX=clang++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang70
-
-    - env: CXX=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang70
+    # Clang 7 (default on Xenial and Bionic images)
+    - name: Clang-7 C++14 Debug
+      env: CXX=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-7 C++14 Release
+      env: CXX=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-7 C++17 Debug
+      env: CXX=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+    - name: Clang-7 C++17 Release
+      env: CXX=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=17
 
     ##########################################################################
     # GCC on Linux
     ##########################################################################
 
-    # GCC 5
-    - env: CXX=g++-5 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &gcc5
-        apt:
-          packages: g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-
-    - env: CXX=g++-5 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *gcc5
+    # GCC 5 (default on the Xenial image)
+    - name: GCC-5 C++14 Debug
+      dist: xenial
+      env: CXX=g++-5 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: GCC-5 C++14 Release
+      dist: xenial
+      env: CXX=g++-5 BUILD_TYPE=Release GSL_CXX_STANDARD=14
 
     # GCC 6
-    - env: CXX=g++-6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: GCC-6 C++14 Debug
+      env: CXX=g++-6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &gcc6
         apt:
           packages: g++-6
-          sources:
-            - ubuntu-toolchain-r-test
-
-    - env: CXX=g++-6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: GCC-6 C++14 Release
+      env: CXX=g++-6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *gcc6
 
-    # GCC 7
-    - env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &gcc7
-        apt:
-          packages: g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-
-    - env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *gcc7
-
-    # GCC 7 c++17 
-    - env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *gcc7
-
-    - env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *gcc7
+    # GCC 7 (default on the Bionic image)
+    - name: GCC-7 C++14 Debug
+      env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: GCC-7 C++14 Release
+      env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: GCC-7 C++17 Debug
+      env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+    - name: GCC-7 C++17 Release
+      env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
 
 install:
   - ${CXX} --version
