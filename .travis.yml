@@ -261,6 +261,41 @@ matrix:
     - name: GCC-7 C++17 Release
       env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
 
+    # GCC 8
+    - name: GCC-8 C++14 Debug
+      env: CXX=g++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &gcc8
+        apt:
+          packages: g++-8
+    - name: GCC-8 C++14 Release
+      env: CXX=g++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *gcc8
+    - name: GCC-8 C++17 Debug
+      env: CXX=g++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *gcc8
+    - name: GCC-8 C++17 Release
+      env: CXX=g++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *gcc8
+
+    # GCC 9
+    - name: GCC-9 C++14 Debug
+      env: CXX=g++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &gcc9
+        apt:
+          sources:
+          - sourceline: ppa:ubuntu-toolchain-r/test
+          packages:
+          - g++-9
+    - name: GCC-9 C++14 Release
+      env: CXX=g++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *gcc9
+    - name: GCC-9 C++17 Debug
+      env: CXX=g++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *gcc9
+    - name: GCC-9 C++17 Release
+      env: CXX=g++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *gcc9
+
 install:
   - ${CXX} --version
 
