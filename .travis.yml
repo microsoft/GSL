@@ -82,9 +82,7 @@ matrix:
             - g++-7
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
-            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+            - llvm-toolchain-bionic-5.0
 
     - env: COMPILER=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang50
@@ -104,9 +102,7 @@ matrix:
             - g++-7
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
-            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+            - llvm-toolchain-bionic-6.0
 
     - env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang60
@@ -127,7 +123,7 @@ matrix:
             - g++-7
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-7
+            - llvm-toolchain-bionic-7
 
     - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang70
@@ -148,7 +144,7 @@ matrix:
             - g++-8
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-8
+            - llvm-toolchain-bionic-8
 
     - env: COMPILER=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang80
@@ -168,7 +164,7 @@ matrix:
             - g++-9
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-9
+            - llvm-toolchain-bionic-9
 
     - env: COMPILER=clang++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang90
