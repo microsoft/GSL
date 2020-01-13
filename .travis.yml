@@ -17,6 +17,42 @@ matrix:
   include:
 
     ##########################################################################
+    # Validate CMake configuration
+    ##########################################################################
+
+    - name: CMake validation on Linux
+      env: &CMAKE_VERSION_LIST
+      - CMAKE_VERSION: '"3.16.2 3.15.6 3.14.7 3.13.5 3.12.4 3.11.4 3.10.3 3.9.6 3.8.2 3.7.2 3.6.3 3.5.2 3.4.3 3.3.2 3.2.3 3.1.3"'
+      - GSL_CXX_STANDARD: 14
+      addons: # Get latest release (candidate)
+        apt:
+          sources:
+          - sourceline: 'deb https://apt.kitware.com/ubuntu/ bionic main'
+            key_url: 'https://apt.kitware.com/keys/kitware-archive-latest.asc'
+          - sourceline: 'deb https://apt.kitware.com/ubuntu/ bionic-rc main'
+          packages:
+          - cmake
+      script:
+      - |
+        cd ./build
+        ( set -eu
+          for CMAKE in ${CMAKE_path[@]}; do test_CMake_generate $CMAKE; done
+          export CXX=clang++
+          for CMAKE in ${CMAKE_path[@]}; do test_CMake_generate $CMAKE; done
+        )
+
+    - name: CMake validation on OSX
+      os: osx
+      osx_image: xcode11.3
+      env: *CMAKE_VERSION_LIST
+      script:
+      - |
+        cd ./build
+        ( set -eu
+          for CMAKE in ${CMAKE_path[@]}; do test_CMake_generate $CMAKE; done
+        )
+
+    ##########################################################################
     # AppleClang on OSX
     ##########################################################################
 
@@ -336,16 +372,106 @@ matrix:
       env: CXX=g++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *gcc9
 
+before_install:
+  - |
+    # Configuration
+    JOBS=2 # Travis machines have 2 cores
+    # Dependencies required by the CI (cached directory)
+    DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - |
+    # Setup
+    mkdir -p "${DEPS_DIR}" && cd "${DEPS_DIR}"
+    mkdir -p ~/tools && cd ~/tools
+    if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then
+      export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    fi
+  - |
+    # Helper functions
+    # usage: if [[ $(check_url '<url>') ]]; then ...
+    function check_url {( set +e
+      if [[ "$1" =~ 'github.com' ]]; then # check for first byte
+        if curl --fail --silent --output /dev/null --connect-timeout 12 --range 0-0 "$1"
+        then echo true; fi
+      else # request head
+        if curl --fail --silent --output /dev/null --connect-timeout 12 --head "$1"
+        then echo true; fi
+      fi
+      return
+    )}
+
 install:
-  - ${CXX} --version
-
-  # Dependencies required by the CI are installed in ${TRAVIS_BUILD_DIR}/deps/
-  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-  - mkdir -p "${DEPS_DIR}"
-  - cd "${DEPS_DIR}"
-
-  # Travis machines have 2 cores
-  - JOBS=2
+  ############################################################################
+  # Install a different CMake version (or several)
+  ############################################################################
+  - |
+    # Install CMake versions
+    ( set -euo pipefail
+      if [[ ${CMAKE_VERSION:-} ]]; then
+        if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+          OS="Linux"; EXT="sh"
+          if [[ ! ("${CMAKE_VERSION:-}" =~ .+[' '].+) ]]; then
+            # Single entry -> default CMake version
+            CMAKE_DEFAULT_DIR="/usr/local"
+          fi
+        elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then OS="Darwin"; EXT="tar.gz"
+        else echo "CMake install not supported for this OS."; exit 1
+        fi
+        CMAKE_INSTALLER="install-cmake.${EXT}"
+      fi
+      for VERSION in ${CMAKE_VERSION:-}; do
+        CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${VERSION}/cmake-${VERSION}-${OS}-x86_64.${EXT}"
+        if [[ $(check_url "$CMAKE_URL") ]]; then
+          curl -sSL ${CMAKE_URL} -o ${CMAKE_INSTALLER}
+          CMAKE_DIR="${CMAKE_DEFAULT_DIR:-"${HOME}/tools/cmake-${VERSION}"}"
+          mkdir -p ${CMAKE_DIR}
+          if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+            chmod +x ${CMAKE_INSTALLER}
+            sudo ./${CMAKE_INSTALLER} --prefix=${CMAKE_DIR} --skip-license
+          else # OSX
+            mkdir -p ./CMake_tmp
+            tar --extract --gzip --file=${CMAKE_INSTALLER} --directory=./CMake_tmp
+            mv ./CMake_tmp/*/CMake.app/Contents/* ${CMAKE_DIR}
+          fi
+          rm --recursive --force ./CMake_tmp ${CMAKE_INSTALLER}
+        else echo 'Invalid url!'; echo "Version: ${VERSION}"
+        fi
+      done
+    )
+    if [[ "${TRAVIS_OS_NAME}" == "osx" && ! ("${CMAKE_VERSION:-}" =~ .+[' '].+) ]]
+    then # Single entry -> default CMake version
+      export PATH=${HOME}/tools/cmake-${CMAKE_VERSION}/bin:$PATH
+    fi
+    CMAKE_path=("cmake") # installed CMake version
+    for VERSION in ${CMAKE_VERSION:-}; do
+      tmp_path="$HOME/tools/cmake-${VERSION}/bin/cmake"
+      if [[ -x "$(command -v $tmp_path)" ]]; then CMAKE_path+=("$tmp_path"); fi
+    done
+    function test_CMake_generate {
+      # $1: cmake or full path to cmake
+      if [[ "$1" == "cmake" || -x "$(command -v $1)" && "$1" =~ .*cmake$ ]]; then
+        echo "----------------"
+        $1 --version
+        echo "Configuration = ${BUILD_TYPE:-Debug}"
+        $1 -DCMAKE_BUILD_TYPE=${BUILD_TYPE:-Debug} ${CMAKE_GEN_FLAGS[@]:?} ..
+        rm ./* -rf
+        if [[ ! ${BUILD_TYPE:-} ]]; then echo "Configuration = Release"
+          $1 -DCMAKE_BUILD_TYPE=Release ${CMAKE_GEN_FLAGS[@]:?} ..
+          rm ./* -rf
+        fi
+      else echo "Non existing command: $1"
+      fi
+    }
+  - |
+    # CMake wrapper (Trusty, Xenial & Bionic); restore default behaviour.
+    if [[ "${TRAVIS_OS_NAME}" == "linux" &&
+          "$(lsb_release --codename)" =~ (trusty|xenial|bionic)$ ]]
+    then
+      if [[ -x $(command -v /usr/local/bin/cmake) ]]; then
+        function cmake { command /usr/local/bin/cmake $@; }
+      elif [[ -x $(command -v /usr/bin/cmake) ]]; then
+        function cmake { command /usr/bin/cmake $@; }
+      fi
+    fi
 
   ############################################################################
   # [linux]: Install the right version of libc++
@@ -375,12 +501,17 @@ install:
     fi
 
 before_script:
-  # have CMake to generate build files
-  - cd "${TRAVIS_BUILD_DIR}"
-  - mkdir build && cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGSL_CXX_STANDARD=$GSL_CXX_STANDARD
-  
+  - |
+    cd "${TRAVIS_BUILD_DIR:?}"
+    mkdir build && cd build
+    if [[ ${GSL_CXX_STANDARD:-} ]]; then 
+      CMAKE_GEN_FLAGS=("-DGSL_CXX_STANDARD=$GSL_CXX_STANDARD")
+    fi
+    CMAKE_GEN_FLAGS+=("-Wdev -Werror=dev --warn-uninitialized")
+
 script:
+  # generate build files
+  - cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE:?} ${CMAKE_GEN_FLAGS[@]:?}
   # build and run tests
   - cmake --build . -- -j${JOBS}
   - ctest --output-on-failure -j${JOBS}
