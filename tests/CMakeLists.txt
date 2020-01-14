@@ -57,9 +57,11 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-missing-prototypes
           -Wno-shift-sign-overflow # GTest gtest-port.h
           -Wno-undef # GTest
-          -Wno-unused-variable
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
-          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+            -Wno-unused-member-function
+            -Wno-unused-variable
+          >
         >
     )
 else()
@@ -85,16 +87,22 @@ else()
           -Wno-missing-prototypes
           -Wno-padded
           -Wno-unknown-attributes
-          -Wno-unused-variable
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
-          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
           -Wno-weak-vtables
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+            -Wno-unused-member-function
+            -Wno-unused-variable
+          >
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
         >
         $<$<CXX_COMPILER_ID:GNU>:
-          -Wno-unused-variable
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
+            $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+              -Wno-unused-variable
+            >
+          >
         >
     )
 endif(MSVC)

@@ -1287,7 +1287,11 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.rend();
          EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(auto _ = *beyond , deathstring);
+#if (__cplusplus > 201402L)
+        EXPECT_DEATH([[maybe_unused]] auto _ = *beyond , deathstring);
+#else
+        EXPECT_DEATH(auto _ = *beyond , deathstring);
+#endif
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
@@ -1332,7 +1336,11 @@ TEST(span_test, from_array_constructor)
 
          auto beyond = s.crend();
          EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(auto _ = *beyond, deathstring);
+#if (__cplusplus > 201402L)
+        EXPECT_DEATH([[maybe_unused]] auto _ = *beyond, deathstring);
+#else
+        EXPECT_DEATH(auto _ = *beyond, deathstring);
+#endif
 
          EXPECT_TRUE(beyond - first == 4);
          EXPECT_TRUE(first - first == 0);
