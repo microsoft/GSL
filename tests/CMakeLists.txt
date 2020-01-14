@@ -49,9 +49,16 @@ if(MSVC) # MSVC or simulating MSVC
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
+          -Wno-covered-switch-default # GTest
+          -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
+          -Wno-global-constructors # GTest
+          -Wno-language-extension-token # GTest gtest-port.h
           -Wno-missing-braces
           -Wno-missing-prototypes
-          -Wno-unknown-attributes
+          -Wno-shift-sign-overflow # GTest gtest-port.h
+          -Wno-undef # GTest
+          -Wno-unused-variable
+          -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
         >
     )
@@ -67,19 +74,27 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-braces
+          -Wno-covered-switch-default # GTest
+          -Wno-global-constructors # GTest
           -Wno-missing-prototypes
           -Wno-padded
           -Wno-unknown-attributes
+          -Wno-unused-variable
+          -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
           -Wno-weak-vtables
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
+        >
+        $<$<CXX_COMPILER_ID:GNU>:
+          -Wno-unused-variable
         >
     )
 endif(MSVC)

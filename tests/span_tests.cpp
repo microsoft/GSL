@@ -20,21 +20,6 @@
 #pragma warning(disable : 26440 26426 26497 4189 4996)
 #endif
 
-#if __clang__ || __GNUC__
-//disable warnings from gtest
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wundef"
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif // __clang__ || __GNUC__
-
-#if __clang__
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
-#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
-#pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#pragma GCC diagnostic ignored "-Winconsistent-missing-destructor-override"
-#endif // __clang__
-
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_byte> // for byte
@@ -1698,7 +1683,3 @@ TEST(span_test, from_array_constructor)
     EXPECT_DEATH(s2.front(), deathstring);
     EXPECT_DEATH(s2.back(), deathstring);
  }
-
-#if __clang__ || __GNUC__
-#pragma GCC diagnostic pop
-#endif // __clang__ || __GNUC__

@@ -21,19 +21,6 @@
 
 #endif
 
-#if __clang__ || __GNUC__
-//disable warnings from gtest
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wundef"
-#endif // __clang__ || __GNUC__
-
-#if __clang__
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
-#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
-#pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#pragma GCC diagnostic ignored "-Winconsistent-missing-destructor-override"
-#endif // __clang__
-
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_assert>  // for Expects, fail_fast (ptr only)
@@ -1235,7 +1222,3 @@ TEST(string_span_tests, as_writeable_bytes)
     EXPECT_TRUE(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
     EXPECT_TRUE(bs.size() == s.size_bytes());
 }
-
-#if __clang__ || __GNUC__
-#pragma GCC diagnostic pop
-#endif // __clang__ || __GNUC__
