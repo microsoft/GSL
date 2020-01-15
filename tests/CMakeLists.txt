@@ -98,10 +98,18 @@ else()
           $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
         >
         $<$<CXX_COMPILER_ID:GNU>:
+          -Wdouble-promotion # float implicit to double
+          -Wlogical-op # suspicious uses of logical operators
           $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
+            -Wduplicated-cond # duplicated if-else conditions
+            -Wmisleading-indentation
+            -Wnull-dereference
             $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
               -Wno-unused-variable
             >
+          >
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,7>>:
+            -Wduplicated-branches # identical if-else branches
           >
         >
     )
@@ -193,6 +201,22 @@ else()
           -Wno-missing-prototypes
           -Wno-unknown-attributes
           -Wno-weak-vtables
+        >
+        $<$<CXX_COMPILER_ID:GNU>:
+          -Wdouble-promotion # float implicit to double
+          -Wlogical-op # suspicious uses of logical operators
+          -Wuseless-cast # casting to its own type
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
+            -Wduplicated-cond # duplicated if-else conditions
+            -Wmisleading-indentation
+            -Wnull-dereference
+          >
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,7>>:
+            -Wduplicated-branches # identical if-else branches
+          >
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,8>>:
+            -Wcast-align=strict # increase alignment (i.e. char* to int*)
+          >
         >
     )
 endif(MSVC)
