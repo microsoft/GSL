@@ -14,13 +14,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef _MSC_VER
-// blanket turn off warnings from CppCoreCheck from catch
-// so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426) // from catch
-#pragma warning(disable : 4996)  // use of function or classes marked [[deprecated]]
-#endif
-
 #include <gtest/gtest.h>
 
 #include <gsl/multi_span> // for static_bounds, static_bounds_dynamic_range_t

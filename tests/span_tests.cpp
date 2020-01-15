@@ -14,12 +14,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef _MSC_VER
-// blanket turn off warnings from CppCoreCheck from catch
-// so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426 26497 4189 4996)
-#endif
-
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_byte> // for byte

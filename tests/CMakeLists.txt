@@ -45,6 +45,21 @@ if(MSVC) # MSVC or simulating MSVC
         /EHsc
         /W4
         /WX
+        $<$<CXX_COMPILER_ID:MSVC>:
+          /wd4996  # Use of function or classes marked [[deprecated]]
+          /wd26409 # CppCoreCheck - GTest
+          /wd26426 # CppCoreCheck - GTest
+          /wd26440 # CppCoreCheck - GTest
+          /wd26446 # CppCoreCheck - prefer gsl::at()
+          /wd26472 # CppCoreCheck - use gsl::narrow(_cast)
+          /wd26481 # CppCoreCheck - use span instead of pointer arithmetic
+          $<$<VERSION_LESS:$<CXX_COMPILER_VERSION>,1920>: # VS2015
+            /wd4189 # variable is initialized but not referenced
+            $<$<NOT:$<CONFIG:Debug>>: # Release, RelWithDebInfo
+              /wd4702 # Unreachable code
+            >
+          >
+        >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
           -Wno-c++98-compat
@@ -172,6 +187,8 @@ if(MSVC) # MSVC or simulating MSVC
         $<$<CXX_COMPILER_ID:MSVC>:
           /wd4577
           /wd4702
+          /wd26440 # CppCoreCheck - GTest
+          /wd26446 # CppCoreCheck - prefer gsl::at()
         >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
