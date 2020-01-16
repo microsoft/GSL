@@ -449,15 +449,16 @@ install:
     done
     function test_CMake_generate {
       # $1: cmake or full path to cmake
+      shopt -s extglob
       if [[ "$1" == "cmake" || -x "$(command -v $1)" && "$1" =~ .*cmake$ ]]; then
         echo "----------------"
         $1 --version
         echo "Configuration = ${BUILD_TYPE:-Debug}"
         $1 -DCMAKE_BUILD_TYPE=${BUILD_TYPE:-Debug} ${CMAKE_GEN_FLAGS[@]:?} ..
-        rm ./* -rf
+        rm -rf !(tests/googletest-*)
         if [[ ! ${BUILD_TYPE:-} ]]; then echo "Configuration = Release"
           $1 -DCMAKE_BUILD_TYPE=Release ${CMAKE_GEN_FLAGS[@]:?} ..
-          rm ./* -rf
+          rm -rf !(tests/googletest-*)
         fi
       else echo "Non existing command: $1"
       fi
