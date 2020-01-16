@@ -135,7 +135,6 @@ add_library(gsl_tests_config_noexcept INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
     target_compile_options(gsl_tests_config_noexcept INTERFACE
         ${GSL_CPLUSPLUS_OPT}
-        /EHsc
         /W4
         /WX
         $<$<CXX_COMPILER_ID:MSVC>:
