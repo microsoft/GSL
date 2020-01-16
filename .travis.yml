@@ -394,9 +394,9 @@ before_install:
     DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - |
     # Setup
-    mkdir -p "${DEPS_DIR}" && cd "${DEPS_DIR}"
+    mkdir -p "${DEPS_DIR:?}" && cd "${DEPS_DIR:?}"
     mkdir -p ~/tools && cd ~/tools
-    if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then
+    if [[ ${TRAVIS_OS_NAME:?} == "osx" ]]; then
       export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     fi
   - |
@@ -451,14 +451,14 @@ install:
         fi
       done
     )
-    if [[ "${TRAVIS_OS_NAME}" == "osx" && ! ("${CMAKE_VERSION:-}" =~ .+[' '].+) ]]
+    if [[ ${CMAKE_VERSION:-} && "${TRAVIS_OS_NAME:?}" == "osx" && ! ("${CMAKE_VERSION:-}" =~ .+[' '].+) ]]
     then # Single entry -> default CMake version
-      export PATH=${HOME}/tools/cmake-${CMAKE_VERSION}/bin:$PATH
+      export PATH=${HOME}/tools/cmake-${CMAKE_VERSION:?}/bin:$PATH
     fi
-    CMAKE_path=("cmake") # installed CMake version
+    CMAKE_path=("cmake") # start with installed CMake version
     for VERSION in ${CMAKE_VERSION:-}; do
-      tmp_path="$HOME/tools/cmake-${VERSION}/bin/cmake"
-      if [[ -x "$(command -v $tmp_path)" ]]; then CMAKE_path+=("$tmp_path"); fi
+      tmp_path="$HOME/tools/cmake-${VERSION:?}/bin/cmake"
+      if [[ -x "$(command -v ${tmp_path:?})" ]]; then CMAKE_path+=("${tmp_path:?}"); fi
     done
     function test_CMake_generate {
       # $1: cmake or full path to cmake
@@ -469,7 +469,7 @@ install:
         echo "Configuration = ${BUILD_TYPE:-Debug}"
         $1 -DCMAKE_BUILD_TYPE=${BUILD_TYPE:-Debug} ${CMAKE_GEN_FLAGS[@]:?} ..
         rm -rf !(tests/googletest-*)
-        if [[ ! ${BUILD_TYPE:-} ]]; then echo "Configuration = Release"
+        if [[ ! ${BUILD_TYPE:-} ]]; then echo "" && echo "Configuration = Release"
           $1 -DCMAKE_BUILD_TYPE=Release ${CMAKE_GEN_FLAGS[@]:?} ..
           rm -rf !(tests/googletest-*)
         fi
@@ -478,7 +478,7 @@ install:
     }
   - |
     # CMake wrapper (Trusty, Xenial & Bionic); restore default behaviour.
-    if [[ "${TRAVIS_OS_NAME}" == "linux" &&
+    if [[ "${TRAVIS_OS_NAME:?}" == "linux" &&
           "$(lsb_release --codename)" =~ (trusty|xenial|bionic)$ ]]
     then
       if [[ -x $(command -v /usr/local/bin/cmake) ]]; then
@@ -492,9 +492,9 @@ install:
   # [linux]: Install the right version of libc++
   ############################################################################
   - |
-    LLVM_INSTALL=${DEPS_DIR}/llvm/install
+    LLVM_INSTALL=${DEPS_DIR:?}/llvm/install
     # if in linux and compiler clang and llvm not installed
-    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${CXX%%+*}" == "clang" && -n "$(ls -A ${LLVM_INSTALL})" ]]; then
+    if [[ "${TRAVIS_OS_NAME:?}" == "linux" && "${CXX%%+*}" == "clang" && -n "$(ls -A ${LLVM_INSTALL:?})" ]]; then
       if   [[ "${CXX}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2";
       elif [[ "${CXX}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.1";
       elif [[ "${CXX}" == "clang++-3.8" ]]; then LLVM_VERSION="3.8.1";
