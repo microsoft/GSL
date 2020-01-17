@@ -58,7 +58,7 @@
 
 // GCC 7 does not like the signed unsigned missmatch (size_t ptrdiff_t)
 // While there is a conversion from signed to unsigned, it happens at
-// compiletime, so the compiler wouldn't have to warn indiscriminently, but
+// compiletime, so the compiler wouldn't have to warn indiscriminately, but
 // could check if the source value actually doesn't fit into the target type
 // and only warn in those cases.
 #if defined(__GNUC__) && __GNUC__ > 6
