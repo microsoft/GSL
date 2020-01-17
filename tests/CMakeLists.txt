@@ -133,9 +133,11 @@ endforeach(flag_var)
 # please try to keep entries ordered =)
 add_library(gsl_tests_config_noexcept INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
+    target_compile_definitions(gsl_tests_config_noexcept INTERFACE
+        _HAS_EXCEPTIONS=0 # disable exceptions in the Microsoft STL
+    )
     target_compile_options(gsl_tests_config_noexcept INTERFACE
         ${GSL_CPLUSPLUS_OPT}
-        /EHsc
         /W4
         /WX
         $<$<CXX_COMPILER_ID:MSVC>:
