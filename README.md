@@ -77,6 +77,18 @@ These steps assume the source code of this repository has been cloned into a dir
 
 All tests should pass - indicating your platform is fully supported and you are ready to use the GSL types!
 
+## Building GSL - Using vcpkg
+
+You can download and install GSL using the [vcpkg](https://github.com/Microsoft/vcpkg) dependency manager:
+
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    ./bootstrap-vcpkg.sh
+    ./vcpkg integrate install
+    vcpkg install gsl
+
+The GSL port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
+
 ## Using the libraries
 As the types are entirely implemented inline in headers, there are no linking requirements.
 
