@@ -14,29 +14,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef _MSC_VER
-// blanket turn off warnings from CppCoreCheck from catch
-// so people aren't annoyed by them when running the tool.
-#pragma warning(disable : 26440 26426) // from catch
-#pragma warning(disable : 4996) // multi_span is in the process of being deprecated.
-                                // Suppressing warnings until it is completely removed
-#endif
-
-#if __clang__ || __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
-//disable warnings from gtest
-#pragma GCC diagnostic ignored "-Wundef"
-#endif // __clang__ || __GNUC__
-
-#if __clang__
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
-#pragma GCC diagnostic ignored "-Wused-but-marked-unused"
-#pragma GCC diagnostic ignored "-Wcovered-switch-default"
-#pragma GCC diagnostic ignored "-Winconsistent-missing-destructor-override"
-#endif // __clang__
-
 #include <gtest/gtest.h>
 
 #include <gsl/gsl_byte>   // for byte
@@ -1884,7 +1861,3 @@ TEST(multi_span_test, iterator)
 #ifdef CONFIRM_COMPILATION_ERRORS
 copy(src_span_static, dst_span_static);
 #endif
-
-#if __clang__ || __GNUC__
-#pragma GCC diagnostic pop
-#endif // __clang__ || __GNUC__

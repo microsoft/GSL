@@ -45,14 +45,38 @@ if(MSVC) # MSVC or simulating MSVC
         /EHsc
         /W4
         /WX
+        $<$<CXX_COMPILER_ID:MSVC>:
+          /wd4996  # Use of function or classes marked [[deprecated]]
+          /wd26409 # CppCoreCheck - GTest
+          /wd26426 # CppCoreCheck - GTest
+          /wd26440 # CppCoreCheck - GTest
+          /wd26446 # CppCoreCheck - prefer gsl::at()
+          /wd26472 # CppCoreCheck - use gsl::narrow(_cast)
+          /wd26481 # CppCoreCheck - use span instead of pointer arithmetic
+          $<$<VERSION_LESS:$<CXX_COMPILER_VERSION>,1920>: # VS2015
+            /wd4189 # variable is initialized but not referenced
+            $<$<NOT:$<CONFIG:Debug>>: # Release, RelWithDebInfo
+              /wd4702 # Unreachable code
+            >
+          >
+        >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
+          -Wno-covered-switch-default # GTest
+          -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
+          -Wno-global-constructors # GTest
+          -Wno-language-extension-token # GTest gtest-port.h
           -Wno-missing-braces
           -Wno-missing-prototypes
-          -Wno-unknown-attributes
-          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
+          -Wno-shift-sign-overflow # GTest gtest-port.h
+          -Wno-undef # GTest
+          -Wno-used-but-marked-unused # GTest EXPECT_DEATH
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+            -Wno-unused-member-function
+            -Wno-unused-variable
+          >
         >
     )
 else()
@@ -67,19 +91,41 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-braces
+          -Wno-covered-switch-default # GTest
+          -Wno-global-constructors # GTest
           -Wno-missing-prototypes
           -Wno-padded
           -Wno-unknown-attributes
-          $<$<EQUAL:${GSL_CXX_STANDARD},14>:-Wno-unused-member-function>
+          -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           -Wno-weak-vtables
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+            -Wno-unused-member-function
+            -Wno-unused-variable
+          >
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
+        >
+        $<$<CXX_COMPILER_ID:GNU>:
+          -Wdouble-promotion # float implicit to double
+          -Wlogical-op # suspicious uses of logical operators
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
+            -Wduplicated-cond # duplicated if-else conditions
+            -Wmisleading-indentation
+            -Wnull-dereference
+            $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+              -Wno-unused-variable
+            >
+          >
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,7>>:
+            -Wduplicated-branches # identical if-else branches
+          >
         >
     )
 endif(MSVC)
@@ -143,6 +189,8 @@ if(MSVC) # MSVC or simulating MSVC
         $<$<CXX_COMPILER_ID:MSVC>:
           /wd4577
           /wd4702
+          /wd26440 # CppCoreCheck - GTest
+          /wd26446 # CppCoreCheck - prefer gsl::at()
         >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
@@ -172,6 +220,22 @@ else()
           -Wno-missing-prototypes
           -Wno-unknown-attributes
           -Wno-weak-vtables
+        >
+        $<$<CXX_COMPILER_ID:GNU>:
+          -Wdouble-promotion # float implicit to double
+          -Wlogical-op # suspicious uses of logical operators
+          -Wuseless-cast # casting to its own type
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
+            -Wduplicated-cond # duplicated if-else conditions
+            -Wmisleading-indentation
+            -Wnull-dereference
+          >
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,7>>:
+            -Wduplicated-branches # identical if-else branches
+          >
+          $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,8>>:
+            -Wcast-align=strict # increase alignment (i.e. char* to int*)
+          >
         >
     )
 endif(MSVC)
