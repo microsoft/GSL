@@ -533,6 +533,3 @@ TEST(notnull_tests, TestMakeNotNull)
     }
 #endif
 }
-
-static_assert(std::is_nothrow_move_constructible<not_null<void*>>::value,
-              "not_null must be no-throw move constructible");
