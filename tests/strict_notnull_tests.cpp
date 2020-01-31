@@ -188,6 +188,3 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 #endif
 }
 #endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
-
-static_assert(std::is_nothrow_move_constructible<strict_not_null<void*>>::value,
-              "strict_not_null must be no-throw move constructible");
