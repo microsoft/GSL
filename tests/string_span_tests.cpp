@@ -84,7 +84,7 @@ czstring_span<> CreateTempName(string_span<> span)
 {
     Expects(span.size() > 1);
 
-    int last = 0;
+    std::size_t last = 0;
     if (span.size() > 4) {
         span[0] = 't';
         span[1] = 'm';
@@ -101,7 +101,7 @@ cwzstring_span<> CreateTempNameW(wstring_span<> span)
 {
     Expects(span.size() > 1);
 
-    int last = 0;
+    std::size_t last = 0;
     if (span.size() > 4) {
         span[0] = L't';
         span[1] = L'm';
@@ -118,7 +118,7 @@ cu16zstring_span<> CreateTempNameU16(u16string_span<> span)
 {
     Expects(span.size() > 1);
 
-    int last = 0;
+    std::size_t last = 0;
     if (span.size() > 4) {
         span[0] = u't';
         span[1] = u'm';
@@ -135,7 +135,7 @@ cu32zstring_span<> CreateTempNameU32(u32string_span<> span)
 {
     Expects(span.size() > 1);
 
-    int last = 0;
+    std::size_t last = 0;
     if (span.size() > 4) {
         span[0] = U't';
         span[1] = U'm';

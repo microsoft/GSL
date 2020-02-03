@@ -592,7 +592,7 @@ private:
         }
         else
         {
-            return idx >= 0 && idx < size;
+            return idx < size;
         }
     }
 

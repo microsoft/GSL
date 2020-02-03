@@ -966,7 +966,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.subspan(5).size() == 0);
          EXPECT_DEATH(av.subspan(6).size(), deathstring);
          const auto av2 = av.subspan(1);
-         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
+         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == static_cast<int>(i) + 2);
      }
 
      {
@@ -977,7 +977,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.subspan(5).size() == 0);
          EXPECT_DEATH(av.subspan(6).size(), deathstring);
          const auto av2 = av.subspan(1);
-         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
+         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == static_cast<int>(i) + 2);
      }
  }
 

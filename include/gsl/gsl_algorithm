@@ -37,8 +37,8 @@ namespace gsl
 {
 // Note: this will generate faster code than std::copy using span iterator in older msvc+stl
 // not necessary for msvc since VS2017 15.8 (_MSC_VER >= 1915)
-template <class SrcElementType, std::ptrdiff_t SrcExtent, class DestElementType,
-          std::ptrdiff_t DestExtent>
+template <class SrcElementType, std::size_t SrcExtent, class DestElementType,
+          std::size_t DestExtent>
 void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent> dest)
 {
     static_assert(std::is_assignable<decltype(*dest.data()), decltype(*src.data())>::value,
