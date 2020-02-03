@@ -475,7 +475,7 @@ public:
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((size() >= Offset) &&
-                (Count == dynamic_extent || (Offset + Count <= size())));
+                (Count == dynamic_extent || (Count <= size() - Offset)));
 
         return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
