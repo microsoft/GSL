@@ -158,14 +158,14 @@ TEST(span_test, from_pointer_length_constructor)
     int arr[4] = {1, 2, 3, 4};
 
     {
-        for (int i = 0; i < 4; ++i)
+        for (std::size_t i = 0; i < 4; ++i)
         {
             {
                 span<int> s = {&arr[0], i};
                 EXPECT_TRUE(s.size() == i);
                 EXPECT_TRUE(s.data() == &arr[0]);
                 EXPECT_TRUE(s.empty() == (i == 0));
-                for (int j = 0; j < i; ++j)
+                for (std::size_t j = 0; j < i; ++j)
                 {
                     EXPECT_TRUE(arr[j] == s[j]);
                     EXPECT_TRUE(arr[j] == s.at(j));
@@ -173,12 +173,12 @@ TEST(span_test, from_pointer_length_constructor)
                 }
             }
             {
-                span<int> s = {&arr[i], 4 - narrow_cast<ptrdiff_t>(i)};
+                span<int> s = {&arr[i], 4 - i};
                 EXPECT_TRUE(s.size() == 4 - i);
                 EXPECT_TRUE(s.data() == &arr[i]);
                 EXPECT_TRUE(s.empty() == ((4 - i) == 0));
 
-                for (int j = 0; j < 4 - i; ++j)
+                for (std::size_t j = 0; j < 4 - i; ++j)
                 {
                     EXPECT_TRUE(arr[j + i] == s[j]);
                     EXPECT_TRUE(arr[j + i] == s.at(j));
@@ -457,21 +457,21 @@ TEST(span_test, from_array_constructor)
 
      {
          span<int> s{arr};
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
 
          span<const int> cs{arr};
-         EXPECT_TRUE(cs.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(cs.size() == arr.size());
          EXPECT_TRUE(cs.data() == arr.data());
      }
 
      {
          span<int, 4> s{arr};
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
 
          span<const int, 4> cs{arr};
-         EXPECT_TRUE(cs.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(cs.size() == arr.size());
          EXPECT_TRUE(cs.data() == arr.data());
      }
 
@@ -486,7 +486,7 @@ TEST(span_test, from_array_constructor)
 
      {
          span<AddressOverloaded, 4> fs{ao_arr};
-         EXPECT_TRUE(fs.size() == narrow_cast<ptrdiff_t>(ao_arr.size()));
+         EXPECT_TRUE(fs.size() == ao_arr.size());
          EXPECT_TRUE(ao_arr.data() == fs.data());
      }
 
@@ -532,7 +532,7 @@ TEST(span_test, from_array_constructor)
 
      {
          auto s = make_span(arr);
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
 
@@ -561,13 +561,13 @@ TEST(span_test, from_array_constructor)
 
      {
          span<const int> s{arr};
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
 
      {
          span<const int, 4> s{arr};
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
 
@@ -575,7 +575,7 @@ TEST(span_test, from_array_constructor)
 
      {
          span<const AddressOverloaded, 4> s{ao_arr};
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(ao_arr.size()));
+         EXPECT_TRUE(s.size() == ao_arr.size());
          EXPECT_TRUE(s.data() == ao_arr.data());
      }
 
@@ -606,7 +606,7 @@ TEST(span_test, from_array_constructor)
 
      {
          auto s = make_span(arr);
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
  }
@@ -617,13 +617,13 @@ TEST(span_test, from_array_constructor)
 
      {
          span<const int> s{arr};
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
 
      {
          span<const int, 4> s{arr};
-         EXPECT_TRUE(s.size() ==  narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() ==  arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
 
@@ -651,7 +651,7 @@ TEST(span_test, from_array_constructor)
 
      {
          auto s = make_span(arr);
-         EXPECT_TRUE(s.size() == narrow_cast<ptrdiff_t>(arr.size()));
+         EXPECT_TRUE(s.size() == arr.size());
          EXPECT_TRUE(s.data() == arr.data());
      }
  }
@@ -663,11 +663,11 @@ TEST(span_test, from_array_constructor)
 
      {
          span<int> s{v};
-         EXPECT_TRUE(s.size() == narrow_cast<std::ptrdiff_t>(v.size()));
+         EXPECT_TRUE(s.size() == v.size());
          EXPECT_TRUE(s.data() == v.data());
 
          span<const int> cs{v};
-         EXPECT_TRUE(cs.size() == narrow_cast<std::ptrdiff_t>(v.size()));
+         EXPECT_TRUE(cs.size() == v.size());
          EXPECT_TRUE(cs.data() == v.data());
      }
 
@@ -677,11 +677,11 @@ TEST(span_test, from_array_constructor)
      {
  #ifdef CONFIRM_COMPILATION_ERRORS
          span<char> s{str};
-         EXPECT_TRUE(s.size() == narrow_cast<std::ptrdiff_t>(str.size()));
+         EXPECT_TRUE(s.size() == str.size());
          EXPECT_TRUE(s.data() == str.data()));
  #endif
          span<const char> cs{str};
-         EXPECT_TRUE(cs.size() == narrow_cast<std::ptrdiff_t>(str.size()));
+         EXPECT_TRUE(cs.size() == str.size());
          EXPECT_TRUE(cs.data() == str.data());
      }
 
@@ -690,7 +690,7 @@ TEST(span_test, from_array_constructor)
          span<char> s{cstr};
  #endif
          span<const char> cs{cstr};
-         EXPECT_TRUE(cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()));
+         EXPECT_TRUE(cs.size() == cstr.size());
          EXPECT_TRUE(cs.data() == cstr.data());
      }
 
@@ -745,11 +745,11 @@ TEST(span_test, from_array_constructor)
 
      {
          auto s = make_span(v);
-         EXPECT_TRUE(s.size() == narrow_cast<std::ptrdiff_t>(v.size()));
+         EXPECT_TRUE(s.size() == v.size());
          EXPECT_TRUE(s.data() == v.data());
 
          auto cs = make_span(cv);
-         EXPECT_TRUE(cs.size() == narrow_cast<std::ptrdiff_t>(cv.size()));
+         EXPECT_TRUE(cs.size() == cv.size());
          EXPECT_TRUE(cs.data() == cv.data());
      }
  }
