@@ -25,7 +25,7 @@
 #include <array>     // for array
 #include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
 #include <iterator>  // for reverse_iterator, distance, random_access_...
-#include <memory> // for std::addressof
+#include <memory>    // for std::addressof
 #include <stdexcept>
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 #include <utility>
