@@ -25,7 +25,6 @@
 #include <array>     // for array
 #include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
 #include <iterator>  // for reverse_iterator, distance, random_access_...
-#include <limits>
 #include <memory> // for std::addressof
 #include <stdexcept>
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
@@ -72,7 +71,7 @@ namespace gsl
 {
 
 // [views.constants], constants
-constexpr const std::size_t dynamic_extent = std::numeric_limits<std::size_t>::max();
+constexpr const std::size_t dynamic_extent = -1;
 
 template <class ElementType, std::size_t Extent = dynamic_extent>
 class span;
@@ -476,7 +475,7 @@ public:
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((size() >= Offset) &&
-                (Count == dynamic_extent || (Count >= 0 && Offset + Count <= size())));
+                (Count == dynamic_extent || (Offset + Count <= size())));
 
         return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
@@ -654,7 +653,7 @@ private:
     span<element_type, dynamic_extent> make_subspan(index_type offset, index_type count,
                                                     subspan_selector<dynamic_extent>) const
     {
-        Expects(offset >= 0 && size() >= offset && size() != dynamic_extent);
+        Expects(size() >= offset && size() != dynamic_extent);
 
         if (count == dynamic_extent) { return {KnownNotNull{data() + offset}, size() - offset}; }
 

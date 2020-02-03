@@ -30,11 +30,6 @@
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <vector>      // for vector
 
-namespace gsl
-{
-struct fail_fast;
-} // namespace gsl
-
 using namespace std;
 using namespace gsl;
 
