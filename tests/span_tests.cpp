@@ -966,7 +966,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.subspan(5).size() == 0);
          EXPECT_DEATH(av.subspan(6).size(), deathstring);
          const auto av2 = av.subspan(1);
-         for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
+         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
      }
 
      {
@@ -977,7 +977,7 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(av.subspan(5).size() == 0);
          EXPECT_DEATH(av.subspan(6).size(), deathstring);
          const auto av2 = av.subspan(1);
-         for (int i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
+         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == i + 2);
      }
  }
 
@@ -1067,28 +1067,28 @@ TEST(span_test, from_array_constructor)
  {
      int a[] = {1, 2, 3, 4};
      span<int> s{a};
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.begin()), decltype(begin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.end()), decltype(end(s))>::value));
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.cbegin()), decltype(cbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.cend()), decltype(cend(s))>::value));
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.rbegin()), decltype(rbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.rend()), decltype(rend(s))>::value));
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.crbegin()), decltype(crbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.crend()), decltype(crend(s))>::value));
- 
+
      EXPECT_TRUE(s.begin() == begin(s));
      EXPECT_TRUE(s.end() == end(s));
- 
+
      EXPECT_TRUE(s.cbegin() == cbegin(s));
      EXPECT_TRUE(s.cend() == cend(s));
- 
+
      EXPECT_TRUE(s.rbegin() == rbegin(s));
      EXPECT_TRUE(s.rend() == rend(s));
- 
+
      EXPECT_TRUE(s.crbegin() == crbegin(s));
      EXPECT_TRUE(s.crend() == crend(s));
  }
@@ -1097,7 +1097,7 @@ TEST(span_test, from_array_constructor)
  {
      int a[] = {1, 2, 3, 4};
      span<int> s{a};
- 
+
      EXPECT_TRUE((std::is_same<decltype(s.size()), decltype(ssize(s))>::value));
      EXPECT_TRUE(s.size() == ssize(s));
  }
