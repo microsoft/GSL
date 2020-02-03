@@ -152,7 +152,7 @@ namespace details
             : span_iterator(other.span_, other.index_)
         {}
 
-        GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr reference operator*() const
         {
             Expects(static_cast<size_t>(index_) != span_->size());
@@ -274,7 +274,7 @@ namespace details
             Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
         }
 
-        GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         constexpr pointer _Unwrapped() const noexcept
         { // after seeking *this to a high water mark, or using one of the
             // _Verify_xxx functions above, unwrap this span_iterator to a raw
@@ -289,7 +289,7 @@ namespace details
 #else
         static constexpr bool _Unwrap_when_unverified = false;
 #endif
-        GSL_SUPPRESS(con .3) // NO-FORMAT: attribute // TODO: false positive
+        GSL_SUPPRESS(con.3) // NO-FORMAT: attribute // TODO: false positive
         constexpr void _Seek_to(const pointer p) noexcept
         { // adjust the position of *this to previously verified location p
             // after _Unwrapped
@@ -462,7 +462,7 @@ public:
     }
 
     template <std::size_t Count>
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr span<element_type, Count> last() const noexcept
     {
         Expects(size() >= Count);
@@ -470,7 +470,7 @@ public:
     }
 
     template <std::size_t Offset, std::size_t Count = dynamic_extent>
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr auto subspan() const noexcept ->
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
@@ -508,7 +508,7 @@ public:
     constexpr bool empty() const noexcept { return size() == 0; }
 
     // [span.elem], span element access
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     constexpr reference operator[](index_type idx) const noexcept
     {
         Expects(CheckRange(idx, storage_.size()));
@@ -563,7 +563,7 @@ public:
     constexpr pointer _Unchecked_begin() const noexcept { return data(); }
     constexpr pointer _Unchecked_end() const noexcept
     {
-        GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         return data() + size();
     }
 #endif // _MSC_VER
@@ -649,7 +649,7 @@ private:
         return tmp.subspan(offset, count);
     }
 
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     span<element_type, dynamic_extent> make_subspan(index_type offset, index_type count,
                                                     subspan_selector<dynamic_extent>) const
     {
@@ -729,7 +729,7 @@ template <class ElementType, std::size_t Extent>
 span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(span<ElementType, Extent> s) noexcept
 {
-    GSL_SUPPRESS(type .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
 }
 
@@ -738,7 +738,7 @@ template <class ElementType, std::size_t Extent,
 span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writeable_bytes(span<ElementType, Extent> s) noexcept
 {
-    GSL_SUPPRESS(type .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
