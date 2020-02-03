@@ -517,13 +517,13 @@ public:
 
     constexpr reference front() const noexcept
     {
-        Expects(size() != dynamic_extent && size() > 0);
+        Expects(size() > 0);
         return data()[0];
     }
 
     constexpr reference back() const noexcept
     {
-        Expects(size() != dynamic_extent && size() > 0);
+        Expects(size() > 0);
         return data()[size() - 1];
     }
 
