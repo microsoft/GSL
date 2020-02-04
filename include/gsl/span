@@ -185,7 +185,7 @@ namespace details
 
         constexpr span_iterator& operator+=(const difference_type n) noexcept
         {
-            Expects(begin_ && current_ && end_);
+            if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(end_ - current_ >= n);
             if (n < 0) Expects(current_ - begin_ >= -n);
             current_ += n;
@@ -206,7 +206,7 @@ namespace details
 
         constexpr span_iterator& operator-=(const difference_type n) noexcept
         {
-            Expects(begin_ && end_ && current_);
+            if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(current_ - begin_ >= n);
             if (n < 0) Expects(end_ - current_ >= -n);
             current_ -= n;
@@ -294,8 +294,7 @@ namespace details
         }
 
         constexpr void _Verify_offset(const difference_type n) const noexcept
-        { // test that *this + n is within the span of this iterator STL
-            // algorithm call
+        { // test that *this + n is within the range of this call
             Expects( n <= (current_ - begin_)  && n <= (end_ - current_));
         }
 
@@ -408,8 +407,8 @@ public:
 
     // [span.cons], span constructors, copy, assignment, and destructor
     template <bool Dependent = false,
-              // "Dependent" is needed to make "std::enable_if_t<Dependent || Extent <= 0>" SFINAE,
-              // since "std::enable_if_t<Extent <= 0>" is ill-formed when Extent is greater than 0.
+              // "Dependent" is needed to make "std::enable_if_t<Dependent || Extent == 0 || Extent == dynamic_extent>" SFINAE,
+              // since "std::enable_if_t<Extent == 0 || Extent == dynamic_extent>" is ill-formed when Extent is greater than 0.
               class = std::enable_if_t<(Dependent || Extent == 0 || Extent == dynamic_extent)>>
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}

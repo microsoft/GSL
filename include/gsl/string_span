@@ -184,13 +184,11 @@ public:
     using const_reference = std::add_lvalue_reference_t<std::add_const_t<element_type>>;
     using impl_type = span<element_type, Extent>;
 
-    using index_type = typename impl_type::index_type;
+    using size_type = typename impl_type::size_type;
     using iterator = typename impl_type::iterator;
     using const_iterator = typename impl_type::const_iterator;
     using reverse_iterator = typename impl_type::reverse_iterator;
     using const_reverse_iterator = typename impl_type::const_reverse_iterator;
-
-    using size_type = index_type;
 
     // default (empty)
     constexpr basic_string_span() noexcept = default;
@@ -201,7 +199,7 @@ public:
     // assign
     constexpr basic_string_span& operator=(const basic_string_span& other) noexcept = default;
 
-    constexpr basic_string_span(pointer ptr, index_type length) : span_(ptr, length) {}
+    constexpr basic_string_span(pointer ptr, size_type length) : span_(ptr, length) {}
     constexpr basic_string_span(pointer firstElem, pointer lastElem) : span_(firstElem, lastElem) {}
 
     // From static arrays - if 0-terminated, remove 0 from the view
@@ -258,49 +256,49 @@ public:
         : span_(other.data(), other.length())
     {}
 
-    template <index_type Count>
+    template <size_type Count>
     constexpr basic_string_span<element_type, Count> first() const
     {
         return {span_.template first<Count>()};
     }
 
-    constexpr basic_string_span<element_type, dynamic_extent> first(index_type count) const
+    constexpr basic_string_span<element_type, dynamic_extent> first(size_type count) const
     {
         return {span_.first(count)};
     }
 
-    template <index_type Count>
+    template <size_type Count>
     constexpr basic_string_span<element_type, Count> last() const
     {
         return {span_.template last<Count>()};
     }
 
-    constexpr basic_string_span<element_type, dynamic_extent> last(index_type count) const
+    constexpr basic_string_span<element_type, dynamic_extent> last(size_type count) const
     {
         return {span_.last(count)};
     }
 
-    template <index_type Offset, index_type Count>
+    template <size_type Offset, size_type Count>
     constexpr basic_string_span<element_type, Count> subspan() const
     {
         return {span_.template subspan<Offset, Count>()};
     }
 
     constexpr basic_string_span<element_type, dynamic_extent>
-    subspan(index_type offset, index_type count = dynamic_extent) const
+    subspan(size_type offset, size_type count = dynamic_extent) const
     {
         return {span_.subspan(offset, count)};
     }
 
-    constexpr reference operator[](index_type idx) const { return span_[idx]; }
-    constexpr reference operator()(index_type idx) const { return span_[idx]; }
+    constexpr reference operator[](size_type idx) const { return span_[idx]; }
+    constexpr reference operator()(size_type idx) const { return span_[idx]; }
 
     constexpr pointer data() const { return span_.data(); }
 
-    constexpr index_type length() const noexcept { return span_.size(); }
-    constexpr index_type size() const noexcept { return span_.size(); }
-    constexpr index_type size_bytes() const noexcept { return span_.size_bytes(); }
-    constexpr index_type length_bytes() const noexcept { return span_.length_bytes(); }
+    constexpr size_type length() const noexcept { return span_.size(); }
+    constexpr size_type size() const noexcept { return span_.size(); }
+    constexpr size_type size_bytes() const noexcept { return span_.size_bytes(); }
+    constexpr size_type length_bytes() const noexcept { return span_.length_bytes(); }
     constexpr bool empty() const noexcept { return size() == 0; }
 
     constexpr iterator begin() const noexcept { return span_.begin(); }
