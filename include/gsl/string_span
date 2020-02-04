@@ -109,7 +109,7 @@ namespace details
 //
 template <typename T, const T Sentinel>
 span<T, dynamic_extent> ensure_sentinel(T* seq,
-                                        std::size_t max = std::numeric_limits<std::size_t>::max())
+                                        std::size_t max = static_cast<std::size_t>(-1))
 {
     Ensures(seq != nullptr);
 
@@ -131,7 +131,7 @@ span<T, dynamic_extent> ensure_sentinel(T* seq,
 //
 template <typename CharT>
 span<CharT, dynamic_extent> ensure_z(CharT* const& sz,
-                                     std::size_t max = std::numeric_limits<std::size_t>::max())
+                                     std::size_t max = static_cast<std::size_t>(-1))
 {
     return ensure_sentinel<CharT, CharT(0)>(sz, max);
 }
