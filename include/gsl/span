@@ -294,7 +294,7 @@ namespace details
         }
 
         constexpr void _Verify_offset(const difference_type n) const noexcept
-        { // test that the iterator *this + n is a valid range in an STL
+        { // test that *this + n is within the span of this iterator STL
             // algorithm call
             Expects((current_ + n) >= begin_ && (current_ + n) <= end_);
         }
