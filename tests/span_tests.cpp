@@ -105,17 +105,17 @@ TEST(span_test, from_nullptr_size_constructor)
         std::abort();
     });
     {
-        span<int> s{nullptr, narrow_cast<span<int>::index_type>(0)};
+        span<int> s{nullptr, narrow_cast<span<int>::size_type>(0)};
         EXPECT_TRUE(s.size() == 0);
         EXPECT_TRUE(s.data() == nullptr);
 
-        span<int> cs{nullptr, narrow_cast<span<int>::index_type>(0)};
+        span<int> cs{nullptr, narrow_cast<span<int>::size_type>(0)};
         EXPECT_TRUE(cs.size() == 0);
         EXPECT_TRUE(cs.data() == nullptr);
     }
     {
         auto workaround_macro = []() {
-            const span<int, 1> s{nullptr, narrow_cast<span<int>::index_type>(0)};
+            const span<int, 1> s{nullptr, narrow_cast<span<int>::size_type>(0)};
         };
         EXPECT_DEATH(workaround_macro(), deathstring);
     }
@@ -134,11 +134,11 @@ TEST(span_test, from_nullptr_size_constructor)
         EXPECT_DEATH(const_workaround_macro(), deathstring);
     }
     {
-        span<int*> s{nullptr, narrow_cast<span<int>::index_type>(0)};
+        span<int*> s{nullptr, narrow_cast<span<int>::size_type>(0)};
         EXPECT_TRUE(s.size() == 0);
         EXPECT_TRUE(s.data() == nullptr);
 
-        span<const int*> cs{nullptr, narrow_cast<span<int>::index_type>(0)};
+        span<const int*> cs{nullptr, narrow_cast<span<int>::size_type>(0)};
         EXPECT_TRUE(cs.size() == 0);
         EXPECT_TRUE(cs.data() == nullptr);
     }
@@ -193,7 +193,7 @@ TEST(span_test, from_pointer_length_constructor)
 
     {
         int* p = nullptr;
-        span<int> s{p, narrow_cast<span<int>::index_type>(0)};
+        span<int> s{p, narrow_cast<span<int>::size_type>(0)};
         EXPECT_TRUE(s.size() == 0);
         EXPECT_TRUE(s.data() == nullptr);
     }
@@ -214,7 +214,7 @@ TEST(span_test, from_pointer_length_constructor)
 
     {
         int* p = nullptr;
-        auto s = make_span(p, narrow_cast<span<int>::index_type>(0));
+        auto s = make_span(p, narrow_cast<span<int>::size_type>(0));
         EXPECT_TRUE(s.size() == 0);
         EXPECT_TRUE(s.data() == nullptr);
     }

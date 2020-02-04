@@ -163,14 +163,14 @@ TEST(string_span_tests, TestConstructFromStdString)
 {
     std::string s = "Hello there world";
     cstring_span<> v = s;
-    EXPECT_TRUE(v.length() == static_cast<cstring_span<>::index_type>(s.length()));
+    EXPECT_TRUE(v.length() == static_cast<cstring_span<>::size_type>(s.length()));
 }
 
 TEST(string_span_tests, TestConstructFromStdVector)
 {
     std::vector<char> vec(5, 'h');
     string_span<> v{vec};
-    EXPECT_TRUE(v.length() == static_cast<string_span<>::index_type>(vec.size()));
+    EXPECT_TRUE(v.length() == static_cast<string_span<>::size_type>(vec.size()));
 }
 
 TEST(string_span_tests, TestStackArrayConstruction)
@@ -232,7 +232,7 @@ TEST(string_span_tests, TestToString)
     char stack_string[] = "Hello";
     cstring_span<> v = ensure_z(stack_string);
     auto s2 = gsl::to_string(v);
-    EXPECT_TRUE(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
+    EXPECT_TRUE(static_cast<cstring_span<>::size_type>(s2.length()) == v.length());
     EXPECT_TRUE(s2.length() == static_cast<size_t>(5));
 }
 
@@ -245,7 +245,7 @@ TEST(string_span_tests, TestToBasicString)
     char stack_string[] = "Hello";
     cstring_span<> v = ensure_z(stack_string);
     auto s2 = gsl::to_basic_string<char, std::char_traits<char>, ::std::allocator<char>>(v);
-    EXPECT_TRUE(static_cast<cstring_span<>::index_type>(s2.length()) == v.length());
+    EXPECT_TRUE(static_cast<cstring_span<>::size_type>(s2.length()) == v.length());
     EXPECT_TRUE(s2.length() == static_cast<size_t>(5));
 }
 
