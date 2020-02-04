@@ -207,7 +207,7 @@ namespace details
         constexpr span_iterator& operator-=(const difference_type n) noexcept
         {
             Expects(begin_ && end_ && current_);
-            if (n > 0) Expects(end_ - current_ >= n);
+            if (n > 0) Expects(current_ - begin_ >= n);
             if (n < 0) Expects(end_ - current_ >= -n);
             current_ -= n;
             return *this;
