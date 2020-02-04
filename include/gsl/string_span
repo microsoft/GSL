@@ -114,11 +114,11 @@ span<T, dynamic_extent> ensure_sentinel(T* seq,
     Ensures(seq != nullptr);
 
     GSL_SUPPRESS(
-        f .23) // NO-FORMAT: attribute // TODO: false positive // TODO: suppress does not work
+        f.23) // NO-FORMAT: attribute // TODO: false positive // TODO: suppress does not work
     auto cur = seq;
     Ensures(cur != nullptr); // workaround for removing the warning
 
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute // TODO: suppress does not work
+    GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute // TODO: suppress does not work
     while (static_cast<std::size_t>(cur - seq) < max && *cur != Sentinel) ++cur;
     Ensures(*cur == Sentinel);
     return {seq, static_cast<std::size_t>(cur - seq)};
@@ -376,7 +376,7 @@ template <class ElementType, std::size_t Extent>
 basic_string_span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
-    GSL_SUPPRESS(type .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
 }
 
@@ -385,7 +385,7 @@ template <class ElementType, std::size_t Extent,
 basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writeable_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
-    GSL_SUPPRESS(type .1) // NO-FORMAT: attribute
+    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
