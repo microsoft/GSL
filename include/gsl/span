@@ -122,140 +122,165 @@ namespace details
     {
     };
 
-    template <class Span, bool IsConst>
+    template <class type>
     class span_iterator
     {
-        using element_type_ = typename Span::element_type;
-
     public:
-#ifdef _MSC_VER
-        // Tell Microsoft standard library that span_iterators are checked.
-        using _Unchecked_type = typename Span::pointer;
-#endif
-
         using iterator_category = std::random_access_iterator_tag;
-        using value_type = std::remove_cv_t<element_type_>;
-        using difference_type = typename Span::index_type;
+        using value_type = std::remove_cv_t<type>;
+        using difference_type = ptrdiff_t;
+        using pointer = std::add_pointer_t<type>;
+        using reference = std::add_lvalue_reference_t<type>;
 
-        using reference = std::conditional_t<IsConst, const element_type_, element_type_>&;
-        using pointer = std::add_pointer_t<reference>;
-
-        span_iterator() = default;
-
-        constexpr span_iterator(const Span* span, difference_type idx) noexcept
-            : span_(span), index_(idx)
-        {}
-
-        friend span_iterator<Span, true>;
-        template <bool B, std::enable_if_t<!B && IsConst>* = nullptr>
-        constexpr span_iterator(const span_iterator<Span, B>& other) noexcept
-            : span_iterator(other.span_, other.index_)
-        {}
-
-        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-        constexpr reference operator*() const
+#ifdef _MSC_VER
+        using _Unchecked_type = typename pointer;
+#endif
+        constexpr operator span_iterator<const type>() const noexcept
         {
-            Expects(static_cast<size_t>(index_) != span_->size());
-            return *(span_->data() + index_);
+            return {begin_, end_, current_};
         }
 
-        constexpr pointer operator->() const
-        {
-            Expects(index_ != span_->size());
-            return span_->data() + index_;
-        }
+        constexpr reference operator*() const noexcept { return *operator->(); }
 
+        constexpr pointer operator->() const noexcept
+        {
+            Expects(begin_ && current_ && end_);
+            Expects(current_ < end_);
+            return current_;
+        }
         constexpr span_iterator& operator++() noexcept
         {
-            Expects(0 <= index_ && static_cast<size_t>(index_) != span_->size());
-            ++index_;
+            Expects(begin_ && current_ && end_);
+            Expects(current_ < end_);
+            ++current_;
             return *this;
         }
 
         constexpr span_iterator operator++(int) noexcept
         {
-            auto ret = *this;
-            ++(*this);
+            auto ret{*this};
+            ++*this;
             return ret;
         }
 
         constexpr span_iterator& operator--() noexcept
         {
-            Expects(index_ != 0 && static_cast<size_t>(index_) <= span_->size());
-            --index_;
+            Expects(begin_ && current_ && end_);
+            Expects(current_ > begin_);
+            --current_;
             return *this;
         }
 
         constexpr span_iterator operator--(int) noexcept
         {
-            auto ret = *this;
-            --(*this);
+            auto ret{*this};
+            --*this;
             return ret;
         }
 
-        constexpr span_iterator operator+(difference_type n) const noexcept
+        constexpr span_iterator& operator+=(const difference_type n) noexcept
         {
-            auto ret = *this;
+            Expects(begin_ && current_ && end_);
+            if (n > 0) Expects(end_ - current_ >= n);
+            if (n < 0) Expects(end_ - current_ >= -n);
+            current_ += n;
+            return *this;
+        }
+
+        constexpr span_iterator operator+(const difference_type n) const noexcept
+        {
+            auto ret{*this};
             return ret += n;
         }
 
-        friend constexpr span_iterator operator+(difference_type n,
+        friend constexpr span_iterator operator+(const difference_type n,
                                                  span_iterator const& rhs) noexcept
         {
             return rhs + n;
         }
 
-        constexpr span_iterator& operator+=(difference_type n) noexcept
+        constexpr span_iterator& operator-=(const difference_type n) noexcept
         {
-            Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
-            index_ += n;
+            Expects(begin_ && end_ && current_);
+            if (n > 0) Expects(end_ - current_ >= n);
+            if (n < 0) Expects(end_ - current_ >= -n);
+            current_ -= n;
             return *this;
         }
 
-        constexpr span_iterator operator-(difference_type n) const noexcept
+        constexpr span_iterator operator-(const difference_type n) const noexcept
         {
-            auto ret = *this;
+            auto ret{*this};
             return ret -= n;
         }
 
-        constexpr span_iterator& operator-=(difference_type n) noexcept { return *this += -n; }
-
-        constexpr difference_type operator-(span_iterator rhs) const noexcept
+        friend constexpr span_iterator operator-(const difference_type n,
+                                                 span_iterator const& rhs) noexcept
         {
-            Expects(span_ == rhs.span_);
-            return index_ - rhs.index_;
+            return rhs - n;
         }
 
-        constexpr reference operator[](difference_type n) const noexcept { return *(*this + n); }
-
-        constexpr friend bool operator==(span_iterator lhs, span_iterator rhs) noexcept
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr difference_type operator-(const span_iterator<type2>& rhs) const noexcept
         {
-            return lhs.span_ == rhs.span_ && lhs.index_ == rhs.index_;
+            Expects(begin_ == rhs.begin_);
+            return current_ - rhs.current_;
         }
 
-        constexpr friend bool operator!=(span_iterator lhs, span_iterator rhs) noexcept
+        constexpr reference operator[](const difference_type n) const noexcept
         {
-            return !(lhs == rhs);
+            return *(*this + n);
         }
 
-        constexpr friend bool operator<(span_iterator lhs, span_iterator rhs) noexcept
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr bool operator==(const span_iterator<type2>& rhs) const noexcept
         {
-            return lhs.index_ < rhs.index_;
+            return begin_ == rhs.begin_ && current_ == rhs.current_;
         }
 
-        constexpr friend bool operator<=(span_iterator lhs, span_iterator rhs) noexcept
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr bool operator!=(const span_iterator<type2>& rhs) const noexcept
         {
-            return !(rhs < lhs);
+            return !(*this == rhs);
         }
 
-        constexpr friend bool operator>(span_iterator lhs, span_iterator rhs) noexcept
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr bool operator<(const span_iterator<type2>& rhs) const noexcept
         {
-            return rhs < lhs;
+            Expects(begin_ == rhs.begin_);
+            return current_ < rhs.current_;
         }
 
-        constexpr friend bool operator>=(span_iterator lhs, span_iterator rhs) noexcept
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr bool operator>(const span_iterator<type2>& rhs) const noexcept
         {
-            return !(rhs > lhs);
+            return !(*this < rhs);
+        }
+
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr bool operator<=(const span_iterator<type2>& rhs) const noexcept
+        {
+            return *this < rhs || *this == rhs;
+        }
+
+        template <
+            class type2,
+            std::enable_if_t<std::is_same<std::remove_cv_t<type2>, value_type>::value, int> = 0>
+        constexpr bool operator>=(const span_iterator<type2>& rhs) const noexcept
+        {
+            return *this > rhs || *this == rhs;
         }
 
 #ifdef _MSC_VER
@@ -264,14 +289,14 @@ namespace details
         // algorithm calls
         friend constexpr void _Verify_range(span_iterator lhs, span_iterator rhs) noexcept
         { // test that [lhs, rhs) forms a valid range inside an STL algorithm
-            Expects(lhs.span_ == rhs.span_        // range spans have to match
-                    && lhs.index_ <= rhs.index_); // range must not be transposed
+            Expects(lhs.begin_ == rhs.begin_    // range spans have to match
+                    && lhs.end_ <= rhs.end_); // range must not be transposed
         }
 
         constexpr void _Verify_offset(const difference_type n) const noexcept
         { // test that the iterator *this + n is a valid range in an STL
             // algorithm call
-            Expects((index_ + n) >= 0 && (index_ + n) <= span_->size());
+            Expects((current_ + n) >= begin_ && (current_ + n) <= end_);
         }
 
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
@@ -279,7 +304,7 @@ namespace details
         { // after seeking *this to a high water mark, or using one of the
             // _Verify_xxx functions above, unwrap this span_iterator to a raw
             // pointer
-            return span_->data() + index_;
+            return current_;
         }
 
         // Tell the STL that span_iterator should not be unwrapped if it can't
@@ -293,13 +318,13 @@ namespace details
         constexpr void _Seek_to(const pointer p) noexcept
         { // adjust the position of *this to previously verified location p
             // after _Unwrapped
-            index_ = p - span_->data();
+            current_ = p;
         }
 #endif
 
-    protected:
-        const Span* span_ = nullptr;
-        std::ptrdiff_t index_ = 0;
+        pointer begin_ = nullptr;
+        pointer end_ = nullptr;
+        pointer current_ = nullptr;
     };
 
     template <std::size_t Ext>
@@ -368,8 +393,8 @@ public:
     using reference = element_type&;
     using difference_type = std::ptrdiff_t;
 
-    using iterator = details::span_iterator<span<ElementType, Extent>, false>;
-    using const_iterator = details::span_iterator<span<ElementType, Extent>, true>;
+    using iterator = details::span_iterator<ElementType>;
+    using const_iterator = details::span_iterator<const ElementType>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -540,11 +565,11 @@ public:
     constexpr pointer data() const noexcept { return storage_.data(); }
 
     // [span.iter], span iterator support
-    constexpr iterator begin() const noexcept { return {this, 0}; }
-    constexpr iterator end() const noexcept { return {this, size()}; }
+    constexpr iterator begin() const noexcept { return {data(), data() + size(), data()}; }
+    constexpr iterator end() const noexcept { return {data(), data() + size(), data() + size()}; }
 
-    constexpr const_iterator cbegin() const noexcept { return {this, 0}; }
-    constexpr const_iterator cend() const noexcept { return {this, size()}; }
+    constexpr const_iterator cbegin() const noexcept { return {data(), data() + size(), data()}; }
+    constexpr const_iterator cend() const noexcept { return {data(), data() + size(), data() + size()}; }
 
     constexpr reverse_iterator rbegin() const noexcept { return reverse_iterator{end()}; }
     constexpr reverse_iterator rend() const noexcept { return reverse_iterator{begin()}; }
@@ -653,7 +678,7 @@ private:
     span<element_type, dynamic_extent> make_subspan(index_type offset, index_type count,
                                                     subspan_selector<dynamic_extent>) const
     {
-        Expects(size() >= offset && size() != dynamic_extent);
+        Expects(size() >= offset);
 
         if (count == dynamic_extent) { return {KnownNotNull{data() + offset}, size() - offset}; }
 
