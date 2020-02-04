@@ -271,7 +271,7 @@ namespace details
             std::enable_if_t<std::is_same<std::remove_cv_t<Type2>, value_type>::value, int> = 0>
         constexpr bool operator<=(const span_iterator<Type2>& rhs) const noexcept
         {
-            return !(*this > rhs);
+            return !(rhs < *this);
         }
 
         template <
@@ -279,7 +279,7 @@ namespace details
             std::enable_if_t<std::is_same<std::remove_cv_t<Type2>, value_type>::value, int> = 0>
         constexpr bool operator>=(const span_iterator<Type2>& rhs) const noexcept
         {
-            return *!(this < rhs);
+            return !(*this < rhs);
         }
 
 #ifdef _MSC_VER
