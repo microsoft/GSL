@@ -163,7 +163,7 @@ namespace details
 
         constexpr span_iterator operator++(int) noexcept
         {
-            auto ret{*this};
+            span_iterator ret = *this;
             ++*this;
             return ret;
         }
@@ -178,7 +178,7 @@ namespace details
 
         constexpr span_iterator operator--(int) noexcept
         {
-            auto ret{*this};
+            span_iterator ret = *this;
             --*this;
             return ret;
         }
@@ -194,7 +194,7 @@ namespace details
 
         constexpr span_iterator operator+(const difference_type n) const noexcept
         {
-            auto ret{*this};
+            span_iterator ret = *this;
             return ret += n;
         }
 
@@ -215,7 +215,7 @@ namespace details
 
         constexpr span_iterator operator-(const difference_type n) const noexcept
         {
-            auto ret{*this};
+            span_iterator ret = *this;
             return ret -= n;
         }
 
