@@ -163,7 +163,7 @@ namespace details
 
         constexpr span_iterator operator++(int) noexcept
         {
-            auto ret{*this};
+            span_iterator ret = {*this};
             ++*this;
             return ret;
         }
@@ -178,7 +178,7 @@ namespace details
 
         constexpr span_iterator operator--(int) noexcept
         {
-            auto ret{*this};
+            span_iterator ret = {*this};
             --*this;
             return ret;
         }
@@ -194,7 +194,7 @@ namespace details
 
         constexpr span_iterator operator+(const difference_type n) const noexcept
         {
-            auto ret{*this};
+            span_iterator ret = {*this};
             return ret += n;
         }
 
@@ -215,7 +215,7 @@ namespace details
 
         constexpr span_iterator operator-(const difference_type n) const noexcept
         {
-            auto ret{*this};
+            span_iterator ret = {*this};
             return ret -= n;
         }
 
@@ -238,7 +238,8 @@ namespace details
             std::enable_if_t<std::is_same<std::remove_cv_t<Type2>, value_type>::value, int> = 0>
         constexpr bool operator==(const span_iterator<Type2>& rhs) const noexcept
         {
-            return begin_ == rhs.begin_ && end_ == rhs.end_ && current_ == rhs.current_;
+            Expects(begin_ == rhs.begin_ && end_ == rhs.end_);
+            return current_ == rhs.current_;
         }
 
         template <
@@ -452,7 +453,7 @@ public:
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
-    constexpr span(Container& cont) noexcept : span(cont.data(), narrow<size_type>(cont.size()))
+    constexpr span(Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
     template <class Container,
@@ -462,7 +463,7 @@ public:
                   std::is_convertible<typename Container::pointer,
                                       decltype(std::declval<Container>().data())>::value>>
     constexpr span(const Container& cont) noexcept
-        : span(cont.data(), narrow<size_type>(cont.size()))
+        : span(cont.data(), cont.size())
     {}
 
     constexpr span(const span& other) noexcept = default;
@@ -526,10 +527,13 @@ public:
 
     // [span.obs], span observers
     constexpr size_type size() const noexcept { return storage_.size(); }
+
     constexpr size_type size_bytes() const noexcept
     {
-        return size() * narrow_cast<size_type>(sizeof(element_type));
+        Expects(size() < dynamic_extent / sizeof(element_type));
+        return size() * sizeof(element_type);
     }
+
     constexpr bool empty() const noexcept { return size() == 0; }
 
     // [span.elem], span element access

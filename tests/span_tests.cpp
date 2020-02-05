@@ -1090,6 +1090,23 @@ TEST(span_test, from_array_constructor)
      }
  }
 
+ TEST(span_test, incomparable_iterators)
+ {
+     std::set_terminate([] {
+         std::cerr << "Expected Death. incomparable_iterators";
+         std::abort();
+     });
+
+     int a[] = {1, 2, 3, 4};
+     int b[] = {1, 2, 3, 4};
+     {
+         span<int> s = a;
+         span<int> s2 = b;
+         EXPECT_DEATH(s.begin() == s2.begin(), deathstring);
+         EXPECT_DEATH(s.begin() <= s2.begin(), deathstring);
+     }
+ }
+
  TEST(span_test, begin_end)
  {
     std::set_terminate([] {
@@ -1425,8 +1442,12 @@ TEST(span_test, from_array_constructor)
 
  TEST(span_test, as_bytes)
  {
-     int a[] = {1, 2, 3, 4};
+     std::set_terminate([] {
+         std::cerr << "Expected Death. as_bytes";
+         std::abort();
+     });
 
+     int a[] = {1, 2, 3, 4};
      {
          const span<const int> s = a;
          EXPECT_TRUE(s.size() == 4);
@@ -1450,6 +1471,12 @@ TEST(span_test, from_array_constructor)
          const auto bs = as_bytes(s);
          EXPECT_TRUE(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
          EXPECT_TRUE(bs.size() == s.size_bytes());
+     }
+
+     int b[5] = {1, 2, 3, 4, 5};
+     {
+         span<int> sp(begin(b), static_cast<size_t>(-2));
+         EXPECT_DEATH((void) sp.size_bytes(), deathstring);
      }
  }
 
