@@ -1103,11 +1103,11 @@ TEST(span_test, from_array_constructor)
          span<int> s = a;
          span<int> s2 = b;
 #if (__cplusplus > 201402L)
-         EXPECT_DEATH([[maybe_unused]] s.begin() == s2.begin(), deathstring);
-         EXPECT_DEATH([[maybe_unused]] s.begin() <= s2.begin(), deathstring);
+         EXPECT_DEATH([[maybe_unused]] bool _ = (s.begin() == s2.begin()), deathstring);
+         EXPECT_DEATH([[maybe_unused]] bool _ = (s.begin() <= s2.begin()), deathstring);
 #else
-         EXPECT_DEATH(s.begin() == s2.begin(), deathstring);
-         EXPECT_DEATH(s.begin() <= s2.begin(), deathstring);
+         EXPECT_DEATH(bool _ = (s.begin() == s2.begin()), deathstring);
+         EXPECT_DEATH(bool _ = (s.begin() <= s2.begin()), deathstring);
 #endif
      }
  }
