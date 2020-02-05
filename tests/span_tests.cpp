@@ -1102,8 +1102,8 @@ TEST(span_test, from_array_constructor)
      {
          span<int> s = a;
          span<int> s2 = b;
-         EXPECT_DEATH(s.begin() == s2.begin(), deathstring);
-         EXPECT_DEATH(s.begin() <= s2.begin(), deathstring);
+         EXPECT_DEATH(bool _ = (s.begin() == s2.begin()), deathstring);
+         EXPECT_DEATH(bool _ = (s.begin() <= s2.begin()), deathstring);
      }
  }
 
