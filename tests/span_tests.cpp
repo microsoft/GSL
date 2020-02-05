@@ -25,7 +25,7 @@
 #include <iterator>    // for reverse_iterator, operator-, operator==
 #include <memory>      // for unique_ptr, shared_ptr, make_unique, allo...
 #include <regex>       // for match_results, sub_match, match_results<>...
-#include <stddef.h>    // for ptrdiff_t
+#include <cstddef>     // for ptrdiff_t
 #include <string>      // for string
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <vector>      // for vector
@@ -161,11 +161,7 @@ TEST(span_test, from_pointer_length_constructor)
                 EXPECT_TRUE(s.data() == &arr[0]);
                 EXPECT_TRUE(s.empty() == (i == 0));
                 for (std::size_t j = 0; j < i; ++j)
-                {
                     EXPECT_TRUE(arr[j] == s[j]);
-                    EXPECT_TRUE(arr[j] == s.at(j));
-                    EXPECT_TRUE(arr[j] == s(j));
-                }
             }
             {
                 span<int> s = {&arr[i], 4 - i};
@@ -174,11 +170,7 @@ TEST(span_test, from_pointer_length_constructor)
                 EXPECT_TRUE(s.empty() == ((4 - i) == 0));
 
                 for (std::size_t j = 0; j < 4 - i; ++j)
-                {
                     EXPECT_TRUE(arr[j + i] == s[j]);
-                    EXPECT_TRUE(arr[j + i] == s.at(j));
-                    EXPECT_TRUE(arr[j + i] == s(j));
-                }
             }
         }
     }
@@ -976,52 +968,6 @@ TEST(span_test, from_array_constructor)
      }
  }
 
- TEST(span_test, at_call)
- {
-    std::set_terminate([] {
-        std::cerr << "Expected Death. at_call";
-        std::abort();
-    });
-     int arr[4] = {1, 2, 3, 4};
-
-     {
-         span<int> s = arr;
-         EXPECT_TRUE(s.at(0) == 1);
-         EXPECT_DEATH(s.at(5), deathstring);
-     }
-
-     {
-         int arr2d[2] = {1, 6};
-         span<int, 2> s = arr2d;
-         EXPECT_TRUE(s.at(0) == 1);
-         EXPECT_TRUE(s.at(1) == 6);
-         EXPECT_DEATH(s.at(2), deathstring);
-     }
- }
-
- TEST(span_test, operator_function_call)
- {
-    std::set_terminate([] {
-        std::cerr << "Expected Death. operator_function_call";
-        std::abort();
-    });
-     int arr[4] = {1, 2, 3, 4};
-
-     {
-         span<int> s = arr;
-         EXPECT_TRUE(s(0) == 1);
-         EXPECT_DEATH(s(5), deathstring);
-     }
-
-     {
-         int arr2d[2] = {1, 6};
-         span<int, 2> s = arr2d;
-         EXPECT_TRUE(s(0) == 1);
-         EXPECT_TRUE(s(1) == 6);
-         EXPECT_DEATH(s(2), deathstring);
-     }
- }
-
  TEST(span_test, iterator_default_init)
  {
      span<int>::iterator it1;
@@ -1093,8 +1039,8 @@ TEST(span_test, from_array_constructor)
      int a[] = {1, 2, 3, 4};
      span<int> s{a};
 
-     EXPECT_TRUE((std::is_same<decltype(s.size()), decltype(ssize(s))>::value));
-     EXPECT_TRUE(s.size() == ssize(s));
+     EXPECT_FALSE((std::is_same<decltype(s.size()), decltype(ssize(s))>::value));
+     EXPECT_TRUE(s.size() == static_cast<std::size_t>(ssize(s)));
  }
 
  TEST(span_test, iterator_comparisons)

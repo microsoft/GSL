@@ -552,16 +552,6 @@ public:
         return data()[size() - 1];
     }
 
-    // at and operator() are deprecated to align to the public member functions of std::span
-    [[deprecated("Use operator[]")]] constexpr reference at(size_type idx) const noexcept
-    {
-        return this->operator[](idx);
-    }
-    [[deprecated("Use operator[]")]] constexpr reference operator()(size_type idx) const noexcept
-    {
-        return this->operator[](idx);
-    }
-
     constexpr pointer data() const noexcept { return storage_.data(); }
 
     // [span.iter], span iterator support
@@ -817,67 +807,67 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
 
 // [span.obs] Free observer functions
 template <class ElementType, std::size_t Extent>
-constexpr typename span<ElementType, Extent>::size_type
-ssize(const span<ElementType, Extent>& span) noexcept
+constexpr std::ptrdiff_t
+ssize(const span<ElementType, Extent>& s) noexcept
 {
-    return span.size();
+    return static_cast<std::ptrdiff_t>(s.size());
 }
 
 // [span.iter] Free functions for begin/end functions
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::iterator
-begin(const span<ElementType, Extent>& span) noexcept
+begin(const span<ElementType, Extent>& s) noexcept
 {
-    return span.begin();
+    return s.begin();
 }
 
 template <class ElementType, std::size_t Extent = dynamic_extent>
 constexpr typename span<ElementType, Extent>::iterator
-end(const span<ElementType, Extent>& span) noexcept
+end(const span<ElementType, Extent>& s) noexcept
 {
-    return span.end();
+    return s.end();
 }
 
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::const_iterator
-cbegin(const span<ElementType, Extent>& span) noexcept
+cbegin(const span<ElementType, Extent>& s) noexcept
 {
-    return span.cbegin();
+    return s.cbegin();
 }
 
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::const_iterator
-cend(const span<ElementType, Extent>& span) noexcept
+cend(const span<ElementType, Extent>& s) noexcept
 {
-    return span.cend();
+    return s.cend();
 }
 
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::reverse_iterator
-rbegin(const span<ElementType, Extent>& span) noexcept
+rbegin(const span<ElementType, Extent>& s) noexcept
 {
-    return span.rbegin();
+    return s.rbegin();
 }
 
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::reverse_iterator
-rend(const span<ElementType, Extent>& span) noexcept
+rend(const span<ElementType, Extent>& s) noexcept
 {
-    return span.rend();
+    return s.rend();
 }
 
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::const_reverse_iterator
-crbegin(const span<ElementType, Extent>& span) noexcept
+crbegin(const span<ElementType, Extent>& s) noexcept
 {
-    return span.crbegin();
+    return s.crbegin();
 }
 
 template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::const_reverse_iterator
-crend(const span<ElementType, Extent>& span) noexcept
+crend(const span<ElementType, Extent>& s) noexcept
 {
-    return span.crend();
+    return s.crend();
 }
 
 } // namespace gsl

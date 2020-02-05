@@ -23,6 +23,7 @@
 #include <limits>      // for numeric_limits
 #include <stdint.h>    // for uint32_t, int32_t
 #include <type_traits> // for is_same
+#include <cstddef>     // for std::size_t
 
 using namespace gsl;
 
@@ -37,7 +38,7 @@ void g() { j += 1; }
 
 TEST(utils_tests, sanity_check_for_gsl_index_typedef)
 {
-    static_assert(std::is_same<gsl::index, std::ptrdiff_t>::value,
+    static_assert(std::is_same<gsl::index, std::size_t>::value,
                   "gsl::index represents wrong arithmetic type");
 }
 
