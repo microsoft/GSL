@@ -38,7 +38,7 @@ void g() { j += 1; }
 
 TEST(utils_tests, sanity_check_for_gsl_index_typedef)
 {
-    static_assert(std::is_same<gsl::index, std::size_t>::value,
+    static_assert(std::is_same<gsl::index, std::ptrdiff_t>::value,
                   "gsl::index represents wrong arithmetic type");
 }
 

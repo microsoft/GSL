@@ -49,7 +49,7 @@ namespace gsl
 //
 
 // index type for all container indexes/subscripts/sizes
-using index = std::size_t;
+using index = std::ptrdiff_t;
 
 // final_action allows you to ensure something gets run at the end of a scope
 template <class F>
@@ -129,8 +129,8 @@ GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 constexpr T& at(T (&arr)[N], const index i)
 {
-    Expects(i >= 0 && i < N);
-    return arr[i];
+    Expects(i >= 0 && i < narrow_cast<index>(N));
+    return arr[narrow_cast<std::size_t>(i)];
 }
 
 template <class Cont>
@@ -138,15 +138,16 @@ GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
 {
-    Expects(i >= 0 && i < cont.size());
-    return cont[i];
+    Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
+    using size_type = decltype(cont.size());
+    return cont[narrow_cast<size_type>(i)];
 }
 
 template <class T>
 GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 constexpr T at(const std::initializer_list<T> cont, const index i)
 {
-    Expects(i >= 0 && i < cont.size());
+    Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     return *(cont.begin() + i);
 }
 
