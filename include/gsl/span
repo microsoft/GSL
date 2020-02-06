@@ -806,7 +806,8 @@ template <class ElementType, std::size_t Extent>
 constexpr ElementType& at(span<ElementType, Extent> s, index i)
 {
     // No bounds checking here because it is done in span::operator[] called below
-    return s[i];
+    Ensures(i >= 0);
+    return s[narrow_cast<std::size_t>(i)];
 }
 
 // [span.obs] Free observer functions

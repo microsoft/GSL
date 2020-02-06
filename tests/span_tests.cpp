@@ -153,24 +153,24 @@ TEST(span_test, from_pointer_length_constructor)
     int arr[4] = {1, 2, 3, 4};
 
     {
-        for (std::size_t i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             {
-                span<int> s = {&arr[0], i};
-                EXPECT_TRUE(s.size() == i);
+                span<int> s = {&arr[0], narrow_cast<std::size_t>(i)};
+                EXPECT_TRUE(s.size() == narrow_cast<std::size_t>(i));
                 EXPECT_TRUE(s.data() == &arr[0]);
                 EXPECT_TRUE(s.empty() == (i == 0));
-                for (std::size_t j = 0; j < i; ++j)
-                    EXPECT_TRUE(arr[j] == s[j]);
+                for (int j = 0; j < i; ++j)
+                    EXPECT_TRUE(arr[j] == s[narrow_cast<std::size_t>(j)]);
             }
             {
-                span<int> s = {&arr[i], 4 - i};
-                EXPECT_TRUE(s.size() == 4 - i);
+                span<int> s = {&arr[i], 4 - narrow_cast<std::size_t>(i)};
+                EXPECT_TRUE(s.size() == 4 - narrow_cast<std::size_t>(i));
                 EXPECT_TRUE(s.data() == &arr[i]);
                 EXPECT_TRUE(s.empty() == ((4 - i) == 0));
 
-                for (std::size_t j = 0; j < 4 - i; ++j)
-                    EXPECT_TRUE(arr[j + i] == s[j]);
+                for (int j = 0; j < 4 - i; ++j)
+                    EXPECT_TRUE(arr[j + i] == s[narrow_cast<std::size_t>(j)]);
             }
         }
     }
