@@ -1551,11 +1551,15 @@ TEST(span_test, from_array_constructor)
      // even when done dynamically
      {
          span<int> s = arr;
+         /*
+         // this now results in a compile-time error, rather than runtime.
+         // There is no suitable conversion from dynamic span to fixed span.
          auto f = [&]() {
              const span<int, 2> s2 = s;
              static_cast<void>(s2);
          };
          EXPECT_DEATH(f(), deathstring);
+         */
      }
 
      // but doing so explicitly is ok
@@ -1570,12 +1574,19 @@ TEST(span_test, from_array_constructor)
          static_cast<void>(s1);
      }
 
-     // ...or dynamically
+    /*
+     // this is not a legal operation in std::span, so we are no longer supporting it
+     // conversion from span<int, 4> to span<int, dynamic_extent> via call to `first`
+     // then convert from span<int, dynamic_extent> to span<int, 1>
+     // The dynamic to fixed extents are not supported in the standard
+     // to make this work, span<int, 1> would need to be span<int>.
      {
+
          // NB: implicit conversion to span<int,1> from span<int>
          span<int, 1> s1 = s4.first(1);
          static_cast<void>(s1);
      }
+     */
 
      // initialization or assignment to static span that requires size INCREASE is not ok.
      int arr2[2] = {1, 2};
@@ -1597,12 +1608,15 @@ TEST(span_test, from_array_constructor)
          EXPECT_DEATH(f(), deathstring);
      }
 
+    /*
+     // This no longer compiles. There is no suitable conversion from dynamic span to a fixed size span.
      // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
      span<int> av = arr2; auto f = [&]() {
          const span<int, 4> _s4 = av;
          static_cast<void>(_s4);
      };
      EXPECT_DEATH(f(), deathstring);
+     */
  }
 
  TEST(span_test, interop_with_std_regex)
