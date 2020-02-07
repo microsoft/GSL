@@ -430,7 +430,7 @@ public:
     constexpr span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(std::distance(firstElem, lastElem)))
     {
-        if (Extent != dynamic_extent) { Expects(lastElem - firstElem == Extent); }
+        if (Extent != dynamic_extent) { Expects(lastElem - firstElem == static_cast<difference_type>(Extent)); }
     }
 
     template <std::size_t N>

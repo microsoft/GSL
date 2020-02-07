@@ -1550,10 +1550,10 @@ TEST(span_test, from_array_constructor)
 
      // even when done dynamically
      {
-         span<int> s = arr;
          /*
          // this now results in a compile-time error, rather than runtime.
          // There is no suitable conversion from dynamic span to fixed span.
+         span<int> s = arr;
          auto f = [&]() {
              const span<int, 2> s2 = s;
              static_cast<void>(s2);
