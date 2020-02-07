@@ -676,7 +676,7 @@ private:
     };
 
     template <std::size_t CallerExtent>
-    span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
+    constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
                                                     subspan_selector<CallerExtent>) const
     {
         const span<element_type, dynamic_extent> tmp(*this);
@@ -686,7 +686,7 @@ private:
     // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     // clang-format on
-    span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
+    constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
                                                     subspan_selector<dynamic_extent>) const
     {
         Expects(size() >= offset);
