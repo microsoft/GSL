@@ -92,6 +92,10 @@ install(
 install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION share/Microsoft.GSL/cmake)
 export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
 
+# Add Microsoft.GSL::GSL alias for GSL so that dependents can be agnostic about
+# whether GSL was added via `add_subdirectory` or `find_package`
+add_library(Microsoft.GSL::GSL ALIAS GSL)
+
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
 	enable_testing()
