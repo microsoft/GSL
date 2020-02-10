@@ -418,7 +418,8 @@ public:
               // "Dependent" is needed to make "std::enable_if_t<Dependent || Extent == 0 || Extent
               // == dynamic_extent>" SFINAE, since "std::enable_if_t<Extent == 0 || Extent ==
               // dynamic_extent>" is ill-formed when Extent is greater than 0.
-              class = std::enable_if_t<(Dependent || Extent == 0 || Extent == dynamic_extent)>>
+              class = std::enable_if_t<(Dependent ||
+                                        details::is_allowed_extent_conversion<0, Extent>::value)>>
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}
 
@@ -430,34 +431,29 @@ public:
     constexpr span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(std::distance(firstElem, lastElem)))
     {
-        if (Extent != dynamic_extent) { Expects(lastElem - firstElem == static_cast<difference_type>(Extent)); }
+        if (Extent != dynamic_extent)
+        { Expects(lastElem - firstElem == static_cast<difference_type>(Extent)); }
     }
 
-    template <std::size_t N>
+    template <std::size_t N,
+              std::enable_if_t<details::is_allowed_extent_conversion<N, Extent>::value, int> = 0>
     constexpr span(element_type (&arr)[N]) noexcept
         : storage_(KnownNotNull{std::addressof(arr[0])}, details::extent_type<N>())
     {}
 
-    template <std::size_t N, std::size_t Ext = Extent,
-              std::enable_if_t<(N == Ext || Ext == dynamic_extent), int> = 0>
-    constexpr span(std::array<value_type, N>& arr) noexcept
+    template <std::size_t N,
+              std::enable_if_t<details::is_allowed_extent_conversion<N, Extent>::value, int> = 0>
+    constexpr span(std::array<element_type, N>& arr) noexcept
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {}
 
-    template <std::size_t N, std::size_t Ext = Extent,
-              std::enable_if_t<((N == Ext || Ext == dynamic_extent) &&
-                                std::is_convertible<const value_type*, element_type*>::value),
+    template <std::size_t N,
+              std::enable_if_t<(details::is_allowed_extent_conversion<N, Extent>::value &&
+                                details::is_allowed_element_type_conversion<const value_type,
+                                                                            element_type>::value),
                                int> = 0>
     constexpr span(const std::array<value_type, N>& arr) noexcept
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
-    {}
-
-    constexpr span(std::array<value_type, 0>&) noexcept
-        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
-    {}
-
-    constexpr span(const std::array<value_type, 0>&) noexcept
-        : storage_(static_cast<pointer>(nullptr), details::extent_type<0>())
     {}
 
     // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
@@ -474,6 +470,7 @@ public:
     template <class Container,
               class = std::enable_if_t<
                   std::is_const<element_type>::value && !details::is_span<Container>::value &&
+                  !details::is_std_array<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
                   std::is_convertible<decltype(std::declval<Container&>().data()), pointer>::value>>
     constexpr span(const Container& cont) noexcept : span(cont.data(), cont.size())
@@ -677,7 +674,7 @@ private:
 
     template <std::size_t CallerExtent>
     constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
-                                                    subspan_selector<CallerExtent>) const
+                                                              subspan_selector<CallerExtent>) const
     {
         const span<element_type, dynamic_extent> tmp(*this);
         return tmp.subspan(offset, count);
@@ -686,8 +683,8 @@ private:
     // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     // clang-format on
-    constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
-                                                    subspan_selector<dynamic_extent>) const
+    constexpr span<element_type, dynamic_extent>
+    make_subspan(size_type offset, size_type count, subspan_selector<dynamic_extent>) const
     {
         Expects(size() >= offset);
 
