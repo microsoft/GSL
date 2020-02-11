@@ -71,7 +71,11 @@ namespace gsl
 {
 
 // [views.constants], constants
+#if (defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND))
+constexpr const std::size_t dynamic_extent = static_cast<std::size_t>(-1);
+#else
 constexpr std::size_t dynamic_extent = static_cast<std::size_t>(-1);
+#endif
 
 template <class ElementType, std::size_t Extent = dynamic_extent>
 class span;
@@ -134,6 +138,12 @@ namespace details
 #ifdef _MSC_VER
         using _Unchecked_type = pointer;
 #endif
+        constexpr span_iterator() = default;
+
+        constexpr span_iterator(pointer begin, pointer end, pointer current)
+            : begin_(begin), end_(end), current_(current)
+        {}
+
         constexpr operator span_iterator<const Type>() const noexcept
         {
             return {begin_, end_, current_};
@@ -494,6 +504,7 @@ public:
     template <std::size_t Count>
     constexpr span<element_type, Count> first() const noexcept
     {
+        Expects(Count != dynamic_extent);
         Expects(Count <= size());
         return {data(), Count};
     }
@@ -504,6 +515,7 @@ public:
         // clang-format on
         constexpr span<element_type, Count> last() const noexcept
     {
+        Expects(Count != dynamic_extent);
         Expects(size() >= Count);
         return {data() + (size() - Count), Count};
     }
