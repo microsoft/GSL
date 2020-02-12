@@ -1206,12 +1206,12 @@ TEST(string_span_tests, as_bytes)
     EXPECT_TRUE(bs.size() == s.size_bytes());
 }
 
-TEST(string_span_tests, as_writeable_bytes)
+TEST(string_span_tests, as_writable_bytes)
 {
     wchar_t buf[]{L"qwerty"};
     wzstring_span<> v(buf);
     const auto s = v.as_string_span();
-    const auto bs = as_writeable_bytes(s);
+    const auto bs = as_writable_bytes(s);
     EXPECT_TRUE(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
     EXPECT_TRUE(bs.size() == s.size_bytes());
 }

@@ -1485,7 +1485,7 @@ TEST(span_test, from_array_constructor)
      }
  }
 
- TEST(span_test, as_writeable_bytes)
+ TEST(span_test, as_writable_bytes)
  {
      int a[] = {1, 2, 3, 4};
 
@@ -1494,7 +1494,7 @@ TEST(span_test, from_array_constructor)
          // you should not be able to get writeable bytes for const objects
          span<const int> s = a;
          EXPECT_TRUE(s.size() == 4);
-         span<const byte> bs = as_writeable_bytes(s);
+         span<const byte> bs = as_writable_bytes(s);
          EXPECT_TRUE(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
          EXPECT_TRUE(bs.size() == s.size_bytes());
  #endif
@@ -1502,7 +1502,7 @@ TEST(span_test, from_array_constructor)
 
      {
          span<int> s;
-         const auto bs = as_writeable_bytes(s);
+         const auto bs = as_writable_bytes(s);
          EXPECT_TRUE(bs.size() == s.size());
          EXPECT_TRUE(bs.size() == 0);
          EXPECT_TRUE(bs.size_bytes() == 0);
@@ -1512,7 +1512,7 @@ TEST(span_test, from_array_constructor)
 
      {
          span<int> s = a;
-         const auto bs = as_writeable_bytes(s);
+         const auto bs = as_writable_bytes(s);
          EXPECT_TRUE(static_cast<void*>(bs.data()) == static_cast<void*>(s.data()));
          EXPECT_TRUE(bs.size() == s.size_bytes());
      }

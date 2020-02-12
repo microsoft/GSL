@@ -381,7 +381,7 @@ as_bytes(basic_string_span<ElementType, Extent> s) noexcept
 template <class ElementType, std::size_t Extent,
           class = std::enable_if_t<!std::is_const<ElementType>::value>>
 basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
-as_writeable_bytes(basic_string_span<ElementType, Extent> s) noexcept
+as_writable_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};

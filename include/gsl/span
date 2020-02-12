@@ -71,11 +71,7 @@ namespace gsl
 {
 
 // [views.constants], constants
-#if (defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND))
 constexpr const std::size_t dynamic_extent = static_cast<std::size_t>(-1);
-#else
-constexpr std::size_t dynamic_extent = static_cast<std::size_t>(-1);
-#endif
 
 template <class ElementType, std::size_t Extent = dynamic_extent>
 class span;
@@ -137,7 +133,7 @@ namespace details
 
 #ifdef _MSC_VER
         using _Unchecked_type = pointer;
-#endif
+#endif // _MSC_VER
         constexpr span_iterator() = default;
 
         constexpr span_iterator(pointer begin, pointer end, pointer current)
@@ -348,14 +344,14 @@ namespace details
     public:
         using size_type = std::size_t;
 
-        static_assert(Ext != dynamic_extent, "A fixed-size span must be >= 0 in size.");
+        static_assert(Ext != dynamic_extent, "A fixed-size span must not have size == dynamic_extent");
 
         constexpr extent_type() noexcept {}
 
         template <size_type Other>
         constexpr extent_type(extent_type<Other> ext)
         {
-            static_assert(Other == Ext || Other == dynamic_extent,
+            static_assert(Other == Ext,
                           "Mismatch between fixed-size extent and size of initializing data.");
             Expects(ext.size() == Ext);
         }
@@ -414,8 +410,6 @@ public:
     using const_iterator = details::span_iterator<const ElementType>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-
-    using index_type [[deprecated("use size_type instead of index_type")]] = size_type;
 
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
     static constexpr const size_type extent{Extent};
@@ -805,18 +799,6 @@ as_writable_bytes(span<ElementType, Extent> s) noexcept
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
-template <class ElementType, std::size_t Extent,
-          std::enable_if_t<!std::is_const<ElementType>::value, int> = 0>
-[[deprecated(
-    "use as_writable_bytes")]] span<byte, details::calculate_byte_size<ElementType, Extent>::value>
-as_writeable_bytes(span<ElementType, Extent> s) noexcept
-{
-    // clang-format off
-    GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
-    // clang-format on
-    return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
-}
-
 //
 // make_span() - Utility functions for creating spans
 //
@@ -868,7 +850,7 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i)
 {
     // No bounds checking here because it is done in span::operator[] called below
     Ensures(i >= 0);
-    return s[narrow_cast<std::size_t>(i)];
+    return s[static_cast<std::size_t>(i)];
 }
 
 // [span.obs] Free observer functions
