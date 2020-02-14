@@ -29,6 +29,7 @@
 #include <string>      // for string
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <vector>      // for vector
+#include <utility>
 
 using namespace std;
 using namespace gsl;
@@ -1021,11 +1022,11 @@ TEST(span_test, from_array_constructor)
      EXPECT_TRUE((std::is_same<decltype(s.crbegin()), decltype(crbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.crend()), decltype(crend(s))>::value));
 
-     EXPECT_TRUE(s.begin() == begin(s));
-     EXPECT_TRUE(s.end() == end(s));
+     EXPECT_TRUE(s.begin() == std::begin(s));
+     EXPECT_TRUE(s.end() == std::end(s));
 
-     EXPECT_TRUE(s.cbegin() == cbegin(s));
-     EXPECT_TRUE(s.cend() == cend(s));
+     EXPECT_TRUE(s.cbegin() == std::cbegin(s));
+     EXPECT_TRUE(s.cend() == std::cend(s));
 
      EXPECT_TRUE(s.rbegin() == rbegin(s));
      EXPECT_TRUE(s.rend() == rend(s));

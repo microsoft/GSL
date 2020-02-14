@@ -105,19 +105,19 @@ namespace details
     };
 
     template <class T>
-    struct is_std_array : public is_std_array_oracle<std::remove_cv_t<T>>
+    struct is_std_array : is_std_array_oracle<std::remove_cv_t<T>>
     {
     };
 
     template <std::size_t From, std::size_t To>
     struct is_allowed_extent_conversion
-        : public std::integral_constant<bool, From == To || To == gsl::dynamic_extent>
+        : std::integral_constant<bool, From == To || To == gsl::dynamic_extent>
     {
     };
 
     template <class From, class To>
     struct is_allowed_element_type_conversion
-        : public std::integral_constant<bool, std::is_convertible<From (*)[], To (*)[]>::value>
+        : std::integral_constant<bool, std::is_convertible<From (*)[], To (*)[]>::value>
     {
     };
 
@@ -460,13 +460,12 @@ public:
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {}
 
-    // NB: the SFINAE here uses .data() as a incomplete/imperfect proxy for the requirement
+    // NB: the SFINAE here uses .data() as an incomplete/imperfect proxy for the requirement
     // on Container to be a contiguous sequence container.
     template <class Container,
               class = std::enable_if_t<
                   !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
                   std::is_convertible<typename Container::pointer, pointer>::value &&
-                  std::is_convertible<pointer, typename Container::pointer>::value &&
                   std::is_convertible<decltype(std::declval<Container&>().data()), pointer>::value>>
     constexpr span(Container& cont) noexcept : span(cont.data(), cont.size())
     {}
@@ -671,7 +670,7 @@ private:
 
     // The rest is needed to remove unnecessary null check
     // in subspans and constructors from arrays
-    constexpr span(KnownNotNull ptr, size_type count) : storage_(ptr, count) {}
+    constexpr span(KnownNotNull ptr, size_type count) noexcept : storage_(ptr, count) {}
 
     template <std::size_t CallerExtent>
     class subspan_selector
@@ -680,7 +679,7 @@ private:
 
     template <std::size_t CallerExtent>
     constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
-                                                              subspan_selector<CallerExtent>) const
+                                                              subspan_selector<CallerExtent>) const noexcept
     {
         const span<element_type, dynamic_extent> tmp(*this);
         return tmp.subspan(offset, count);
@@ -690,7 +689,7 @@ private:
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     // clang-format on
     constexpr span<element_type, dynamic_extent>
-    make_subspan(size_type offset, size_type count, subspan_selector<dynamic_extent>) const
+    make_subspan(size_type offset, size_type count, subspan_selector<dynamic_extent>) const noexcept
     {
         Expects(size() >= offset);
 

@@ -153,6 +153,7 @@ function(add_gsl_test name)
 endfunction()
 
 add_gsl_test(span_tests)
+add_gsl_test(span_compatibility_tests)
 add_gsl_test(multi_span_tests)
 add_gsl_test(strided_span_tests)
 add_gsl_test(string_span_tests)
