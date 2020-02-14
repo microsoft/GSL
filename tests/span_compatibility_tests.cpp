@@ -42,10 +42,10 @@ static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
 template <typename U, typename = void>
-constexpr bool AsWritableBytesCompilesFor = false;
+static constexpr bool AsWritableBytesCompilesFor = false;
 
 template <typename U>
-constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
+static constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
     true;
 
 TEST(span_test, std_span_compatibilty_assertion_tests)
