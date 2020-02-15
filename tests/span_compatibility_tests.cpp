@@ -48,22 +48,22 @@ template <typename U>
 static constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
     true;
 
-TEST(span_test, std_span_compatibilty_assertion_tests)
+TEST(span_compatibility_tests, assertion_tests)
 {
     int arr[3]{10, 20, 30};
     std::array<int, 3> stl{{100, 200, 300}};
 
     {
         gsl::span<int> sp_dyn;
-        assert(sp_dyn.data() == nullptr);
-        assert(sp_dyn.size() == 0);
-        assert(sp_dyn.empty());
+        EXPECT_TRUE(sp_dyn.data() == nullptr);
+        EXPECT_TRUE(sp_dyn.size() == 0);
+        EXPECT_TRUE(sp_dyn.empty());
     }
     {
         gsl::span<int, 0> sp_zero;
-        assert(sp_zero.data() == nullptr);
-        assert(sp_zero.size() == 0);
-        assert(sp_zero.empty());
+        EXPECT_TRUE(sp_zero.data() == nullptr);
+        EXPECT_TRUE(sp_zero.size() == 0);
+        EXPECT_TRUE(sp_zero.empty());
 
         gsl::span<int> sp_dyn_a(arr, 3);
         gsl::span<int> sp_dyn_b(begin(arr), 3);
