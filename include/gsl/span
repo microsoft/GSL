@@ -199,7 +199,8 @@ namespace details
         constexpr span_iterator operator+(const difference_type n) const noexcept
         {
             span_iterator ret = *this;
-            return ret += n;
+            ret += n;
+            return ret;
         }
 
         friend constexpr span_iterator operator+(const difference_type n,
@@ -220,7 +221,8 @@ namespace details
         constexpr span_iterator operator-(const difference_type n) const noexcept
         {
             span_iterator ret = *this;
-            return ret -= n;
+            ret -= n;
+            return ret;
         }
 
         template <
@@ -342,8 +344,6 @@ namespace details
     {
     public:
         using size_type = std::size_t;
-
-        static_assert(Ext != dynamic_extent, "A fixed-size span must not have size == dynamic_extent");
 
         constexpr extent_type() noexcept = default;
 
