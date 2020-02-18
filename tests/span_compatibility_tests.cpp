@@ -41,29 +41,22 @@ static_assert(std::is_convertible<Derived*, Base*>::value, "std::is_convertible<
 static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
-template <typename U, typename = void>
-static constexpr bool AsWritableBytesCompilesFor = false;
-
-template <typename U>
-static constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
-    true;
-
-TEST(span_test, std_span_compatibilty_assertion_tests)
+TEST(span_compatibility_tests, assertion_tests)
 {
     int arr[3]{10, 20, 30};
     std::array<int, 3> stl{{100, 200, 300}};
 
     {
         gsl::span<int> sp_dyn;
-        assert(sp_dyn.data() == nullptr);
-        assert(sp_dyn.size() == 0);
-        assert(sp_dyn.empty());
+        EXPECT_TRUE(sp_dyn.data() == nullptr);
+        EXPECT_TRUE(sp_dyn.size() == 0);
+        EXPECT_TRUE(sp_dyn.empty());
     }
     {
         gsl::span<int, 0> sp_zero;
-        assert(sp_zero.data() == nullptr);
-        assert(sp_zero.size() == 0);
-        assert(sp_zero.empty());
+        EXPECT_TRUE(sp_zero.data() == nullptr);
+        EXPECT_TRUE(sp_zero.size() == 0);
+        EXPECT_TRUE(sp_zero.empty());
 
         gsl::span<int> sp_dyn_a(arr, 3);
         gsl::span<int> sp_dyn_b(begin(arr), 3);
@@ -500,15 +493,6 @@ TEST(span_test, std_span_compatibilty_assertion_tests)
         static_assert(noexcept(as_bytes(sp_const_nine)), "noexcept(as_bytes(sp_const_nine))");
         static_assert(noexcept(as_writable_bytes(sp_dyn)), "noexcept(as_writable_bytes(sp_dyn))");
         static_assert(noexcept(as_writable_bytes(sp_nine)), "noexcept(as_writable_bytes(sp_nine))");
-
-        static_assert(AsWritableBytesCompilesFor<gsl::span<int>>,
-                      "AsWritableBytesCompilesFor<gsl::span<int>>");
-        static_assert(AsWritableBytesCompilesFor<gsl::span<int, 9>>,
-                      "AsWritableBytesCompilesFor<gsl::span<int, 9>>");
-        static_assert(!AsWritableBytesCompilesFor<gsl::span<const int>>,
-                      "!AsWritableBytesCompilesFor<gsl::span<const int>>");
-        static_assert(!AsWritableBytesCompilesFor<gsl::span<const int, 9>>,
-                      "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
 
         auto sp_1 = as_bytes(sp_dyn);
         auto sp_2 = as_bytes(sp_nine);
@@ -1064,3 +1048,22 @@ static_assert(std::is_convertible<std::array<int, 3>&, gsl::span<const int>>::va
 
 static_assert(std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>::value,
               "std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>");
+              
+              
+#if __cplusplus >= 201703l
+template <typename U, typename = void>
+inline constexpr bool AsWritableBytesCompilesFor = false;
+
+template <typename U>
+inline constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
+    true;
+        
+static_assert(AsWritableBytesCompilesFor<gsl::span<int>>,
+                "AsWritableBytesCompilesFor<gsl::span<int>>");
+static_assert(AsWritableBytesCompilesFor<gsl::span<int, 9>>,
+                "AsWritableBytesCompilesFor<gsl::span<int, 9>>");
+static_assert(!AsWritableBytesCompilesFor<gsl::span<const int>>,
+                "!AsWritableBytesCompilesFor<gsl::span<const int>>");
+static_assert(!AsWritableBytesCompilesFor<gsl::span<const int, 9>>,
+                "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
+#endif // __cplusplus >= 201703l
