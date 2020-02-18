@@ -931,6 +931,8 @@ static_assert(!std::is_constructible<gsl::span<Base>, Derived (&)[3]>::value,
               "!std::is_constructible<gsl::span<Base>, Derived(&)[3]>");
 static_assert(!std::is_constructible<gsl::span<Base>, std::array<Derived, 3>&>::value,
               "!std::is_constructible<gsl::span<Base>, std::array<Derived, 3>&>");
+static_assert(!std::is_constructible<gsl::span<Base>, std::vector<Derived>&>::value,
+              "!std::is_constructible<gsl::span<Base>, std::vector<Derived>&>");
 static_assert(!std::is_constructible<gsl::span<Base>, const gsl::span<Derived>&>::value,
               "!std::is_constructible<gsl::span<Base>, const gsl::span<Derived>&>");
 static_assert(!std::is_constructible<gsl::span<Base>, const gsl::span<Derived, 3>&>::value,
@@ -1048,16 +1050,16 @@ static_assert(std::is_convertible<std::array<int, 3>&, gsl::span<const int>>::va
 
 static_assert(std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>::value,
               "std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>");
-              
-              
+
+
 #if __cplusplus >= 201703l
 template <typename U, typename = void>
-inline constexpr bool AsWritableBytesCompilesFor = false;
+static constexpr bool AsWritableBytesCompilesFor = false;
 
 template <typename U>
-inline constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
+static constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
     true;
-        
+
 static_assert(AsWritableBytesCompilesFor<gsl::span<int>>,
                 "AsWritableBytesCompilesFor<gsl::span<int>>");
 static_assert(AsWritableBytesCompilesFor<gsl::span<int, 9>>,
