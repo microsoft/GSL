@@ -24,6 +24,7 @@
 #include <iterator>    // for reverse_iterator, operator-, operator==
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <utility>
+#include <vector>      // for vector
 
 using namespace std;
 using namespace gsl;

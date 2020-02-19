@@ -19,7 +19,7 @@
 
 #include <gsl/gsl_assert> // for Ensures, Expects
 #include <gsl/gsl_util>   // for narrow_cast
-#include <gsl/span>       // for operator!=, operator==, dynamic_extent
+#include <gsl/span_ext>       // for operator!=, operator==, dynamic_extent
 
 #include <algorithm> // for equal, lexicographical_compare
 #include <array>     // for array
