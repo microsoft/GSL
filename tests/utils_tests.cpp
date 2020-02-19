@@ -23,6 +23,7 @@
 #include <limits>      // for numeric_limits
 #include <stdint.h>    // for uint32_t, int32_t
 #include <type_traits> // for is_same
+#include <cstddef>     // for std::ptrdiff_t
 
 using namespace gsl;
 
