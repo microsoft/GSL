@@ -25,6 +25,24 @@
 #include <iterator>  // for reverse_iterator, distance, random_access_...
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 
+// forward declaring std::array.
+// pulling the entire array header is unnecessary for span because array is only used for a few constructors.
+// The end user's logic will pull in the actual definition of array if they need it.
+// To do: find a way to forward declare array for Apple Clang
+#if defined(__APPLE__)
+#include <array>
+#else
+namespace std
+{
+template <class Type, std::size_t Sz>
+#if defined(__clang__)
+struct array;
+#else
+class array;
+#endif // defined(__clang__)
+}
+#endif // defined(__APPLE__)
+
 #if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
 
@@ -61,26 +79,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
-
-namespace std
-{
-// forward declaring std::array.
-// array is only used for a few constructors, so pulling the entire header is unnecessary for span.
-// The end user's logic will pull in the actual definition of array if they need it.
-template <class Type, std::size_t Sz>
-#if defined(__clang__)
-
-#if defined(__APPLE__)
-#define VIS_MOD _LIBCPP_TYPE_VIS_ONLY
-#else
-#define VIS_MOD
-#endif
-
-struct VIS_MOD array;
-#else
-class array;
-#endif // defined(__clang__)
-}
 
 namespace gsl
 {
