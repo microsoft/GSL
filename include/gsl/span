@@ -68,7 +68,11 @@ namespace std
 // array is only used for a few constructors, so pulling the entire header is unnecessary for span.
 // The end user's logic will pull in the actual definition of array if they need it.
 template <class Type, std::size_t Sz>
+#if defined(_MSC_VER) || (defined(__GNUC__) && !defined(__clang__))
 class array;
+#else
+struct array;
+#endif // defined(_MSC_VER) || (defined(__GNUC__) && !defined(__clang__))
 }
 
 namespace gsl
