@@ -69,11 +69,14 @@ namespace std
 // The end user's logic will pull in the actual definition of array if they need it.
 template <class Type, std::size_t Sz>
 #if defined(__clang__)
-struct \
+
 #if defined(__APPLE__)
-_LIBCPP_TYPE_VIS_ONLY \
+#define VIS_MOD _LIBCPP_TYPE_VIS_ONLY
+#else
+#define VIS_MOD
 #endif
-array;
+
+struct VIS_MOD array;
 #else
 class array;
 #endif // defined(__clang__)
