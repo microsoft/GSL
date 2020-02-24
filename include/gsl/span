@@ -21,7 +21,6 @@
 #include <gsl/gsl_byte>   // for byte
 #include <gsl/gsl_util>   // for narrow_cast, narrow
 
-#include <array>     // for array
 #include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
 #include <iterator>  // for reverse_iterator, distance, random_access_...
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
@@ -62,6 +61,15 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
+
+namespace std
+{
+// forward declaring std::array.
+// array is only used for a few constructors, so pulling the entire header is unnecessary for span.
+// The end user's logic will pull in the actual definition of array if they need it.
+template <class Type, std::size_t Sz>
+class array;
+}
 
 namespace gsl
 {
