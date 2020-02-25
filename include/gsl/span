@@ -21,27 +21,10 @@
 #include <gsl/gsl_byte>   // for byte
 #include <gsl/gsl_util>   // for narrow_cast, narrow
 
+#include <array>     // for array
 #include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
 #include <iterator>  // for reverse_iterator, distance, random_access_...
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
-
-// forward declaring std::array.
-// pulling the entire array header is unnecessary for span because array is only used for a few constructors.
-// The end user's logic will pull in the actual definition of array if they need it.
-// To do: find a way to forward declare array for Apple Clang
-#if defined(__APPLE__)
-#include <array>
-#else
-namespace std
-{
-template <class Type, std::size_t Sz>
-#if defined(__clang__)
-struct array;
-#else
-class array;
-#endif // defined(__clang__)
-}
-#endif // defined(__APPLE__)
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
