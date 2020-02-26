@@ -5,6 +5,9 @@ project(GSL CXX)
 include(ExternalProject)
 find_package(Git)
 
+# Use GNUInstallDirs to provide the right locations on all platforms
+include(GNUInstallDirs)
+
 # creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
@@ -54,15 +57,13 @@ target_compile_definitions(GSL INTERFACE
 # the SYSTEM keyword suppresses warnings for users of the library
 if(GSL_STANDALONE_PROJECT)
     target_include_directories(GSL INTERFACE
-        $<BUILD_INTERFACE:
-            ${CMAKE_CURRENT_SOURCE_DIR}/include
-        >
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
 else()
     target_include_directories(GSL SYSTEM INTERFACE
-        $<BUILD_INTERFACE:
-            ${CMAKE_CURRENT_SOURCE_DIR}/include
-        >
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
 endif()
 
@@ -77,15 +78,23 @@ if (CMAKE_VERSION VERSION_GREATER 3.7.8)
     # add natvis file to the library so it will automatically be loaded into Visual Studio
     if(VS_ADD_NATIVE_VISUALIZERS)
         target_sources(GSL INTERFACE
-            ${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis>
         )
     endif()
 endif()
 
+install(TARGETS GSL EXPORT Microsoft.GSLConfig)
 install(
     DIRECTORY include/gsl
-    DESTINATION include
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+# Make library importable by other projects
+install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION share/Microsoft.GSL/cmake)
+export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
+
+# Add Microsoft.GSL::GSL alias for GSL so that dependents can be agnostic about
+# whether GSL was added via `add_subdirectory` or `find_package`
+add_library(Microsoft.GSL::GSL ALIAS GSL)
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)

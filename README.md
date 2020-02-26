@@ -109,5 +109,14 @@ Include the library using:
 
     #include <gsl/gsl>
 
+## Usage in CMake
+
+The library provides a Config file for CMake, once installed it can be found via
+
+    find_package(Microsoft.GSL CONFIG)
+
+Which, when successful, will add library target called `Microsoft.GSL::GSL` which you can use via the usual
+`target_link_libraries` mechanism.
+
 ## Debugging visualization support
 For Visual Studio users, the file [GSL.natvis](./GSL.natvis) in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.
