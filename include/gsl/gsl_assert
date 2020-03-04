@@ -17,8 +17,6 @@
 #ifndef GSL_CONTRACTS_H
 #define GSL_CONTRACTS_H
 
-#include <exception>
-
 //
 // make suppress attributes parse for some compilers
 // Hopefully temporary until suppression standardization occurs
@@ -46,6 +44,10 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Winvalid-noreturn"
 #endif
+
+#else
+
+#include <exception>
 
 #endif
 
@@ -109,14 +111,6 @@ namespace details
         std::terminate();
 #endif
     }
-
-    template <typename Exception>
-    [[deprecated("GSL no longer supports throwing for contract violations. Use gsl::details::terminate() instead.")]]
-    [[noreturn]] void throw_exception(Exception&&) noexcept
-    {
-        gsl::details::terminate();
-    }
-
 
 } // namespace details
 } // namespace gsl
