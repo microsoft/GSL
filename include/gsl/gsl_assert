@@ -36,6 +36,7 @@
 // Currently terminate is a no-op in this mode, so we add termination behavior back
 //
 #if defined(_MSC_VER) && defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS
+
 #define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
 #include <intrin.h>
 #define RANGE_CHECKS_FAILURE 0
@@ -43,13 +44,13 @@
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Winvalid-noreturn"
-#endif
+#endif // defined(__clang__)
 
 #else
 
 #include <exception>
 
-#endif
+#endif // !defined(_MSC_VER) || !defined(_HAS_EXCEPTIONS) || _HAS_EXCEPTIONS
 
 #define GSL_STRINGIFY_DETAIL(x) #x
 #define GSL_STRINGIFY(x) GSL_STRINGIFY_DETAIL(x)
@@ -57,10 +58,12 @@
 #if defined(__clang__) || defined(__GNUC__)
 #define GSL_LIKELY(x) __builtin_expect(!!(x), 1)
 #define GSL_UNLIKELY(x) __builtin_expect(!!(x), 0)
+
 #else
+
 #define GSL_LIKELY(x) (!!(x))
 #define GSL_UNLIKELY(x) (!!(x))
-#endif
+#endif // defined(__clang__) || defined(__GNUC__)
 
 //
 // GSL_ASSUME(cond)
@@ -87,9 +90,11 @@ namespace details
 {
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
-    typedef void  (__cdecl *terminate_handler)();
+    typedef void(__cdecl* terminate_handler)();
 
+    // clang-format off
     GSL_SUPPRESS(f.6) // NO-FORMAT: attribute
+    // clang-format on
     [[noreturn]] inline void __cdecl default_terminate_handler()
     {
         __fastfail(RANGE_CHECKS_FAILURE);
@@ -101,7 +106,7 @@ namespace details
         return handler;
     }
 
-#endif
+#endif // defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
 
     [[noreturn]] inline void terminate() noexcept
     {
@@ -109,12 +114,11 @@ namespace details
         (*gsl::details::get_terminate_handler())();
 #else
         std::terminate();
-#endif
+#endif // defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND)
     }
 
 } // namespace details
 } // namespace gsl
-
 
 #define GSL_CONTRACT_CHECK(type, cond)                                                             \
     (GSL_LIKELY(cond) ? static_cast<void>(0) : gsl::details::terminate())
