@@ -18,20 +18,6 @@
 #define GSL_CONTRACTS_H
 
 //
-// make suppress attributes parse for some compilers
-// Hopefully temporary until suppression standardization occurs
-//
-#if defined(__clang__)
-#define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
-#else
-#if defined(_MSC_VER)
-#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
-#else
-#define GSL_SUPPRESS(x)
-#endif // _MSC_VER
-#endif // __clang__
-
-//
 // Temporary until MSVC STL supports no-exceptions mode.
 // Currently terminate is a no-op in this mode, so we add termination behavior back
 //
@@ -45,12 +31,23 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Winvalid-noreturn"
 #endif // defined(__clang__)
-
 #else
-
 #include <exception>
-
 #endif // !defined(_MSC_VER) || !defined(_HAS_EXCEPTIONS) || _HAS_EXCEPTIONS
+
+//
+// make suppress attributes parse for some compilers
+// Hopefully temporary until suppression standardization occurs
+//
+#if defined(__clang__)
+#define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
+#else
+#if defined(_MSC_VER)
+#define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
+#else
+#define GSL_SUPPRESS(x)
+#endif // _MSC_VER
+#endif // __clang__
 
 #define GSL_STRINGIFY_DETAIL(x) #x
 #define GSL_STRINGIFY(x) GSL_STRINGIFY_DETAIL(x)
