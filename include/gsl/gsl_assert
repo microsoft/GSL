@@ -21,7 +21,7 @@
 // Temporary until MSVC STL supports no-exceptions mode.
 // Currently terminate is a no-op in this mode, so we add termination behavior back
 //
-#if defined(_MSC_VER) && defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS
+#if defined(_MSC_VER) && (defined(_KERNEL_MODE) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS))
 
 #define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
 #include <intrin.h>
@@ -31,9 +31,12 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Winvalid-noreturn"
 #endif // defined(__clang__)
-#else
+
+#else // defined(_MSC_VER) && (defined(_KERNEL_MODE) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS))
+
 #include <exception>
-#endif // !defined(_MSC_VER) || !defined(_HAS_EXCEPTIONS) || _HAS_EXCEPTIONS
+
+#endif // defined(_MSC_VER) && (defined(_KERNEL_MODE) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS))
 
 //
 // make suppress attributes parse for some compilers
