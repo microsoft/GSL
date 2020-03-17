@@ -24,7 +24,7 @@
 #include <iterator>    // for reverse_iterator, operator-, operator==
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <utility>
-#include <vector>      // for vector
+#include <vector> // for vector
 
 using namespace std;
 using namespace gsl;
@@ -46,7 +46,7 @@ TEST(span_compatibility_tests, assertion_tests)
 {
     int arr[3]{10, 20, 30};
     std::array<int, 3> stl{{100, 200, 300}};
-    std::array<int*, 3> stl_nullptr{{nullptr,nullptr,nullptr}};
+    std::array<int*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
 
 #if __cplusplus >= 201703l
     // This std::is_convertible_v<int*(*)[], int const* const(*)[]> fails for C++14
@@ -60,8 +60,9 @@ TEST(span_compatibility_tests, assertion_tests)
         EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
 
-        static_assert(std::is_same<decltype(span{stl_nullptr}), span<int*, 3>);
-        static_assert(std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<int* const, 3>);
+        static_assert(std::is_same < decltype(span{stl_nullptr}), span<int*, 3>);
+        static_assert(std::is_same < decltype(span{std::as_const(stl_nullptr)}),
+                      span<int* const, 3>);
     }
 #endif
 
@@ -1070,21 +1071,20 @@ static_assert(std::is_convertible<std::array<int, 3>&, gsl::span<const int>>::va
 static_assert(std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>::value,
               "std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>");
 
-
 #if __cplusplus >= 201703l
 template <typename U, typename = void>
 static constexpr bool AsWritableBytesCompilesFor = false;
 
 template <typename U>
-static constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
-    true;
+static constexpr bool
+    AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> = true;
 
 static_assert(AsWritableBytesCompilesFor<gsl::span<int>>,
-                "AsWritableBytesCompilesFor<gsl::span<int>>");
+              "AsWritableBytesCompilesFor<gsl::span<int>>");
 static_assert(AsWritableBytesCompilesFor<gsl::span<int, 9>>,
-                "AsWritableBytesCompilesFor<gsl::span<int, 9>>");
+              "AsWritableBytesCompilesFor<gsl::span<int, 9>>");
 static_assert(!AsWritableBytesCompilesFor<gsl::span<const int>>,
-                "!AsWritableBytesCompilesFor<gsl::span<const int>>");
+              "!AsWritableBytesCompilesFor<gsl::span<const int>>");
 static_assert(!AsWritableBytesCompilesFor<gsl::span<const int, 9>>,
-                "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
+              "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
 #endif // __cplusplus >= 201703l
