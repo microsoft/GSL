@@ -441,23 +441,6 @@ public:
         : storage_(KnownNotNull{arr + 0}, details::extent_type<N>())
     {}
 
-// #define useold
-#if defined(useold)
-    template <std::size_t N,
-              std::enable_if_t<details::is_allowed_extent_conversion<N, Extent>::value, int> = 0>
-    constexpr span(std::array<element_type, N>& arr) noexcept
-        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
-    {}
-
-    template <std::size_t N,
-              std::enable_if_t<(details::is_allowed_extent_conversion<N, Extent>::value &&
-                                details::is_allowed_element_type_conversion<const value_type,
-                                                                            element_type>::value),
-                               int> = 0>
-    constexpr span(const std::array<value_type, N>& arr) noexcept
-        : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
-    {}
-#else
     template <class T, std::size_t N,
               std::enable_if_t<(details::is_allowed_extent_conversion<N, Extent>::value &&
                                 details::is_allowed_element_type_conversion<T, element_type>::value), int> = 0>
@@ -473,7 +456,7 @@ public:
     constexpr span(const std::array<T, N>& arr) noexcept
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {}
-#endif
+
     // NB: the SFINAE here uses .data() as an incomplete/imperfect proxy for the requirement
     // on Container to be a contiguous sequence container.
     template <class Container,
