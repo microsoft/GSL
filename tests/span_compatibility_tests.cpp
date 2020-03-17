@@ -46,6 +46,22 @@ TEST(span_compatibility_tests, assertion_tests)
 {
     int arr[3]{10, 20, 30};
     std::array<int, 3> stl{{100, 200, 300}};
+    std::array<int*, 3> stl_nullptr{{nullptr,nullptr,nullptr}};
+
+    {
+        gsl::span<const int* const> sp_const_nullptr_1{stl_nullptr};
+        EXPECT_TRUE(sp_const_nullptr_1.data() == stl_nullptr.data());
+        EXPECT_TRUE(sp_const_nullptr_1.size() == 3);
+
+#if __cplusplus >= 201703l
+        span<const int* const> sp_const_nullptr_2{std::as_const(stl_nullptr)};
+        EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
+        EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
+
+        static_assert(std::is_same<decltype(span{stl_nullptr}), span<int*, 3>);
+        static_assert(std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<int* const, 3>);
+#endif
+    }
 
     {
         gsl::span<int> sp_dyn;
