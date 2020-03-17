@@ -46,12 +46,12 @@ TEST(span_compatibility_tests, assertion_tests)
 {
     int arr[3]{10, 20, 30};
     std::array<int, 3> stl{{100, 200, 300}};
-    std::array<int*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
 
 #if __cplusplus >= 201703l
     // This std::is_convertible_v<int*(*)[], int const* const(*)[]> fails for C++14
     // so these conversions aren't valid in C++14
     {
+        std::array<int*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
         gsl::span<const int* const> sp_const_nullptr_1{stl_nullptr};
         EXPECT_TRUE(sp_const_nullptr_1.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_1.size() == 3);
