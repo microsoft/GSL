@@ -22,7 +22,7 @@ matrix:
     # so leave this first for the overall build to be faster
     ##########################################################################
 
-    # XCode 8.3
+    # Xcode 8.3
     - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode8.3
@@ -33,7 +33,7 @@ matrix:
       osx_image: xcode8.3
       compiler: clang
 
-    # XCode 9.1
+    # Xcode 9.1
     - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode9.1
