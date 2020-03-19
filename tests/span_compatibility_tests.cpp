@@ -42,14 +42,11 @@ static_assert(std::is_convertible<Derived*, Base*>::value, "std::is_convertible<
 static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
-TEST(span_compatibility_tests, assertion_tests)
+template <class = void>
+void ArrayConvertibilityCheck()
 {
-    int arr[3]{10, 20, 30};
-    std::array<int, 3> stl{{100, 200, 300}};
-
 #if __cplusplus >= 201703l
-    // This std::is_convertible_v<int*(*)[], int const* const(*)[]> fails for C++14
-    // so these conversions aren't valid in C++14
+    if constexpr (std::is_convertible<int*(*) [], int const* const(*)[]>::value)
     {
         std::array<int*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
         gsl::span<const int* const> sp_const_nullptr_1{stl_nullptr};
@@ -60,11 +57,22 @@ TEST(span_compatibility_tests, assertion_tests)
         EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
 
-        static_assert(std::is_same < decltype(span{stl_nullptr}), span<int*, 3>);
-        static_assert(std::is_same < decltype(span{std::as_const(stl_nullptr)}),
-                      span<int* const, 3>);
+        static_assert(std::is_same<decltype(span{stl_nullptr}), span<int*, 3>>::value,
+                      "std::is_same< decltype(span{stl_nullptr}), span<int*, 3>>::value");
+        static_assert(
+            std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<int* const, 3>>::value,
+            "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<int* const, "
+            "3>>::value");
     }
 #endif
+}
+
+TEST(span_compatibility_tests, assertion_tests)
+{
+    int arr[3]{10, 20, 30};
+    std::array<int, 3> stl{{100, 200, 300}};
+
+    ArrayConvertibilityCheck();
 
     {
         gsl::span<int> sp_dyn;
