@@ -1,7 +1,6 @@
 # Based on https://github.com/ldionne/hana/blob/master/.travis.yml
 
 language: cpp
-sudo: false
 notifications:
   email: false
 
@@ -18,7 +17,7 @@ stages:
   - name: Validation # run other jobs
   - name: Legacy     # build with all other supported compilers
 
-matrix:
+jobs:
   include:
 
     ##########################################################################
