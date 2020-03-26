@@ -1,4 +1,3 @@
-# Based on https://github.com/ldionne/hana/blob/master/.travis.yml
 
 language: cpp
 notifications:
@@ -509,6 +508,7 @@ install:
 
   ############################################################################
   # [linux]: Install the right version of libc++
+  # Based on https://github.com/ldionne/hana/blob/master/.travis.yml
   ############################################################################
   - |
     LLVM_INSTALL=${DEPS_DIR:?}/llvm/install
