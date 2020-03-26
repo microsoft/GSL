@@ -1,268 +1,519 @@
-# Based on https://github.com/ldionne/hana/blob/master/.travis.yml
 
 language: cpp
-sudo: false
 notifications:
   email: false
 
 # Use Linux unless specified otherwise
 os: linux
-dist: trusty
+dist: bionic
 
 cache:
   directories:
     - ${TRAVIS_BUILD_DIR}/deps
 
-matrix:
+stages:
+  - name: Latest     # build jobs to run first and always
+  - name: Validation # run other jobs
+  - name: Legacy     # build with all other supported compilers
+
+jobs:
   include:
 
     ##########################################################################
-    # Clang on OSX
-    # Travis seems to take longer to start OSX instances,
-    # so leave this first for the overall build to be faster
+    # Validate CMake configuration
     ##########################################################################
 
-    # XCode 8.3
-    - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: CMake 3.1.3 - latest
+      stage: Validation
+      env: &CMAKE_VERSION_LIST
+      - CMAKE_VERSION: '"3.17.0 3.16.5 3.15.7 3.14.7 3.13.5 3.12.4 3.11.4 3.10.3 3.9.6 3.8.2 3.7.2 3.6.3 3.5.2 3.4.3 3.3.2 3.2.3 3.1.3"'
+      - GSL_CXX_STANDARD: 14
+      addons: # Get latest release (candidate)
+        apt:
+          sources:
+          - sourceline: 'deb https://apt.kitware.com/ubuntu/ bionic main'
+            key_url: 'https://apt.kitware.com/keys/kitware-archive-latest.asc'
+          - sourceline: 'deb https://apt.kitware.com/ubuntu/ bionic-rc main'
+          packages:
+          - cmake
+      script:
+      - |
+        cd ./build
+        ( set -eu
+          for CMAKE in ${CMAKE_path[@]}; do test_CMake_generate $CMAKE; done
+          export CXX=clang++
+          for CMAKE in ${CMAKE_path[@]}; do test_CMake_generate $CMAKE; done
+        )
+
+    - name: CMake 3.2.3 - 3.17.0
+      stage: Validation
+      os: osx
+      osx_image: xcode11.3
+      env:
+      - CMAKE_VERSION: '"3.17.0 3.16.5 3.15.7 3.14.7 3.13.5 3.12.4 3.11.4 3.10.3 3.9.6 3.8.2 3.7.2 3.6.3 3.5.2 3.4.3 3.3.2 3.2.3"'
+      script:
+      - |
+        cd ./build
+        ( set -eu
+          for CMAKE in ${CMAKE_path[@]}; do test_CMake_generate $CMAKE; done
+        )
+
+    ##########################################################################
+    # AppleClang on OSX
+    ##########################################################################
+
+    # Xcode 8.3
+    - name: AppleClang Xcode-8.3 C++14 Debug
+      stage: Legacy
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode8.3
-      compiler: clang
-
-    - env: COMPILER=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: AppleClang Xcode-8.3 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode8.3
-      compiler: clang
 
-    # XCode 9.1
-    - env: COMPILER=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    # Xcode 9.0 earliest C++17 support
+    - name: AppleClang Xcode-9.0 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       os: osx
-      osx_image: xcode9.1
-      compiler: clang
+      osx_image: xcode9 # AppleClang 9.1.0 same compiler in Xcode 9.0, 9.1 and 9.2
+    - name: AppleClang Xcode-9.0 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode9
+    - name: AppleClang Xcode-9.0 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode9
+    - name: AppleClang Xcode-9.0 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode9
 
-    - env: COMPILER=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    # Xcode 9.4
+    - name: AppleClang Xcode-9.4 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode9.1
-      compiler: clang
+      osx_image: xcode9.4 # AppleClang 9.1.0 same compiler as Xcode 9.3
+    - name: AppleClang Xcode-9.4 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode9.4
+    - name: AppleClang Xcode-9.4 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode9.4
+    - name: AppleClang Xcode-9.4 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode9.4
+
+    # Xcode 10.1
+    - name: AppleClang Xcode-10.1 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.1 # AppleClang 10.0.0 same compiler as Xcode 10.0
+    - name: AppleClang Xcode-10.1 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.1
+    - name: AppleClang Xcode-10.1 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.1
+    - name: AppleClang Xcode-10.1 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.1
+
+    # Xcode 10.3
+    - name: AppleClang Xcode-10.3 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3 # AppleClang 10.0.1 same compiler as Xcode 10.2
+    - name: AppleClang Xcode-10.3 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode10.3
+    - name: AppleClang Xcode-10.3 C++17 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.3
+    - name: AppleClang Xcode-10.3 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode10.3
+
+    # Xcode 11.3
+    - name: AppleClang Xcode-11.3 C++17 Debug
+      stage: Latest
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode11.3 # AppleClang 11.0.0 linker update / same as Xcode 11.2
+    - name: AppleClang Xcode-11.3 C++17 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      os: osx
+      osx_image: xcode11.3
+    - name: AppleClang Xcode-11.3 C++14 Debug
+      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode11.3
+    - name: AppleClang Xcode-11.3 C++14 Release
+      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      os: osx
+      osx_image: xcode11.3
 
     ##########################################################################
     # Clang on Linux
     ##########################################################################
 
     # Clang 3.6
-    - env: COMPILER=clang++-3.6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.6 C++14 Debug
+      stage: Legacy
+      dist: xenial
+      env: CXX=clang++-3.6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang36
         apt:
           packages:
             - clang-3.6
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
-
-    - env: COMPILER=clang++-3.6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.6 C++14 Release
+      dist: xenial
+      env: CXX=clang++-3.6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang36
 
     # Clang 3.7
-    - env: COMPILER=clang++-3.7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.7 C++14 Debug
+      dist: xenial
+      env: CXX=clang++-3.7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang37
         apt:
           packages:
             - clang-3.7
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-
-    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.7 C++14 Release
+      dist: xenial
+      env: CXX=clang++-3.7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang37
 
     # Clang 3.8
-    - env: COMPILER=clang++-3.8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.8 C++14 Debug
+      dist: xenial
+      env: CXX=clang++-3.8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang38
         apt:
           packages:
             - clang-3.8
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-
-    - env: COMPILER=clang++-3.8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.8 C++14 Release
+      dist: xenial
+      env: CXX=clang++-3.8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang38
 
     # Clang 3.9
-    - env: COMPILER=clang++-3.9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-3.9 C++14 Debug
+      env: CXX=clang++-3.9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang39
         apt:
           packages:
             - clang-3.9
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
-
-    - env: COMPILER=clang++-3.9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-3.9 C++14 Release
+      env: CXX=clang++-3.9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang39
 
     # Clang 4.0
-    - env: COMPILER=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-4.0 C++14 Debug
+      env: CXX=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang40
         apt:
           packages:
             - clang-4.0
-            - g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-4.0
-
-    - env: COMPILER=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-4.0 C++14 Release
+      env: CXX=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang40
 
     # Clang 5.0
-    - env: COMPILER=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-5.0 C++14 Debug
+      env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang50
         apt:
           packages:
             - clang-5.0
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
-            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-
-    - env: COMPILER=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-5.0 C++14 Release
+      env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *clang50
-
-    - env: COMPILER=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+    - name: Clang-5.0 C++17 Debug
+      env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       addons: *clang50
-
-    - env: COMPILER=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+    - name: Clang 5.0 C++17 Release
+      env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang50
 
     # Clang 6.0
-    - env: COMPILER=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-6.0 C++14 Debug
+      env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang60
         apt:
           packages:
             - clang-6.0
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
-            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-
-    - env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang 6.0 C++14 Release
+      env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang60
+    - name: Clang-6.0 C++17 Debug
+      env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang60
+    - name: Clang 6.0 C++17 Release
+      env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang60
 
-    # Clang 6.0 c++17
-    - env: COMPILER=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang60
+    # Clang 7 (default on Xenial and Bionic images)
+    - name: Clang-7 C++14 Debug
+      env: CXX=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: Clang-7 C++14 Release
+      env: CXX=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: Clang-7 C++17 Debug
+      env: CXX=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+    - name: Clang-7 C++17 Release
+      env: CXX=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=17
 
-    - env: COMPILER=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang60
-
-    # Clang 7.0
-    - env: COMPILER=clang++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang70
+    # Clang 8
+    - name: Clang-8 C++14 Debug
+      env: CXX=clang++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang8
         apt:
-          packages:
-            - clang-7
-            - g++-7
           sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-7
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main'
+            key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
+          packages:
+          - clang-8
+    - name: Clang-8 C++14 Release
+      env: CXX=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang8
+    - name: Clang-8 C++17 Debug
+      env: CXX=clang++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang8
+    - name: Clang-8 C++17 Release
+      env: CXX=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang8
 
+    # Clang 9
+    - name: Clang-9 C++14 Debug
+      env: CXX=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang9
+        apt:
+          sources:
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+            key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
+          packages:
+          - clang-9
+    - name: Clang-9 C++14 Release
+      env: CXX=clang++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang9
+    - name: Clang-9 C++17 Debug
+      env: CXX=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang9
+    - name: Clang-9 C++17 Release
+      env: CXX=clang++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang9
 
-    - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang70
-
-    # Clang 7.0 c++17
-    - env: COMPILER=clang++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang70
-
-    - env: COMPILER=clang++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang70
+    # Clang 10
+    - name: Clang-10 C++14 Debug
+      stage: Latest
+      env: CXX=clang++-10 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang10
+        apt:
+          sources:
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main'
+            key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
+          packages:
+          - clang-10
+    - name: Clang-10 C++14 Release
+      env: CXX=clang++-10 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang10
+    - name: Clang-10 C++17 Debug
+      env: CXX=clang++-10 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang10
+    - name: Clang-10 C++17 Release
+      env: CXX=clang++-10 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang10
 
     ##########################################################################
     # GCC on Linux
     ##########################################################################
 
-    # GCC 5
-    - env: COMPILER=g++-5 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &gcc5
-        apt:
-          packages: g++-5
-          sources:
-            - ubuntu-toolchain-r-test
-
-    - env: COMPILER=g++-5 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *gcc5
+    # GCC 5 (default on the Xenial image)
+    - name: GCC-5 C++14 Debug
+      stage: Legacy
+      dist: xenial
+      env: CXX=g++-5 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: GCC-5 C++14 Release
+      dist: xenial
+      env: CXX=g++-5 BUILD_TYPE=Release GSL_CXX_STANDARD=14
 
     # GCC 6
-    - env: COMPILER=g++-6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: GCC-6 C++14 Debug
+      env: CXX=g++-6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &gcc6
         apt:
           packages: g++-6
-          sources:
-            - ubuntu-toolchain-r-test
-
-    - env: COMPILER=g++-6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: GCC-6 C++14 Release
+      env: CXX=g++-6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
       addons: *gcc6
 
-    # GCC 7
-    - env: COMPILER=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &gcc7
+    # GCC 7 (default on the Bionic image)
+    - name: GCC-7 C++14 Debug
+      env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - name: GCC-7 C++14 Release
+      env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - name: GCC-7 C++17 Debug
+      env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+    - name: GCC-7 C++17 Release
+      env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+
+    # GCC 8
+    - name: GCC-8 C++14 Debug
+      env: CXX=g++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &gcc8
         apt:
-          packages: g++-7
+          packages: g++-8
+    - name: GCC-8 C++14 Release
+      env: CXX=g++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *gcc8
+    - name: GCC-8 C++17 Debug
+      env: CXX=g++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *gcc8
+    - name: GCC-8 C++17 Release
+      env: CXX=g++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *gcc8
+
+    # GCC 9
+    - name: GCC-9 C++14 Debug
+      stage: Latest
+      env: CXX=g++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &gcc9
+        apt:
           sources:
-            - ubuntu-toolchain-r-test
+          - sourceline: ppa:ubuntu-toolchain-r/test
+          packages:
+          - g++-9
+    - name: GCC-9 C++14 Release
+      env: CXX=g++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *gcc9
+    - name: GCC-9 C++17 Debug
+      env: CXX=g++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *gcc9
+    - name: GCC-9 C++17 Release
+      env: CXX=g++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *gcc9
 
-    - env: COMPILER=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *gcc7
-
-    # GCC 7 c++17 
-    - env: COMPILER=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *gcc7
-
-    - env: COMPILER=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *gcc7
+before_install:
+  - |
+    # Configuration
+    JOBS=2 # Travis machines have 2 cores
+    # Dependencies required by the CI (cached directory)
+    DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - |
+    # Setup
+    mkdir -p "${DEPS_DIR:?}" && cd "${DEPS_DIR:?}"
+    mkdir -p ~/tools && cd ~/tools
+    if [[ ${TRAVIS_OS_NAME:?} == "osx" ]]; then
+      export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    fi
+  - |
+    # Helper functions
+    # usage: if [[ $(check_url '<url>') ]]; then ...
+    function check_url {( set +e
+      if [[ "$1" =~ 'github.com' ]]; then # check for first byte
+        if curl --fail --silent --output /dev/null --connect-timeout 12 --range 0-0 "$1"
+        then echo true; fi
+      else # request head
+        if curl --fail --silent --output /dev/null --connect-timeout 12 --head "$1"
+        then echo true; fi
+      fi
+      return
+    )}
 
 install:
-  # Set the ${CXX} variable properly
-  - export CXX=${COMPILER}
-  - ${CXX} --version
-
-  # Dependencies required by the CI are installed in ${TRAVIS_BUILD_DIR}/deps/
-  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-  - mkdir -p "${DEPS_DIR}"
-  - cd "${DEPS_DIR}"
-
-  # Travis machines have 2 cores
-  - JOBS=2
-
   ############################################################################
-  # Install a recent CMake (unless already installed on OS X)
+  # Install a different CMake version (or several)
   ############################################################################
-  - CMAKE_VERSION=3.7.2
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      CMAKE_URL="https://cmake.org/files/v${CMAKE_VERSION%.[0-9]}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz"
-      mkdir cmake && travis_retry wget --no-check-certificate -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-      export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    else
-      brew install cmake || brew upgrade cmake
+    # Install CMake versions
+    ( set -euo pipefail
+      if [[ ${CMAKE_VERSION:-} ]]; then
+        if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+          OS="Linux"; EXT="sh"
+          if [[ ! ("${CMAKE_VERSION:-}" =~ .+[' '].+) ]]; then
+            # Single entry -> default CMake version
+            CMAKE_DEFAULT_DIR="/usr/local"
+          fi
+        elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then OS="Darwin"; EXT="tar.gz"
+        else echo "CMake install not supported for this OS."; exit 1
+        fi
+        CMAKE_INSTALLER="install-cmake.${EXT}"
+      fi
+      for VERSION in ${CMAKE_VERSION:-}; do
+        CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${VERSION}/cmake-${VERSION}-${OS}-x86_64.${EXT}"
+        if [[ $(check_url "$CMAKE_URL") ]]; then
+          curl -sSL ${CMAKE_URL} -o ${CMAKE_INSTALLER}
+          CMAKE_DIR="${CMAKE_DEFAULT_DIR:-"${HOME}/tools/cmake-${VERSION}"}"
+          mkdir -p ${CMAKE_DIR}
+          if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+            chmod +x ${CMAKE_INSTALLER}
+            sudo ./${CMAKE_INSTALLER} --prefix=${CMAKE_DIR} --skip-license
+          else # OSX
+            mkdir -p ./CMake_tmp
+            tar --extract --gzip --file=${CMAKE_INSTALLER} --directory=./CMake_tmp
+            mv ./CMake_tmp/*/CMake.app/Contents/* ${CMAKE_DIR}
+          fi
+          rm --recursive --force ./CMake_tmp ${CMAKE_INSTALLER}
+        else echo 'Invalid url!'; echo "Version: ${VERSION}"
+        fi
+      done
+    )
+    if [[ ${CMAKE_VERSION:-} && "${TRAVIS_OS_NAME:?}" == "osx" && ! ("${CMAKE_VERSION:-}" =~ .+[' '].+) ]]
+    then # Single entry -> default CMake version
+      export PATH=${HOME}/tools/cmake-${CMAKE_VERSION:?}/bin:$PATH
     fi
-  - cmake --version
+    CMAKE_path=("cmake") # start with installed CMake version
+    for VERSION in ${CMAKE_VERSION:-}; do
+      tmp_path="$HOME/tools/cmake-${VERSION:?}/bin/cmake"
+      if [[ -x "$(command -v ${tmp_path:?})" ]]; then CMAKE_path+=("${tmp_path:?}"); fi
+    done
+    function test_CMake_generate {
+      # $1: cmake or full path to cmake
+      shopt -s extglob
+      if [[ "$1" == "cmake" || -x "$(command -v $1)" && "$1" =~ .*cmake$ ]]; then
+        echo "----------------"
+        $1 --version
+        echo "Configuration = ${BUILD_TYPE:-Debug}"
+        $1 -DCMAKE_BUILD_TYPE=${BUILD_TYPE:-Debug} ${CMAKE_GEN_FLAGS[@]:?} ..
+        rm -rf !(tests/googletest-*)
+        if [[ ! ${BUILD_TYPE:-} ]]; then echo "" && echo "Configuration = Release"
+          $1 -DCMAKE_BUILD_TYPE=Release ${CMAKE_GEN_FLAGS[@]:?} ..
+          rm -rf !(tests/googletest-*)
+        fi
+      else echo "Non existing command: $1"
+      fi
+    }
+  - |
+    # CMake wrapper (Trusty, Xenial & Bionic); restore default behaviour.
+    if [[ "${TRAVIS_OS_NAME:?}" == "linux" &&
+          "$(lsb_release --codename)" =~ (trusty|xenial|bionic)$ ]]
+    then
+      if [[ -x $(command -v /usr/local/bin/cmake) ]]; then
+        function cmake { command /usr/local/bin/cmake $@; }
+      elif [[ -x $(command -v /usr/bin/cmake) ]]; then
+        function cmake { command /usr/bin/cmake $@; }
+      fi
+    fi
 
   ############################################################################
   # [linux]: Install the right version of libc++
+  # Based on https://github.com/ldionne/hana/blob/master/.travis.yml
   ############################################################################
   - |
-    LLVM_INSTALL=${DEPS_DIR}/llvm/install
+    LLVM_INSTALL=${DEPS_DIR:?}/llvm/install
     # if in linux and compiler clang and llvm not installed
-    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${CXX%%+*}" == "clang" && -n "$(ls -A ${LLVM_INSTALL})" ]]; then
+    if [[ "${TRAVIS_OS_NAME:?}" == "linux" && "${CXX%%+*}" == "clang" && -n "$(ls -A ${LLVM_INSTALL:?})" ]]; then
       if   [[ "${CXX}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2";
       elif [[ "${CXX}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.1";
       elif [[ "${CXX}" == "clang++-3.8" ]]; then LLVM_VERSION="3.8.1";
@@ -284,12 +535,17 @@ install:
     fi
 
 before_script:
-  # have CMake to generate build files
-  - cd "${TRAVIS_BUILD_DIR}"
-  - mkdir build && cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGSL_CXX_STANDARD=$GSL_CXX_STANDARD
-  
+  - |
+    cd "${TRAVIS_BUILD_DIR:?}"
+    mkdir build && cd build
+    if [[ ${GSL_CXX_STANDARD:-} ]]; then 
+      CMAKE_GEN_FLAGS=("-DGSL_CXX_STANDARD=$GSL_CXX_STANDARD")
+    fi
+    CMAKE_GEN_FLAGS+=("-Wdev -Werror=dev --warn-uninitialized")
+
 script:
+  # generate build files
+  - cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE:?} ${CMAKE_GEN_FLAGS[@]:?}
   # build and run tests
   - cmake --build . -- -j${JOBS}
   - ctest --output-on-failure -j${JOBS}
