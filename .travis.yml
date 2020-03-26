@@ -298,7 +298,6 @@ matrix:
 
     # Clang 9
     - name: Clang-9 C++14 Debug
-      stage: Latest
       env: CXX=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang9
         apt:
@@ -316,6 +315,27 @@ matrix:
     - name: Clang-9 C++17 Release
       env: CXX=clang++-9 BUILD_TYPE=Release GSL_CXX_STANDARD=17
       addons: *clang9
+
+    # Clang 10
+    - name: Clang-10 C++14 Debug
+      stage: Latest
+      env: CXX=clang++-10 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &clang10
+        apt:
+          sources:
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main'
+            key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
+          packages:
+          - clang-10
+    - name: Clang-10 C++14 Release
+      env: CXX=clang++-10 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *clang10
+    - name: Clang-10 C++17 Debug
+      env: CXX=clang++-10 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
+      addons: *clang10
+    - name: Clang-10 C++17 Release
+      env: CXX=clang++-10 BUILD_TYPE=Release GSL_CXX_STANDARD=17
+      addons: *clang10
 
     ##########################################################################
     # GCC on Linux
