@@ -77,6 +77,18 @@ These steps assume the source code of this repository has been cloned into a dir
 
 All tests should pass - indicating your platform is fully supported and you are ready to use the GSL types!
 
+## Building GSL - Using vcpkg
+
+You can download and install GSL using the [vcpkg](https://github.com/Microsoft/vcpkg) dependency manager:
+
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    ./bootstrap-vcpkg.sh
+    ./vcpkg integrate install
+    vcpkg install ms-gsl
+
+The GSL port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
+
 ## Using the libraries
 As the types are entirely implemented inline in headers, there are no linking requirements.
 
@@ -96,6 +108,15 @@ GCC/clang
 Include the library using:
 
     #include <gsl/gsl>
+
+## Usage in CMake
+
+The library provides a Config file for CMake, once installed it can be found via
+
+    find_package(Microsoft.GSL CONFIG)
+
+Which, when successful, will add library target called `Microsoft.GSL::GSL` which you can use via the usual
+`target_link_libraries` mechanism.
 
 ## Debugging visualization support
 For Visual Studio users, the file [GSL.natvis](./GSL.natvis) in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.
