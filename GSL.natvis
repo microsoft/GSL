@@ -19,9 +19,7 @@
         </Expand>
     </Type>
 
-    <!-- These types are from the span header. -->
-    <!-- This is for dynamic_extent spans. -->
-    <Type Name="gsl::span&lt;*, -1&gt;">
+    <Type Name="gsl::span&lt;*, *&gt;">
         <DisplayString>{{ extent = {storage_.size_} }}</DisplayString>
         <Expand>
             <ArrayItems>
@@ -31,43 +29,7 @@
         </Expand>
     </Type>
 
-    <!-- This works for constexpr size spans. -->
-    <Type Name="gsl::span&lt;*, *&gt;">
-        <DisplayString>{{ extent = {extent} }}</DisplayString>
-        <Expand>
-            <ArrayItems>
-                <Size>extent</Size>
-                <ValuePointer>storage_.data_</ValuePointer>
-            </ArrayItems>
-        </Expand>
-    </Type>
-
-    <!-- This is for dynamic_extent string_spans. -->
-    <Type Name="gsl::basic_string_span&lt;*, -1&gt;">
-        <DisplayString>{span_.storage_.data_,[span_.storage_.size_]na}</DisplayString>
-        <Expand>
-            <Item Name="[size]">span_.storage_.size_</Item>
-            <ArrayItems>
-                <Size>span_.storage_.size_</Size>
-                <ValuePointer>span_.storage_.data_</ValuePointer>
-            </ArrayItems>
-        </Expand>
-    </Type>
-
-    <!-- This works for constexpr size string_spans. -->
     <Type Name="gsl::basic_string_span&lt;*, *&gt;">
-        <DisplayString>{span_.storage_.data_,[span_.extent]na}</DisplayString>
-        <Expand>
-            <Item Name="[size]">span_.extent</Item>
-            <ArrayItems>
-                <Size>span_.extent</Size>
-                <ValuePointer>span_.storage_.data_</ValuePointer>
-            </ArrayItems>
-        </Expand>
-    </Type>
-
-    <!-- This is for dynamic_extent zstring_spans. -->
-    <Type Name="gsl::basic_zstring_span&lt;*, -1&gt;">
         <DisplayString>{span_.storage_.data_,[span_.storage_.size_]na}</DisplayString>
         <Expand>
             <Item Name="[size]">span_.storage_.size_</Item>
@@ -77,19 +39,18 @@
             </ArrayItems>
         </Expand>
     </Type>
-    
-    <!-- This works for constexpr size string_spans. -->
+
     <Type Name="gsl::basic_zstring_span&lt;*, *&gt;">
-        <DisplayString>{span_.storage_.data_,[span_.extent]na}</DisplayString>
+        <DisplayString>{span_.storage_.data_,[span_.storage_.size_]na}</DisplayString>
         <Expand>
-            <Item Name="[size]">span_.extent</Item>
+            <Item Name="[size]">span_.storage_.size_</Item>
             <ArrayItems>
-                <Size>span_.extent</Size>
+                <Size>span_.storage_.size_</Size>
                 <ValuePointer>span_.storage_.data_</ValuePointer>
             </ArrayItems>
         </Expand>
     </Type>
-    
+
     <!-- These types are from the gsl header. -->
     <Type Name="gsl::not_null&lt;*&gt;">
         <!-- We can always dereference this since it's an invariant. -->

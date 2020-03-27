@@ -355,6 +355,13 @@ namespace details
         constexpr extent_type(size_type size) { Expects(size == Ext); }
 
         constexpr size_type size() const noexcept { return Ext; }
+
+    private:
+#if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
+        static constexpr const size_type size_ = Ext; // static size equal to Ext
+#else
+        static constexpr size_type size_ = Ext; // static size equal to Ext
+#endif
     };
 
     template <>
