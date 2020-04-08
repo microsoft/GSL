@@ -110,7 +110,14 @@ else()
           >
         >
         $<$<CXX_COMPILER_ID:Clang>:
-          $<$<CXX_COMPILER_VERSION:5.0.2>:-Wno-undefined-func-template>
+          $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
+            $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
+          >
+        >
+        $<$<CXX_COMPILER_ID:AppleClang>:
+          $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,9.1>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,10>>:
+            $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
+          >
         >
         $<$<CXX_COMPILER_ID:GNU>:
           -Wdouble-promotion # float implicit to double
