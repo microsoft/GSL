@@ -42,6 +42,7 @@ static_assert(std::is_convertible<Derived*, Base*>::value, "std::is_convertible<
 static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
+#if (defined(_MSC_VER)) || (defined(__GNUC__) && __GNUC__ > 7) || (defined(__clang__) && __clang_major__ > 6)
 template <class = void>
 void ArrayConvertibilityCheck()
 {
@@ -57,15 +58,19 @@ void ArrayConvertibilityCheck()
         EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
 
-        static_assert(std::is_same<decltype(span{stl_nullptr}), span<int*, 3>>::value,
-                      "std::is_same< decltype(span{stl_nullptr}), span<int*, 3>>::value");
-        static_assert(
-            std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<int* const, 3>>::value,
-            "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<int* const, "
-            "3>>::value");
+         static_assert(std::is_same<decltype(span{stl_nullptr}), span<int*, 3>>::value,
+                       "std::is_same< decltype(span{stl_nullptr}), span<int*, 3>>::value");
+         static_assert(
+             std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<int* const, 3>>::value,
+             "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<int* const, "
+             "3>>::value");
     }
 #endif
 }
+#else
+template <class = void>
+void ArrayConvertibilityCheck(){}
+#endif
 
 TEST(span_compatibility_tests, assertion_tests)
 {
