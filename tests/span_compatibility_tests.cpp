@@ -48,7 +48,7 @@ static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
 // Filtering g++ version < 8, clang version < 7, and XCode 9.4 and 10.1 which looks to be Apple clang versions 9.1 and 10.0.
 #if (defined(_MSC_VER)) || \
 (defined(__GNUC__) && __GNUC__ > 7) || \
-(defined(__apple_build_version__) && __apple_build_version__ != 10001145 && __apple_build_version__ != 9020039 ) || \
+(defined(__apple_build_version__) && defined(__clang__) && __clang_major__ > 10 ) || \
 (defined(__clang__) && __clang_major__ > 6)
 template <class = void>
 void ArrayConvertibilityCheck()
