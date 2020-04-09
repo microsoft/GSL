@@ -1043,7 +1043,7 @@ TEST(multi_span_test, subspan)
         EXPECT_TRUE(av.subspan(4).length() == 1);
         EXPECT_TRUE(av.subspan(5).length() == 0);
         // Disabled test instead of fixing since multi_span is deprecated. (PR#835)
-#if !(defined(__GNUC__) && __GNUC__ == 8 && __GNUC_MINOR__ == 3)
+#if !(defined(__GNUC__) && __GNUC__ == 8)
         EXPECT_DEATH(av.subspan(6).length(), deathstring);
 #endif
         auto av2 = av.subspan(1);

@@ -57,7 +57,7 @@
 #endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
-#if __clang__ || __GNUC__
+#if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
@@ -2266,7 +2266,7 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
 
-#if __clang__ || __GNUC__
+#if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic pop
 #endif
 
