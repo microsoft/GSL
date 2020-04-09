@@ -42,7 +42,14 @@ static_assert(std::is_convertible<Derived*, Base*>::value, "std::is_convertible<
 static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
-#if (defined(_MSC_VER)) || (defined(__GNUC__) && __GNUC__ > 7) || (defined(__clang__) && __clang_major__ > 6)
+// int*(*) [], int const* const(*)[] was identified as an issue in CWG330 and the resolution was provided with N4261
+// The changes were not backported to all versions of the compilers that GSL supports.
+// The `if constexpr` should prevent codegen from happening if it is not supported however a few compilers continue to complain about the logic within.
+// Filtering g++ version < 8, clang version < 7, and Apple clang versions 9.4 and 10.1.
+#if (defined(_MSC_VER)) || \
+(defined(__GNUC__) && __GNUC__ > 7) || \
+(defined(__APPLE__) && defined(__clang__) && (!(__clang_major__ == 9 && __clang_minor == 4) && !(__clang_major__ == 10 && __clang_minro__ == 1))) || \
+(defined(__clang__) && __clang_major__ > 6)
 template <class = void>
 void ArrayConvertibilityCheck()
 {
