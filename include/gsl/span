@@ -21,9 +21,9 @@
 #include <gsl/gsl_byte>   // for byte
 #include <gsl/gsl_util>   // for narrow_cast, narrow
 
-#include <array>     // for array
-#include <cstddef>   // for ptrdiff_t, size_t, nullptr_t
-#include <iterator>  // for reverse_iterator, distance, random_access_...
+#include <array>       // for array
+#include <cstddef>     // for ptrdiff_t, size_t, nullptr_t
+#include <iterator>    // for reverse_iterator, distance, random_access_...
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
 
 #if defined(_MSC_VER) && !defined(__clang__)
@@ -441,18 +441,21 @@ public:
         : storage_(KnownNotNull{arr + 0}, details::extent_type<N>())
     {}
 
-    template <std::size_t N,
-              std::enable_if_t<details::is_allowed_extent_conversion<N, Extent>::value, int> = 0>
-    constexpr span(std::array<element_type, N>& arr) noexcept
+    template <
+        class T, std::size_t N,
+        std::enable_if_t<(details::is_allowed_extent_conversion<N, Extent>::value &&
+                          details::is_allowed_element_type_conversion<T, element_type>::value),
+                         int> = 0>
+    constexpr span(std::array<T, N>& arr) noexcept
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {}
 
-    template <std::size_t N,
-              std::enable_if_t<(details::is_allowed_extent_conversion<N, Extent>::value &&
-                                details::is_allowed_element_type_conversion<const value_type,
-                                                                            element_type>::value),
-                               int> = 0>
-    constexpr span(const std::array<value_type, N>& arr) noexcept
+    template <class T, std::size_t N,
+              std::enable_if_t<
+                  (details::is_allowed_extent_conversion<N, Extent>::value &&
+                   details::is_allowed_element_type_conversion<const T, element_type>::value),
+                  int> = 0>
+    constexpr span(const std::array<T, N>& arr) noexcept
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {}
 
@@ -462,7 +465,9 @@ public:
               class = std::enable_if_t<
                   !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
                   std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
-                  std::is_convertible<std::remove_pointer_t<decltype(std::declval<Container&>().data())>(*)[], element_type(*)[]>::value>>
+                  std::is_convertible<
+                      std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
+                      element_type (*)[]>::value>>
     constexpr span(Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
@@ -471,7 +476,9 @@ public:
                   std::is_const<element_type>::value && !details::is_span<Container>::value &&
                   !details::is_std_array<Container>::value &&
                   std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
-                  std::is_convertible<std::remove_pointer_t<decltype(std::declval<const Container&>().data())>(*)[], element_type(*)[]>::value>>
+                  std::is_convertible<std::remove_pointer_t<
+                                          decltype(std::declval<const Container&>().data())> (*)[],
+                                      element_type (*)[]>::value>>
     constexpr span(const Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
@@ -500,8 +507,8 @@ public:
     template <std::size_t Count>
     // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-    // clang-format on
-    constexpr span<element_type, Count> last() const noexcept
+        // clang-format on
+        constexpr span<element_type, Count> last() const noexcept
     {
         Expects(Count <= size());
         return {data() + (size() - Count), Count};
@@ -510,9 +517,9 @@ public:
     template <std::size_t Offset, std::size_t Count = dynamic_extent>
     // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
-    // clang-format on
-    constexpr auto subspan() const noexcept ->
-    typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
+        // clang-format on
+        constexpr auto subspan() const noexcept ->
+        typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((size() >= Offset) && (Count == dynamic_extent || (Count <= size() - Offset)));
 
@@ -673,7 +680,8 @@ private:
 
     template <std::size_t CallerExtent>
     constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
-                                                              subspan_selector<CallerExtent>) const noexcept
+                                                              subspan_selector<CallerExtent>) const
+        noexcept
     {
         const span<element_type, dynamic_extent> tmp(*this);
         return tmp.subspan(offset, count);

@@ -24,7 +24,7 @@
 #include <iterator>    // for reverse_iterator, operator-, operator==
 #include <type_traits> // for integral_constant<>::value, is_default_co...
 #include <utility>
-#include <vector>      // for vector
+#include <vector> // for vector
 
 using namespace std;
 using namespace gsl;
@@ -42,10 +42,39 @@ static_assert(std::is_convertible<Derived*, Base*>::value, "std::is_convertible<
 static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
+// int*(*) [], int const* const(*)[] was identified as an issue in CWG330 and the resolution was
+// provided with N4261.
+template <class T = int>
+void ArrayConvertibilityCheck()
+{
+#if __cplusplus >= 201703l
+    if constexpr (std::is_convertible<T*(*) [], T const* const(*)[]>::value)
+    {
+        std::array<T*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
+        gsl::span<const T* const> sp_const_nullptr_1{stl_nullptr};
+        EXPECT_TRUE(sp_const_nullptr_1.data() == stl_nullptr.data());
+        EXPECT_TRUE(sp_const_nullptr_1.size() == 3);
+
+        span<const T* const> sp_const_nullptr_2{std::as_const(stl_nullptr)};
+        EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
+        EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
+
+        static_assert(std::is_same<decltype(span{stl_nullptr}), span<T*, 3>>::value,
+                      "std::is_same< decltype(span{stl_nullptr}), span<T*, 3>>::value");
+        static_assert(
+            std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<T* const, 3>>::value,
+            "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<T* const, "
+            "3>>::value");
+    }
+#endif
+}
+
 TEST(span_compatibility_tests, assertion_tests)
 {
     int arr[3]{10, 20, 30};
     std::array<int, 3> stl{{100, 200, 300}};
+
+    ArrayConvertibilityCheck();
 
     {
         gsl::span<int> sp_dyn;
@@ -1052,21 +1081,20 @@ static_assert(std::is_convertible<std::array<int, 3>&, gsl::span<const int>>::va
 static_assert(std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>::value,
               "std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>");
 
-
 #if __cplusplus >= 201703l
 template <typename U, typename = void>
 static constexpr bool AsWritableBytesCompilesFor = false;
 
 template <typename U>
-static constexpr bool AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> =
-    true;
+static constexpr bool
+    AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> = true;
 
 static_assert(AsWritableBytesCompilesFor<gsl::span<int>>,
-                "AsWritableBytesCompilesFor<gsl::span<int>>");
+              "AsWritableBytesCompilesFor<gsl::span<int>>");
 static_assert(AsWritableBytesCompilesFor<gsl::span<int, 9>>,
-                "AsWritableBytesCompilesFor<gsl::span<int, 9>>");
+              "AsWritableBytesCompilesFor<gsl::span<int, 9>>");
 static_assert(!AsWritableBytesCompilesFor<gsl::span<const int>>,
-                "!AsWritableBytesCompilesFor<gsl::span<const int>>");
+              "!AsWritableBytesCompilesFor<gsl::span<const int>>");
 static_assert(!AsWritableBytesCompilesFor<gsl::span<const int, 9>>,
-                "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
+              "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
 #endif // __cplusplus >= 201703l
