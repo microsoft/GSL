@@ -43,42 +43,31 @@ static_assert(!std::is_convertible<Derived (*)[], Base (*)[]>::value,
               "!std::is_convertible<Derived(*)[], Base(*)[]>");
 
 // int*(*) [], int const* const(*)[] was identified as an issue in CWG330 and the resolution was
-// provided with N4261. The changes were not backported to all versions of the compilers that GSL
-// supports. The `if constexpr` should prevent codegen from happening if it is not supported however
-// a few compilers continue to complain about the logic within. Filtering g++ version < 8, clang
-// version < 7, and XCode 9.4 and 10.1 which looks to be Apple clang versions 9.1 and 10.0.
-#if (defined(_MSC_VER)) || (defined(__GNUC__) && __GNUC__ > 7) ||                                  \
-    (defined(__APPLE__) && defined(__clang_major__) && __clang_major__ > 10) ||                    \
-    (!defined(__APPLE__) && defined(__clang__) && __clang_major__ > 6)
-template <class = void>
+// provided with N4261.
+template <class T = int>
 void ArrayConvertibilityCheck()
 {
 #if __cplusplus >= 201703l
-    if constexpr (std::is_convertible<int*(*) [], int const* const(*)[]>::value)
+    if constexpr (std::is_convertible<T*(*) [], T const* const(*)[]>::value)
     {
-        std::array<int*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
-        gsl::span<const int* const> sp_const_nullptr_1{stl_nullptr};
+        std::array<T*, 3> stl_nullptr{{nullptr, nullptr, nullptr}};
+        gsl::span<const T* const> sp_const_nullptr_1{stl_nullptr};
         EXPECT_TRUE(sp_const_nullptr_1.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_1.size() == 3);
 
-        span<const int* const> sp_const_nullptr_2{std::as_const(stl_nullptr)};
+        span<const T* const> sp_const_nullptr_2{std::as_const(stl_nullptr)};
         EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
 
-        static_assert(std::is_same<decltype(span{stl_nullptr}), span<int*, 3>>::value,
-                      "std::is_same< decltype(span{stl_nullptr}), span<int*, 3>>::value");
+        static_assert(std::is_same<decltype(span{stl_nullptr}), span<T*, 3>>::value,
+                      "std::is_same< decltype(span{stl_nullptr}), span<T*, 3>>::value");
         static_assert(
-            std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<int* const, 3>>::value,
-            "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<int* const, "
+            std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<T* const, 3>>::value,
+            "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<T* const, "
             "3>>::value");
     }
 #endif
 }
-#else
-template <class = void>
-void ArrayConvertibilityCheck()
-{}
-#endif
 
 TEST(span_compatibility_tests, assertion_tests)
 {
