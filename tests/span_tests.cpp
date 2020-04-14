@@ -864,34 +864,6 @@ TEST(span_test, from_array_constructor)
      EXPECT_TRUE(it1 == it2);
  }
 
- TEST(span_test, const_iterator_default_init)
- {
-     span<int>::const_iterator it1;
-     span<int>::const_iterator it2;
-     EXPECT_TRUE(it1 == it2);
- }
-
- TEST(span_test, iterator_conversions)
- {
-     span<int>::iterator badIt;
-     span<int>::const_iterator badConstIt;
-     EXPECT_TRUE(badIt == badConstIt);
-
-     int a[] = {1, 2, 3, 4};
-     span<int> s = a;
-
-     auto it = s.begin();
-     auto cit = s.cbegin();
-
-     EXPECT_TRUE(it == cit);
-     EXPECT_TRUE(cit == it);
-
-     span<int>::const_iterator cit2 = it;
-     EXPECT_TRUE(cit2 == cit);
-
-     span<int>::const_iterator cit3 = it + 4;
-     EXPECT_TRUE(cit3 == s.cend());
- }
  TEST(span_test, iterator_comparisons)
  {
      int a[] = {1, 2, 3, 4};
@@ -899,15 +871,8 @@ TEST(span_test, from_array_constructor)
          span<int> s = a;
          span<int>::iterator it = s.begin();
          auto it2 = it + 1;
-         span<int>::const_iterator cit = s.cbegin();
 
-         EXPECT_TRUE(it == cit);
-         EXPECT_TRUE(cit == it);
          EXPECT_TRUE(it == it);
-         EXPECT_TRUE(cit == cit);
-         EXPECT_TRUE(cit == s.begin());
-         EXPECT_TRUE(s.begin() == cit);
-         EXPECT_TRUE(s.cbegin() == cit);
          EXPECT_TRUE(it == s.begin());
          EXPECT_TRUE(s.begin() == it);
 
@@ -916,26 +881,16 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(it != s.end());
          EXPECT_TRUE(it2 != s.end());
          EXPECT_TRUE(s.end() != it);
-         EXPECT_TRUE(it2 != cit);
-         EXPECT_TRUE(cit != it2);
 
          EXPECT_TRUE(it < it2);
          EXPECT_TRUE(it <= it2);
          EXPECT_TRUE(it2 <= s.end());
          EXPECT_TRUE(it < s.end());
-         EXPECT_TRUE(it <= cit);
-         EXPECT_TRUE(cit <= it);
-         EXPECT_TRUE(cit < it2);
-         EXPECT_TRUE(cit <= it2);
-         EXPECT_TRUE(cit < s.end());
-         EXPECT_TRUE(cit <= s.end());
 
          EXPECT_TRUE(it2 > it);
          EXPECT_TRUE(it2 >= it);
          EXPECT_TRUE(s.end() > it2);
          EXPECT_TRUE(s.end() >= it2);
-         EXPECT_TRUE(it2 > cit);
-         EXPECT_TRUE(it2 >= cit);
      }
  }
 
@@ -1019,63 +974,6 @@ TEST(span_test, from_array_constructor)
      }
  }
 
- TEST(span_test, cbegin_cend)
- {
-    std::set_terminate([] {
-        std::cerr << "Expected Death. cbegin_cend";
-        std::abort();
-    });
-     {
-         int a[] = {1, 2, 3, 4};
-         span<int> s = a;
-
-         span<int>::const_iterator cit = s.cbegin();
-         span<int>::const_iterator cit2 = std::cbegin(s);
-         EXPECT_TRUE(cit == cit2);
-
-         cit = s.cend();
-         cit2 = std::cend(s);
-         EXPECT_TRUE(cit == cit2);
-     }
-
-     {
-         int a[] = {1, 2, 3, 4};
-         span<int> s = a;
-
-         auto it = s.cbegin();
-         auto first = it;
-         EXPECT_TRUE(it == first);
-         EXPECT_TRUE(*it == 1);
-
-         auto beyond = s.cend();
-         EXPECT_TRUE(it != beyond);
-         EXPECT_DEATH(*beyond, deathstring);
-
-         EXPECT_TRUE(beyond - first == 4);
-         EXPECT_TRUE(first - first == 0);
-         EXPECT_TRUE(beyond - beyond == 0);
-
-         ++it;
-         EXPECT_TRUE(it - first == 1);
-         EXPECT_TRUE(*it == 2);
-         EXPECT_TRUE(beyond - it == 3);
-
-         int last = 0;
-         it = first;
-         EXPECT_TRUE(it == first);
-         while (it != s.cend())
-         {
-             EXPECT_TRUE(*it == last + 1);
-
-             last = *it;
-             ++it;
-         }
-
-         EXPECT_TRUE(it == beyond);
-         EXPECT_TRUE(it - beyond == 0);
-     }
- }
-
  TEST(span_test, rbegin_rend)
  {
     std::set_terminate([] {
@@ -1122,55 +1020,6 @@ TEST(span_test, from_array_constructor)
          EXPECT_TRUE(it - beyond == 0);
 
          for (const auto& n : s) { EXPECT_TRUE(n == 5); }
-     }
- }
-
- TEST(span_test, crbegin_crend)
- {
-    std::set_terminate([] {
-        std::cerr << "Expected Death. crbegin_crend";
-        std::abort();
-    });
-     {
-         int a[] = {1, 2, 3, 4};
-         span<int> s = a;
-
-         auto it = s.crbegin();
-         auto first = it;
-         EXPECT_TRUE(it == first);
-         EXPECT_TRUE(*it == 4);
-
-         auto beyond = s.crend();
-         EXPECT_TRUE(it != beyond);
-#if (__cplusplus > 201402L)
-        EXPECT_DEATH([[maybe_unused]] auto _ = *beyond, deathstring);
-#else
-        EXPECT_DEATH(auto _ = *beyond, deathstring);
-#endif
-
-         EXPECT_TRUE(beyond - first == 4);
-         EXPECT_TRUE(first - first == 0);
-         EXPECT_TRUE(beyond - beyond == 0);
-
-         std::cout << *first << std::endl;
-         ++it;
-         EXPECT_TRUE(it - s.crbegin() == 1);
-         EXPECT_TRUE(*it == 3);
-         EXPECT_TRUE(beyond - it == 3);
-
-         it = first;
-         EXPECT_TRUE(it == first);
-         int last = 5;
-         while (it != s.crend())
-         {
-             EXPECT_TRUE(*it == last - 1);
-             last = *it;
-
-             ++it;
-         }
-
-         EXPECT_TRUE(it == beyond);
-         EXPECT_TRUE(it - beyond == 0);
      }
  }
 

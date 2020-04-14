@@ -186,9 +186,7 @@ public:
 
     using size_type = typename impl_type::size_type;
     using iterator = typename impl_type::iterator;
-    using const_iterator = typename impl_type::const_iterator;
     using reverse_iterator = typename impl_type::reverse_iterator;
-    using const_reverse_iterator = typename impl_type::const_reverse_iterator;
 
     // default (empty)
     constexpr basic_string_span() noexcept = default;
@@ -304,14 +302,8 @@ public:
     constexpr iterator begin() const noexcept { return span_.begin(); }
     constexpr iterator end() const noexcept { return span_.end(); }
 
-    constexpr const_iterator cbegin() const noexcept { return span_.cbegin(); }
-    constexpr const_iterator cend() const noexcept { return span_.cend(); }
-
     constexpr reverse_iterator rbegin() const noexcept { return span_.rbegin(); }
     constexpr reverse_iterator rend() const noexcept { return span_.rend(); }
-
-    constexpr const_reverse_iterator crbegin() const noexcept { return span_.crbegin(); }
-    constexpr const_reverse_iterator crend() const noexcept { return span_.crend(); }
 
 private:
     static impl_type remove_z(pointer const& sz, std::size_t max)
