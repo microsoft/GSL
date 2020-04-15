@@ -152,20 +152,6 @@ end(const span<ElementType, Extent>& s) noexcept
 }
 
 template <class ElementType, std::size_t Extent>
-constexpr typename span<ElementType, Extent>::const_iterator
-cbegin(const span<ElementType, Extent>& s) noexcept
-{
-    return s.cbegin();
-}
-
-template <class ElementType, std::size_t Extent>
-constexpr typename span<ElementType, Extent>::const_iterator
-cend(const span<ElementType, Extent>& s) noexcept
-{
-    return s.cend();
-}
-
-template <class ElementType, std::size_t Extent>
 constexpr typename span<ElementType, Extent>::reverse_iterator
 rbegin(const span<ElementType, Extent>& s) noexcept
 {
@@ -180,17 +166,31 @@ rend(const span<ElementType, Extent>& s) noexcept
 }
 
 template <class ElementType, std::size_t Extent>
-constexpr typename span<ElementType, Extent>::const_reverse_iterator
-crbegin(const span<ElementType, Extent>& s) noexcept
+constexpr typename span<ElementType, Extent>::iterator
+cbegin(const span<ElementType, Extent>& s) noexcept
 {
-    return s.crbegin();
+    return s.begin();
+}
+
+template <class ElementType, std::size_t Extent = dynamic_extent>
+constexpr typename span<ElementType, Extent>::iterator
+cend(const span<ElementType, Extent>& s) noexcept
+{
+    return s.end();
 }
 
 template <class ElementType, std::size_t Extent>
-constexpr typename span<ElementType, Extent>::const_reverse_iterator
+constexpr typename span<ElementType, Extent>::reverse_iterator
+crbegin(const span<ElementType, Extent>& s) noexcept
+{
+    return s.rbegin();
+}
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
 crend(const span<ElementType, Extent>& s) noexcept
 {
-    return s.crend();
+    return s.rend();
 }
 
 } // namespace gsl

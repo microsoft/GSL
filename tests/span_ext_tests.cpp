@@ -208,26 +208,26 @@ TEST(span_ext_test, make_span_from_array_constructor)
      EXPECT_TRUE((std::is_same<decltype(s.begin()), decltype(begin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.end()), decltype(end(s))>::value));
 
-     EXPECT_TRUE((std::is_same<decltype(s.cbegin()), decltype(cbegin(s))>::value));
-     EXPECT_TRUE((std::is_same<decltype(s.cend()), decltype(cend(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(std::cbegin(s)), decltype(cbegin(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(std::cend(s)), decltype(cend(s))>::value));
 
      EXPECT_TRUE((std::is_same<decltype(s.rbegin()), decltype(rbegin(s))>::value));
      EXPECT_TRUE((std::is_same<decltype(s.rend()), decltype(rend(s))>::value));
 
-     EXPECT_TRUE((std::is_same<decltype(s.crbegin()), decltype(crbegin(s))>::value));
-     EXPECT_TRUE((std::is_same<decltype(s.crend()), decltype(crend(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(std::crbegin(s)), decltype(crbegin(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(std::crend(s)), decltype(crend(s))>::value));
 
      EXPECT_TRUE(s.begin() == begin(s));
      EXPECT_TRUE(s.end() == end(s));
 
-     EXPECT_TRUE(s.cbegin() == cbegin(s));
-     EXPECT_TRUE(s.cend() == cend(s));
-
      EXPECT_TRUE(s.rbegin() == rbegin(s));
      EXPECT_TRUE(s.rend() == rend(s));
 
-     EXPECT_TRUE(s.crbegin() == crbegin(s));
-     EXPECT_TRUE(s.crend() == crend(s));
+     EXPECT_TRUE(s.begin() == cbegin(s));
+     EXPECT_TRUE(s.end() == cend(s));
+
+     EXPECT_TRUE(s.rbegin() == crbegin(s));
+     EXPECT_TRUE(s.rend() == crend(s));
  }
 
  TEST(span_ext_test, ssize_free_function)

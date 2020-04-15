@@ -387,12 +387,8 @@ TEST(span_compatibility_tests, assertion_tests)
         static_assert(noexcept(sp_dyn.data()), "noexcept(sp_dyn.data())");
         static_assert(noexcept(sp_dyn.begin()), "noexcept(sp_dyn.begin())");
         static_assert(noexcept(sp_dyn.end()), "noexcept(sp_dyn.end())");
-        static_assert(noexcept(sp_dyn.cbegin()), "noexcept(sp_dyn.cbegin())");
-        static_assert(noexcept(sp_dyn.cend()), "noexcept(sp_dyn.cend())");
         static_assert(noexcept(sp_dyn.rbegin()), "noexcept(sp_dyn.rbegin())");
         static_assert(noexcept(sp_dyn.rend()), "noexcept(sp_dyn.rend())");
-        static_assert(noexcept(sp_dyn.crbegin()), "noexcept(sp_dyn.crbegin())");
-        static_assert(noexcept(sp_dyn.crend()), "noexcept(sp_dyn.crend())");
 
         static_assert(noexcept(sp_nine.size()), "noexcept(sp_nine.size())");
         static_assert(noexcept(sp_nine.size_bytes()), "noexcept(sp_nine.size_bytes())");
@@ -403,12 +399,8 @@ TEST(span_compatibility_tests, assertion_tests)
         static_assert(noexcept(sp_nine.data()), "noexcept(sp_nine.data())");
         static_assert(noexcept(sp_nine.begin()), "noexcept(sp_nine.begin())");
         static_assert(noexcept(sp_nine.end()), "noexcept(sp_nine.end())");
-        static_assert(noexcept(sp_nine.cbegin()), "noexcept(sp_nine.cbegin())");
-        static_assert(noexcept(sp_nine.cend()), "noexcept(sp_nine.cend())");
         static_assert(noexcept(sp_nine.rbegin()), "noexcept(sp_nine.rbegin())");
         static_assert(noexcept(sp_nine.rend()), "noexcept(sp_nine.rend())");
-        static_assert(noexcept(sp_nine.crbegin()), "noexcept(sp_nine.crbegin())");
-        static_assert(noexcept(sp_nine.crend()), "noexcept(sp_nine.crend())");
 
         EXPECT_TRUE(sp_dyn.size() == 9);
         EXPECT_TRUE(sp_nine.size() == 9);
@@ -446,23 +438,11 @@ TEST(span_compatibility_tests, assertion_tests)
         EXPECT_TRUE(sp_dyn.end()[-2] == 80);
         EXPECT_TRUE(sp_nine.end()[-2] == 80);
 
-        EXPECT_TRUE(*sp_dyn.cbegin() == 10);
-        EXPECT_TRUE(*sp_nine.cbegin() == 10);
-
-        EXPECT_TRUE(sp_dyn.cend()[-2] == 80);
-        EXPECT_TRUE(sp_nine.cend()[-2] == 80);
-
         EXPECT_TRUE(*sp_dyn.rbegin() == 90);
         EXPECT_TRUE(*sp_nine.rbegin() == 90);
 
         EXPECT_TRUE(sp_dyn.rend()[-2] == 20);
         EXPECT_TRUE(sp_nine.rend()[-2] == 20);
-
-        EXPECT_TRUE(*sp_dyn.crbegin() == 90);
-        EXPECT_TRUE(*sp_nine.crbegin() == 90);
-
-        EXPECT_TRUE(sp_dyn.crend()[-2] == 20);
-        EXPECT_TRUE(sp_nine.crend()[-2] == 20);
 
         static_assert(is_same<decltype(sp_dyn.begin()), gsl::span<int>::iterator>::value,
                       "is_same<decltype(sp_dyn.begin()), gsl::span<int>::iterator>::value");
@@ -472,16 +452,6 @@ TEST(span_compatibility_tests, assertion_tests)
                       "is_same<decltype(sp_dyn.end()), gsl::span<int>::iterator>::value");
         static_assert(is_same<decltype(sp_nine.end()), gsl::span<int, 9>::iterator>::value,
                       "is_same<decltype(sp_nine.end()), gsl::span<int, 9>::iterator>::value");
-        static_assert(is_same<decltype(sp_dyn.cbegin()), gsl::span<int>::const_iterator>::value,
-                      "is_same<decltype(sp_dyn.cbegin()), gsl::span<int>::const_iterator>::value");
-        static_assert(
-            is_same<decltype(sp_nine.cbegin()), gsl::span<int, 9>::const_iterator>::value,
-            "is_same<decltype(sp_nine.cbegin()), gsl::span<int, 9>::const_iterator>::value");
-        static_assert(is_same<decltype(sp_dyn.cend()), gsl::span<int>::const_iterator>::value,
-                      "is_same<decltype(sp_dyn.cend()), gsl::span<int>::const_iterator>::value");
-        static_assert(
-            is_same<decltype(sp_nine.cend()), gsl::span<int, 9>::const_iterator>::value,
-            "is_same<decltype(sp_nine.cend()), gsl::span<int, 9>::const_iterator>::value");
         static_assert(
             is_same<decltype(sp_dyn.rbegin()), gsl::span<int>::reverse_iterator>::value,
             "is_same<decltype(sp_dyn.rbegin()), gsl::span<int>::reverse_iterator>::value");
@@ -493,19 +463,6 @@ TEST(span_compatibility_tests, assertion_tests)
         static_assert(
             is_same<decltype(sp_nine.rend()), gsl::span<int, 9>::reverse_iterator>::value,
             "is_same<decltype(sp_nine.rend()), gsl::span<int, 9>::reverse_iterator>::value");
-        static_assert(
-            is_same<decltype(sp_dyn.crbegin()), gsl::span<int>::const_reverse_iterator>::value,
-            "is_same<decltype(sp_dyn.crbegin()), gsl::span<int>::const_reverse_iterator>::value");
-        static_assert(
-            is_same<decltype(sp_nine.crbegin()), gsl::span<int, 9>::const_reverse_iterator>::value,
-            "is_same<decltype(sp_nine.crbegin()), gsl::span<int, "
-            "9>::const_reverse_iterator>::value");
-        static_assert(
-            is_same<decltype(sp_dyn.crend()), gsl::span<int>::const_reverse_iterator>::value,
-            "is_same<decltype(sp_dyn.crend()), gsl::span<int>::const_reverse_iterator>::value");
-        static_assert(
-            is_same<decltype(sp_nine.crend()), gsl::span<int, 9>::const_reverse_iterator>::value,
-            "is_same<decltype(sp_nine.crend()), gsl::span<int, 9>::const_reverse_iterator>::value");
     }
     {
         int sequence[9]{10, 20, 30, 40, 50, 60, 70, 80, 90};
@@ -647,89 +604,53 @@ static_assert(std::is_same<gsl::span<const int, 3>::const_reference, const int&>
 static_assert(std::is_same<std::iterator_traits<gsl::span<int>::iterator>::pointer, int*>::value,
               "span<int>::iterator's pointer should be int*");
 static_assert(
-    std::is_same<std::iterator_traits<gsl::span<int>::const_iterator>::pointer, const int*>::value,
-    "span<int>::const_iterator's pointer should be const int*");
-static_assert(
     std::is_same<gsl::span<int>::reverse_iterator,
                  std::reverse_iterator<gsl::span<int>::iterator>>::value,
     "span<int>::reverse_iterator should equal std::reverse_iterator<span<int>::iterator>");
-static_assert(std::is_same<gsl::span<int>::const_reverse_iterator,
-                           std::reverse_iterator<gsl::span<int>::const_iterator>>::value,
-              "span<int>::const_reverse_iterator should equal "
-              "std::reverse_iterator<span<int>::const_iterator>");
 
 static_assert(std::is_same<std::iterator_traits<gsl::span<int, 3>::iterator>::pointer, int*>::value,
               "span<int, 3>::iterator's pointer should be int*");
-static_assert(std::is_same<std::iterator_traits<gsl::span<int, 3>::const_iterator>::pointer,
-                           const int*>::value,
-              "span<int, 3>::const_iterator's pointer should be const int*");
 static_assert(
     std::is_same<gsl::span<int, 3>::reverse_iterator,
                  std::reverse_iterator<gsl::span<int, 3>::iterator>>::value,
     "span<int, 3>::reverse_iterator should equal std::reverse_iterator<span<int, 3>::iterator>");
-static_assert(std::is_same<gsl::span<int, 3>::const_reverse_iterator,
-                           std::reverse_iterator<gsl::span<int, 3>::const_iterator>>::value,
-              "span<int, 3>::const_reverse_iterator should equal std::reverse_iterator<span<int, "
-              "3>::const_iterator>");
 
 static_assert(
     std::is_same<std::iterator_traits<gsl::span<const int>::iterator>::pointer, const int*>::value,
     "span<const int>::iterator's pointer should be int*");
-static_assert(std::is_same<std::iterator_traits<gsl::span<const int>::const_iterator>::pointer,
-                           const int*>::value,
-              "span<const int>::const_iterator's pointer should be const int*");
 static_assert(std::is_same<gsl::span<const int>::reverse_iterator,
                            std::reverse_iterator<gsl::span<const int>::iterator>>::value,
               "span<const int>::reverse_iterator should equal std::reverse_iterator<span<const "
               "int>::iterator>");
-static_assert(std::is_same<gsl::span<const int>::const_reverse_iterator,
-                           std::reverse_iterator<gsl::span<const int>::const_iterator>>::value,
-              "span<const int>::const_reverse_iterator should equal "
-              "std::reverse_iterator<span<const int>::const_iterator>");
 
 static_assert(std::is_same<std::iterator_traits<gsl::span<const int, 3>::iterator>::pointer,
                            const int*>::value,
               "span<const int, 3>::iterator's pointer should be int*");
-static_assert(std::is_same<std::iterator_traits<gsl::span<const int, 3>::const_iterator>::pointer,
-                           const int*>::value,
-              "span<const int, 3>::const_iterator's pointer should be const int*");
 static_assert(std::is_same<gsl::span<const int, 3>::reverse_iterator,
                            std::reverse_iterator<gsl::span<const int, 3>::iterator>>::value,
               "span<const int, 3>::reverse_iterator should equal std::reverse_iterator<span<const "
               "int, 3>::iterator>");
-static_assert(std::is_same<gsl::span<const int, 3>::const_reverse_iterator,
-                           std::reverse_iterator<gsl::span<const int, 3>::const_iterator>>::value,
-              "span<const int, 3>::const_reverse_iterator should equal "
-              "std::reverse_iterator<span<const int, 3>::const_iterator>");
 
 // copyability assertions
 static_assert(std::is_trivially_copyable<gsl::span<int>>::value,
               "span<int> should be trivially copyable");
 static_assert(std::is_trivially_copyable<gsl::span<int>::iterator>::value,
               "span<int>::iterator should be trivially copyable");
-static_assert(std::is_trivially_copyable<gsl::span<int>::const_iterator>::value,
-              "span<int>::const_iterator should be trivially copyable");
 
 static_assert(std::is_trivially_copyable<gsl::span<int, 3>>::value,
               "span<int, 3> should be trivially copyable");
 static_assert(std::is_trivially_copyable<gsl::span<int, 3>::iterator>::value,
               "span<int, 3>::iterator should be trivially copyable");
-static_assert(std::is_trivially_copyable<gsl::span<int, 3>::const_iterator>::value,
-              "span<int, 3>::const_iterator should be trivially copyable");
 
 static_assert(std::is_trivially_copyable<gsl::span<const int>>::value,
               "span<const int> should be trivially copyable");
 static_assert(std::is_trivially_copyable<gsl::span<const int>::iterator>::value,
               "span<const int>::iterator should be trivially copyable");
-static_assert(std::is_trivially_copyable<gsl::span<const int>::const_iterator>::value,
-              "span<const int>::const_iterator should be trivially copyable");
 
 static_assert(std::is_trivially_copyable<gsl::span<const int, 3>>::value,
               "span<const int, 3> should be trivially copyable");
 static_assert(std::is_trivially_copyable<gsl::span<const int, 3>::iterator>::value,
               "span<const int, 3>::iterator should be trivially copyable");
-static_assert(std::is_trivially_copyable<gsl::span<const int, 3>::const_iterator>::value,
-              "span<const int, 3>::const_iterator should be trivially copyable");
 
 // nothrow constructible assertions
 static_assert(std::is_nothrow_constructible<gsl::span<int>, int*, std::size_t>::value,
