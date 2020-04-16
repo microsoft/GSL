@@ -1242,3 +1242,33 @@ TEST(span_test, from_array_constructor)
     EXPECT_DEATH(s2.front(), deathstring);
     EXPECT_DEATH(s2.back(), deathstring);
  }
+
+ TEST(span_test, iterator_free_functions)
+ {
+     int a[] = {1, 2, 3, 4};
+     span<int> s{a};
+
+     EXPECT_TRUE((std::is_same<decltype(s.begin()), decltype(begin(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(s.end()), decltype(end(s))>::value));
+
+     EXPECT_TRUE((std::is_same<decltype(std::cbegin(s)), decltype(cbegin(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(std::cend(s)), decltype(cend(s))>::value));
+
+     EXPECT_TRUE((std::is_same<decltype(s.rbegin()), decltype(rbegin(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(s.rend()), decltype(rend(s))>::value));
+
+     EXPECT_TRUE((std::is_same<decltype(std::crbegin(s)), decltype(crbegin(s))>::value));
+     EXPECT_TRUE((std::is_same<decltype(std::crend(s)), decltype(crend(s))>::value));
+
+     EXPECT_TRUE(s.begin() == begin(s));
+     EXPECT_TRUE(s.end() == end(s));
+
+     EXPECT_TRUE(s.rbegin() == rbegin(s));
+     EXPECT_TRUE(s.rend() == rend(s));
+
+     EXPECT_TRUE(s.begin() == cbegin(s));
+     EXPECT_TRUE(s.end() == cend(s));
+
+     EXPECT_TRUE(s.rbegin() == crbegin(s));
+     EXPECT_TRUE(s.rend() == crend(s));
+ }

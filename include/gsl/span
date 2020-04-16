@@ -740,6 +740,63 @@ as_writable_bytes(span<ElementType, Extent> s) noexcept
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
+
+// [span.iter] Free functions for begin/end functions
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::iterator
+begin(const span<ElementType, Extent>& s) noexcept
+{
+    return s.begin();
+}
+
+template <class ElementType, std::size_t Extent = dynamic_extent>
+constexpr typename span<ElementType, Extent>::iterator
+end(const span<ElementType, Extent>& s) noexcept
+{
+    return s.end();
+}
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+rbegin(const span<ElementType, Extent>& s) noexcept
+{
+    return s.rbegin();
+}
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+rend(const span<ElementType, Extent>& s) noexcept
+{
+    return s.rend();
+}
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::iterator
+cbegin(const span<ElementType, Extent>& s) noexcept
+{
+    return s.begin();
+}
+
+template <class ElementType, std::size_t Extent = dynamic_extent>
+constexpr typename span<ElementType, Extent>::iterator
+cend(const span<ElementType, Extent>& s) noexcept
+{
+    return s.end();
+}
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+crbegin(const span<ElementType, Extent>& s) noexcept
+{
+    return s.rbegin();
+}
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+crend(const span<ElementType, Extent>& s) noexcept
+{
+    return s.rend();
+}
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)
