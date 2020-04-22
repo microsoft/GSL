@@ -104,11 +104,6 @@ TEST(utils_tests, narrow_cast)
 
 TEST(utils_tests, narrow)
 {
-    std::set_terminate([] {
-        std::cerr << "Expected Death. narrow";
-        std::abort();
-    });
-
     int n = 120;
     const char c = narrow<char>(n);
     EXPECT_TRUE(c == 120);
@@ -123,14 +118,13 @@ TEST(utils_tests, narrow)
     EXPECT_TRUE(narrow<uint32_t>(int32_t(1)) == 1);
     EXPECT_TRUE(narrow<uint32_t>(int32_max) == static_cast<uint32_t>(int32_max));
 
-    EXPECT_DEATH(narrow<uint32_t>(int32_t(-1)), deathstring);
-    EXPECT_DEATH(narrow<uint32_t>(int32_min), deathstring);
+    EXPECT_THROW(narrow<uint32_t>(int32_t(-1)), narrowing_error);
+    EXPECT_THROW(narrow<uint32_t>(int32_min), narrowing_error);
 
     n = -42;
-    EXPECT_DEATH(narrow<unsigned>(n), deathstring);
+    EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
 
 #if GSL_CONSTEXPR_NARROW
     static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");
 #endif
-
 }
