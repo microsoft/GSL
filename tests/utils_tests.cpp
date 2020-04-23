@@ -109,7 +109,7 @@ TEST(utils_tests, narrow)
     EXPECT_TRUE(c == 120);
 
     n = 300;
-    EXPECT_DEATH(narrow<char>(n), deathstring);
+    EXPECT_THROW(narrow<char>(n), narrowing_error);
 
     const auto int32_max = std::numeric_limits<int32_t>::max();
     const auto int32_min = std::numeric_limits<int32_t>::min();
