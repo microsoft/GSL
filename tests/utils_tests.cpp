@@ -29,7 +29,6 @@ using namespace gsl;
 
 namespace
 {
-static constexpr char deathstring[] = "Expected Death";
 void f(int& i) { i += 1; }
 static int j = 0;
 void g() { j += 1; }
