@@ -581,12 +581,18 @@ public:
     constexpr iterator begin() const noexcept
     {
         const auto data = storage_.data();
+        // clang-format off
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+        // clang-format on
         return {data, data + size(), data};
     }
 
     constexpr iterator end() const noexcept
     {
         const auto data = storage_.data();
+        // clang-format off
+        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+        // clang-format on
         const auto endData = data + storage_.size();
         return {data, endData, endData};
     }
