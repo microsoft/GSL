@@ -264,5 +264,4 @@ function(add_gsl_test_noexcept name)
     set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests_noexcept")
 endfunction()
 
-add_gsl_test_noexcept(no_exception_throw_tests)
 add_gsl_test_noexcept(no_exception_ensure_tests)
