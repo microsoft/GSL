@@ -23,7 +23,7 @@
 
 #include <algorithm> // for transform, lexicographical_compare
 #include <array>     // for array
-#include <cstddef>          // for ptrdiff_t, size_t, nullptr_t
+#include <cstddef>          // for std::ptrdiff_t, size_t, nullptr_t
 #include <cstdint>          // for PTRDIFF_MAX
 #include <functional>       // for divides, multiplies, minus, negate, plus
 #include <initializer_list> // for initializer_list
@@ -62,7 +62,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-// GCC 7 does not like the signed unsigned missmatch (size_t ptrdiff_t)
+// GCC 7 does not like the signed unsigned missmatch (size_t std::ptrdiff_t)
 // While there is a conversion from signed to unsigned, it happens at
 // compiletime, so the compiler wouldn't have to warn indiscriminently, but
 // could check if the source value actually doesn't fit into the target type
@@ -392,9 +392,9 @@ namespace details
         template <typename T, std::size_t Dim = 0>
         constexpr size_type contains(const T& arr) const
         {
-            const ptrdiff_t last = this->Base::template contains<T, Dim + 1>(arr);
+            const std::ptrdiff_t last = this->Base::template contains<T, Dim + 1>(arr);
             if (last == -1) return -1;
-            const ptrdiff_t cur = this->Base::totalSize() * arr[Dim];
+            const std::ptrdiff_t cur = this->Base::totalSize() * arr[Dim];
             return cur < m_bound ? cur + last : -1;
         }
 
@@ -462,7 +462,7 @@ namespace details
             GSL_SUPPRESS(bounds.4)                            // NO-FORMAT: attribute
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
             GSL_SUPPRESS(bounds.4)                            // NO-FORMAT: attribute
-            const ptrdiff_t d = arr[Dim];
+            const std::ptrdiff_t d = arr[Dim];
             return this->Base::totalSize() * d + this->Base::template linearize<T, Dim + 1>(arr);
         }
 
