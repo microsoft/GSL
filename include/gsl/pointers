@@ -119,7 +119,7 @@ private:
 };
 
 template <class T>
-auto make_not_null(T&& t) {
+auto make_not_null(T&& t) noexcept {
     return not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
 
@@ -131,37 +131,37 @@ std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
 }
 
 template <class T, class U>
-auto operator==(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() == rhs.get())
+auto operator==(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() == rhs.get())) -> decltype(lhs.get() == rhs.get())
 {
     return lhs.get() == rhs.get();
 }
 
 template <class T, class U>
-auto operator!=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() != rhs.get())
+auto operator!=(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() != rhs.get())) -> decltype(lhs.get() != rhs.get())
 {
     return lhs.get() != rhs.get();
 }
 
 template <class T, class U>
-auto operator<(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() < rhs.get())
+auto operator<(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() < rhs.get())) -> decltype(lhs.get() < rhs.get())
 {
     return lhs.get() < rhs.get();
 }
 
 template <class T, class U>
-auto operator<=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() <= rhs.get())
+auto operator<=(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() <= rhs.get())) -> decltype(lhs.get() <= rhs.get())
 {
     return lhs.get() <= rhs.get();
 }
 
 template <class T, class U>
-auto operator>(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() > rhs.get())
+auto operator>(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() > rhs.get())) -> decltype(lhs.get() > rhs.get())
 {
     return lhs.get() > rhs.get();
 }
 
 template <class T, class U>
-auto operator>=(const not_null<T>& lhs, const not_null<U>& rhs) -> decltype(lhs.get() >= rhs.get())
+auto operator>=(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() >= rhs.get())) -> decltype(lhs.get() >= rhs.get())
 {
     return lhs.get() >= rhs.get();
 }
@@ -267,7 +267,7 @@ template <class T>
 strict_not_null<T> operator+(std::ptrdiff_t, const strict_not_null<T>&) = delete;
 
 template <class T>
-auto make_strict_not_null(T&& t) {
+auto make_strict_not_null(T&& t) noexcept {
     return strict_not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
 
