@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3...3.16)
 
-project(GSL CXX)
+project(GSL VERSION 3.0.2 LANGUAGES CXX)
 
 include(ExternalProject)
 find_package(Git)
@@ -91,6 +91,18 @@ install(
 # Make library importable by other projects
 install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
 export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
+
+# Add find_package() versioning support. The version for
+# generated Microsoft.GSLConfigVersion.cmake will be used from
+# last project() command. The version's compatibility is set between all
+# minor versions (as it was in prev. GSL releases).
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
+    COMPATIBILITY SameMajorVersion
+    ARCH_INDEPENDENT
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
 
 # Add Microsoft.GSL::GSL alias for GSL so that dependents can be agnostic about
 # whether GSL was added via `add_subdirectory` or `find_package`
