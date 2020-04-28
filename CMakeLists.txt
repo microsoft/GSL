@@ -100,7 +100,6 @@ include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
     ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
     COMPATIBILITY SameMajorVersion
-    ARCH_INDEPENDENT
 )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
 
