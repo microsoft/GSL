@@ -109,12 +109,12 @@ constexpr
 #endif
 T narrow(U u) noexcept(false)
 {
-    constexpr const bool is_same_signedness = std::is_signed<T>::value == std::is_signed<U>::value;
+    constexpr const bool is_different_signedness = (std::is_signed<T>::value != std::is_signed<U>::value);
     
     const T t = narrow_cast<T>(u);
     
     if (static_cast<U>(t) != u
-        || (!is_same_signedness
+        || (is_different_signedness
             && ((t < T{}) != (u < U{}))))
     {
         throw narrowing_error{};
