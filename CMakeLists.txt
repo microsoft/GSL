@@ -14,7 +14,7 @@ add_library(GSL INTERFACE)
 # determine whether this is a standalone project or included by other projects
 set(GSL_STANDALONE_PROJECT OFF)
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-  set(GSL_STANDALONE_PROJECT ON)
+    set(GSL_STANDALONE_PROJECT ON)
 endif ()
 
 set(GSL_CXX_STANDARD "14" CACHE STRING "Use c++ standard")
@@ -109,6 +109,11 @@ add_library(Microsoft.GSL::GSL ALIAS GSL)
 
 option(GSL_TEST "Generate tests." ${GSL_STANDALONE_PROJECT})
 if (GSL_TEST)
-	enable_testing()
-	add_subdirectory(tests)
+    enable_testing()
+    if(IOS)
+        add_compile_definitions(
+            GTEST_HAS_DEATH_TEST=1
+        )
+    endif()
+    add_subdirectory(tests)
 endif ()

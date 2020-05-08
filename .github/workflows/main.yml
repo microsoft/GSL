@@ -1,0 +1,94 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  iOS:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: build
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create build directory
+        run: mkdir -p build
+        working-directory: .
+
+      - name: Configure
+        run: |
+          cmake \
+            -GXcode \
+            -DCMAKE_SYSTEM_NAME=iOS \
+            "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=8 \
+            -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY \
+            "-DMACOSX_BUNDLE_GUI_IDENTIFIER=GSL.\$(EXECUTABLE_NAME)" \
+            -DMACOSX_BUNDLE_BUNDLE_VERSION=3.0.1 \
+            -DMACOSX_BUNDLE_SHORT_VERSION_STRING=3.0.1 \
+            ..
+
+      - name: Build
+        run: cmake --build . --parallel `sysctl -n hw.ncpu` --config Release -- -sdk iphonesimulator
+
+      - name: Start simulator
+        run: |
+          RUNTIME=`xcrun simctl list runtimes iOS -j|jq '.runtimes|last.identifier'`
+          UDID=`xcrun simctl list devices iPhone available -j|jq -r ".devices[$RUNTIME]|last.udid"`
+          xcrun simctl bootstatus $UDID -b
+
+      - name: Test
+        run: |
+          for TEST in `find tests/Release-iphonesimulator -depth 1 -name "*.app"`
+          do
+            xcrun simctl install booted $TEST
+            TEST_ID=`plutil -convert json -o - $TEST/Info.plist|jq -r ".CFBundleIdentifier"`
+            xcrun simctl launch --console booted $TEST_ID
+            xcrun simctl uninstall booted $TEST_ID
+          done
+
+  Android:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: build
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create build directory
+        run: mkdir -p build
+        working-directory: .
+
+      - name: Start emulator
+        run: |
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-24;default;x86_64'
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator -k 'system-images;android-24;default;x86_64' --force
+          $ANDROID_HOME/emulator/emulator -list-avds
+          echo "Starting emulator"
+          # Start emulator in background
+          nohup $ANDROID_HOME/emulator/emulator -avd xamarin_android_emulator -no-snapshot > /dev/null 2>&1 &
+          echo "Emulator starting"
+
+      - name: Configure
+        run: cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_HOME/ndk-bundle/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=16 -DANDROID_ABI=x86_64 -DCMAKE_BUILD_TYPE=Debug ..
+
+      - name: Build
+        run: cmake --build . --parallel
+
+      - name: Wait for emulator ready
+        run: |
+          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 10; done; input keyevent 82'
+          $ANDROID_HOME/platform-tools/adb devices
+          $ANDROID_HOME/platform-tools/adb shell getprop ro.product.cpu.abi
+          echo "Emulator started"
+
+      - name: Deploy tests
+        run: |
+          adb push tests /data/local/tmp
+          adb shell find /data/local/tmp/tests -maxdepth 1 -exec chmod +x {} \\\;
+
+      - name: Test
+        run: adb shell find /data/local/tmp/tests -name "*_tests" -maxdepth 1 -exec {} \\\;

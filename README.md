@@ -44,6 +44,8 @@ The test suite that exercises GSL has been built and passes successfully on the 
 * OS X El Capitan (10.11) using Xcode with AppleClang 8.0.0.8000042
 * OS X High Sierra 10.13.2 (17C88) using Apple LLVM version 9.0.0 (clang-900.0.39.2)
 * FreeBSD 10.x with Clang/LLVM 3.6
+* iOS 8 and newer using AppleClang 11.0.3.11030032
+* Android 4.1 and newer (API Level 16 and above) using NDK r21b
 
 > If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
 contributing any changes that were necessary back to this project to benefit the wider community.
