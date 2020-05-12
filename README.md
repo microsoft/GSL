@@ -22,10 +22,18 @@ This project makes use of the [Google Test](https://github.com/google/googletest
 
 # Quick Start
 ## Supported Platforms
-The test suite that exercises GSL has been built and passes successfully on the following platforms:<sup>1)</sup>
+The GSL officially supports the current and previous major releases of MSVC, GCC, Clang, and XCode's AppleClang.
+See our latest test results for the most up-to-date list of supported configurations. <sup>1)</sup>
 
-* Windows using Visual Studio 2015
+- For XCode, Clang, and GCC: [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+- For Visual Studio with MSVC and LLVM toolsets: [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+- Android and iOS support: ![CI](https://github.com/microsoft/GSL/workflows/CI/badge.svg) <sup>2)</sup>
+
+
+The test suite that exercises GSL has been built and passes successfully on the following platforms: <sup>3)</sup>
+
 * Windows using Visual Studio 2017
+* Windows using Visual Studio 2019
 * Windows using Clang/LLVM 3.6
 * Windows using Clang/LLVM 7.0.0
 * Windows using GCC 5.1
@@ -50,7 +58,9 @@ The test suite that exercises GSL has been built and passes successfully on the 
 > If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
 contributing any changes that were necessary back to this project to benefit the wider community.
 
-<sup>1)</sup> For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
+<sup>1)</sup> The test matrix contains legacy versions of these compilers. The legacy releases are no longer officially supported. If a change causes a legacy compiler to fail, please file an issue or submit a pull request to have the legacy version to be removed from the test matrix.
+<sup>2)</sup> Android and iOS build failures are non-blocking and do not prevent pull request merging.
+<sup>3)</sup> For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
 
 ## Building the tests
 To build the tests, you will require the following:

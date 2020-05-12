@@ -17,6 +17,10 @@ stages:
   - name: Legacy     # build with all other supported compilers
 
 jobs:
+  fast_finish: true
+  allow_failures:
+  -  stage: Legacy
+
   include:
 
     ##########################################################################
@@ -111,6 +115,7 @@ jobs:
 
     # Xcode 10.1
     - name: AppleClang Xcode-10.1 C++14 Debug
+      stage: Latest
       env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode10.1 # AppleClang 10.0.0 same compiler as Xcode 10.0
@@ -147,7 +152,6 @@ jobs:
 
     # Xcode 11.3
     - name: AppleClang Xcode-11.3 C++17 Debug
-      stage: Latest
       env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       os: osx
       osx_image: xcode11.3 # AppleClang 11.0.0 linker update / same as Xcode 11.2
@@ -296,6 +300,7 @@ jobs:
 
     # Clang 9
     - name: Clang-9 C++14 Debug
+      stage: Latest
       env: CXX=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang9
         apt:
@@ -316,7 +321,6 @@ jobs:
 
     # Clang 10
     - name: Clang-10 C++14 Debug
-      stage: Latest
       env: CXX=clang++-10 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang10
         apt:
@@ -370,6 +374,7 @@ jobs:
 
     # GCC 8
     - name: GCC-8 C++14 Debug
+      stage: Latest
       env: CXX=g++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &gcc8
         apt:
@@ -386,7 +391,6 @@ jobs:
 
     # GCC 9
     - name: GCC-9 C++14 Debug
-      stage: Latest
       env: CXX=g++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &gcc9
         apt:
@@ -538,7 +542,7 @@ before_script:
   - |
     cd "${TRAVIS_BUILD_DIR:?}"
     mkdir build && cd build
-    if [[ ${GSL_CXX_STANDARD:-} ]]; then 
+    if [[ ${GSL_CXX_STANDARD:-} ]]; then
       CMAKE_GEN_FLAGS=("-DGSL_CXX_STANDARD=$GSL_CXX_STANDARD")
     fi
     CMAKE_GEN_FLAGS+=("-Wdev -Werror=dev --warn-uninitialized")
