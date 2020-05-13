@@ -742,7 +742,7 @@ as_writable_bytes(span<ElementType, Extent> s) noexcept
 } // namespace gsl
 
 //TEST
-#if defined(__GNUC__) && __GNUC__ < 6
+#if !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 6
 asdfadfasdfasdfasdfasdfasdfasdfasdf
 #endif
 //
