@@ -741,12 +741,6 @@ as_writable_bytes(span<ElementType, Extent> s) noexcept
 
 } // namespace gsl
 
-//TEST
-#if !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 6
-asdfadfasdfasdfasdfasdfasdfasdfasdf
-#endif
-//
-
 #if defined(_MSC_VER) && !defined(__clang__)
 
 #pragma warning(pop)
