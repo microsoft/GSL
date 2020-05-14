@@ -1,4 +1,5 @@
-# GSL: Guidelines Support Library [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL) [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+# GSL: Guidelines Support Library
+[![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL) [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
@@ -21,46 +22,33 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 This project makes use of the [Google Test](https://github.com/google/googletest) testing library. Please see the [ThirdPartyNotices.txt](./ThirdPartyNotices.txt) file for details regarding the licensing of Google Test.
 
 # Quick Start
-## Supported Platforms
-The GSL officially supports the current and previous major releases of MSVC, GCC, Clang, and XCode's AppleClang.
-See our latest test results for the most up-to-date list of supported configurations. <sup>1)</sup>
+## Supported Compilers
+The GSL officially supports the current and previous major release of MSVC, GCC, Clang, and XCode's Apple-Clang.
+See our latest test results for the most up-to-date list of supported configurations.
 
-- For XCode, Clang, and GCC: [![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
-- For Visual Studio with MSVC and LLVM toolsets: [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
-- Android and iOS support: ![CI](https://github.com/microsoft/GSL/workflows/CI/badge.svg) <sup>2)</sup>
+Compiler | Build Status
+:------- | ------------:
+ XCode | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+ GCC | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+ Clang | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+ Visual Studio with MSVC | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+ Visual Studio with LLVM | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
 
 
-The test suite that exercises GSL has been built and passes successfully on the following platforms: <sup>3)</sup>
+Note: For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
 
-* Windows using Visual Studio 2017
-* Windows using Visual Studio 2019
-* Windows using Clang/LLVM 3.6
-* Windows using Clang/LLVM 7.0.0
-* Windows using GCC 5.1
-* Windows using Intel C++ Compiler 18.0
-* GNU/Linux using Clang/LLVM 3.6-3.9
-* GNU/Linux using Clang/LLVM 4.0
-* GNU/Linux using Clang/LLVM 5.0
-* GNU/Linux using Clang/LLVM 6.0
-* GNU/Linux using Clang/LLVM 7.0
-* GNU/Linux using GCC 5.1
-* OS X Mojave 10.14.4 using Apple LLVM version 10.0.0 (10.0.1.10010046)
-* OS X Mojave 10.14.3 using Apple LLVM version 10.0.0 (clang-1000.11.45.5)
-* OS X Yosemite using Xcode with Apple Clang 7.0.0.7000072
-* OS X Yosemite using GCC-5.2.0
-* OS X Sierra 10.12.4 using Apple LLVM version 8.1.0 (Clang-802.0.42)
-* OS X El Capitan (10.11) using Xcode with AppleClang 8.0.0.8000042
-* OS X High Sierra 10.13.2 (17C88) using Apple LLVM version 9.0.0 (clang-900.0.39.2)
-* FreeBSD 10.x with Clang/LLVM 3.6
-* iOS 8 and newer using AppleClang 11.0.3.11030032
-* Android 4.1 and newer (API Level 16 and above) using NDK r21b
+---
+If you successfully port GSL to another platform, we would love to hear from you!
+- Submit an issue specifying the platform and target.
+- Consider contributing your changes by filing a pull request with any necessary changes.
+- If at all possible, add a CI/CD step and add the button to the table below!
 
-> If you successfully port GSL to another platform, we would love to hear from you. Please submit an issue to let us know. Also please consider
-contributing any changes that were necessary back to this project to benefit the wider community.
+Target | CI/CD Status
+:------- | -----------:
+iOS | ![CI](https://github.com/microsoft/GSL/workflows/CI/badge.svg)
+Android | ![CI](https://github.com/microsoft/GSL/workflows/CI/badge.svg)
 
-<sup>1)</sup> The test matrix contains legacy versions of these compilers. The legacy releases are no longer officially supported. If a change causes a legacy compiler to fail, please file an issue or submit a pull request to have the legacy version to be removed from the test matrix.
-<sup>2)</sup> Android and iOS build failures are non-blocking and do not prevent pull request merging.
-<sup>3)</sup> For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
+Note: These CI/CD steps are run with each pull request, however failures in them are non-blocking.
 
 ## Building the tests
 To build the tests, you will require the following:
