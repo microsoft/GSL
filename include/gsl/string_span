@@ -121,7 +121,7 @@ span<T, dynamic_extent> ensure_sentinel(T* seq,
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute // TODO: suppress does not work
     while (static_cast<std::size_t>(cur - seq) < max && *cur != Sentinel) ++cur;
     Ensures(*cur == Sentinel);
-    return {seq, static_cast<std::size_t>(cur - seq)};
+    return span<T>(seq, static_cast<std::size_t>(cur - seq));
 }
 
 //
@@ -308,7 +308,7 @@ public:
 private:
     static impl_type remove_z(pointer const& sz, std::size_t max)
     {
-        return {sz, details::string_length(sz, max)};
+        return impl_type(sz, details::string_length(sz, max));
     }
 
     template <std::size_t N>
