@@ -420,18 +420,18 @@ public:
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}
 
-     template<std::size_t extent = Extent, std::enable_if_t<extent != gsl::dynamic_extent, int> = 0>
-    constexpr span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
+    template<std::size_t extent = Extent, std::enable_if_t<extent != gsl::dynamic_extent, int> = 0>
+    constexpr explicit span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {
         Expects(count == Extent);
     }
 
-     template<std::size_t extent = Extent, std::enable_if_t<extent == gsl::dynamic_extent, int> = 0>
-    constexpr explicit span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
+    template<std::size_t extent = Extent, std::enable_if_t<extent == gsl::dynamic_extent, int> = 0>
+    constexpr span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {}
 
     template<std::size_t extent = Extent, std::enable_if_t<extent != gsl::dynamic_extent, int> = 0>
-    constexpr span(pointer firstElem, pointer lastElem) noexcept
+    constexpr explicit span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
     {
         Expects(lastElem - firstElem == static_cast<difference_type>(Extent));
@@ -519,7 +519,7 @@ public:
     constexpr span<element_type, Count> first() const noexcept
     {
         Expects(Count <= size());
-        return {data(), Count};
+        return span<element_type, Count>(data(), Count);
     }
 
     template <std::size_t Count>
@@ -529,7 +529,7 @@ public:
         constexpr span<element_type, Count> last() const noexcept
     {
         Expects(Count <= size());
-        return {data() + (size() - Count), Count};
+        return span<element_type, Count>(data() + (size() - Count), Count);
     }
 
     template <std::size_t Offset, std::size_t Count = dynamic_extent>
@@ -547,7 +547,7 @@ public:
     constexpr span<element_type, dynamic_extent> first(size_type count) const noexcept
     {
         Expects(count <= size());
-        return span<element_type>(data(), count);
+        return {data(), count};
     }
 
     constexpr span<element_type, dynamic_extent> last(size_type count) const noexcept

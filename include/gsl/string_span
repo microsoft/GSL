@@ -121,7 +121,7 @@ span<T, dynamic_extent> ensure_sentinel(T* seq,
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute // TODO: suppress does not work
     while (static_cast<std::size_t>(cur - seq) < max && *cur != Sentinel) ++cur;
     Ensures(*cur == Sentinel);
-    return span<T>(seq, static_cast<std::size_t>(cur - seq));
+    return {seq, static_cast<std::size_t>(cur - seq)};
 }
 
 //

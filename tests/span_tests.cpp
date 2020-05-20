@@ -157,7 +157,7 @@ TEST(span_test, from_pointer_length_constructor)
         for (int i = 0; i < 4; ++i)
         {
             {
-                span<int> s = span<int>(&arr[0], narrow_cast<std::size_t>(i));
+                span<int> s = {&arr[0], narrow_cast<std::size_t>(i)};
                 EXPECT_TRUE(s.size() == narrow_cast<std::size_t>(i));
                 EXPECT_TRUE(s.data() == &arr[0]);
                 EXPECT_TRUE(s.empty() == (i == 0));
@@ -165,7 +165,7 @@ TEST(span_test, from_pointer_length_constructor)
                     EXPECT_TRUE(arr[j] == s[narrow_cast<std::size_t>(j)]);
             }
             {
-                span<int> s = span<int>(&arr[i], 4 - narrow_cast<std::size_t>(i));
+                span<int> s = {&arr[i], 4 - narrow_cast<std::size_t>(i)};
                 EXPECT_TRUE(s.size() == 4 - narrow_cast<std::size_t>(i));
                 EXPECT_TRUE(s.data() == &arr[i]);
                 EXPECT_TRUE(s.empty() == ((4 - i) == 0));
@@ -678,7 +678,7 @@ TEST(span_test, from_array_constructor)
      s2 = s1;
      EXPECT_TRUE(s2.empty());
 
-     auto get_temp_span = [&]() -> span<int> { return span<int>(&arr[1], 2); };
+     auto get_temp_span = [&]() -> span<int> { return {&arr[1], 2}; };
      auto use_span = [&](span<const int> s) {
          EXPECT_TRUE(s.size() ==  2);
          EXPECT_TRUE(s.data() == &arr[1]);
@@ -1144,7 +1144,7 @@ TEST(span_test, from_array_constructor)
 
      // you can convert statically
      {
-         const span<int, 2> s2 = {&arr[0], 2};
+         const span<int, 2> s2(&arr[0], 2);
          static_cast<void>(s2);
      }
      {
@@ -1180,7 +1180,7 @@ TEST(span_test, from_array_constructor)
  #endif
      {
          auto f = [&]() {
-             const span<int, 4> _s4 = {arr2, 2};
+             const span<int, 4> _s4(arr2, 2);
              static_cast<void>(_s4);
          };
          EXPECT_DEATH(f(), deathstring);

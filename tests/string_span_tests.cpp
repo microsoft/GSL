@@ -128,7 +128,6 @@ cu16zstring_span<> CreateTempNameU16(u16string_span<> span)
     span[last] = u'\0';
 
     auto ret = span.subspan(0, 4);
-    // return cu16zstring_span<>(ret);
     return {ret};
 }
 
@@ -961,7 +960,7 @@ TEST(string_span_tests, zstring)
         char buf[1];
         buf[0] = '\0';
 
-        zstring_span<> zspan(span<char>(buf, 1));
+        zstring_span<> zspan({buf, 1});
 
         EXPECT_TRUE(generic::strlen(zspan.assume_z()) == 0);
         EXPECT_TRUE(zspan.as_string_span().size() == 0);
@@ -973,7 +972,7 @@ TEST(string_span_tests, zstring)
         char buf[1];
         buf[0] = 'a';
 
-        auto workaround_macro = [&]() { const zstring_span<> zspan(span<char>(buf, 1)); };
+        auto workaround_macro = [&]() { const zstring_span<> zspan({buf, 1}); };
         EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
@@ -1002,7 +1001,7 @@ TEST(string_span_tests, wzstring)
         wchar_t buf[1];
         buf[0] = L'\0';
 
-        wzstring_span<> zspan(span<wchar_t>(buf, 1));
+        wzstring_span<> zspan({buf, 1});
 
         EXPECT_TRUE(generic::strnlen(zspan.assume_z(), 1) == 0);
         EXPECT_TRUE(zspan.as_string_span().size() == 0);
@@ -1014,7 +1013,7 @@ TEST(string_span_tests, wzstring)
         wchar_t buf[1];
         buf[0] = L'a';
 
-        const auto workaround_macro = [&]() { const wzstring_span<> zspan(span<wchar_t>(buf, 1)); };
+        const auto workaround_macro = [&]() { const wzstring_span<> zspan({buf, 1}); };
         EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
@@ -1043,7 +1042,7 @@ TEST(string_span_tests, u16zstring)
         char16_t buf[1];
         buf[0] = L'\0';
 
-        u16zstring_span<> zspan(span<char16_t>(buf, 1));
+        u16zstring_span<> zspan({buf, 1});
 
         EXPECT_TRUE(generic::strnlen(zspan.assume_z(), 1) == 0);
         EXPECT_TRUE(zspan.as_string_span().size() == 0);
@@ -1055,7 +1054,7 @@ TEST(string_span_tests, u16zstring)
         char16_t buf[1];
         buf[0] = u'a';
 
-        const auto workaround_macro = [&]() { const u16zstring_span<> zspan(span<char16_t>(buf, 1)); };
+        const auto workaround_macro = [&]() { const u16zstring_span<> zspan({buf, 1}); };
         EXPECT_DEATH(workaround_macro(), deathstring);
     }
 
@@ -1084,7 +1083,7 @@ TEST(string_span_tests, u32zstring)
         char32_t buf[1];
         buf[0] = L'\0';
 
-        u32zstring_span<> zspan(span<char32_t>(buf, 1));
+        u32zstring_span<> zspan({buf, 1});
 
         EXPECT_TRUE(generic::strnlen(zspan.assume_z(), 1) == 0);
         EXPECT_TRUE(zspan.as_string_span().size() == 0);
@@ -1096,7 +1095,7 @@ TEST(string_span_tests, u32zstring)
         char32_t buf[1];
         buf[0] = u'a';
 
-        const auto workaround_macro = [&]() { const u32zstring_span<> zspan(span<char32_t>(buf, 1)); };
+        const auto workaround_macro = [&]() { const u32zstring_span<> zspan({buf, 1}); };
         EXPECT_DEATH(workaround_macro(), deathstring);
     }
 

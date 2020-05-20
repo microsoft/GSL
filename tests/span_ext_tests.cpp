@@ -320,7 +320,7 @@ TEST(span_ext_test, make_span_from_array_constructor)
      {
          int arr[] = {1, 2, 3};
 
-         span<int> s1 = span<int>(&arr[0], 2); // shorter
+         span<int> s1 = {&arr[0], 2}; // shorter
          span<int> s2 = arr;          // longer
 
          EXPECT_TRUE(s1 != s2);
