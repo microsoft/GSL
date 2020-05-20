@@ -519,7 +519,7 @@ public:
     template <
         class OtherElementType, std::size_t OtherExtent, std::size_t SpanExtent = Extent,
         std::enable_if_t<
-            (SpanExtent == dynamic_extent || OtherExtent == dynamic_extent) &&
+            (SpanExtent == dynamic_extent || SpanExtent == OtherExtent) &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
     constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
@@ -542,7 +542,7 @@ public:
     constexpr span<element_type, Count> first() const noexcept
     {
         Expects(Count <= size());
-        return span<element_type, Count>(data(), Count);
+        return span<element_type, Count>{data(), Count};
     }
 
     template <std::size_t Count>
@@ -552,7 +552,7 @@ public:
         constexpr span<element_type, Count> last() const noexcept
     {
         Expects(Count <= size());
-        return span<element_type, Count>(data() + (size() - Count), Count);
+        return span<element_type, Count>{data() + (size() - Count), Count};
     }
 
     template <std::size_t Offset, std::size_t Count = dynamic_extent>
