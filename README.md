@@ -26,13 +26,13 @@ This project makes use of the [Google Test](https://github.com/google/googletest
 The GSL officially supports the current and previous major release of MSVC, GCC, Clang, and XCode's Apple-Clang.
 See our latest test results for the most up-to-date list of supported configurations.
 
-Compiler | Build Status
-:------- | ------------:
- XCode | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
- GCC | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
- Clang | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
- Visual Studio with MSVC | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
- Visual Studio with LLVM | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+Compiler |Toolset Versions Currently Tested| Build Status
+:------- |:--|------------:
+ XCode |11.4 & 10.3 | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+ GCC |9 & 8| [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+ Clang |11 &  10| [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
+ Visual Studio with MSVC | VS2017 (15.9) & VS2019 (16.4) | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+ Visual Studio with LLVM | VS2017 (Clang 9) & VS2019 (Clang 10) | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
 
 
 Note: For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
