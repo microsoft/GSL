@@ -420,24 +420,24 @@ public:
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}
 
-    template<std::size_t extent = Extent, std::enable_if_t<extent != gsl::dynamic_extent, int> = 0>
+    template<std::size_t SpanExtent = Extent, std::enable_if_t<SpanExtent != gsl::dynamic_extent, int> = 0>
     constexpr explicit span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {
         Expects(count == Extent);
     }
 
-    template<std::size_t extent = Extent, std::enable_if_t<extent == gsl::dynamic_extent, int> = 0>
+    template<std::size_t SpanExtent = Extent, std::enable_if_t<SpanExtent == gsl::dynamic_extent, int> = 0>
     constexpr span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {}
 
-    template<std::size_t extent = Extent, std::enable_if_t<extent != gsl::dynamic_extent, int> = 0>
+    template<std::size_t SpanExtent = Extent, std::enable_if_t<SpanExtent != gsl::dynamic_extent, int> = 0>
     constexpr explicit span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
     {
         Expects(lastElem - firstElem == static_cast<difference_type>(Extent));
     }
 
-    template<std::size_t extent = Extent, std::enable_if_t<extent == gsl::dynamic_extent, int> = 0>
+    template<std::size_t SpanExtent = Extent, std::enable_if_t<SpanExtent == gsl::dynamic_extent, int> = 0>
     constexpr span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
     {}
@@ -492,9 +492,9 @@ public:
     constexpr span(const span& other) noexcept = default;
 
     template <
-        class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
+        class OtherElementType, std::size_t OtherExtent, std::size_t SpanExtent = Extent,
         std::enable_if_t<
-            !(MyExtent != dynamic_extent && OtherExtent == dynamic_extent) &&
+            !(SpanExtent != dynamic_extent && OtherExtent == dynamic_extent) &&
             (Extent == dynamic_extent || OtherExtent == dynamic_extent || Extent == OtherExtent) &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
     constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept
@@ -502,9 +502,9 @@ public:
     {}
 
     template <
-        class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
+        class OtherElementType, std::size_t OtherExtent, std::size_t SpanExtent = Extent,
         std::enable_if_t<
-            (MyExtent != dynamic_extent && OtherExtent == dynamic_extent) &&
+            (SpanExtent != dynamic_extent && OtherExtent == dynamic_extent) &&
             (Extent == dynamic_extent || OtherExtent == dynamic_extent || Extent == OtherExtent) &&
             details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
     constexpr explicit span(const span<OtherElementType, OtherExtent>& other) noexcept
