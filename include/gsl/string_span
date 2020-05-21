@@ -308,7 +308,7 @@ public:
 private:
     static impl_type remove_z(pointer const& sz, std::size_t max)
     {
-        return {sz, details::string_length(sz, max)};
+        return impl_type(sz, details::string_length(sz, max));
     }
 
     template <std::size_t N>

@@ -343,15 +343,9 @@ namespace details
 
         constexpr extent_type() noexcept = default;
 
-        template <size_type Other>
-        constexpr extent_type(extent_type<Other> ext)
-        {
-            static_assert(Other == Ext,
-                          "Mismatch between fixed-size extent and size of initializing data.");
-            Expects(ext.size() == Ext);
-        }
+        constexpr explicit extent_type(extent_type<dynamic_extent>);
 
-        constexpr extent_type(size_type size) { Expects(size == Ext); }
+        constexpr explicit extent_type(size_type size) { Expects(size == Ext); }
 
         constexpr size_type size() const noexcept { return Ext; }
     };
@@ -363,10 +357,10 @@ namespace details
         using size_type = std::size_t;
 
         template <size_type Other>
-        explicit constexpr extent_type(extent_type<Other> ext) : size_(ext.size())
+        constexpr explicit extent_type(extent_type<Other> ext) : size_(ext.size())
         {}
 
-        explicit constexpr extent_type(size_type size) : size_(size)
+        constexpr explicit extent_type(size_type size) : size_(size)
         {
             Expects(size != dynamic_extent);
         }
@@ -376,6 +370,12 @@ namespace details
     private:
         size_type size_;
     };
+
+    template <std::size_t Ext>
+    constexpr extent_type<Ext>::extent_type(extent_type<dynamic_extent> ext)
+    {
+        Expects(ext.size() == Ext);
+    }
 
     template <class ElementType, std::size_t Extent, std::size_t Offset, std::size_t Count>
     struct calculate_subspan_type
@@ -420,17 +420,27 @@ public:
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}
 
-    constexpr span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != gsl::dynamic_extent, int> = 0>
+    constexpr explicit span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {
-        if (Extent != dynamic_extent) Expects(count == Extent);
+        Expects(count == Extent);
     }
 
-    constexpr span(pointer firstElem, pointer lastElem) noexcept
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent == gsl::dynamic_extent, int> = 0>
+    constexpr span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
+    {}
+
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != gsl::dynamic_extent, int> = 0>
+    constexpr explicit span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
     {
-        if (Extent != dynamic_extent)
-        { Expects(lastElem - firstElem == static_cast<difference_type>(Extent)); }
+        Expects(lastElem - firstElem == static_cast<difference_type>(Extent));
     }
+
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent == gsl::dynamic_extent, int> = 0>
+    constexpr span(pointer firstElem, pointer lastElem) noexcept
+        : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
+    {}
 
     template <std::size_t N,
               std::enable_if_t<details::is_allowed_extent_conversion<N, Extent>::value, int> = 0>
@@ -456,37 +466,71 @@ public:
         : storage_(KnownNotNull{arr.data()}, details::extent_type<N>())
     {}
 
-    // NB: the SFINAE here uses .data() as an incomplete/imperfect proxy for the requirement
-    // on Container to be a contiguous sequence container.
-    template <class Container,
-              class = std::enable_if_t<
+    // NB: the SFINAE on these constructors uses .data() as an incomplete/imperfect proxy for the
+    // requirement on Container to be a contiguous sequence container.
+    template <std::size_t MyExtent = Extent, class Container,
+              std::enable_if_t<
+                  MyExtent != dynamic_extent &&
                   !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
                   std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
                   std::is_convertible<
                       std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
-                      element_type (*)[]>::value>>
+                      element_type (*)[]>::value, int> = 0>
+    constexpr explicit span(Container& cont) noexcept : span(cont.data(), cont.size())
+    {}
+
+    template <std::size_t MyExtent = Extent, class Container,
+              std::enable_if_t<
+                  MyExtent == dynamic_extent &&
+                  !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
+                  std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
+                  std::is_convertible<
+                      std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
+                      element_type (*)[]>::value, int> = 0>
     constexpr span(Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
-    template <class Container,
-              class = std::enable_if_t<
+    template <std::size_t MyExtent = Extent, class Container,
+              std::enable_if_t<
+                  MyExtent != dynamic_extent &&
                   std::is_const<element_type>::value && !details::is_span<Container>::value &&
                   !details::is_std_array<Container>::value &&
                   std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
                   std::is_convertible<std::remove_pointer_t<
-                                          decltype(std::declval<const Container&>().data())> (*)[],
-                                      element_type (*)[]>::value>>
+                      decltype(std::declval<const Container&>().data())> (*)[],
+                      element_type (*)[]>::value, int> = 0>
+    constexpr explicit span(const Container& cont) noexcept : span(cont.data(), cont.size())
+    {}
+
+    template <std::size_t MyExtent = Extent, class Container,
+              std::enable_if_t<
+                  MyExtent == dynamic_extent &&
+                  std::is_const<element_type>::value && !details::is_span<Container>::value &&
+                  !details::is_std_array<Container>::value &&
+                  std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
+                  std::is_convertible<std::remove_pointer_t<
+                      decltype(std::declval<const Container&>().data())> (*)[],
+                      element_type (*)[]>::value, int> = 0>
     constexpr span(const Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
     constexpr span(const span& other) noexcept = default;
 
     template <
-        class OtherElementType, std::size_t OtherExtent,
-        class = std::enable_if_t<
-            details::is_allowed_extent_conversion<OtherExtent, Extent>::value &&
-            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value>>
+        class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
+        std::enable_if_t<
+            (MyExtent == dynamic_extent || MyExtent == OtherExtent) &&
+            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
     constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept
+        : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
+    {}
+
+    template <
+        class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
+        std::enable_if_t<
+            MyExtent != dynamic_extent && OtherExtent == dynamic_extent &&
+            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
+    constexpr explicit span(const span<OtherElementType, OtherExtent>& other) noexcept
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
     {}
 
@@ -498,7 +542,7 @@ public:
     constexpr span<element_type, Count> first() const noexcept
     {
         Expects(Count <= size());
-        return {data(), Count};
+        return span<element_type, Count>{data(), Count};
     }
 
     template <std::size_t Count>
@@ -508,7 +552,7 @@ public:
         constexpr span<element_type, Count> last() const noexcept
     {
         Expects(Count <= size());
-        return {data() + (size() - Count), Count};
+        return span<element_type, Count>{data() + (size() - Count), Count};
     }
 
     template <std::size_t Offset, std::size_t Count = dynamic_extent>
@@ -519,8 +563,8 @@ public:
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((size() >= Offset) && (Count == dynamic_extent || (Count <= size() - Offset)));
-
-        return {data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
+        using type = typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type;
+        return type{data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
 
     constexpr span<element_type, dynamic_extent> first(size_type count) const noexcept
@@ -728,10 +772,12 @@ template <class ElementType, std::size_t Extent>
 span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(span<ElementType, Extent> s) noexcept
 {
+    using type = span<const byte, details::calculate_byte_size<ElementType, Extent>::value>;
+
     // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     // clang-format on
-    return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
+    return type{reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
 }
 
 template <class ElementType, std::size_t Extent,
@@ -739,10 +785,12 @@ template <class ElementType, std::size_t Extent,
 span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writable_bytes(span<ElementType, Extent> s) noexcept
 {
+    using type = span<byte, details::calculate_byte_size<ElementType, Extent>::value>;
+
     // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     // clang-format on
-    return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
+    return type{reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
 } // namespace gsl
