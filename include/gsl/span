@@ -772,10 +772,11 @@ template <class ElementType, std::size_t Extent>
 span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(span<ElementType, Extent> s) noexcept
 {
+    using type = span<const byte, details::calculate_byte_size<ElementType, Extent>::value>;
+
     // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     // clang-format on
-    using type = span<const byte, details::calculate_byte_size<ElementType, Extent>::value>;
     return type{reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
 }
 
@@ -784,10 +785,11 @@ template <class ElementType, std::size_t Extent,
 span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writable_bytes(span<ElementType, Extent> s) noexcept
 {
+    using type = span<byte, details::calculate_byte_size<ElementType, Extent>::value>;
+
     // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     // clang-format on
-    using type = span<byte, details::calculate_byte_size<ElementType, Extent>::value>;
     return type{reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 

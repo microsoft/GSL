@@ -1180,7 +1180,7 @@ TEST(span_test, from_array_constructor)
  #endif
      {
          auto f = [&]() {
-             span<int, 4> _s4{arr2, 2};
+             const span<int, 4> _s4{arr2, 2};
              static_cast<void>(_s4);
          };
          EXPECT_DEATH(f(), deathstring);
