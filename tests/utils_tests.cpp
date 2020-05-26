@@ -122,8 +122,4 @@ TEST(utils_tests, narrow)
 
     n = -42;
     EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
-
-#if GSL_CONSTEXPR_NARROW
-    static_assert(narrow<char>(120) == 120, "Fix GSL_CONSTEXPR_NARROW");
-#endif
 }

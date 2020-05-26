@@ -38,12 +38,6 @@
 #pragma warning(disable : 26495) // uninitalized member when constructor calls constructor
 #pragma warning(disable : 26446) // parser bug does not allow attributes on some templates
 
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-#define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
-
-#endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
 // See if we have enough C++17 power to use a static constexpr data member
@@ -803,11 +797,6 @@ as_writable_bytes(span<ElementType, Extent> s) noexcept
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)
-#if _MSC_VER < 1910
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#endif // _MSC_VER < 1910
 
 #pragma warning(pop)
 #endif // _MSC_VER

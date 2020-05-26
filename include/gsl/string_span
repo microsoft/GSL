@@ -36,11 +36,6 @@
 #pragma warning(disable : 26446) // TODO: bug in parser - attributes and templates
 #pragma warning(disable : 26481) // TODO: suppress does not work inside templates sometimes
 
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-#endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
 namespace gsl
@@ -706,11 +701,6 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 #if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(pop)
 
-#if _MSC_VER < 1910
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
 #endif // GSL_STRING_SPAN_H

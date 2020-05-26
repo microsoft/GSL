@@ -12,9 +12,9 @@ cache:
     - ${TRAVIS_BUILD_DIR}/deps
 
 stages:
-  - name: Latest     # build jobs to run first and always
+  - name: Latest     # Compiler with the latest major version
+  - name: Previous   # Compilers with the major version Latest - 1
   - name: Validation # run other jobs
-  - name: Legacy     # build with all other supported compilers
 
 jobs:
   include:
@@ -62,73 +62,11 @@ jobs:
     # AppleClang on OSX
     ##########################################################################
 
-    # Xcode 8.3
-    - name: AppleClang Xcode-8.3 C++14 Debug
-      stage: Legacy
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode8.3
-    - name: AppleClang Xcode-8.3 C++14 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode8.3
 
-    # Xcode 9.0 earliest C++17 support
-    - name: AppleClang Xcode-9.0 C++17 Debug
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      os: osx
-      osx_image: xcode9 # AppleClang 9.1.0 same compiler in Xcode 9.0, 9.1 and 9.2
-    - name: AppleClang Xcode-9.0 C++17 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      os: osx
-      osx_image: xcode9
-    - name: AppleClang Xcode-9.0 C++14 Debug
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode9
-    - name: AppleClang Xcode-9.0 C++14 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode9
-
-    # Xcode 9.4
-    - name: AppleClang Xcode-9.4 C++14 Debug
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode9.4 # AppleClang 9.1.0 same compiler as Xcode 9.3
-    - name: AppleClang Xcode-9.4 C++14 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode9.4
-    - name: AppleClang Xcode-9.4 C++17 Debug
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      os: osx
-      osx_image: xcode9.4
-    - name: AppleClang Xcode-9.4 C++17 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      os: osx
-      osx_image: xcode9.4
-
-    # Xcode 10.1
-    - name: AppleClang Xcode-10.1 C++14 Debug
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode10.1 # AppleClang 10.0.0 same compiler as Xcode 10.0
-    - name: AppleClang Xcode-10.1 C++14 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      os: osx
-      osx_image: xcode10.1
-    - name: AppleClang Xcode-10.1 C++17 Debug
-      env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      os: osx
-      osx_image: xcode10.1
-    - name: AppleClang Xcode-10.1 C++17 Release
-      env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      os: osx
-      osx_image: xcode10.1
 
     # Xcode 10.3
     - name: AppleClang Xcode-10.3 C++14 Debug
+      stage: Previous
       env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
       osx_image: xcode10.3 # AppleClang 10.0.1 same compiler as Xcode 10.2
@@ -145,157 +83,33 @@ jobs:
       os: osx
       osx_image: xcode10.3
 
-    # Xcode 11.3
-    - name: AppleClang Xcode-11.3 C++17 Debug
+
+    # Xcode 11.4
+    - name: AppleClang Xcode-11.4 C++17 Debug
       stage: Latest
       env: BUILD_TYPE=Debug GSL_CXX_STANDARD=17
       os: osx
-      osx_image: xcode11.3 # AppleClang 11.0.0 linker update / same as Xcode 11.2
-    - name: AppleClang Xcode-11.3 C++17 Release
+      osx_image: xcode11.4
+    - name: AppleClang Xcode-11.4 C++17 Release
       env: BUILD_TYPE=Release GSL_CXX_STANDARD=17
       os: osx
-      osx_image: xcode11.3
-    - name: AppleClang Xcode-11.3 C++14 Debug
+      osx_image: xcode11.4
+    - name: AppleClang Xcode-11.4 C++14 Debug
       env: BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode11.3
-    - name: AppleClang Xcode-11.3 C++14 Release
+      osx_image: xcode11.4
+    - name: AppleClang Xcode-11.4 C++14 Release
       env: BUILD_TYPE=Release GSL_CXX_STANDARD=14
       os: osx
-      osx_image: xcode11.3
+      osx_image: xcode11.4
 
     ##########################################################################
     # Clang on Linux
     ##########################################################################
 
-    # Clang 3.6
-    - name: Clang-3.6 C++14 Debug
-      stage: Legacy
-      dist: xenial
-      env: CXX=clang++-3.6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang36
-        apt:
-          packages:
-            - clang-3.6
-    - name: Clang-3.6 C++14 Release
-      dist: xenial
-      env: CXX=clang++-3.6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang36
-
-    # Clang 3.7
-    - name: Clang-3.7 C++14 Debug
-      dist: xenial
-      env: CXX=clang++-3.7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang37
-        apt:
-          packages:
-            - clang-3.7
-    - name: Clang-3.7 C++14 Release
-      dist: xenial
-      env: CXX=clang++-3.7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang37
-
-    # Clang 3.8
-    - name: Clang-3.8 C++14 Debug
-      dist: xenial
-      env: CXX=clang++-3.8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang38
-        apt:
-          packages:
-            - clang-3.8
-    - name: Clang-3.8 C++14 Release
-      dist: xenial
-      env: CXX=clang++-3.8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang38
-
-    # Clang 3.9
-    - name: Clang-3.9 C++14 Debug
-      env: CXX=clang++-3.9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang39
-        apt:
-          packages:
-            - clang-3.9
-    - name: Clang-3.9 C++14 Release
-      env: CXX=clang++-3.9 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang39
-
-    # Clang 4.0
-    - name: Clang-4.0 C++14 Debug
-      env: CXX=clang++-4.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang40
-        apt:
-          packages:
-            - clang-4.0
-    - name: Clang-4.0 C++14 Release
-      env: CXX=clang++-4.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang40
-
-    # Clang 5.0
-    - name: Clang-5.0 C++14 Debug
-      env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang50
-        apt:
-          packages:
-            - clang-5.0
-    - name: Clang-5.0 C++14 Release
-      env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang50
-    - name: Clang-5.0 C++17 Debug
-      env: CXX=clang++-5.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang50
-    - name: Clang 5.0 C++17 Release
-      env: CXX=clang++-5.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang50
-
-    # Clang 6.0
-    - name: Clang-6.0 C++14 Debug
-      env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang60
-        apt:
-          packages:
-            - clang-6.0
-    - name: Clang 6.0 C++14 Release
-      env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang60
-    - name: Clang-6.0 C++17 Debug
-      env: CXX=clang++-6.0 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang60
-    - name: Clang 6.0 C++17 Release
-      env: CXX=clang++-6.0 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang60
-
-    # Clang 7 (default on Xenial and Bionic images)
-    - name: Clang-7 C++14 Debug
-      env: CXX=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-    - name: Clang-7 C++14 Release
-      env: CXX=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=14
-    - name: Clang-7 C++17 Debug
-      env: CXX=clang++ BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-    - name: Clang-7 C++17 Release
-      env: CXX=clang++ BUILD_TYPE=Release GSL_CXX_STANDARD=17
-
-    # Clang 8
-    - name: Clang-8 C++14 Debug
-      env: CXX=clang++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &clang8
-        apt:
-          sources:
-          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main'
-            key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
-          packages:
-          - clang-8
-    - name: Clang-8 C++14 Release
-      env: CXX=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *clang8
-    - name: Clang-8 C++17 Debug
-      env: CXX=clang++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-      addons: *clang8
-    - name: Clang-8 C++17 Release
-      env: CXX=clang++-8 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-      addons: *clang8
-
     # Clang 9
     - name: Clang-9 C++14 Debug
+      stage: Previous
       env: CXX=clang++-9 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &clang9
         apt:
@@ -339,37 +153,9 @@ jobs:
     # GCC on Linux
     ##########################################################################
 
-    # GCC 5 (default on the Xenial image)
-    - name: GCC-5 C++14 Debug
-      stage: Legacy
-      dist: xenial
-      env: CXX=g++-5 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-    - name: GCC-5 C++14 Release
-      dist: xenial
-      env: CXX=g++-5 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-
-    # GCC 6
-    - name: GCC-6 C++14 Debug
-      env: CXX=g++-6 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-      addons: &gcc6
-        apt:
-          packages: g++-6
-    - name: GCC-6 C++14 Release
-      env: CXX=g++-6 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-      addons: *gcc6
-
-    # GCC 7 (default on the Bionic image)
-    - name: GCC-7 C++14 Debug
-      env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
-    - name: GCC-7 C++14 Release
-      env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
-    - name: GCC-7 C++17 Debug
-      env: CXX=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=17
-    - name: GCC-7 C++17 Release
-      env: CXX=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=17
-
     # GCC 8
     - name: GCC-8 C++14 Debug
+      stage: Previous
       env: CXX=g++-8 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
       addons: &gcc8
         apt:
@@ -538,7 +324,7 @@ before_script:
   - |
     cd "${TRAVIS_BUILD_DIR:?}"
     mkdir build && cd build
-    if [[ ${GSL_CXX_STANDARD:-} ]]; then 
+    if [[ ${GSL_CXX_STANDARD:-} ]]; then
       CMAKE_GEN_FLAGS=("-DGSL_CXX_STANDARD=$GSL_CXX_STANDARD")
     fi
     CMAKE_GEN_FLAGS+=("-Wdev -Werror=dev --warn-uninitialized")
