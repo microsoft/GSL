@@ -740,6 +740,12 @@ span(std::array<Type, Size>&)->span<Type, Size>;
 template <class Type, std::size_t Size>
 span(const std::array<Type, Size>&)->span<const Type, Size>;
 
+template <class Container>
+span(Container&)->span<typename Container::value_type>;
+
+template <class Container>
+span(const Container&)->span<const typename Container::value_type>;
+
 #endif // ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
 
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
