@@ -1227,6 +1227,21 @@ TEST(span_test, from_array_constructor)
      EXPECT_FALSE((std::is_default_constructible<span<int, 42>>::value));
  }
 
+ TEST(span_test, std_container_ctad)
+ {
+#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+    // this test is just to verify that these compile
+    {
+        std::vector v{1,2,3,4};
+        gsl::span sp{v};
+    }
+    {
+        std::string str{"foo"};
+        gsl::span sp{str};
+    }
+#endif
+ }
+
  TEST(span_test, front_back)
  {
     int arr[5] = {1,2,3,4,5};
