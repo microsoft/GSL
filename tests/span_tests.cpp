@@ -31,7 +31,7 @@
 #include <vector>      // for vector
 #include <utility>
 
-// the string_view include and macro are used in the deduciton guide verification
+// the string_view include and macro are used in the deduction guide verification
 #if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
 #ifdef __has_include
 #if __has_include(<string_view>)
