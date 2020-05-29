@@ -740,6 +740,14 @@ span(std::array<Type, Size>&)->span<Type, Size>;
 template <class Type, std::size_t Size>
 span(const std::array<Type, Size>&)->span<const Type, Size>;
 
+template <class Container,
+    class Element = std::remove_pointer_t<decltype(std::declval<Container&>().data())>>
+span(Container&)->span<Element>;
+
+template <class Container,
+    class Element = std::remove_pointer_t<decltype(std::declval<const Container&>().data())>>
+span(const Container&)->span<Element>;
+
 #endif // ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
 
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)

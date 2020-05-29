@@ -31,6 +31,16 @@
 #include <vector>      // for vector
 #include <utility>
 
+// the string_view include and macro are used in the deduction guide verification
+#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#ifdef __has_include
+#if __has_include(<string_view>)
+#include <string_view>
+#define HAS_STRING_VIEW
+#endif // __has_include(<string_view>)
+#endif // __has_include
+#endif // (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+
 using namespace std;
 using namespace gsl;
 
@@ -1225,6 +1235,30 @@ TEST(span_test, from_array_constructor)
      EXPECT_TRUE((std::is_default_constructible<span<int>>::value));
      EXPECT_TRUE((std::is_default_constructible<span<int, 0>>::value));
      EXPECT_FALSE((std::is_default_constructible<span<int, 42>>::value));
+ }
+
+ TEST(span_test, std_container_ctad)
+ {
+#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+    // this test is just to verify that these compile
+    {
+        std::vector<int> v{1,2,3,4};
+        gsl::span sp{v};
+        static_assert(std::is_same<decltype(sp), gsl::span<int>>::value);
+    }
+    {
+        std::string str{"foo"};
+        gsl::span sp{str};
+        static_assert(std::is_same<decltype(sp), gsl::span<char>>::value);
+    }
+#ifdef HAS_STRING_VIEW
+    {
+        std::string_view sv{"foo"};
+        gsl::span sp{sv};
+        static_assert(std::is_same<decltype(sp), gsl::span<const char>>::value);
+    }
+#endif
+#endif
  }
 
  TEST(span_test, front_back)
