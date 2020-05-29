@@ -31,6 +31,13 @@
 #include <vector>      // for vector
 #include <utility>
 
+#ifdef __has_include
+#if __has_include(<string_view>)
+#include <string_view>
+#define HAS_STRING_VIEW
+#endif
+#endif
+
 using namespace std;
 using namespace gsl;
 
@@ -1234,11 +1241,20 @@ TEST(span_test, from_array_constructor)
     {
         std::vector v{1,2,3,4};
         gsl::span sp{v};
+        static_assert(std::is_same<decltype(sp), gsl::span<int>>::value);
     }
     {
         std::string str{"foo"};
         gsl::span sp{str};
+        static_assert(std::is_same<decltype(sp), gsl::span<char>>::value);
     }
+#ifdef HAS_STRING_VIEW
+    {
+        std::string_view sv{"foo"};
+        gsl::span sp{sv};
+        static_assert(std::is_same<decltype(sp), gsl::span<const char>>::value);
+    }
+#endif
 #endif
  }
 
