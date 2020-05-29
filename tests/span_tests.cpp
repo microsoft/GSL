@@ -1242,7 +1242,7 @@ TEST(span_test, from_array_constructor)
 #if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
     // this test is just to verify that these compile
     {
-        std::vector v{1,2,3,4};
+        std::vector<int> v{1,2,3,4};
         gsl::span sp{v};
         static_assert(std::is_same<decltype(sp), gsl::span<int>>::value);
     }
