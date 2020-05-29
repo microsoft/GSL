@@ -31,12 +31,15 @@
 #include <vector>      // for vector
 #include <utility>
 
+// the string_view include and macro are used in the deduciton guide verification
+#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
 #ifdef __has_include
 #if __has_include(<string_view>)
 #include <string_view>
 #define HAS_STRING_VIEW
-#endif
-#endif
+#endif // __has_include(<string_view>)
+#endif // __has_include
+#endif // (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
 
 using namespace std;
 using namespace gsl;
