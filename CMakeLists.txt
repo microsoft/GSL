@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3...3.16)
 
-project(GSL VERSION 3.0.2 LANGUAGES CXX)
+project(GSL VERSION 3.1.0 LANGUAGES CXX)
 
 include(ExternalProject)
 find_package(Git)
