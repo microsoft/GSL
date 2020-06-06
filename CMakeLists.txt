@@ -97,10 +97,18 @@ export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
 # last project() command. The version's compatibility is set between all
 # minor versions (as it was in prev. GSL releases).
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
-    COMPATIBILITY SameMajorVersion
-)
+if(${CMAKE_VERSION} VERSION_LESS "3.14.0")
+    write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
+        COMPATIBILITY SameMajorVersion
+    )
+else()
+    write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
+        COMPATIBILITY SameMajorVersion
+        ARCH_INDEPENDENT
+    )
+endif()
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
 
 # Add Microsoft.GSL::GSL alias for GSL so that dependents can be agnostic about
