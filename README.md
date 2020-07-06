@@ -7,7 +7,7 @@ This repo contains Microsoft's implementation of GSL.
 
 The library includes types like `span<T>`, `string_span`, `owner<>` and others.
 
-The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support. There are specific workarounds to support MSVC 2015.
+The entire implementation is provided inline in the headers under the [gsl](./include/gsl) directory. The implementation generally assumes a platform that implements C++14 support.
 
 While some types have been broken out into their own headers (e.g. [gsl/span](./include/gsl/span)),
 it is simplest to just include [gsl/gsl](./include/gsl/gsl) and gain access to the entire library.
@@ -65,7 +65,7 @@ These steps assume the source code of this repository has been cloned into a dir
 
 2. Configure CMake to use the compiler of your choice (you can see a list by running `cmake --help`).
 
-        cmake -G "Visual Studio 14 2015" c:\GSL
+        cmake -G "Visual Studio 15 2017" c:\GSL
 
 3. Build the test suite (in this case, in the Debug configuration, Release is another good choice).
 
