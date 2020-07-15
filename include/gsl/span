@@ -100,7 +100,7 @@ namespace details
 
     template <std::size_t From, std::size_t To>
     struct is_allowed_extent_conversion
-        : std::integral_constant<bool, From == To || To == gsl::dynamic_extent>
+        : std::integral_constant<bool, From == To || To == dynamic_extent>
     {
     };
 
@@ -421,24 +421,24 @@ public:
     constexpr span() noexcept : storage_(nullptr, details::extent_type<0>())
     {}
 
-    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != gsl::dynamic_extent, int> = 0>
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != dynamic_extent, int> = 0>
     constexpr explicit span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {
         Expects(count == Extent);
     }
 
-    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent == gsl::dynamic_extent, int> = 0>
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent == dynamic_extent, int> = 0>
     constexpr span(pointer ptr, size_type count) noexcept : storage_(ptr, count)
     {}
 
-    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != gsl::dynamic_extent, int> = 0>
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != dynamic_extent, int> = 0>
     constexpr explicit span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
     {
         Expects(lastElem - firstElem == static_cast<difference_type>(Extent));
     }
 
-    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent == gsl::dynamic_extent, int> = 0>
+    template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent == dynamic_extent, int> = 0>
     constexpr span(pointer firstElem, pointer lastElem) noexcept
         : storage_(firstElem, static_cast<std::size_t>(lastElem - firstElem))
     {}
