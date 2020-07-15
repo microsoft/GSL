@@ -285,11 +285,4 @@ struct hash<gsl::strict_not_null<T>>
 
 } // namespace std
 
-#if defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
-
-#undef constexpr
-#pragma pop_macro("constexpr")
-
-#endif // defined(_MSC_VER) && _MSC_VER < 1910 && !defined(__clang__)
-
 #endif // GSL_POINTERS_H

@@ -2247,11 +2247,6 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)
-#if _MSC_VER < 1910
-
-#undef constexpr
-#pragma pop_macro("constexpr")
-#endif // _MSC_VER < 1910
 
 #pragma warning(pop)
 
