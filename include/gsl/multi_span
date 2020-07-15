@@ -50,11 +50,6 @@
 #pragma warning(disable : 26465) // TODO: bug - suppression does not work on template functions
 #pragma warning(disable : 4996)  // use of function or classes marked [[deprecated]]
 
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-#endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
 #if defined(__GNUC__) || defined(__clang__)
