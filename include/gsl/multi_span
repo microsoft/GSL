@@ -50,11 +50,6 @@
 #pragma warning(disable : 26465) // TODO: bug - suppression does not work on template functions
 #pragma warning(disable : 4996)  // use of function or classes marked [[deprecated]]
 
-#if _MSC_VER < 1910
-#pragma push_macro("constexpr")
-#define constexpr /*constexpr*/
-
-#endif // _MSC_VER < 1910
 #endif // _MSC_VER
 
 #if defined(__GNUC__) || defined(__clang__)
@@ -2252,11 +2247,6 @@ general_span_iterator<Span> operator+(typename general_span_iterator<Span>::diff
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)
-#if _MSC_VER < 1910
-
-#undef constexpr
-#pragma pop_macro("constexpr")
-#endif // _MSC_VER < 1910
 
 #pragma warning(pop)
 
