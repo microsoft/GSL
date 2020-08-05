@@ -90,15 +90,6 @@ struct narrowing_error : public std::exception
 {
 };
 
-namespace details
-{
-    template <class T, class U>
-    struct is_same_signedness
-        : public std::integral_constant<bool, std::is_signed<T>::value == std::is_signed<U>::value>
-    {
-    };
-} // namespace details
-
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template <class T, class U>
 GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
@@ -106,10 +97,17 @@ GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recogn
 constexpr
 T narrow(U u) noexcept(false)
 {
-    T t = narrow_cast<T>(u);
-    if (static_cast<U>(t) != u) throw narrowing_error{};
-    if (!details::is_same_signedness<T, U>::value && ((t < T{}) != (u < U{})))
+    constexpr const bool is_different_signedness = (std::is_signed<T>::value != std::is_signed<U>::value);
+    
+    const T t = narrow_cast<T>(u);
+    
+    if (static_cast<U>(t) != u
+        || (is_different_signedness
+            && ((t < T{}) != (u < U{}))))
+    {
         throw narrowing_error{};
+    }
+    
     return t;
 }
 
