@@ -120,9 +120,8 @@ span<T, dynamic_extent> ensure_sentinel(T* seq,
 }
 
 //
-// ensure_z - creates a span for a zero terminated strings.
-// Will fail fast if a null-terminator cannot be found before
-// the limit of size_type.
+// ensure_z - creates a span for a zero terminated strings. The span will not contain the zero termination.
+// Will fail fast if a null-terminator cannot be found before the limit of size_type.
 //
 template <typename CharT>
 span<CharT, dynamic_extent> ensure_z(CharT* const& sz,
@@ -395,7 +394,8 @@ public:
     constexpr basic_zstring_span(impl_type s) : span_(s)
     {
         // expects a zero-terminated span
-        Expects(s[s.size() - 1] == '\0');
+        Expects(s.size() > 0);
+        Expects(s[s.size() - 1] == value_type{});
     }
 
     // copy
@@ -410,12 +410,11 @@ public:
     // move assign
     constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
 
-    constexpr bool empty() const noexcept { return span_.size() == 0; }
+    constexpr bool empty() const noexcept { return false; }
 
     constexpr string_span_type as_string_span() const noexcept
     {
-        const auto sz = span_.size();
-        return {span_.data(), sz > 1 ? sz - 1 : 0};
+        return {span_.data(), span_.size() - 1};
     }
     constexpr string_span_type ensure_z() const { return gsl::ensure_z(span_); }
 
