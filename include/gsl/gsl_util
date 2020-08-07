@@ -30,7 +30,22 @@
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
 
-#endif            // _MSC_VER
+#endif // defined(_MSC_VER) && !defined(__clang__)
+
+// disable unrecognized attributes in c++14 for msvc and clang
+#if __cplusplus < 201703L
+#if defined(_MSC_VER)
+
+#pragma warning(push)
+#pragma warning(disable:5030)
+
+#elif defined(__clang__)
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "c++17-extensions"
+
+#endif // defined(_MSC_VER)
+#endif // __cplusplus < 201703L
 
 namespace gsl
 {
@@ -67,13 +82,13 @@ private:
 
 // finally() - convenience function to generate a final_action
 template <class F>
-final_action<F> finally(const F& f) noexcept
+[[nodiscard]] final_action<F> finally(const F& f) noexcept
 {
     return final_action<F>(f);
 }
 
 template <class F>
-final_action<F> finally(F&& f) noexcept
+[[nodiscard]] final_action<F> finally(F&& f) noexcept
 {
     return final_action<F>(std::forward<F>(f));
 }
@@ -98,16 +113,16 @@ constexpr
 T narrow(U u) noexcept(false)
 {
     constexpr const bool is_different_signedness = (std::is_signed<T>::value != std::is_signed<U>::value);
-    
+
     const T t = narrow_cast<T>(u);
-    
+
     if (static_cast<U>(t) != u
         || (is_different_signedness
             && ((t < T{}) != (u < U{}))))
     {
         throw narrowing_error{};
     }
-    
+
     return t;
 }
 
@@ -148,5 +163,17 @@ constexpr T at(const std::initializer_list<T> cont, const index i)
 #pragma warning(pop)
 
 #endif // _MSC_VER
+
+#if __cplusplus < 201703L
+#if defined(_MSC_VER)
+
+#pragma warning(pop)
+
+#elif defined(__clang__)
+
+#pragma clang diagnostic pop
+
+#endif // defined(_MSC_VER)
+#endif // __cplusplus < 201703L
 
 #endif // GSL_UTIL_H
