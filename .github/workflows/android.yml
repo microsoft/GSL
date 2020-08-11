@@ -1,4 +1,4 @@
-name: CI
+name: CI_Android
 on:
   push:
     branches: [ master ]

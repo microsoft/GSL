@@ -1,4 +1,4 @@
-name: CI
+name: CI_iOS
 on:
   push:
     branches: [ master ]
