@@ -100,7 +100,7 @@ TEST(utils_tests, narrow_cast)
     unsigned char uc = narrow_cast<unsigned char>(n);
     EXPECT_TRUE(uc == 44);
 }
-
+#if defined(__cpp_exceptions)
 TEST(utils_tests, narrow)
 {
     int n = 120;
@@ -123,3 +123,4 @@ TEST(utils_tests, narrow)
     n = -42;
     EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
 }
+#endif
