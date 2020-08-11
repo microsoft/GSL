@@ -45,8 +45,8 @@ If you successfully port GSL to another platform, we would love to hear from you
 
 Target | CI/CD Status
 :------- | -----------:
-iOS | ![CI](https://github.com/microsoft/GSL/workflows/CI/badge.svg)
-Android | ![CI](https://github.com/microsoft/GSL/workflows/CI/badge.svg)
+iOS | ![CI](https://github.com/microsoft/GSL/workflows/CI_iOS/badge.svg)
+Android | ![CI](https://github.com/microsoft/GSL/workflows/CI_Android/badge.svg)
 
 Note: These CI/CD steps are run with each pull request, however failures in them are non-blocking.
 
