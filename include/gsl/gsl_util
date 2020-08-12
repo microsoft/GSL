@@ -42,7 +42,7 @@
 #elif defined(__clang__)
 
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "c++17-extensions"
+#pragma clang diagnostic ignored "-Wc++17-extensions"
 
 #endif // defined(_MSC_VER)
 #endif // __cplusplus < 201703L
