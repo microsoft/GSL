@@ -1,0 +1,33 @@
+
+#ifndef GSL_NARROW_H
+#define GSL_NARROW_H
+#include <gsl/gsl_assert> // for Expects
+#include <gsl/gsl_util> // for narrow_cast
+namespace gsl
+{
+struct narrowing_error : public std::exception
+{
+};
+
+// narrow() : a checked version of narrow_cast() that throws if the cast changed the value
+template <class T, class U>
+GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recognise noexcept(false)
+constexpr
+T narrow(U u) noexcept(false)
+{
+    constexpr const bool is_different_signedness = (std::is_signed<T>::value != std::is_signed<U>::value);
+
+    const T t = narrow_cast<T>(u);
+
+    if (static_cast<U>(t) != u
+        || (is_different_signedness
+            && ((t < T{}) != (u < U{}))))
+    {
+        throw narrowing_error{};
+    }
+
+    return t;
+}
+}
+#endif // GSL_NARROW_H
