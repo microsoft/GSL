@@ -32,11 +32,11 @@
 
 #endif            // _MSC_VER
 
-#if defined(__cplusplus) && (__cplusplus >= 201703L)
+#if defined(__has_cpp_attribute) && __has_cpp_attribute(nodiscard)
 #define GSL_NODISCARD [[nodiscard]]
 #else
 #define GSL_NODISCARD
-#endif // defined(__cplusplus) && (__cplusplus >= 201703L)
+#endif // defined(__has_cpp_attribute) && __has_cpp_attribute(nodiscard)
 
 namespace gsl
 {
