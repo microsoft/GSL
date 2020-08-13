@@ -177,7 +177,7 @@ namespace std
 template <class T>
 struct hash<gsl::not_null<T>>
 {
-    std::size_t operator()(const gsl::not_null<T>& value) const { return hash<T>{}(value); }
+    std::size_t operator()(const gsl::not_null<T>& value) const { return hash<T>{}(value.get()); }
 };
 
 } // namespace std
@@ -280,7 +280,7 @@ namespace std
 template <class T>
 struct hash<gsl::strict_not_null<T>>
 {
-    std::size_t operator()(const gsl::strict_not_null<T>& value) const { return hash<T>{}(value); }
+    std::size_t operator()(const gsl::strict_not_null<T>& value) const { return hash<T>{}(value.get()); }
 };
 
 } // namespace std
