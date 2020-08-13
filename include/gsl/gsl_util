@@ -32,11 +32,11 @@
 
 #endif            // _MSC_VER
 
-#if defined(__has_cpp_attribute) && __has_cpp_attribute(nodiscard)
+#if defined(__has_cpp_attribute) && __has_cpp_attribute(nodiscard) >= 201603l
 #define GSL_NODISCARD [[nodiscard]]
 #else
 #define GSL_NODISCARD
-#endif // defined(__has_cpp_attribute) && __has_cpp_attribute(nodiscard)
+#endif // defined(__has_cpp_attribute) && __has_cpp_attribute(nodiscard) >= 201603l
 
 namespace gsl
 {
