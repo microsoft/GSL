@@ -1,36 +1,41 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 project(GSLTests CXX)
+include(FindPkgConfig)
 
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-execute_process(
-    COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-    RESULT_VARIABLE result
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
-)
-if(result)
-    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+pkg_search_module(GTestMain gtest_main)
+if (NOT GTestMain_FOUND)
+    configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
+    )
+    if(result)
+        message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+    endif()
+
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} --build .
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
+    )
+    if(result)
+        message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+    endif()
+
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    set(GTestMain_LIBRARIES gtest_main)
+
+    add_subdirectory(
+        ${CMAKE_CURRENT_BINARY_DIR}/googletest-src
+        ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+        EXCLUDE_FROM_ALL
+    )
 endif()
-
-execute_process(
-    COMMAND ${CMAKE_COMMAND} --build .
-    RESULT_VARIABLE result
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
-)
-if(result)
-    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-endif()
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-add_subdirectory(
-    ${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-    ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-    EXCLUDE_FROM_ALL
-)
 
 if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
     set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
@@ -149,7 +154,7 @@ function(add_gsl_test name)
     target_link_libraries(${name}
         GSL
         gsl_tests_config
-        gtest_main
+        ${GTestMain_LIBRARIES}
     )
     add_test(
         ${name}
@@ -254,7 +259,7 @@ function(add_gsl_test_noexcept name)
     target_link_libraries(${name}
         GSL
         gsl_tests_config_noexcept
-        gtest_main
+        ${GTestMain_LIBRARIES}
     )
     add_test(
       ${name}
