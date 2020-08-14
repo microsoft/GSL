@@ -25,7 +25,7 @@ struct narrowing_error : public std::exception
 };
 
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
-template <class T, class U>
+template <class T, class U, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
 GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
 GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recognise noexcept(false)
 constexpr
@@ -38,6 +38,22 @@ T narrow(U u) noexcept(false)
     if (static_cast<U>(t) != u
         || (is_different_signedness
             && ((t < T{}) != (u < U{}))))
+    {
+        throw narrowing_error{};
+    }
+
+    return t;
+}
+
+template <class T, class U, typename std::enable_if<!std::is_arithmetic<T>::value>::type* = nullptr>
+GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recognise noexcept(false)
+constexpr
+T narrow(U u) noexcept(false)
+{
+    const T t = narrow_cast<T>(u);
+
+    if (static_cast<U>(t) != u)
     {
         throw narrowing_error{};
     }

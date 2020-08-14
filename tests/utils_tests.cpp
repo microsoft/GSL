@@ -24,6 +24,7 @@
 #include <stdint.h>    // for uint32_t, int32_t
 #include <type_traits> // for is_same
 #include <cstddef>     // for std::ptrdiff_t
+#include <complex>
 
 using namespace gsl;
 
@@ -122,4 +123,8 @@ TEST(utils_tests, narrow)
 
     n = -42;
     EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
+
+    EXPECT_TRUE(
+        narrow<std::complex<float>>(std::complex<double>(4, 2)) == std::complex<float>(4, 2));
+    EXPECT_THROW(narrow<std::complex<float>>(std::complex<double>(4.2)), narrowing_error);
 }
