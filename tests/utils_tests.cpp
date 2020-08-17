@@ -70,6 +70,28 @@ TEST(utils_tests, finally_lambda_move)
     EXPECT_TRUE(i == 1);
 }
 
+TEST(utils_tests, finally_const_lvalue_lambda)
+{
+    int i = 0;
+    {
+        const auto const_lvalue_lambda = [&]() { f(i); };
+        auto _ = finally(const_lvalue_lambda);
+        EXPECT_TRUE(i == 0);
+    }
+    EXPECT_TRUE(i == 1);
+}
+
+TEST(utils_tests, finally_mutable_lvalue_lambda)
+{
+    int i = 0;
+    {
+        auto mutable_lvalue_lambda = [&]() { f(i); };
+        auto _ = finally(mutable_lvalue_lambda);
+        EXPECT_TRUE(i == 0);
+    }
+    EXPECT_TRUE(i == 1);
+}
+
 TEST(utils_tests, finally_function_with_bind)
 {
     int i = 0;
