@@ -56,7 +56,7 @@ dyn_array                          | &#x2610;   | a heap-allocated array
 [**3. Assertions**][cg-assertions] |            |
 Expects                            | &#x2611;   | a precondition assertion; on failure it terminates
 Ensures                            | &#x2611;   | a postcondition assertion; on failure it terminates
-[**4. Utitilies**][cg-utilities]   |            |
+[**4. Utilities**][cg-utilities]   |            |
 move_owner                         | &#x2610;   | a helper function that moves one `owner` to the other
 byte                               | &#x2611;   | either an alias to std::byte or a byte type
 final_action                       | &#x2611;   | a RAII style class that invokes a functor on its destruction
