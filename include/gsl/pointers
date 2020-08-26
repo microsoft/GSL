@@ -72,7 +72,7 @@ public:
     }
 
     template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
-    constexpr not_null(T u) : ptr_(u)
+    constexpr not_null(T u) : ptr_(std::move(u))
     {
         Expects(ptr_ != nullptr);
     }
@@ -84,15 +84,14 @@ public:
 
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
-
-    constexpr T get() const
+    constexpr std::conditional_t<std::is_copy_constructible<T>::value, T, const T&> get() const
     {
         Ensures(ptr_ != nullptr);
         return ptr_;
     }
 
     constexpr operator T() const { return get(); }
-    constexpr T operator->() const { return get(); }
+    constexpr decltype(auto) operator->() const { return get(); }
     constexpr decltype(auto) operator*() const { return *get(); }
 
     // prevents compilation when someone attempts to assign a null pointer constant
