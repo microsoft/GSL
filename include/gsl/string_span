@@ -81,7 +81,7 @@ using u32zstring = basic_zstring<char32_t, Extent>;
 namespace details
 {
     template <class CharT>
-    std::size_t string_length(const CharT* str, std::size_t n)
+    constexpr std::size_t string_length(const CharT* str, std::size_t n)
     {
         if (str == nullptr || n == dynamic_extent) return 0;
 
@@ -103,7 +103,7 @@ namespace details
 // Will fail-fast if sentinel cannot be found before max elements are examined.
 //
 template <typename T, const T Sentinel>
-span<T, dynamic_extent> ensure_sentinel(T* seq,
+constexpr span<T, dynamic_extent> ensure_sentinel(T* seq,
                                         std::size_t max = static_cast<std::size_t>(-1))
 {
     Ensures(seq != nullptr);
@@ -124,20 +124,20 @@ span<T, dynamic_extent> ensure_sentinel(T* seq,
 // Will fail fast if a null-terminator cannot be found before the limit of size_type.
 //
 template <typename CharT>
-span<CharT, dynamic_extent> ensure_z(CharT* const& sz,
+constexpr span<CharT, dynamic_extent> ensure_z(CharT* const& sz,
                                      std::size_t max = static_cast<std::size_t>(-1))
 {
     return ensure_sentinel<CharT, CharT(0)>(sz, max);
 }
 
 template <typename CharT, std::size_t N>
-span<CharT, dynamic_extent> ensure_z(CharT (&sz)[N])
+constexpr span<CharT, dynamic_extent> ensure_z(CharT (&sz)[N])
 {
     return ensure_z(&sz[0], N);
 }
 
 template <class Cont>
-span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
+constexpr span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
 ensure_z(Cont& cont)
 {
     return ensure_z(cont.data(), cont.size());
@@ -300,13 +300,13 @@ public:
     constexpr reverse_iterator rend() const noexcept { return span_.rend(); }
 
 private:
-    static impl_type remove_z(pointer const& sz, std::size_t max)
+    static constexpr impl_type remove_z(pointer const& sz, std::size_t max)
     {
         return impl_type(sz, details::string_length(sz, max));
     }
 
     template <std::size_t N>
-    static impl_type remove_z(element_type (&sz)[N])
+    static constexpr impl_type remove_z(element_type (&sz)[N])
     {
         return remove_z(&sz[0], N);
     }
@@ -343,7 +343,7 @@ using cu32string_span = basic_string_span<const char32_t, Extent>;
 //
 
 template <typename CharT, std::size_t Extent>
-std::basic_string<typename std::remove_const<CharT>::type>
+constexpr std::basic_string<typename std::remove_const<CharT>::type>
 to_string(basic_string_span<CharT, Extent> view)
 {
     return {view.data(), narrow_cast<std::size_t>(view.length())};
@@ -351,13 +351,14 @@ to_string(basic_string_span<CharT, Extent> view)
 
 template <typename CharT, typename Traits = typename std::char_traits<CharT>,
           typename Allocator = std::allocator<CharT>, typename gCharT, std::size_t Extent>
-std::basic_string<CharT, Traits, Allocator> to_basic_string(basic_string_span<gCharT, Extent> view)
+constexpr std::basic_string<CharT, Traits, Allocator>
+to_basic_string(basic_string_span<gCharT, Extent> view)
 {
     return {view.data(), narrow_cast<std::size_t>(view.length())};
 }
 
 template <class ElementType, std::size_t Extent>
-basic_string_span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
+constexpr basic_string_span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
@@ -366,7 +367,7 @@ as_bytes(basic_string_span<ElementType, Extent> s) noexcept
 
 template <class ElementType, std::size_t Extent,
           class = std::enable_if_t<!std::is_const<ElementType>::value>>
-basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
+constexpr basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writable_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
