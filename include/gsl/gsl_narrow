@@ -22,6 +22,10 @@ namespace gsl
 {
 struct narrowing_error : public std::exception
 {
+    const char* what() const noexcept override
+    {
+        return "narrowing_error";
+    }
 };
 
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
