@@ -1,0 +1,51 @@
+name: CI_iOS
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  iOS:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: build
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create build directory
+        run: mkdir -p build
+        working-directory: .
+
+      - name: Configure
+        run: |
+          cmake \
+            -GXcode \
+            -DCMAKE_SYSTEM_NAME=iOS \
+            "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=8 \
+            -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY \
+            "-DMACOSX_BUNDLE_GUI_IDENTIFIER=GSL.\$(EXECUTABLE_NAME)" \
+            -DMACOSX_BUNDLE_BUNDLE_VERSION=3.0.1 \
+            -DMACOSX_BUNDLE_SHORT_VERSION_STRING=3.0.1 \
+            ..
+
+      - name: Build
+        run: cmake --build . --parallel `sysctl -n hw.ncpu` --config Release -- -sdk iphonesimulator
+
+      - name: Start simulator
+        run: |
+          RUNTIME=`xcrun simctl list runtimes iOS -j|jq '.runtimes|last.identifier'`
+          UDID=`xcrun simctl list devices iPhone available -j|jq -r ".devices[$RUNTIME]|last.udid"`
+          xcrun simctl bootstatus $UDID -b
+
+      - name: Test
+        run: |
+          for TEST in `find tests/Release-iphonesimulator -depth 1 -name "*.app"`
+          do
+            xcrun simctl install booted $TEST
+            TEST_ID=`plutil -convert json -o - $TEST/Info.plist|jq -r ".CFBundleIdentifier"`
+            xcrun simctl launch --console booted $TEST_ID
+            xcrun simctl uninstall booted $TEST_ID
+          done
