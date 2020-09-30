@@ -35,8 +35,13 @@
 // Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
 #pragma warning(disable : 26446) // TODO: bug in parser - attributes and templates
 #pragma warning(disable : 26481) // TODO: suppress does not work inside templates sometimes
-
+#pragma warning(disable : 4996)  // use of functions & classes marked [[deprecated]]
 #endif // _MSC_VER
+
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 namespace gsl
 {
@@ -52,36 +57,36 @@ namespace gsl
 //
 
 template <typename CharT, std::size_t Extent = dynamic_extent>
-using basic_zstring = CharT*;
+using basic_zstring [[deprecated]] = CharT*;
 
 template <std::size_t Extent = dynamic_extent>
-using czstring = basic_zstring<const char, Extent>;
+using czstring [[deprecated]] = basic_zstring<const char, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cwzstring = basic_zstring<const wchar_t, Extent>;
+using cwzstring [[deprecated]] = basic_zstring<const wchar_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cu16zstring = basic_zstring<const char16_t, Extent>;
+using cu16zstring [[deprecated]] = basic_zstring<const char16_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cu32zstring = basic_zstring<const char32_t, Extent>;
+using cu32zstring [[deprecated]] = basic_zstring<const char32_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using zstring = basic_zstring<char, Extent>;
+using zstring [[deprecated]] = basic_zstring<char, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using wzstring = basic_zstring<wchar_t, Extent>;
+using wzstring [[deprecated]] = basic_zstring<wchar_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using u16zstring = basic_zstring<char16_t, Extent>;
+using u16zstring [[deprecated]] = basic_zstring<char16_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using u32zstring = basic_zstring<char32_t, Extent>;
+using u32zstring [[deprecated]] = basic_zstring<char32_t, Extent>;
 
 namespace details
 {
     template <class CharT>
-    constexpr std::size_t string_length(const CharT* str, std::size_t n)
+    [[deprecated]] constexpr std::size_t string_length(const CharT* str, std::size_t n)
     {
         if (str == nullptr || n == dynamic_extent) return 0;
 
@@ -103,7 +108,7 @@ namespace details
 // Will fail-fast if sentinel cannot be found before max elements are examined.
 //
 template <typename T, const T Sentinel>
-constexpr span<T, dynamic_extent> ensure_sentinel(T* seq,
+[[deprecated]]constexpr span<T, dynamic_extent> ensure_sentinel(T* seq,
                                         std::size_t max = static_cast<std::size_t>(-1))
 {
     Ensures(seq != nullptr);
@@ -124,7 +129,7 @@ constexpr span<T, dynamic_extent> ensure_sentinel(T* seq,
 // Will fail fast if a null-terminator cannot be found before the limit of size_type.
 //
 template <typename CharT>
-constexpr span<CharT, dynamic_extent> ensure_z(CharT* const& sz,
+[[deprecated]] constexpr span<CharT, dynamic_extent> ensure_z(CharT* const& sz,
                                      std::size_t max = static_cast<std::size_t>(-1))
 {
     return ensure_sentinel<CharT, CharT(0)>(sz, max);
@@ -137,29 +142,28 @@ constexpr span<CharT, dynamic_extent> ensure_z(CharT (&sz)[N])
 }
 
 template <class Cont>
-constexpr span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
-ensure_z(Cont& cont)
+[[deprecated]] constexpr span<typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent> ensure_z(Cont& cont)
 {
     return ensure_z(cont.data(), cont.size());
 }
 
 template <typename CharT, std::size_t>
-class basic_string_span;
+class [[deprecated]] basic_string_span;
 
 namespace details
 {
     template <typename T>
-    struct is_basic_string_span_oracle : std::false_type
+    struct [[deprecated]] is_basic_string_span_oracle : std::false_type
     {
     };
 
     template <typename CharT, std::size_t Extent>
-    struct is_basic_string_span_oracle<basic_string_span<CharT, Extent>> : std::true_type
+    struct [[deprecated]] is_basic_string_span_oracle<basic_string_span<CharT, Extent>> : std::true_type
     {
     };
 
     template <typename T>
-    struct is_basic_string_span : is_basic_string_span_oracle<std::remove_cv_t<T>>
+    struct [[deprecated]] is_basic_string_span : is_basic_string_span_oracle<std::remove_cv_t<T>>
     {
     };
 } // namespace details
@@ -168,7 +172,7 @@ namespace details
 // string_span and relatives
 //
 template <typename CharT, std::size_t Extent = dynamic_extent>
-class basic_string_span
+class [[deprecated]] basic_string_span
 {
 public:
     using element_type = CharT;
@@ -315,28 +319,28 @@ private:
 };
 
 template <std::size_t Extent = dynamic_extent>
-using string_span = basic_string_span<char, Extent>;
+using string_span [[deprecated]] = basic_string_span<char, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cstring_span = basic_string_span<const char, Extent>;
+using cstring_span [[deprecated]] = basic_string_span<const char, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using wstring_span = basic_string_span<wchar_t, Extent>;
+using wstring_span [[deprecated]] = basic_string_span<wchar_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cwstring_span = basic_string_span<const wchar_t, Extent>;
+using cwstring_span [[deprecated]] = basic_string_span<const wchar_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using u16string_span = basic_string_span<char16_t, Extent>;
+using u16string_span [[deprecated]] = basic_string_span<char16_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cu16string_span = basic_string_span<const char16_t, Extent>;
+using cu16string_span [[deprecated]] = basic_string_span<const char16_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using u32string_span = basic_string_span<char32_t, Extent>;
+using u32string_span [[deprecated]] = basic_string_span<char32_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cu32string_span = basic_string_span<const char32_t, Extent>;
+using cu32string_span [[deprecated]] = basic_string_span<const char32_t, Extent>;
 
 //
 // to_string() allow (explicit) conversions from string_span to string
@@ -377,7 +381,7 @@ as_writable_bytes(basic_string_span<ElementType, Extent> s) noexcept
 // zero-terminated string span, used to convert
 // zero-terminated spans to legacy strings
 template <typename CharT, std::size_t Extent = dynamic_extent>
-class basic_zstring_span
+class [[deprecated]] basic_zstring_span
 {
 public:
     using value_type = CharT;
@@ -426,28 +430,28 @@ private:
 };
 
 template <std::size_t Max = dynamic_extent>
-using zstring_span = basic_zstring_span<char, Max>;
+using zstring_span [[deprecated]] = basic_zstring_span<char, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using wzstring_span = basic_zstring_span<wchar_t, Max>;
+using wzstring_span [[deprecated]] = basic_zstring_span<wchar_t, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using u16zstring_span = basic_zstring_span<char16_t, Max>;
+using u16zstring_span [[deprecated]] = basic_zstring_span<char16_t, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using u32zstring_span = basic_zstring_span<char32_t, Max>;
+using u32zstring_span [[deprecated]] = basic_zstring_span<char32_t, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using czstring_span = basic_zstring_span<const char, Max>;
+using czstring_span [[deprecated]] = basic_zstring_span<const char, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using cwzstring_span = basic_zstring_span<const wchar_t, Max>;
+using cwzstring_span [[deprecated]] = basic_zstring_span<const wchar_t, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using cu16zstring_span = basic_zstring_span<const char16_t, Max>;
+using cu16zstring_span [[deprecated]] = basic_zstring_span<const char16_t, Max>;
 
 template <std::size_t Max = dynamic_extent>
-using cu32zstring_span = basic_zstring_span<const char32_t, Max>;
+using cu32zstring_span [[deprecated]] = basic_zstring_span<const char32_t, Max>;
 
 // operator ==
 template <class CharT, std::size_t Extent, class T,
@@ -703,4 +707,7 @@ bool operator>=(const T& one, gsl::basic_string_span<CharT, Extent> other)
 
 #endif // _MSC_VER
 
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 #endif // GSL_STRING_SPAN_H
