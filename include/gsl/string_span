@@ -133,12 +133,15 @@ ensure_sentinel(T* seq, std::size_t max = static_cast<std::size_t>(-1))
 {
     Ensures(seq != nullptr);
 
-    GSL_SUPPRESS(
-        f .23) // NO-FORMAT: attribute // TODO: false positive // TODO: suppress does not work
+    // clang-format off
+    GSL_SUPPRESS(f.23) // TODO: false positive // TODO: suppress does not work
+    // clang-format on
     auto cur = seq;
     Ensures(cur != nullptr); // workaround for removing the warning
 
-    GSL_SUPPRESS(bounds .1) // NO-FORMAT: attribute // TODO: suppress does not work
+    // clang-format off
+    GSL_SUPPRESS(bounds.1) // TODO: suppress does not work
+    // clang-format on
     while (static_cast<std::size_t>(cur - seq) < max && *cur != Sentinel) ++cur;
     Ensures(*cur == Sentinel);
     return {seq, static_cast<std::size_t>(cur - seq)};
@@ -163,9 +166,12 @@ constexpr span<CharT, dynamic_extent> ensure_z(CharT (&sz)[N])
 }
 
 template <class Cont>
-[[deprecated("string_span was removed from the C++ Core Guidelines. For more information, see "
-             "isocpp/CppCoreGuidelines PR#1680")]] constexpr span<
-    typename std::remove_pointer<typename Cont::pointer>::type, dynamic_extent>
+[[deprecated(
+    "string_span was removed from the C++ Core Guidelines. For more information, see "
+    "isocpp/CppCoreGuidelines PR#1680")]] constexpr span<typename std::
+                                                             remove_pointer<
+                                                                 typename Cont::pointer>::type,
+                                                         dynamic_extent>
 ensure_z(Cont& cont)
 {
     return ensure_z(cont.data(), cont.size());
@@ -243,7 +249,7 @@ public:
 
     // Container signature should work for basic_string after C++17 version exists
     template <class Traits, class Allocator>
-    // GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute // TODO: parser bug
+    // GSL_SUPPRESS(bounds.4) // TODO: parser bug
     constexpr basic_string_span(std::basic_string<element_type, Traits, Allocator> & str)
         : span_(&str[0], str.length())
     {}
@@ -410,7 +416,9 @@ template <class ElementType, std::size_t Extent>
 constexpr basic_string_span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
-    GSL_SUPPRESS(type .1) // NO-FORMAT: attribute
+    // clang-format off
+    GSL_SUPPRESS(type.1)
+    // clang-format on
     return {reinterpret_cast<const byte*>(s.data()), s.size_bytes()};
 }
 
@@ -419,7 +427,9 @@ template <class ElementType, std::size_t Extent,
 constexpr basic_string_span<byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writable_bytes(basic_string_span<ElementType, Extent> s) noexcept
 {
-    GSL_SUPPRESS(type .1) // NO-FORMAT: attribute
+    // clang-format off
+    GSL_SUPPRESS(type.1)
+    // clang-format on
     return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
