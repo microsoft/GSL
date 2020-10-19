@@ -434,7 +434,7 @@ public:
 
     template <std::size_t MyExtent = Extent, std::enable_if_t<MyExtent != dynamic_extent, int> = 0>
     constexpr explicit span(pointer firstElem, pointer lastElem) noexcept
-        : storage_(firstElem, gsl::narrow_cast<std::size_t>(lastElem - firstElem))
+        : storage_(firstElem, narrow_cast<std::size_t>(lastElem - firstElem))
     {
         Expects(lastElem - firstElem == static_cast<difference_type>(Extent));
     }
