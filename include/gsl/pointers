@@ -195,7 +195,7 @@ namespace gsl
 //   - remove unnecessary asserts
 //
 template <class T>
-class [[deprecated]] strict_not_null: public not_null<T>
+class strict_not_null: public not_null<T>
 {
 public:
 
