@@ -20,7 +20,7 @@
 #include <gsl/gsl_assert>  // for Ensures, Expects
 
 #include <algorithm>    // for forward
-#include <iosfwd>       // for ptrdiff_t, nullptr_t, ostream, size_t
+#include <cstddef>       // for ptrdiff_t, nullptr_t, size_t
 #include <memory>       // for shared_ptr, unique_ptr
 #include <system_error> // for hash
 #include <type_traits>  // for enable_if_t, is_convertible, is_assignable
@@ -116,13 +116,6 @@ auto make_not_null(T&& t) noexcept {
     return not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
 
-template <class T>
-std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
-{
-    os << val.get();
-    return os;
-}
-
 template <class T, class U>
 auto operator==(const not_null<T>& lhs, const not_null<U>& rhs) noexcept(noexcept(lhs.get() == rhs.get())) -> decltype(lhs.get() == rhs.get())
 {
@@ -202,7 +195,7 @@ namespace gsl
 //   - remove unnecessary asserts
 //
 template <class T>
-class strict_not_null: public not_null<T>
+class [[deprecated]] strict_not_null: public not_null<T>
 {
 public:
 
