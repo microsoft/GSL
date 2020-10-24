@@ -61,7 +61,7 @@ namespace gsl
 {
 
 // [views.constants], constants
-constexpr const std::size_t dynamic_extent = static_cast<std::size_t>(-1);
+constexpr const std::size_t dynamic_extent = narrow_cast<std::size_t>(-1);
 
 template <class ElementType, std::size_t Extent = dynamic_extent>
 class span;
