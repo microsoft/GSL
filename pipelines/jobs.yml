@@ -1,0 +1,26 @@
+parameters:
+  jobName: ''
+  imageName: ''
+
+jobs:
+- job:
+  displayName: ${{ parameters.imageName }}
+  pool:
+    vmImage: ${{ parameters.imageName }}
+  strategy:
+    matrix:
+      14_debug:
+        GSL_CXX_STANDARD: '14'
+        BUILD_TYPE: 'Debug'
+      14_release:
+        GSL_CXX_STANDARD: '14'
+        BUILD_TYPE: 'Release'
+      17_debug:
+        GSL_CXX_STANDARD: '17'
+        BUILD_TYPE: 'Debug'
+      17_release:
+        GSL_CXX_STANDARD: '17'
+        BUILD_TYPE: 'Release'
+  continueOnError: false
+  steps:
+  - template: ./steps.yml
