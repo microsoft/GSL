@@ -57,48 +57,31 @@ namespace gsl
 //
 
 template <typename CharT, std::size_t Extent = dynamic_extent>
-using basic_zstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                                 "information, see isocpp/CppCoreGuidelines PR#1680")]] = CharT*;
+using basic_zstring = CharT*;
 
 template <std::size_t Extent = dynamic_extent>
-using czstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                            "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<const char, Extent>;
+using czstring = basic_zstring<const char, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cwzstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                             "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<const wchar_t, Extent>;
+using cwzstring = basic_zstring<const wchar_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cu16zstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                               "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<const char16_t, Extent>;
+using cu16zstring = basic_zstring<const char16_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using cu32zstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                               "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<const char32_t, Extent>;
+using cu32zstring = basic_zstring<const char32_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using zstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                           "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<char, Extent>;
+using zstring = basic_zstring<char, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using wzstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                            "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<wchar_t, Extent>;
+using wzstring = basic_zstring<wchar_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using u16zstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                              "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<char16_t, Extent>;
+using u16zstring = basic_zstring<char16_t, Extent>;
 
 template <std::size_t Extent = dynamic_extent>
-using u32zstring [[deprecated("string_span was removed from the C++ Core Guidelines. For more "
-                              "information, see isocpp/CppCoreGuidelines PR#1680")]] =
-    basic_zstring<char32_t, Extent>;
+using u32zstring = basic_zstring<char32_t, Extent>;
 
 namespace details
 {
