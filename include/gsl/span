@@ -447,7 +447,7 @@ public:
     template <std::size_t N,
               std::enable_if_t<details::is_allowed_extent_conversion<N, Extent>::value, int> = 0>
     constexpr span(element_type (&arr)[N]) noexcept
-        : storage_(KnownNotNull{arr + 0}, details::extent_type<N>())
+        : storage_(KnownNotNull{arr}, details::extent_type<N>())
     {}
 
     template <
