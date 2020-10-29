@@ -97,9 +97,6 @@ Compiler |Toolset Versions Currently Tested| Build Status
  Visual Studio with MSVC | VS2017 (15.9) & VS2019 (16.4) | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
  Visual Studio with LLVM | VS2017 (Clang 9) & VS2019 (Clang 10) | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
 
-
-Note: For `gsl::byte` to work correctly with Clang and GCC you might have to use the ` -fno-strict-aliasing` compiler option.
-
 ---
 If you successfully port GSL to another platform, we would love to hear from you!
 - Submit an issue specifying the platform and target.
