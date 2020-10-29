@@ -17,9 +17,9 @@
 #ifndef GSL_SPAN_H
 #define GSL_SPAN_H
 
-#include <gsl/gsl_assert> // for Expects
-#include <gsl/gsl_byte>   // for byte
-#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/assert> // for Expects
+#include <gsl/byte>   // for byte
+#include <gsl/util>   // for narrow_cast
 
 #include <array>       // for array
 #include <cstddef>     // for ptrdiff_t, size_t, nullptr_t
@@ -472,66 +472,70 @@ public:
     // requirement on Container to be a contiguous sequence container.
     template <std::size_t MyExtent = Extent, class Container,
               std::enable_if_t<
-                  MyExtent != dynamic_extent &&
-                  !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
-                  std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
-                  std::is_convertible<
-                      std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
-                      element_type (*)[]>::value, int> = 0>
+                  MyExtent != dynamic_extent && !details::is_span<Container>::value &&
+                      !details::is_std_array<Container>::value &&
+                      std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
+                      std::is_convertible<
+                          std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
+                          element_type (*)[]>::value,
+                  int> = 0>
     constexpr explicit span(Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
     template <std::size_t MyExtent = Extent, class Container,
               std::enable_if_t<
-                  MyExtent == dynamic_extent &&
-                  !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
-                  std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
-                  std::is_convertible<
-                      std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
-                      element_type (*)[]>::value, int> = 0>
+                  MyExtent == dynamic_extent && !details::is_span<Container>::value &&
+                      !details::is_std_array<Container>::value &&
+                      std::is_pointer<decltype(std::declval<Container&>().data())>::value &&
+                      std::is_convertible<
+                          std::remove_pointer_t<decltype(std::declval<Container&>().data())> (*)[],
+                          element_type (*)[]>::value,
+                  int> = 0>
     constexpr span(Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
-    template <std::size_t MyExtent = Extent, class Container,
-              std::enable_if_t<
-                  MyExtent != dynamic_extent &&
-                  std::is_const<element_type>::value && !details::is_span<Container>::value &&
-                  !details::is_std_array<Container>::value &&
-                  std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
-                  std::is_convertible<std::remove_pointer_t<
-                      decltype(std::declval<const Container&>().data())> (*)[],
-                      element_type (*)[]>::value, int> = 0>
+    template <
+        std::size_t MyExtent = Extent, class Container,
+        std::enable_if_t<
+            MyExtent != dynamic_extent && std::is_const<element_type>::value &&
+                !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
+                std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
+                std::is_convertible<
+                    std::remove_pointer_t<decltype(std::declval<const Container&>().data())> (*)[],
+                    element_type (*)[]>::value,
+            int> = 0>
     constexpr explicit span(const Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
-    template <std::size_t MyExtent = Extent, class Container,
-              std::enable_if_t<
-                  MyExtent == dynamic_extent &&
-                  std::is_const<element_type>::value && !details::is_span<Container>::value &&
-                  !details::is_std_array<Container>::value &&
-                  std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
-                  std::is_convertible<std::remove_pointer_t<
-                      decltype(std::declval<const Container&>().data())> (*)[],
-                      element_type (*)[]>::value, int> = 0>
+    template <
+        std::size_t MyExtent = Extent, class Container,
+        std::enable_if_t<
+            MyExtent == dynamic_extent && std::is_const<element_type>::value &&
+                !details::is_span<Container>::value && !details::is_std_array<Container>::value &&
+                std::is_pointer<decltype(std::declval<const Container&>().data())>::value &&
+                std::is_convertible<
+                    std::remove_pointer_t<decltype(std::declval<const Container&>().data())> (*)[],
+                    element_type (*)[]>::value,
+            int> = 0>
     constexpr span(const Container& cont) noexcept : span(cont.data(), cont.size())
     {}
 
     constexpr span(const span& other) noexcept = default;
 
-    template <
-        class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
-        std::enable_if_t<
-            (MyExtent == dynamic_extent || MyExtent == OtherExtent) &&
-            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
+    template <class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
+              std::enable_if_t<(MyExtent == dynamic_extent || MyExtent == OtherExtent) &&
+                                   details::is_allowed_element_type_conversion<OtherElementType,
+                                                                               element_type>::value,
+                               int> = 0>
     constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
     {}
 
-    template <
-        class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
-        std::enable_if_t<
-            MyExtent != dynamic_extent && OtherExtent == dynamic_extent &&
-            details::is_allowed_element_type_conversion<OtherElementType, element_type>::value, int> = 0>
+    template <class OtherElementType, std::size_t OtherExtent, std::size_t MyExtent = Extent,
+              std::enable_if_t<MyExtent != dynamic_extent && OtherExtent == dynamic_extent &&
+                                   details::is_allowed_element_type_conversion<OtherElementType,
+                                                                               element_type>::value,
+                               int> = 0>
     constexpr explicit span(const span<OtherElementType, OtherExtent>& other) noexcept
         : storage_(other.data(), details::extent_type<OtherExtent>(other.size()))
     {}
@@ -565,7 +569,8 @@ public:
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         Expects((size() >= Offset) && (Count == dynamic_extent || (Count <= size() - Offset)));
-        using type = typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type;
+        using type =
+            typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type;
         return type{data() + Offset, Count == dynamic_extent ? size() - Offset : Count};
     }
 
@@ -581,9 +586,8 @@ public:
         return make_subspan(size() - count, dynamic_extent, subspan_selector<Extent>{});
     }
 
-    constexpr span<element_type, dynamic_extent> subspan(size_type offset,
-                                                         size_type count = dynamic_extent) const
-        noexcept
+    constexpr span<element_type, dynamic_extent>
+    subspan(size_type offset, size_type count = dynamic_extent) const noexcept
     {
         return make_subspan(offset, count, subspan_selector<Extent>{});
     }
@@ -706,9 +710,8 @@ private:
     };
 
     template <std::size_t CallerExtent>
-    constexpr span<element_type, dynamic_extent> make_subspan(size_type offset, size_type count,
-                                                              subspan_selector<CallerExtent>) const
-        noexcept
+    constexpr span<element_type, dynamic_extent>
+    make_subspan(size_type offset, size_type count, subspan_selector<CallerExtent>) const noexcept
     {
         const span<element_type, dynamic_extent> tmp(*this);
         return tmp.subspan(offset, count);
@@ -733,21 +736,21 @@ private:
 
 // Deduction Guides
 template <class Type, std::size_t Extent>
-span(Type (&)[Extent])->span<Type, Extent>;
+span(Type (&)[Extent]) -> span<Type, Extent>;
 
 template <class Type, std::size_t Size>
-span(std::array<Type, Size>&)->span<Type, Size>;
+span(std::array<Type, Size>&) -> span<Type, Size>;
 
 template <class Type, std::size_t Size>
-span(const std::array<Type, Size>&)->span<const Type, Size>;
+span(const std::array<Type, Size>&) -> span<const Type, Size>;
 
 template <class Container,
-    class Element = std::remove_pointer_t<decltype(std::declval<Container&>().data())>>
-span(Container&)->span<Element>;
+          class Element = std::remove_pointer_t<decltype(std::declval<Container&>().data())>>
+span(Container&) -> span<Element>;
 
 template <class Container,
-    class Element = std::remove_pointer_t<decltype(std::declval<const Container&>().data())>>
-span(const Container&)->span<Element>;
+          class Element = std::remove_pointer_t<decltype(std::declval<const Container&>().data())>>
+span(const Container&) -> span<Element>;
 
 #endif // ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
 

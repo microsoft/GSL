@@ -27,9 +27,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-#include <gsl/gsl_util> // for narrow_cast, narrow
-#include <gsl/span>     // for span
+#include <gsl/span> // for span
+#include <gsl/util> // for narrow_cast, narrow
 
 #include <algorithm> // for lexicographical_compare
 #include <cstddef>   // for ptrdiff_t, size_t

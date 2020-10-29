@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <gtest/gtest.h>
-#include <gsl/gsl_assert> // for fail_fast (ptr only), Ensures, Expects
+#include <gsl/assert> // for fail_fast (ptr only), Ensures, Expects
 
 using namespace gsl;
 

@@ -15,8 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <gtest/gtest.h>
-#include <gsl/gsl_byte>   // for byte
-#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/byte>   // for byte
+#include <gsl/util>   // for narrow_cast
 #include <gsl/multi_span> // for strided_span, index, multi_span, strided_...
 
 #include <iostream>    // for size_t

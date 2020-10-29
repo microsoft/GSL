@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_util> // for narrow_cast, at
+#include <gsl/util> // for narrow_cast, at
 #include <gsl/span_ext> // for operator==, operator!=, make_span
 
 #include <array>       // for array

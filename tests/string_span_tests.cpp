@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_assert>  // for Expects, fail_fast (ptr only)
+#include <gsl/assert>  // for Expects, fail_fast (ptr only)
 #include <gsl/pointers>    // for owner
 #include <gsl/span>        // for span, dynamic_extent
 #include <gsl/string_span> // for basic_string_span, operator==, ensure_z

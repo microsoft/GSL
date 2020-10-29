@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_byte> // for byte
+#include <gsl/byte> // for byte
 #include <gsl/span>     // for span, span_iterator, operator==, operator!=
 
 #include <array>       // for array

@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_byte> // for to_byte, to_integer, byte, operator&, ope...
+#include <gsl/byte> // for to_byte, to_integer, byte, operator&, ope...
 
 using namespace std;
 using namespace gsl;

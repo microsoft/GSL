@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <gtest/gtest.h>
-#include <gsl/gsl_algorithm> // for copy
+#include <gsl/algorithm> // for copy
 #include <gsl/span>          // for span
 #include <array>   // for array
 #include <cstddef> // for size_t
