@@ -17,12 +17,12 @@
 #ifndef GSL_MULTI_SPAN_H
 #define GSL_MULTI_SPAN_H
 
-#include <gsl/gsl_assert> // for Expects
-#include <gsl/gsl_byte>   // for byte
-#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/assert> // for Expects
+#include <gsl/byte>   // for byte
+#include <gsl/util>   // for narrow_cast
 
-#include <algorithm> // for transform, lexicographical_compare
-#include <array>     // for array
+#include <algorithm>        // for transform, lexicographical_compare
+#include <array>            // for array
 #include <cstddef>          // for std::ptrdiff_t, size_t, nullptr_t
 #include <cstdint>          // for PTRDIFF_MAX
 #include <functional>       // for divides, multiplies, minus, negate, plus
@@ -95,7 +95,8 @@ namespace details
 } // namespace details
 
 template <std::size_t Rank>
-class [[deprecated]] multi_span_index final {
+class [[deprecated]] multi_span_index final
+{
     static_assert(Rank > 0, "Rank must be greater than 0!");
 
     template <std::size_t OtherRank>
@@ -110,10 +111,12 @@ public:
 
     constexpr multi_span_index() noexcept {}
 
-    constexpr multi_span_index(const value_type(&values)[Rank]) noexcept
+    constexpr multi_span_index(const value_type (&values)[Rank]) noexcept
     {
+        // clang-format off
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+        // clang-format on
         std::copy(values, values + Rank, elems);
     }
 
@@ -127,8 +130,10 @@ public:
     constexpr multi_span_index& operator=(const multi_span_index& rhs) noexcept = default;
 
     // Preconditions: component_idx < rank
+    // clang-format off
     GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr reference operator[](std::size_t component_idx)
     {
         Expects(component_idx < Rank); // Component index must be less than rank
@@ -136,16 +141,20 @@ public:
     }
 
     // Preconditions: component_idx < rank
+    // clang-format off
     GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr const_reference operator[](std::size_t component_idx) const
     {
         Expects(component_idx < Rank); // Component index must be less than rank
         return elems[component_idx];
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+    // clang-format on
     constexpr bool operator==(const multi_span_index& rhs) const
     {
         return std::equal(elems, elems + rank, rhs.elems);
@@ -178,16 +187,20 @@ public:
 
     constexpr multi_span_index& operator+=(const multi_span_index& rhs)
     {
+        // clang-format off
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+        // clang-format on
         std::transform(elems, elems + rank, rhs.elems, elems, std::plus<value_type>{});
         return *this;
     }
 
     constexpr multi_span_index& operator-=(const multi_span_index& rhs)
     {
+        // clang-format off
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+        // clang-format on
         std::transform(elems, elems + rank, rhs.elems, elems, std::minus<value_type>{});
         return *this;
     }
@@ -213,8 +226,10 @@ public:
 
     constexpr multi_span_index& operator*=(value_type v)
     {
+        // clang-format off
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+        // clang-format on
         std::transform(elems, elems + rank, elems,
                        [v](value_type x) { return std::multiplies<value_type>{}(x, v); });
         return *this;
@@ -222,8 +237,10 @@ public:
 
     constexpr multi_span_index& operator/=(value_type v)
     {
+        // clang-format off
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         GSL_SUPPRESS(bounds.3) // NO-FORMAT: attribute
+        // clang-format on
         std::transform(elems, elems + rank, elems,
                        [v](value_type x) { return std::divides<value_type>{}(x, v); });
         return *this;
@@ -286,7 +303,9 @@ const std::ptrdiff_t dynamic_range = -1;
 struct [[deprecated]] generalized_mapping_tag
 {
 };
-struct[[deprecated]] contiguous_mapping_tag : generalized_mapping_tag{};
+struct [[deprecated]] contiguous_mapping_tag : generalized_mapping_tag
+{
+};
 
 namespace details
 {
@@ -298,7 +317,8 @@ namespace details
     };
 
     template <std::ptrdiff_t... Ranges>
-    struct [[deprecated]] BoundsRanges {
+    struct [[deprecated]] BoundsRanges
+    {
         using size_type = std::ptrdiff_t;
         static const size_type Depth = 0;
         static const size_type DynamicNum = 0;
@@ -337,7 +357,7 @@ namespace details
     };
 
     template <std::ptrdiff_t... RestRanges>
-    struct[[deprecated]] BoundsRanges<dynamic_range, RestRanges...> : BoundsRanges<RestRanges...>
+    struct [[deprecated]] BoundsRanges<dynamic_range, RestRanges...> : BoundsRanges<RestRanges...>
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
@@ -350,9 +370,10 @@ namespace details
         size_type m_bound;
 
     public:
-        GSL_SUPPRESS(
-            f.23) // NO-FORMAT: attribute // this pointer type is cannot be assigned nullptr - issue in not_null
-        GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+        // clang-format off
+        GSL_SUPPRESS(f.23)      // NO-FORMAT: attribute // this pointer type is cannot be assigned nullptr - issue in not_null
+        GSL_SUPPRESS(bounds.1)  // NO-FORMAT: attribute
+        // clang-format on
         constexpr BoundsRanges(const std::ptrdiff_t* const arr)
             : Base(arr + 1), m_bound(*arr * this->Base::totalSize())
         {
@@ -369,14 +390,16 @@ namespace details
         {}
 
         template <typename T, std::size_t Dim = 0>
-        constexpr void serialize(T & arr) const
+        constexpr void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
         }
 
         template <typename T, std::size_t Dim = 0>
+        // clang-format off
         GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+        // clang-format on
         constexpr size_type linearize(const T& arr) const
         {
             const size_type index = this->Base::totalSize() * arr[Dim];
@@ -393,19 +416,22 @@ namespace details
             return cur < m_bound ? cur + last : -1;
         }
 
-        GSL_SUPPRESS(
-            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format off
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format on
         constexpr size_type totalSize() const noexcept { return m_bound; }
 
-        GSL_SUPPRESS(
-            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format off
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format on
         constexpr size_type elementNum() const noexcept
         {
             return totalSize() / this->Base::totalSize();
         }
 
-        GSL_SUPPRESS(
-            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format off
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format on
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
@@ -422,7 +448,7 @@ namespace details
     };
 
     template <std::ptrdiff_t CurRange, std::ptrdiff_t... RestRanges>
-    struct[[deprecated]] BoundsRanges<CurRange, RestRanges...> : BoundsRanges<RestRanges...>
+    struct [[deprecated]] BoundsRanges<CurRange, RestRanges...> : BoundsRanges<RestRanges...>
     {
         using Base = BoundsRanges<RestRanges...>;
         using size_type = std::ptrdiff_t;
@@ -440,12 +466,14 @@ namespace details
                                bool firstLevel = true)
             : Base(static_cast<const BoundsRanges<RestOtherRanges...>&>(other), false)
         {
+            // clang-format off
             GSL_SUPPRESS(type.4) // NO-FORMAT: attribute // TODO: false positive
+            // clang-format on
             (void) firstLevel;
         }
 
         template <typename T, std::size_t Dim = 0>
-        constexpr void serialize(T & arr) const
+        constexpr void serialize(T& arr) const
         {
             arr[Dim] = elementNum();
             this->Base::template serialize<T, Dim + 1>(arr);
@@ -454,9 +482,13 @@ namespace details
         template <typename T, std::size_t Dim = 0>
         constexpr size_type linearize(const T& arr) const
         {
+            // clang-format off
             GSL_SUPPRESS(bounds.4)                            // NO-FORMAT: attribute
+            // clang-format on
             Expects(arr[Dim] >= 0 && arr[Dim] < CurrentRange); // Index is out of range
+            // clang-format off
             GSL_SUPPRESS(bounds.4)                            // NO-FORMAT: attribute
+            // clang-format on
             const std::ptrdiff_t d = arr[Dim];
             return this->Base::totalSize() * d + this->Base::template linearize<T, Dim + 1>(arr);
         }
@@ -470,19 +502,22 @@ namespace details
             return this->Base::totalSize() * arr[Dim] + last;
         }
 
-        GSL_SUPPRESS(
-            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format off
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format on
         constexpr size_type totalSize() const noexcept
         {
             return CurrentRange * this->Base::totalSize();
         }
 
-        GSL_SUPPRESS(
-            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format off
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format on
         constexpr size_type elementNum() const noexcept { return CurrentRange; }
 
-        GSL_SUPPRESS(
-            c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format off
+        GSL_SUPPRESS(c.128) // NO-FORMAT: attribute // no pointers to BoundsRanges should be ever used
+        // clang-format on
         constexpr size_type elementNum(std::size_t dim) const noexcept
         {
             if (dim > 0)
@@ -498,14 +533,17 @@ namespace details
     };
 
     template <typename SourceType, typename TargetType>
-    struct[[deprecated]] BoundsRangeConvertible
+    struct [[deprecated]] BoundsRangeConvertible
         : public std::integral_constant<bool, (SourceType::TotalSize >= TargetType::TotalSize ||
                                                TargetType::TotalSize == dynamic_range ||
                                                SourceType::TotalSize == dynamic_range ||
-                                               TargetType::TotalSize == 0)>{};
+                                               TargetType::TotalSize == 0)>
+    {
+    };
 
     template <typename TypeChain>
-    struct [[deprecated]] TypeListIndexer {
+    struct [[deprecated]] TypeListIndexer
+    {
         const TypeChain& obj_;
         constexpr TypeListIndexer(const TypeChain& obj) : obj_(obj) {}
 
@@ -518,13 +556,13 @@ namespace details
         template <std::size_t N, typename MyChain = TypeChain,
                   typename MyBase = typename MyChain::Base>
         constexpr auto getObj(std::false_type)
-            ->decltype(TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>())
+            -> decltype(TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>())
         {
             return TypeListIndexer<MyBase>(static_cast<const MyBase&>(obj_)).template get<N>();
         }
 
         template <std::size_t N>
-        constexpr auto get()->decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
+        constexpr auto get() -> decltype(getObj<N - 1>(std::integral_constant<bool, N == 0>()))
         {
             return getObj<N - 1>(std::integral_constant<bool, N == 0>());
         }
@@ -543,7 +581,9 @@ namespace details
         Ret ret{};
         for (std::size_t i = 0; i < Rank - 1; ++i)
         {
+            // clang-format off
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+            // clang-format on
             ret[i] = other[i + 1];
         }
         return ret;
@@ -554,13 +594,14 @@ template <typename IndexType>
 class [[deprecated]] bounds_iterator;
 
 template <std::ptrdiff_t... Ranges>
-class [[deprecated]] static_bounds {
+class [[deprecated]] static_bounds
+{
 public:
     static_bounds(const details::BoundsRanges<Ranges...>&) {}
 };
 
 template <std::ptrdiff_t FirstRange, std::ptrdiff_t... RestRanges>
-class[[deprecated]] static_bounds<FirstRange, RestRanges...>
+class [[deprecated]] static_bounds<FirstRange, RestRanges...>
 {
     using MyRanges = details::BoundsRanges<FirstRange, RestRanges...>;
 
@@ -592,10 +633,10 @@ public:
     template <std::size_t Rank, typename SourceType, typename TargetType,
               typename Ret = BoundsRangeConvertible2<typename SourceType::Base,
                                                      typename TargetType::Base, Rank>>
-    static auto helpBoundsRangeConvertible(SourceType, TargetType, std::true_type)->Ret;
+    static auto helpBoundsRangeConvertible(SourceType, TargetType, std::true_type) -> Ret;
 
     template <std::size_t Rank, typename SourceType, typename TargetType>
-    static auto helpBoundsRangeConvertible(SourceType, TargetType, ...)->std::false_type;
+    static auto helpBoundsRangeConvertible(SourceType, TargetType, ...) -> std::false_type;
 
     template <typename SourceType, typename TargetType, std::size_t Rank>
     struct BoundsRangeConvertible2
@@ -721,7 +762,8 @@ public:
 };
 
 template <std::size_t Rank>
-class [[deprecated]] strided_bounds {
+class [[deprecated]] strided_bounds
+{
     template <std::size_t OtherRank>
     friend class strided_bounds;
 
@@ -745,7 +787,7 @@ public:
 
     constexpr strided_bounds& operator=(const strided_bounds&) noexcept = default;
 
-    constexpr strided_bounds(const value_type(&values)[rank], index_type strides)
+    constexpr strided_bounds(const value_type (&values)[rank], index_type strides)
         : m_extents(values), m_strides(std::move(strides))
     {}
 
@@ -755,7 +797,9 @@ public:
 
     constexpr index_type strides() const noexcept { return m_strides; }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr size_type total_size() const noexcept
     {
         size_type ret = 0;
@@ -763,7 +807,9 @@ public:
         return ret + 1;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr size_type size() const noexcept
     {
         size_type ret = 1;
@@ -780,7 +826,9 @@ public:
         return true;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr size_type linearize(const index_type& idx) const
     {
         size_type ret = 0;
@@ -792,7 +840,9 @@ public:
         return ret;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr size_type stride() const noexcept { return m_strides[0]; }
 
     template <bool Enabled = (rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
@@ -803,7 +853,9 @@ public:
 
     template <std::size_t Dim = 0>
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr size_type extent() const noexcept
     {
         static_assert(Dim < Rank,
@@ -823,14 +875,21 @@ private:
 };
 
 template <typename T>
-struct[[deprecated]] is_bounds : std::integral_constant<bool, false>{};
+struct [[deprecated]] is_bounds : std::integral_constant<bool, false>
+{
+};
 template <std::ptrdiff_t... Ranges>
-struct[[deprecated]] is_bounds<static_bounds<Ranges...>> : std::integral_constant<bool, true>{};
+struct [[deprecated]] is_bounds<static_bounds<Ranges...>> : std::integral_constant<bool, true>
+{
+};
 template <std::size_t Rank>
-struct[[deprecated]] is_bounds<strided_bounds<Rank>> : std::integral_constant<bool, true>{};
+struct [[deprecated]] is_bounds<strided_bounds<Rank>> : std::integral_constant<bool, true>
+{
+};
 
 template <typename IndexType>
-class [[deprecated]] bounds_iterator {
+class [[deprecated]] bounds_iterator
+{
 public:
     static const std::size_t rank = IndexType::rank;
     using iterator_category = std::random_access_iterator_tag;
@@ -851,8 +910,10 @@ public:
 
     constexpr pointer operator->() const noexcept { return &curr_; }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
     GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+    // clang-format on
     constexpr bounds_iterator& operator++() noexcept
 
     {
@@ -877,7 +938,9 @@ public:
         return ret;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr bounds_iterator& operator--()
     {
         if (!less(curr_, boundary_))
@@ -914,7 +977,9 @@ public:
         return ret += n;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr bounds_iterator& operator+=(difference_type n)
     {
         auto linear_idx = linearize(curr_) + n;
@@ -964,15 +1029,17 @@ public:
 
     constexpr bool operator>=(const bounds_iterator& rhs) const noexcept { return !(rhs > *this); }
 
-    void swap(bounds_iterator & rhs) noexcept
+    void swap(bounds_iterator& rhs) noexcept
     {
         std::swap(boundary_, rhs.boundary_);
         std::swap(curr_, rhs.curr_);
     }
 
 private:
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
-    constexpr bool less(index_type & one, index_type & other) const noexcept
+    // clang-format on
+    constexpr bool less(index_type& one, index_type& other) const noexcept
     {
         for (std::size_t i = 0; i < rank; ++i)
         {
@@ -981,7 +1048,9 @@ private:
         return false;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     constexpr index_size_type linearize(const value_type& idx) const noexcept
     {
         // TODO: Smarter impl.
@@ -1043,8 +1112,10 @@ namespace details
         stride[Bounds::rank - 1] = 1;
         for (std::size_t i = 1; i < Bounds::rank; ++i)
         {
+            // clang-format off
             GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
             GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
+            // clang-format on
             stride[Bounds::rank - i - 1] = stride[Bounds::rank - i] * extents[Bounds::rank - i];
         }
         return {stride};
@@ -1098,10 +1169,12 @@ constexpr dim_t<N> dim(std::ptrdiff_t n) noexcept
 
 template <typename ValueType, std::ptrdiff_t FirstDimension = dynamic_range,
           std::ptrdiff_t... RestDimensions>
-class [[deprecated("gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span;
+class [[deprecated(
+    "gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span;
 
 template <typename ValueType, std::size_t Rank>
-class [[deprecated("gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span;
+class [[deprecated(
+    "gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span;
 
 namespace details
 {
@@ -1188,8 +1261,8 @@ namespace details
     };
 
     template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-    struct [[deprecated]] is_multi_span_oracle<multi_span<ValueType, FirstDimension, RestDimensions...>>
-        : std::true_type
+    struct [[deprecated]] is_multi_span_oracle<
+        multi_span<ValueType, FirstDimension, RestDimensions...>> : std::true_type
     {
     };
 
@@ -1205,7 +1278,9 @@ namespace details
 } // namespace details
 
 template <typename ValueType, std::ptrdiff_t FirstDimension, std::ptrdiff_t... RestDimensions>
-class [[deprecated("gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span {
+class [[deprecated(
+    "gsl::multi_span is deprecated because it is not in the C++ Core Guidelines")]] multi_span
+{
     // TODO do we still need this?
     template <typename ValueType2, std::ptrdiff_t FirstDimension2,
               std::ptrdiff_t... RestDimensions2>
@@ -1237,7 +1312,9 @@ private:
 
 public:
     // default constructor - same as constructing from nullptr_t
+    // clang-format off
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
+    // clang-format on
     constexpr multi_span() noexcept : multi_span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
@@ -1247,7 +1324,9 @@ public:
     }
 
     // construct from nullptr - get an empty multi_span
+    // clang-format off
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
+    // clang-format on
     constexpr multi_span(std::nullptr_t) noexcept : multi_span(nullptr, bounds_type{})
     {
         static_assert(bounds_type::dynamic_rank != 0 ||
@@ -1271,7 +1350,9 @@ public:
 
     // construct from a single element
 
+    // clang-format off
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
+    // clang-format on
     constexpr multi_span(reference data) noexcept : multi_span(&data, bounds_type{1})
     {
         static_assert(bounds_type::dynamic_rank > 0 || bounds_type::static_size == 0 ||
@@ -1284,7 +1365,9 @@ public:
     constexpr multi_span(value_type &&) = delete;
 
     // construct from pointer + length
+    // clang-format off
     GSL_SUPPRESS(type.6) // NO-FORMAT: attribute // TODO: false positive
+    // clang-format on
     constexpr multi_span(pointer ptr, size_type size) : multi_span(ptr, bounds_type{size}) {}
 
     // construct from pointer + length - multidimensional
@@ -1521,7 +1604,9 @@ public:
         return this->operator[](idx);
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     constexpr reference operator[](const index_type& idx) const
     {
         return data_[bounds_.linearize(idx)];
@@ -1529,7 +1614,9 @@ public:
 
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     constexpr Ret operator[](size_type idx) const
     {
         Expects(idx >= 0 && idx < bounds_.size()); // index is out of bounds of the array
@@ -1544,7 +1631,9 @@ public:
 
     constexpr iterator end() const noexcept { return iterator{this, false}; }
 
+    // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
+    // clang-format on
     constexpr const_iterator cbegin() const noexcept
     {
         return const_iterator{reinterpret_cast<const const_span*>(this), true};
@@ -1642,8 +1731,7 @@ constexpr auto as_multi_span(SpanType s, Dimensions2... dims)
 
 // convert a multi_span<T> to a multi_span<const byte>
 template <typename U, std::ptrdiff_t... Dimensions>
-multi_span<const byte, dynamic_range>
-as_bytes(multi_span<U, Dimensions...> s) noexcept
+multi_span<const byte, dynamic_range> as_bytes(multi_span<U, Dimensions...> s) noexcept
 {
     static_assert(std::is_trivial<std::decay_t<U>>::value,
                   "The value_type of multi_span must be a trivial type.");
@@ -1729,8 +1817,7 @@ constexpr auto as_multi_span(T* arr, std::ptrdiff_t len) ->
 }
 
 template <typename T, std::size_t N>
-constexpr auto as_multi_span(T (&arr)[N]) ->
-    typename details::SpanArrayTraits<T, N>::type
+constexpr auto as_multi_span(T (&arr)[N]) -> typename details::SpanArrayTraits<T, N>::type
 {
     return {arr};
 }
@@ -1772,7 +1859,9 @@ constexpr auto as_multi_span(Cont&& arr) -> std::enable_if_t<
 
 // from basic_string which doesn't have nonconst .data() member like other contiguous containers
 template <typename CharT, typename Traits, typename Allocator>
+// clang-format off
 GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+// clang-format on
 constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>& str)
     -> multi_span<CharT, dynamic_range>
 {
@@ -1783,7 +1872,8 @@ constexpr auto as_multi_span(std::basic_string<CharT, Traits, Allocator>& str)
 // strided_span is an extension that is not strictly part of the GSL at this time.
 // It is kept here while the multidimensional interface is still being defined.
 template <typename ValueType, std::size_t Rank>
-class [[deprecated("gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span
+class [[deprecated(
+    "gsl::strided_span is deprecated because it is not in the C++ Core Guidelines")]] strided_span
 {
 public:
     using bounds_type = strided_bounds<Rank>;
@@ -1818,13 +1908,15 @@ public:
         Expects((bounds_.size() > 0 && ptr != nullptr) || bounds_.size() == 0);
         // Bounds cross data boundaries
         Expects(this->bounds().total_size() <= size);
+        // clang-format off
         GSL_SUPPRESS(type.4) // NO-FORMAT: attribute // TODO: false positive
+        // clang-format on
         (void) size;
     }
 
     // from static array of size N
     template <size_type N>
-    constexpr strided_span(value_type (&values)[N], bounds_type bounds)
+    constexpr strided_span(value_type(&values)[N], bounds_type bounds)
         : strided_span(values, N, std::move(bounds))
     {}
 
@@ -1839,7 +1931,7 @@ public:
 
     // convertible
     template <typename OtherValueType, typename = std::enable_if_t<std::is_convertible<
-                                           OtherValueType (*)[], value_type (*)[]>::value>>
+                                           OtherValueType(*)[], value_type(*)[]>::value>>
     constexpr strided_span(const strided_span<OtherValueType, Rank>& other)
         : data_(other.data_), bounds_(other.bounds_)
     {}
@@ -1858,7 +1950,9 @@ public:
 
         const size_type size = this->bounds().total_size() / d;
 
+        // clang-format off
         GSL_SUPPRESS(type.3) // NO-FORMAT: attribute
+        // clang-format on
         return {const_cast<OtherValueType*>(reinterpret_cast<const OtherValueType*>(this->data())),
                 size,
                 bounds_type{resize_extent(this->bounds().index_bounds(), d),
@@ -1872,14 +1966,18 @@ public:
                 bounds_type{extents, details::make_stride(bounds())}};
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     constexpr reference operator[](const index_type& idx) const
     {
         return data_[bounds_.linearize(idx)];
     }
 
     template <bool Enabled = (Rank > 1), typename Ret = std::enable_if_t<Enabled, sliced_type>>
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     constexpr Ret operator[](size_type idx) const
     {
         Expects(idx < bounds_.size()); // index is out of bounds of the array
@@ -1983,7 +2081,9 @@ private:
     static index_type resize_extent(const index_type& extent, std::ptrdiff_t d)
     {
         // The last dimension of the array needs to contain a multiple of new type elements
+        // clang-format off
         GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+        // clang-format on
         Expects(extent[Rank - 1] >= d && (extent[Rank - 1] % d == 0));
 
         index_type ret = extent;
@@ -1996,14 +2096,18 @@ private:
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t, void* = nullptr)
     {
         // Only strided arrays with regular strides can be resized
+        // clang-format off
         GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+        // clang-format on
         Expects(strides[Rank - 1] == 1);
 
         return strides;
     }
 
     template <bool Enabled = (Rank > 1), typename = std::enable_if_t<Enabled>>
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     static index_type resize_stride(const index_type& strides, std::ptrdiff_t d)
     {
         // Only strided arrays with regular strides can be resized
@@ -2026,7 +2130,8 @@ private:
 };
 
 template <class Span>
-class [[deprecated]] contiguous_span_iterator {
+class [[deprecated]] contiguous_span_iterator
+{
 public:
     using iterator_category = std::random_access_iterator_tag;
     using value_type = typename Span::value_type;
@@ -2041,14 +2146,18 @@ private:
     pointer data_;
     const Span* m_validator;
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     void validateThis() const
     {
         // iterator is out of range of the array
         Expects(data_ >= m_validator->data_ && data_ < m_validator->data_ + m_validator->size());
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     contiguous_span_iterator(const Span* container, bool isbegin)
         : data_(isbegin ? container->data_ : container->data_ + container->size())
         , m_validator(container)
@@ -2066,7 +2175,9 @@ public:
         return data_;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     contiguous_span_iterator& operator++() noexcept
     {
         ++data_;
@@ -2079,7 +2190,9 @@ public:
         return ret;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+    // clang-format on
     contiguous_span_iterator& operator--() noexcept
     {
         --data_;
@@ -2132,7 +2245,7 @@ public:
     bool operator>(const contiguous_span_iterator& rhs) const { return rhs < *this; }
     bool operator>=(const contiguous_span_iterator& rhs) const { return !(rhs > *this); }
 
-    void swap(contiguous_span_iterator & rhs) noexcept
+    void swap(contiguous_span_iterator& rhs) noexcept
     {
         std::swap(data_, rhs.data_);
         std::swap(m_validator, rhs.m_validator);
@@ -2147,7 +2260,8 @@ contiguous_span_iterator<Span> operator+(typename contiguous_span_iterator<Span>
 }
 
 template <typename Span>
-class [[deprecated]] general_span_iterator {
+class [[deprecated]] general_span_iterator
+{
 public:
     using iterator_category = std::random_access_iterator_tag;
     using value_type = typename Span::value_type;
@@ -2213,7 +2327,9 @@ public:
         return m_itr - rhs.m_itr;
     }
 
+    // clang-format off
     GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
+    // clang-format on
     value_type operator[](difference_type n) const { return (*m_container)[m_itr[n]]; }
 
     bool operator==(const general_span_iterator& rhs) const
@@ -2230,7 +2346,7 @@ public:
     bool operator<=(const general_span_iterator& rhs) const { return !(rhs < *this); }
     bool operator>(const general_span_iterator& rhs) const { return rhs < *this; }
     bool operator>=(const general_span_iterator& rhs) const { return !(rhs > *this); }
-    void swap(general_span_iterator & rhs) noexcept
+    void swap(general_span_iterator& rhs) noexcept
     {
         std::swap(m_itr, rhs.m_itr);
         std::swap(m_container, rhs.m_container);

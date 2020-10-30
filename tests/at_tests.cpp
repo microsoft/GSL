@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_util> // for at
+#include <gsl/util> // for at
 
 #include <array>            // for array
 #include <cstddef>          // for size_t

@@ -16,8 +16,8 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_byte>   // for byte
-#include <gsl/gsl_util>   // for narrow_cast
+#include <gsl/byte>   // for byte
+#include <gsl/util>   // for narrow_cast
 #include <gsl/multi_span> // for multi_span, contiguous_span_iterator, dim
 
 #include <algorithm> // for fill, for_each

@@ -17,9 +17,9 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
-#include <gsl/gsl_assert> // for Ensures, Expects
-#include <gsl/gsl_util>   // for narrow_cast
-#include <gsl/span_ext>   // for operator!=, operator==, dynamic_extent
+#include <gsl/assert>   // for Ensures, Expects
+#include <gsl/span_ext> // for operator!=, operator==, dynamic_extent
+#include <gsl/util>     // for narrow_cast
 
 #include <algorithm> // for equal, lexicographical_compare
 #include <array>     // for array
@@ -167,10 +167,9 @@ class [[deprecated("string_span was removed from the C++ Core Guidelines. For mo
 namespace details
 {
     template <typename T>
-    struct [
-        [deprecated("string_span was removed from the C++ Core Guidelines. For more information, "
-                    "see isocpp/CppCoreGuidelines PR#1680")]] is_basic_string_span_oracle
-        : std::false_type{};
+    struct [[deprecated(
+        "string_span was removed from the C++ Core Guidelines. For more information, "
+        "see isocpp/CppCoreGuidelines PR#1680")]] is_basic_string_span_oracle : std::false_type{};
 
     template <typename CharT, std::size_t Extent>
     struct [[deprecated(

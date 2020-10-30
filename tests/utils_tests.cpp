@@ -16,8 +16,8 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/gsl_util>     // finally, narrow_cast
-#include <gsl/gsl_narrow>   // for narrow, narrowing_error
+#include <gsl/util>     // finally, narrow_cast
+#include <gsl/narrow>   // for narrow, narrowing_error
 #include <algorithm>   // for move
 #include <functional>  // for reference_wrapper, _Bind_helper<>::type
 #include <limits>      // for numeric_limits
