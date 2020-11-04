@@ -533,3 +533,18 @@ TEST(notnull_tests, TestMakeNotNull)
     }
 #endif
 }
+
+TEST(notnull_tests, TestStdHash)
+{
+    int x = 42;
+    int y = 99;
+    not_null<int*> nn{&x};
+    const not_null<int*> cnn{&x};
+
+    std::hash<not_null<int*>> hash_nn;
+    std::hash<int*> hash_intptr;
+
+    EXPECT_TRUE(hash_nn(nn) == hash_intptr(&x));
+    EXPECT_FALSE(hash_nn(nn) == hash_intptr(&y));
+    EXPECT_FALSE(hash_nn(nn) == hash_intptr(nullptr));
+}
