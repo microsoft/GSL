@@ -152,6 +152,9 @@ namespace details
         {
             Expects(begin_ && current_ && end_);
             Expects(current_ < end_);
+            // clang-format off
+            GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+            // clang-format on
             ++current_;
             return *this;
         }
@@ -183,6 +186,9 @@ namespace details
             if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(end_ - current_ >= n);
             if (n < 0) Expects(current_ - begin_ >= -n);
+            // clang-format off
+            GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
+            // clang-format on
             current_ += n;
             return *this;
         }
