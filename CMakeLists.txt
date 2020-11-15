@@ -14,7 +14,7 @@ include(GNUInstallDirs)
 # Creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
-# NOTE: If you want to use GSL prefer to link against glfw using this alias target
+# NOTE: If you want to use GSL prefer to link against GSL using this alias target
 # EX:
 #   target_link_libraries(foobar PRIVATE Microsoft.GSL::GSL)
 #
