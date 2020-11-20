@@ -1,5 +1,5 @@
 # GSL: Guidelines Support Library
-[![Build Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL) [![Build status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+[![Build Status](https://dev.azure.com/cppstat/GSL/_apis/build/status/microsoft.GSL?branchName=master)](https://dev.azure.com/cppstat/GSL/_build/latest?definitionId=1&branchName=master)
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
@@ -89,13 +89,13 @@ This is based on [CppCoreGuidelines semi-specification](https://github.com/isocp
 The GSL officially supports the current and previous major release of MSVC, GCC, Clang, and XCode's Apple-Clang.
 See our latest test results for the most up-to-date list of supported configurations.
 
-Compiler |Toolset Versions Currently Tested| Build Status
-:------- |:--|------------:
- XCode |11.4 & 10.3 | [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
- GCC |9 & 8| [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
- Clang |11 &  10| [![Status](https://travis-ci.org/Microsoft/GSL.svg?branch=master)](https://travis-ci.org/Microsoft/GSL)
- Visual Studio with MSVC | VS2017 (15.9) & VS2019 (16.4) | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
- Visual Studio with LLVM | VS2017 (Clang 9) & VS2019 (Clang 10) | [![Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/GSL?svg=true)](https://ci.appveyor.com/project/neilmacintosh/GSL)
+Compiler |Toolset Versions Currently Tested
+:------- |--:
+ XCode |11.4 & 10.3
+ GCC |9 & 8
+ Clang |11 &  10
+ Visual Studio with MSVC | VS2017 (15.9) & VS2019 (16.4) 
+ Visual Studio with LLVM | VS2017 (Clang 9) & VS2019 (Clang 10)
 
 ---
 If you successfully port GSL to another platform, we would love to hear from you!
