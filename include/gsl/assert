@@ -57,16 +57,6 @@
 #define GSL_STRINGIFY_DETAIL(x) #x
 #define GSL_STRINGIFY(x) GSL_STRINGIFY_DETAIL(x)
 
-#if defined(__clang__) || defined(__GNUC__)
-#define GSL_LIKELY(x) __builtin_expect(!!(x), 1)
-#define GSL_UNLIKELY(x) __builtin_expect(!!(x), 0)
-
-#else
-
-#define GSL_LIKELY(x) (!!(x))
-#define GSL_UNLIKELY(x) (!!(x))
-#endif // defined(__clang__) || defined(__GNUC__)
-
 //
 // GSL_ASSUME(cond)
 //
@@ -123,7 +113,7 @@ namespace details
 } // namespace gsl
 
 #define GSL_CONTRACT_CHECK(type, cond)                                                             \
-    (GSL_LIKELY(cond) ? static_cast<void>(0) : gsl::details::terminate())
+    ((cond) ? static_cast<void>(0) : gsl::details::terminate())
 
 #define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
 #define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
