@@ -37,16 +37,6 @@ else()
     gsl_client_set_cxx_standard(${gsl_min_cxx_standard})
 endif()
 
-# add definitions to the library and targets that consume it
-target_compile_definitions(GSL INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:
-        # remove unnecessary warnings about unchecked iterators
-        _SCL_SECURE_NO_WARNINGS
-        # remove deprecation warnings about std::uncaught_exception() (from catch)
-        _SILENCE_CXX17_UNCAUGHT_EXCEPTION_DEPRECATION_WARNING
-    >
-)
-
 # add include folders to the library and targets that consume it
 # the SYSTEM keyword suppresses warnings for users of the library
 if(GSL_STANDALONE_PROJECT)
