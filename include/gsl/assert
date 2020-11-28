@@ -108,18 +108,23 @@ public:
     auto set_handler(handler h) -> handler { return chandler.exchange(h); }
     auto get_handler()          -> handler { return chandler; }
 
-    auto assertion(bool b) { if (!b && chandler.load()) chandler.load()(); }
+    auto expects(bool b) { assertion(b); }
+    auto ensures(bool b) { assertion(b); }
 
 private:
+    auto assertion(bool b) { if (!b && chandler.load()) chandler.load()(); }
     std::atomic<handler> chandler;
 };
 
-auto static cg_default = contract_group{ &gsl::details::terminate };
+auto static Default = contract_group{ &gsl::details::terminate };
+auto static Bounds  = contract_group{ Default.get_handler() };
+auto static Null    = contract_group{ Default.get_handler() };
+auto static Testing = contract_group{ Default.get_handler() };
 
 } // namespace gsl
 
-#define Expects(cond) gsl::cg_default.assertion(cond)
-#define Ensures(cond) gsl::cg_default.assertion(cond)
+#define Expects(cond, kind) kind.expects(cond)
+#define Ensures(cond, kind) kind.ensures(cond)
 
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND) && defined(__clang__)
 #pragma clang diagnostic pop
