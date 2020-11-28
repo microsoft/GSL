@@ -17,6 +17,8 @@
 #ifndef GSL_CONTRACTS_H
 #define GSL_CONTRACTS_H
 
+#include <atomic>
+
 //
 // Temporary until MSVC STL supports no-exceptions mode.
 // Currently terminate is a no-op in this mode, so we add termination behavior back
@@ -96,13 +98,28 @@ namespace details
     }
 
 } // namespace details
+
+
+class contract_group {
+public:
+    using handler = void (*)() noexcept;
+
+    contract_group(handler h)              : chandler{h} { }
+    auto set_handler(handler h) -> handler { return chandler.exchange(h); }
+    auto get_handler()          -> handler { return chandler; }
+
+    auto assertion(bool b) { if (!b && chandler.load()) chandler.load()(); }
+
+private:
+    std::atomic<handler> chandler;
+};
+
+auto static cg_default = contract_group{ &gsl::details::terminate };
+
 } // namespace gsl
 
-#define GSL_CONTRACT_CHECK(type, cond)                                                             \
-    ((cond) ? static_cast<void>(0) : gsl::details::terminate())
-
-#define Expects(cond) GSL_CONTRACT_CHECK("Precondition", cond)
-#define Ensures(cond) GSL_CONTRACT_CHECK("Postcondition", cond)
+#define Expects(cond) gsl::cg_default.assertion(cond)
+#define Ensures(cond) gsl::cg_default.assertion(cond)
 
 #if defined(GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND) && defined(__clang__)
 #pragma clang diagnostic pop
