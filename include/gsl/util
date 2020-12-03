@@ -88,10 +88,39 @@ finally(F&& f) noexcept
         std::forward<F>(f));
 }
 
+namespace details{
+
+template <class T, class U> constexpr bool FloatingPointToUnsignedConversion =
+        std::is_floating_point<typename std::decay<U>::type>::value
+        && std::is_integral<T>::value
+        && std::is_unsigned<T>::value;
+
+} // namespace details
+
 // narrow_cast(): a searchable way to do narrowing casts of values
-template <class T, class U>
+
+// floating point to unsigned values have unpredictable conversions across various
+// architectures and build configurations when the floating value is negative.
+// To force a consistent behavior the float should first cast to signed and then to unsigned.
+template <class T, class U,
+            std::enable_if_t<
+                details::FloatingPointToUnsignedConversion<T,U>
+                , int> = 0>
 // clang-format off
-GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
+GSL_SUPPRESS(type.1)
+// clang-format on
+constexpr T narrow_cast(U&& u) noexcept
+{
+    using signed_type = typename std::make_signed<T>::type;
+    return static_cast<T>(static_cast<signed_type>(std::forward<U>(u)));
+}
+
+template <class T, class U,
+            std::enable_if_t<
+                !details::FloatingPointToUnsignedConversion<T,U>
+                , int> = 0>
+// clang-format off
+GSL_SUPPRESS(type.1)
 // clang-format on
 constexpr T narrow_cast(U&& u) noexcept
 {
