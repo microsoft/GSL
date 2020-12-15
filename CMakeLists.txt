@@ -5,9 +5,6 @@ include(guidelineSupportLibrary)
 
 project(GSL VERSION 3.1.0 LANGUAGES CXX)
 
-include(ExternalProject)
-find_package(Git)
-
 # Use GNUInstallDirs to provide the right locations on all platforms
 include(GNUInstallDirs)
 
@@ -51,21 +48,8 @@ else()
     )
 endif()
 
-
-if (CMAKE_VERSION VERSION_GREATER 3.7.8)
-    if (MSVC_IDE)
-        option(GSL_VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
-    else()
-        set(GSL_VS_ADD_NATIVE_VISUALIZERS FALSE CACHE INTERNAL "Native visualizers are Visual Studio extension" FORCE)
-    endif()
-
-    # add natvis file to the library so it will automatically be loaded into Visual Studio
-    if(GSL_VS_ADD_NATIVE_VISUALIZERS)
-        target_sources(GSL INTERFACE
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/GSL.natvis>
-        )
-    endif()
-endif()
+# Add natvis file
+gsl_add_native_visualizer_support()
 
 install(TARGETS GSL EXPORT Microsoft.GSLConfig)
 install(
@@ -104,4 +88,4 @@ if (GSL_TEST)
         )
     endif()
     add_subdirectory(tests)
-endif ()
+endif()

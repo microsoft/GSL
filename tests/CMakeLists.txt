@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 project(GSLTests CXX)
+
 include(FindPkgConfig)
+include(ExternalProject)
+
+find_package(Git REQUIRED QUIET)
 
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
