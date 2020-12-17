@@ -102,9 +102,11 @@ namespace details
 
 class contract_group {
 public:
-    using handler = void (*)() /*noexcept*/;    // TODO: make this noexcept once all supported compilers allow it
+    // TODO: change this back to unconditionally noexcept
+    //       again once all supported compilers allow it
+    using handler = void (*)() /*noexcept*/;
 
-    constexpr contract_group(handler h)    { set_handler(h); }
+    contract_group  (handler h)            { set_handler(h); }
     auto set_handler(handler h) -> handler { if (!h) h = []()noexcept{};
                                              return chandler.exchange(h); }
     auto get_handler()          -> handler { return chandler; }
@@ -117,6 +119,8 @@ private:
     std::atomic<handler> chandler;
 };
 
+// TODO: change this back to "auto static Blah = contract_group{ ... };"
+//       again once all supported compilers allow it
 static contract_group Default { &gsl::details::terminate };
 static contract_group Bounds  { Default.get_handler() };
 static contract_group Null    { Default.get_handler() };
