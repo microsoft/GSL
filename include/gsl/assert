@@ -104,15 +104,16 @@ class contract_group {
 public:
     using handler = void (*)() noexcept;
 
-    contract_group(handler h)              : chandler{h} { }
-    auto set_handler(handler h) -> handler { return chandler.exchange(h); }
+    contract_group(handler h)              { set_handler(h); }
+    auto set_handler(handler h) -> handler { if (!h) h = []()noexcept{};
+                                             return chandler.exchange(h); }
     auto get_handler()          -> handler { return chandler; }
 
     auto expects(bool b) { assertion(b); }
     auto ensures(bool b) { assertion(b); }
 
 private:
-    auto assertion(bool b) { if (!b && chandler.load()) chandler.load()(); }
+    auto assertion(bool b) { if (!b) chandler.load()(); }
     std::atomic<handler> chandler;
 };
 
