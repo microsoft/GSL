@@ -117,10 +117,10 @@ private:
     std::atomic<handler> chandler;
 };
 
-auto static Default = contract_group{ &gsl::details::terminate };
-auto static Bounds  = contract_group{ Default.get_handler() };
-auto static Null    = contract_group{ Default.get_handler() };
-auto static Testing = contract_group{ Default.get_handler() };
+static contract_group Default { &gsl::details::terminate };
+static contract_group Bounds  { Default.get_handler() };
+static contract_group Null    { Default.get_handler() };
+static contract_group Testing { Default.get_handler() };
 
 } // namespace gsl
 
