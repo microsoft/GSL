@@ -102,18 +102,18 @@ namespace details
 
 class contract_group {
 public:
-    using handler = void (*)() noexcept;
+    using handler = void (*)() /*noexcept*/;    // TODO: make this noexcept once all supported compilers allow it
 
-    contract_group(handler h)              { set_handler(h); }
+    constexpr contract_group(handler h)    { set_handler(h); }
     auto set_handler(handler h) -> handler { if (!h) h = []()noexcept{};
                                              return chandler.exchange(h); }
     auto get_handler()          -> handler { return chandler; }
 
-    void expects(bool b) { assertion(b); }
-    void ensures(bool b) { assertion(b); }
+    constexpr void expects(bool b) { assertion(b); }
+    constexpr void ensures(bool b) { assertion(b); }
 
 private:
-    void assertion(bool b) { if (!b) chandler.load()(); }
+    constexpr void assertion(bool b) { if (!b) chandler.load()(); }
     std::atomic<handler> chandler;
 };
 
