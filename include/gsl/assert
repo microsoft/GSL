@@ -126,10 +126,10 @@ private:
 };
 
 auto static Default = contract_group( 
-#if defined GSL_TERMINATE_ON_CONTRACT_VIOLATION
-                                      &gsl::details::terminate
-#else // if defined GSL_UNENFORCED_ON_CONTRACT_VIOLATION
+#if defined GSL_UNENFORCED_ON_CONTRACT_VIOLATION
                                       // use default == null handler
+#else // if defined GSL_TERMINATE_ON_CONTRACT_VIOLATION
+                                      &gsl::details::terminate
 #endif
                                     );
 
