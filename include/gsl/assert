@@ -114,7 +114,15 @@ public:
 #else
     constexpr contract_group  (handler h)            : chandler(h ? h : []()noexcept{}) { }
 #endif
+
+#if __cplusplus >= 202002L
     constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, h ? h : []()noexcept{}); }
+#else
+    constexpr auto set_handler(handler h) -> handler { auto old = chandler;
+                                                       chandler = h ? h : []()noexcept{};
+                                                       return old; 
+                                                     }
+#endif
     constexpr auto get_handler()          -> handler { return chandler; }
 
     constexpr void expects  (bool b) { assertion(b); }
