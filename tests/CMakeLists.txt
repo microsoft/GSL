@@ -132,7 +132,8 @@ else()
           $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             -Wduplicated-cond # duplicated if-else conditions
             -Wmisleading-indentation
-            -Wnull-dereference
+            -Wno-null-dereference
+            -Wno-array-bounds
             $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
               -Wno-unused-variable
             >
@@ -246,7 +247,8 @@ else()
           $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             -Wduplicated-cond # duplicated if-else conditions
             -Wmisleading-indentation
-            -Wnull-dereference
+            -Wno-null-dereference
+            -Wno-array-bounds
           >
           $<$<NOT:$<VERSION_LESS:$<CXX_COMPILER_VERSION>,7>>:
             -Wduplicated-branches # identical if-else branches
