@@ -103,7 +103,7 @@ namespace details
 
 class contract_group {
 public:
-#ifdef __cpp_noexcept_function_type
+#if defined __cpp_noexcept_function_type
     using handler = void (*)() noexcept;
 #else // VESTIGIAL, remove when no longer needed for downlevel compilers
     using handler = void (*)();
@@ -125,7 +125,13 @@ private:
     handler chandler;
 };
 
-auto static Default = contract_group( 
+#if defined __cpp_inline_variables
+#define GSL_INLINE inline
+#else // VESTIGIAL, remove when no longer needed for downlevel compilers
+#define GSL_INLINE static
+#endif
+
+auto GSL_INLINE Default = contract_group( 
 #if defined GSL_UNENFORCED_ON_CONTRACT_VIOLATION
                                       // use default == null handler
 #else // if defined GSL_TERMINATE_ON_CONTRACT_VIOLATION
@@ -133,9 +139,9 @@ auto static Default = contract_group(
 #endif
                                     );
 
-auto static Bounds  = contract_group( Default.get_handler() );
-auto static Null    = contract_group( Default.get_handler() );
-auto static Testing = contract_group( Default.get_handler() );
+auto GSL_INLINE Bounds  = contract_group( Default.get_handler() );
+auto GSL_INLINE Null    = contract_group( Default.get_handler() );
+auto GSL_INLINE Testing = contract_group( Default.get_handler() );
 
 } // namespace gsl
 
