@@ -109,7 +109,7 @@ public:
     using handler = void (*)();
 #endif
 
-    constexpr contract_group  (handler h)            : chandler(sanitize(h)) { }
+    constexpr contract_group  (handler h = nullptr)  : chandler(sanitize(h)) { }
 #if __cplusplus >= 202002L
     constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, sanitize(h)); }
 #else // VESTIGIAL, remove when no longer needed for downlevel compilers
@@ -125,7 +125,14 @@ private:
     handler chandler;
 };
 
-auto static Default = contract_group( &gsl::details::terminate );
+auto static Default = contract_group( 
+#if defined GSL_TERMINATE_ON_CONTRACT_VIOLATION
+                                      &gsl::details::terminate
+#else // if defined GSL_UNENFORCED_ON_CONTRACT_VIOLATION
+                                      // use default == null handler
+#endif
+                                    );
+
 auto static Bounds  = contract_group( Default.get_handler() );
 auto static Null    = contract_group( Default.get_handler() );
 auto static Testing = contract_group( Default.get_handler() );
