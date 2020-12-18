@@ -109,12 +109,7 @@ public:
     using handler = void (*)();
 #endif
 
-#if defined(__cpp_constexpr) && __cpp_constexpr >= 201806
-    constexpr contract_group  (handler h)            { set_handler(h); }
-#else // VESTIGIAL, remove when no longer needed for downlevel compilers
     constexpr contract_group  (handler h)            : chandler(h ? h : []()noexcept{}) { }
-#endif
-
 #if __cplusplus >= 202002L
     constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, h ? h : []()noexcept{}); }
 #else // VESTIGIAL, remove when no longer needed for downlevel compilers
