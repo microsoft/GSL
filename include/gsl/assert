@@ -112,10 +112,10 @@ public:
     auto set_handler(handler h) -> handler { return chandler.exchange(h ? h : []()noexcept{}); }
     auto get_handler()          -> handler { return chandler; }
 
-    constexpr void expects  (bool b) { assertion(b); }
-    constexpr void ensures  (bool b) { assertion(b); }
+    void expects  (bool b) { assertion(b); }
+    void ensures  (bool b) { assertion(b); }
 private:
-    constexpr void assertion(bool b) { if (!b) chandler.load()(); }
+    void assertion(bool b) { if (!b) chandler.load()(); }
 
 #ifdef __cpp_guaranteed_copy_elision
     std::atomic<handler> chandler;  // current handler
