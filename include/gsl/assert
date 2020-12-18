@@ -109,14 +109,11 @@ public:
     using handler = void (*)();
 #endif
 
-    constexpr contract_group  (handler h)            : chandler(h ? h : []()noexcept{}) { }
+    constexpr contract_group  (handler h)            : chandler(sanitize(h)) { }
 #if __cplusplus >= 202002L
-    constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, h ? h : []()noexcept{}); }
+    constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, sanitize(h)); }
 #else // VESTIGIAL, remove when no longer needed for downlevel compilers
-    constexpr auto set_handler(handler h) -> handler { auto old = chandler;
-                                                       chandler = h ? h : []()noexcept{};
-                                                       return old; 
-                                                     }
+    constexpr auto set_handler(handler h) -> handler { auto old = chandler; chandler = sanitize(h); return old; }
 #endif
     constexpr auto get_handler()          -> handler { return chandler; }
 
@@ -124,6 +121,7 @@ public:
     constexpr void ensures  (bool b) { assertion(b); }
 private:
     constexpr void assertion(bool b) { if (!b) chandler(); }
+    constexpr auto sanitize(handler h) -> handler { return h ? h : []()noexcept{}; }
     handler chandler;
 };
 
