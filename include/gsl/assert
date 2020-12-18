@@ -102,29 +102,32 @@ namespace details
 
 class contract_group {
 public:
-    // TODO: change this back to unconditionally noexcept
-    //       again once all supported compilers allow it
-    using handler = void (*)() /*noexcept*/;
+#ifdef __cpp_noexcept_function_type
+    using handler = void (*)() noexcept;
+#else
+    using handler = void (*)();
+#endif
 
     contract_group  (handler h)            { set_handler(h); }
-    auto set_handler(handler h) -> handler { if (!h) h = []()noexcept{};
-                                             return chandler.exchange(h); }
+    auto set_handler(handler h) -> handler { return chandler.exchange(h ? h : []()noexcept{}); }
     auto get_handler()          -> handler { return chandler; }
 
-    constexpr void expects(bool b) { assertion(b); }
-    constexpr void ensures(bool b) { assertion(b); }
-
+    constexpr void expects  (bool b) { assertion(b); }
+    constexpr void ensures  (bool b) { assertion(b); }
 private:
     constexpr void assertion(bool b) { if (!b) chandler.load()(); }
-    std::atomic<handler> chandler;
+
+#ifdef __cpp_guaranteed_copy_elision
+    std::atomic<handler> chandler;  // current handler
+#else
+    handler chandler;
+#endif
 };
 
-// TODO: change this back to "auto static Blah = contract_group{ ... };"
-//       again once all supported compilers allow it
-static contract_group Default { &gsl::details::terminate };
-static contract_group Bounds  { Default.get_handler() };
-static contract_group Null    { Default.get_handler() };
-static contract_group Testing { Default.get_handler() };
+auto static Default = contract_group( &gsl::details::terminate );
+auto static Bounds  = contract_group( Default.get_handler() );
+auto static Null    = contract_group( Default.get_handler() );
+auto static Testing = contract_group( Default.get_handler() );
 
 } // namespace gsl
 
