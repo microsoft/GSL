@@ -105,19 +105,19 @@ class contract_group {
 public:
 #ifdef __cpp_noexcept_function_type
     using handler = void (*)() noexcept;
-#else
+#else // VESTIGIAL, remove when no longer needed for downlevel compilers
     using handler = void (*)();
 #endif
 
 #if defined(__cpp_constexpr) && __cpp_constexpr >= 201806
     constexpr contract_group  (handler h)            { set_handler(h); }
-#else
+#else // VESTIGIAL, remove when no longer needed for downlevel compilers
     constexpr contract_group  (handler h)            : chandler(h ? h : []()noexcept{}) { }
 #endif
 
 #if __cplusplus >= 202002L
     constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, h ? h : []()noexcept{}); }
-#else
+#else // VESTIGIAL, remove when no longer needed for downlevel compilers
     constexpr auto set_handler(handler h) -> handler { auto old = chandler;
                                                        chandler = h ? h : []()noexcept{};
                                                        return old; 
