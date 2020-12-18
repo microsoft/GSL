@@ -18,6 +18,7 @@
 #define GSL_CONTRACTS_H
 
 #include <atomic>
+#include <utility>
 
 //
 // Temporary until MSVC STL supports no-exceptions mode.
@@ -109,7 +110,7 @@ public:
 #endif
 
     contract_group  (handler h)            { set_handler(h); }
-    auto set_handler(handler h) -> handler { return chandler.exchange(h ? h : []()noexcept{}); }
+    auto set_handler(handler h) -> handler { return std::exchange(chandler, h ? h : []()noexcept{}); }
     auto get_handler()          -> handler { return chandler; }
 
     void expects  (bool b) { assertion(b); }
