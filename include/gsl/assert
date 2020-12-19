@@ -17,8 +17,6 @@
 #ifndef GSL_CONTRACTS_H
 #define GSL_CONTRACTS_H
 
-#include <atomic>
-#include <utility>
 
 //
 // Temporary until MSVC STL supports no-exceptions mode.
@@ -110,12 +108,8 @@ public:
 #endif
 
     constexpr contract_group  (handler h = nullptr)  : chandler(sanitize(h)) { }
-#if __cplusplus >= 202002L
-    constexpr auto set_handler(handler h) -> handler { return std::exchange(chandler, sanitize(h)); }
-#else // VESTIGIAL, remove when no longer needed for downlevel compilers
     constexpr auto set_handler(handler h) -> handler { auto old = chandler; chandler = sanitize(h); return old; }
-#endif
-    constexpr auto get_handler()          -> handler { return chandler; }
+    constexpr auto get_handler() const    -> handler { return chandler; }
 
     constexpr void expects  (bool b) { assertion(b); }
     constexpr void ensures  (bool b) { assertion(b); }
@@ -125,23 +119,22 @@ private:
     handler chandler;
 };
 
-#if defined __cpp_inline_variables
-#define GSL_INLINE inline
-#else // VESTIGIAL, remove when no longer needed for downlevel compilers
-#define GSL_INLINE static
+#if !defined GSL_PER_CPP_CONTRACT_VIOLATION && defined __cpp_inline_variables
+#define GSL_CONTRACT_VIOLATION_GRANULARITY inline
+#else
+#define GSL_CONTRACT_VIOLATION_GRANULARITY static
 #endif
 
-auto GSL_INLINE Default = contract_group( 
+auto GSL_CONTRACT_VIOLATION_GRANULARITY Default = contract_group( 
 #if defined GSL_UNENFORCED_ON_CONTRACT_VIOLATION
                                       // use default == null handler
 #else // if defined GSL_TERMINATE_ON_CONTRACT_VIOLATION
                                       &gsl::details::terminate
 #endif
                                     );
-
-auto GSL_INLINE Bounds  = contract_group( Default.get_handler() );
-auto GSL_INLINE Null    = contract_group( Default.get_handler() );
-auto GSL_INLINE Testing = contract_group( Default.get_handler() );
+auto GSL_CONTRACT_VIOLATION_GRANULARITY Bounds  = Default;
+auto GSL_CONTRACT_VIOLATION_GRANULARITY Null    = Default;
+auto GSL_CONTRACT_VIOLATION_GRANULARITY Testing = Default;
 
 } // namespace gsl
 
