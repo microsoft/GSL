@@ -106,16 +106,14 @@ public:
 #else // VESTIGIAL, remove when no longer needed for downlevel compilers
     using handler = void (*)();
 #endif
-
-    constexpr contract_group  (handler h = nullptr)  : chandler(sanitize(h)) { }
-    constexpr auto set_handler(handler h) -> handler { auto old = chandler; chandler = sanitize(h); return old; }
+    constexpr contract_group  (handler h = nullptr)  : chandler(normalize(h)) { }
+    constexpr auto set_handler(handler h) -> handler { auto old = chandler; chandler = normalize(h); return old; }
     constexpr auto get_handler() const    -> handler { return chandler; }
-
-    constexpr void expects  (bool b) { assertion(b); }
-    constexpr void ensures  (bool b) { assertion(b); }
+    constexpr auto expects  (bool b)      -> void    { assertion(b); }
+    constexpr auto ensures  (bool b)      -> void    { assertion(b); }
 private:
-    constexpr void assertion(bool b) { if (!b) chandler(); }
-    constexpr auto sanitize(handler h) -> handler { return h ? h : []()noexcept{}; }
+    constexpr auto assertion(bool b)      -> void    { if (!b) chandler(); }
+    constexpr auto normalize(handler h)   -> handler { return h ? h : []()noexcept{}; }
     handler chandler;
 };
 
