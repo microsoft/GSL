@@ -5,13 +5,14 @@ project(GSLTests CXX)
 include(FindPkgConfig)
 include(ExternalProject)
 
-find_package(Git REQUIRED QUIET)
-
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 pkg_search_module(GTestMain gtest_main)
 if (NOT GTestMain_FOUND)
+    # No pre-installed GTest is available, try to download it using Git.
+    find_package(Git REQUIRED QUIET)
+
     configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
     execute_process(
         COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
