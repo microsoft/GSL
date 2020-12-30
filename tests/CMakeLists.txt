@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 project(GSLTests CXX)
+enable_testing()  # again, for support standalone testing
 
 include(FindPkgConfig)
 include(ExternalProject)
@@ -40,6 +41,13 @@ if (NOT GTestMain_FOUND)
         ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL
     )
+endif()
+
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    # CMake has been started independently in this directory with tests. Do
+    # import the globally installed Guidelines Support Library and test it
+    # instead of the current version from the include/ folder.
+    find_package(Microsoft.GSL REQUIRED)
 endif()
 
 if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
@@ -157,7 +165,7 @@ set_property(TARGET  PROPERTY FOLDER "GSL_tests")
 function(add_gsl_test name)
     add_executable(${name} ${name}.cpp)
     target_link_libraries(${name}
-        GSL
+        Microsoft.GSL::GSL
         gsl_tests_config
         ${GTestMain_LIBRARIES}
     )
@@ -259,7 +267,7 @@ endif(MSVC)
 function(add_gsl_test_noexcept name)
     add_executable(${name} ${name}.cpp)
     target_link_libraries(${name}
-        GSL
+        Microsoft.GSL::GSL
         gsl_tests_config_noexcept
         ${GTestMain_LIBRARIES}
     )
