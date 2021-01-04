@@ -26,7 +26,7 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 ### Project options
-option(GSL_INSTALL "Generate and install gsl target" ${GSL_STANDALONE_PROJECT})
+option(GSL_INSTALL "Generate and install GSL target" ${GSL_STANDALONE_PROJECT})
 option(GSL_TEST "Build and perform gsl tests" ${GSL_STANDALONE_PROJECT})
 
 # This GSL implementation generally assumes a platform that implements C++14 support.
