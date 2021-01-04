@@ -10,10 +10,6 @@ find_package(Git REQUIRED QUIET)
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-if(IOS)
-  add_compile_definitions(GTEST_HAS_DEATH_TEST=1)
-endif()
-
 pkg_search_module(GTestMain gtest_main)
 if (NOT GTestMain_FOUND)
     configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
