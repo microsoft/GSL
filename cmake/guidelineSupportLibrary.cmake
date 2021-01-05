@@ -9,7 +9,7 @@ if (DEFINED guideline_support_library_include_guard)
 endif()
 set(guideline_support_library_include_guard ON)
 
-# Neccessary for 'write_basic_package_version_file'
+# Necessary for 'write_basic_package_version_file'
 include(CMakePackageConfigHelpers)
 
 function(gsl_set_default_cxx_standard min_cxx_standard)
@@ -96,10 +96,6 @@ function(gsl_target_include_directories is_standalone)
 endfunction()
 
 function(gsl_install_logic)
-    # Use GNUInstallDirs to provide the right locations on all platforms
-    # NOTE: Including GNUInstallDirs automatically executes logic
-    include(GNUInstallDirs)
-
     install(TARGETS GSL EXPORT Microsoft.GSLConfig)
     install(
         DIRECTORY include/gsl

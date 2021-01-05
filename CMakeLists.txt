@@ -8,6 +8,9 @@ project(GSL
     LANGUAGES CXX
 )
 
+# Use GNUInstallDirs to provide the right locations on all platforms
+include(GNUInstallDirs)
+
 # Creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
