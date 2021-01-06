@@ -45,7 +45,10 @@ jobs:
           for TEST in `find tests/Release-iphonesimulator -depth 1 -name "*.app"`
           do
             xcrun simctl install booted $TEST
+            sleep 3
             TEST_ID=`plutil -convert json -o - $TEST/Info.plist|jq -r ".CFBundleIdentifier"`
             xcrun simctl launch --console booted $TEST_ID
+            sleep 3
             xcrun simctl uninstall booted $TEST_ID
+            sleep 3
           done
