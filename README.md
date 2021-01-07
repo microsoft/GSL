@@ -178,5 +178,36 @@ The library provides a Config file for CMake, once installed it can be found via
 Which, when successful, will add library target called `Microsoft.GSL::GSL` which you can use via the usual
 `target_link_libraries` mechanism.
 
+### FetchContent
+
+If you are using cmake version 3.11+ you can use the offical FetchContent module.
+This allows you to easily incorporate GSL into your project.
+
+```cmake
+# NOTE: This example uses cmake version 3.14 (FetchContent_MakeAvailable).
+# Since it streamlines the FetchContent process
+cmake_minimum_required(VERSION 3.14)
+
+include(FetchContent)
+
+# In this example we are picking a specific tag.
+# You can also pick a specific commit, if you need to.
+FetchContent_Declare(GSL
+    GIT_REPOSITORY "https://github.com/microsoft/GSL"
+    GIT_TAG "v3.1.0"
+)
+
+FetchContent_MakeAvailable(GSL)
+
+# Now you can link against the GSL interface library
+add_executable(foobar)
+
+# Link against the interface library (IE header only library)
+target_link_libraries(foobar PRIVATE GSL)
+```
+
 ## Debugging visualization support
 For Visual Studio users, the file [GSL.natvis](./GSL.natvis) in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.
+
+If you are using cmake this will be done automatically for you.
+See 'GSL_VS_ADD_NATIVE_VISUALIZERS'
