@@ -4,13 +4,20 @@
 # for multiple versions of cmake.
 #
 # Any functions/macros should have a gsl_* prefix to avoid problems
-if (DEFINED guideline_support_library_include_guard)
-    return()
+if (CMAKE_VERSION VERSION_GREATER 3.10 OR CMAKE_VERSION VERSION_EQUAL 3.10)
+    include_guard()
+else()
+    if (DEFINED guideline_support_library_include_guard)
+        return()
+    endif()
+    set(guideline_support_library_include_guard ON)
 endif()
-set(guideline_support_library_include_guard ON)
 
 # Necessary for 'write_basic_package_version_file'
 include(CMakePackageConfigHelpers)
+
+# Use GNUInstallDirs to provide the right locations on all platforms
+include(GNUInstallDirs)
 
 function(gsl_set_default_cxx_standard min_cxx_standard)
     set(GSL_CXX_STANDARD "${min_cxx_standard}" CACHE STRING "Use c++ standard")
@@ -76,22 +83,6 @@ function(gsl_add_native_visualizer_support)
         if(GSL_VS_ADD_NATIVE_VISUALIZERS)
             target_sources(GSL INTERFACE $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>)
         endif()
-    endif()
-endfunction()
-
-function(gsl_target_include_directories is_standalone)
-    # Add include folders to the library and targets that consume it
-    # the SYSTEM keyword suppresses warnings for users of the library
-    if(${is_standalone})
-        target_include_directories(GSL INTERFACE
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-        )
-    else()
-        target_include_directories(GSL SYSTEM INTERFACE
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-        )
     endif()
 endfunction()
 

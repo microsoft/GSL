@@ -8,9 +8,6 @@ project(GSL
     LANGUAGES CXX
 )
 
-# Use GNUInstallDirs to provide the right locations on all platforms
-include(GNUInstallDirs)
-
 # Creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 
@@ -41,8 +38,8 @@ else()
     gsl_client_set_cxx_standard(${gsl_min_cxx_standard})
 endif()
 
-# Setup the include directory
-gsl_target_include_directories(${GSL_STANDALONE_PROJECT})
+# Setup include directory
+add_subdirectory(include)
 
 # Add natvis file
 gsl_add_native_visualizer_support()
