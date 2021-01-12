@@ -21,6 +21,7 @@ jobs:
       - name: Configure
         run: |
           cmake \
+            -Werror=dev \
             -GXcode \
             -DCMAKE_SYSTEM_NAME=iOS \
             "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64" \

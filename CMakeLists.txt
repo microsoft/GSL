@@ -8,6 +8,9 @@ project(GSL
     LANGUAGES CXX
 )
 
+# Must include after the project call due to GNUInstallDirs requiring a language be enabled (IE. CXX)
+include(GNUInstallDirs)
+
 # Creates a library GSL which is an interface (header files only)
 add_library(GSL INTERFACE)
 

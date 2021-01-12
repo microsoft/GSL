@@ -3,7 +3,7 @@ steps:
     name: Configure
     inputs:
       workingDirectory: build
-      cmakeArgs: '-DCMAKE_CXX_STANDARD=$(GSL_CXX_STANDARD) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) .. '
+      cmakeArgs: '-DCMAKE_CXX_STANDARD=$(GSL_CXX_STANDARD) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -Werror=dev .. '
 
   - task: CMake@1
     name: Build

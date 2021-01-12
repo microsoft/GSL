@@ -16,9 +16,6 @@ endif()
 # Necessary for 'write_basic_package_version_file'
 include(CMakePackageConfigHelpers)
 
-# Use GNUInstallDirs to provide the right locations on all platforms
-include(GNUInstallDirs)
-
 function(gsl_set_default_cxx_standard min_cxx_standard)
     set(GSL_CXX_STANDARD "${min_cxx_standard}" CACHE STRING "Use c++ standard")
 

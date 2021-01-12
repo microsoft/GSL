@@ -29,7 +29,7 @@ jobs:
           echo "Emulator starting"
 
       - name: Configure
-        run: cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_HOME/ndk-bundle/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=16 -DANDROID_ABI=x86_64 -DCMAKE_BUILD_TYPE=Debug ..
+        run: cmake -Werror=dev -DCMAKE_TOOLCHAIN_FILE=$ANDROID_HOME/ndk-bundle/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=16 -DANDROID_ABI=x86_64 -DCMAKE_BUILD_TYPE=Debug ..
 
       - name: Build
         run: cmake --build . --parallel
