@@ -117,7 +117,10 @@ private:
     handler chandler;
 };
 
-#if !defined GSL_PER_CPP_CONTRACT_VIOLATION && defined __cpp_inline_variables
+// By default, there is one violation handler per translation unit.
+// Defining GSL_GLOBAL_CONTRACT_VIOLATION_HANDLERS and compiling as
+// C++17 (or later) opts into using a global violation handler.
+#if defined GSL_GLOBAL_CONTRACT_VIOLATION_HANDLERS && __cplusplus >= 201703L
 #define GSL_CONTRACT_VIOLATION_GRANULARITY inline
 #else
 #define GSL_CONTRACT_VIOLATION_GRANULARITY static
