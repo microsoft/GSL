@@ -1,5 +1,5 @@
 # GSL: Guidelines Support Library
-[![Build Status](https://dev.azure.com/cppstat/GSL/_apis/build/status/microsoft.GSL?branchName=master)](https://dev.azure.com/cppstat/GSL/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/cppstat/GSL/_apis/build/status/microsoft.GSL?branchName=main)](https://dev.azure.com/cppstat/GSL/_build/latest?definitionId=1&branchName=main)
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
