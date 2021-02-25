@@ -54,10 +54,6 @@ class final_action
 public:
     explicit final_action(F f) : f_(std::move(f)) { }
     ~final_action() noexcept { f_(); }
-
-    final_action(const final_action&) = delete;
-    final_action& operator=(const final_action&) = delete;
-
 private:
     F f_;
 };
