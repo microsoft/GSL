@@ -51,25 +51,6 @@ TEST(utils_tests, finally_lambda)
     EXPECT_TRUE(i == 1);
 }
 
-TEST(utils_tests, finally_lambda_move)
-{
-    int i = 0;
-    {
-        auto _1 = finally([&]() { f(i); });
-        {
-            auto _2 = std::move(_1);
-            EXPECT_TRUE(i == 0);
-        }
-        EXPECT_TRUE(i == 1);
-        {
-            auto _2 = std::move(_1);
-            EXPECT_TRUE(i == 1);
-        }
-        EXPECT_TRUE(i == 1);
-    }
-    EXPECT_TRUE(i == 1);
-}
-
 TEST(utils_tests, finally_const_lvalue_lambda)
 {
     int i = 0;

@@ -52,14 +52,14 @@ template <class F>
 class final_action
 {
 public:
-    explicit final_action(F f) : f_(std::move(f)) { }
-    ~final_action() { f_(); }
+    explicit final_action(F f_) : f(f_) { }
+    ~final_action() { f(); }
 
-    final_action(const final_action&) = default;
-    final_action& operator=(const final_action&) = default;
+    final_action(const final_action& rhs) = delete;
+    final_action& operator=(const final_action&) = delete;
 
 private:
-    F f_;
+    F f;
 };
 
 // finally() - convenience function to generate a final_action
