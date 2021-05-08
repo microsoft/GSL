@@ -17,13 +17,10 @@
 #include <gtest/gtest.h>
 #include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
 
-namespace gsl
-{
-struct fail_fast;
-} // namespace gsl
-
 using namespace gsl;
 
+namespace
+{
 GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
 bool helper(not_null<int*> p) { return *p == 12; }
 
@@ -36,8 +33,11 @@ bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
+#ifdef CONFIRM_COMPILATION_ERRORS
 int* return_pointer() { return nullptr; }
 const int* return_pointer_const() { return nullptr; }
+#endif
+} // namespace
 
 TEST(strict_notnull_tests, TestStrictNotNull)
 {

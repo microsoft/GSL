@@ -29,8 +29,8 @@ using namespace gsl;
 
 namespace
 {
-static constexpr char deathstring[] = "Expected Death";
-} //namespace
+constexpr char deathstring[] = "Expected Death";
+} // namespace
 
 struct MyBase
 {
@@ -118,12 +118,15 @@ struct NonCopyableNonMovable
     NonCopyableNonMovable& operator=(NonCopyableNonMovable&&) = delete;
 };
 
+namespace
+{
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper(not_null<int*> p) { return *p == 12; }
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 bool helper_const(not_null<const int*> p) { return *p == 12; }
 
 int* return_pointer() { return nullptr; }
+} // namespace
 
 TEST(notnull_tests, TestNotNullConstructors)
 {
