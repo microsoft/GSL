@@ -10,7 +10,7 @@ include(ExternalProject)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 if(IOS)
-  add_compile_definitions(GTEST_HAS_DEATH_TEST=1)
+    add_compile_definitions(GTEST_HAS_DEATH_TEST=1 IOS_PROCESS_DELAY_WORKAROUND=1)
 endif()
 
 pkg_search_module(GTestMain gtest_main)
@@ -164,36 +164,27 @@ target_include_directories(gsl_tests_config SYSTEM INTERFACE
     googletest/googletest/include
 )
 
-set_property(TARGET  PROPERTY FOLDER "GSL_tests")
+add_executable(gsl_tests
+    algorithm_tests.cpp
+    assertion_tests.cpp
+    at_tests.cpp
+    byte_tests.cpp
+    notnull_tests.cpp
+    owner_tests.cpp
+    span_compatibility_tests.cpp
+    span_ext_tests.cpp
+    span_tests.cpp
+    strict_notnull_tests.cpp
+    string_span_tests.cpp
+    utils_tests.cpp
+)
 
-function(add_gsl_test name)
-    add_executable(${name} ${name}.cpp)
-    target_link_libraries(${name}
-        Microsoft.GSL::GSL
-        gsl_tests_config
-        ${GTestMain_LIBRARIES}
-    )
-    add_test(
-        ${name}
-        ${name}
-    )
-    # group all tests under GSL_tests
-    set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests")
-endfunction()
-
-add_gsl_test(span_tests)
-add_gsl_test(span_ext_tests)
-add_gsl_test(span_compatibility_tests)
-add_gsl_test(string_span_tests)
-add_gsl_test(at_tests)
-add_gsl_test(notnull_tests)
-add_gsl_test(assertion_tests)
-add_gsl_test(utils_tests)
-add_gsl_test(owner_tests)
-add_gsl_test(byte_tests)
-add_gsl_test(algorithm_tests)
-add_gsl_test(strict_notnull_tests)
-
+target_link_libraries(gsl_tests
+    Microsoft.GSL::GSL
+    gsl_tests_config
+    ${GTestMain_LIBRARIES}
+)
+add_test(gsl_tests gsl_tests)
 
 # No exception tests
 
@@ -268,19 +259,9 @@ else()
     )
 endif(MSVC)
 
-function(add_gsl_test_noexcept name)
-    add_executable(${name} ${name}.cpp)
-    target_link_libraries(${name}
-        Microsoft.GSL::GSL
-        gsl_tests_config_noexcept
-        ${GTestMain_LIBRARIES}
-    )
-    add_test(
-      ${name}
-      ${name}
-    )
-    # group all tests under GSL_tests_noexcept
-    set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests_noexcept")
-endfunction()
-
-add_gsl_test_noexcept(no_exception_ensure_tests)
+add_executable(gsl_noexcept_tests no_exception_ensure_tests.cpp)
+target_link_libraries(gsl_noexcept_tests
+    Microsoft.GSL::GSL
+    gsl_tests_config_noexcept
+)
+add_test(gsl_noexcept_tests gsl_noexcept_tests)
