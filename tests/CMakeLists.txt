@@ -259,18 +259,9 @@ else()
     )
 endif(MSVC)
 
-function(add_gsl_test_noexcept name)
-    add_executable(${name} ${name}.cpp)
-    target_link_libraries(${name}
-        Microsoft.GSL::GSL
-        gsl_tests_config_noexcept
-    )
-    add_test(
-      ${name}
-      ${name}
-    )
-    # group all tests under GSL_tests_noexcept
-    set_property(TARGET ${name} PROPERTY FOLDER "GSL_tests_noexcept")
-endfunction()
-
-add_gsl_test_noexcept(no_exception_ensure_tests)
+add_executable(gsl_noexcept_tests no_exception_ensure_tests.cpp)
+target_link_libraries(gsl_noexcept_tests
+    Microsoft.GSL::GSL
+    gsl_tests_config_noexcept
+)
+add_test(gsl_noexcept_tests gsl_noexcept_tests)
