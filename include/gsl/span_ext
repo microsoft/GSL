@@ -119,15 +119,6 @@ constexpr span<typename Ptr::element_type> make_span(Ptr& cont)
     return span<typename Ptr::element_type>(cont);
 }
 
-// Specialization of gsl::at for span
-template <class ElementType, std::size_t Extent>
-constexpr ElementType& at(span<ElementType, Extent> s, index i)
-{
-    // No bounds checking here because it is done in span::operator[] called below
-    Ensures(i >= 0);
-    return s[narrow_cast<std::size_t>(i)];
-}
-
 // [span.obs] Free observer functions
 template <class ElementType, std::size_t Extent>
 constexpr std::ptrdiff_t ssize(const span<ElementType, Extent>& s) noexcept
