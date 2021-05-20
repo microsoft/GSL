@@ -14,11 +14,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gtest/gtest.h>
+#include <array>         // for array
+#include <cstddef>       // for size_t
 #include <gsl/algorithm> // for copy
-#include <gsl/span>          // for span
-#include <array>   // for array
-#include <cstddef> // for size_t
+#include <gsl/span>      // for span
+#include <gtest/gtest.h>
 
 #include "deathTestCommon.h"
 

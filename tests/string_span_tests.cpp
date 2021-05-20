@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/assert>  // for Expects, fail_fast (ptr only)
+#include <gsl/assert>      // for Expects, fail_fast (ptr only)
 #include <gsl/pointers>    // for owner
 #include <gsl/span>        // for span, dynamic_extent
 #include <gsl/string_span> // for basic_string_span, operator==, ensure_z
@@ -74,8 +74,7 @@ T create()
 
 template <class T>
 void use(basic_string_span<T, gsl::dynamic_extent>)
-{
-}
+{}
 #endif
 
 czstring_span<> CreateTempName(string_span<> span)
@@ -83,7 +82,8 @@ czstring_span<> CreateTempName(string_span<> span)
     Expects(span.size() > 1);
 
     std::size_t last = 0;
-    if (span.size() > 4) {
+    if (span.size() > 4)
+    {
         span[0] = 't';
         span[1] = 'm';
         span[2] = 'p';
@@ -100,7 +100,8 @@ cwzstring_span<> CreateTempNameW(wstring_span<> span)
     Expects(span.size() > 1);
 
     std::size_t last = 0;
-    if (span.size() > 4) {
+    if (span.size() > 4)
+    {
         span[0] = L't';
         span[1] = L'm';
         span[2] = L'p';
@@ -117,7 +118,8 @@ cu16zstring_span<> CreateTempNameU16(u16string_span<> span)
     Expects(span.size() > 1);
 
     std::size_t last = 0;
-    if (span.size() > 4) {
+    if (span.size() > 4)
+    {
         span[0] = u't';
         span[1] = u'm';
         span[2] = u'p';
@@ -134,7 +136,8 @@ cu32zstring_span<> CreateTempNameU32(u32string_span<> span)
     Expects(span.size() > 1);
 
     std::size_t last = 0;
-    if (span.size() > 4) {
+    if (span.size() > 4)
+    {
         span[0] = U't';
         span[1] = U'm';
         span[2] = U'p';
@@ -980,7 +983,8 @@ TEST(string_span_tests, zstring)
         char buf[10];
 
         auto name = CreateTempName({buf, 10});
-        if (!name.empty()) {
+        if (!name.empty())
+        {
             czstring<> str = name.assume_z();
             EXPECT_TRUE(generic::strlen(str) == 3);
             EXPECT_TRUE(*(str + 3) == '\0');
@@ -1022,7 +1026,8 @@ TEST(string_span_tests, wzstring)
         wchar_t buf[10];
 
         const auto name = CreateTempNameW({buf, 10});
-        if (!name.empty()) {
+        if (!name.empty())
+        {
             cwzstring<> str = name.assume_z();
             EXPECT_TRUE(generic::strnlen(str, 10) == 3);
             EXPECT_TRUE(*(str + 3) == L'\0');
@@ -1064,7 +1069,8 @@ TEST(string_span_tests, u16zstring)
         char16_t buf[10];
 
         const auto name = CreateTempNameU16({buf, 10});
-        if (!name.empty()) {
+        if (!name.empty())
+        {
             cu16zstring<> str = name.assume_z();
             EXPECT_TRUE(generic::strnlen(str, 10) == 3);
             EXPECT_TRUE(*(str + 3) == L'\0');
@@ -1106,7 +1112,8 @@ TEST(string_span_tests, u32zstring)
         char32_t buf[10];
 
         const auto name = CreateTempNameU32({buf, 10});
-        if (!name.empty()) {
+        if (!name.empty())
+        {
             cu32zstring<> str = name.assume_z();
             EXPECT_TRUE(generic::strnlen(str, 10) == 3);
             EXPECT_TRUE(*(str + 3) == L'\0');

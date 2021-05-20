@@ -14,9 +14,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gtest/gtest.h>
-#include <gsl/assert> // for fail_fast (ptr only), Ensures, Expects
 #include "deathTestCommon.h"
+#include <gsl/assert> // for fail_fast (ptr only), Ensures, Expects
+#include <gtest/gtest.h>
 
 using namespace gsl;
 
@@ -47,7 +47,6 @@ TEST(assertion_tests, expects)
     EXPECT_TRUE(f(2) == 2);
     EXPECT_DEATH(f(10), GetExpectedDeathString(terminateHandler));
 }
-
 
 TEST(assertion_tests, ensures)
 {

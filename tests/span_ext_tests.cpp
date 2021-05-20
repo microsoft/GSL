@@ -16,12 +16,12 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/util> // for narrow_cast, at
 #include <gsl/span> // for span and span_ext
+#include <gsl/util> // for narrow_cast, at
 
-#include <array>       // for array
-#include <iostream>    // for cerr
-#include <vector>      // for vector
+#include <array>    // for array
+#include <iostream> // for cerr
+#include <vector>   // for vector
 
 using namespace std;
 using namespace gsl;
@@ -87,29 +87,29 @@ TEST(span_ext_test, make_span_from_pointer_pointer_construction)
 }
 
 TEST(span_ext_test, make_span_from_array_constructor)
- {
-     int arr[5] = {1, 2, 3, 4, 5};
-     int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
-     int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+    int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
+    int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
-     {
-         const auto s = make_span(arr);
-         EXPECT_TRUE(s.size() == 5);
-         EXPECT_TRUE(s.data() == std::addressof(arr[0]));
-     }
+    {
+        const auto s = make_span(arr);
+        EXPECT_TRUE(s.size() == 5);
+        EXPECT_TRUE(s.data() == std::addressof(arr[0]));
+    }
 
-     {
-         const auto s = make_span(std::addressof(arr2d[0]), 1);
-         EXPECT_TRUE(s.size() == 1);
-         EXPECT_TRUE(s.data() == std::addressof(arr2d[0]));
-     }
+    {
+        const auto s = make_span(std::addressof(arr2d[0]), 1);
+        EXPECT_TRUE(s.size() == 1);
+        EXPECT_TRUE(s.data() == std::addressof(arr2d[0]));
+    }
 
-     {
-         const auto s = make_span(std::addressof(arr3d[0]), 1);
-         EXPECT_TRUE(s.size() == 1);
-         EXPECT_TRUE(s.data() == std::addressof(arr3d[0]));
-     }
- }
+    {
+        const auto s = make_span(std::addressof(arr3d[0]), 1);
+        EXPECT_TRUE(s.size() == 1);
+        EXPECT_TRUE(s.data() == std::addressof(arr3d[0]));
+    }
+}
 
 TEST(span_ext_test, make_span_from_dynamic_array_constructor)
 {
@@ -195,7 +195,7 @@ TEST(span_test, interop_with_gsl_at)
 {
     int arr[5] = {1, 2, 3, 4, 5};
     span<int> s{arr};
-    EXPECT_TRUE(at(s, 0) ==  1);
+    EXPECT_TRUE(at(s, 0) == 1);
     EXPECT_TRUE(at(s, 1) == 2);
 }
 
@@ -359,4 +359,3 @@ TEST(span_ext_test, comparison_operators)
     }
 }
 #endif // GSL_KERNEL_MODE
-

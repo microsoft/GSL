@@ -17,7 +17,7 @@
 #include <gtest/gtest.h>
 
 #include <gsl/byte> // for byte
-#include <gsl/span>     // for span, span_iterator, operator==, operator!=
+#include <gsl/span> // for span, span_iterator, operator==, operator!=
 
 #include <array>       // for array
 #include <cstddef>     // for ptrdiff_t
