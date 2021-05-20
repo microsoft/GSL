@@ -25,6 +25,10 @@
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for exchange, forward
 
+#if defined(__cplusplus) && __cplusplus >= 202002L
+#include <span>
+#endif // __cplusplus >= 202002L
+
 #if defined(_MSC_VER) && !defined(__clang__)
 
 #pragma warning(push)
@@ -111,13 +115,13 @@ GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     Expects(i >= 0 && i < narrow_cast<index>(N));
     return arr[narrow_cast<std::size_t>(i)];
 }
-
+    
 template <class Cont>
 // clang-format off
 GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
 // clang-format on
-    constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
+constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
 {
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     using size_type = decltype(cont.size());
@@ -134,6 +138,14 @@ constexpr T at(const std::initializer_list<T> cont, const index i)
     return *(cont.begin() + i);
 }
 
+#if defined(__cplusplus) && __cplusplus >= 202002L
+template <class T, size_t extent = std::dynamic_extent>
+constexpr auto at(std::span<T, extent> sp, const index i)
+{
+    Expects(i >= 0 && i < narrow_cast<i>(sp.size()));
+    return sp[i];
+}
+#endif // __cplusplus >= 202002L
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)

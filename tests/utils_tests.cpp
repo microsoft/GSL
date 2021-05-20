@@ -123,6 +123,7 @@ TEST(utils_tests, narrow_cast)
     EXPECT_TRUE(uc == 44);
 }
 
+#ifndef GSL_KERNEL_MODE
 TEST(utils_tests, narrow)
 {
     int n = 120;
@@ -145,3 +146,4 @@ TEST(utils_tests, narrow)
     n = -42;
     EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
 }
+#endif // GSL_KERNEL_MODE

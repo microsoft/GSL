@@ -25,12 +25,8 @@
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
 
+#include "deathTestCommon.h"
 using namespace gsl;
-
-namespace
-{
-constexpr char deathstring[] = "Expected Death";
-} // namespace
 
 struct MyBase
 {
@@ -145,10 +141,12 @@ TEST(notnull_tests, TestNotNullConstructors)
 #endif
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. TestNotNullConstructors";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
     {
         // from shared pointer
         int i = 12;
@@ -160,7 +158,7 @@ TEST(notnull_tests, TestNotNullConstructors)
             std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
 
         int* pi = nullptr;
-        EXPECT_DEATH((not_null<decltype(pi)>(pi)), deathstring);
+        EXPECT_DEATH((not_null<decltype(pi)>(pi)), expected);
     }
 
     {
@@ -217,8 +215,8 @@ TEST(notnull_tests, TestNotNullConstructors)
     {
         // from returned pointer
 
-        EXPECT_DEATH(helper(return_pointer()), deathstring);
-        EXPECT_DEATH(helper_const(return_pointer()), deathstring);
+        EXPECT_DEATH(helper(return_pointer()), expected);
+        EXPECT_DEATH(helper_const(return_pointer()), expected);
     }
 }
 
@@ -278,17 +276,18 @@ TEST(notnull_tests, TestNotNullCasting)
 
 TEST(notnull_tests, TestNotNullAssignment)
 {
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. TestNotNullAssignmentd";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
     int i = 12;
     not_null<int*> p(&i);
     EXPECT_TRUE(helper(p));
 
     int* q = nullptr;
-    EXPECT_DEATH(p = not_null<int*>(q), deathstring);
+    EXPECT_DEATH(p = not_null<int*>(q), expected);
 }
 
 TEST(notnull_tests, TestNotNullRawPointerComparison)
@@ -437,17 +436,18 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         EXPECT_TRUE(*x == 42);
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. TestNotNullConstructorTypeDeduction";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
     {
         auto workaround_macro = []() {
             int* p1 = nullptr;
             const not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring);
+        EXPECT_DEATH(workaround_macro(), expected);
     }
 
     {
@@ -455,14 +455,14 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
             const int* p1 = nullptr;
             const not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring);
+        EXPECT_DEATH(workaround_macro(), expected);
     }
 
     {
         int* p = nullptr;
 
-        EXPECT_DEATH(helper(not_null{p}), deathstring);
-        EXPECT_DEATH(helper_const(not_null{p}), deathstring);
+        EXPECT_DEATH(helper(not_null{p}), expected);
+        EXPECT_DEATH(helper_const(not_null{p}), expected);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
@@ -498,10 +498,11 @@ TEST(notnull_tests, TestMakeNotNull)
         EXPECT_TRUE(*x == 42);
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. TestMakeNotNull";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
     {
         const auto workaround_macro = []() {
@@ -509,7 +510,7 @@ TEST(notnull_tests, TestMakeNotNull)
             const auto x = make_not_null(p1);
             EXPECT_TRUE(*x == 42);
         };
-        EXPECT_DEATH(workaround_macro(), deathstring);
+        EXPECT_DEATH(workaround_macro(), expected);
     }
 
     {
@@ -518,21 +519,21 @@ TEST(notnull_tests, TestMakeNotNull)
             const auto x = make_not_null(p1);
             EXPECT_TRUE(*x == 42);
         };
-        EXPECT_DEATH(workaround_macro(), deathstring);
+        EXPECT_DEATH(workaround_macro(), expected);
     }
 
     {
         int* p = nullptr;
 
-        EXPECT_DEATH(helper(make_not_null(p)), deathstring);
-        EXPECT_DEATH(helper_const(make_not_null(p)), deathstring);
+        EXPECT_DEATH(helper(make_not_null(p)), expected);
+        EXPECT_DEATH(helper_const(make_not_null(p)), expected);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     {
-        EXPECT_DEATH(make_not_null(nullptr), deathstring);
-        EXPECT_DEATH(helper(make_not_null(nullptr)), deathstring);
-        EXPECT_DEATH(helper_const(make_not_null(nullptr)), deathstring);
+        EXPECT_DEATH(make_not_null(nullptr), expected);
+        EXPECT_DEATH(helper(make_not_null(nullptr)), expected);
+        EXPECT_DEATH(helper_const(make_not_null(nullptr)), expected);
     }
 #endif
 }
