@@ -22,6 +22,7 @@
 // Currently terminate is a no-op in this mode, so we add termination behavior back
 //
 #if defined(_MSC_VER) && (defined(_KERNEL_MODE) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS))
+#define GSL_KERNEL_MODE
 
 #define GSL_MSVC_USE_STL_NOEXCEPTION_WORKAROUND
 #include <intrin.h>

@@ -14,16 +14,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gtest/gtest.h>
+#include <array>         // for array
+#include <cstddef>       // for size_t
 #include <gsl/algorithm> // for copy
-#include <gsl/span>          // for span
-#include <array>   // for array
-#include <cstddef> // for size_t
+#include <gsl/span>      // for span
+#include <gtest/gtest.h>
 
-namespace
-{
-    static constexpr char deathstring[] = "Expected Death";
-}
+#include "deathTestCommon.h"
 
 namespace gsl
 {
@@ -204,10 +201,11 @@ TEST(algorithm_tests, incompatible_type)
 
 TEST(algorithm_tests, small_destination_span)
 {
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. small_destination_span";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
     std::array<int, 12> src{1, 2, 3, 4};
     std::array<int, 4> dst{};
@@ -217,9 +215,9 @@ TEST(algorithm_tests, small_destination_span)
     const span<int> dst_span_dyn(dst);
     const span<int, 4> dst_span_static(dst);
 
-    EXPECT_DEATH(copy(src_span_dyn, dst_span_dyn), deathstring);
-    EXPECT_DEATH(copy(src_span_dyn, dst_span_static), deathstring);
-    EXPECT_DEATH(copy(src_span_static, dst_span_dyn), deathstring);
+    EXPECT_DEATH(copy(src_span_dyn, dst_span_dyn), expected);
+    EXPECT_DEATH(copy(src_span_dyn, dst_span_static), expected);
+    EXPECT_DEATH(copy(src_span_static, dst_span_dyn), expected);
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     copy(src_span_static, dst_span_static);

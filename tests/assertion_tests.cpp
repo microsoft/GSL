@@ -14,14 +14,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gtest/gtest.h>
+#include "deathTestCommon.h"
 #include <gsl/assert> // for fail_fast (ptr only), Ensures, Expects
+#include <gtest/gtest.h>
 
 using namespace gsl;
 
 namespace
 {
-static constexpr char deathstring[] = "Expected Death";
 
 int f(int i)
 {
@@ -39,23 +39,22 @@ int g(int i)
 
 TEST(assertion_tests, expects)
 {
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. expects";
         std::abort();
     });
 
     EXPECT_TRUE(f(2) == 2);
-    EXPECT_DEATH(f(10), deathstring);
+    EXPECT_DEATH(f(10), GetExpectedDeathString(terminateHandler));
 }
-
 
 TEST(assertion_tests, ensures)
 {
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. ensures";
         std::abort();
     });
 
     EXPECT_TRUE(g(2) == 3);
-    EXPECT_DEATH(g(9), deathstring);
+    EXPECT_DEATH(g(9), GetExpectedDeathString(terminateHandler));
 }

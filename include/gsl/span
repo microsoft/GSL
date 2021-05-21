@@ -21,10 +21,11 @@
 #include <gsl/byte>   // for byte
 #include <gsl/util>   // for narrow_cast
 
-#include <array>       // for array
-#include <cstddef>     // for ptrdiff_t, size_t, nullptr_t
-#include <iterator>    // for reverse_iterator, distance, random_access_...
-#include <type_traits> // for enable_if_t, declval, is_convertible, inte...
+#include <array>        // for array
+#include <cstddef>      // for ptrdiff_t, size_t, nullptr_t
+#include <gsl/span_ext> // for span specialization of gsl::at and other span-related extensions
+#include <iterator>     // for reverse_iterator, distance, random_access_...
+#include <type_traits>  // for enable_if_t, declval, is_convertible, inte...
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
@@ -59,12 +60,6 @@
 
 namespace gsl
 {
-
-// [views.constants], constants
-constexpr const std::size_t dynamic_extent = narrow_cast<std::size_t>(-1);
-
-template <class ElementType, std::size_t Extent = dynamic_extent>
-class span;
 
 // implementation details
 namespace details

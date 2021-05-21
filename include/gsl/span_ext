@@ -27,15 +27,28 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gsl/span> // for span
-#include <gsl/util> // for narrow_cast, narrow
+#include <gsl/assert> // GSL_KERNEL_MODE
+#include <gsl/util>   // for narrow_cast, narrow
 
-#include <algorithm> // for lexicographical_compare
-#include <cstddef>   // for ptrdiff_t, size_t
+#include <cstddef> // for ptrdiff_t, size_t
 #include <utility>
+
+#ifndef GSL_KERNEL_MODE
+#include <algorithm> // for lexicographical_compare
+#endif               // GSL_KERNEL_MODE
 
 namespace gsl
 {
+
+// [span.views.constants], constants
+constexpr const std::size_t dynamic_extent = narrow_cast<std::size_t>(-1);
+
+template <class ElementType, std::size_t Extent = dynamic_extent>
+class span;
+
+// std::equal and std::lexicographical_compare are not /kernel compatible
+// so all comparison operators must be removed for kernel mode.
+#ifndef GSL_KERNEL_MODE
 
 // [span.comparison], span comparison operators
 template <class ElementType, std::size_t FirstExtent, std::size_t SecondExtent>
@@ -73,6 +86,8 @@ constexpr bool operator>=(span<ElementType, Extent> l, span<ElementType, Extent>
 {
     return !(l < r);
 }
+
+#endif // GSL_KERNEL_MODE
 
 //
 // make_span() - Utility functions for creating spans

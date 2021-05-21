@@ -30,7 +30,7 @@ template <class T, class U>
 // clang-format off
 GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
 GSL_SUPPRESS(f.6) // NO-FORMAT: attribute // TODO: MSVC /analyze does not recognise noexcept(false)
-// clang-format on
+    // clang-format on
     constexpr T narrow(U u) noexcept(false)
 {
     constexpr const bool is_different_signedness =

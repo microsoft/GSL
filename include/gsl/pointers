@@ -34,12 +34,19 @@ namespace gsl
 
 namespace details
 {
-template<typename T, typename = void>
-struct is_comparable_to_nullptr : std::false_type {};
+    template <typename T, typename = void>
+    struct is_comparable_to_nullptr : std::false_type
+    {
+    };
 
-template <typename T>
-struct is_comparable_to_nullptr<T, std::enable_if_t<std::is_convertible<decltype(std::declval<T>() != nullptr), bool>::value>> : std::true_type {};
-}   // namespace details
+    template <typename T>
+    struct is_comparable_to_nullptr<
+        T,
+        std::enable_if_t<std::is_convertible<decltype(std::declval<T>() != nullptr), bool>::value>>
+        : std::true_type
+    {
+    };
+} // namespace details
 
 //
 // GSL.owner: ownership pointers

@@ -22,31 +22,33 @@
 #include <cstddef>          // for size_t
 #include <initializer_list> // for initializer_list
 #include <vector>           // for vector
+#if defined(__cplusplus) && __cplusplus >= 202002L
+#include <span>
+#endif // __cplusplus >= 202002L
 
-namespace
-{
-    static constexpr char deathstring[] = "Expected Death";
-}
+#include "deathTestCommon.h"
 
 TEST(at_tests, static_array)
 {
     int a[4] = {1, 2, 3, 4};
     const int(&c_a)[4] = a;
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         EXPECT_TRUE(&gsl::at(a, i) == &a[i]);
         EXPECT_TRUE(&gsl::at(c_a, i) == &a[i]);
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. static_array";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
-    EXPECT_DEATH(gsl::at(a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(a, 4), deathstring);
-    EXPECT_DEATH(gsl::at(c_a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(c_a, 4), deathstring);
+    EXPECT_DEATH(gsl::at(a, -1), expected);
+    EXPECT_DEATH(gsl::at(a, 4), expected);
+    EXPECT_DEATH(gsl::at(c_a, -1), expected);
+    EXPECT_DEATH(gsl::at(c_a, 4), expected);
 }
 
 TEST(at_tests, std_array)
@@ -54,20 +56,22 @@ TEST(at_tests, std_array)
     std::array<int, 4> a = {1, 2, 3, 4};
     const std::array<int, 4>& c_a = a;
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         EXPECT_TRUE(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
         EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. std_array";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
-    EXPECT_DEATH(gsl::at(a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(a, 4), deathstring);
-    EXPECT_DEATH(gsl::at(c_a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(c_a, 4), deathstring);
+    EXPECT_DEATH(gsl::at(a, -1), expected);
+    EXPECT_DEATH(gsl::at(a, 4), expected);
+    EXPECT_DEATH(gsl::at(c_a, -1), expected);
+    EXPECT_DEATH(gsl::at(c_a, 4), expected);
 }
 
 TEST(at_tests, std_vector)
@@ -75,41 +79,67 @@ TEST(at_tests, std_vector)
     std::vector<int> a = {1, 2, 3, 4};
     const std::vector<int>& c_a = a;
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         EXPECT_TRUE(&gsl::at(a, i) == &a[static_cast<std::size_t>(i)]);
         EXPECT_TRUE(&gsl::at(c_a, i) == &a[static_cast<std::size_t>(i)]);
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. std_vector";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
-    EXPECT_DEATH(gsl::at(a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(a, 4), deathstring);
-    EXPECT_DEATH(gsl::at(c_a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(c_a, 4), deathstring);
+    EXPECT_DEATH(gsl::at(a, -1), expected);
+    EXPECT_DEATH(gsl::at(a, 4), expected);
+    EXPECT_DEATH(gsl::at(c_a, -1), expected);
+    EXPECT_DEATH(gsl::at(c_a, 4), expected);
 }
 
 TEST(at_tests, InitializerList)
 {
     const std::initializer_list<int> a = {1, 2, 3, 4};
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         EXPECT_TRUE(gsl::at(a, i) == i + 1);
         EXPECT_TRUE(gsl::at({1, 2, 3, 4}, i) == i + 1);
     }
 
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. InitializerList";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
-    EXPECT_DEATH(gsl::at(a, -1), deathstring);
-    EXPECT_DEATH(gsl::at(a, 4), deathstring);
-    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, -1), deathstring);
-    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), deathstring);
+    EXPECT_DEATH(gsl::at(a, -1), expected);
+    EXPECT_DEATH(gsl::at(a, 4), expected);
+    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, -1), expected);
+    EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), expected);
 }
+
+#if defined(__cplusplus) && __cplusplus >= 202002L
+TEST(at_tests, std_span)
+{
+    std::vector<int> vec{1, 2, 3, 4, 5};
+    std::span sp{vec};
+
+    std::vector<int> cvec{1, 2, 3, 4, 5};
+    std::span csp{cvec};
+
+    for (size_t i = 0, i < vec.size(); ++i)
+    {
+        EXPECT_TRUE(&gsl::at(sp, i) == &vec[i]);
+        EXPECT_TRUE(&gsl::at(csp, i) == &cvec[i]);
+    }
+
+    EXPECT_DEATH(gsl::at(sp, -1), expected);
+    EXPECT_DEATH(gsl::at(sp, sp.size()), expected);
+    EXPECT_DEATH(gsl::at(csp, -1), expected);
+    EXPECT_DEATH(gsl::at(csp, sp.size()), expected);
+}
+#endif // __cplusplus >= 202002L
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
 static constexpr bool test_constexpr()
@@ -119,7 +149,8 @@ static constexpr bool test_constexpr()
     std::array<int, 4> a2 = {1, 2, 3, 4};
     const std::array<int, 4>& c_a2 = a2;
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         if (&gsl::at(a1, i) != &a1[i]) return false;
         if (&gsl::at(c_a1, i) != &a1[i]) return false;
         // requires C++17:
