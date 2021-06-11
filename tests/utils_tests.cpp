@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>   // for move
+#include <complex>
 #include <cstddef>     // for std::ptrdiff_t
 #include <functional>  // for reference_wrapper, _Bind_helper<>::type
 #include <gsl/narrow>  // for narrow, narrowing_error
@@ -144,5 +145,9 @@ TEST(utils_tests, narrow)
 
     n = -42;
     EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
+
+    EXPECT_TRUE(
+        narrow<std::complex<float>>(std::complex<double>(4, 2)) == std::complex<float>(4, 2));
+    EXPECT_THROW(narrow<std::complex<float>>(std::complex<double>(4.2)), narrowing_error);
 }
 #endif // GSL_KERNEL_MODE
