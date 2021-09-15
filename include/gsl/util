@@ -25,9 +25,12 @@
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for exchange, forward
 
-#if defined(__cplusplus) && __cplusplus >= 202002L
+#if defined(__has_include) && __has_include(<version>)
+#include <version>
+#if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 #include <span>
-#endif // __cplusplus >= 202002L
+#endif // __cpp_lib_span >= 202002L
+#endif //__has_include(<version>)
 
 #if defined(_MSC_VER) && !defined(__clang__)
 
@@ -138,14 +141,14 @@ GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     return *(cont.begin() + i);
 }
 
-#if defined(__cplusplus) && __cplusplus >= 202002L
+#if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 template <class T, size_t extent = std::dynamic_extent>
 constexpr auto at(std::span<T, extent> sp, const index i)
 {
     Expects(i >= 0 && i < narrow_cast<i>(sp.size()));
     return sp[i];
 }
-#endif // __cplusplus >= 202002L
+#endif // __cpp_lib_span >= 202002L
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)
