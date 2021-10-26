@@ -985,7 +985,7 @@ TEST(string_span_tests, zstring)
         auto name = CreateTempName({buf, 10});
         if (!name.empty())
         {
-            czstring<> str = name.assume_z();
+            czstring str = name.assume_z();
             EXPECT_TRUE(generic::strlen(str) == 3);
             EXPECT_TRUE(*(str + 3) == '\0');
         }
@@ -1028,7 +1028,7 @@ TEST(string_span_tests, wzstring)
         const auto name = CreateTempNameW({buf, 10});
         if (!name.empty())
         {
-            cwzstring<> str = name.assume_z();
+            cwzstring str = name.assume_z();
             EXPECT_TRUE(generic::strnlen(str, 10) == 3);
             EXPECT_TRUE(*(str + 3) == L'\0');
         }
@@ -1071,7 +1071,7 @@ TEST(string_span_tests, u16zstring)
         const auto name = CreateTempNameU16({buf, 10});
         if (!name.empty())
         {
-            cu16zstring<> str = name.assume_z();
+            cu16zstring str = name.assume_z();
             EXPECT_TRUE(generic::strnlen(str, 10) == 3);
             EXPECT_TRUE(*(str + 3) == L'\0');
         }
@@ -1114,7 +1114,7 @@ TEST(string_span_tests, u32zstring)
         const auto name = CreateTempNameU32({buf, 10});
         if (!name.empty())
         {
-            cu32zstring<> str = name.assume_z();
+            cu32zstring str = name.assume_z();
             EXPECT_TRUE(generic::strnlen(str, 10) == 3);
             EXPECT_TRUE(*(str + 3) == L'\0');
         }
