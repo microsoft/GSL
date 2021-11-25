@@ -124,7 +124,7 @@ template <class Cont>
 GSL_SUPPRESS(bounds.4) // NO-FORMAT: attribute
 GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     // clang-format on
-    constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
+    constexpr decltype(auto) at(Cont& cont, const index i)
 {
     Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     using size_type = decltype(cont.size());
@@ -143,10 +143,10 @@ GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 
 #if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 template <class T, size_t extent = std::dynamic_extent>
-constexpr auto at(std::span<T, extent> sp, const index i)
+constexpr decltype(auto) at(std::span<T, extent> sp, const index i)
 {
-    Expects(i >= 0 && i < narrow_cast<i>(sp.size()));
-    return sp[i];
+    Expects(i >= 0 && i < narrow_cast<index>(sp.size()));
+    return sp[gsl::narrow_cast<size_t>(i)];
 }
 #endif // __cpp_lib_span >= 202002L
 } // namespace gsl

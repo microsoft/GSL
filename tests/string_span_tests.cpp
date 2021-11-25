@@ -30,7 +30,6 @@
 
 #include "deathTestCommon.h"
 
-using namespace std;
 using namespace gsl;
 
 // Generic string functions
