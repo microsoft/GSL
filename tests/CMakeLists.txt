@@ -62,6 +62,7 @@ endif()
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
+    message(INFO, "br:MSVC")
     target_compile_options(gsl_tests_config INTERFACE
         ${GSL_CPLUSPLUS_OPT}
         /EHsc
@@ -102,13 +103,13 @@ if(MSVC) # MSVC or simulating MSVC
         >
     )
 else()
+    message(INFO, "br:MSVC:else")
     target_compile_options(gsl_tests_config INTERFACE
         -fno-strict-aliasing
         -Wall
         -Wcast-align
         -Wconversion
         -Wctor-dtor-privacy
-        -Werror
         -Wextra
         -Wpedantic
         -Wshadow
