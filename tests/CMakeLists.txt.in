@@ -11,4 +11,5 @@ ExternalProject_Add(googletest
   BUILD_COMMAND     ""
   INSTALL_COMMAND   ""
   TEST_COMMAND      ""
+  CMAKE_ARGS        -Wno-dev
 )
