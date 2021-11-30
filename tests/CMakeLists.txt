@@ -102,7 +102,7 @@ if(MSVC) # MSVC or simulating MSVC
         >
     )
 else()
-    target_compile_options(gsl_tests_config PRIVATE
+    target_compile_options(gsl_tests_config INTERFACE
         -fno-strict-aliasing
         -Wall
         -Wcast-align
