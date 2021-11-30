@@ -15,7 +15,6 @@ endif()
 
 pkg_search_module(GTestMain gtest_main)
 if (NOT GTestMain_FOUND)
-    message(INFO, "Manually building googletest")
     # No pre-installed GTest is available, try to download it using Git.
     find_package(Git REQUIRED QUIET)
 
@@ -46,7 +45,6 @@ if (NOT GTestMain_FOUND)
         ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL
     )
-    message(INFO, "Done: Manually building googletest")
 endif()
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -132,13 +130,14 @@ else()
             -Wno-unused-member-function
             -Wno-unused-variable
           >
+          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:-Wzero-as-null-pointer-constant-> # Very noisy, minor, and just so
+                                                                                # happens to trigger on googletest
+                                                                                # for Ubuntu 20.04
+          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:-Wsign-conversion->
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
-            # $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:-Wzero-as-null-pointer-constant-> # Very noisy, minor, and just so
-            #                                                                       # happens to trigger on googletest
-            #                                                                       # for Ubuntu 20.04
           >
         >
         $<$<CXX_COMPILER_ID:AppleClang>:
