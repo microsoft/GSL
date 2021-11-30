@@ -15,7 +15,6 @@ endif()
 
 pkg_search_module(GTestMain gtest_main)
 if (NOT GTestMain_FOUND)
-    message(INFO, "Manually building googletest")
     # No pre-installed GTest is available, try to download it using Git.
     find_package(Git REQUIRED QUIET)
 
@@ -46,7 +45,6 @@ if (NOT GTestMain_FOUND)
         ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL
     )
-    message(INFO, "Done: Manually building googletest")
 endif()
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -60,11 +58,30 @@ if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
     set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
 endif()
 
+add_executable(gsl_tests
+    algorithm_tests.cpp
+    assertion_tests.cpp
+    at_tests.cpp
+    byte_tests.cpp
+    notnull_tests.cpp
+    owner_tests.cpp
+    span_compatibility_tests.cpp
+    span_ext_tests.cpp
+    span_tests.cpp
+    strict_notnull_tests.cpp
+    string_span_tests.cpp
+    utils_tests.cpp
+)
+
+# for tests to find the gtest header
+target_include_directories(gsl_tests SYSTEM INTERFACE
+    googletest/googletest/include
+)
+
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
-add_library(gsl_tests_config INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
-    target_compile_options(gsl_tests_config INTERFACE
+    target_compile_options(gsl_tests PRIVATE
         ${GSL_CPLUSPLUS_OPT}
         /EHsc
         /W4
@@ -104,7 +121,7 @@ if(MSVC) # MSVC or simulating MSVC
         >
     )
 else()
-    target_compile_options(gsl_tests_config INTERFACE
+    target_compile_options(gsl_tests PRIVATE
         -fno-strict-aliasing
         -Wall
         -Wcast-align
@@ -164,29 +181,8 @@ else()
     )
 endif(MSVC)
 
-# for tests to find the gtest header
-target_include_directories(gsl_tests_config SYSTEM INTERFACE
-    googletest/googletest/include
-)
-
-add_executable(gsl_tests
-    algorithm_tests.cpp
-    assertion_tests.cpp
-    at_tests.cpp
-    byte_tests.cpp
-    notnull_tests.cpp
-    owner_tests.cpp
-    span_compatibility_tests.cpp
-    span_ext_tests.cpp
-    span_tests.cpp
-    strict_notnull_tests.cpp
-    string_span_tests.cpp
-    utils_tests.cpp
-)
-
 target_link_libraries(gsl_tests
     Microsoft.GSL::GSL
-    gsl_tests_config
     ${GTestMain_LIBRARIES}
 )
 add_test(gsl_tests gsl_tests)
