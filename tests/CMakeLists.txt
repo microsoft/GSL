@@ -62,7 +62,6 @@ endif()
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
-    message(INFO, "br:MSVC")
     target_compile_options(gsl_tests_config INTERFACE
         ${GSL_CPLUSPLUS_OPT}
         /EHsc
@@ -103,13 +102,13 @@ if(MSVC) # MSVC or simulating MSVC
         >
     )
 else()
-    message(INFO, "br:MSVC:else")
-    target_compile_options(gsl_tests_config INTERFACE
+    target_compile_options(gsl_tests_config PRIVATE
         -fno-strict-aliasing
         -Wall
         -Wcast-align
         -Wconversion
         -Wctor-dtor-privacy
+        -Werror
         -Wextra
         -Wpedantic
         -Wshadow
@@ -135,6 +134,9 @@ else()
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
+            # $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:-Wzero-as-null-pointer-constant-> # Very noisy, minor, and just so
+            #                                                                       # happens to trigger on googletest
+            #                                                                       # for Ubuntu 20.04
           >
         >
         $<$<CXX_COMPILER_ID:AppleClang>:
