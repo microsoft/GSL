@@ -130,10 +130,10 @@ else()
             -Wno-unused-member-function
             -Wno-unused-variable
           >
-          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:-Wzero-as-null-pointer-constant-> # Very noisy, minor, and just so
-                                                                                # happens to trigger on googletest
-                                                                                # for Ubuntu 20.04
-          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:-Wsign-conversion->
+          $<$<AND:$<BOOL:${CMAKE_CXX_STANDARD}>,$<EQUAL:${CMAKE_CXX_STANDARD},20>>:
+            -Wzero-as-null-pointer-constant- # Very noisy, minor, and just so
+            -Wsign-conversion-                                                                   # happens to trigger on googletest
+          >
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
