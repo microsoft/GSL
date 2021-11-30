@@ -15,6 +15,7 @@ endif()
 
 pkg_search_module(GTestMain gtest_main)
 if (NOT GTestMain_FOUND)
+    message(INFO, "Manually building googletest")
     # No pre-installed GTest is available, try to download it using Git.
     find_package(Git REQUIRED QUIET)
 
@@ -45,6 +46,7 @@ if (NOT GTestMain_FOUND)
         ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL
     )
+    message(INFO, "Done: Manually building googletest")
 endif()
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
