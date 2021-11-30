@@ -245,6 +245,12 @@ else()
           -Wno-missing-prototypes
           -Wno-unknown-attributes
           -Wno-weak-vtables
+          $<$<BOOL:${CMAKE_CXX_STANDARD}>:
+            $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
+                -Wzero-as-null-pointer-constant- # Very noisy, minor, and just so
+                -Wsign-conversion-                                                                   # happens to trigger on googletest
+            >
+          >
         >
         $<$<CXX_COMPILER_ID:GNU>:
           -Wdouble-promotion # float implicit to double
