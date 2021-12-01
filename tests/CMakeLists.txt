@@ -132,8 +132,8 @@ else()
           >
           $<$<BOOL:${CMAKE_CXX_STANDARD}>:
             $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
-            -Wzero-as-null-pointer-constant- # Very noisy, minor, and just so
-            -Wsign-conversion-                                                                   # happens to trigger on googletest
+                -Wno-zero-as-null-pointer-constant # Very noisy, minor, and just so
+                -Wno-sign-conversion                                                                   # happens to trigger on googletest
           >
         >
         >
@@ -237,8 +237,11 @@ else()
         -Wextra
         -Wpedantic
         -Wshadow
-        $<$<NOT:$<AND:$<BOOL:${CMAKE_CXX_STANDARD}>, $<EQUAL:${CMAKE_CXX_STANDARD},20>>>:
-           -Wsign-conversion                                                                   # happens to trigger on googletest
+        -Wsign-conversion
+        $<$<BOOL:${CMAKE_CXX_STANDARD}>:                                                           # happens to trigger on googletest
+          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
+              -Wno-sign-conversion                                                                   # happens to trigger on googletest
+          >
         >
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
