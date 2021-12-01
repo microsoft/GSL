@@ -130,6 +130,12 @@ else()
             -Wno-unused-member-function
             -Wno-unused-variable
           >
+          $<$<BOOL:${CMAKE_CXX_STANDARD}>:
+            $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
+                -Wno-zero-as-null-pointer-constant # Very noisy, minor, and just so
+                -Wno-sign-conversion                                                                   # happens to trigger on googletest
+          >
+        >
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
@@ -232,6 +238,11 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        $<$<BOOL:${CMAKE_CXX_STANDARD}>:                                                           # happens to trigger on googletest
+          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
+              -Wno-sign-conversion                                                                   # happens to trigger on googletest
+          >
+        >
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
