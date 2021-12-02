@@ -54,7 +54,7 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     find_package(Microsoft.GSL REQUIRED)
 endif()
 
-if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
+if (MSVC AND (GSL_CXX_STANDARD GREATER_EQUAL 17))
     set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
 endif()
 
@@ -130,16 +130,15 @@ else()
             -Wno-unused-member-function
             -Wno-unused-variable
           >
-          $<$<BOOL:${CMAKE_CXX_STANDARD}>:
-            $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
-                -Wno-zero-as-null-pointer-constant # Very noisy, minor, and just so
-                -Wno-sign-conversion                                                                   # happens to trigger on googletest
-          >
-        >
         >
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
+          >
+          $<$<AND:$<EQUAL:${GSL_CXX_STANDARD},20>,$<CXX_COMPILER_VERSION:11.0.0>>:
+              -Wno-zero-as-null-pointer-constant  # failing Clang Ubuntu 20.04 tests, seems to be a bug with clang 11.0.0
+                                                  # (operator< is being re-written by the compiler as operator<=> and
+                                                  # raising the warning)
           >
         >
         $<$<CXX_COMPILER_ID:AppleClang>:
@@ -238,11 +237,6 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
-        $<$<BOOL:${CMAKE_CXX_STANDARD}>:                                                           # happens to trigger on googletest
-          $<$<EQUAL:${CMAKE_CXX_STANDARD},20>:
-              -Wno-sign-conversion                                                                   # happens to trigger on googletest
-          >
-        >
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat

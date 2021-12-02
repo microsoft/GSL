@@ -11,24 +11,23 @@ jobs:
     matrix:
       14_debug:
         GSL_CXX_STANDARD: '14'
-        CMAKE_CXX_STANDARD: '14'
         BUILD_TYPE: 'Debug'
       14_release:
         GSL_CXX_STANDARD: '14'
-        CMAKE_CXX_STANDARD: '14'
         BUILD_TYPE: 'Release'
       17_debug:
         GSL_CXX_STANDARD: '17'
-        CMAKE_CXX_STANDARD: '17'
         BUILD_TYPE: 'Debug'
       17_release:
         GSL_CXX_STANDARD: '17'
-        CMAKE_CXX_STANDARD: '17'
         BUILD_TYPE: 'Release'
+      # Note: Currently, only some C++20 features are supported by GSL
       20_debug:
-        GSL_CXX_STANDARD: '17'
-        CMAKE_CXX_STANDARD: '20'
+        GSL_CXX_STANDARD: '20'
         BUILD_TYPE: 'Debug'
+      20_release:
+        GSL_CXX_STANDARD: '20'
+        BUILD_TYPE: 'Release'
   continueOnError: false
   steps:
   - template: ./steps.yml
