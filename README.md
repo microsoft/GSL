@@ -86,16 +86,14 @@ This is based on [CppCoreGuidelines semi-specification](https://github.com/isocp
 
 # Quick Start
 ## Supported Compilers
-The GSL officially supports the current and previous major release of MSVC, GCC, Clang, and XCode's Apple-Clang.
-See our latest test results for the most up-to-date list of supported configurations.
+The GSL officially supports the following versions of MSVC, GCC, Clang, and XCode's Apple-Clang.
 
 Compiler |Toolset Versions Currently Tested
 :------- |--:
- XCode |11.4 & 10.3
- GCC |9 & 8
- Clang |11 &  10
- Visual Studio with MSVC | VS2017 (15.9) & VS2019 (16.4) 
- Visual Studio with LLVM | VS2017 (Clang 9) & VS2019 (Clang 10)
+ XCode | 12.4 & 11.3
+ GCC | 9.3.0 & 7.5.0
+ Clang | 11.0.0 & 9.0.0
+ Visual Studio with MSVC | VS2017 (15.9.21) & VS2019 (16.11.2)
 
 ---
 If you successfully port GSL to another platform, we would love to hear from you!
