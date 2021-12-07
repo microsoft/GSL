@@ -119,7 +119,7 @@ TEST(at_tests, InitializerList)
     EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), expected);
 }
 
-#if defined(__cplusplus) && __cplusplus >= 202002L
+#if defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 TEST(at_tests, std_span)
 {
     std::vector<int> vec{1, 2, 3, 4, 5};
@@ -145,7 +145,7 @@ TEST(at_tests, std_span)
     EXPECT_DEATH(gsl::at(csp, -1), expected);
     EXPECT_DEATH(gsl::at(csp, gsl::narrow_cast<gsl::index>(sp.size())), expected);
 }
-#endif // __cplusplus >= 202002L
+#endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
 static constexpr bool test_constexpr()

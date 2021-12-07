@@ -9,6 +9,10 @@ include(ExternalProject)
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+if(CI_TESTING AND GSL_CXX_STANDARD EQUAL 20)
+    add_compile_definitions(FORCE_STD_SPAN_TESTS=1)
+endif()
+
 if(IOS)
     add_compile_definitions(GTEST_HAS_DEATH_TEST=1 IOS_PROCESS_DELAY_WORKAROUND=1)
 endif()
