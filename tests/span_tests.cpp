@@ -43,7 +43,6 @@
 
 #include "deathTestCommon.h"
 
-using namespace std;
 using namespace gsl;
 
 namespace
@@ -1085,7 +1084,7 @@ TEST(span_test, as_bytes)
 
     int b[5] = {1, 2, 3, 4, 5};
     {
-        span<int> sp(begin(b), static_cast<size_t>(-2));
+        span<int> sp(std::begin(b), static_cast<size_t>(-2));
         EXPECT_DEATH((void) sp.size_bytes(), expected);
     }
 }

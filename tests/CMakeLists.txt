@@ -9,6 +9,10 @@ include(ExternalProject)
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+if(CI_TESTING AND GSL_CXX_STANDARD EQUAL 20)
+    add_compile_definitions(FORCE_STD_SPAN_TESTS=1)
+endif()
+
 if(IOS)
     add_compile_definitions(GTEST_HAS_DEATH_TEST=1 IOS_PROCESS_DELAY_WORKAROUND=1)
 endif()
@@ -54,7 +58,7 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     find_package(Microsoft.GSL REQUIRED)
 endif()
 
-if (MSVC AND (GSL_CXX_STANDARD EQUAL 17))
+if (MSVC AND (GSL_CXX_STANDARD GREATER_EQUAL 17))
     set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
 endif()
 
@@ -134,6 +138,11 @@ else()
         $<$<CXX_COMPILER_ID:Clang>:
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
+          >
+          $<$<AND:$<EQUAL:${GSL_CXX_STANDARD},20>,$<CXX_COMPILER_VERSION:11.0.0>>:
+              -Wno-zero-as-null-pointer-constant  # failing Clang Ubuntu 20.04 tests, seems to be a bug with clang 11.0.0
+                                                  # (operator< is being re-written by the compiler as operator<=> and
+                                                  # raising the warning)
           >
         >
         $<$<CXX_COMPILER_ID:AppleClang>:

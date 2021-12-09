@@ -1,9 +1,13 @@
+parameters:
+    buildType: ''
+    CXXVersion: ''
+
 steps:
   - task: CMake@1
     name: Configure
     inputs:
       workingDirectory: build
-      cmakeArgs: '-DCMAKE_CXX_STANDARD=$(GSL_CXX_STANDARD) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -Werror=dev .. '
+      cmakeArgs: '-DGSL_CXX_STANDARD=${{ parameters.CXXVersion }} -DCMAKE_BUILD_TYPE=${{ parameters.buildType }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev .. '
 
   - task: CMake@1
     name: Build

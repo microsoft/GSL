@@ -48,7 +48,7 @@ TEST(span_ext_test, make_span_from_pointer_length_constructor)
 
     {
         int* p = nullptr;
-        auto s = make_span(p, narrow_cast<span<int>::size_type>(0));
+        auto s = make_span(p, narrow_cast<gsl::span<int>::size_type>(0));
         EXPECT_TRUE(s.size() == 0);
         EXPECT_TRUE(s.data() == nullptr);
     }
@@ -136,9 +136,9 @@ TEST(span_ext_test, make_span_from_std_array_constructor)
 
     // This test checks for the bug found in gcc 6.1, 6.2, 6.3, 6.4, 6.5 7.1, 7.2, 7.3 - issue #590
     {
-        span<int> s1 = make_span(arr);
+        gsl::span<int> s1 = make_span(arr);
 
-        static span<int> s2;
+        static gsl::span<int> s2;
         s2 = s1;
 
 #if defined(__GNUC__) && __GNUC__ == 6 && (__GNUC_MINOR__ == 4 || __GNUC_MINOR__ == 5) &&          \
@@ -194,7 +194,7 @@ TEST(span_ext_test, make_span_from_container_constructor)
 TEST(span_test, interop_with_gsl_at)
 {
     int arr[5] = {1, 2, 3, 4, 5};
-    span<int> s{arr};
+    gsl::span<int> s{arr};
     EXPECT_TRUE(at(s, 0) == 1);
     EXPECT_TRUE(at(s, 1) == 2);
 }
@@ -202,7 +202,7 @@ TEST(span_test, interop_with_gsl_at)
 TEST(span_ext_test, iterator_free_functions)
 {
     int a[] = {1, 2, 3, 4};
-    span<int> s{a};
+    gsl::span<int> s{a};
 
     EXPECT_TRUE((std::is_same<decltype(s.begin()), decltype(begin(s))>::value));
     EXPECT_TRUE((std::is_same<decltype(s.end()), decltype(end(s))>::value));
@@ -232,7 +232,7 @@ TEST(span_ext_test, iterator_free_functions)
 TEST(span_ext_test, ssize_free_function)
 {
     int a[] = {1, 2, 3, 4};
-    span<int> s{a};
+    gsl::span<int> s{a};
 
     EXPECT_FALSE((std::is_same<decltype(s.size()), decltype(ssize(s))>::value));
     EXPECT_TRUE(s.size() == static_cast<std::size_t>(ssize(s)));
@@ -242,8 +242,8 @@ TEST(span_ext_test, ssize_free_function)
 TEST(span_ext_test, comparison_operators)
 {
     {
-        span<int> s1;
-        span<int> s2;
+        gsl::span<int> s1;
+        gsl::span<int> s2;
         EXPECT_TRUE(s1 == s2);
         EXPECT_FALSE(s1 != s2);
         EXPECT_FALSE(s1 < s2);
@@ -260,8 +260,8 @@ TEST(span_ext_test, comparison_operators)
 
     {
         int arr[] = {2, 1};
-        span<int> s1 = arr;
-        span<int> s2 = arr;
+        gsl::span<int> s1 = arr;
+        gsl::span<int> s2 = arr;
 
         EXPECT_TRUE(s1 == s2);
         EXPECT_FALSE(s1 != s2);
@@ -280,8 +280,8 @@ TEST(span_ext_test, comparison_operators)
     {
         int arr[] = {2, 1}; // bigger
 
-        span<int> s1;
-        span<int> s2 = arr;
+        gsl::span<int> s1;
+        gsl::span<int> s2 = arr;
 
         EXPECT_TRUE(s1 != s2);
         EXPECT_TRUE(s2 != s1);
@@ -300,8 +300,8 @@ TEST(span_ext_test, comparison_operators)
     {
         int arr1[] = {1, 2};
         int arr2[] = {1, 2};
-        span<int> s1 = arr1;
-        span<int> s2 = arr2;
+        gsl::span<int> s1 = arr1;
+        gsl::span<int> s2 = arr2;
 
         EXPECT_TRUE(s1 == s2);
         EXPECT_FALSE(s1 != s2);
@@ -320,8 +320,8 @@ TEST(span_ext_test, comparison_operators)
     {
         int arr[] = {1, 2, 3};
 
-        span<int> s1 = {&arr[0], 2}; // shorter
-        span<int> s2 = arr;          // longer
+        gsl::span<int> s1 = {&arr[0], 2}; // shorter
+        gsl::span<int> s2 = arr;          // longer
 
         EXPECT_TRUE(s1 != s2);
         EXPECT_TRUE(s2 != s1);
@@ -341,8 +341,8 @@ TEST(span_ext_test, comparison_operators)
         int arr1[] = {1, 2}; // smaller
         int arr2[] = {2, 1}; // bigger
 
-        span<int> s1 = arr1;
-        span<int> s2 = arr2;
+        gsl::span<int> s1 = arr1;
+        gsl::span<int> s2 = arr2;
 
         EXPECT_TRUE(s1 != s2);
         EXPECT_TRUE(s2 != s1);

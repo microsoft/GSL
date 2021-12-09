@@ -27,7 +27,6 @@ namespace gsl
 struct fail_fast;
 } // namespace gsl
 
-using namespace std;
 using namespace gsl;
 
 TEST(algorithm_tests, same_type)
@@ -73,8 +72,8 @@ TEST(algorithm_tests, same_type)
         std::array<int, 5> src{1, 2, 3, 4, 5};
         std::array<int, 10> dst{};
 
-        const span<int> src_span(src);
-        const span<int, 10> dst_span(dst);
+        const gsl::span<int> src_span(src);
+        const gsl::span<int, 10> dst_span(dst);
 
         copy(src_span, dst_span);
         copy(src_span, dst_span.subspan(src_span.size()));

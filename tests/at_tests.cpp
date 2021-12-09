@@ -119,7 +119,7 @@ TEST(at_tests, InitializerList)
     EXPECT_DEATH(gsl::at({1, 2, 3, 4}, 4), expected);
 }
 
-#if defined(__cplusplus) && __cplusplus >= 202002L
+#if defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 TEST(at_tests, std_span)
 {
     std::vector<int> vec{1, 2, 3, 4, 5};
@@ -128,18 +128,24 @@ TEST(at_tests, std_span)
     std::vector<int> cvec{1, 2, 3, 4, 5};
     std::span csp{cvec};
 
-    for (size_t i = 0, i < vec.size(); ++i)
+    for (gsl::index i = 0; i < gsl::narrow_cast<gsl::index>(vec.size()); ++i)
     {
-        EXPECT_TRUE(&gsl::at(sp, i) == &vec[i]);
-        EXPECT_TRUE(&gsl::at(csp, i) == &cvec[i]);
+        EXPECT_TRUE(&gsl::at(sp, i) == &vec[gsl::narrow_cast<size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(csp, i) == &cvec[gsl::narrow_cast<size_t>(i)]);
     }
 
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. std_span";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
     EXPECT_DEATH(gsl::at(sp, -1), expected);
-    EXPECT_DEATH(gsl::at(sp, sp.size()), expected);
+    EXPECT_DEATH(gsl::at(sp, gsl::narrow_cast<gsl::index>(sp.size())), expected);
     EXPECT_DEATH(gsl::at(csp, -1), expected);
-    EXPECT_DEATH(gsl::at(csp, sp.size()), expected);
+    EXPECT_DEATH(gsl::at(csp, gsl::narrow_cast<gsl::index>(sp.size())), expected);
 }
-#endif // __cplusplus >= 202002L
+#endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
 static constexpr bool test_constexpr()
