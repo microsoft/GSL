@@ -52,20 +52,20 @@ stages:
 - stage: MSVC_LLVM
   dependsOn: []
   jobs:
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'VS2019 LLVM'
-      compilerVersions: [ '16.11' ]
-      image: windows-2019
-      extraCmakeArgs: '-T ClangCL'
-      CXXVersions: [ 14 ]
-      buildTypes: [ Release ]
+  # - template: ./pipelines/jobs.yml
+  #   parameters:
+  #     compiler: 'VS2019 LLVM'
+  #     compilerVersions: [ '16.11' ]
+  #     image: windows-2019
+  #     extraCmakeArgs: '-T ClangCL'
+  #     CXXVersions: [ 14 ]
+  #     buildTypes: [ Release ]
   - template: ./pipelines/jobs.yml
     parameters:
       compiler: 'VS2022 LLVM'
       compilerVersions: [ '17.0' ]
       image: windows-2022
-      extraCmakeArgs: '-T ClangCL'
+      extraCmakeArgs: '-T clang-cl'
       CXXVersions: [ 14 ]
       buildTypes: [ Release ]
 
