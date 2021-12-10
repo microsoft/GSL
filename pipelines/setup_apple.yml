@@ -1,0 +1,9 @@
+parameters:
+    version: 0
+
+steps:
+  - script: |
+      if [ "${{ parameters.version }" = "12.5.1" ]; then export DEVELOPER_DIR=/Applications/Xcode12.5.1.app/Contents/Developer; fi
+
+    displayName: "Setup Xcode Version"
+    failOnStderr: true

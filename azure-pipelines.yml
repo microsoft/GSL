@@ -30,11 +30,14 @@ stages:
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'Apple-Clang 13.1'
+      compiler: 'Apple-Clang'
       image: macOS-11
-      compilerVersions: [ 'Default' ]
+      # compilerVersions: [ '13.1' ]
+      compilerVersions: [ '12.5.1' ]
       CXXVersions: [ 14 ]
       buildTypes: [ Release ]
+
+      # export DEVELOPER_DIR=/Applications/Xcode12.5.app/Contents/Developer
 
 
 # # Apple-Clang
