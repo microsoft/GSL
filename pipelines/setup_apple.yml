@@ -1,0 +1,9 @@
+parameters:
+    version: 0
+
+steps:
+  - script: |
+      if [ "${{ parameters.version }}" = "12.5.1" ]; then sudo xcode-select -switch /Applications/Xcode_12.5.1.app; fi
+
+    displayName: "Setup Xcode Version"
+    failOnStderr: true
