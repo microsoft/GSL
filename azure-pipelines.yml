@@ -15,51 +15,28 @@ stages:
 #       compilerVersions: [ 11, 10 ]
 #       setupfile: 'setup_gcc.yml'
 
-- stage: Clang
+# - stage: Clang
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: clang
+#       image: ubuntu-20.04
+#       compilerVersions: [ 11, 10 ]
+#       setupfile: 'setup_clang.yml'
+
+- stage: Apple_Clang
   dependsOn: []
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: clang
-      image: ubuntu-20.04
-      compilerVersions: [ 11, 10 ]
+      compiler: 'Apple-Clang 13.1'
+      image: macOS-11
+      compilerVersions: [ 'Default' ]
       CXXVersions: [ 14 ]
       buildTypes: [ Release ]
-      setupfile: 'setup_clang.yml'
 
-# # Clang
-# - stage: Clang
-#   dependsOn: []
-#   variables:
-#   - name: CC
-#     value: clang
-#   - name: CXX
-#     value: clang++
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate Clang latest'
-#       imageName: ubuntu-20.04
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate Clang Previous'
-#       imageName: ubuntu-18.04
-#       CXXVersions: [ 14, 17 ]
-#
-# # MSVC
-# - stage: MSVC
-#   dependsOn: []
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate MSVC latest'
-#       imageName: windows-latest
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate MSVC Previous'
-#       imageName: vs2017-win2016
-#       CXXVersions: [ 14, 17 ]
-#
+
 # # Apple-Clang
 # - stage: Apple_Clang
 #   dependsOn: []
@@ -74,3 +51,18 @@ stages:
 #       jobName: 'Validate Apple-Clang Previous'
 #       imageName: macos-10.14
 #       CXXVersions: [ 14, 17 ]
+
+# # MSVC
+# - stage: MSVC
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       jobName: 'Validate MSVC latest'
+#       imageName: windows-latest
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       jobName: 'Validate MSVC Previous'
+#       imageName: vs2017-win2016
+#       CXXVersions: [ 14, 17 ]
+#
