@@ -3,7 +3,7 @@ parameters:
 
 steps:
   - script: |
-      if [ "${{ parameters.version }}" = "12.5.1" ]; then export DEVELOPER_DIR=/Applications/Xcode12.5.1.app/Contents/Developer; fi
+      if [ "${{ parameters.version }}" = "12.5.1" ]; then sudo xcode-select -switch /Applications/Xcode_12.5.1.app; fi
 
     displayName: "Setup Xcode Version"
     failOnStderr: true
