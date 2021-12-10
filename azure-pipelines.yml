@@ -35,21 +35,39 @@ stages:
 #       compilerVersions: [ '12.5.1', '13.1' ]
 #       setupfile: 'setup_apple.yml'
 
-- stage: MSVC
+# - stage: MSVC
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'VS2019 MSVC'
+#       compilerVersions: [ '16.11' ]
+#       image: windows-2019
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'VS2022 MSVC'
+#       compilerVersions: [ '17.0' ]
+#       image: windows-2022
+
+- stage: MSVC (LLVM)
   dependsOn: []
   jobs:
-  # - template: ./pipelines/jobs.yml
-  #   parameters:
-  #     compiler: 'MSVC VS2019'
-  #     compilerVersions: [ '16.11' ]
-  #     image: windows-2019
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'MSVC VS2022'
-      compilerVersions: [ '17.0' ]
+      compiler: 'VS2019 LLVM'
+      compilerVersions: [ '16.11' ]
+      image: windows-2019
+      extraCmakeArgs: '-T ClangCL'
       CXXVersions: [ 14 ]
       buildTypes: [ Release ]
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: 'VS2022 LLVM'
+      compilerVersions: [ '17.0' ]
       image: windows-2022
+      extraCmakeArgs: '-T ClangCL'
+      CXXVersions: [ 14 ]
+      buildTypes: [ Release ]
 
 # # MSVC
 # - stage: MSVC
