@@ -5,81 +5,67 @@ pr:
   autoCancel: true
 
 stages:
-# - stage: GCC
-#   dependsOn: []
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       compiler: gcc
-#       image: ubuntu-20.04
-#       compilerVersions: [ 11, 10 ]
-#       setupfile: 'setup_gcc.yml'
+- stage: GCC
+  dependsOn: []
+  jobs:
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: gcc
+      image: ubuntu-20.04
+      compilerVersions: [ 11, 10 ]
+      setupfile: 'setup_gcc.yml'
 
-# - stage: Clang
-#   dependsOn: []
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       compiler: clang
-#       image: ubuntu-20.04
-#       compilerVersions: [ 11, 10 ]
-#       setupfile: 'setup_clang.yml'
+- stage: Clang
+  dependsOn: []
+  jobs:
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: clang
+      image: ubuntu-20.04
+      compilerVersions: [ 11, 10 ]
+      setupfile: 'setup_clang.yml'
 
-# - stage: Apple_Clang
-#   dependsOn: []
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       compiler: 'Apple-Clang'
-#       image: macOS-11
-#       compilerVersions: [ '12.5.1', '13.1' ]
-#       setupfile: 'setup_apple.yml'
+- stage: Apple_Clang
+  dependsOn: []
+  jobs:
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: 'Apple-Clang'
+      image: macOS-11
+      compilerVersions: [ '12.5.1', '13.1' ]
+      setupfile: 'setup_apple.yml'
 
-# - stage: MSVC
-#   dependsOn: []
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       compiler: 'VS2019 MSVC'
-#       compilerVersions: [ '16.11' ]
-#       image: windows-2019
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       compiler: 'VS2022 MSVC'
-#       compilerVersions: [ '17.0' ]
-#       image: windows-2022
+- stage: MSVC
+  dependsOn: []
+  jobs:
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: 'VS2019 MSVC'
+      compilerVersions: [ '16.11' ]
+      image: windows-2019
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: 'VS2022 MSVC'
+      compilerVersions: [ '17.0' ]
+      image: windows-2022
 
 - stage: MSVC_LLVM
   dependsOn: []
   jobs:
-  # - template: ./pipelines/jobs.yml
-  #   parameters:
-  #     compiler: 'VS2019 LLVM'
-  #     compilerVersions: [ '16.11' ]
-  #     image: windows-2019
-  #     extraCmakeArgs: '-T ClangCL'
-  #     CXXVersions: [ 14 ]
-  #     buildTypes: [ Release ]
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'VS2022 LLVM'
-      compilerVersions: [ '17.0' ]
-      image: windows-2022
-      extraCmakeArgs: '-T LLVM_v143'
-      CXXVersions: [ 14 ]
-      buildTypes: [ Release ]
+      compiler: 'VS2019 LLVM'
+      compilerVersions: [ '16.11' ]
+      image: windows-2019
+      extraCmakeArgs: '-T ClangCL'
 
-# # MSVC
-# - stage: MSVC
-#   dependsOn: []
-#   jobs:
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate MSVC latest'
-#       imageName: windows-latest
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate MSVC Previous'
-#       imageName: vs2017-win2016
-#       CXXVersions: [ 14, 17 ]
-#
+# The *same* config as with 2019 but on 2022 yields an error.
+# Tracking issue: https://github.com/actions/virtual-environments/issues/4716
+# - template: ./pipelines/jobs.yml
+#   parameters:
+#     compiler: 'VS2022 LLVM'
+#     compilerVersions: [ '17.0' ]
+#     image: windows-2022
+#     extraCmakeArgs: '-T ClangCL'
+#     CXXVersions: [ 14 ]
+#     buildTypes: [ Release ]
