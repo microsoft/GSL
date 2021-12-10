@@ -49,7 +49,7 @@ stages:
 #       compilerVersions: [ '17.0' ]
 #       image: windows-2022
 
-- stage: MSVC (LLVM)
+- stage: MSVC_LLVM
   dependsOn: []
   jobs:
   - template: ./pipelines/jobs.yml
