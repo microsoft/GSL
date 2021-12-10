@@ -25,31 +25,23 @@ stages:
 #       compilerVersions: [ 11, 10 ]
 #       setupfile: 'setup_clang.yml'
 
-- stage: Apple_Clang
-  dependsOn: []
-  jobs:
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'Apple-Clang'
-      image: macOS-11
-      compilerVersions: [ '12.5.1', '13.1' ]
-      setupfile: 'setup_apple.yml'
-
-
-# # Apple-Clang
 # - stage: Apple_Clang
 #   dependsOn: []
 #   jobs:
 #   - template: ./pipelines/jobs.yml
 #     parameters:
-#       jobName: 'Validate Apple-Clang latest'
-#       imageName: macos-10.15
-#       CXXVersions: [ 14, 17 ]
-#   - template: ./pipelines/jobs.yml
-#     parameters:
-#       jobName: 'Validate Apple-Clang Previous'
-#       imageName: macos-10.14
-#       CXXVersions: [ 14, 17 ]
+#       compiler: 'Apple-Clang'
+#       image: macOS-11
+#       compilerVersions: [ '12.5.1', '13.1' ]
+#       setupfile: 'setup_apple.yml'
+
+- template: ./pipelines/jobs.yml
+  parameters:
+    compiler: 'MSVC VS2019'
+    compilerVersions: [ '16.11' ]
+    CXXVersions: [ 14 ]
+    buildTypes: [ Release ]
+    image: windows-2019
 
 # # MSVC
 # - stage: MSVC
