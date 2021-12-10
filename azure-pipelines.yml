@@ -65,7 +65,7 @@ stages:
       compiler: 'VS2022 LLVM'
       compilerVersions: [ '17.0' ]
       image: windows-2022
-      extraCmakeArgs: '-T clang-cl'
+      extraCmakeArgs: '-T llvm'
       CXXVersions: [ 14 ]
       buildTypes: [ Release ]
 
