@@ -25,12 +25,12 @@ stages:
       compilerVersions: [ 11, 10 ]
       setupfile: 'setup_clang.yml'
 
-- stage: Apple_Clang
+- stage: Xcode
   dependsOn: []
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'Apple-Clang'
+      compiler: 'Xcode'
       image: macOS-11
       compilerVersions: [ '12.5.1', '13.1' ]
       setupfile: 'setup_apple.yml'
@@ -54,8 +54,8 @@ stages:
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'VS2019 LLVM'
-      compilerVersions: [ '16.11' ]
+      compiler: 'VS2019 (16.11)'
+      compilerVersions: [ 'LLVM' ]
       image: windows-2019
       extraCmakeArgs: '-T ClangCL'
 
