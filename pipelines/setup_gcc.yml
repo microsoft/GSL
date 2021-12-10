@@ -1,0 +1,14 @@
+parameters:
+    version: 0
+
+steps:
+  - script: |
+      echo "##vso[task.setvariable variable=CXX;]${CXX}"
+      echo "##vso[task.setvariable variable=CC;]${CC}"
+      ${{ if eq(parameters.version, 11) }}: # GCC 11 is not on the image by default
+        sudo apt-get install $CXX
+    displayName: "Setup GCC Version"
+    failOnStderr: true
+    env:
+      CC: gcc-${{ parameters.version }}
+      CXX: g++-${{ parameters.version }}
