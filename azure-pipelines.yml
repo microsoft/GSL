@@ -32,13 +32,8 @@ stages:
     parameters:
       compiler: 'Apple-Clang'
       image: macOS-11
-      # compilerVersions: [ '13.1' ]
-      compilerVersions: [ '12.5.1' ]
-      CXXVersions: [ 14 ]
-      buildTypes: [ Release ]
+      compilerVersions: [ '12.5.1', '13.1' ]
       setupfile: 'setup_apple.yml'
-
-      # export DEVELOPER_DIR=/Applications/Xcode12.5.app/Contents/Developer
 
 
 # # Apple-Clang

@@ -5,7 +5,7 @@ steps:
   - script: |
       echo "##vso[task.setvariable variable=CXX;]${CXX}"
       echo "##vso[task.setvariable variable=CC;]${CC}"
-      if [ "${CXX}" = "g++-11" ]; then sudo apt-get install $CXX; fi
+      if [ "${{ parameters.version }}" = "11" ]; then sudo apt-get install $CXX; fi
 
     displayName: "Setup GCC Version"
     failOnStderr: true
