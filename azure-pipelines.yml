@@ -5,19 +5,28 @@ pr:
   autoCancel: true
 
 stages:
-- stage: GCC
+# - stage: GCC
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: gcc
+#       image: ubuntu-20.04
+#       compilerVersions: [ 11, 10 ]
+#       setupfile: 'setup_gcc.yml'
+
+- stage: Clang
   dependsOn: []
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: gcc
+      compiler: clang
       image: ubuntu-20.04
       compilerVersions: [ 11, 10 ]
-      # compilerVersions: [ 8, 9 ]
       CXXVersions: [ 14 ]
-      setupfile: 'setup_gcc.yml'
+      buildTypes: [ Release ]
+      setupfile: 'setup_clang.yml'
 
-#
 # # Clang
 # - stage: Clang
 #   dependsOn: []

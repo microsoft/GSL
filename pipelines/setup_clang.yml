@@ -5,8 +5,8 @@ steps:
   - script: |
       echo "##vso[task.setvariable variable=CXX;]${CXX}"
       echo "##vso[task.setvariable variable=CC;]${CC}"
-      sudo apt-get install $CXX
-    displayName: "Setup Compiler"
+
+    displayName: "Setup Clang Version"
     failOnStderr: true
     env:
       CC: clang-${{ parameters.version }}
