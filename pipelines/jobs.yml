@@ -29,7 +29,7 @@ jobs:
             name: Configure
             inputs:
               workingDirectory: build
-              cmakeArgs: '-DGSL_CXX_STANDARD=${{ CXXVersion }} -DCMAKE_BUILD_TYPE=${{ buildType }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev ${{ extraCmakeArgs }} .. '
+              cmakeArgs: '-DGSL_CXX_STANDARD=${{ CXXVersion }} -DCMAKE_BUILD_TYPE=${{ buildType }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev ${{ parameters.extraCmakeArgs }} .. '
 
           - task: CMake@1
             name: Build
