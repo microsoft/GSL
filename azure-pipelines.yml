@@ -36,6 +36,7 @@ stages:
       compilerVersions: [ '12.5.1' ]
       CXXVersions: [ 14 ]
       buildTypes: [ Release ]
+      setupfile: 'setup_apple.yml'
 
       # export DEVELOPER_DIR=/Applications/Xcode12.5.app/Contents/Developer
 
