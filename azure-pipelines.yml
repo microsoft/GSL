@@ -35,13 +35,16 @@ stages:
 #       compilerVersions: [ '12.5.1', '13.1' ]
 #       setupfile: 'setup_apple.yml'
 
-- template: ./pipelines/jobs.yml
-  parameters:
-    compiler: 'MSVC VS2019'
-    compilerVersions: [ '16.11' ]
-    CXXVersions: [ 14 ]
-    buildTypes: [ Release ]
-    image: windows-2019
+- stage: MSVC
+  dependsOn: []
+  jobs:
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: 'MSVC VS2019'
+      compilerVersions: [ '16.11' ]
+      CXXVersions: [ 14 ]
+      buildTypes: [ Release ]
+      image: windows-2019
 
 # # MSVC
 # - stage: MSVC
