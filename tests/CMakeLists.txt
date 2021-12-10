@@ -139,10 +139,10 @@ else()
           $<$<AND:$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.99>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,6>>:
             $<$<EQUAL:${GSL_CXX_STANDARD},17>:-Wno-undefined-func-template>
           >
-          $<$<AND:$<EQUAL:${GSL_CXX_STANDARD},20>,$<CXX_COMPILER_VERSION:11.0.0>>:
-              -Wno-zero-as-null-pointer-constant  # failing Clang Ubuntu 20.04 tests, seems to be a bug with clang 11.0.0
-                                                  # (operator< is being re-written by the compiler as operator<=> and
-                                                  # raising the warning)
+          $<$<AND:$<EQUAL:${GSL_CXX_STANDARD},20>,$<OR:$<CXX_COMPILER_VERSION:11.0.0>,$<CXX_COMPILER_VERSION:10.0.0>>>:
+              -Wno-zero-as-null-pointer-constant  # failing Clang Ubuntu 20.04 tests, seems to be a bug with clang 10.0.0
+                                                  # and clang 11.0.0. (operator< is being re-written by the compiler
+                                                  # as operator<=> and raising the warning)
           >
         >
         $<$<CXX_COMPILER_ID:AppleClang>:
