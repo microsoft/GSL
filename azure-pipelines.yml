@@ -14,7 +14,7 @@ stages:
       image: ubuntu-20.04
       compilerVersions: [ 11, 10 ]
       # compilerVersions: [ 8, 9 ]
-      # CXXVersions: [ 14, 17 ]
+      CXXVersions: [ 14 ]
       setupfile: 'setup_gcc.yml'
 
 #
