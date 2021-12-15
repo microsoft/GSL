@@ -58,14 +58,9 @@ stages:
       compilerVersions: [ 'LLVM' ]
       image: windows-2019
       extraCmakeArgs: '-T ClangCL'
-
-# The *same* config as with 2019 but on 2022 yields an error.
-# Tracking issue: https://github.com/actions/virtual-environments/issues/4716
-# - template: ./pipelines/jobs.yml
-#   parameters:
-#     compiler: 'VS2022 LLVM'
-#     compilerVersions: [ '17.0' ]
-#     image: windows-2022
-#     extraCmakeArgs: '-T ClangCL'
-#     CXXVersions: [ 14 ]
-#     buildTypes: [ Release ]
+- template: ./pipelines/jobs.yml
+  parameters:
+    compiler: 'VS2022 (17.0)'
+    compilerVersions: [ 'LLVM' ]
+    image: windows-2022
+    extraCmakeArgs: '-T ClangCL'
