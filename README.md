@@ -97,9 +97,7 @@ Compiler |Toolset Versions Currently Tested
  GCC | 11.1.0 & 10.3.0
  Clang | 11.0.0 & 10.0.0
  Visual Studio with MSVC | VS2019 (16.11) & VS2022 (17.0)
- Visual Studio with LLVM | VS2019 (16.11)
-
-- Support for Visual Studio 2022 with LLVM will be added in the near future
+ Visual Studio with LLVM | VS2019 (16.11) & VS2022 (17.0)
 
 ---
 If you successfully port GSL to another platform, we would love to hear from you!
