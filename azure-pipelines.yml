@@ -22,7 +22,7 @@ stages:
     parameters:
       compiler: clang
       image: ubuntu-20.04
-      compilerVersions: [ 11, 10 ]
+      compilerVersions: [ 12, 11 ]
       setupfile: 'setup_clang.yml'
 
 - stage: Xcode
@@ -32,7 +32,7 @@ stages:
     parameters:
       compiler: 'Xcode'
       image: macOS-11
-      compilerVersions: [ '12.5.1', '13.1' ]
+      compilerVersions: [ '12.5.1', '13.2.1' ]
       setupfile: 'setup_apple.yml'
 
 - stage: VS_MSVC
@@ -40,13 +40,13 @@ stages:
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'VS2019 (16.11)'
-      compilerVersions: [ 'MSVC' ]
+      compiler: 'VS2019 (MSVC)'
+      compilerVersions: [ 'default' ]
       image: windows-2019
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'VS2022 (17.0)'
-      compilerVersions: [ 'MSVC' ]
+      compiler: 'VS2022 (MSVC)'
+      compilerVersions: [ 'default' ]
       image: windows-2022
 
 - stage: VS_LLVM
@@ -54,18 +54,13 @@ stages:
   jobs:
   - template: ./pipelines/jobs.yml
     parameters:
-      compiler: 'VS2019 (16.11)'
-      compilerVersions: [ 'LLVM' ]
+      compiler: 'VS2019 (LLVM)'
+      compilerVersions: [ 'default' ]
       image: windows-2019
       extraCmakeArgs: '-T ClangCL'
-
-# The *same* config as with 2019 but on 2022 yields an error.
-# Tracking issue: https://github.com/actions/virtual-environments/issues/4716
-# - template: ./pipelines/jobs.yml
-#   parameters:
-#     compiler: 'VS2022 LLVM'
-#     compilerVersions: [ '17.0' ]
-#     image: windows-2022
-#     extraCmakeArgs: '-T ClangCL'
-#     CXXVersions: [ 14 ]
-#     buildTypes: [ Release ]
+  - template: ./pipelines/jobs.yml
+    parameters:
+      compiler: 'VS2022 (LLVM)'
+      compilerVersions: [ 'default' ]
+      image: windows-2022
+      extraCmakeArgs: '-T ClangCL'

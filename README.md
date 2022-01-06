@@ -93,13 +93,17 @@ Below is a table showing the versions currently being tested.
 
 Compiler |Toolset Versions Currently Tested
 :------- |--:
- XCode | 13.1 & 12.5.1
- GCC | 11.1.0 & 10.3.0
- Clang | 11.0.0 & 10.0.0
- Visual Studio with MSVC | VS2019 (16.11) & VS2022 (17.0)
- Visual Studio with LLVM | VS2019 (16.11)
+ XCode | 13.2.1 & 12.5.1
+ GCC | 11[^1] & 10[^2]
+ Clang | 12[^2] & 11[^2]
+ Visual Studio with MSVC | VS2022[^3] & VS2019[^4]
+ Visual Studio with LLVM | VS2022[^3] & VS2019[^4]
 
-- Support for Visual Studio 2022 with LLVM will be added in the near future
+
+[^1]: Precise version may be found in the [latest CI results](https://dev.azure.com/cppstat/GSL/_build?definitionId=1&branchFilter=26).
+[^2]: Precise version may be found in the [latest CI results](https://dev.azure.com/cppstat/GSL/_build?definitionId=1&branchFilter=26). Should be the version specified [here](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md#language-and-runtime).
+[^3]: Precise version may be found in the [latest CI results](https://dev.azure.com/cppstat/GSL/_build?definitionId=1&branchFilter=26). Should be the version specified [here](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2022-Readme.md#visual-studio-enterprise-2022).
+[^4]: Precise version may be found in the [latest CI results](https://dev.azure.com/cppstat/GSL/_build?definitionId=1&branchFilter=26). Should be the version specified [here](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#visual-studio-enterprise-2019).
 
 ---
 If you successfully port GSL to another platform, we would love to hear from you!
