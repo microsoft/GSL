@@ -5,15 +5,15 @@ pr:
   autoCancel: true
 
 stages:
-- stage: GCC
-  dependsOn: []
-  jobs:
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: gcc
-      image: ubuntu-20.04
-      compilerVersions: [ 11, 10 ]
-      setupfile: 'setup_gcc.yml'
+# - stage: GCC
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: gcc
+#       image: ubuntu-20.04
+#       compilerVersions: [ 11, 10 ]
+#       setupfile: 'setup_gcc.yml'
 
 - stage: Clang
   dependsOn: []
@@ -22,45 +22,57 @@ stages:
     parameters:
       compiler: clang
       image: ubuntu-20.04
-      compilerVersions: [ 13, 12 ]
+      compilerVersions: [ 13 ]
       setupfile: 'setup_clang.yml'
+      CXXVersions: [ 14 ]
+      buildTypes: [ Release ]
 
-- stage: Xcode
-  dependsOn: []
-  jobs:
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'Xcode'
-      image: macOS-11
-      compilerVersions: [ '12.5.1', '13.2.1' ]
-      setupfile: 'setup_apple.yml'
+# - stage: Clang
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: clang
+#       image: ubuntu-20.04
+#       compilerVersions: [ 13, 12 ]
+#       setupfile: 'setup_clang.yml'
 
-- stage: VS_MSVC
-  dependsOn: []
-  jobs:
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'VS2019 (MSVC)'
-      compilerVersions: [ 'default' ]
-      image: windows-2019
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'VS2022 (MSVC)'
-      compilerVersions: [ 'default' ]
-      image: windows-2022
-
-- stage: VS_LLVM
-  dependsOn: []
-  jobs:
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'VS2019 (LLVM)'
-      compilerVersions: [ 'default' ]
-      image: windows-2019
-      extraCmakeArgs: '-T ClangCL'
-  - template: ./pipelines/jobs.yml
-    parameters:
-      compiler: 'VS2022 (LLVM)'
-      compilerVersions: [ 'default' ]
-      image: windows-2022
-      extraCmakeArgs: '-T ClangCL'
+# - stage: Xcode
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'Xcode'
+#       image: macOS-11
+#       compilerVersions: [ '12.5.1', '13.2.1' ]
+#       setupfile: 'setup_apple.yml'
+#
+# - stage: VS_MSVC
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'VS2019 (MSVC)'
+#       compilerVersions: [ 'default' ]
+#       image: windows-2019
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'VS2022 (MSVC)'
+#       compilerVersions: [ 'default' ]
+#       image: windows-2022
+#
+# - stage: VS_LLVM
+#   dependsOn: []
+#   jobs:
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'VS2019 (LLVM)'
+#       compilerVersions: [ 'default' ]
+#       image: windows-2019
+#       extraCmakeArgs: '-T ClangCL'
+#   - template: ./pipelines/jobs.yml
+#     parameters:
+#       compiler: 'VS2022 (LLVM)'
+#       compilerVersions: [ 'default' ]
+#       image: windows-2022
+#       extraCmakeArgs: '-T ClangCL'
