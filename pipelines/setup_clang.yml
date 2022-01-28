@@ -6,6 +6,13 @@ steps:
       echo "##vso[task.setvariable variable=CXX;]${CXX}"
       echo "##vso[task.setvariable variable=CC;]${CC}"
 
+      if [ "${{ parameters.version }}" = "13" ]
+      then # see https://apt.llvm.org/
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        sudo ./llvm.sh 13
+      fi
+
     displayName: "Setup Clang Version"
     failOnStderr: true
     env:

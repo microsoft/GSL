@@ -22,7 +22,7 @@ stages:
     parameters:
       compiler: clang
       image: ubuntu-20.04
-      compilerVersions: [ 12, 11 ]
+      compilerVersions: [ 13, 12 ]
       setupfile: 'setup_clang.yml'
 
 - stage: Xcode
