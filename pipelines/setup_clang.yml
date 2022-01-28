@@ -8,10 +8,10 @@ steps:
 
       if [ "${{ parameters.version }}" = "13" ]
       then # see https://apt.llvm.org/
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-        add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
-        apt-get update
-        apt-get install clang-13
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
+        sudo apt-get update
+        sudo apt-get install clang-13
         # wget https://apt.llvm.org/llvm.sh
         # chmod +x llvm.sh
         # sudo ./llvm.sh 13
