@@ -9,7 +9,7 @@ steps:
       if [ "${{ parameters.version }}" = "13" ]
       then # see https://apt.llvm.org/
         wget https://apt.llvm.org/llvm-snapshot.gpg.key
-        sudo apt-key add llvm-snapshot.gpg.key
+        sudo apt-key add llvm-snapshot.gpg.key > /dev/null
         # wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         # sudo apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
         # sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
