@@ -8,9 +8,11 @@ steps:
 
       if [ "${{ parameters.version }}" = "13" ]
       then # see https://apt.llvm.org/
-        wget https://apt.llvm.org/llvm.sh
-        chmod +x llvm.sh
-        sudo ./llvm.sh 13
+        sudo add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
+        sudo apt-get install clang-13
+        # wget https://apt.llvm.org/llvm.sh
+        # chmod +x llvm.sh
+        # sudo ./llvm.sh 13
       fi
 
     displayName: "Setup Clang Version"
