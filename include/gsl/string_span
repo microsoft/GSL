@@ -17,9 +17,9 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
-#include <gsl/assert>   // for Ensures, Expects
-#include <gsl/span_ext> // for operator!=, operator==, dynamic_extent
-#include <gsl/util>     // for narrow_cast
+#include "assert"   // for Ensures, Expects
+#include "span_ext" // for operator!=, operator==, dynamic_extent
+#include "util"     // for narrow_cast
 
 #include <algorithm> // for equal, lexicographical_compare
 #include <array>     // for array
