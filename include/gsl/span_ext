@@ -27,8 +27,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <gsl/assert> // GSL_KERNEL_MODE
-#include <gsl/util>   // for narrow_cast, narrow
+#include "assert" // GSL_KERNEL_MODE
+#include "util"   // for narrow_cast, narrow
 
 #include <cstddef> // for ptrdiff_t, size_t
 #include <utility>
