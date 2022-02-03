@@ -195,6 +195,18 @@ target_link_libraries(gsl_tests
 )
 add_test(gsl_tests gsl_tests)
 
+# Ignore uninteresting warning about ABI change somewhere inside std::regex. GSL never supported GCC 5.
+# The warning was removed in GCC 12, see: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93011
+if (CMAKE_SYSTEM_PROCESSOR STREQUAL "ppc64le"  # PowerPC 64-bit Little-Endian
+    AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU"   # GNU Compiler Collection
+    AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 12)
+    if (CMAKE_MINOR_VERSION GREATER 10)
+        set_property(SOURCE span_tests.cpp APPEND PROPERTY COMPILE_OPTIONS "-Wno-psabi")
+    else()
+        target_compile_options(gsl_tests PRIVATE "-Wno-psabi")
+    endif()
+endif()
+
 # No exception tests
 
 foreach(flag_var
