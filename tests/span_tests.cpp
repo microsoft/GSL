@@ -40,6 +40,9 @@
 #endif // __has_include(<string_view>)
 #endif // __has_include
 #endif // (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#if defined(__cplusplus) && __cplusplus >= 202002L
+#include <span>
+#endif // __cplusplus >= 202002L
 
 #include "deathTestCommon.h"
 
@@ -1297,3 +1300,13 @@ TEST(span_test, front_back)
     EXPECT_DEATH(s2.front(), expected);
     EXPECT_DEATH(s2.back(), expected);
 }
+
+#if defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
+TEST(span_test, std_span)
+{
+    // make sure std::span can be constructed from gsl::span
+    gsl::span<int> gsl_span;
+    std::span<int> std_span = gsl_span;
+    (void)std_span; // suppress unused variable warning
+}
+#endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
