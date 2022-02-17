@@ -110,6 +110,9 @@ namespace details
     class span_iterator
     {
     public:
+#ifdef __cpp_lib_concepts
+        using iterator_concept = std::contiguous_iterator_tag;
+#endif // __cpp_lib_concepts
         using iterator_category = std::random_access_iterator_tag;
         using value_type = std::remove_cv_t<Type>;
         using difference_type = std::ptrdiff_t;
