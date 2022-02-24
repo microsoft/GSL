@@ -25,7 +25,14 @@
 #include <array>       // for array
 #include <cstddef>     // for ptrdiff_t, size_t, nullptr_t
 #include <iterator>    // for reverse_iterator, distance, random_access_...
+#include <memory>      // for pointer_traits
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
+
+#ifdef __has_include
+#if __has_include(<version>)
+#include <version>
+#endif
+#endif
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
@@ -110,9 +117,9 @@ namespace details
     class span_iterator
     {
     public:
-#ifdef __cpp_lib_concepts
+#ifdef __cpp_lib_ranges
         using iterator_concept = std::contiguous_iterator_tag;
-#endif // __cpp_lib_concepts
+#endif // __cpp_lib_ranges
         using iterator_category = std::random_access_iterator_tag;
         using value_type = std::remove_cv_t<Type>;
         using difference_type = std::ptrdiff_t;
@@ -333,7 +340,20 @@ namespace details
         pointer end_ = nullptr;
         pointer current_ = nullptr;
     };
+}} // namespace gsl::details
 
+template <class Type>
+struct std::pointer_traits<::gsl::details::span_iterator<Type>> {
+    using pointer         = ::gsl::details::span_iterator<Type>;
+    using element_type    = Type;
+    using difference_type = ptrdiff_t;
+
+    static constexpr element_type* to_address(const pointer i) noexcept {
+        return i._Unwrapped();
+    }
+};
+
+namespace gsl { namespace details {
     template <std::size_t Ext>
     class extent_type
     {

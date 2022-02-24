@@ -1305,8 +1305,15 @@ TEST(span_test, front_back)
 TEST(span_test, std_span)
 {
     // make sure std::span can be constructed from gsl::span
-    gsl::span<int> gsl_span;
+    int arr[5] = {1, 2, 3, 4, 5};
+    gsl::span<int> gsl_span{arr};
+#ifdef __cpp_lib_ranges
+    EXPECT_TRUE(std::to_address(gsl_span.begin()) == gsl_span.data());
+    EXPECT_TRUE(std::to_address(gsl_span.end()) == gsl_span.data() + gsl_span.size());
+#endif // __cpp_lib_ranges
+
     std::span<int> std_span = gsl_span;
-    (void)std_span; // suppress unused variable warning
+    EXPECT_TRUE(std_span.data() == gsl_span.data());
+    EXPECT_TRUE(std_span.size() == gsl_span.size());
 }
 #endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
