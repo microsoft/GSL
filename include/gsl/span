@@ -339,6 +339,9 @@ namespace details
         pointer begin_ = nullptr;
         pointer end_ = nullptr;
         pointer current_ = nullptr;
+
+        template <typename Ptr>
+        friend struct std::pointer_traits;
     };
 }} // namespace gsl::details
 
@@ -349,7 +352,7 @@ struct std::pointer_traits<::gsl::details::span_iterator<Type>> {
     using difference_type = ptrdiff_t;
 
     static constexpr element_type* to_address(const pointer i) noexcept {
-        return i._Unwrapped();
+        return i.current_;
     }
 };
 
