@@ -100,6 +100,7 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-shift-sign-overflow # GTest gtest-port.h
           -Wno-undef # GTest
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
+          -Wreserved-identifier # required by span implementation
           $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
             -Wno-unused-member-function
             -Wno-unused-variable
@@ -231,6 +232,7 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
           -Wno-unknown-attributes
+          -Wreserved-identifier # required by span implementation
         >
     )
     check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
