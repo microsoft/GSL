@@ -125,6 +125,7 @@ namespace details
         using reference = Type&;
 
 #ifdef _MSC_VER
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         using _Unchecked_type = pointer;
 #endif // _MSC_VER
         constexpr span_iterator() = default;
@@ -293,6 +294,7 @@ namespace details
         // MSVC++ iterator debugging support; allows STL algorithms in 15.8+
         // to unwrap span_iterator to a pointer type after a range check in STL
         // algorithm calls
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         friend constexpr void _Verify_range(span_iterator lhs, span_iterator rhs) noexcept
         { // test that [lhs, rhs) forms a valid range inside an STL algorithm
             Expects(lhs.begin_ == rhs.begin_ // range spans have to match
@@ -300,6 +302,7 @@ namespace details
                     lhs.current_ <= rhs.current_); // range must not be transposed
         }
 
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         constexpr void _Verify_offset(const difference_type n) const noexcept
         { // test that *this + n is within the range of this call
             if (n != 0) Expects(begin_ && current_ && end_);
@@ -310,6 +313,7 @@ namespace details
         // clang-format off
         GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
         // clang-format on
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         constexpr pointer _Unwrapped() const noexcept
         { // after seeking *this to a high water mark, or using one of the
             // _Verify_xxx functions above, unwrap this span_iterator to a raw
@@ -320,13 +324,16 @@ namespace details
         // Tell the STL that span_iterator should not be unwrapped if it can't
         // validate in advance, even in release / optimized builds:
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         static constexpr const bool _Unwrap_when_unverified = false;
 #else
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         static constexpr bool _Unwrap_when_unverified = false;
 #endif
         // clang-format off
         GSL_SUPPRESS(con.3) // NO-FORMAT: attribute // TODO: false positive
         // clang-format on
+#pragma clang diagnostic ignored "-Wreserved-identifier"
         constexpr void _Seek_to(const pointer p) noexcept
         { // adjust the position of *this to previously verified location p
             // after _Unwrapped
@@ -677,7 +684,9 @@ public:
 
 #ifdef _MSC_VER
     // Tell MSVC how to unwrap spans in range-based-for
+#pragma clang diagnostic ignored "-Wreserved-identifier"
     constexpr pointer _Unchecked_begin() const noexcept { return data(); }
+#pragma clang diagnostic ignored "-Wreserved-identifier"
     constexpr pointer _Unchecked_end() const noexcept
     {
         // clang-format off
