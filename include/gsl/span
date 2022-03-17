@@ -115,7 +115,7 @@ namespace details
     class span_iterator
     {
     public:
-#ifdef __cpp_lib_ranges
+#if defined(__cpp_lib_ranges) || (defined(_MSVC_STL_VERSION) && defined(__cpp_lib_concepts))
         using iterator_concept = std::contiguous_iterator_tag;
 #endif // __cpp_lib_ranges
         using iterator_category = std::random_access_iterator_tag;
