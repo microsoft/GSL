@@ -105,6 +105,10 @@ if(MSVC) # MSVC or simulating MSVC
           >
         >
     )
+    check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
+    if (WARN_RESERVED_ID)
+        target_compile_options(gsl_tests_config INTERFACE "-Wno-reserved-identifier")
+    endif()
 else()
     target_compile_options(gsl_tests_config INTERFACE
         -fno-strict-aliasing
@@ -228,6 +232,10 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-unknown-attributes
         >
     )
+    check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
+    if (WARN_RESERVED_ID)
+        target_compile_options(gsl_tests_config INTERFACE "-Wno-reserved-identifier")
+    endif()
 else()
     target_compile_options(gsl_tests_config_noexcept INTERFACE
         -fno-exceptions
