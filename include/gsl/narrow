@@ -43,7 +43,7 @@ GSL_SUPPRESS(p.2) // NO-FORMAT: attribute // don't rely on undefined behavior
                                    // and cannot fit into the destination integral type), the resultant behavior is benign on the platforms
                                    // that we target (i.e., no hardware trap representations are hit).
 
-    if (static_cast<U>(t) != u || (is_different_signedness && ((t < T{}) != (u < U{}))))
+    if (narrow_cast<U>(t) != u || (is_different_signedness && ((t < T{}) != (u < U{}))))
     {
         throw narrowing_error{};
     }
