@@ -62,6 +62,7 @@ if (MSVC AND (GSL_CXX_STANDARD GREATER_EQUAL 17))
     set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
 endif()
 
+include(CheckCXXCompilerFlag)
 # this interface adds compile options to how the tests are run
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
@@ -105,6 +106,10 @@ if(MSVC) # MSVC or simulating MSVC
           >
         >
     )
+    check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
+    if (WARN_RESERVED_ID)
+        target_compile_options(gsl_tests_config INTERFACE "-Wno-reserved-identifier")
+    endif()
 else()
     target_compile_options(gsl_tests_config INTERFACE
         -fno-strict-aliasing
@@ -228,6 +233,10 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-unknown-attributes
         >
     )
+    check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
+    if (WARN_RESERVED_ID)
+        target_compile_options(gsl_tests_config_noexcept INTERFACE "-Wno-reserved-identifier")
+    endif()
 else()
     target_compile_options(gsl_tests_config_noexcept INTERFACE
         -fno-exceptions
