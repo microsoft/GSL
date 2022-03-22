@@ -1307,7 +1307,7 @@ TEST(span_test, std_span)
     // make sure std::span can be constructed from gsl::span
     int arr[5] = {1, 2, 3, 4, 5};
     gsl::span<int> gsl_span{arr};
-#ifdef __cpp_lib_ranges
+#if defined(__cpp_lib_ranges) || (defined(_MSVC_STL_VERSION) && defined(__cpp_lib_concepts))
     EXPECT_TRUE(std::to_address(gsl_span.begin()) == gsl_span.data());
     EXPECT_TRUE(std::to_address(gsl_span.end()) == gsl_span.data() + gsl_span.size());
 #endif // __cpp_lib_ranges
