@@ -40,6 +40,9 @@
 #endif // __has_include(<string_view>)
 #endif // __has_include
 #endif // (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#if defined(__cplusplus) && __cplusplus >= 202002L
+#include <span>
+#endif // __cplusplus >= 202002L
 
 #include "deathTestCommon.h"
 
@@ -1297,3 +1300,20 @@ TEST(span_test, front_back)
     EXPECT_DEATH(s2.front(), expected);
     EXPECT_DEATH(s2.back(), expected);
 }
+
+#if defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
+TEST(span_test, std_span)
+{
+    // make sure std::span can be constructed from gsl::span
+    int arr[5] = {1, 2, 3, 4, 5};
+    gsl::span<int> gsl_span{arr};
+#if defined(__cpp_lib_ranges) || (defined(_MSVC_STL_VERSION) && defined(__cpp_lib_concepts))
+    EXPECT_TRUE(std::to_address(gsl_span.begin()) == gsl_span.data());
+    EXPECT_TRUE(std::to_address(gsl_span.end()) == gsl_span.data() + gsl_span.size());
+#endif // __cpp_lib_ranges
+
+    std::span<int> std_span = gsl_span;
+    EXPECT_TRUE(std_span.data() == gsl_span.data());
+    EXPECT_TRUE(std_span.size() == gsl_span.size());
+}
+#endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
