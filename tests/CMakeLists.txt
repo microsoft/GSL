@@ -89,6 +89,7 @@ if(MSVC) # MSVC or simulating MSVC
         >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
+          -Wfloat-equal
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-covered-switch-default # GTest
@@ -122,6 +123,7 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        -Wfloat-equal
         -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
@@ -227,6 +229,7 @@ if(MSVC) # MSVC or simulating MSVC
         >
         $<$<CXX_COMPILER_ID:Clang>:
           -Weverything
+          -Wfloat-equal
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
@@ -250,6 +253,7 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        -Wfloat-equal
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
