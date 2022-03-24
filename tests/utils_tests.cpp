@@ -149,5 +149,7 @@ TEST(utils_tests, narrow)
     EXPECT_TRUE(
         narrow<std::complex<float>>(std::complex<double>(4, 2)) == std::complex<float>(4, 2));
     EXPECT_THROW(narrow<std::complex<float>>(std::complex<double>(4.2)), narrowing_error);
+
+    EXPECT_TRUE(narrow<int>(float(1)) == 1);
 }
 #endif // GSL_KERNEL_MODE
