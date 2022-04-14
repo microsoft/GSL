@@ -43,10 +43,17 @@ GSL_SUPPRESS(p.2) // NO-FORMAT: attribute // don't rely on undefined behavior
                                    // and cannot fit into the destination integral type), the resultant behavior is benign on the platforms
                                    // that we target (i.e., no hardware trap representations are hit).
 
+#if defined(__clang__) || defined(__GNUC__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
     if (static_cast<U>(t) != u || (is_different_signedness && ((t < T{}) != (u < U{}))))
     {
         throw narrowing_error{};
     }
+#if defined(__clang__) || defined(__GNUC__)
+    #pragma GCC diagnostic pop
+#endif
 
     return t;
 }
