@@ -16,8 +16,9 @@
 
 #ifndef GSL_NARROW_H
 #define GSL_NARROW_H
-#include "assert" // for Expects
-#include "util"   // for narrow_cast
+#include "assert"    // for Expects
+#include "util"      // for narrow_cast
+#include <exception> // for std::exception
 namespace gsl
 {
 struct narrowing_error : public std::exception
