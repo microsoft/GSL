@@ -706,14 +706,11 @@ private:
         template <class OtherExtentType>
         constexpr storage_type(KnownNotNull data, OtherExtentType ext)
             : ExtentType(ext), data_(data.p)
-        {
-            Expects(ExtentType::size() != dynamic_extent);
-        }
+        {}
 
         template <class OtherExtentType>
         constexpr storage_type(pointer data, OtherExtentType ext) : ExtentType(ext), data_(data)
         {
-            Expects(ExtentType::size() != dynamic_extent);
             Expects(data || ExtentType::size() == 0);
         }
 
