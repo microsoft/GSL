@@ -16,7 +16,7 @@
 
 #ifndef GSL_NARROW_H
 #define GSL_NARROW_H
-#include "assert"    // for Expects
+#include "assert"    // for GSL_SUPPRESS
 #include "util"      // for narrow_cast
 #include <exception> // for std::exception
 namespace gsl
