@@ -45,6 +45,12 @@
 #define GSL_NODISCARD
 #endif // defined(__cplusplus) && (__cplusplus >= 201703L)
 
+#if defined(__cpp_inline_variables)
+#define GSL_INLINE inline
+#else
+#define GSL_INLINE
+#endif
+
 namespace gsl
 {
 //

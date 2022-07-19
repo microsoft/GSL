@@ -41,7 +41,7 @@ namespace gsl
 {
 
 // [span.views.constants], constants
-constexpr const std::size_t dynamic_extent = narrow_cast<std::size_t>(-1);
+GSL_INLINE constexpr const std::size_t dynamic_extent = narrow_cast<std::size_t>(-1);
 
 template <class ElementType, std::size_t Extent = dynamic_extent>
 class span;
