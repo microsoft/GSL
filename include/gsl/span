@@ -343,16 +343,18 @@ namespace details
     };
 }} // namespace gsl::details
 
+namespace std
+{
 template <class Type>
-struct std::pointer_traits<::gsl::details::span_iterator<Type>> {
-    using pointer         = ::gsl::details::span_iterator<Type>;
-    using element_type    = Type;
+struct pointer_traits<::gsl::details::span_iterator<Type>>
+{
+    using pointer = ::gsl::details::span_iterator<Type>;
+    using element_type = Type;
     using difference_type = ptrdiff_t;
 
-    static constexpr element_type* to_address(const pointer i) noexcept {
-        return i.current_;
-    }
+    static constexpr element_type* to_address(const pointer i) noexcept { return i.current_; }
 };
+} // namespace std
 
 namespace gsl { namespace details {
     template <std::size_t Ext>
