@@ -52,7 +52,9 @@ template <class F>
 class final_action
 {
 public:
-    explicit final_action(F f_) : f(std::move(f_)) { }
+    template <class FF>
+    explicit final_action(FF&& ff) : f{std::forward<FF>(ff)} { }
+
     ~final_action() { if (invoke) f(); }
 
     final_action(final_action&& other)
@@ -60,8 +62,8 @@ public:
     { }
 
     final_action(const final_action& rhs) = delete;
-    final_action& operator=(const final_action&) = delete;
-    final_action& operator=(final_action&& other) = delete;
+    void operator=(const final_action&)   = delete;
+    void operator=(final_action&& other)  = delete;
 
 private:
     F f;
@@ -70,9 +72,9 @@ private:
 
 // finally() - convenience function to generate a final_action
 template <class F>
-auto finally(F f) noexcept
+[[nodiscard]] auto finally(F&& f) noexcept
 {
-    return final_action<F>{f};
+    return final_action<F>{std::forward<F>(f)};
 }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
