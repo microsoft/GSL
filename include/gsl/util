@@ -53,11 +53,11 @@ class final_action
 {
 public:
     template <class FF>
-    explicit final_action(FF&& ff) : f{std::forward<FF>(ff)} { }
+    explicit final_action(FF&& ff) noexcept : f{std::forward<FF>(ff)} { }
 
-    ~final_action() { if (invoke) f(); }
+    ~final_action() noexcept { if (invoke) f(); }
 
-    final_action(final_action&& other)
+    final_action(final_action&& other) noexcept
         : f(std::move(other.f)), invoke(std::exchange(other.invoke, false))
     { }
 
