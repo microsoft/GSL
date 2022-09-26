@@ -37,7 +37,9 @@ TEST(byte_tests, construction)
         EXPECT_TRUE(static_cast<unsigned char>(b) == 4);
     }
 
+    // clang-format off
     GSL_SUPPRESS(es.49)
+    // clang-format on
     {
         const byte b = byte(12);
         EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
@@ -55,7 +57,7 @@ TEST(byte_tests, construction)
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
     {
-        const byte b { 14 };
+        const byte b{14};
         EXPECT_TRUE(static_cast<unsigned char>(b) == 14);
     }
 #endif
@@ -122,7 +124,7 @@ TEST(byte_tests, aliasing)
     EXPECT_TRUE(res == i);
 }
 
-}
+} // namespace
 
 #ifdef CONFIRM_COMPILATION_ERRORS
 copy(src_span_static, dst_span_static);

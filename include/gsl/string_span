@@ -17,9 +17,9 @@
 #ifndef GSL_STRING_SPAN_H
 #define GSL_STRING_SPAN_H
 
-#include <gsl/assert>   // for Ensures, Expects
-#include <gsl/span_ext> // for operator!=, operator==, dynamic_extent
-#include <gsl/util>     // for narrow_cast
+#include "assert"   // for Ensures, Expects
+#include "span_ext" // for operator!=, operator==, dynamic_extent
+#include "util"     // for narrow_cast
 
 #include <algorithm> // for equal, lexicographical_compare
 #include <array>     // for array
@@ -59,29 +59,21 @@ namespace gsl
 template <typename CharT, std::size_t Extent = dynamic_extent>
 using basic_zstring = CharT*;
 
-template <std::size_t Extent = dynamic_extent>
-using czstring = basic_zstring<const char, Extent>;
+using czstring = basic_zstring<const char, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using cwzstring = basic_zstring<const wchar_t, Extent>;
+using cwzstring = basic_zstring<const wchar_t, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using cu16zstring = basic_zstring<const char16_t, Extent>;
+using cu16zstring = basic_zstring<const char16_t, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using cu32zstring = basic_zstring<const char32_t, Extent>;
+using cu32zstring = basic_zstring<const char32_t, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using zstring = basic_zstring<char, Extent>;
+using zstring = basic_zstring<char, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using wzstring = basic_zstring<wchar_t, Extent>;
+using wzstring = basic_zstring<wchar_t, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using u16zstring = basic_zstring<char16_t, Extent>;
+using u16zstring = basic_zstring<char16_t, dynamic_extent>;
 
-template <std::size_t Extent = dynamic_extent>
-using u32zstring = basic_zstring<char32_t, Extent>;
+using u32zstring = basic_zstring<char32_t, dynamic_extent>;
 
 namespace details
 {

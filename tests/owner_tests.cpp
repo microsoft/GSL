@@ -20,7 +20,7 @@
 
 using namespace gsl;
 
-GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
+GSL_SUPPRESS(f .23) // NO-FORMAT: attribute
 void f(int* i) { *i += 1; }
 
 TEST(owner_tests, basic_test)
@@ -34,10 +34,10 @@ TEST(owner_tests, basic_test)
 
 TEST(owner_tests, check_pointer_constraint)
 {
-    #ifdef CONFIRM_COMPILATION_ERRORS
+#ifdef CONFIRM_COMPILATION_ERRORS
     {
         owner<int> integerTest = 10;
         owner<std::shared_ptr<int>> sharedPtrTest(new int(10));
     }
-    #endif
+#endif
 }

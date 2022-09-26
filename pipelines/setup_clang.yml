@@ -1,0 +1,13 @@
+parameters:
+    version: 0
+
+steps:
+  - script: |
+      echo "##vso[task.setvariable variable=CXX;]${CXX}"
+      echo "##vso[task.setvariable variable=CC;]${CC}"
+
+    displayName: "Setup Clang Version"
+    failOnStderr: true
+    env:
+      CC: clang-${{ parameters.version }}
+      CXX: clang++-${{ parameters.version }}

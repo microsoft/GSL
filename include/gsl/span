@@ -17,14 +17,20 @@
 #ifndef GSL_SPAN_H
 #define GSL_SPAN_H
 
-#include <gsl/assert> // for Expects
-#include <gsl/byte>   // for byte
-#include <gsl/util>   // for narrow_cast
+#include "assert"   // for Expects
+#include "byte"     // for byte
+#include "span_ext" // for span specialization of gsl::at and other span-related extensions
+#include "util"     // for narrow_cast
 
 #include <array>       // for array
 #include <cstddef>     // for ptrdiff_t, size_t, nullptr_t
 #include <iterator>    // for reverse_iterator, distance, random_access_...
+#include <memory>      // for pointer_traits
 #include <type_traits> // for enable_if_t, declval, is_convertible, inte...
+
+#if defined(__has_include) && __has_include(<version>)
+#include <version>
+#endif
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #pragma warning(push)
@@ -59,12 +65,6 @@
 
 namespace gsl
 {
-
-// [views.constants], constants
-constexpr const std::size_t dynamic_extent = narrow_cast<std::size_t>(-1);
-
-template <class ElementType, std::size_t Extent = dynamic_extent>
-class span;
 
 // implementation details
 namespace details
@@ -115,6 +115,9 @@ namespace details
     class span_iterator
     {
     public:
+#if defined(__cpp_lib_ranges) || (defined(_MSVC_STL_VERSION) && defined(__cpp_lib_concepts))
+        using iterator_concept = std::contiguous_iterator_tag;
+#endif // __cpp_lib_ranges
         using iterator_category = std::random_access_iterator_tag;
         using value_type = std::remove_cv_t<Type>;
         using difference_type = std::ptrdiff_t;
@@ -334,8 +337,26 @@ namespace details
         pointer begin_ = nullptr;
         pointer end_ = nullptr;
         pointer current_ = nullptr;
-    };
 
+        template <typename Ptr>
+        friend struct std::pointer_traits;
+    };
+}} // namespace gsl::details
+
+namespace std
+{
+template <class Type>
+struct pointer_traits<::gsl::details::span_iterator<Type>>
+{
+    using pointer = ::gsl::details::span_iterator<Type>;
+    using element_type = Type;
+    using difference_type = ptrdiff_t;
+
+    static constexpr element_type* to_address(const pointer i) noexcept { return i.current_; }
+};
+} // namespace std
+
+namespace gsl { namespace details {
     template <std::size_t Ext>
     class extent_type
     {
@@ -687,14 +708,11 @@ private:
         template <class OtherExtentType>
         constexpr storage_type(KnownNotNull data, OtherExtentType ext)
             : ExtentType(ext), data_(data.p)
-        {
-            Expects(ExtentType::size() != dynamic_extent);
-        }
+        {}
 
         template <class OtherExtentType>
         constexpr storage_type(pointer data, OtherExtentType ext) : ExtentType(ext), data_(data)
         {
-            Expects(ExtentType::size() != dynamic_extent);
             Expects(data || ExtentType::size() == 0);
         }
 

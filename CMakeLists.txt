@@ -4,7 +4,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
 include(guidelineSupportLibrary)
 
 project(GSL
-    VERSION 3.1.0
+    VERSION 4.0.0
     LANGUAGES CXX
 )
 

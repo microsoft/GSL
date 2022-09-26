@@ -16,14 +16,15 @@
 
 #include <gtest/gtest.h>
 
-#include <gsl/util>     // finally, narrow_cast
-#include <gsl/narrow>   // for narrow, narrowing_error
 #include <algorithm>   // for move
+#include <complex>
+#include <cstddef>     // for std::ptrdiff_t
 #include <functional>  // for reference_wrapper, _Bind_helper<>::type
+#include <gsl/narrow>  // for narrow, narrowing_error
+#include <gsl/util>    // finally, narrow_cast
 #include <limits>      // for numeric_limits
 #include <stdint.h>    // for uint32_t, int32_t
 #include <type_traits> // for is_same
-#include <cstddef>     // for std::ptrdiff_t
 
 using namespace gsl;
 
@@ -32,8 +33,7 @@ namespace
 void f(int& i) { i += 1; }
 static int j = 0;
 void g() { j += 1; }
-}
-
+} // namespace
 
 TEST(utils_tests, sanity_check_for_gsl_index_typedef)
 {
@@ -123,6 +123,7 @@ TEST(utils_tests, narrow_cast)
     EXPECT_TRUE(uc == 44);
 }
 
+#ifndef GSL_KERNEL_MODE
 TEST(utils_tests, narrow)
 {
     int n = 120;
@@ -144,4 +145,11 @@ TEST(utils_tests, narrow)
 
     n = -42;
     EXPECT_THROW(narrow<unsigned>(n), narrowing_error);
+
+    EXPECT_TRUE(
+        narrow<std::complex<float>>(std::complex<double>(4, 2)) == std::complex<float>(4, 2));
+    EXPECT_THROW(narrow<std::complex<float>>(std::complex<double>(4.2)), narrowing_error);
+
+    EXPECT_TRUE(narrow<int>(float(1)) == 1);
 }
+#endif // GSL_KERNEL_MODE

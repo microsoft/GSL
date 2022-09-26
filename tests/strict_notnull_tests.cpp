@@ -14,30 +14,40 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <gsl/pointers> // for not_null, operator<, operator<=, operator>
 #include <gtest/gtest.h>
-#include <gsl/pointers>           // for not_null, operator<, operator<=, operator>
 
-namespace gsl
-{
-struct fail_fast;
-} // namespace gsl
+#include "deathTestCommon.h"
 
 using namespace gsl;
 
-GSL_SUPPRESS(f.4)  // NO-FORMAT: attribute
+namespace
+{
+// clang-format off
+GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+// clang-format on
 bool helper(not_null<int*> p) { return *p == 12; }
 
+// clang-format off
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+// clang-format on
 bool helper_const(not_null<const int*> p) { return *p == 12; }
 
+// clang-format off
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+// clang-format on
 bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
 
+// clang-format off
 GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
+// clang-format on
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
+#ifdef CONFIRM_COMPILATION_ERRORS
 int* return_pointer() { return nullptr; }
 const int* return_pointer_const() { return nullptr; }
+#endif
+} // namespace
 
 TEST(strict_notnull_tests, TestStrictNotNull)
 {
@@ -123,17 +133,14 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
-namespace
-{
-static constexpr char deathstring[] = "Expected Death";
-}
 
 TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 {
-    std::set_terminate([] {
+    const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. TestStrictNotNullConstructorTypeDeduction";
         std::abort();
     });
+    const auto expected = GetExpectedDeathString(terminateHandler);
 
     {
         int i = 42;
@@ -161,7 +168,7 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
             int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring);
+        EXPECT_DEATH(workaround_macro(), expected);
     }
 
     {
@@ -169,14 +176,14 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
             const int* p1 = nullptr;
             const strict_not_null x{p1};
         };
-        EXPECT_DEATH(workaround_macro(), deathstring);
+        EXPECT_DEATH(workaround_macro(), expected);
     }
 
     {
         int* p = nullptr;
 
-        EXPECT_DEATH(helper(strict_not_null{p}), deathstring);
-        EXPECT_DEATH(helper_const(strict_not_null{p}), deathstring);
+        EXPECT_DEATH(helper(strict_not_null{p}), expected);
+        EXPECT_DEATH(helper_const(strict_not_null{p}), expected);
     }
 
 #ifdef CONFIRM_COMPILATION_ERRORS

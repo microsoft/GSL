@@ -1,0 +1,9 @@
+parameters:
+    version: 0
+
+steps:
+  - script: |
+      if [ "${{ parameters.version }}" != "default" ]; then sudo xcode-select -switch /Applications/Xcode_${{ parameters.version }}.app; fi
+
+    displayName: "Setup Xcode Version"
+    failOnStderr: true

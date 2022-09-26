@@ -17,7 +17,7 @@
 #include <gtest/gtest.h>
 
 #include <gsl/byte> // for byte
-#include <gsl/span>     // for span, span_iterator, operator==, operator!=
+#include <gsl/span> // for span, span_iterator, operator==, operator!=
 
 #include <array>       // for array
 #include <cstddef>     // for ptrdiff_t
@@ -55,14 +55,14 @@ void ArrayConvertibilityCheck()
         EXPECT_TRUE(sp_const_nullptr_1.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_1.size() == 3);
 
-        span<const T* const> sp_const_nullptr_2{std::as_const(stl_nullptr)};
+        gsl::span<const T* const> sp_const_nullptr_2{std::as_const(stl_nullptr)};
         EXPECT_TRUE(sp_const_nullptr_2.data() == stl_nullptr.data());
         EXPECT_TRUE(sp_const_nullptr_2.size() == 3);
 
-        static_assert(std::is_same<decltype(span{stl_nullptr}), span<T*, 3>>::value,
+        static_assert(std::is_same<decltype(gsl::span{stl_nullptr}), gsl::span<T*, 3>>::value,
                       "std::is_same< decltype(span{stl_nullptr}), span<T*, 3>>::value");
         static_assert(
-            std::is_same<decltype(span{std::as_const(stl_nullptr)}), span<T* const, 3>>::value,
+            std::is_same<decltype(gsl::span{std::as_const(stl_nullptr)}), gsl::span<T* const, 3>>::value,
             "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<T* const, "
             "3>>::value");
     }
