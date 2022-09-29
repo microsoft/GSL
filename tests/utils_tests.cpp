@@ -112,6 +112,16 @@ TEST(utils_tests, finally_function_ptr)
     EXPECT_TRUE(j == 1);
 }
 
+TEST(utils_tests, finally_function)
+{
+    j = 0;
+    {
+        auto _ = finally(g);
+        EXPECT_TRUE(j == 0);
+    }
+    EXPECT_TRUE(j == 1);
+}
+
 TEST(utils_tests, narrow_cast)
 {
     int n = 120;
