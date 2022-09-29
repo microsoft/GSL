@@ -87,7 +87,7 @@ private:
 template <class F>
 GSL_NODISCARD auto finally(F&& f) noexcept
 {
-    return final_action<std::remove_cv_t<std::remove_reference_t<F>>>{std::forward<F>(f)};
+    return final_action<std::decay_t<F>>{std::forward<F>(f)};
 }
 
 // narrow_cast(): a searchable way to do narrowing casts of values
