@@ -256,7 +256,7 @@ public:
     constexpr strict_not_null(const strict_not_null<U>& other) : not_null<T>(other)
     {}
 
-    strict_not_null(strict_not_null&& other) noexcept = default;
+    strict_not_null(strict_not_null&& other) = default;
     strict_not_null(const strict_not_null& other) = default;
     strict_not_null& operator=(const strict_not_null& other) = default;
     strict_not_null& operator=(const not_null<T>& other)
