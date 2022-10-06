@@ -19,11 +19,11 @@
 #include <algorithm>   // for move
 #include <complex>
 #include <cstddef>     // for std::ptrdiff_t
+#include <cstdint>     // for uint32_t, int32_t
 #include <functional>  // for reference_wrapper, _Bind_helper<>::type
 #include <gsl/narrow>  // for narrow, narrowing_error
 #include <gsl/util>    // finally, narrow_cast
 #include <limits>      // for numeric_limits
-#include <stdint.h>    // for uint32_t, int32_t
 #include <type_traits> // for is_same
 
 using namespace gsl;
@@ -96,7 +96,7 @@ TEST(utils_tests, finally_function_with_bind)
 {
     int i = 0;
     {
-        auto _ = finally(std::bind(&f, std::ref(i)));
+        auto _ = finally([&i] { return f(i); });
         EXPECT_TRUE(i == 0);
     }
     EXPECT_TRUE(i == 1);
