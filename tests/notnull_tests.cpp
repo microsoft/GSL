@@ -52,7 +52,7 @@ template <typename T>
 struct CustomPtr
 {
     CustomPtr(T* p) : p_(p) {}
-    operator T*() { return p_; }
+    operator T*() const { return p_; }
     bool operator!=(std::nullptr_t) const { return p_ != nullptr; }
     T* p_ = nullptr;
 };
