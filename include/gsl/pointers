@@ -46,6 +46,17 @@ namespace details
         : std::true_type
     {
     };
+
+    // Resolves to the more efficient of `const T` or `const T&`, in the context of returning a const-qualified value
+    // of type T.
+    //
+    // Copied from cppfront's implementation of the CppCoreGuidelines F.16 (https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-in)
+    template<typename T>
+    using value_or_reference_return_t = std::conditional_t<
+                                            sizeof(T) < 2*sizeof(void*) && std::is_trivially_copy_constructible<T>::value,
+                                            const T,
+                                            const T&>;
+
 } // namespace details
 
 //
@@ -104,7 +115,7 @@ public:
 
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
-    constexpr std::conditional_t<std::is_copy_constructible<T>::value, T, const T&> get() const
+    constexpr details::value_or_reference_return_t<T> get() const
     {
         Ensures(ptr_ != nullptr);
         return ptr_;
