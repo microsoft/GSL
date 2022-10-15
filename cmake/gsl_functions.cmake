@@ -4,32 +4,19 @@
 # for multiple versions of cmake.
 #
 # Any functions/macros should have a gsl_* prefix to avoid problems
-if (CMAKE_VERSION VERSION_GREATER 3.10 OR CMAKE_VERSION VERSION_EQUAL 3.10)
-    include_guard()
-else()
-    if (DEFINED guideline_support_library_include_guard)
-        return()
-    endif()
-    set(guideline_support_library_include_guard ON)
-endif()
-
-# Necessary for 'write_basic_package_version_file'
-include(CMakePackageConfigHelpers)
 
 function(gsl_set_default_cxx_standard min_cxx_standard)
     set(GSL_CXX_STANDARD "${min_cxx_standard}" CACHE STRING "Use c++ standard")
 
-    set(GSL_CXX_STD "cxx_std_${GSL_CXX_STANDARD}")
-
-    if (MSVC)
-        set(GSL_CXX_STD_OPT "-std:c++${GSL_CXX_STANDARD}")
-    else()
-        set(GSL_CXX_STD_OPT "-std=c++${GSL_CXX_STANDARD}")
-    endif()
-
     # when minimum version required is 3.8.0 remove if below
     # both branches do exactly the same thing
     if (CMAKE_VERSION VERSION_LESS 3.7.9)
+        if (MSVC)
+            set(GSL_CXX_STD_OPT "-std:c++${GSL_CXX_STANDARD}")
+        else()
+            set(GSL_CXX_STD_OPT "-std=c++${GSL_CXX_STANDARD}")
+        endif()
+
         include(CheckCXXCompilerFlag)
         CHECK_CXX_COMPILER_FLAG("${GSL_CXX_STD_OPT}" COMPILER_SUPPORTS_CXX_STANDARD)
 
@@ -39,7 +26,8 @@ function(gsl_set_default_cxx_standard min_cxx_standard)
             message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no c++${GSL_CXX_STANDARD} support. Please use a different C++ compiler.")
         endif()
     else()
-        target_compile_features(GSL INTERFACE "${GSL_CXX_STD}")
+        # Compiler must support at least this standard
+        target_compile_features(GSL INTERFACE "cxx_std_${GSL_CXX_STANDARD}")
         # on *nix systems force the use of -std=c++XX instead of -std=gnu++XX (default)
         set(CMAKE_CXX_EXTENSIONS OFF)
     endif()
@@ -80,37 +68,5 @@ function(gsl_add_native_visualizer_support)
         if(GSL_VS_ADD_NATIVE_VISUALIZERS)
             target_sources(GSL INTERFACE $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>)
         endif()
-    endif()
-endfunction()
-
-function(gsl_install_logic)
-    install(TARGETS GSL EXPORT Microsoft.GSLConfig)
-    install(
-        DIRECTORY include/gsl
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    )
-    # Make library importable by other projects
-    install(EXPORT Microsoft.GSLConfig NAMESPACE Microsoft.GSL:: DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
-    export(TARGETS GSL NAMESPACE Microsoft.GSL:: FILE Microsoft.GSLConfig.cmake)
-
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
-endfunction()
-
-# Add find_package() versioning support. The version for
-# generated Microsoft.GSLConfigVersion.cmake will be used from
-# last project() command. The version's compatibility is set between all
-# minor versions (as it was in prev. GSL releases).
-function(gsl_create_packaging_file)
-    if(${CMAKE_VERSION} VERSION_LESS "3.14.0")
-        write_basic_package_version_file(
-            ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
-            COMPATIBILITY SameMajorVersion
-        )
-    else()
-        write_basic_package_version_file(
-            ${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake
-            COMPATIBILITY SameMajorVersion
-            ARCH_INDEPENDENT
-        )
     endif()
 endfunction()

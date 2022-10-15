@@ -1,4 +1,3 @@
-
 # Add include folders to the library and targets that consume it
 # the SYSTEM keyword suppresses warnings for users of the library
 #
@@ -7,14 +6,8 @@
 #
 # IE:
 #   #include <gsl/gsl>
-if(GSL_STANDALONE_PROJECT)
-    target_include_directories(GSL INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-    )
+if(PROJECT_IS_TOP_LEVEL)
+    target_include_directories(GSL INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 else()
-    target_include_directories(GSL SYSTEM INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-    )
+    target_include_directories(GSL SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 endif()
