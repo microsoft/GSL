@@ -121,7 +121,7 @@ Note: These CI/CD steps are run with each pull request, however failures in them
 ## Building the tests
 To build the tests, you will require the following:
 
-* [CMake](http://cmake.org), version 3.1.3 (3.2.3 for AppleClang) or later to be installed and in your PATH.
+* [CMake](http://cmake.org), version 3.8 or later to be installed and in your PATH.
 
 These steps assume the source code of this repository has been cloned into a directory named `c:\GSL`.
 

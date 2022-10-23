@@ -1,7 +1,13 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.8)
 
-project(GSLTests CXX)
+project(GSLTests LANGUAGES CXX)
 enable_testing()  # again, for support standalone testing
+
+set(GSL_CXX_STANDARD "14" CACHE STRING "Use c++ standard")
+
+set(CMAKE_CXX_STANDARD ${GSL_CXX_STANDARD})
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CXX_STANDARD_REQUIRED ON)
 
 include(FindPkgConfig)
 include(ExternalProject)
