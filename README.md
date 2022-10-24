@@ -27,7 +27,7 @@ Feature                            | Supported? | Description
 [**1. Views**][cg-views]           |            |
 owner                              | &#x2611;   | an alias for a raw pointer
 not_null                           | &#x2611;   | restricts a pointer / smart pointer to hold non-null values
-span                               | &#x2611;   | a view over a contiguous sequence of memory. Based on the standardized verison of `std::span`, however `gsl::span` enforces bounds checking. See the [wiki](https://github.com/microsoft/GSL/wiki/gsl::span-and-std::span) for additional information.
+span                               | &#x2611;   | a view over a contiguous sequence of memory. Based on the standardized version of `std::span`, however `gsl::span` enforces bounds checking. See the [wiki](https://github.com/microsoft/GSL/wiki/gsl::span-and-std::span) for additional information.
 span_p                             | &#x2610;   | spans a range starting from a pointer to the first place for which the predicate is true
 basic_zstring                      | &#x2611;   | A pointer to a C-string (zero-terminated array) with a templated char type
 zstring                            | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char
