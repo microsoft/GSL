@@ -437,13 +437,13 @@ public:
     constexpr basic_zstring_span(const basic_zstring_span& other) = default;
 
     // move
-    constexpr basic_zstring_span(basic_zstring_span && other) = default;
+    constexpr basic_zstring_span(basic_zstring_span && other) noexcept = default;
 
     // assign
     constexpr basic_zstring_span& operator=(const basic_zstring_span& other) = default;
 
     // move assign
-    constexpr basic_zstring_span& operator=(basic_zstring_span&& other) = default;
+    constexpr basic_zstring_span& operator=(basic_zstring_span&& other) noexcept = default;
 
     constexpr bool empty() const noexcept { return false; }
 
