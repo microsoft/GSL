@@ -117,7 +117,6 @@ public:
     not_null& operator=(const not_null& other) = default;
     constexpr details::value_or_reference_return_t<T> get() const
     {
-        Ensures(ptr_ != nullptr);
         return ptr_;
     }
 
