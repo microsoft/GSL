@@ -110,6 +110,9 @@ if(MSVC) # MSVC or simulating MSVC
           $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
             -Wno-unused-member-function
             -Wno-unused-variable
+            $<$<VERSION_EQUAL:$<CXX_COMPILER_VERSION>,15.0.1>:
+              -Wno-deprecated # False positive in MSVC Clang 15.0.1 raises a C++17 warning
+            >
           >
         >
     )
@@ -240,6 +243,11 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-c++98-compat-pedantic
           -Wno-missing-prototypes
           -Wno-unknown-attributes
+          $<$<EQUAL:${GSL_CXX_STANDARD},14>:
+            $<$<VERSION_EQUAL:$<CXX_COMPILER_VERSION>,15.0.1>: 
+              -Wno-deprecated # False positive in MSVC Clang 15.0.1 raises a C++17 warning
+            >
+          >
         >
     )
     check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
