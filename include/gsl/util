@@ -144,6 +144,13 @@ constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size
     return sp[gsl::narrow_cast<size_t>(i)];
 }
 #endif // __cpp_lib_span >= 202002L
+
+template <class Cont, class... Args>
+constexpr decltype(auto) at(Cont&& cont, const index i, Args&&... args)
+{
+    return at(at(std::forward<Cont>(cont), i), std::forward<Args>(args)...);
+}
+
 } // namespace gsl
 
 #if defined(_MSC_VER) && !defined(__clang__)

@@ -147,6 +147,34 @@ TEST(at_tests, std_span)
 }
 #endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 
+TEST(at_tests, VariadicTemplate)
+{
+    std::array<std::vector<int>, 4> a;
+    for (int i = 0; i < 4; ++i)
+    {
+        a[i] = std::vector<int>(4, i + 1);
+    }
+
+    for (int i = 0; i < 4; ++i)
+    {
+        EXPECT_TRUE(gsl::at(a, i, i) == i + 1);
+    }
+
+    gsl::at(a, 0, 0) = 0;
+    EXPECT_TRUE(gsl::at(a, 0, 0) == 0);
+
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. VariadicTemplate";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
+    EXPECT_DEATH(gsl::at(a, -1, 0), expected);
+    EXPECT_DEATH(gsl::at(a, 0, -1), expected);
+    EXPECT_DEATH(gsl::at(a, 4, 0), expected);
+    EXPECT_DEATH(gsl::at(a, 0, 4), expected);
+}
+
 #if !defined(_MSC_VER) || defined(__clang__) || _MSC_VER >= 1910
 static constexpr bool test_constexpr()
 {
