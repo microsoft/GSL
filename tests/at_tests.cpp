@@ -149,11 +149,7 @@ TEST(at_tests, std_span)
 
 TEST(at_tests, VariadicTemplate)
 {
-    std::array<std::vector<int>, 4> a;
-    for (int i = 0; i < 4; ++i)
-    {
-        a[i] = std::vector<int>(4, i + 1);
-    }
+    std::array<std::vector<int>, 4> a{{{1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}, {4, 4, 4, 4}}};
 
     for (int i = 0; i < 4; ++i)
     {
