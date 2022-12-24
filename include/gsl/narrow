@@ -52,6 +52,7 @@ GSL_SUPPRESS(p.2) // NO-FORMAT: attribute // don't rely on undefined behavior
     #pragma GCC diagnostic push
     #pragma GCC diagnostic ignored "-Wfloat-equal"
 #endif
+    // Note: NaN will always throw, since NaN != NaN
     if (static_cast<U>(t) != u || (is_different_signedness && ((t < T{}) != (u < U{}))))
     {
         throw narrowing_error{};
