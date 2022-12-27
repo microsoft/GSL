@@ -200,7 +200,7 @@ add_executable(gsl_tests
     span_ext_tests.cpp
     span_tests.cpp
     strict_notnull_tests.cpp
-    string_span_tests.cpp
+    
     utils_tests.cpp
 )
 
