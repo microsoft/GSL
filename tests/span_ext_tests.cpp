@@ -19,9 +19,10 @@
 #include <gsl/span> // for span and span_ext
 #include <gsl/util> // for narrow_cast, at
 
-#include <array>    // for array
-#include <iostream> // for cerr
-#include <vector>   // for vector
+#include <array>     // for array
+#include <exception> // for terminate
+#include <iostream>  // for cerr
+#include <vector>    // for vector
 
 using namespace std;
 using namespace gsl;
@@ -193,10 +194,18 @@ TEST(span_ext_test, make_span_from_container_constructor)
 
 TEST(span_test, interop_with_gsl_at)
 {
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. interop_with_gsl_at";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
     int arr[5] = {1, 2, 3, 4, 5};
     gsl::span<int> s{arr};
     EXPECT_TRUE(at(s, 0) == 1);
     EXPECT_TRUE(at(s, 1) == 2);
+    EXPECT_DEATH(at(s, 5), expected);
+    EXPECT_DEATH(at(s, 6), expected);
 }
 
 TEST(span_ext_test, iterator_free_functions)
