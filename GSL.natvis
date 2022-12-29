@@ -4,13 +4,7 @@
     vim: syntax=xml
 -->
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
-    <!-- These types are from the gsl_assert header. -->
-    <Type Name="gsl::fail_fast">
-        <!-- na hides the address, otherwise it would appear as 0x.... "Message" -->
-        <DisplayString>{_Data._What,nasb}</DisplayString>
-    </Type>
-
-    <!-- These types are from the gsl_util header. -->
+    <!-- These types are from the util header. -->
     <Type Name="gsl::final_action&lt;*&gt;">
         <DisplayString>{{ invoke = {invoke_}, action = {f_} }}</DisplayString>
         <Expand>
@@ -19,7 +13,8 @@
         </Expand>
     </Type>
 
-    <Type Name="gsl::span&lt;*, *&gt;">
+  <!-- These types are from the span header. -->
+  <Type Name="gsl::span&lt;*, *&gt;">
         <DisplayString>{{ extent = {storage_.size_} }}</DisplayString>
         <Expand>
             <ArrayItems>
@@ -29,29 +24,7 @@
         </Expand>
     </Type>
 
-    <Type Name="gsl::basic_string_span&lt;*, *&gt;">
-        <DisplayString>{span_.storage_.data_,[span_.storage_.size_]na}</DisplayString>
-        <Expand>
-            <Item Name="[size]">span_.storage_.size_</Item>
-            <ArrayItems>
-                <Size>span_.storage_.size_</Size>
-                <ValuePointer>span_.storage_.data_</ValuePointer>
-            </ArrayItems>
-        </Expand>
-    </Type>
-
-    <Type Name="gsl::basic_zstring_span&lt;*, *&gt;">
-        <DisplayString>{span_.storage_.data_,[span_.storage_.size_]na}</DisplayString>
-        <Expand>
-            <Item Name="[size]">span_.storage_.size_</Item>
-            <ArrayItems>
-                <Size>span_.storage_.size_</Size>
-                <ValuePointer>span_.storage_.data_</ValuePointer>
-            </ArrayItems>
-        </Expand>
-    </Type>
-
-    <!-- These types are from the gsl header. -->
+    <!-- These types are from the pointers header. -->
     <Type Name="gsl::not_null&lt;*&gt;">
         <!-- We can always dereference this since it's an invariant. -->
         <DisplayString>value = {*ptr_}</DisplayString>

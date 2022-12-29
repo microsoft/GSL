@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "deathTestCommon.h"
-#include <gsl/assert> // for fail_fast (ptr only), Ensures, Expects
+#include <gsl/assert> // for Ensures, Expects
 #include <gtest/gtest.h>
 
 using namespace gsl;
