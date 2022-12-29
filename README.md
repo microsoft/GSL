@@ -48,15 +48,15 @@ Expects                            | &#x2611;   | a precondition assertion; on f
 Ensures                            | &#x2611;   | a postcondition assertion; on failure it terminates
 [**4. Utilities**][cg-utilities]   |            |
 move_owner                         | &#x2610;   | a helper function that moves one `owner` to the other
-byte                               | &#x2611;   | either an alias to std::byte or a byte type
+byte                               | &#x2611;   | either an alias to `std::byte` or a byte type
 final_action                       | &#x2611;   | a RAII style class that invokes a functor on its destruction
 finally                            | &#x2611;   | a helper function instantiating `final_action`
 GSL_SUPPRESS                       | &#x2611;   | a macro that takes an argument and turns it into `[[gsl::suppress(x)]]` or `[[gsl::suppress("x")]]`
 [[implicit]]                       | &#x2610;   | a "marker" to put on single-argument constructors to explicitly make them non-explicit
-index                              | &#x2611;   | a type to use for all container and array indexing (currently an alias for std::ptrdiff_t)
+index                              | &#x2611;   | a type to use for all container and array indexing (currently an alias for `std::ptrdiff_t`)
 joining_thread                     | &#x2610;   | a RAII style version of `std::thread` that joins
-narrow                             | &#x2611;   | a checked version of narrow_cast; it can throw `narrowing_error`
-narrow_cast                        | &#x2611;   | a narrowing cast for values and a synonym for static_cast
+narrow                             | &#x2611;   | a checked version of `narrow_cast`; it can throw `narrowing_error`
+narrow_cast                        | &#x2611;   | a narrowing cast for values and a synonym for `static_cast`
 narrowing_error                    | &#x2611;   | a custom exception type thrown by `narrow()`
 [**5. Concepts**][cg-concepts]     | &#x2610;   |
 
