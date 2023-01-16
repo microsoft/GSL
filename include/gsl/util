@@ -111,8 +111,8 @@ GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     // clang-format on
     constexpr T& at(T (&arr)[N], const index i)
 {
-    static_assert(N <= std::numeric_limits<std::size_t>::max() / 2, "We only support arrays up to half the bytes of the address space.");
-    Expects(i >= 0 && narrow_cast<std::size_t>(i) < N);
+    static_assert(N <= static_cast<std::size_t>(std::numeric_limits<std::ptrdiff_t>::max()), "We only support arrays up to half the bytes of the address space.");
+    Expects(i >= 0 && i < narrow_cast<index>(N));
     return arr[narrow_cast<std::size_t>(i)];
 }
 
@@ -123,8 +123,8 @@ GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     // clang-format on
     constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()])
 {
+    Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     using size_type = decltype(cont.size());
-    Expects(i >= 0 && narrow_cast<size_type>(i) < cont.size());
     return cont[narrow_cast<size_type>(i)];
 }
 
@@ -134,8 +134,7 @@ GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     // clang-format on
     constexpr T at(const std::initializer_list<T> cont, const index i)
 {
-    using size_type = decltype(cont.size());
-    Expects(i >= 0 && narrow_cast<size_type>(i) < cont.size());
+    Expects(i >= 0 && i < narrow_cast<index>(cont.size()));
     return *(cont.begin() + i);
 }
 
@@ -143,7 +142,7 @@ GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 template <class T, std::size_t extent = std::dynamic_extent>
 constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size()])
 {
-    Expects(i >= 0 && narrow_cast<std::size_t>(i) < sp.size());
+    Expects(i >= 0 && i < narrow_cast<index>(sp.size()));
     return sp[gsl::narrow_cast<std::size_t>(i)];
 }
 #endif // __cpp_lib_span >= 202002L
