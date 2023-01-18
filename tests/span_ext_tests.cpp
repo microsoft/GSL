@@ -195,10 +195,10 @@ TEST(span_ext_test, make_span_from_container_constructor)
 TEST(span_test, interop_with_gsl_at)
 {
     std::vector<int> vec{1, 2, 3, 4, 5};
-    gsl::span sp{vec};
+    gsl::span<int> sp{vec};
 
     std::vector<int> cvec{1, 2, 3, 4, 5};
-    gsl::span csp{cvec};
+    gsl::span<int> csp{cvec};
 
     for (gsl::index i = 0; i < gsl::narrow_cast<gsl::index>(vec.size()); ++i)
     {
