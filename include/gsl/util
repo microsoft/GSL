@@ -21,6 +21,7 @@
 
 #include <array>
 #include <cstddef>          // for ptrdiff_t, size_t
+#include <limits>           // for numeric_limits
 #include <initializer_list> // for initializer_list
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for exchange, forward
@@ -110,6 +111,7 @@ GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     // clang-format on
     constexpr T& at(T (&arr)[N], const index i)
 {
+    static_assert(N <= static_cast<std::size_t>(std::numeric_limits<std::ptrdiff_t>::max()), "We only support arrays up to PTRDIFF_MAX bytes.");
     Expects(i >= 0 && i < narrow_cast<index>(N));
     return arr[narrow_cast<std::size_t>(i)];
 }
@@ -137,11 +139,11 @@ GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
 }
 
 #if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
-template <class T, size_t extent = std::dynamic_extent>
+template <class T, std::size_t extent = std::dynamic_extent>
 constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size()])
 {
     Expects(i >= 0 && i < narrow_cast<index>(sp.size()));
-    return sp[gsl::narrow_cast<size_t>(i)];
+    return sp[gsl::narrow_cast<std::size_t>(i)];
 }
 #endif // __cpp_lib_span >= 202002L
 } // namespace gsl

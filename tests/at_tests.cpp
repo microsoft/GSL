@@ -20,6 +20,7 @@
 
 #include <array>            // for array
 #include <cstddef>          // for size_t
+#include <exception>        // for terminate
 #include <initializer_list> // for initializer_list
 #include <vector>           // for vector
 #if defined(__cplusplus) && __cplusplus >= 202002L
