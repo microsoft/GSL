@@ -194,18 +194,28 @@ TEST(span_ext_test, make_span_from_container_constructor)
 
 TEST(span_test, interop_with_gsl_at)
 {
+    std::vector<int> vec{1, 2, 3, 4, 5};
+    gsl::span sp{vec};
+
+    std::vector<int> cvec{1, 2, 3, 4, 5};
+    gsl::span csp{cvec};
+
+    for (gsl::index i = 0; i < gsl::narrow_cast<gsl::index>(vec.size()); ++i)
+    {
+        EXPECT_TRUE(&gsl::at(sp, i) == &vec[gsl::narrow_cast<size_t>(i)]);
+        EXPECT_TRUE(&gsl::at(csp, i) == &cvec[gsl::narrow_cast<size_t>(i)]);
+    }
+
     const auto terminateHandler = std::set_terminate([] {
         std::cerr << "Expected Death. interop_with_gsl_at";
         std::abort();
     });
     const auto expected = GetExpectedDeathString(terminateHandler);
 
-    int arr[5] = {1, 2, 3, 4, 5};
-    gsl::span<int> s{arr};
-    EXPECT_TRUE(at(s, 0) == 1);
-    EXPECT_TRUE(at(s, 1) == 2);
-    EXPECT_DEATH(at(s, 5), expected);
-    EXPECT_DEATH(at(s, 6), expected);
+    EXPECT_DEATH(gsl::at(sp, -1), expected);
+    EXPECT_DEATH(gsl::at(sp, gsl::narrow_cast<gsl::index>(sp.size())), expected);
+    EXPECT_DEATH(gsl::at(csp, -1), expected);
+    EXPECT_DEATH(gsl::at(csp, gsl::narrow_cast<gsl::index>(sp.size())), expected);
 }
 
 TEST(span_ext_test, iterator_free_functions)
