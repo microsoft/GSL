@@ -111,7 +111,7 @@ GSL_SUPPRESS(bounds.2) // NO-FORMAT: attribute
     // clang-format on
     constexpr T& at(T (&arr)[N], const index i)
 {
-    static_assert(N <= static_cast<std::size_t>(std::numeric_limits<std::ptrdiff_t>::max()), "We only support arrays up to PTRDIFF_MAX bytes.");
+    static_assert(N <= static_cast<std::size_t>((std::numeric_limits<std::ptrdiff_t>::max)()), "We only support arrays up to PTRDIFF_MAX bytes.");
     Expects(i >= 0 && i < narrow_cast<index>(N));
     return arr[narrow_cast<std::size_t>(i)];
 }
