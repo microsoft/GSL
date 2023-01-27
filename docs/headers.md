@@ -1,4 +1,4 @@
-**<The documentation is under construction>**
+**The documentation is under construction**
 
 
 
