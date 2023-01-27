@@ -8,19 +8,19 @@ The GSL interface is very lightweight and exposed via a header-only library. Thi
 
 ## Headers
 
-- [<algorithms>](#H-algorithms)
-- [<assert>](#H-assert)
-- [<byte>](#H-byte)
-- [<narrow>](#H-narrow)
-- [<pointers>](#H-pointers)
-- [<span>](#H-span)
-- [<span_ext>](#H-span_ext)
-- [<string_span>](#H-string_span)
-- [<util>](#H-util)
+- [`<algorithms>`](#H-algorithms)
+- [`<assert>`](#H-assert)
+- [`<byte>`](#H-byte)
+- [`<narrow>`](#H-narrow)
+- [`<pointers>`](#H-pointers)
+- [`<span>`](#H-span)
+- [`<span_ext>`](#H-span_ext)
+- [`<string_span>`](#H-string_span)
+- [`<util>`](#H-util)
 
 
 
-### <a name="H-algorithms"></a><algorithms>
+### <a name="H-algorithms"></a>`<algorithms>`
 
 This header contains some common algorithms that have been wrapped in GSL safety features.
 
@@ -28,11 +28,11 @@ This header contains some common algorithms that have been wrapped in GSL safety
 
 TODO: document this
 
-### <a name="H-assert"></a><assert>
+### <a name="H-assert"></a>`<assert>`
 
 TODO: document this
 
-### <a name="H-byte"></a><byte>
+### <a name="H-byte"></a>`<byte>`
 
 `gsl::byte`
 
@@ -40,17 +40,17 @@ TODO: document this
 
 TODO: document this
 
-### <a name="H-narrow"></a><narrow>
+### <a name="H-narrow"></a>`<narrow>`
 
 `gsl::narrowing_error`
 
 `gsl::narrow`
 
-Note: related `gsl::narrow_cast` is found in [<util>](#H-util)
+Note: related `gsl::narrow_cast` is found in [`<util>`](#H-util)
 
 TODO: document this
 
-### <a name="H-pointers"></a><pointers>
+### <a name="H-pointers"></a>`<pointers>`
 
 `gsl::owner`
 
@@ -60,25 +60,25 @@ TODO: document this
 
 TODO: document this
 
-### <a name="H-span"></a><span>
+### <a name="H-span"></a>`<span>`
 
 `gsl::span` (and related functions: `as_bytes`, `as_writable_bytes`)
 
 TODO: document this
 
-### <a name="H-span_ext"></a><span_ext>
+### <a name="H-span_ext"></a>`<span_ext>`
 
 operators and functions (`as_bytes`, `as_writable_bytes`)
 
 TODO: document this
 
-### <a name="H-string_span"></a><string_span>
+### <a name="H-string_span"></a>`<string_span>`
 
 `*zstring` family
 
 TODO: document this
 
-### <a name="H-util"></a><util>
+### <a name="H-util"></a>`<util>`
 
 functions: `finally`, `narrow_cast`, `at`, ...
 
