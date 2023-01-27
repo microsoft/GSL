@@ -8,15 +8,15 @@ The GSL interface is very lightweight and exposed via a header-only library. Thi
 
 ## Headers
 
-- [`<algorithms>`](#H-algorithms)
-- [`<assert>`](#H-assert)
-- [`<byte>`](#H-byte)
-- [`<narrow>`](#H-narrow)
-- [`<pointers>`](#H-pointers)
-- [`<span>`](#H-span)
-- [`<span_ext>`](#H-span_ext)
-- [`<string_span>`](#H-string_span)
-- [`<util>`](#H-util)
+- [`<algorithms>`](#user-content-H-algorithms)
+- [`<assert>`](#user-content-H-assert)
+- [`<byte>`](#user-content-H-byte)
+- [`<narrow>`](#user-content-H-narrow)
+- [`<pointers>`](#user-content-H-pointers)
+- [`<span>`](#user-content-H-span)
+- [`<span_ext>`](#user-content-H-span_ext)
+- [`<string_span>`](#user-content-H-string_span)
+- [`<util>`](#user-content-H-util)
 
 
 
@@ -46,7 +46,7 @@ TODO: document this
 
 `gsl::narrow`
 
-Note: related `gsl::narrow_cast` is found in [`<util>`](#H-util)
+Note: related `gsl::narrow_cast` is found in [`<util>`](#user-content-H-util)
 
 TODO: document this
 
