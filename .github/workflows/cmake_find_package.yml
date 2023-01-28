@@ -1,0 +1,25 @@
+name: cmake_find_package
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cmake-find-package:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: 3.14.0
+      - name: Configure GSL
+        run: cmake -S . -B build -G "Ninja" -D GSL_TEST=OFF -D CMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/build/install
+      - name: Install GSL
+        run: cmake --build build --target install
+      - name: Test GSL find_package support
+        run: cmake -S tests/ -B build/tests_find_package -G "Ninja" -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/build/install -D CMAKE_BUILD_TYPE=Release

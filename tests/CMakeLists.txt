@@ -1,13 +1,12 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.14...3.16)
 
 project(GSLTests LANGUAGES CXX)
-enable_testing()  # again, for support standalone testing
 
 set(GSL_CXX_STANDARD "14" CACHE STRING "Use c++ standard")
 
 set(CMAKE_CXX_STANDARD ${GSL_CXX_STANDARD})
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FindPkgConfig)
 include(ExternalProject)
@@ -58,10 +57,14 @@ if (NOT GTestMain_FOUND)
 endif()
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    # CMake has been started independently in this directory with tests. Do
-    # import the globally installed Guidelines Support Library and test it
-    # instead of the current version from the include/ folder.
-    find_package(Microsoft.GSL REQUIRED)
+    find_package(Microsoft.GSL CONFIG REQUIRED)
+    enable_testing()
+
+    if (NOT DEFINED Microsoft.GSL_VERSION)
+        message(FATAL_ERROR "Microsoft.GSL_VERSION not defined!")
+    endif()
+
+    message(STATUS "Microsoft.GSL_VERSION = ${Microsoft.GSL_VERSION}")
 endif()
 
 if (MSVC AND (GSL_CXX_STANDARD GREATER_EQUAL 17))
