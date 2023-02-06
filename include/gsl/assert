@@ -14,8 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef GSL_CONTRACTS_H
-#define GSL_CONTRACTS_H
+#ifndef GSL_ASSERT_H
+#define GSL_ASSERT_H
 
 //
 // Temporary until MSVC STL supports no-exceptions mode.
@@ -133,4 +133,4 @@ namespace details
 #pragma clang diagnostic pop
 #endif
 
-#endif // GSL_CONTRACTS_H
+#endif // GSL_ASSERT_H
