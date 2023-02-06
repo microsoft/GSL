@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8...3.16)
+cmake_minimum_required(VERSION 3.14...3.16)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
 include(gsl_functions)
 
@@ -22,11 +22,28 @@ add_subdirectory(include)
 # Add natvis file
 gsl_add_native_visualizer_support()
 
-if (GSL_INSTALL)
-    include(gsl_install)
-endif()
-
 if (GSL_TEST)
     enable_testing()
     add_subdirectory(tests)
+endif()
+
+if (GSL_INSTALL)
+    include(GNUInstallDirs)
+    include(CMakePackageConfigHelpers)
+
+    install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/gsl" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+    set(export_name "Microsoft.GSLConfig")
+    set(namespace "Microsoft.GSL::")
+    set(cmake_files_install_dir ${CMAKE_INSTALL_DATADIR}/cmake/Microsoft.GSL)
+
+    install(TARGETS GSL EXPORT ${export_name} INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    install(EXPORT ${export_name} NAMESPACE ${namespace} DESTINATION ${cmake_files_install_dir})
+    export(TARGETS GSL NAMESPACE ${namespace} FILE ${export_name}.cmake)
+
+    set(gls_config_version "${CMAKE_CURRENT_BINARY_DIR}/Microsoft.GSLConfigVersion.cmake")
+
+    write_basic_package_version_file(${gls_config_version} COMPATIBILITY SameMajorVersion ARCH_INDEPENDENT)
+
+    install(FILES ${gls_config_version} DESTINATION ${cmake_files_install_dir})
 endif()
