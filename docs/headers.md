@@ -75,13 +75,13 @@ This header contains the definition of a byte type.
 If `GSL_USE_STD_BYTE` is defined to be `1`, then `gsl::byte` will be `std::byte`.  
 If `GSL_USE_STD_BYTE` is defined to be `0`, then `gsl::byte` will be a distinct type that implements the concept of byte.  
 If `GSL_USE_STD_BYTE` is not defined, then the header file will check if `std::byte` is available (C\+\+17 or higher). If yes,
-`gsl::byte` will be `std::byte`, otherwise `gsl::byte` will be a distinct type that implements the concept of byte.
+`gsl::byte` will be an alias to `std::byte`, otherwise `gsl::byte` will be a distinct type that implements the concept of byte.
 
 &#x26a0; Take care when linking projects that where compiled with different language standards (before C\+\+17 and C\+\+17 or higher).
 If you do so, you might want to `#define GSL_USE_STD_BYTE 0` to a fixed value to be sure that both projects use exactly
 the same type. Otherwise you might get linker errors.
 
-See [SL.str.5: Use std::byte to refer to byte values that do not necessarily represent characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-byte)
+See [SL.str.5: Use `std::byte` to refer to byte values that do not necessarily represent characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-byte)
 
 ### Non-member functions
 
@@ -123,11 +123,23 @@ This header contains some pointer types.
 
 See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-views)
 
-&#x1f6a7; There are also `gsl::unique_ptr` and `gsl::shared_ptr`, but why would anyone use them? What is their benefit?
-
+- [`gsl::unique_ptr`](#user-content-H-pointers-unique_ptr)
+- [`gsl::shared_ptr`](#user-content-H-pointers-shared_ptr)
 - [`gsl::owner`](#user-content-H-pointers-owner)
 - [`gsl::not_null`](#user-content-H-pointers-not_null)
 - [`gsl::strict_not_null`](#user-content-H-pointers-strict_not_null)
+
+### <a name="H-pointers-unique_ptr" />`gsl::unique_ptr`
+
+`gsl::unique_ptr` is an alias to `std::unique_ptr`.
+
+See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-ownership)
+
+### <a name="H-pointers-shared_ptr" />`gsl::shared_ptr`
+
+`gsl::shared_ptr` is an alias to `std::shared_ptr`.
+
+See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-ownership)
 
 ### <a name="H-pointers-owner" />`gsl::owner`
 
@@ -324,18 +336,18 @@ This header exports a family of `*zstring` types.
 A `gsl::XXzstring<T>` is a typedef to `T`. It adds no checks or whatsoever, it is just for having a syntax to describe
 that a pointer is a pointer to a zero terminated C style string. This helps static code analysis, and it helps human readers.
 
-`czstring` is a const zero terminated `char` string.  
-`cwzstring` is a const zero terminated `wchar_t` string.  
-`cu16zstring` is a const zero terminated `char16_t` string.  
-`cu32zstring` is a const zero terminated `char32_t` string.  
 `zstring` is a zero terminated `char` string.  
+`czstring` is a const zero terminated `char` string.  
 `wzstring` is a zero terminated `wchar_t` string.  
+`cwzstring` is a const zero terminated `wchar_t` string.  
 `u16zstring` is a zero terminated `char16_t` string.  
+`cu16zstring` is a const zero terminated `char16_t` string.  
 `u32zstring` is a zero terminated `char32_t` string.  
+`cu32zstring` is a const zero terminated `char32_t` string.  
 
 See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-views) and [SL.str.3: Use zstring or czstring to refer to a C-style, zero-terminated, sequence of characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-zstring).
 
-&#x1f6a7; TODO: Also document basic_zstring? It is not mentioned in the Core Guidelines, so better not mention it here?
+&#x1f6a7; TODO: Also document basic_zstring? It is mentioned in README.md, but not mentioned in the Core Guidelines.
 
 ## <a name="H-util" />`<util>`
 
@@ -347,6 +359,10 @@ See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuid
 - [`gsl::narrow_cast`](#user-content-H-util-narrow_cast)
 - [`gsl::final_action`](#user-content-H-util-final_action)
 - [`gsl::at`](#user-content-H-util-at)
+
+### <a name="H-util-index" />`gsl::index`
+
+Index type for all container indexes/subscripts/sizes.
 
 ### <a name="H-util-narrow_cast" />`gsl::narrow_cast`
 
