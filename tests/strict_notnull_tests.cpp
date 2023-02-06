@@ -72,6 +72,28 @@ TEST(strict_notnull_tests, TestStrictNotNull)
     }
 
     {
+        // raw ptr <-> strict_not_null
+        const int x = 42;
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        strict_not_null<int*> snn = &x;
+        strict_helper(&x);
+        strict_helper_const(&x);
+        strict_helper(return_pointer());
+        strict_helper_const(return_pointer_const());
+#endif
+
+        const strict_not_null<const int*> snn1{&x};
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        helper(snn1);
+#endif
+        helper_const(snn1);
+
+        EXPECT_TRUE(*snn1 == 42);
+    }
+
+    {
         // strict_not_null -> strict_not_null
         int x = 42;
 
@@ -79,6 +101,22 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         const strict_not_null<int*> snn2{&x};
 
         strict_helper(snn1);
+        strict_helper_const(snn1);
+        strict_helper_const(snn2);
+
+        EXPECT_TRUE(snn1 == snn2);
+    }
+
+    {
+        // strict_not_null -> strict_not_null
+        const int x = 42;
+
+        strict_not_null<const int*> snn1{&x};
+        const strict_not_null<const int*> snn2{&x};
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        strict_helper(snn1);
+#endif
         strict_helper_const(snn1);
         strict_helper_const(snn2);
 
@@ -102,6 +140,24 @@ TEST(strict_notnull_tests, TestStrictNotNull)
     }
 
     {
+        // strict_not_null -> not_null
+        const int x = 42;
+
+        strict_not_null<const int*> snn{&x};
+
+        const not_null<const int*> nn1 = snn;
+        const not_null<const int*> nn2{snn};
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        helper(snn);
+#endif
+        helper_const(snn);
+
+        EXPECT_TRUE(snn == nn1);
+        EXPECT_TRUE(snn == nn2);
+    }
+
+    {
         // not_null -> strict_not_null
         int x = 42;
 
@@ -118,6 +174,32 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 
         std::hash<strict_not_null<int*>> hash_snn;
         std::hash<not_null<int*>> hash_nn;
+
+        EXPECT_TRUE(hash_nn(snn1) == hash_nn(nn));
+        EXPECT_TRUE(hash_snn(snn1) == hash_nn(nn));
+        EXPECT_TRUE(hash_nn(snn1) == hash_nn(snn2));
+        EXPECT_TRUE(hash_snn(snn1) == hash_snn(nn));
+    }
+
+    {
+        // not_null -> strict_not_null
+        const int x = 42;
+
+        not_null<const int*> nn{&x};
+
+        const strict_not_null<const int*> snn1{nn};
+        const strict_not_null<const int*> snn2{nn};
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        strict_helper(nn);
+#endif
+        strict_helper_const(nn);
+
+        EXPECT_TRUE(snn1 == nn);
+        EXPECT_TRUE(snn2 == nn);
+
+        std::hash<strict_not_null<const int*>> hash_snn;
+        std::hash<not_null<const int*>> hash_nn;
 
         EXPECT_TRUE(hash_nn(snn1) == hash_nn(nn));
         EXPECT_TRUE(hash_snn(snn1) == hash_nn(nn));
@@ -153,11 +235,36 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
     }
 
     {
+        const int i = 42;
+
+        strict_not_null x{&i};
+#ifdef CONFIRM_COMPILATION_ERRORS
+        helper(strict_not_null{&i});
+#endif
+        helper_const(strict_not_null{&i});
+
+        EXPECT_TRUE(*x == 42);
+    }
+
+    {
         int i = 42;
         int* p = &i;
 
         strict_not_null x{p};
         helper(strict_not_null{p});
+        helper_const(strict_not_null{p});
+
+        EXPECT_TRUE(*x == 42);
+    }
+
+    {
+        const int i = 42;
+        const int* p = &i;
+
+        strict_not_null x{p};
+#ifdef CONFIRM_COMPILATION_ERRORS
+        helper(strict_not_null{p});
+#endif
         helper_const(strict_not_null{p});
 
         EXPECT_TRUE(*x == 42);
