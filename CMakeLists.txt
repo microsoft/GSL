@@ -16,8 +16,7 @@ option(GSL_TEST "Build and perform GSL tests" ${PROJECT_IS_TOP_LEVEL})
 # The implementation generally assumes a platform that implements C++14 support
 target_compile_features(GSL INTERFACE "cxx_std_14")
 
-# Setup include directory
-add_subdirectory(include)
+target_include_directories(GSL INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 # Add natvis file
 gsl_add_native_visualizer_support()
