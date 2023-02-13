@@ -72,7 +72,7 @@ This header contains the definition of a byte type.
 
 ### <a name="H-byte-byte" />`gsl::byte`
 
-If `GSL_USE_STD_BYTE` is defined to be `1`, then `gsl::byte` will be `std::byte`.  
+If `GSL_USE_STD_BYTE` is defined to be `1`, then `gsl::byte` will be an alias to `std::byte`.  
 If `GSL_USE_STD_BYTE` is defined to be `0`, then `gsl::byte` will be a distinct type that implements the concept of byte.  
 If `GSL_USE_STD_BYTE` is not defined, then the header file will check if `std::byte` is available (C\+\+17 or higher). If yes,
 `gsl::byte` will be an alias to `std::byte`, otherwise `gsl::byte` will be a distinct type that implements the concept of byte.
@@ -149,7 +149,7 @@ See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/C
 A `gsl::owner<T>` is a typedef to `T`. It adds no checks or whatsoever, it is just for having a syntax to describe
 that a pointer must be an owning pointer. This helps static code analysis detect memory leaks, and it helps human readers.
 
-See Enforcement section of [C.31: All resources acquired by a class must be released by the classís destructor](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-dtor-release).
+See Enforcement section of [C.31: All resources acquired by a class must be released by the class‚Äôs destructor](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-dtor-release).
 
 ### <a name="H-pointers-not_null" />`gsl::not_null`
 
@@ -158,7 +158,7 @@ See Enforcement section of [C.31: All resources acquired by a class must be rele
 The checks for ensuring that the pointer is not null are done in the constructor. There is no CPU overhead when retrieving or dereferencing the checked pointer.
 When a nullptr check fails, `std::terminate` is called.
 
-See [F.23: Use a `not_null<T>` to indicate that ìnullî is not a valid value](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-nullptr)
+See [F.23: Use a `not_null<T>` to indicate that ‚Äúnull‚Äù is not a valid value](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-nullptr)
 
 #### Member functions
 
