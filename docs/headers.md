@@ -172,14 +172,14 @@ template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
 constexpr not_null(T u);
 ```
 
-Constructs a `gsl_owner<T>` from a pointer that is convertible to `T` or that is a `T`.
+Constructs a `gsl_owner<T>` from a pointer that is convertible to `T` or that is a `T`. It [`Expects`](#user-content-H-assert-expects) that the provided pointer is not `== nullptr`.
 
 ```
 template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
 constexpr not_null(const not_null<U>& other);
 ```
 
-Constructs a `gsl_owner<T>` from another `gsl_owner` where the other pointer is convertible to `T`.
+Constructs a `gsl_owner<T>` from another `gsl_owner` where the other pointer is convertible to `T`. It [`Expects`](#user-content-H-assert-expects) that the provided pointer is not `== nullptr`.
 
 ```
 not_null(const not_null& other) = default;
@@ -228,7 +228,7 @@ Dereference the underlying pointer.
 void operator[](std::ptrdiff_t) const = delete;
 ```
 
-Array index operator is explicitly deleted. Pointers point to single objects, so don't allow treating them as an array.
+Array index operator is explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#i13-do-not-pass-an-array-as-a-single-pointer)), so don't allow treating them as an array.
 
 #### Non-member functions
 
@@ -275,7 +275,7 @@ template <class T>
 std::ostream& operator<<(std::ostream& os, const not_null<T>& val);
 ```
 
-Performs stream output on a `not_null` pointer. This function is only available when `GSL_NO_IOSTREAMS` is not defined.
+Performs stream output on a `not_null` pointer, invoking `os << val.get()`. This function is only available when `GSL_NO_IOSTREAMS` is not defined.
 
 ##### Modifiers
 
@@ -290,7 +290,7 @@ template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 ```
 
-Addition and subtraction are explicitly deleted. Pointers point to single objects, so don't allow these operators.
+Addition and subtraction are explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#i13-do-not-pass-an-array-as-a-single-pointer)), so don't allow these operators.
 
 ##### STL integration
 
