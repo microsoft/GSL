@@ -66,7 +66,7 @@ See [I.8: Prefer `Ensures()` for expressing postconditions](https://isocpp.githu
 
 ## <a name="H-byte" />`<byte>`
 
-This header contains the definition of a byte type.
+This header contains the definition of a byte type, implementing `std::byte` before it was standardized into C++17.
 
 - [`gsl::byte`](#user-content-H-byte-byte)
 
@@ -97,7 +97,7 @@ As `<narrow>` requires exceptions, it will only be included if exceptions are en
 
 ## <a name="H-narrow" />`<narrow>`
 
-This header contains utility functions and classes for narrowing casts. Other than [util](#user-content-H-util) this header requires exceptions being available.
+This header contains utility functions and classes, for narrowing casts, which require exceptions. The narrowing-related utilities that don't require exceptions are found inside [util](#user-content-H-util).
 
 See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-utilities)
 
@@ -143,10 +143,10 @@ See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/C
 
 ### <a name="H-pointers-owner" />`gsl::owner`
 
-`gsl::owner<T>` is designed as a bridge for code that must deal directly with owning pointers for some reason.
+`gsl::owner<T>` is designed as a safety mechanism for code that must deal directly with raw pointers that own memory. Ideally such code should be restricted to the implementation of low-level abstractions. `gsl::owner` can also be used as a stepping point in converting legacy code to use more modern RAII constructs, such as smart pointers.
 `T` must be a pointer type (`std::is_pointer<T>`).
 
-A `gsl::owner<T>` is a typedef to `T`. It adds no checks or whatsoever, it is just for having a syntax to describe
+A `gsl::owner<T>` is a typedef to `T`. It adds no runtime overhead whatsoever, as it is purely syntactic and does not add any runtime checks. Instead, it helps guide both human readers, and static analysis tools.
 that a pointer must be an owning pointer. This helps static code analysis detect memory leaks, and it helps human readers.
 
 See Enforcement section of [C.31: All resources acquired by a class must be released by the class’s destructor](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-dtor-release).
