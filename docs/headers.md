@@ -307,8 +307,6 @@ Specialization of `std::hash` for `gsl::not_null`.
 
 The free function that deduces the target type from the type of the argument and creates an `gsl::strict_not_null` object is `gsl::make_strict_not_null`.
 
-TODO: Just link to `not_null` or duplicate content?
-
 ## <a name="H-span" />`<span>`
 
 &#x1f6a7; 
