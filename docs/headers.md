@@ -332,7 +332,7 @@ operators and functions (`as_bytes`, `as_writable_bytes`)
 This header exports a family of `*zstring` types.
 
 A `gsl::XXzstring<T>` is a typedef to `T`. It adds no checks or whatsoever, it is just for having a syntax to describe
-that a pointer is a pointer to a zero terminated C style string. This helps static code analysis, and it helps human readers.
+that a pointer points to a zero terminated C style string. This helps static code analysis, and it helps human readers.
 
 `zstring` is a zero terminated `char` string.  
 `czstring` is a const zero terminated `char` string.  
@@ -360,11 +360,11 @@ See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuid
 
 ### <a name="H-util-index" />`gsl::index`
 
-Index type for all container indexes/subscripts/sizes.
+An alias to `std::ptrdiff_t`. It serves as the index type for all container indexes/subscripts/sizes.
 
 ### <a name="H-util-narrow_cast" />`gsl::narrow_cast`
 
-`gsl::narrow_cast<T>(x)` is a named cast that is identical to a `static_cast<T>(x)`. It exists to make the intent clearer to static code analysis tools and to human readers.
+`gsl::narrow_cast<T>(x)` is a named cast that is identical to a `static_cast<T>(x)`. It exists to make clear to static code analysis tools and to human readers that a lossy conversion is acceptable.
 
 Note: compare the throwing version [`gsl::narrow`](#user-content-H-narrow-narrow) in header [narrow](#user-content-H-narrow).
 
@@ -427,27 +427,27 @@ template <class T, std::size_t N>
 constexpr T& at(T (&arr)[N], const index i);
 ```
 
-This overload returns a reference to the `i`s element of a C style array `arr`. In case of an out-of-bound access `std::terminate` is called.
+This overload returns a reference to the `i`s element of a C style array `arr`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
 ```
 template <class Cont>
 constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()]);
 ```
 
-This overload returns a reference to the `i`s element of the container `cont`. In case of an out-of-bound access `std::terminate` is called.
+This overload returns a reference to the `i`s element of the container `cont`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
 ```
 template <class T>
 constexpr T at(const std::initializer_list<T> cont, const index i);
 ```
 
-This overload returns a reference to the `i`s element of the initializer list `cont`. In case of an out-of-bound access `std::terminate` is called.
+This overload returns a reference to the `i`s element of the initializer list `cont`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
 ```
 template <class T, std::size_t extent = std::dynamic_extent>
 constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size()]);
 ```
 
-This overload returns a reference to the `i`s element of the `std::span` `sp`. In case of an out-of-bound access `std::terminate` is called.
+This overload returns a reference to the `i`s element of the `std::span` `sp`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
 For [`gsl::at`](#user-content-H-span-at) for [`gsl::span`](#user-content-H-span-span) see header [`span`](#user-content-H-span).
