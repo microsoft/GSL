@@ -164,7 +164,7 @@ See [F.23: Use a `not_null<T>` to indicate that “null” is not a valid value]
 
 ##### Construct/Copy
 
-```
+```cpp
 template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
 constexpr not_null(U&& u);
 
@@ -174,21 +174,21 @@ constexpr not_null(T u);
 
 Constructs a `gsl_owner<T>` from a pointer that is convertible to `T` or that is a `T`. It [`Expects`](#user-content-H-assert-expects) that the provided pointer is not `== nullptr`.
 
-```
+```cpp
 template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
 constexpr not_null(const not_null<U>& other);
 ```
 
 Constructs a `gsl_owner<T>` from another `gsl_owner` where the other pointer is convertible to `T`. It [`Expects`](#user-content-H-assert-expects) that the provided pointer is not `== nullptr`.
 
-```
+```cpp
 not_null(const not_null& other) = default;
 not_null& operator=(const not_null& other) = default;
 ```
 
 Copy construction and assignment.
 
-```
+```cpp
 not_null(std::nullptr_t) = delete;
 not_null& operator=(std::nullptr_t) = delete;
 ```
@@ -197,7 +197,7 @@ Construction from `std::nullptr_t`  and assignment of `std::nullptr_t` are expli
 
 ##### Modifiers
 
-```
+```cpp
 not_null& operator++() = delete;
 not_null& operator--() = delete;
 not_null operator++(int) = delete;
@@ -210,21 +210,21 @@ Explicitly deleted operators. Pointers point to single objects, so don't allow t
 
 ##### Observers
 
-```
+```cpp
     constexpr details::value_or_reference_return_t<T> get() const;
     constexpr operator T() const { return get(); }
 ```
 
 Get the underlying pointer.
 
-```
+```cpp
     constexpr decltype(auto) operator->() const { return get(); }
     constexpr decltype(auto) operator*() const { return *get(); }
 ```
 
 Dereference the underlying pointer.
 
-```
+```cpp
 void operator[](std::ptrdiff_t) const = delete;
 ```
 
@@ -232,14 +232,14 @@ Array index operator is explicitly deleted. Pointers point to single objects ([I
 
 #### Non-member functions
 
-```
+```cpp
 template <class T>
 auto make_not_null(T&& t) noexcept;
 ```
 
 Creates a `gsl::not_null` object, deducing the target type from the type of the argument.
 
-```
+```cpp
 template <class T, class U>
 auto operator==(const not_null<T>& lhs,
                 const not_null<U>& rhs) noexcept(noexcept(lhs.get() == rhs.get()))
@@ -270,7 +270,7 @@ Comparison of pointers that are convertible to each other.
 
 ##### Input/Output
 
-```
+```cpp
 template <class T>
 std::ostream& operator<<(std::ostream& os, const not_null<T>& val);
 ```
@@ -279,7 +279,7 @@ Performs stream output on a `not_null` pointer, invoking `os << val.get()`. This
 
 ##### Modifiers
 
-```
+```cpp
 template <class T, class U>
 std::ptrdiff_t operator-(const not_null<T>&, const not_null<U>&) = delete;
 template <class T>
@@ -294,7 +294,7 @@ Addition and subtraction are explicitly deleted. Pointers point to single object
 
 ##### STL integration
 
-```
+```cpp
 template <class T>
 struct std::hash<gsl::not_null<T>> { ... };
 ```
@@ -372,7 +372,7 @@ See [ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions](https://
 
 ### <a name="H-util-final_action" />`gsl::final_action`
 
-```
+```cpp
 template <class F>
 class final_action { ... };
 ```
@@ -383,20 +383,20 @@ See [E.19: Use a final_action object to express cleanup if no suitable resource 
 
 #### Member functions
 
-```
+```cpp
 explicit final_action(const F& ff) noexcept;
 explicit final_action(F&& ff) noexcept;
 ```
 
 Construct an object with the action to invoke in the destructor.
 
-```
+```cpp
 ~final_action() noexcept;
 ```
 
 The destructor will call the action that was passed in the constructor.
 
-```
+```cpp
 final_action(final_action&& other) noexcept;
 final_action(const final_action&)   = delete;
 void operator=(const final_action&) = delete;
@@ -407,7 +407,7 @@ Move construction is allowed. Copy construction is deleted. Copy and move assign
 
 #### Non-member functions
 
-```
+```cpp
 template <class F>
 auto finally(F&& f) noexcept;
 ```
@@ -422,28 +422,28 @@ Note: `gsl::at` supports indexes up to `PTRDIFF_MAX`.
 
 See [ES.42: Keep use of pointers simple and straightforward](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-ptr)
 
-```
+```cpp
 template <class T, std::size_t N>
 constexpr T& at(T (&arr)[N], const index i);
 ```
 
 This overload returns a reference to the `i`s element of a C style array `arr`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
-```
+```cpp
 template <class Cont>
 constexpr auto at(Cont& cont, const index i) -> decltype(cont[cont.size()]);
 ```
 
 This overload returns a reference to the `i`s element of the container `cont`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
-```
+```cpp
 template <class T>
 constexpr T at(const std::initializer_list<T> cont, const index i);
 ```
 
 This overload returns a reference to the `i`s element of the initializer list `cont`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
-```
+```cpp
 template <class T, std::size_t extent = std::dynamic_extent>
 constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size()]);
 ```
