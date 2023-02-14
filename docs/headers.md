@@ -1,5 +1,3 @@
-&#x1f6a7; **This documentation is under construction** &#x1f6a7;
-
 The Guidelines Support Library (GSL) interface is very lightweight and exposed via a header-only library. This document attempts to document all of the headers and their exposed classes and functions.
 
 Types and functions are exported in the namespace `gsl`.
@@ -27,7 +25,14 @@ This header contains some common algorithms that have been wrapped in GSL safety
 
 ### <a name="H-algorithms-copy" />`gsl::copy`
 
-&#x1f6a7; TODO: document this
+```cpp
+template <class SrcElementType, std::size_t SrcExtent, class DestElementType,
+          std::size_t DestExtent>
+void copy(span<SrcElementType, SrcExtent> src, span<DestElementType, DestExtent> dest);
+```
+
+This function copies the content from the `src` [`span`](#user-content-H-span-span) to the `dest` [`span`](#user-content-H-span-span). It [`Expects`](#user-content-H-assert-expects)
+that the destination `span` is at least as large as the source `span`.
 
 ## <a name="H-assert" />`<assert>`
 
@@ -85,10 +90,63 @@ See [SL.str.5: Use `std::byte` to refer to byte values that do not necessarily r
 
 ### Non-member functions
 
-`to_integer` etc
+```
+template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+constexpr byte& operator<<=(byte& b, IntegerType shift) noexcept;
 
-&#x1f6a7; TODO: document this
+template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+constexpr byte operator<<(byte b, IntegerType shift) noexcept;
 
+template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+constexpr byte& operator>>=(byte& b, IntegerType shift) noexcept;
+
+template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+constexpr byte operator>>(byte b, IntegerType shift) noexcept;
+```
+
+Left or right shift a `byte` by a given number of bits.
+
+```
+constexpr byte& operator|=(byte& l, byte r) noexcept;
+constexpr byte operator|(byte l, byte r) noexcept;
+```
+
+Bitwise or of two `byte`s.
+
+```
+constexpr byte& operator&=(byte& l, byte r) noexcept;
+constexpr byte operator&(byte l, byte r) noexcept;
+```
+
+Bitwise and of two `byte`s.
+
+```
+constexpr byte& operator^=(byte& l, byte r) noexcept;
+constexpr byte operator^(byte l, byte r) noexcept;
+```
+
+Bitwise xor of two `byte`s.
+
+```
+constexpr byte operator~(byte b) noexcept;
+```
+
+Bitwise negation of a `byte`. Flips all bits. Zeroes become ones, ones become zeroes.
+
+```
+template <typename T>
+constexpr byte to_byte(T t) noexcept;
+```
+
+Convert the given value to a `byte`. The template requires `T` to be an `unsigned char` so that no data loss can occur.
+If you want to convert an integer constant to a `byte` you probably want to call `to_byte<integer constant>()`.
+
+```
+template <int I>
+constexpr byte to_byte() noexcept;
+```
+
+Convert the given value `I` to a `byte`. The template requires `I` to be in the valid range 0..255 for a `gsl::byte`.
 
 ## <a name="H-gsl" />`<gsl>`
 
@@ -211,15 +269,15 @@ Explicitly deleted operators. Pointers point to single objects, so don't allow t
 ##### Observers
 
 ```cpp
-    constexpr details::value_or_reference_return_t<T> get() const;
-    constexpr operator T() const { return get(); }
+constexpr details::value_or_reference_return_t<T> get() const;
+constexpr operator T() const { return get(); }
 ```
 
 Get the underlying pointer.
 
 ```cpp
-    constexpr decltype(auto) operator->() const { return get(); }
-    constexpr decltype(auto) operator*() const { return *get(); }
+constexpr decltype(auto) operator->() const { return get(); }
+constexpr decltype(auto) operator*() const { return *get(); }
 ```
 
 Dereference the underlying pointer.
@@ -309,23 +367,365 @@ The free function that deduces the target type from the type of the argument and
 
 ## <a name="H-span" />`<span>`
 
-&#x1f6a7; 
+This header file exports the class `gsl::span` which is like `std::span` a view over memory.
+
+- [`gsl::span`](#user-content-H-span-span)
 
 ### <a name="H-span-span" />`gsl::span`
 
-<a name="H-span-at" />`gsl::at`
+```cpp
+template <class ElementType, std::size_t Extent>
+class span;
+```
 
-`gsl::span` (and related functions: `as_bytes`, `as_writable_bytes`)
+`gsl::span` is a view over memory. It does not own the memory and is only a way to access contiguous sequences of objects.
+The extent can be either a fixed size or [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent).
 
-&#x1f6a7; TODO: document this
+The `gsl::span` is based on the standardized version of `std::span` which was added to C++20. Originally, the plan was to
+deprecate `gsl::span` when `std::span` finished standardization, however that plan changed when the runtime bounds checking
+was removed from `std::span`'s design.
 
-&#x1f6a7; TODO: Copy content from https://github.com/microsoft/GSL/wiki/gsl::span-and-std::span
+The only difference between `gsl::span` and `std::span` is that `gsl::span` strictly enforces runtime bounds checking.
+Any violations of the bounds check results in termination of the program.
+Like `gsl::span`, `gsl::span`'s iterators also differ from `std::span`'s iterator in that all access operations are bounds checked.
+
+#### Which version of span should I use?
+
+##### Use `gsl::span` if
+
+- you want to guarantee bounds safety in your project.
+  - All data accessing operations use bounds checking to ensure you are only accessing valid memory.
+- your project uses C++14 or C++17.
+  - `std::span` is not available as it was not introduced into the STL until C++20.
+
+##### Use `std::span` if
+
+- your project is C++20 and you need the performance offered by `std::span`.
+
+#### Types
+
+```cpp
+using element_type = ElementType;
+using value_type = std::remove_cv_t<ElementType>;
+using size_type = std::size_t;
+using pointer = element_type*;
+using const_pointer = const element_type*;
+using reference = element_type&;
+using const_reference = const element_type&;
+using difference_type = std::ptrdiff_t;
+
+using iterator = details::span_iterator<ElementType>;
+using reverse_iterator = std::reverse_iterator<iterator>;
+```
+
+#### Member functinos
+
+```cpp
+constexpr span() noexcept;
+```
+
+Constructs an empty `span`. This constructor is only available if `Extent` is 0 or [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent).
+
+```cpp
+constexpr explicit(Extent != gsl::dynamic_extent) span(pointer ptr, size_type count) noexcept;
+```
+
+Constructs a `span` from a pointer and a size. If `Extent` is not [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent),
+then the constructor [`Expects`](#user-content-H-assert-expects) that `count == Extent`.
+
+```cpp
+constexpr explicit(Extent != gsl::dynamic_extent) span(pointer firstElem, pointer lastElem) noexcept;
+```
+
+Constructs a `span` from a pointer to the begin and the end of the data. If `Extent` is not [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent),
+then the constructor [`Expects`](#user-content-H-assert-expects) that `lastElem - firstElem == Extent`.
+
+```cpp
+template <std::size_t N>
+constexpr span(element_type (&arr)[N]) noexcept;
+```
+
+Constructs a `span` from a C style array. This overload is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+or `N == Extent`.
+
+```cpp
+template <class T, std::size_t N>
+constexpr span(std::array<T, N>& arr) noexcept;
+
+template <class T, std::size_t N>
+constexpr span(const std::array<T, N>& arr) noexcept;
+```
+
+Constructs a `span` from a `std::array`. These overloads are available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+or `N == Extent`, and if the array can be interpreted as a `ElementType` array.
+
+```cpp
+template <class Container>
+constexpr explicit(Extent != gsl::dynamic_extent) span(Container& cont) noexcept;
+
+template <class Container>
+constexpr explicit(Extent != gsl::dynamic_extent) span(const Container& cont) noexcept;
+```
+
+Constructs a `span` from a container. These overloads are available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+or `N == Extent`, and if the container can be interpreted as a contiguous `ElementType` array.
+
+```cpp
+constexpr span(const span& other) noexcept = default;
+```
+
+Copy constructor.
+
+```cpp
+template <class OtherElementType, std::size_t OtherExtent>
+explicit(Extent != gsl::dynamic_extent)
+constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept;
+```
+
+Constructs a `span` from another span. This overload is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+or `OtherExtent == Extent` and if the `ElementType` and `OtherElementType` are compatible.
+
+```cpp
+constexpr span& operator=(const span& other) noexcept = default;
+```
+
+Copy assignment
+
+```cpp
+template <std::size_t Count>
+constexpr span<element_type, Count> first() const noexcept;
+
+constexpr span<element_type, dynamic_extent> first(size_type count) const noexcept;
+
+template <std::size_t Count>
+constexpr span<element_type, Count> last() const noexcept;
+
+constexpr span<element_type, dynamic_extent> last(size_type count) const noexcept;
+```
+
+Return a subspan of the first/last `Count` elements. [`Expects`](#user-content-H-assert-expects) that `Count` does not exceed the `span`'s size.
+
+```cpp
+template <std::size_t Offset, std::size_t Count = dynamic_extent>
+constexpr auto subspan() const noexcept;
+
+constexpr span<element_type, dynamic_extent>
+subspan(size_type offset, size_type count = dynamic_extent) const noexcept;
+```
+
+Return a subspan starting at `Offset` and having size `Count`. [`Expects`](#user-content-H-assert-expects) that `Offset` does not exceed the `span`'s size,
+and that `Offset == `[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) or `Offset + Count` does not exceed the `span`'s size.
+
+```cpp
+constexpr size_type size() const noexcept;
+
+constexpr size_type size_bytes() const noexcept;
+```
+
+Returns the size respective the size in bytes of the `span`.
+
+```cpp
+constexpr bool empty() const noexcept;
+```
+
+Is the `span` empty?
+
+```cpp
+constexpr reference operator[](size_type idx) const noexcept;
+```
+
+Returns a reference to the element at the given index. [`Expects`](#user-content-H-assert-expects) that `idx` is less than the `span`'s size.
+
+```cpp
+constexpr reference front() const noexcept;
+constexpr reference back() const noexcept;
+```
+
+Returns a reference to the first/last element in the `span`. [`Expects`](#user-content-H-assert-expects) that the `span` is not empty.
+
+```cpp
+constexpr pointer data() const noexcept;
+```
+
+Returns a pointer to the first element in the `span`.
+
+```cpp
+constexpr iterator begin() const noexcept;
+constexpr iterator end() const noexcept;
+constexpr reverse_iterator rbegin() const noexcept;
+constexpr reverse_iterator rend() const noexcept;
+```
+
+Returns an iterator to the first/last normal/reverse iterator.
+
+```cpp
+template <class Type, std::size_t Extent>
+span(Type (&)[Extent]) -> span<Type, Extent>;
+
+template <class Type, std::size_t Size>
+span(std::array<Type, Size>&) -> span<Type, Size>;
+
+template <class Type, std::size_t Size>
+span(const std::array<Type, Size>&) -> span<const Type, Size>;
+
+template <class Container,
+          class Element = std::remove_pointer_t<decltype(std::declval<Container&>().data())>>
+span(Container&) -> span<Element>;
+
+template <class Container,
+          class Element = std::remove_pointer_t<decltype(std::declval<const Container&>().data())>>
+span(const Container&) -> span<Element>;
+```
+
+Deduction guides.
+
+```cpp
+template <class ElementType, std::size_t Extent>
+span<const byte, details::calculate_byte_size<ElementType, Extent>::value>
+as_bytes(span<ElementType, Extent> s) noexcept;
+
+template <class ElementType, std::size_t Extent>
+span<byte, details::calculate_byte_size<ElementType, Extent>::value>
+as_writable_bytes(span<ElementType, Extent> s) noexcept;
+```
+
+Converts a `span` into a `span` of `byte`s.
+
+`as_writable_bytes` will only be available for non-const `ElementType`s.
 
 ## <a name="H-span_ext" />`<span_ext>`
 
-operators and functions (`as_bytes`, `as_writable_bytes`)
+This files is a companion for and included by [`<span>`](#user-content-H-span).
 
-&#x1f6a7; TODO: document this
+- [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+- [`gsl::span`](#user-content-H-span_ext-span)
+- [`gsl::span` comparison operators](#user-content-H-span_ext-span_comparison_operators)
+- [`gsl::make_span`](#user-content-H-span_ext-make_span)
+- [`gsl::at`](#user-content-H-span_ext-at)
+- [`gsl::ssize`](#user-content-H-span_ext-ssize)
+- [`gsl::span` iterator functions](#user-content-H-span_ext-span_iterator_functions)
+
+### <a name="H-span_ext-dynamic_extent" />`gsl::dynamic_extent`
+
+Defines the extent value to be used by all `gsl::span` with dynamic extent.
+
+### <a name="H-span_ext-span" />`gsl::span`
+
+```cpp
+template <class ElementType, std::size_t Extent = dynamic_extent>
+class span;
+```
+
+Forward declaration of `gsl::span`.
+
+### <a name="H-span_ext-span_comparison_operators" />`gsl::span` comparison operators
+
+```cpp
+template <class ElementType, std::size_t FirstExtent, std::size_t SecondExtent>
+constexpr bool operator==(span<ElementType, FirstExtent> l, span<ElementType, SecondExtent> r);
+template <class ElementType, std::size_t FirstExtent, std::size_t SecondExtent>
+constexpr bool operator!=(span<ElementType, FirstExtent> l, span<ElementType, SecondExtent> r);
+template <class ElementType, std::size_t Extent>
+constexpr bool operator<(span<ElementType, Extent> l, span<ElementType, Extent> r);
+template <class ElementType, std::size_t Extent>
+constexpr bool operator<=(span<ElementType, Extent> l, span<ElementType, Extent> r);
+template <class ElementType, std::size_t Extent>
+constexpr bool operator>(span<ElementType, Extent> l, span<ElementType, Extent> r);
+template <class ElementType, std::size_t Extent>
+constexpr bool operator>=(span<ElementType, Extent> l, span<ElementType, Extent> r);
+```
+
+The comparison operators for two `span`s lexicographically compare the elements in the `span`s.
+
+### <a name="H-span_ext-make_span" />`gsl::make_span`
+
+```cpp
+template <class ElementType>
+constexpr span<ElementType> make_span(ElementType* ptr, typename span<ElementType>::size_type count);
+template <class ElementType>
+constexpr span<ElementType> make_span(ElementType* firstElem, ElementType* lastElem);
+template <class ElementType, std::size_t N>
+constexpr span<ElementType, N> make_span(ElementType (&arr)[N]) noexcept;
+template <class Container>
+constexpr span<typename Container::value_type> make_span(Container& cont);
+template <class Container>
+constexpr span<const typename Container::value_type> make_span(const Container& cont);
+template <class Ptr>
+constexpr span<typename Ptr::element_type> make_span(Ptr& cont, std::size_t count);
+template <class Ptr>
+constexpr span<typename Ptr::element_type> make_span(Ptr& cont);
+```
+
+Utility function for creating a span with [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) from
+- pointer and length,
+- pointer to start and pointer to end,
+- C style array,
+- a container,
+- a smart pointer and a number of elements, or &#x1f6a7;
+- a smart pointer. &#x1f6a7;
+
+&#x1f6a7; What are these for? And why is there no unit test for them?
+
+### <a name="H-span_ext-at" />`gsl::at`
+
+```cpp
+template <class ElementType, std::size_t Extent>
+constexpr ElementType& at(span<ElementType, Extent> s, index i);
+```
+
+The function `gsl::at` offers a safe way to access data with index bounds checking.
+
+This is the specialization of [`gsl::at`]()#user-content-H-util-at) for [`span`](#user-content-H-span-span). It returns a reference to the `i`s element and
+[`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the `span`.
+
+Note: `gsl::at` supports indexes up to `PTRDIFF_MAX`.
+
+### <a name="H-span_ext-ssize" />`gsl::ssize`
+
+```cpp
+template <class ElementType, std::size_t Extent>
+constexpr std::ptrdiff_t ssize(const span<ElementType, Extent>& s) noexcept;
+```
+
+Return the size of a [`span`](#user-content-H-span-span) as a `ptrdiff_t`.
+
+### <a name="H-span_ext-span_iterator_functions" />`gsl::span` iterator functions
+
+```cpp
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::iterator
+begin(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent = dynamic_extent>
+constexpr typename span<ElementType, Extent>::iterator
+end(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+rbegin(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+rend(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::iterator
+cbegin(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent = dynamic_extent>
+constexpr typename span<ElementType, Extent>::iterator
+cend(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+crbegin(const span<ElementType, Extent>& s) noexcept;
+
+template <class ElementType, std::size_t Extent>
+constexpr typename span<ElementType, Extent>::reverse_iterator
+crend(const span<ElementType, Extent>& s) noexcept;
+```
+
+Free functions for getting a non-const/const begin/end normal/reverse iterator for a [`span`](#user-content-H-span-span).
 
 ## <a name="H-string_span" />`<string_span>`
 
@@ -450,4 +850,4 @@ constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size
 
 This overload returns a reference to the `i`s element of the `std::span` `sp`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
-For [`gsl::at`](#user-content-H-span-at) for [`gsl::span`](#user-content-H-span-span) see header [`span`](#user-content-H-span).
+For [`gsl::at`](#user-content-H-span_ext-at) for [`gsl::span`](#user-content-H-span-span) see header [`span_ext`](#user-content-H-span_ext).
