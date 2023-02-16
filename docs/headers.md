@@ -82,7 +82,7 @@ If `GSL_USE_STD_BYTE` is defined to be `0`, then `gsl::byte` will be a distinct 
 If `GSL_USE_STD_BYTE` is not defined, then the header file will check if `std::byte` is available (C\+\+17 or higher). If yes,
 `gsl::byte` will be an alias to `std::byte`, otherwise `gsl::byte` will be a distinct type that implements the concept of byte.
 
-&#x26a0; Take care when linking projects that where compiled with different language standards (before C\+\+17 and C\+\+17 or higher).
+&#x26a0; Take care when linking projects that were compiled with different language standards (before C\+\+17 and C\+\+17 or higher).
 If you do so, you might want to `#define GSL_USE_STD_BYTE 0` to a fixed value to be sure that both projects use exactly
 the same type. Otherwise you might get linker errors.
 
@@ -90,7 +90,7 @@ See [SL.str.5: Use `std::byte` to refer to byte values that do not necessarily r
 
 ### Non-member functions
 
-```
+```cpp
 template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
 constexpr byte& operator<<=(byte& b, IntegerType shift) noexcept;
 
@@ -106,34 +106,34 @@ constexpr byte operator>>(byte b, IntegerType shift) noexcept;
 
 Left or right shift a `byte` by a given number of bits.
 
-```
+```cpp
 constexpr byte& operator|=(byte& l, byte r) noexcept;
 constexpr byte operator|(byte l, byte r) noexcept;
 ```
 
-Bitwise or of two `byte`s.
+Bitwise "or" of two `byte`s.
 
-```
+```cpp
 constexpr byte& operator&=(byte& l, byte r) noexcept;
 constexpr byte operator&(byte l, byte r) noexcept;
 ```
 
-Bitwise and of two `byte`s.
+Bitwise "and" of two `byte`s.
 
-```
+```cpp
 constexpr byte& operator^=(byte& l, byte r) noexcept;
 constexpr byte operator^(byte l, byte r) noexcept;
 ```
 
 Bitwise xor of two `byte`s.
 
-```
+```cpp
 constexpr byte operator~(byte b) noexcept;
 ```
 
 Bitwise negation of a `byte`. Flips all bits. Zeroes become ones, ones become zeroes.
 
-```
+```cpp
 template <typename T>
 constexpr byte to_byte(T t) noexcept;
 ```
@@ -141,7 +141,7 @@ constexpr byte to_byte(T t) noexcept;
 Convert the given value to a `byte`. The template requires `T` to be an `unsigned char` so that no data loss can occur.
 If you want to convert an integer constant to a `byte` you probably want to call `to_byte<integer constant>()`.
 
-```
+```cpp
 template <int I>
 constexpr byte to_byte() noexcept;
 ```
@@ -151,7 +151,7 @@ Convert the given value `I` to a `byte`. The template requires `I` to be in the 
 ## <a name="H-gsl" />`<gsl>`
 
 This header is a convenience header that includes all other [GSL headers](#user-content-H).
-As `<narrow>` requires exceptions, it will only be included if exceptions are enabled.
+Since `<narrow>` requires exceptions, it will only be included if exceptions are enabled.
 
 ## <a name="H-narrow" />`<narrow>`
 
@@ -201,11 +201,10 @@ See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/C
 
 ### <a name="H-pointers-owner" />`gsl::owner`
 
-`gsl::owner<T>` is designed as a safety mechanism for code that must deal directly with raw pointers that own memory. Ideally such code should be restricted to the implementation of low-level abstractions. `gsl::owner` can also be used as a stepping point in converting legacy code to use more modern RAII constructs, such as smart pointers.
+`gsl::owner<T>` is designed as a safety mechanism for code that must deal directly with raw pointers that own memory. Ideally such code should be restricted to the implementation of low-level abstractions. `gsl::owner` can also be used as a stepping point in converting legacy code to use more modern RAII constructs such as smart pointers.
 `T` must be a pointer type (`std::is_pointer<T>`).
 
-A `gsl::owner<T>` is a typedef to `T`. It adds no runtime overhead whatsoever, as it is purely syntactic and does not add any runtime checks. Instead, it helps guide both human readers, and static analysis tools.
-that a pointer must be an owning pointer. This helps static code analysis detect memory leaks, and it helps human readers.
+A `gsl::owner<T>` is a typedef to `T`. It adds no runtime overhead whatsoever, as it is purely syntactic and does not add any runtime checks.  Instead, it serves as an annotation for static analysis tools which check for memory safety, and as a code comprehension guide for human readers.
 
 See Enforcement section of [C.31: All resources acquired by a class must be released by the class’s destructor](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-dtor-release).
 
@@ -213,7 +212,7 @@ See Enforcement section of [C.31: All resources acquired by a class must be rele
 
 `gsl::not_null<T>` restricts a pointer or smart pointer to only hold non-null values. It has no size overhead over `T`.
 
-The checks for ensuring that the pointer is not null are done in the constructor. There is no CPU overhead when retrieving or dereferencing the checked pointer.
+The checks for ensuring that the pointer is not null are done in the constructor. There is no overhead when retrieving or dereferencing the checked pointer.
 When a nullptr check fails, `std::terminate` is called.
 
 See [F.23: Use a `not_null<T>` to indicate that “null” is not a valid value](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-nullptr)
@@ -264,7 +263,7 @@ not_null& operator+=(std::ptrdiff_t) = delete;
 not_null& operator-=(std::ptrdiff_t) = delete;
 ```
 
-Explicitly deleted operators. Pointers point to single objects, so don't allow these operators.
+Explicitly deleted operators. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#i13-do-not-pass-an-array-as-a-single-pointer)), so don't allow these operators.
 
 ##### Observers
 
@@ -363,11 +362,11 @@ Specialization of `std::hash` for `gsl::not_null`.
 
 `strict_not_null` is the same as [`not_null`](#user-content-H-pointers-not_null) except that the constructors are `explicit`.
 
-The free function that deduces the target type from the type of the argument and creates an `gsl::strict_not_null` object is `gsl::make_strict_not_null`.
+The free function that deduces the target type from the type of the argument and creates a `gsl::strict_not_null` object is `gsl::make_strict_not_null`.
 
 ## <a name="H-span" />`<span>`
 
-This header file exports the class `gsl::span` which is like `std::span` a view over memory.
+This header file exports the class `gsl::span`, a bounds-checked implementation of `std::span`.
 
 - [`gsl::span`](#user-content-H-span-span)
 
@@ -418,13 +417,14 @@ using iterator = details::span_iterator<ElementType>;
 using reverse_iterator = std::reverse_iterator<iterator>;
 ```
 
-#### Member functinos
+#### Member functions
 
 ```cpp
 constexpr span() noexcept;
 ```
 
 Constructs an empty `span`. This constructor is only available if `Extent` is 0 or [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent).
+`span::data()` will return `nullptr`.
 
 ```cpp
 constexpr explicit(Extent != gsl::dynamic_extent) span(pointer ptr, size_type count) noexcept;
@@ -482,7 +482,7 @@ explicit(Extent != gsl::dynamic_extent)
 constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept;
 ```
 
-Constructs a `span` from another span. This overload is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+Constructs a `span` from another `span`. This overload is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
 or `OtherExtent == Extent` and if the `ElementType` and `OtherElementType` are compatible.
 
 ```cpp
@@ -506,15 +506,16 @@ constexpr span<element_type, dynamic_extent> last(size_type count) const noexcep
 Return a subspan of the first/last `Count` elements. [`Expects`](#user-content-H-assert-expects) that `Count` does not exceed the `span`'s size.
 
 ```cpp
-template <std::size_t Offset, std::size_t Count = dynamic_extent>
+template <std::size_t offset, std::size_t count = dynamic_extent>
 constexpr auto subspan() const noexcept;
 
 constexpr span<element_type, dynamic_extent>
 subspan(size_type offset, size_type count = dynamic_extent) const noexcept;
 ```
 
-Return a subspan starting at `Offset` and having size `Count`. [`Expects`](#user-content-H-assert-expects) that `Offset` does not exceed the `span`'s size,
-and that `Offset == `[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) or `Offset + Count` does not exceed the `span`'s size.
+Return a subspan starting at `offset` and having size `count`. [`Expects`](#user-content-H-assert-expects) that `offset` does not exceed the `span`'s size,
+and that `offset == `[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) or `offset + count` does not exceed the `span`'s size.
+If `count` is `gsl::dynamic_extent`, the number of elements in the subspan is `size() - offset`.
 
 ```cpp
 constexpr size_type size() const noexcept;
@@ -547,7 +548,7 @@ Returns a reference to the first/last element in the `span`. [`Expects`](#user-c
 constexpr pointer data() const noexcept;
 ```
 
-Returns a pointer to the first element in the `span`.
+Returns a pointer to the beginning of the contained data.
 
 ```cpp
 constexpr iterator begin() const noexcept;
@@ -656,15 +657,11 @@ template <class Ptr>
 constexpr span<typename Ptr::element_type> make_span(Ptr& cont);
 ```
 
-Utility function for creating a span with [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) from
+Utility function for creating a `span` with [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) from
 - pointer and length,
 - pointer to start and pointer to end,
-- C style array,
-- a container,
-- a smart pointer and a number of elements, or &#x1f6a7;
-- a smart pointer. &#x1f6a7;
-
-&#x1f6a7; What are these for? And why is there no unit test for them?
+- a C style array, or
+- a container.
 
 ### <a name="H-span_ext-at" />`gsl::at`
 
@@ -675,7 +672,7 @@ constexpr ElementType& at(span<ElementType, Extent> s, index i);
 
 The function `gsl::at` offers a safe way to access data with index bounds checking.
 
-This is the specialization of [`gsl::at`]()#user-content-H-util-at) for [`span`](#user-content-H-span-span). It returns a reference to the `i`s element and
+This is the specialization of [`gsl::at`](#user-content-H-util-at) for [`span`](#user-content-H-span-span). It returns a reference to the `i`th element and
 [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the `span`.
 
 Note: `gsl::at` supports indexes up to `PTRDIFF_MAX`.
@@ -731,9 +728,10 @@ Free functions for getting a non-const/const begin/end normal/reverse iterator f
 
 This header exports a family of `*zstring` types.
 
-A `gsl::XXzstring<T>` is a typedef to `T`. It adds no checks or whatsoever, it is just for having a syntax to describe
+A `gsl::XXzstring<T>` is a typedef to `T`. It adds no checks whatsoever, it is just for having a syntax to describe
 that a pointer points to a zero terminated C style string. This helps static code analysis, and it helps human readers.
 
+`basic_zstring` is a pointer to a C-string (zero-terminated array) with a templated char type. Used to implement the rest of the `*zstring` family.  
 `zstring` is a zero terminated `char` string.  
 `czstring` is a const zero terminated `char` string.  
 `wzstring` is a zero terminated `wchar_t` string.  
@@ -744,8 +742,6 @@ that a pointer points to a zero terminated C style string. This helps static cod
 `cu32zstring` is a const zero terminated `char32_t` string.  
 
 See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-views) and [SL.str.3: Use zstring or czstring to refer to a C-style, zero-terminated, sequence of characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-zstring).
-
-&#x1f6a7; TODO: Also document basic_zstring? It is mentioned in README.md, but not mentioned in the Core Guidelines.
 
 ## <a name="H-util" />`<util>`
 
