@@ -482,7 +482,7 @@ explicit(Extent != gsl::dynamic_extent)
 constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept;
 ```
 
-Constructs a `span` from another `span`. The copy constructor is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+Constructs a `span` from another `span`. This constructor is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
 or `OtherExtent == Extent` and if the `ElementType` and `OtherElementType` are compatible.
 
 ```cpp
