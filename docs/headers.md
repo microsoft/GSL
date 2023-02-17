@@ -478,12 +478,12 @@ Copy constructor.
 
 ```cpp
 template <class OtherElementType, std::size_t OtherExtent>
-explicit(Extent != gsl::dynamic_extent)
+explicit(Extent != gsl::dynamic_extent && OtherExtent == dynamic_extent)
 constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept;
 ```
 
-Constructs a `span` from another `span`. This constructor is available if `Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
-or `OtherExtent == Extent` and if the `ElementType` and `OtherElementType` are compatible.
+Constructs a `span` from another `span`. This constructor is available if `OtherExtent == Extent || Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)` || OtherExtent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
+and if `ElementType` and `OtherElementType` are compatible.
 
 ```cpp
 constexpr span& operator=(const span& other) noexcept = default;
