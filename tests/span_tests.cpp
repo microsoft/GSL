@@ -646,37 +646,93 @@ TEST(span_test, from_container_constructor)
     }
 }
 
-TEST(span_test, from_convertible_span_constructor){{span<DerivedClass> avd;
-span<const DerivedClass> avcd = avd;
-static_cast<void>(avcd);
-}
-
+TEST(span_test, from_convertible_span_constructor)
 {
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. from_convertible_span_constructor";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
+    {
+        span<DerivedClass> avd;
+        span<const DerivedClass> avcd = avd;
+        static_cast<void>(avcd);
+    }
+
+    {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass, 2> avd{arr};
+        span<const DerivedClass, 2> avcd = avd;
+        static_cast<void>(avcd);
+    }
+
+    {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass, 2> avd{arr};
+        span<const DerivedClass> avcd = avd;
+        static_cast<void>(avcd);
+    }
+
+    {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass> avd{arr};
+        span<const DerivedClass, 2> avcd{avd};
+        static_cast<void>(avcd);
+    }
+
+    {
+        std::array<DerivedClass, 1> arr{};
+        span<DerivedClass> avd{arr};
+        using T = span<const DerivedClass, 2>;
+        EXPECT_DEATH(T{avd}, expected);
+    }
+
 #ifdef CONFIRM_COMPILATION_ERRORS
-    span<DerivedClass> avd;
-    span<BaseClass> avb = avd;
-    static_cast<void>(avb);
-#endif
-}
+    {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass> avd{arr};
+        span<const DerivedClass, 2> avcd = avd;
+        static_cast<void>(avcd);
+    }
 
-#ifdef CONFIRM_COMPILATION_ERRORS
-{
-    span<int> s;
-    span<unsigned int> s2 = s;
-    static_cast<void>(s2);
-}
+    {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass, 2> avd{arr};
+        span<const DerivedClass, 1> avcd = avd;
+        static_cast<void>(avcd);
+    }
 
-{
-    span<int> s;
-    span<const unsigned int> s2 = s;
-    static_cast<void>(s2);
-}
+    {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass, 2> avd{arr};
+        span<const DerivedClass, 3> avcd = avd;
+        static_cast<void>(avcd);
+    }
 
-{
-    span<int> s;
-    span<short> s2 = s;
-    static_cast<void>(s2);
-}
+    {
+        span<DerivedClass> avd;
+        span<BaseClass> avb = avd;
+        static_cast<void>(avb);
+    }
+
+    {
+        span<int> s;
+        span<unsigned int> s2 = s;
+        static_cast<void>(s2);
+    }
+
+    {
+        span<int> s;
+        span<const unsigned int> s2 = s;
+        static_cast<void>(s2);
+    }
+
+    {
+        span<int> s;
+        span<short> s2 = s;
+        static_cast<void>(s2);
+    }
 #endif
 }
 
