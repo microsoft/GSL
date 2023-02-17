@@ -22,43 +22,43 @@ This project makes use of the [Google Test](https://github.com/google/googletest
 # Supported features
 ## Microsoft GSL implements the following from the C++ Core Guidelines:
 
-Feature                            | Supported? | Description
------------------------------------|:----------:|-------------
-[**1. Views**][cg-views]           |            |
-owner                              | &#x2611;   | an alias for a raw pointer
-not_null                           | &#x2611;   | restricts a pointer / smart pointer to hold non-null values
-span                               | &#x2611;   | a view over a contiguous sequence of memory. Based on the standardized version of `std::span`, however `gsl::span` enforces bounds checking. See the [wiki](https://github.com/microsoft/GSL/wiki/gsl::span-and-std::span) for additional information.
-span_p                             | &#x2610;   | spans a range starting from a pointer to the first place for which the predicate is true
-basic_zstring                      | &#x2611;   | A pointer to a C-string (zero-terminated array) with a templated char type
-zstring                            | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char
-czstring                           | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char
-wzstring                           | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of wchar_t
-cwzstring                          | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const wchar_t
-u16zstring                         | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char16_t
-cu16zstring                        | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char16_t
-u32zstring                         | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char32_t
-cu32zstring                        | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char32_t
-[**2. Owners**][cg-owners]         |            |
-unique_ptr                         | &#x2611;   | an alias to `std::unique_ptr`
-shared_ptr                         | &#x2611;   | an alias to `std::shared_ptr`
-stack_array                        | &#x2610;   | a stack-allocated array
-dyn_array                          | &#x2610;   | a heap-allocated array
-[**3. Assertions**][cg-assertions] |            |
-Expects                            | &#x2611;   | a precondition assertion; on failure it terminates
-Ensures                            | &#x2611;   | a postcondition assertion; on failure it terminates
-[**4. Utilities**][cg-utilities]   |            |
-move_owner                         | &#x2610;   | a helper function that moves one `owner` to the other
-byte                               | &#x2611;   | either an alias to `std::byte` or a byte type
-final_action                       | &#x2611;   | a RAII style class that invokes a functor on its destruction
-finally                            | &#x2611;   | a helper function instantiating `final_action`
-GSL_SUPPRESS                       | &#x2611;   | a macro that takes an argument and turns it into `[[gsl::suppress(x)]]` or `[[gsl::suppress("x")]]`
-[[implicit]]                       | &#x2610;   | a "marker" to put on single-argument constructors to explicitly make them non-explicit
-index                              | &#x2611;   | a type to use for all container and array indexing (currently an alias for `std::ptrdiff_t`)
-joining_thread                     | &#x2610;   | a RAII style version of `std::thread` that joins
-narrow                             | &#x2611;   | a checked version of `narrow_cast`; it can throw `narrowing_error`
-narrow_cast                        | &#x2611;   | a narrowing cast for values and a synonym for `static_cast`
-narrowing_error                    | &#x2611;   | a custom exception type thrown by `narrow()`
-[**5. Concepts**][cg-concepts]     | &#x2610;   |
+Feature                                                                  | Supported? | Description
+-------------------------------------------------------------------------|:----------:|-------------
+[**1. Views**][cg-views]                                                 |            |
+[owner](docs/headers.md#user-content-H-pointers-owner)                   | &#x2611;   | an alias for a raw pointer
+[not_null](docs/headers.md#user-content-H-pointers-not_null)             | &#x2611;   | restricts a pointer / smart pointer to hold non-null values
+span                                                                     | &#x2611;   | a view over a contiguous sequence of memory. Based on the standardized version of `std::span`, however `gsl::span` enforces bounds checking. See the [wiki](https://github.com/microsoft/GSL/wiki/gsl::span-and-std::span) for additional information.
+span_p                                                                   | &#x2610;   | spans a range starting from a pointer to the first place for which the predicate is true
+basic_zstring                                                            | &#x2611;   | A pointer to a C-string (zero-terminated array) with a templated char type
+[zstring](docs/headers.md#user-content-H-string_span)                    | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char
+[czstring](docs/headers.md#user-content-H-string_span)                   | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char
+[wzstring](docs/headers.md#user-content-H-string_span)                   | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of wchar_t
+[cwzstring](docs/headers.md#user-content-H-string_span)                  | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const wchar_t
+[u16zstring](docs/headers.md#user-content-H-string_span)                 | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char16_t
+[cu16zstring](docs/headers.md#user-content-H-string_span)                | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char16_t
+[u32zstring](docs/headers.md#user-content-H-string_span)                 | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char32_t
+[cu32zstring](docs/headers.md#user-content-H-string_span)                | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char32_t
+[**2. Owners**][cg-owners]                                               |            |
+[unique_ptr](docs/headers.md#user-content-H-pointers-unique_ptr)         | &#x2611;   | an alias to `std::unique_ptr`
+[shared_ptr](docs/headers.md#user-content-H-pointers-shared_ptr)         | &#x2611;   | an alias to `std::shared_ptr`
+stack_array                                                              | &#x2610;   | a stack-allocated array
+dyn_array                                                                | &#x2610;   | a heap-allocated array
+[**3. Assertions**][cg-assertions]                                       |            |
+[Expects](docs/headers.md#user-content-H-assert-expects)                 | &#x2611;   | a precondition assertion; on failure it terminates
+[Ensures](docs/headers.md#user-content-H-assert-ensures)                 | &#x2611;   | a postcondition assertion; on failure it terminates
+[**4. Utilities**][cg-utilities]                                         |            |
+move_owner                                                               | &#x2610;   | a helper function that moves one `owner` to the other
+[byte](docs/headers.md#user-content-H-byte-byte)                         | &#x2611;   | either an alias to `std::byte` or a byte type
+[final_action](docs/headers.md#user-content-H-util-final_action)         | &#x2611;   | a RAII style class that invokes a functor on its destruction
+[finally](docs/headers.md#user-content-H-util-finally)                   | &#x2611;   | a helper function instantiating `final_action`
+[GSL_SUPPRESS](docs/headers.md#user-content-H-assert-gsl_suppress)       | &#x2611;   | a macro that takes an argument and turns it into `[[gsl::suppress(x)]]` or `[[gsl::suppress("x")]]`
+[[implicit]]                                                             | &#x2610;   | a "marker" to put on single-argument constructors to explicitly make them non-explicit
+[index](docs/headers.md#user-content-H-util-index)                       | &#x2611;   | a type to use for all container and array indexing (currently an alias for `std::ptrdiff_t`)
+joining_thread                                                           | &#x2610;   | a RAII style version of `std::thread` that joins
+[narrow](docs/headers.md#user-content-H-narrow-narrow)                   | &#x2611;   | a checked version of `narrow_cast`; it can throw `narrowing_error`
+[narrow_cast](docs/headers.md#user-content-H-util-narrow_cast)           | &#x2611;   | a narrowing cast for values and a synonym for `static_cast`
+[narrowing_error](docs/headers.md#user-content-H-narrow-narrowing_error) | &#x2611;   | a custom exception type thrown by `narrow()`
+[**5. Concepts**][cg-concepts]                                           | &#x2610;   |
 
 ## The following features do not exist in or have been removed from the C++ Core Guidelines:
 Feature                            | Supported? | Description
