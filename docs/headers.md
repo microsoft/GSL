@@ -485,6 +485,9 @@ constexpr span(const span<OtherElementType, OtherExtent>& other) noexcept;
 Constructs a `span` from another `span`. This constructor is available if `OtherExtent == Extent || Extent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)` || OtherExtent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
 and if `ElementType` and `OtherElementType` are compatible.
 
+If `Extent !=`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) and `OtherExtent ==`[`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent),
+then the constructor [`Expects`](#user-content-H-assert-expects) that `other.size() == Extent`.
+
 ```cpp
 constexpr span& operator=(const span& other) noexcept = default;
 ```
