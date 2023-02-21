@@ -682,6 +682,13 @@ TEST(span_test, from_convertible_span_constructor)
     }
 
     {
+        std::array<DerivedClass, 2> arr{};
+        span<DerivedClass> avd{arr};
+        using T = span<const DerivedClass, 1>;
+        EXPECT_DEATH(T{avd}, expected);
+    }
+
+    {
         std::array<DerivedClass, 1> arr{};
         span<DerivedClass> avd{arr};
         using T = span<const DerivedClass, 2>;
