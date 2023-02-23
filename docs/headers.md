@@ -599,7 +599,7 @@ Converts a `span` into a `span` of `byte`s.
 
 ## <a name="H-span_ext" />`<span_ext>`
 
-This files is a companion for and included by [`<span>`](#user-content-H-span).
+This file is a companion for and included by [`<gsl/span>`](#user-content-H-span), and should not be used on its own. It contains useful features that aren't part of the `std::span` API as found inside the STL `<span>` header (with the exception of [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent), which is included here due to implementation constraints).
 
 - [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent)
 - [`gsl::span`](#user-content-H-span_ext-span)
@@ -611,7 +611,9 @@ This files is a companion for and included by [`<span>`](#user-content-H-span).
 
 ### <a name="H-span_ext-dynamic_extent" />`gsl::dynamic_extent`
 
-Defines the extent value to be used by all `gsl::span` with dynamic extent.
+Defines the extent value to be used by all `gsl::span` with dynamic extent. 
+
+Note: `std::dynamic_extent` is exposed by the STL `<span>` header and so ideally `gsl::dynamic_extent` would be under [`<gsl/span>`](#user-content-H-span), but to avoid cyclic dependency issues it is under `<span_ext>` instead.
 
 ### <a name="H-span_ext-span" />`gsl::span`
 
