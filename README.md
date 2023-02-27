@@ -63,7 +63,7 @@ joining_thread                                                           | &#x26
 ## The following features do not exist in or have been removed from the C++ Core Guidelines:
 Feature                            | Supported? | Description
 -----------------------------------|:----------:|-------------
-strict_not_null                    | &#x2611;   | A stricter version of `not_null` with explicit constructors
+[strict_not_null](docs/headers.md#user-content-H-pointers-strict_not_null) | &#x2611;   | A stricter version of `not_null` with explicit constructors
 multi_span                         | &#x2610;   | Deprecated. Multi-dimensional span.
 strided_span                       | &#x2610;   | Deprecated. Support for this type has been discontinued.
 basic_string_span                  | &#x2610;   | Deprecated. Like `span` but for strings with a templated char type
