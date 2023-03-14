@@ -126,6 +126,7 @@ namespace details
 
 #ifdef _MSC_VER
         using _Unchecked_type = pointer;
+        using _Prevent_inheriting_unwrap = span_iterator;
 #endif // _MSC_VER
         constexpr span_iterator() = default;
 
