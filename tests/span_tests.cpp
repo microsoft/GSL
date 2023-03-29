@@ -1381,6 +1381,7 @@ TEST(span_test, std_span)
 }
 #endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 
+#if defined(__cpp_lib_span)
 // This test covers the changes in PR #1100
 TEST(span_test, msvc_compile_error_PR1100)
 {
@@ -1391,3 +1392,4 @@ TEST(span_test, msvc_compile_error_PR1100)
         (void)e;
     }
 }
+#endif // defined(__cpp_lib_span)
