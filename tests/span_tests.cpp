@@ -1380,3 +1380,16 @@ TEST(span_test, std_span)
     EXPECT_TRUE(std_span.size() == gsl_span.size());
 }
 #endif // defined(FORCE_STD_SPAN_TESTS) || defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
+
+#if defined(__cpp_lib_span) && defined(__cpp_lib_ranges)
+// This test covers the changes in PR #1100
+TEST(span_test, msvc_compile_error_PR1100)
+{
+    int arr[]{1, 7, 2, 9};
+    gsl::span sp{arr, std::size(arr)};
+    std::ranges::sort(sp);
+    for (const auto& e : sp) {
+        (void)e;
+    }
+}
+#endif // defined(__cpp_lib_span) && defined(__cpp_lib_ranges)
