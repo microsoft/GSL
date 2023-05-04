@@ -227,7 +227,7 @@ template< class T >
 struct can_hash< T , void_t< decltype( std::hash<T>{}(std::declval<const T&>())) > > : std::true_type
 { };
 
-template <class T, class U = decltype(std::declval<T>().get()), typename = std::enable_if_t<can_hash<U>::value>>
+template <class T, class U = decltype(std::declval<T>().get()), typename = typename can_hash<U>::type>
 struct not_null_hash
 {
     std::size_t operator()(const T& value) const { return std::hash<U>{}(value.get()); }
