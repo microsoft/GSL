@@ -175,34 +175,34 @@ auto operator!=(const not_null<T>& lhs,
 
 template <class T, class U>
 auto operator<(const not_null<T>& lhs,
-               const not_null<U>& rhs) noexcept(noexcept(std::less(lhs.get(), rhs.get())))
-    -> decltype(std::less(lhs.get(), rhs.get()))
+               const not_null<U>& rhs) noexcept(noexcept(std::less{}(lhs.get(), rhs.get())))
+    -> decltype(std::less{}(lhs.get(), rhs.get()))
 {
-    return std::less(lhs.get(), rhs.get());
+    return std::less{}(lhs.get(), rhs.get());
 }
 
 template <class T, class U>
 auto operator<=(const not_null<T>& lhs,
-                const not_null<U>& rhs) noexcept(noexcept(std::less_equal(lhs.get(), rhs.get())))
-    -> decltype(std::less_equal(lhs.get(), rhs.get()))
+                const not_null<U>& rhs) noexcept(noexcept(std::less_equal{}(lhs.get(), rhs.get())))
+    -> decltype(std::less_equal{}(lhs.get(), rhs.get()))
 {
-    return std::less_equal(lhs.get(), rhs.get());
+    return std::less_equal{}(lhs.get(), rhs.get());
 }
 
 template <class T, class U>
 auto operator>(const not_null<T>& lhs,
-               const not_null<U>& rhs) noexcept(noexcept(std::greater(lhs.get(), rhs.get())))
-    -> decltype(std::greater(lhs.get(), rhs.get()))
+               const not_null<U>& rhs) noexcept(noexcept(std::greater{}(lhs.get(), rhs.get())))
+    -> decltype(std::greater{}(lhs.get(), rhs.get()))
 {
-    return std::greater(lhs.get(), rhs.get());
+    return std::greater{}(lhs.get(), rhs.get());
 }
 
 template <class T, class U>
 auto operator>=(const not_null<T>& lhs,
-                const not_null<U>& rhs) noexcept(noexcept(std::greater_equal(lhs.get(), rhs.get())))
-    -> decltype(std::greater_equal(lhs.get(), rhs.get()))
+                const not_null<U>& rhs) noexcept(noexcept(std::greater_equal{}(lhs.get(), rhs.get())))
+    -> decltype(std::greater_equal{}(lhs.get(), rhs.get()))
 {
-    return std::greater_equal(lhs.get(), rhs.get());
+    return std::greater_equal{}(lhs.get(), rhs.get());
 }
 
 // more unwanted operators
