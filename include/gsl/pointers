@@ -215,14 +215,26 @@ not_null<T> operator+(const not_null<T>&, std::ptrdiff_t) = delete;
 template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 
-template <class T, class U = decltype(std::declval<T>().get()), bool enabled = std::is_invocable_v<std::hash<U>, U>>
+
+
+template< class , class = void >
+struct can_hash : std::false_type
+{ };
+
+template< class ... > using void_t = void;
+
+template< class T >
+struct can_hash< T , void_t< decltype( std::hash<T>{}(std::declval<const T&>())) > > : std::true_type
+{ };
+
+template <class T, class U = decltype(std::declval<T>().get()), typename = std::enable_if_t<can_hash<U>::value>>
 struct not_null_hash
 {
     std::size_t operator()(const T& value) const { return std::hash<U>{}(value.get()); }
 };
 
 template <class T, class U>
-struct not_null_hash<T, U, false>
+struct not_null_hash<T, U, std::false_type>
 {
     not_null_hash() = delete;
     not_null_hash(const not_null_hash&) = delete;
