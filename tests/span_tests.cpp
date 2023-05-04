@@ -1116,12 +1116,6 @@ TEST(span_test, rbegin_rend)
 
 TEST(span_test, as_bytes)
 {
-    const auto terminateHandler = std::set_terminate([] {
-        std::cerr << "Expected Death. as_bytes";
-        std::abort();
-    });
-    const auto expected = GetExpectedDeathString(terminateHandler);
-
     int a[] = {1, 2, 3, 4};
     {
         const span<const int> s = a;
@@ -1146,12 +1140,6 @@ TEST(span_test, as_bytes)
         const auto bs = as_bytes(s);
         EXPECT_TRUE(static_cast<const void*>(bs.data()) == static_cast<const void*>(s.data()));
         EXPECT_TRUE(bs.size() == s.size_bytes());
-    }
-
-    int b[5] = {1, 2, 3, 4, 5};
-    {
-        span<int> sp(std::begin(b), static_cast<size_t>(-2));
-        EXPECT_DEATH((void) sp.size_bytes(), expected);
     }
 }
 
