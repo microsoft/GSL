@@ -223,7 +223,7 @@ struct not_null_hash
 };
 
 template <class T, class U>
-struct not_null_hash<T, U, std::false_type>
+struct not_null_hash<T, U, false>
 {
     not_null_hash() = delete;
     not_null_hash(const not_null_hash&) = delete;
