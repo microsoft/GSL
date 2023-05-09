@@ -624,11 +624,7 @@ public:
     // [span.obs], span observers
     constexpr size_type size() const noexcept { return storage_.size(); }
 
-    constexpr size_type size_bytes() const noexcept
-    {
-        Expects(size() < dynamic_extent / sizeof(element_type));
-        return size() * sizeof(element_type);
-    }
+    constexpr size_type size_bytes() const noexcept { return size() * sizeof(element_type); }
 
     constexpr bool empty() const noexcept { return size() == 0; }
 
