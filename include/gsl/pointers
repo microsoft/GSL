@@ -215,14 +215,28 @@ not_null<T> operator+(const not_null<T>&, std::ptrdiff_t) = delete;
 template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 
+
+template <class T, class U = decltype(std::declval<const T&>().get()), bool = std::is_default_constructible<std::hash<U>>::value>
+struct not_null_hash
+{
+    std::size_t operator()(const T& value) const { return std::hash<U>{}(value.get()); }
+};
+
+template <class T, class U>
+struct not_null_hash<T, U, false>
+{
+    not_null_hash() = delete;
+    not_null_hash(const not_null_hash&) = delete;
+    not_null_hash& operator=(const not_null_hash&) = delete;
+};
+
 } // namespace gsl
 
 namespace std
 {
 template <class T>
-struct hash<gsl::not_null<T>>
+struct hash<gsl::not_null<T>> : gsl::not_null_hash<gsl::not_null<T>>
 {
-    std::size_t operator()(const gsl::not_null<T>& value) const { return hash<T>{}(value.get()); }
 };
 
 } // namespace std
@@ -323,12 +337,8 @@ strict_not_null(T) -> strict_not_null<T>;
 namespace std
 {
 template <class T>
-struct hash<gsl::strict_not_null<T>>
+struct hash<gsl::strict_not_null<T>> : gsl::not_null_hash<gsl::strict_not_null<T>>
 {
-    std::size_t operator()(const gsl::strict_not_null<T>& value) const
-    {
-        return hash<T>{}(value.get());
-    }
 };
 
 } // namespace std
