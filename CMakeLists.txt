@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.14...3.16)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
-include(gsl_functions)
 
 project(GSL VERSION 4.0.0 LANGUAGES CXX)
 
@@ -19,8 +17,7 @@ target_compile_features(GSL INTERFACE "cxx_std_14")
 # Setup include directory
 add_subdirectory(include)
 
-# Add natvis file
-gsl_add_native_visualizer_support()
+target_sources(GSL INTERFACE $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>)
 
 if (GSL_TEST)
     enable_testing()
@@ -46,4 +43,6 @@ if (GSL_INSTALL)
     write_basic_package_version_file(${gls_config_version} COMPATIBILITY SameMajorVersion ARCH_INDEPENDENT)
 
     install(FILES ${gls_config_version} DESTINATION ${cmake_files_install_dir})
+
+    install(FILES GSL.natvis DESTINATION ${cmake_files_install_dir})
 endif()

@@ -214,7 +214,5 @@ target_link_libraries(foobar PRIVATE Microsoft.GSL::GSL)
 ```
 
 ## Debugging visualization support
-For Visual Studio users, the file [GSL.natvis](./GSL.natvis) in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.
 
-If you are using CMake this will be done automatically for you.
-See `GSL_VS_ADD_NATIVE_VISUALIZERS`
+For Visual Studio users, the file [GSL.natvis](./GSL.natvis) in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.
