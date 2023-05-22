@@ -123,12 +123,14 @@ constexpr span<const typename Container::value_type> make_span(const Container& 
 }
 
 template <class Ptr>
+[[deprecated("This function is deprecated. See GSL issue #1092.")]]
 constexpr span<typename Ptr::element_type> make_span(Ptr& cont, std::size_t count)
 {
     return span<typename Ptr::element_type>(cont, count);
 }
 
 template <class Ptr>
+[[deprecated("This function is deprecated. See GSL issue #1092.")]]
 constexpr span<typename Ptr::element_type> make_span(Ptr& cont)
 {
     return span<typename Ptr::element_type>(cont);
