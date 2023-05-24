@@ -433,7 +433,9 @@ public:
     using difference_type = std::ptrdiff_t;
 
     using iterator = details::span_iterator<ElementType>;
+    using const_iterator = std::const_iterator<iterator>;
     using reverse_iterator = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::const_iterator<reverse_iterator>;
 
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
     static constexpr const size_type extent{Extent};
@@ -674,6 +676,10 @@ public:
 
     constexpr reverse_iterator rbegin() const noexcept { return reverse_iterator{end()}; }
     constexpr reverse_iterator rend() const noexcept { return reverse_iterator{begin()}; }
+    constexpr const_iterator cbegin() const noexcept { return begin(); }
+    constexpr const_iterator cend() const noexcept { return end(); }
+    constexpr const_reverse_iterator crbegin() const noexcept { return rbegin(); }
+    constexpr const_reverse_iterator crend() const noexcept { return rend(); }
 
 #ifdef _MSC_VER
     // Tell MSVC how to unwrap spans in range-based-for
