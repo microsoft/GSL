@@ -1,3 +1,6 @@
+# This is a test
+This header is added to check for the GSL CLA policy for first-time contributors
+
 # GSL: Guidelines Support Library
 [![Build Status](https://dev.azure.com/cppstat/GSL/_apis/build/status/microsoft.GSL?branchName=main)](https://dev.azure.com/cppstat/GSL/_build/latest?definitionId=1&branchName=main)
 
