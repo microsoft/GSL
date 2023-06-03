@@ -14,6 +14,20 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef __CLA_TESTING_
+int DummyFunc(bool cond)
+{
+    if (cond)
+    {
+        std::cout << "Hello world!" << std::endl;
+    }
+    return 42;
+    // this is a filler line
+    // this is another filler line
+}
+#endif
+
+
 #ifndef GSL_UTIL_H
 #define GSL_UTIL_H
 
