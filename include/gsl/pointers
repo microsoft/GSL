@@ -117,6 +117,7 @@ public:
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
     constexpr details::value_or_reference_return_t<T> get() const
+        noexcept(noexcept(details::value_or_reference_return_t<T>{ptr_}))
     {
         return ptr_;
     }
