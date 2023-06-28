@@ -29,15 +29,15 @@ Feature                                                                  | Suppo
 [not_null](docs/headers.md#user-content-H-pointers-not_null)             | &#x2611;   | Restricts a pointer / smart pointer to hold non-null values
 [span](docs/headers.md#user-content-H-span-span)                         | &#x2611;   | A view over a contiguous sequence of memory. Based on the standardized version of `std::span`, however `gsl::span` enforces bounds checking.
 span_p                                                                   | &#x2610;   | Spans a range starting from a pointer to the first place for which the predicate is true
-[basic_zstring](docs/headers.md#user-content-H-string_span)              | &#x2611;   | A pointer to a C-string (zero-terminated array) with a templated char type
-[zstring](docs/headers.md#user-content-H-string_span)                    | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char
-[czstring](docs/headers.md#user-content-H-string_span)                   | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char
-[wzstring](docs/headers.md#user-content-H-string_span)                   | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of wchar_t
-[cwzstring](docs/headers.md#user-content-H-string_span)                  | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const wchar_t
-[u16zstring](docs/headers.md#user-content-H-string_span)                 | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char16_t
-[cu16zstring](docs/headers.md#user-content-H-string_span)                | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char16_t
-[u32zstring](docs/headers.md#user-content-H-string_span)                 | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char32_t
-[cu32zstring](docs/headers.md#user-content-H-string_span)                | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char32_t
+[basic_zstring](docs/headers.md#user-content-H-zstring)              | &#x2611;   | A pointer to a C-string (zero-terminated array) with a templated char type
+[zstring](docs/headers.md#user-content-H-zstring)                    | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char
+[czstring](docs/headers.md#user-content-H-zstring)                   | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char
+[wzstring](docs/headers.md#user-content-H-zstring)                   | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of wchar_t
+[cwzstring](docs/headers.md#user-content-H-zstring)                  | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const wchar_t
+[u16zstring](docs/headers.md#user-content-H-zstring)                 | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char16_t
+[cu16zstring](docs/headers.md#user-content-H-zstring)                | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char16_t
+[u32zstring](docs/headers.md#user-content-H-zstring)                 | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of char32_t
+[cu32zstring](docs/headers.md#user-content-H-zstring)                | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of const char32_t
 [**2. Owners**][cg-owners]                                               |            |
 [unique_ptr](docs/headers.md#user-content-H-pointers-unique_ptr)         | &#x2611;   | An alias to `std::unique_ptr`
 [shared_ptr](docs/headers.md#user-content-H-pointers-shared_ptr)         | &#x2611;   | An alias to `std::shared_ptr`

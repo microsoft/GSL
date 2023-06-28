@@ -14,7 +14,7 @@ See [GSL: Guidelines support library](https://isocpp.github.io/CppCoreGuidelines
 - [`<pointers>`](#user-content-H-pointers)
 - [`<span>`](#user-content-H-span)
 - [`<span_ext>`](#user-content-H-span_ext)
-- [`<string_span>`](#user-content-H-string_span)
+- [`<zstring>`](#user-content-H-zstring)
 - [`<util>`](#user-content-H-util)
 
 ## <a name="H-algorithms" />`<algorithms>`
@@ -729,7 +729,7 @@ crend(const span<ElementType, Extent>& s) noexcept;
 
 Free functions for getting a non-const/const begin/end normal/reverse iterator for a [`span`](#user-content-H-span-span).
 
-## <a name="H-string_span" />`<string_span>`
+## <a name="H-zstring" />`<zstring>`
 
 This header exports a family of `*zstring` types.
 
