@@ -22,7 +22,7 @@
 #include "byte"        // byte
 #include "pointers"    // owner, not_null
 #include "span"        // span
-#include "string_span" // zstring, string_span, zstring_builder...
+#include "zstring"     // zstring
 #include "util"        // finally()/narrow_cast()...
 
 #ifdef __cpp_exceptions
