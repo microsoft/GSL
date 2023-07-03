@@ -24,6 +24,7 @@
 #include <memory>       // for shared_ptr, unique_ptr
 #include <system_error> // for hash
 #include <type_traits>  // for enable_if_t, is_convertible, is_assignable
+#include <utility>      // for declval
 
 #if !defined(GSL_NO_IOSTREAMS)
 #include <iosfwd> // for ostream
