@@ -55,9 +55,6 @@
 #endif // _MSC_VER
 #endif // __clang__
 
-#define GSL_STRINGIFY_DETAIL(x) #x
-#define GSL_STRINGIFY(x) GSL_STRINGIFY_DETAIL(x)
-
 #if defined(__clang__) || defined(__GNUC__)
 #define GSL_LIKELY(x) __builtin_expect(!!(x), 1)
 #define GSL_UNLIKELY(x) __builtin_expect(!!(x), 0)
