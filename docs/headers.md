@@ -806,8 +806,7 @@ void operator=(final_action&&)      = delete;
 
 Move construction is allowed. Copy construction is deleted. Copy and move assignment are also explicitely deleted.
 
-#### Non-member functions
-
+#### <a name="H-util-finally" />Non-member functions
 ```cpp
 template <class F>
 auto finally(F&& f) noexcept;
