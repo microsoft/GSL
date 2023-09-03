@@ -24,6 +24,7 @@
 #include <sstream>   // for operator<<, ostringstream, basic_ostream:...
 #include <string>    // for basic_string, operator==, string, operator<<
 #include <typeinfo>  // for type_info
+#include <variant>   // for variant, monostate, get
 
 #include "deathTestCommon.h"
 using namespace gsl;
@@ -513,6 +514,17 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         helper_const(not_null{nullptr});
     }
 #endif
+}
+
+TEST(notnull_tests, TestVariantEmplace)
+{
+    int i = 0;
+    std::variant<std::monostate, not_null<int*>> v;
+    v.emplace<not_null<int*>>(&i);
+
+    EXPECT_FALSE(v.valueless_by_exception());
+    EXPECT_TRUE(v.index() == 1);
+    EXPECT_TRUE(std::get<not_null<int*>>(v) == &i);
 }
 #endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
