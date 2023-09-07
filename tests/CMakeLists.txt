@@ -137,6 +137,7 @@ else()
         -Wsign-conversion
         -Wfloat-equal
         -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
+        -Wno-unsafe-buffer-usage # This test uses very loose and blanket heuristics such as "no pointer arithmetic on raw buffer"
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
