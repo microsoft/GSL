@@ -117,6 +117,7 @@ if(MSVC) # MSVC or simulating MSVC
               -Wno-deprecated # False positive in MSVC Clang 15.0.1 raises a C++17 warning
             >
           >
+          -Wno-unsafe-buffer-usage # This test uses very loose and blanket heuristics such as "no pointer arithmetic on raw buffer"
         >
     )
     check_cxx_compiler_flag("-Wno-reserved-identifier" WARN_RESERVED_ID)
@@ -137,7 +138,6 @@ else()
         -Wsign-conversion
         -Wfloat-equal
         -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
-        -Wno-unsafe-buffer-usage # This test uses very loose and blanket heuristics such as "no pointer arithmetic on raw buffer"
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Weverything
           -Wno-c++98-compat
