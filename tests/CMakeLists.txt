@@ -126,7 +126,7 @@ if(MSVC) # MSVC or simulating MSVC
     check_cxx_compiler_flag("-Wno-unsafe-buffer-usage" WARN_UNSAFE_BUFFER)
     if (WARN_UNSAFE_BUFFER)
       # This test uses very greedy heuristics such as "no pointer arithmetic on raw buffer"
-      target_compile_options(gsl_tests_config_noexcept INTERFACE "-Wno-unsafe-buffer-usage")
+      target_compile_options(gsl_tests_config INTERFACE "-Wno-unsafe-buffer-usage")
     endif()
 else()
     target_compile_options(gsl_tests_config INTERFACE
