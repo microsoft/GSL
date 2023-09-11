@@ -46,7 +46,7 @@
 // Hopefully temporary until suppression standardization occurs
 //
 #if defined(__clang__)
-#define GSL_SUPPRESS(x) [[gsl::suppress("x")]]
+#define GSL_SUPPRESS(x) [[gsl::suppress(#x)]]
 #else
 #if defined(_MSC_VER) && !defined(__INTEL_COMPILER) && !defined(__NVCC__)
 #define GSL_SUPPRESS(x) [[gsl::suppress(x)]]
