@@ -100,19 +100,19 @@ public:
     static_assert(details::is_comparable_to_nullptr<T>::value, "T cannot be compared to nullptr.");
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr not_null(U&& u) : ptr_(std::forward<U>(u))
+    constexpr not_null(U&& u) noexcept(std::is_nothrow_move_constructible<T>::value) : ptr_(std::forward<U>(u))
     {
         Expects(ptr_ != nullptr);
     }
 
     template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
-    constexpr not_null(T u) : ptr_(std::move(u))
+    constexpr not_null(T u) noexcept(std::is_nothrow_move_constructible<T>::value) : ptr_(std::move(u))
     {
         Expects(ptr_ != nullptr);
     }
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr not_null(const not_null<U>& other) : not_null(other.get())
+    constexpr not_null(const not_null<U>& other) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null(other.get())
     {}
 
     not_null(const not_null& other) = default;
