@@ -42,7 +42,7 @@
 #pragma warning(disable : 4702) // unreachable code
 
 // Turn MSVC /analyze rules that generate too much noise. TODO: fix in the tool.
-#pragma warning(disable : 26495) // uninitalized member when constructor calls constructor
+#pragma warning(disable : 26495) // uninitialized member when constructor calls constructor
 #pragma warning(disable : 26446) // parser bug does not allow attributes on some templates
 
 #endif // _MSC_VER
@@ -53,7 +53,7 @@
 #define GSL_USE_STATIC_CONSTEXPR_WORKAROUND
 #endif // !(defined(__cplusplus) && (__cplusplus >= 201703L))
 
-// GCC 7 does not like the signed unsigned missmatch (size_t ptrdiff_t)
+// GCC 7 does not like the signed unsigned mismatch (size_t ptrdiff_t)
 // While there is a conversion from signed to unsigned, it happens at
 // compiletime, so the compiler wouldn't have to warn indiscriminately, but
 // could check if the source value actually doesn't fit into the target type

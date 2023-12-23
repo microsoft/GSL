@@ -167,7 +167,7 @@ constexpr byte to_byte(T t) noexcept
 {
     static_assert(std::is_same<T, unsigned char>::value,
                   "gsl::to_byte(t) must be provided an unsigned char, otherwise data loss may occur. "
-                  "If you are calling to_byte with an integer contant use: gsl::to_byte<t>() version.");
+                  "If you are calling to_byte with an integer constant use: gsl::to_byte<t>() version.");
     return byte(t);
 }
 
