@@ -192,7 +192,7 @@ target_link_libraries(foobar PRIVATE Microsoft.GSL::GSL)
 
 ### FetchContent
 
-If you are using CMake version 3.11+ you can use the offical [FetchContent module](https://cmake.org/cmake/help/latest/module/FetchContent.html).
+If you are using CMake version 3.11+ you can use the official [FetchContent module](https://cmake.org/cmake/help/latest/module/FetchContent.html).
 This allows you to easily incorporate GSL into your project.
 
 ```cmake

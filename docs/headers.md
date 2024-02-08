@@ -804,7 +804,7 @@ void operator=(const final_action&) = delete;
 void operator=(final_action&&)      = delete;
 ```
 
-Move construction is allowed. Copy construction is deleted. Copy and move assignment are also explicitely deleted.
+Move construction is allowed. Copy construction is deleted. Copy and move assignment are also explicitly deleted.
 
 #### <a name="H-util-finally" />Non-member functions
 ```cpp

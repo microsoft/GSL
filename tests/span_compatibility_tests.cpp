@@ -519,7 +519,7 @@ TEST(span_compatibility_tests, assertion_tests)
 
 // assertions for span's definition
 static_assert(std::is_same<decltype(gsl::dynamic_extent), const std::size_t>::value,
-              "gsl::dynamic_extent must be respresented as std::size_t");
+              "gsl::dynamic_extent must be represented as std::size_t");
 static_assert(gsl::dynamic_extent == static_cast<std::size_t>(-1),
               "gsl::dynamic_extent must be defined as the max value of std::size_t");
 
