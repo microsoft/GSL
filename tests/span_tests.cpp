@@ -333,7 +333,7 @@ TEST(span_test, from_array_constructor)
         EXPECT_TRUE(s.data() == std::addressof(arr2d[0]));
     }
 
-    int arr3d[2][3][2] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    int arr3d[2][3][2] = { { {1, 2}, {3, 4}, {5, 6} }, { {7, 8}, {9, 10}, {11, 12} } };
 
 #ifdef CONFIRM_COMPILATION_ERRORS
     {

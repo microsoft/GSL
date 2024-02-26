@@ -40,6 +40,12 @@
 
 #endif // _MSC_VER
 
+// Turn off clang unsafe buffer warnings as all accessed are guarded by runtime checks
+#if defined(__clang__) && __has_warning("-Wunsafe-buffer-usage")
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+#endif // defined(__clang__) && __has_warning("-Wunsafe-buffer-usage")
+
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 #define GSL_NODISCARD [[nodiscard]]
 #else
@@ -153,5 +159,9 @@ constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size
 #pragma warning(pop)
 
 #endif // _MSC_VER
+
+#if defined(__clang__) && __has_warning("-Wunsafe-buffer-usage")
+#pragma clang diagnostic pop
+#endif
 
 #endif // GSL_UTIL_H
