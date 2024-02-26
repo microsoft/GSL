@@ -123,11 +123,6 @@ if(MSVC) # MSVC or simulating MSVC
     if (WARN_RESERVED_ID)
       target_compile_options(gsl_tests_config INTERFACE "-Wno-reserved-identifier")
     endif()
-    check_cxx_compiler_flag("-Wno-unsafe-buffer-usage" WARN_UNSAFE_BUFFER)
-    if (WARN_UNSAFE_BUFFER)
-      # This test uses very greedy heuristics such as "no pointer arithmetic on raw buffer"
-      target_compile_options(gsl_tests_config INTERFACE "-Wno-unsafe-buffer-usage")
-    endif()
 else()
     target_compile_options(gsl_tests_config INTERFACE
         -fno-strict-aliasing
@@ -191,6 +186,11 @@ else()
         >
     )
 endif(MSVC)
+check_cxx_compiler_flag("-Wno-unsafe-buffer-usage" WARN_UNSAFE_BUFFER)
+if (WARN_UNSAFE_BUFFER)
+  # This test uses very greedy heuristics such as "no pointer arithmetic on raw buffer"
+  target_compile_options(gsl_tests_config INTERFACE "-Wno-unsafe-buffer-usage")
+endif()
 
 # for tests to find the gtest header
 target_include_directories(gsl_tests_config SYSTEM INTERFACE
@@ -262,11 +262,6 @@ if(MSVC) # MSVC or simulating MSVC
     if (WARN_RESERVED_ID)
       target_compile_options(gsl_tests_config_noexcept INTERFACE "-Wno-reserved-identifier")
     endif()
-    check_cxx_compiler_flag("-Wno-unsafe-buffer-usage" WARN_UNSAFE_BUFFER)
-    if (WARN_UNSAFE_BUFFER)
-      # This test uses very greedy heuristics such as "no pointer arithmetic on raw buffer"
-      target_compile_options(gsl_tests_config_noexcept INTERFACE "-Wno-unsafe-buffer-usage")
-    endif()
 else()
     target_compile_options(gsl_tests_config_noexcept INTERFACE
         -fno-exceptions
@@ -307,6 +302,11 @@ else()
         >
     )
 endif(MSVC)
+check_cxx_compiler_flag("-Wno-unsafe-buffer-usage" WARN_UNSAFE_BUFFER)
+if (WARN_UNSAFE_BUFFER)
+  # This test uses very greedy heuristics such as "no pointer arithmetic on raw buffer"
+  target_compile_options(gsl_tests_config_noexcept INTERFACE "-Wno-unsafe-buffer-usage")
+endif()
 
 add_executable(gsl_noexcept_tests no_exception_ensure_tests.cpp)
 target_link_libraries(gsl_noexcept_tests
