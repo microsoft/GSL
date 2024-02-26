@@ -134,6 +134,13 @@ constexpr byte operator~(byte b) noexcept;
 Bitwise negation of a `byte`. Flips all bits. Zeroes become ones, ones become zeroes.
 
 ```cpp
+template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+constexpr IntegerType to_integer(byte b) noexcept;
+```
+
+Convert the given `byte` value to an integral type.
+
+```cpp
 template <typename T>
 constexpr byte to_byte(T t) noexcept;
 ```
