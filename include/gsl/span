@@ -64,10 +64,12 @@
 #endif
 
 // Turn off clang unsafe buffer warnings as all accessed are guarded by runtime checks
-#if defined(__clang__) && __has_warning("-Wunsafe-buffer-usage")
+#if defined(__clang__)
+#if __has_warning("-Wunsafe-buffer-usage")
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
-#endif // defined(__clang__) && __has_warning("-Wunsafe-buffer-usage")
+#endif // __has_warning("-Wunsafe-buffer-usage")
+#endif // defined(__clang__)
 
 namespace gsl
 {
@@ -852,8 +854,10 @@ as_writable_bytes(span<ElementType, Extent> s) noexcept
 #pragma GCC diagnostic pop
 #endif // __GNUC__ > 6
 
-#if defined(__clang__) && __has_warning("-Wunsafe-buffer-usage")
+#if defined(__clang__)
+#if __has_warning("-Wunsafe-buffer-usage")
 #pragma clang diagnostic pop
-#endif
+#endif // __has_warning("-Wunsafe-buffer-usage")
+#endif // defined(__clang__)
 
 #endif // GSL_SPAN_H
