@@ -1,4 +1,9 @@
 name: CI_Android
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [ main ]
@@ -7,7 +12,7 @@ on:
 
 jobs:
   Android:
-    runs-on: macos-latest
+    runs-on: macos-latest-large
     defaults:
       run:
         working-directory: build
@@ -18,15 +23,19 @@ jobs:
         run: mkdir -p build
         working-directory: .
 
-      - name: Start emulator
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: zulu
+
+      - name: Start Emulator
         run: |
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-24;default;x86_64'
           echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator -k 'system-images;android-24;default;x86_64' --force
           $ANDROID_HOME/emulator/emulator -list-avds
-          echo "Starting emulator"
-          # Start emulator in background
-          nohup $ANDROID_HOME/emulator/emulator -avd xamarin_android_emulator -no-snapshot > /dev/null 2>&1 &
-          echo "Emulator starting"
+          echo "Starting emulator..."
+          nohup $ANDROID_HOME/emulator/emulator -no-audio -no-snapshot -avd xamarin_android_emulator &> /dev/null &
+          echo "Emulator starting in background"
 
       - name: Configure
         run: cmake -Werror=dev -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_LATEST_HOME/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=16 -DANDROID_ABI=x86_64 -DCMAKE_BUILD_TYPE=Debug ..
@@ -35,11 +44,11 @@ jobs:
         run: cmake --build . --parallel
 
       - name: Wait for emulator ready
+        timeout-minutes: 2
         run: |
           $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 10; done; input keyevent 82'
           $ANDROID_HOME/platform-tools/adb devices
           $ANDROID_HOME/platform-tools/adb shell getprop ro.product.cpu.abi
-          echo "Emulator started"
 
       - name: Deploy tests
         run: |
