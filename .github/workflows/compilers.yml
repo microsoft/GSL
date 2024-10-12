@@ -1,0 +1,46 @@
+name: Compiler Integration Tests
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  VS_MSVC:
+    strategy:
+      matrix:
+        image: [ windows-2022 ]
+        generator: [ "Visual Studio 17 2022" ]
+        cxx_version: [ 20 ]
+        build_type: [ 'Debug', 'Release' ]
+    runs-on: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: create build directory
+        run: mkdir build
+
+      - name: cmake configure
+        working-directory: build
+        run: cmake -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev ..
+
+      - name: build
+        working-directory: build
+        run: msbuild GSL.sln
+
+      - name: test
+        working-directory: build
+        run: ctest . --output-on-failure --no-compress-output
+
+  # TODO (@carsonradtke)
+  #  - [ ] GCC
+  #  - [ ] Clang
+  #  - [ ] Xcode
+  #  - [ ] VS_LLVM
+  #  - [ ] delete azure-pipelines.yml
+  #  - [ ] delete pipelines/
