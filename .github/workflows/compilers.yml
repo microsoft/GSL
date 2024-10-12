@@ -21,6 +21,7 @@ jobs:
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v1
 
       - name: create build directory
         run: mkdir build
