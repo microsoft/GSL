@@ -72,10 +72,13 @@ jobs:
     strategy:
       matrix:
         cxx_version: [ 14, 17, 20 ]
-        generator: [ 'Visual Studio 16 2019', 'Visual Studio 17 2022' ]
-        build_type: [ 'Debug', 'Release' ]
         extra_args: [ '', '-T ClangCL' ]
-    runs-on: windows-latest
+        include:
+          - generator: 'Visual Studio 16 2019'
+            image: 'windows-2019'
+          - generator: 'Visual Studio 17 2022'
+            image: 'windows-2022'
+    runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
 
