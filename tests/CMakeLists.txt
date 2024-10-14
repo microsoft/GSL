@@ -146,6 +146,7 @@ else()
           -Wno-global-constructors # GTest
           -Wno-missing-prototypes
           -Wno-padded
+          -Wno-switch-default
           -Wno-unknown-attributes
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           -Wno-weak-vtables
