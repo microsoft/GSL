@@ -11,14 +11,74 @@ on:
     branches: [ main ]
 
 jobs:
+
+  # TODO (@carsonradtke)
+  #  - [ ] Xcode
+  #  - [ ] VS_LLVM
+
+  gcc:
+    strategy:
+      matrix:
+        cxx_version: [ 14, 17, 20 ]
+        build_type: [ 'Debug', 'Release' ]
+        gcc_version: [ 12, 13, 14 ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: create build directory
+        run: mkdir build
+
+      - name: cmake configure
+        working-directory: build
+        run: |
+          CC=gcc-${{ matrix.gcc_version }}
+          CXX=g++-${{ matrix.gcc_version }}
+          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} ..
+
+      - name: build
+        working-directory: build
+        run: make
+
+      - name: test
+        working-directory: build
+        run: make test
+
+  clang:
+    strategy:
+      matrix:
+        cxx_version: [ 14, 17, 20 ]
+        build_type: [ 'Debug', 'Release' ]
+        clang_version: [ 16, 17, 18 ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: create build directory
+        run: mkdir build
+
+      - name: cmake configure
+        working-directory: build
+        run: |
+          CC=clang-${{ matrix.clang_version }}
+          CXX=clang++-${{ matrix.clang_version }}
+          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} ..
+
+      - name: build
+        working-directory: build
+        run: make
+
+      - name: test
+        working-directory: build
+        run: make test
+
   VS_MSVC:
     strategy:
       matrix:
-        image: [ windows-2022 ]
-        generator: [ "Visual Studio 17 2022" ]
-        cxx_version: [ 20 ]
+        generator: [ "Visual Studio 16 2019", "Visual Studio 17 2022" ]
+        cxx_version: [ 14, 17, 20 ]
         build_type: [ 'Debug', 'Release' ]
-    runs-on: ${{ matrix.image }}
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: microsoft/setup-msbuild@v1
@@ -38,10 +98,3 @@ jobs:
         working-directory: build
         run: ctest . --output-on-failure --no-compress-output
 
-  # TODO (@carsonradtke)
-  #  - [ ] GCC
-  #  - [ ] Clang
-  #  - [ ] Xcode
-  #  - [ ] VS_LLVM
-  #  - [ ] delete azure-pipelines.yml
-  #  - [ ] delete pipelines/
