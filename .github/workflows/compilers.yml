@@ -1,0 +1,104 @@
+name: Compiler Integration Tests
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# These jobs are correlated with the officially supported compilers
+# and toolsets. If you change any versions, please update README.md.
+
+jobs:
+  gcc:
+    strategy:
+      matrix:
+        gcc_version: [ 10, 11, 12 ]
+        build_type: [ Debug, Release ]
+        cxx_version: [ 14, 17, 20, 23 ]
+        exclude:
+          - gcc_version: 10
+            cxx_version: 23
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_cxx_compiler: g++-${{ matrix.gcc_version }}
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          
+  clang:
+    strategy:
+      matrix:
+        clang_version: [ 13, 14, 15 ]
+        build_type: [ Debug, Release ]
+        cxx_version: [ 14, 17, 20, 23 ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+     
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_cxx_compiler: clang++-${{ matrix.clang_version }}
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
+
+  xcode:
+    strategy:
+      matrix:
+        xcode_version: [ '14.3.1', '15.4' ]
+        build_type: [ Debug, Release ]
+        cxx_version: [ 14, 17, 20, 23 ]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: select xcode version
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode_version }}.app
+
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_cxx_compiler: clang++
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
+
+  VisualStudio:
+    strategy:
+      matrix:
+        generator: [ 'Visual Studio 16 2019', 'Visual Studio 17 2022' ]
+        image: [ windows-2019, windows-2022 ]
+        build_type: [ Debug, Release ]
+        extra_args: [ '', '-T ClangCL' ]
+        cxx_version: [ 14, 17, 20, 23 ]
+        exclude:
+          - generator: 'Visual Studio 17 2022'
+            image: windows-2019
+          - generator: 'Visual Studio 16 2019'
+            image: windows-2022
+          - generator: 'Visual Studio 16 2019'
+            cxx_version: 23
+    runs-on: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_generator: ${{ matrix.generator }}
+          cmake_build_type: ${{ matrix.build_type }}
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          extra_cmake_args: ${{ matrix.extra_args }}
+          build_cmd: msbuild GSL.sln
+          test_cmd: ctest . --output-on-failure --no-compress-output
+          shell: pwsh
+
