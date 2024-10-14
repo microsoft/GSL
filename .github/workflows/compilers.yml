@@ -15,6 +15,8 @@ jobs:
   # TODO (@carsonradtke)
   #  - [ ] Xcode
   #  - [ ] VS_LLVM
+  #  - [ ] Update README with latest versions actively tested
+  #  - [ ] Do not use '*-latest' for runs-on
 
   gcc:
     strategy:
@@ -31,10 +33,7 @@ jobs:
 
       - name: cmake configure
         working-directory: build
-        run: |
-          CC=gcc-${{ matrix.gcc_version }}
-          CXX=g++-${{ matrix.gcc_version }}
-          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} ..
+        run: cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} ..
 
       - name: build
         working-directory: build
@@ -59,10 +58,7 @@ jobs:
 
       - name: cmake configure
         working-directory: build
-        run: |
-          CC=clang-${{ matrix.clang_version }}
-          CXX=clang++-${{ matrix.clang_version }}
-          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} ..
+        run: cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=clang++-${{ matrix.clang_version }} ..
 
       - name: build
         working-directory: build
@@ -76,7 +72,7 @@ jobs:
     strategy:
       matrix:
         cxx_version: [ 17 ] # 14, 17, 20
-        generator: [ "Visual Studio 16 2019" ] # "Visual Studio 16 2019", "Visual Studio 17 2022" ]
+        generator: [ "Visual Studio 17 2022" ] # "Visual Studio 16 2019", "Visual Studio 17 2022"
         build_type: [ 'Debug' ] # 'Debug', 'Release'
     runs-on: windows-latest
     steps:
