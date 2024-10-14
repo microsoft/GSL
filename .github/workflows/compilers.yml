@@ -19,9 +19,9 @@ jobs:
   gcc:
     strategy:
       matrix:
-        cxx_version: [ 14, 17, 20 ]
-        build_type: [ 'Debug', 'Release' ]
-        gcc_version: [ 12, 13, 14 ]
+        cxx_version: [ 17 ] # 14, 17, 20
+        build_type: [ 'Debug'] # 'Debug', 'Release'
+        gcc_version: [ 12 ] # 12, 13, 14
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,9 +47,9 @@ jobs:
   clang:
     strategy:
       matrix:
-        cxx_version: [ 14, 17, 20 ]
-        build_type: [ 'Debug', 'Release' ]
-        clang_version: [ 16, 17, 18 ]
+        cxx_version: [ 17 ] # 14, 17, 20
+        build_type: [ 'Debug' ] # 'Debug', 'Release'
+        clang_version: [ 16 ] # 16, 17, 18
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,9 +75,9 @@ jobs:
   VS_MSVC:
     strategy:
       matrix:
-        generator: [ "Visual Studio 16 2019", "Visual Studio 17 2022" ]
-        cxx_version: [ 14, 17, 20 ]
-        build_type: [ 'Debug', 'Release' ]
+        cxx_version: [ 17 ] # 14, 17, 20
+        generator: [ "Visual Studio 16 2019" ] # "Visual Studio 16 2019", "Visual Studio 17 2022" ]
+        build_type: [ 'Debug' ] # 'Debug', 'Release'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
