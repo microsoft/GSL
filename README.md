@@ -86,8 +86,8 @@ This is based on [CppCoreGuidelines semi-specification](https://github.com/isocp
 
 # Quick Start
 ## Supported Compilers / Toolsets
-The GSL officially support recent major versions of Visual Studio with both MSVC and LLVM, GCC, Clang, and XCode with Apple-Clang.
-For each of these major versions, the GSL officially supports C++14, C++17, and C++20.
+The GSL officially supports recent major versions of Visual Studio with both MSVC and LLVM, GCC, Clang, and XCode with Apple-Clang.
+For each of these major versions, the GSL officially supports C++14, C++17, C++20, and C++23 (when supported by the compiler).
 Below is a table showing the versions currently being tested (also see [.github/workflows/compilers.yml](the workflow).)
 
 Compiler |Toolset Versions Currently Tested

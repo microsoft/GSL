@@ -17,9 +17,12 @@ jobs:
   gcc:
     strategy:
       matrix:
-        cxx_version: [ 14, 17, 20 ]
-        build_type: [ 'Debug', 'Release' ]
         gcc_version: [ 10, 11, 12 ]
+        build_type: [ Debug, Release ]
+        cxx_version: [ 14, 17, 20, 23 ]
+        exclude:
+          - gcc_version: 10
+            cxx_version: 23
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,9 +37,9 @@ jobs:
   clang:
     strategy:
       matrix:
-        cxx_version: [ 14, 17, 20 ]
-        build_type: [ 'Debug', 'Release' ]
         clang_version: [ 13, 14, 15 ]
+        build_type: [ Debug, Release ]
+        cxx_version: [ 14, 17, 20, 23 ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,9 +54,9 @@ jobs:
   xcode:
     strategy:
       matrix:
-        cxx_version: [ 14, 17, 20 ]
-        build_type: [ 'Debug', 'Release' ]
         xcode_version: [ '14.3.1', '15.4' ]
+        build_type: [ Debug, Release ]
+        cxx_version: [ 14, 17, 20, 23 ]
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -71,13 +74,18 @@ jobs:
   VisualStudio:
     strategy:
       matrix:
-        cxx_version: [ 14, 17, 20 ]
+        generator: [ 'Visual Studio 16 2019', 'Visual Studio 17 2022' ]
+        image: [ windows-2019, windows-2022 ]
+        build_type: [ Debug, Release ]
         extra_args: [ '', '-T ClangCL' ]
-        include:
-          - generator: 'Visual Studio 16 2019'
-            image: 'windows-2019'
+        cxx_version: [ 14, 17, 20, 23 ]
+        exclude:
           - generator: 'Visual Studio 17 2022'
-            image: 'windows-2022'
+            image: windows-2019
+          - generator: 'Visual Studio 16 2019'
+            image: windows-2022
+          - generator: 'Visual Studio 16 2019'
+            cxx_version: 23
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
