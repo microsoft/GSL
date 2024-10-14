@@ -10,8 +10,9 @@ on:
   pull_request:
     branches: [ main ]
 
-# TODO (@carsonradtke)
-#  - [ ] Update README with latest versions actively tested
+# These jobs are correlated with the officially supported compilers
+# and toolsets. If you change any versions, please update README.md.
+
 jobs:
   gcc:
     strategy:
@@ -71,7 +72,7 @@ jobs:
     strategy:
       matrix:
         cxx_version: [ 14, 17, 20 ]
-        generator: [ 'Visual Studio 17 2022' ]
+        generator: [ 'Visual Studio 16 2019', 'Visual Studio 17 2022' ]
         build_type: [ 'Debug', 'Release' ]
         extra_args: [ '', '-T ClangCL' ]
     runs-on: windows-latest
@@ -87,7 +88,7 @@ jobs:
           gsl_cxx_standard: ${{ matrix.cxx_version }}
           extra_cmake_args: ${{ matrix.extra_args }}
 
-      - uses: microsoft/setup-msbuild@v1
+      - uses: microsoft/setup-msbuild@v2
 
       - name: build
         working-directory: build
