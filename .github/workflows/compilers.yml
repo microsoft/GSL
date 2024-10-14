@@ -89,23 +89,16 @@ jobs:
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v2
 
-      - name: Run CMake (configure only)
+      - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
         with:
           cmake_generator: ${{ matrix.generator }}
           cmake_build_type: ${{ matrix.build_type }}
-          cmake_configure_only: true
           gsl_cxx_standard: ${{ matrix.cxx_version }}
           extra_cmake_args: ${{ matrix.extra_args }}
-
-      - uses: microsoft/setup-msbuild@v2
-
-      - name: build
-        working-directory: build
-        run: msbuild GSL.sln
-
-      - name: test
-        working-directory: build
-        run: ctest . --output-on-failure --no-compress-output
+          build_cmd: msbuild GSL.sln
+          test_cmd: ctest . --output-on-failure --no-compress-output
+          shell: pwsh
 

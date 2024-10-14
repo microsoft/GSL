@@ -18,42 +18,39 @@ inputs:
     required: false
     type: string
     default: ''
-  cmake_configure_only:
+  build_cmd:
+    required: true 
+    type: string 
+    default: 'make'
+  test_cmd:
     required: false
-    type: boolean
-    default: false
+    type: string 
+    default: 'make test'
+  shell:
+    required: false 
+    type: string
+    default: 'bash'
+
 
 runs:
   using: composite
   steps:
     - name: Create build directory
       run: mkdir build
-      shell: bash
+      shell: ${{ inputs.shell }}
 
     - name: Configure CMake
       working-directory: build
-      run: |
-        cmake \
-          -G "${{ inputs.cmake_generator }}" \
-          -DCMAKE_BUILD_TYPE=${{ inputs.cmake_build_type }} \
-          -DCMAKE_CXX_COMPILER=${{ inputs.cmake_cxx_compiler }} \
-          -DGSL_CXX_STANDARD=${{ inputs.gsl_cxx_standard }} \
-          -DCI_TESTING:BOOL=ON \
-          -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-          -Werror=dev \
-          ${{ inputs.extra_cmake_args }} \
-          ..
-      shell: bash
+      run: cmake -G "${{ inputs.cmake_generator }}" -DCMAKE_BUILD_TYPE=${{ inputs.cmake_build_type }} -DCMAKE_CXX_COMPILER=${{ inputs.cmake_cxx_compiler }} -DGSL_CXX_STANDARD=${{ inputs.gsl_cxx_standard }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev ${{ inputs.extra_cmake_args }} ..
+      shell: ${{ inputs.shell }}
 
     - name: Build
-      if: ${{inputs.cmake_configure_only == false}}
       working-directory: build
-      run: make
-      shell: bash
+      run: ${{ inputs.build_cmd }}
+      shell: ${{ inputs.shell }}
 
     - name: Test
-      if: ${{inputs.cmake_configure_only == false}}
       working-directory: build
-      run: make test
-      shell: bash
+      run: ${{ inputs.test_cmd }}
+      shell: ${{ inputs.shell }} 
 
