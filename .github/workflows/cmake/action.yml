@@ -1,0 +1,59 @@
+name: Composite CMake
+inputs:
+  cmake_generator:
+    required: false
+    type: string
+    default: 'Unix Makefiles'
+  cmake_build_type:
+    required: true
+    type: string
+    default: ''
+  cmake_cxx_compiler:
+    required: false 
+    type: string 
+  gsl_cxx_standard:
+    required: true
+    type: number
+  extra_cmake_args:
+    required: false
+    type: string
+    default: ''
+  cmake_configure_only:
+    required: false
+    type: boolean
+    default: false
+
+runs:
+  using: composite
+  steps:
+    - name: Create build directory
+      run: mkdir build
+      shell: bash
+
+    - name: Configure CMake
+      working-directory: build
+      run: |
+        cmake \
+          -G "${{ inputs.cmake_generator }}" \
+          -DCMAKE_BUILD_TYPE=${{ inputs.cmake_build_type }} \
+          -DCMAKE_CXX_COMPILER=${{ inputs.cmake_cxx_compiler }} \
+          -DGSL_CXX_STANDARD=${{ inputs.gsl_cxx_standard }} \
+          -DCI_TESTING:BOOL=ON \
+          -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+          -Werror=dev \
+          ${{ inputs.extra_cmake_args }} \
+          ..
+      shell: bash
+
+    - name: Build
+      if: "${{ !inputs.cmake_configure_only }}"
+      working-directory: build
+      run: make
+      shell: bash
+
+    - name: Test
+      if: "${{ !inputs.cmake_configure_only }}"
+      working-directory: build
+      run: make test
+      shell: bash
+

@@ -10,14 +10,11 @@ on:
   pull_request:
     branches: [ main ]
 
+# TODO (@carsonradtke)
+#  - [ ] flesh out strategy.matrix
+#  - [ ] Update README with latest versions actively tested
+#  - [ ] Do not use '*-latest' for runs-on
 jobs:
-
-  # TODO (@carsonradtke)
-  #  - [ ] Xcode
-  #  - [ ] VS_LLVM
-  #  - [ ] Update README with latest versions actively tested
-  #  - [ ] Do not use '*-latest' for runs-on
-
   gcc:
     strategy:
       matrix:
@@ -28,21 +25,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: create build directory
-        run: mkdir build
-
-      - name: cmake configure
-        working-directory: build
-        run: cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} ..
-
-      - name: build
-        working-directory: build
-        run: make
-
-      - name: test
-        working-directory: build
-        run: make test
-
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_cxx_compiler: g++-${{ matrix.gcc_version }}
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          
   clang:
     strategy:
       matrix:
@@ -53,38 +42,54 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: create build directory
-        run: mkdir build
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_cxx_compiler: clang++-${{ matrix.clang_version }}
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
 
-      - name: cmake configure
-        working-directory: build
-        run: cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev -DCMAKE_CXX_COMPILER=clang++-${{ matrix.clang_version }} ..
+  xcode:
+    strategy:
+      matrix:
+        cxx_version: [ 17 ] # 14, 17, 20
+        build_type: [ 'Debug' ] # 'Debug', 'Release'
+        xcode_version: [ "15.4" ] # "14.3.1", "15.4"
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: build
-        working-directory: build
-        run: make
+      - name: select xcode version
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode_version }}.app
 
-      - name: test
-        working-directory: build
-        run: make test
+      - name: Run CMake (configure, build, test)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_cxx_compiler: clang++
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
 
-  VS_MSVC:
+  VisualStudio:
     strategy:
       matrix:
         cxx_version: [ 17 ] # 14, 17, 20
         generator: [ "Visual Studio 17 2022" ] # "Visual Studio 16 2019", "Visual Studio 17 2022"
         build_type: [ 'Debug' ] # 'Debug', 'Release'
+        extra_args: [ "", "-T ClangCL" ]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Run CMake (configure only)
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_generator: ${{ matrix.generator }}
+          cmake_build_type: ${{ matrix.build_type }}
+          cmake_configure_only: true
+          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          extra_cmake_args: ${{ matrix.extra_args }}
+
       - uses: microsoft/setup-msbuild@v1
-
-      - name: create build directory
-        run: mkdir build
-
-      - name: cmake configure
-        working-directory: build
-        run: cmake -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DGSL_CXX_STANDARD=${{ matrix.cxx_version }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev ..
 
       - name: build
         working-directory: build
