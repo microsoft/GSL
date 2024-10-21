@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14...3.16)
 
-project(GSL VERSION 4.0.0 LANGUAGES CXX)
+project(GSL VERSION 4.1.0 LANGUAGES CXX)
 
 add_library(GSL INTERFACE)
 add_library(Microsoft.GSL::GSL ALIAS GSL)
