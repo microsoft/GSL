@@ -294,6 +294,12 @@ void operator[](std::ptrdiff_t) const = delete;
 
 Array index operator is explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Ri-array)), so don't allow treating them as an array.
 
+```cpp
+void swap(not_null<T>& other) { std::swap(ptr_, other.ptr_); }
+```
+
+Swaps contents with another `gsl::not_null` object.
+
 #### Non-member functions
 
 ```cpp
@@ -302,6 +308,13 @@ auto make_not_null(T&& t) noexcept;
 ```
 
 Creates a `gsl::not_null` object, deducing the target type from the type of the argument.
+
+```cpp
+template <typename T, typename = std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value>>
+void swap(not_null<T>& a, not_null<T>& b);
+```
+
+Swaps the contents of two `gsl::not_null` objects.
 
 ```cpp
 template <class T, class U>
@@ -858,3 +871,10 @@ constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size
 This overload returns a reference to the `i`s element of the `std::span` `sp`. It [`Expects`](#user-content-H-assert-expects) that the provided index is within the bounds of the array.
 
 For [`gsl::at`](#user-content-H-span_ext-at) for [`gsl::span`](#user-content-H-span-span) see header [`span_ext`](#user-content-H-span_ext).
+
+```cpp
+template <class T, std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value>>
+void swap(T& a, T& b);
+```
+
+Swaps the contents of two objects. Exists only to specialize `gsl::swap<T>(gsl::not_null<T>&, gsl::not_null<T>&)`.
