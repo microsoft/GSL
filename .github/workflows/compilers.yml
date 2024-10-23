@@ -99,6 +99,6 @@ jobs:
           gsl_cxx_standard: ${{ matrix.cxx_version }}
           extra_cmake_args: ${{ matrix.extra_args }}
           build_cmd: msbuild GSL.sln
-          test_cmd: ctest . --output-on-failure --no-compress-output
+          test_cmd: ctest . --output-on-failure --no-compress-output -C ${{ matrix.build_type }}
           shell: pwsh
 

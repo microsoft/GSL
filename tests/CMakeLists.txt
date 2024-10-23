@@ -1,15 +1,8 @@
-cmake_minimum_required(VERSION 3.14...3.16)
-
-project(GSLTests LANGUAGES CXX)
-
 set(GSL_CXX_STANDARD "14" CACHE STRING "Use c++ standard")
 
 set(CMAKE_CXX_STANDARD ${GSL_CXX_STANDARD})
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-include(FindPkgConfig)
-include(ExternalProject)
 
 # will make visual studio generated project group files
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -22,50 +15,14 @@ if(IOS)
     add_compile_definitions(GTEST_HAS_DEATH_TEST=1 IOS_PROCESS_DELAY_WORKAROUND=1)
 endif()
 
-pkg_search_module(GTestMain gtest_main)
-if (NOT GTestMain_FOUND)
-    # No pre-installed GTest is available, try to download it using Git.
-    find_package(Git REQUIRED QUIET)
+include(FetchContent)
 
-    configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-    execute_process(
-        COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-        RESULT_VARIABLE result
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
-    )
-    if(result)
-        message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-    endif()
-
-    execute_process(
-        COMMAND ${CMAKE_COMMAND} --build .
-        RESULT_VARIABLE result
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
-    )
-    if(result)
-        message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-    endif()
-
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    set(GTestMain_LIBRARIES gtest_main)
-
-    add_subdirectory(
-        ${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-        ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-        EXCLUDE_FROM_ALL
-    )
-endif()
-
-if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    find_package(Microsoft.GSL CONFIG REQUIRED)
-    enable_testing()
-
-    if (NOT DEFINED Microsoft.GSL_VERSION)
-        message(FATAL_ERROR "Microsoft.GSL_VERSION not defined!")
-    endif()
-
-    message(STATUS "Microsoft.GSL_VERSION = ${Microsoft.GSL_VERSION}")
-endif()
+FetchContent_Declare(googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        1b18723e874b256c1e39378c6774a90701d70f7a)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
 if (MSVC AND (GSL_CXX_STANDARD GREATER_EQUAL 17))
     set(GSL_CPLUSPLUS_OPT -Zc:__cplusplus -permissive-)
@@ -193,11 +150,6 @@ if (WARN_UNSAFE_BUFFER)
   target_compile_options(gsl_tests_config INTERFACE "-Wno-unsafe-buffer-usage")
 endif()
 
-# for tests to find the gtest header
-target_include_directories(gsl_tests_config SYSTEM INTERFACE
-    googletest/googletest/include
-)
-
 add_executable(gsl_tests
     algorithm_tests.cpp
     assertion_tests.cpp
@@ -216,7 +168,7 @@ add_executable(gsl_tests
 target_link_libraries(gsl_tests
     Microsoft.GSL::GSL
     gsl_tests_config
-    ${GTestMain_LIBRARIES}
+    GTest::gtest_main
 )
 add_test(gsl_tests gsl_tests)
 
@@ -315,3 +267,21 @@ target_link_libraries(gsl_noexcept_tests
     gsl_tests_config_noexcept
 )
 add_test(gsl_noexcept_tests gsl_noexcept_tests)
+
+# Test installation
+set(test_install_dir "${CMAKE_CURRENT_BINARY_DIR}/install")
+add_test(NAME integration.install
+    COMMAND ${CMAKE_COMMAND} --install ${GSL_BINARY_DIR} --prefix ${test_install_dir} --config $<CONFIG>
+)
+
+# Test find_package suppport
+add_test(NAME integration.find_package
+    COMMAND ${CMAKE_CTEST_COMMAND}
+        --build-and-test ${CMAKE_CURRENT_LIST_DIR}/integration
+                         ${CMAKE_CURRENT_BINARY_DIR}/find_package
+        --build-generator ${CMAKE_GENERATOR}
+        --build-options -DCMAKE_PREFIX_PATH=${test_install_dir}
+)
+
+# Installing comes before testing
+set_tests_properties(integration.find_package PROPERTIES DEPENDS integration.install)
