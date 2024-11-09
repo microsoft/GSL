@@ -141,8 +141,8 @@ namespace details
         constexpr span_iterator(pointer begin, pointer end, pointer current)
             : begin_(begin), end_(end), current_(current)
         {
-            Expects(begin && current && end);
-            Expects(begin <= current && current <= end);
+            Expects(begin_ && current_ && end_);
+            Expects(begin_ <= current_ && current <= end_);
         }
 
         constexpr operator span_iterator<const Type>() const noexcept
@@ -180,7 +180,7 @@ namespace details
 
         constexpr span_iterator& operator--() noexcept
         {
-            Expects(begin != current_);
+            Expects(begin_ != current_);
             --current_;
             return *this;
         }
