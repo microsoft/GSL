@@ -140,7 +140,10 @@ namespace details
 
         constexpr span_iterator(pointer begin, pointer end, pointer current)
             : begin_(begin), end_(end), current_(current)
-        {}
+        {
+            Expects(begin && current && end);
+            Expects(begin <= current && current <= end);
+        }
 
         constexpr operator span_iterator<const Type>() const noexcept
         {
@@ -149,21 +152,18 @@ namespace details
 
         constexpr reference operator*() const noexcept
         {
-            Expects(begin_ && end_);
-            Expects(begin_ <= current_ && current_ < end_);
+            Expects(current_ != end_);
             return *current_;
         }
 
         constexpr pointer operator->() const noexcept
         {
-            Expects(begin_ && end_);
-            Expects(begin_ <= current_ && current_ < end_);
+            Expects(current_ != end_);
             return current_;
         }
         constexpr span_iterator& operator++() noexcept
         {
-            Expects(begin_ && current_ && end_);
-            Expects(current_ < end_);
+            Expects(current_ != end_);
             // clang-format off
             GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
             // clang-format on
@@ -180,8 +180,7 @@ namespace details
 
         constexpr span_iterator& operator--() noexcept
         {
-            Expects(begin_ && end_);
-            Expects(begin_ < current_);
+            Expects(begin != current_);
             --current_;
             return *this;
         }
@@ -195,7 +194,6 @@ namespace details
 
         constexpr span_iterator& operator+=(const difference_type n) noexcept
         {
-            if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(end_ - current_ >= n);
             if (n < 0) Expects(current_ - begin_ >= -n);
             // clang-format off
@@ -220,7 +218,6 @@ namespace details
 
         constexpr span_iterator& operator-=(const difference_type n) noexcept
         {
-            if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(current_ - begin_ >= n);
             if (n < 0) Expects(end_ - current_ >= -n);
             GSL_SUPPRESS(bounds .1)
