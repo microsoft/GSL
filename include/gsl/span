@@ -141,7 +141,6 @@ namespace details
         constexpr span_iterator(pointer begin, pointer end, pointer current)
             : begin_(begin), end_(end), current_(current)
         {
-            Expects(begin_ && current_ && end_);
             Expects(begin_ <= current_ && current <= end_);
         }
 
@@ -194,6 +193,7 @@ namespace details
 
         constexpr span_iterator& operator+=(const difference_type n) noexcept
         {
+            if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(end_ - current_ >= n);
             if (n < 0) Expects(current_ - begin_ >= -n);
             // clang-format off
@@ -218,6 +218,7 @@ namespace details
 
         constexpr span_iterator& operator-=(const difference_type n) noexcept
         {
+            if (n != 0) Expects(begin_ && current_ && end_);
             if (n > 0) Expects(current_ - begin_ >= n);
             if (n < 0) Expects(end_ - current_ >= -n);
             GSL_SUPPRESS(bounds .1)
