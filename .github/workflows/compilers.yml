@@ -23,7 +23,14 @@ jobs:
         exclude:
           - gcc_version: 10
             cxx_version: 23
-    runs-on: ubuntu-latest
+          # https://github.com/google/googletest/issues/4232
+          # Looks like GoogleTest is not interested in making version 1.14
+          # work with gcc-12.
+          - gcc_version: 12
+            cxx_version: 20
+          - gcc_version: 12
+            cxx_version: 20
+ runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
