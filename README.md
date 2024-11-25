@@ -1,5 +1,6 @@
 # GSL: Guidelines Support Library
-[![Build Status](https://dev.azure.com/cppstat/GSL/_apis/build/status/microsoft.GSL?branchName=main)](https://dev.azure.com/cppstat/GSL/_build/latest?definitionId=1&branchName=main)
+[![CI](https://github.com/Microsoft/GSL/actions/workflows/compilers.yml/badge.svg)](https://github.com/microsoft/GSL/actions/workflows/compilers.yml?query=branch%3Amain)
+[![vcpkg](https://img.shields.io/vcpkg/v/ms-gsl)](https://vcpkg.io/en/package/ms-gsl)
 
 The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines) maintained by the [Standard C++ Foundation](https://isocpp.org).
@@ -106,8 +107,8 @@ If you successfully port GSL to another platform, we would love to hear from you
 
 Target | CI/CD Status
 :------- | -----------:
-iOS | ![CI_iOS](https://github.com/microsoft/GSL/workflows/CI_iOS/badge.svg)
-Android | ![CI_Android](https://github.com/microsoft/GSL/workflows/CI_Android/badge.svg)
+iOS | [![CI_iOS](https://github.com/microsoft/GSL/workflows/CI_iOS/badge.svg?branch=main)](https://github.com/microsoft/GSL/actions/workflows/ios.yml?query=branch%3Amain)
+Android | [![CI_Android](https://github.com/microsoft/GSL/workflows/CI_Android/badge.svg?branch=main)](https://github.com/microsoft/GSL/actions/workflows/android.yml?query=branch%3Amain)
 
 Note: These CI/CD steps are run with each pull request, however failures in them are non-blocking.
 
