@@ -30,7 +30,7 @@ jobs:
             cxx_version: 20
           - gcc_version: 12
             cxx_version: 20
- runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
