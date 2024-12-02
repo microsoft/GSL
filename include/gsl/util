@@ -146,6 +146,9 @@ GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
     return *(cont.begin() + i);
 }
 
+template <class T, std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value>>
+void swap(T& a, T& b) { std::swap(a, b); }
+
 #if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
 template <class T, std::size_t extent = std::dynamic_extent>
 constexpr auto at(std::span<T, extent> sp, const index i) -> decltype(sp[sp.size()])
