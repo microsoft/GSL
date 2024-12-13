@@ -206,6 +206,7 @@ add_executable(gsl_tests
     byte_tests.cpp
     notnull_tests.cpp
     owner_tests.cpp
+    pointers_tests.cpp
     span_compatibility_tests.cpp
     span_ext_tests.cpp
     span_tests.cpp
