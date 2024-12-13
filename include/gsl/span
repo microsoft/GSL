@@ -140,7 +140,9 @@ namespace details
 
         constexpr span_iterator(pointer begin, pointer end, pointer current)
             : begin_(begin), end_(end), current_(current)
-        {}
+        {
+            Expects(begin_ <= current_ && current <= end_);
+        }
 
         constexpr operator span_iterator<const Type>() const noexcept
         {
@@ -149,21 +151,18 @@ namespace details
 
         constexpr reference operator*() const noexcept
         {
-            Expects(begin_ && end_);
-            Expects(begin_ <= current_ && current_ < end_);
+            Expects(current_ != end_);
             return *current_;
         }
 
         constexpr pointer operator->() const noexcept
         {
-            Expects(begin_ && end_);
-            Expects(begin_ <= current_ && current_ < end_);
+            Expects(current_ != end_);
             return current_;
         }
         constexpr span_iterator& operator++() noexcept
         {
-            Expects(begin_ && current_ && end_);
-            Expects(current_ < end_);
+            Expects(current_ != end_);
             // clang-format off
             GSL_SUPPRESS(bounds.1) // NO-FORMAT: attribute
             // clang-format on
@@ -180,8 +179,7 @@ namespace details
 
         constexpr span_iterator& operator--() noexcept
         {
-            Expects(begin_ && end_);
-            Expects(begin_ < current_);
+            Expects(begin_ != current_);
             --current_;
             return *this;
         }
