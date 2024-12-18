@@ -16,6 +16,7 @@
 
 #include <gtest/gtest.h>
 
+#define GSL_USE_STD_BYTE 0
 #include <gsl/byte> // for to_byte, to_integer, byte, operator&, ope...
 
 using namespace std;
@@ -33,28 +34,28 @@ int modify_both(gsl::byte& b, int& i)
 TEST(byte_tests, construction)
 {
     {
-        const byte b = static_cast<byte>(4);
+        const gsl::byte b = static_cast<gsl::byte>(4);
         EXPECT_TRUE(static_cast<unsigned char>(b) == 4);
     }
 
     {
-        const byte b = byte(12);
+        const gsl::byte b = gsl::byte(12);
         EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
     }
 
     {
-        const byte b = to_byte<12>();
+        const gsl::byte b = to_byte<12>();
         EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
     }
     {
         const unsigned char uc = 12;
-        const byte b = to_byte(uc);
+        const gsl::byte b = to_byte(uc);
         EXPECT_TRUE(static_cast<unsigned char>(b) == 12);
     }
 
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
     {
-        const byte b{14};
+        const gsl::byte b{14};
         EXPECT_TRUE(static_cast<unsigned char>(b) == 14);
     }
 #endif
@@ -68,9 +69,9 @@ TEST(byte_tests, construction)
 
 TEST(byte_tests, bitwise_operations)
 {
-    const byte b = to_byte<0xFF>();
+    const gsl::byte b = to_byte<0xFF>();
 
-    byte a = to_byte<0x00>();
+    gsl::byte a = to_byte<0x00>();
     EXPECT_TRUE((b | a) == to_byte<0xFF>());
     EXPECT_TRUE(a == to_byte<0x00>());
 
@@ -104,7 +105,7 @@ TEST(byte_tests, bitwise_operations)
 
 TEST(byte_tests, to_integer)
 {
-    const byte b = to_byte<0x12>();
+    const gsl::byte b = to_byte<0x12>();
 
     EXPECT_TRUE(0x12 == gsl::to_integer<char>(b));
     EXPECT_TRUE(0x12 == gsl::to_integer<short>(b));
@@ -123,7 +124,7 @@ TEST(byte_tests, to_integer)
 TEST(byte_tests, aliasing)
 {
     int i{0};
-    const int res = modify_both(reinterpret_cast<byte&>(i), i);
+    const int res = modify_both(reinterpret_cast<gsl::byte&>(i), i);
     EXPECT_TRUE(res == i);
 }
 
