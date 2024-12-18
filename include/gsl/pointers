@@ -145,7 +145,7 @@ private:
     T ptr_;
 };
 
-template <typename T, typename = std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value>>
+template <typename T, std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value, bool> = true>
 void swap(not_null<T>& a, not_null<T>& b)
 {
     a.swap(b);

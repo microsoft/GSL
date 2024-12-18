@@ -33,10 +33,10 @@ struct NotMovable
 template <typename U, typename = void>
 static constexpr bool SwapCompilesFor = false;
 template <typename U>
-static constexpr bool SwapCompilesFor<
-    U, std::void_t<decltype(gsl::swap<U, void>(std::declval<gsl::not_null<U>&>(),
-                                               std::declval<gsl::not_null<U>&>()))>> =
-    true;
-static_assert(SwapCompilesFor<NotMovable>, "SwapCompilesFor<NotMovable>");
+static constexpr bool
+    SwapCompilesFor<U, std::void_t<decltype(gsl::swap<U>(std::declval<gsl::not_null<U>&>(),
+                                                         std::declval<gsl::not_null<U>&>()))>> =
+        true;
+static_assert(!SwapCompilesFor<NotMovable>, "!SwapCompilesFor<NotMovable>");
 
 } // namespace

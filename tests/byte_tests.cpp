@@ -136,36 +136,36 @@ template <typename U, typename = void>
 static constexpr bool LShiftCompilesFor = false;
 template <typename U>
 static constexpr bool LShiftCompilesFor<
-    U, std::void_t<decltype(gsl::operator<< <float, void>(declval<gsl::byte>(), declval<U>()))>> = true;
-static_assert(LShiftCompilesFor<float>, "LShiftCompilesFor<float>");
+    U, std::void_t<decltype(gsl::operator<< <float>(declval<gsl::byte>(), declval<U>()))>> = true;
+static_assert(!LShiftCompilesFor<float>, "!LShiftCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool RShiftCompilesFor = false;
 template <typename U>
 static constexpr bool RShiftCompilesFor<
-    U, std::void_t<decltype(gsl::operator>> <U, void>(declval<gsl::byte>(), declval<U>()))>> = true;
-static_assert(RShiftCompilesFor<float>, "RShiftCompilesFor<float>");
+    U, std::void_t<decltype(gsl::operator>> <U>(declval<gsl::byte>(), declval<U>()))>> = true;
+static_assert(!RShiftCompilesFor<float>, "!RShiftCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool LShiftAssignCompilesFor = false;
 template <typename U>
 static constexpr bool LShiftAssignCompilesFor<
-    U, std::void_t<decltype(gsl::operator<<= <U, void>(declval<gsl::byte&>(), declval<U>()))>> = true;
-static_assert(LShiftAssignCompilesFor<float>, "LShiftAssignCompilesFor<float>");
+    U, std::void_t<decltype(gsl::operator<<= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
+static_assert(!LShiftAssignCompilesFor<float>, "!LShiftAssignCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool RShiftAssignCompilesFor = false;
 template <typename U>
 static constexpr bool RShiftAssignCompilesFor<
-    U, std::void_t<decltype(gsl::operator>>= <U, void>(declval<gsl::byte&>(), declval<U>()))>> = true;
-static_assert(RShiftAssignCompilesFor<float>, "RShiftAssignCompilesFor<float>");
+    U, std::void_t<decltype(gsl::operator>>= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
+static_assert(!RShiftAssignCompilesFor<float>, "!RShiftAssignCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool ToIntegerCompilesFor = false;
 template <typename U>
-static constexpr bool ToIntegerCompilesFor<
-    U, std::void_t<decltype(gsl::to_integer<U, void>(gsl::byte{}))>> = true;
-static_assert(ToIntegerCompilesFor<float>, "ToIntegerCompilesFor<float>");
+static constexpr bool
+    ToIntegerCompilesFor<U, std::void_t<decltype(gsl::to_integer<U>(gsl::byte{}))>> = true;
+static_assert(!ToIntegerCompilesFor<float>, "!ToIntegerCompilesFor<float>");
 
 } // namespace
 
