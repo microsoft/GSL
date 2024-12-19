@@ -91,16 +91,16 @@ See [SL.str.5: Use `std::byte` to refer to byte values that do not necessarily r
 ### Non-member functions
 
 ```cpp
-template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+template <class IntegerType, std::enable_if_t<std::is_integral<IntegerType>::value, bool> = true>
 constexpr byte& operator<<=(byte& b, IntegerType shift) noexcept;
 
-template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+template <class IntegerType, std::enable_if_t<std::is_integral<IntegerType>::value, bool> = true>
 constexpr byte operator<<(byte b, IntegerType shift) noexcept;
 
-template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+template <class IntegerType, std::enable_if_t<std::is_integral<IntegerType>::value, bool> = true>
 constexpr byte& operator>>=(byte& b, IntegerType shift) noexcept;
 
-template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+template <class IntegerType, std::enable_if_t<std::is_integral<IntegerType>::value, bool> = true>
 constexpr byte operator>>(byte b, IntegerType shift) noexcept;
 ```
 
@@ -134,7 +134,7 @@ constexpr byte operator~(byte b) noexcept;
 Bitwise negation of a `byte`. Flips all bits. Zeroes become ones, ones become zeroes.
 
 ```cpp
-template <class IntegerType, class = std::enable_if_t<std::is_integral<IntegerType>::value>>
+template <class IntegerType, std::enable_if_t<std::is_integral<IntegerType>::value, bool> = true>
 constexpr IntegerType to_integer(byte b) noexcept;
 ```
 
@@ -310,7 +310,7 @@ auto make_not_null(T&& t) noexcept;
 Creates a `gsl::not_null` object, deducing the target type from the type of the argument.
 
 ```cpp
-template <typename T, typename = std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value>>
+template <typename T, std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value, bool> = true>
 void swap(not_null<T>& a, not_null<T>& b);
 ```
 
