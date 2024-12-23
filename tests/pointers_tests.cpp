@@ -25,22 +25,50 @@ struct NotMoveAssignableCustomPtr
 TEST(pointers_test, swap)
 {
     // taken from gh-1129:
-    gsl::not_null<std::unique_ptr<int>> a(std::make_unique<int>(0));
-    gsl::not_null<std::unique_ptr<int>> b(std::make_unique<int>(1));
+    {
+        gsl::not_null<std::unique_ptr<int>> a(std::make_unique<int>(0));
+        gsl::not_null<std::unique_ptr<int>> b(std::make_unique<int>(1));
 
-    EXPECT_TRUE(*a == 0);
-    EXPECT_TRUE(*b == 1);
+        EXPECT_TRUE(*a == 0);
+        EXPECT_TRUE(*b == 1);
 
-    gsl::swap(a, b);
+        gsl::swap(a, b);
 
-    EXPECT_TRUE(*a == 1);
-    EXPECT_TRUE(*b == 0);
+        EXPECT_TRUE(*a == 1);
+        EXPECT_TRUE(*b == 0);
 
-    // Make sure our custom ptr can be used with not_null. The shared_pr is to prevent "unused"
-    // compiler warnings.
-    const auto shared_custom_ptr{std::make_shared<NotMoveAssignableCustomPtr>()};
-    gsl::not_null<NotMoveAssignableCustomPtr> c{*shared_custom_ptr};
-    EXPECT_TRUE(c.get() != nullptr);
+        // Make sure our custom ptr can be used with not_null. The shared_pr is to prevent "unused"
+        // compiler warnings.
+        const auto shared_custom_ptr{std::make_shared<NotMoveAssignableCustomPtr>()};
+        gsl::not_null<NotMoveAssignableCustomPtr> c{*shared_custom_ptr};
+        EXPECT_TRUE(c.get() != nullptr);
+    }
+
+    {
+        gsl::strict_not_null<std::unique_ptr<int>> a{std::make_unique<int>(0)};
+        gsl::strict_not_null<std::unique_ptr<int>> b{std::make_unique<int>(1)};
+
+        EXPECT_TRUE(*a == 0);
+        EXPECT_TRUE(*b == 1);
+
+        gsl::swap(a, b);
+
+        EXPECT_TRUE(*a == 1);
+        EXPECT_TRUE(*b == 0);
+    }
+
+    {
+        gsl::not_null<std::unique_ptr<int>> a{std::make_unique<int>(0)};
+        gsl::strict_not_null<std::unique_ptr<int>> b{std::make_unique<int>(1)};
+
+        EXPECT_TRUE(*a == 0);
+        EXPECT_TRUE(*b == 1);
+
+        gsl::swap(a, b);
+
+        EXPECT_TRUE(*a == 1);
+        EXPECT_TRUE(*b == 0);
+    }
 }
 
 #if __cplusplus >= 201703l
