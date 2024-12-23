@@ -19,6 +19,9 @@
 #define GSL_USE_STD_BYTE 0
 #include <gsl/byte> // for to_byte, to_integer, byte, operator&, ope...
 
+#include <type_traits>
+#include <utility>
+
 using namespace std;
 using namespace gsl;
 
@@ -127,6 +130,48 @@ TEST(byte_tests, aliasing)
     const int res = modify_both(reinterpret_cast<gsl::byte&>(i), i);
     EXPECT_TRUE(res == i);
 }
+
+#if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
+template <typename U, typename = void>
+static constexpr bool LShiftCompilesFor = false;
+template <typename U>
+static constexpr bool LShiftCompilesFor<
+    U, void_t<decltype(gsl::operator<< <float>(declval<gsl::byte>(), declval<U>()))>> = true;
+static_assert(!LShiftCompilesFor<float>, "!LShiftCompilesFor<float>");
+
+template <typename U, typename = void>
+static constexpr bool RShiftCompilesFor = false;
+template <typename U>
+static constexpr bool RShiftCompilesFor<
+    U, void_t<decltype(gsl::operator>> <U>(declval<gsl::byte>(), declval<U>()))>> = true;
+static_assert(!RShiftCompilesFor<float>, "!RShiftCompilesFor<float>");
+
+template <typename U, typename = void>
+static constexpr bool LShiftAssignCompilesFor = false;
+template <typename U>
+static constexpr bool LShiftAssignCompilesFor<
+    U, void_t<decltype(gsl::operator<<= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
+static_assert(!LShiftAssignCompilesFor<float>, "!LShiftAssignCompilesFor<float>");
+
+template <typename U, typename = void>
+static constexpr bool RShiftAssignCompilesFor = false;
+template <typename U>
+static constexpr bool RShiftAssignCompilesFor<
+    U, void_t<decltype(gsl::operator>>= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
+static_assert(!RShiftAssignCompilesFor<float>, "!RShiftAssignCompilesFor<float>");
+
+template <typename U, typename = void>
+static constexpr bool ToIntegerCompilesFor = false;
+template <typename U>
+static constexpr bool
+    ToIntegerCompilesFor<U, void_t<decltype(gsl::to_integer<U>(gsl::byte{}))>> = true;
+static_assert(!ToIntegerCompilesFor<float>, "!ToIntegerCompilesFor<float>");
 
 } // namespace
 
