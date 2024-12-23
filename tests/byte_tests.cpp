@@ -131,40 +131,46 @@ TEST(byte_tests, aliasing)
     EXPECT_TRUE(res == i);
 }
 
-//  These are regressions, should be fixed.
+#if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
 template <typename U, typename = void>
 static constexpr bool LShiftCompilesFor = false;
 template <typename U>
 static constexpr bool LShiftCompilesFor<
-    U, std::void_t<decltype(gsl::operator<< <float>(declval<gsl::byte>(), declval<U>()))>> = true;
+    U, void_t<decltype(gsl::operator<< <float>(declval<gsl::byte>(), declval<U>()))>> = true;
 static_assert(!LShiftCompilesFor<float>, "!LShiftCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool RShiftCompilesFor = false;
 template <typename U>
 static constexpr bool RShiftCompilesFor<
-    U, std::void_t<decltype(gsl::operator>> <U>(declval<gsl::byte>(), declval<U>()))>> = true;
+    U, void_t<decltype(gsl::operator>> <U>(declval<gsl::byte>(), declval<U>()))>> = true;
 static_assert(!RShiftCompilesFor<float>, "!RShiftCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool LShiftAssignCompilesFor = false;
 template <typename U>
 static constexpr bool LShiftAssignCompilesFor<
-    U, std::void_t<decltype(gsl::operator<<= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
+    U, void_t<decltype(gsl::operator<<= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
 static_assert(!LShiftAssignCompilesFor<float>, "!LShiftAssignCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool RShiftAssignCompilesFor = false;
 template <typename U>
 static constexpr bool RShiftAssignCompilesFor<
-    U, std::void_t<decltype(gsl::operator>>= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
+    U, void_t<decltype(gsl::operator>>= <U>(declval<gsl::byte&>(), declval<U>()))>> = true;
 static_assert(!RShiftAssignCompilesFor<float>, "!RShiftAssignCompilesFor<float>");
 
 template <typename U, typename = void>
 static constexpr bool ToIntegerCompilesFor = false;
 template <typename U>
 static constexpr bool
-    ToIntegerCompilesFor<U, std::void_t<decltype(gsl::to_integer<U>(gsl::byte{}))>> = true;
+    ToIntegerCompilesFor<U, void_t<decltype(gsl::to_integer<U>(gsl::byte{}))>> = true;
 static_assert(!ToIntegerCompilesFor<float>, "!ToIntegerCompilesFor<float>");
 
 } // namespace

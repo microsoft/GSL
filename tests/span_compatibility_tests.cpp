@@ -1005,12 +1005,18 @@ static_assert(std::is_convertible<const std::array<int, 3>&, gsl::span<const int
               "std::is_convertible<const std::array<int, 3>&, gsl::span<const int>>");
 
 #if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
 template <typename U, typename = void>
 static constexpr bool AsWritableBytesCompilesFor = false;
 
 template <typename U>
 static constexpr bool
-    AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(declval<U>()))>> = true;
+    AsWritableBytesCompilesFor<U, ::void_t<decltype(as_writable_bytes(declval<U>()))>> = true;
 
 static_assert(AsWritableBytesCompilesFor<gsl::span<int>>,
               "AsWritableBytesCompilesFor<gsl::span<int>>");
@@ -1020,4 +1026,3 @@ static_assert(!AsWritableBytesCompilesFor<gsl::span<const int>>,
               "!AsWritableBytesCompilesFor<gsl::span<const int>>");
 static_assert(!AsWritableBytesCompilesFor<gsl::span<const int, 9>>,
               "!AsWritableBytesCompilesFor<gsl::span<const int, 9>>");
-#endif // __cplusplus >= 201703l
