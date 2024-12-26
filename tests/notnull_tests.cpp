@@ -179,6 +179,14 @@ TEST(notnull_tests, TestNotNullConstructors)
     }
 
     {
+        // from unique pointer
+        not_null<std::unique_ptr<int>> x(
+            std::make_unique<int>(10)); // unique_ptr<int> is nullptr assignable
+
+        EXPECT_DEATH((not_null<std::unique_ptr<int>>(std::unique_ptr<int>{})), expected);
+    }
+
+    {
         // from pointer to local
         int t = 42;
 

@@ -275,19 +275,19 @@ class strict_not_null : public not_null<T>
 {
 public:
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr explicit strict_not_null(U&& u) : not_null<T>(std::forward<U>(u))
+    constexpr explicit strict_not_null(U&& u) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null<T>(std::forward<U>(u))
     {}
 
     template <typename = std::enable_if_t<!std::is_same<std::nullptr_t, T>::value>>
-    constexpr explicit strict_not_null(T u) : not_null<T>(u)
+    constexpr explicit strict_not_null(T u) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null<T>(std::move(u))
     {}
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr strict_not_null(const not_null<U>& other) : not_null<T>(other)
+    constexpr strict_not_null(const not_null<U>& other) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null<T>(other)
     {}
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr strict_not_null(const strict_not_null<U>& other) : not_null<T>(other)
+    constexpr strict_not_null(const strict_not_null<U>& other) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null<T>(other)
     {}
 
     // To avoid invalidating the "not null" invariant, the contained pointer is actually copied

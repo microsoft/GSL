@@ -21,6 +21,15 @@
 
 using namespace gsl;
 
+// stand-in for a user-defined ref-counted class
+template <typename T>
+struct RefCounted
+{
+    RefCounted(T* p) : p_(p) {}
+    operator T*() { return p_; }
+    T* p_;
+};
+
 namespace
 {
 // clang-format off
@@ -43,11 +52,115 @@ GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
 // clang-format on
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
-#ifdef CONFIRM_COMPILATION_ERRORS
 int* return_pointer() { return nullptr; }
+#ifdef CONFIRM_COMPILATION_ERRORS
 const int* return_pointer_const() { return nullptr; }
 #endif
 } // namespace
+
+TEST(strict_notnull_tests, TestStrictNotNullConstructors)
+{
+    {
+#ifdef CONFIRM_COMPILATION_ERRORS
+        strict_not_null<int*> p = nullptr;          // yay...does not compile!
+        strict_not_null<std::vector<char>*> p1 = 0; // yay...does not compile!
+        strict_not_null<int*> p2;                   // yay...does not compile!
+        std::unique_ptr<int> up = std::make_unique<int>(120);
+        strict_not_null<int*> p3 = up;
+
+        // Forbid non-nullptr assignable types
+        strict_not_null<std::vector<int>> f(std::vector<int>{1});
+        strict_not_null<int> z(10);
+        strict_not_null<std::vector<int>> y({1, 2});
+#endif
+    }
+
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. TestNotNullConstructors";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
+    {
+        // from shared pointer
+        int i = 12;
+        auto rp = RefCounted<int>(&i);
+        strict_not_null<int*> p(rp);
+        EXPECT_TRUE(p.get() == &i);
+
+        strict_not_null<std::shared_ptr<int>> x(
+            std::make_shared<int>(10)); // shared_ptr<int> is nullptr assignable
+
+        int* pi = nullptr;
+        EXPECT_DEATH((strict_not_null<decltype(pi)>(pi)), expected);
+    }
+
+    {
+        // from unique pointer
+        strict_not_null<std::unique_ptr<int>> x(
+            std::make_unique<int>(10)); // unique_ptr<int> is nullptr assignable
+
+        EXPECT_DEATH((strict_not_null<std::unique_ptr<int>>(std::unique_ptr<int>{})), expected);
+    }
+
+    {
+        // from pointer to local
+        int t = 42;
+
+        strict_not_null<int*> x{&t};
+        helper(&t);
+        helper_const(&t);
+
+        EXPECT_TRUE(*x == 42);
+    }
+
+    {
+        // from raw pointer
+        // from strict_not_null pointer
+
+        int t = 42;
+        int* p = &t;
+
+        strict_not_null<int*> x{p};
+        helper(p);
+        helper_const(p);
+        helper(x);
+        helper_const(x);
+
+        EXPECT_TRUE(*x == 42);
+    }
+
+    {
+        // from raw const pointer
+        // from strict_not_null const pointer
+
+        int t = 42;
+        const int* cp = &t;
+
+        strict_not_null<const int*> x{cp};
+        helper_const(cp);
+        helper_const(x);
+
+        EXPECT_TRUE(*x == 42);
+    }
+
+    {
+        // from strict_not_null const pointer, using auto
+        int t = 42;
+        const int* cp = &t;
+
+        auto x = strict_not_null<const int*>{cp};
+
+        EXPECT_TRUE(*x == 42);
+    }
+
+    {
+        // from returned pointer
+
+        EXPECT_DEATH(helper(return_pointer()), expected);
+        EXPECT_DEATH(helper_const(return_pointer()), expected);
+    }
+}
 
 TEST(strict_notnull_tests, TestStrictNotNull)
 {
