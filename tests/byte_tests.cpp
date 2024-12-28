@@ -67,6 +67,8 @@ TEST(byte_tests, construction)
     to_byte(char{});
     to_byte(3);
     to_byte(3u);
+    to_byte<-1>();
+    to_byte<256u>();
 #endif
 }
 
@@ -174,7 +176,3 @@ static constexpr bool
 static_assert(!ToIntegerCompilesFor<float>, "!ToIntegerCompilesFor<float>");
 
 } // namespace
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-copy(src_span_static, dst_span_static);
-#endif

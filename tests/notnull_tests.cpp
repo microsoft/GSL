@@ -18,13 +18,14 @@
 
 #include <gsl/pointers> // for not_null, operator<, operator<=, operator>
 
-#include <algorithm> // for addressof
-#include <cstdint>   // for uint16_t
-#include <memory>    // for shared_ptr, make_shared, operator<, opera...
-#include <sstream>   // for operator<<, ostringstream, basic_ostream:...
-#include <string>    // for basic_string, operator==, string, operator<<
-#include <typeinfo>  // for type_info
-#include <variant>   // for variant, monostate, get
+#include <algorithm>   // for addressof
+#include <cstdint>     // for uint16_t
+#include <memory>      // for shared_ptr, make_shared, operator<, opera...
+#include <sstream>     // for operator<<, ostringstream, basic_ostream:...
+#include <string>      // for basic_string, operator==, string, operator<<
+#include <type_traits> // for declval
+#include <typeinfo>    // for type_info
+#include <variant>     // for variant, monostate, get
 
 #include "deathTestCommon.h"
 using namespace gsl;
@@ -145,12 +146,6 @@ TEST(notnull_tests, TestNotNullConstructors)
 {
     {
 #ifdef CONFIRM_COMPILATION_ERRORS
-        not_null<int*> p = nullptr;          // yay...does not compile!
-        not_null<std::vector<char>*> p1 = 0; // yay...does not compile!
-        not_null<int*> p2;                   // yay...does not compile!
-        std::unique_ptr<int> up = std::make_unique<int>(120);
-        not_null<int*> p3 = up;
-
         // Forbid non-nullptr assignable types
         not_null<std::vector<int>> f(std::vector<int>{1});
         not_null<int> z(10);
@@ -288,15 +283,11 @@ TEST(notnull_tests, TestNotNullCasting)
     q = p; // allowed with heterogeneous copy ctor
     EXPECT_TRUE(q == p);
 
-#ifdef CONFIRM_COMPILATION_ERRORS
-    q = u; // no viable conversion possible between MyBase* and Unrelated*
-    p = q; // not possible to implicitly convert MyBase* to MyDerived*
-
-    not_null<Unrelated*> r = p;
-    not_null<Unrelated*> s = reinterpret_cast<Unrelated*>(p);
-#endif
     not_null<Unrelated*> t(reinterpret_cast<Unrelated*>(p.get()));
     EXPECT_TRUE(reinterpret_cast<void*>(p.get()) == reinterpret_cast<void*>(t.get()));
+
+    (void)static_cast<MyDerived*>(p);
+    (void)static_cast<MyBase*>(p);
 }
 
 TEST(notnull_tests, TestNotNullAssignment)
@@ -454,9 +445,6 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         const int i = 42;
 
         not_null x{&i};
-#ifdef CONFIRM_COMPILATION_ERRORS
-        helper(not_null{&i});
-#endif
         helper_const(not_null{&i});
 
         EXPECT_TRUE(*x == 42);
@@ -478,9 +466,6 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         const int* p = &i;
 
         not_null x{p};
-#ifdef CONFIRM_COMPILATION_ERRORS
-        helper(not_null{p});
-#endif
         helper_const(not_null{p});
 
         EXPECT_TRUE(*x == 42);
@@ -514,14 +499,6 @@ TEST(notnull_tests, TestNotNullConstructorTypeDeduction)
         EXPECT_DEATH(helper(not_null{p}), expected);
         EXPECT_DEATH(helper_const(not_null{p}), expected);
     }
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-    {
-        not_null x{nullptr};
-        helper(not_null{nullptr});
-        helper_const(not_null{nullptr});
-    }
-#endif
 }
 
 TEST(notnull_tests, TestVariantEmplace)
@@ -552,9 +529,6 @@ TEST(notnull_tests, TestMakeNotNull)
         const int i = 42;
 
         const auto x = make_not_null(&i);
-#ifdef CONFIRM_COMPILATION_ERRORS
-        helper(make_not_null(&i));
-#endif
         helper_const(make_not_null(&i));
 
         EXPECT_TRUE(*x == 42);
@@ -576,9 +550,6 @@ TEST(notnull_tests, TestMakeNotNull)
         const int* p = &i;
 
         const auto x = make_not_null(p);
-#ifdef CONFIRM_COMPILATION_ERRORS
-        helper(make_not_null(p));
-#endif
         helper_const(make_not_null(p));
 
         EXPECT_TRUE(*x == 42);
@@ -654,3 +625,79 @@ TEST(notnull_tests, TestStdHash)
         EXPECT_FALSE(hash_nn(nn) == hash_intptr(nullptr));
     }
 }
+
+#if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
+template <typename U, typename = void>
+static constexpr bool CtorCompilesFor_A = false;
+template <typename U>
+static constexpr bool
+    CtorCompilesFor_A<U, void_t<decltype(gsl::not_null<void*>{std::declval<U>()})>> = true;
+static_assert(CtorCompilesFor_A<void*>, "CtorCompilesFor_A<void*>");
+static_assert(!CtorCompilesFor_A<std::nullptr_t>, "!CtorCompilesFor_A<std::nullptr_t>");
+
+template <typename U, int N, typename = void>
+static constexpr bool CtorCompilesFor_B = false;
+template <typename U, int N>
+static constexpr bool CtorCompilesFor_B<U, N, void_t<decltype(gsl::not_null<U>{N})>> = true;
+static_assert(!CtorCompilesFor_B<void*, 0>, "!CtorCompilesFor_B<void*, 0>");
+
+template <typename U, typename = void>
+static constexpr bool CtorCompilesFor_C = false;
+template <typename U>
+static constexpr bool
+    CtorCompilesFor_C<U, void_t<decltype(gsl::not_null<U*>{std::declval<std::unique_ptr<U>>()})>> =
+        true;
+static_assert(!CtorCompilesFor_C<int>, "CtorCompilesFor_C<int>");
+
+template <typename U, typename = void>
+static constexpr bool DefaultCtorCompilesFor = false;
+template <typename U>
+static constexpr bool DefaultCtorCompilesFor<U, void_t<decltype(gsl::not_null<U>{})>> = true;
+static_assert(!DefaultCtorCompilesFor<void*>, "!DefaultCtorCompilesFor<void*>");
+
+template <typename U, typename V, typename = void>
+static constexpr bool AssignmentCompilesFor = false;
+template <typename U, typename V>
+static constexpr bool
+    AssignmentCompilesFor<U, V,
+                          void_t<decltype(std::declval<gsl::not_null<U*>&>().operator=(
+                              std::declval<gsl::not_null<V*>&>()))>> = true;
+static_assert(AssignmentCompilesFor<MyBase, MyDerived>, "AssignmentCompilesFor<MyBase, MyDerived>");
+static_assert(!AssignmentCompilesFor<MyBase, Unrelated>,
+              "!AssignmentCompilesFor<MyBase, Unrelated>");
+static_assert(!AssignmentCompilesFor<Unrelated, MyDerived>,
+              "!AssignmentCompilesFor<Unrelated, MyDerived>");
+static_assert(!AssignmentCompilesFor<MyDerived, MyBase>,
+              "!AssignmentCompilesFor<MyDerived, MyBase>");
+
+template <typename U, typename V, typename = void>
+static constexpr bool CastCompilesFor_A = false;
+template <typename U, typename V>
+static constexpr bool CastCompilesFor_A<
+    U, V, void_t<decltype(static_cast<U*>(std::declval<gsl::not_null<V*>&>()))>> = true;
+static_assert(CastCompilesFor_A<MyDerived, MyDerived>, "CastCompilesFor_A<MyDerived, MyDerived>");
+static_assert(CastCompilesFor_A<MyBase, MyDerived>, "CastCompilesFor_A<MyBase, MyDerived>");
+static_assert(!CastCompilesFor_A<MyDerived, MyBase>, "!CastCompilesFor_A<MyDerived, MyBase>");
+static_assert(!CastCompilesFor_A<Unrelated, MyDerived>, "!CastCompilesFor_A<Unrelated, MyDerived>");
+
+template <typename U, typename V, typename = void>
+static constexpr bool CastCompilesFor_B = false;
+template <typename U, typename V>
+static constexpr bool CastCompilesFor_B<
+    U, V, void_t<decltype(reinterpret_cast<U*>(std::declval<gsl::not_null<V*>&>()))>> = true;
+static_assert(!CastCompilesFor_B<MyDerived, MyDerived>, "!CastCompilesFor_A<MyDerived, MyDerived>");
+static_assert(!CastCompilesFor_B<Unrelated, MyDerived>, "!CastCompilesFor_A<Unrelated, MyDerived>");
+
+template <typename U, typename = void>
+static constexpr bool HelperCompilesFor = false;
+template <typename U>
+static constexpr bool HelperCompilesFor<U, void_t<decltype(helper(std::declval<U>()))>> = true;
+static_assert(HelperCompilesFor<gsl::not_null<int*>>, "HelperCompilesFor<gsl::not_null<int*>>");
+static_assert(!HelperCompilesFor<gsl::not_null<const int*>>,
+              "!HelperCompilesFor<gsl::not_null<const int*>>");
