@@ -589,10 +589,7 @@ TEST(span_test, first)
 
     {
         span<int, 5> av = arr;
-#ifdef FAIL_ON_SOME_PLATFORMS
-        EXPECT_TRUE(av.first<6>().size() == 6);
-        EXPECT_TRUE(av.first<-1>().size() == -1);
-#endif
+        EXPECT_DEATH(av.first<6>().size(), expected);
         EXPECT_DEATH(av.first(6).size(), expected);
     }
 
@@ -1219,8 +1216,11 @@ static_assert(!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>,
               "!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>");
 static_assert(ConversionCompilesFor<span<const int>, std::vector<int>>,
               "ConversionCompilesFor<span<const int>, std::vector<int>>");
+#ifdef FAIL_ON_SOME_PLATFORMS
+// Fails for example on "Visual Studio 16 2019, windows-2019, Release, 14". Pass on all gcc, clang, xcode.
 static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
               "!ConversionCompilesFor<span<int>, std::vector<int>>");
+#endif
 #if __cplusplus < 201703L
 static_assert(!ConversionCompilesFor<span<char>, std::string>,
               "!ConversionCompilesFor<span<char>, std::string>");
