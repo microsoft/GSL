@@ -1144,6 +1144,8 @@ static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
 static_assert(CtorCompilesFor<span<int, 4>, std::array<int, 4>&>,
               "CtorCompilesFor<span<int, 4>, std::array<int, 4>&>");
 #ifdef FAIL_ON_SOME_PLATFORMS
+// Fails for example on "Visual Studio 16 2019, windows-2019, Debug/Release, 14".
+// Pass on all gcc, clang, xcode.
 static_assert(!CtorCompilesFor<span<int, 4>, std::array<int, 4>&&>,
               "!CtorCompilesFor<span<int, 4>, std::array<int, 4>&&>");
 #endif
@@ -1171,11 +1173,14 @@ static_assert(CtorCompilesFor<span<int>, std::vector<int>&>,
 static_assert(CtorCompilesFor<span<const int>, std::vector<int>&&>,
               "CtorCompilesFor<span<const int>, std::vector<int>&&>");
 #ifdef FAIL_ON_SOME_PLATFORMS
+// Fails for example on "Visual Studio 16 2019, windows-2019, Debug/Release, 14" and
+// "Visual Studio 17 2022, windows-2022, Release, 14".
+// Pass on all gcc, clang, xcode.
 static_assert(!CtorCompilesFor<span<int>, std::vector<int>&&>,
               "!CtorCompilesFor<span<int>, std::vector<int>&&>");
+#endif
 static_assert(!CtorCompilesFor<span<int>, const std::vector<int>&&>,
               "!CtorCompilesFor<span<int>, const std::vector<int>&&>");
-#endif
 
 #if __cplusplus < 201703L
 static_assert(!CtorCompilesFor<span<char>, std::string&>,
@@ -1215,7 +1220,8 @@ static_assert(!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>,
 static_assert(ConversionCompilesFor<span<const int>, std::vector<int>>,
               "ConversionCompilesFor<span<const int>, std::vector<int>>");
 #ifdef FAIL_ON_SOME_PLATFORMS
-// Fails for example on "Visual Studio 16 2019, windows-2019, Release, 14". Pass on all gcc, clang, xcode.
+// Fails for example on "Visual Studio 16 2019, windows-2019, Debug/Release, 14".
+// Pass on all gcc, clang, xcode.
 static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
               "!ConversionCompilesFor<span<int>, std::vector<int>>");
 #endif
