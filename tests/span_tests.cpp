@@ -589,8 +589,8 @@ TEST(span_test, first)
 
     {
         span<int, 5> av = arr;
-        EXPECT_DEATH(av.first<6>().size(), expected);
-        EXPECT_DEATH(av.first(6).size(), expected);
+        EXPECT_DEATH(av.first<6>(), expected);
+        EXPECT_DEATH(av.first(6), expected);
     }
 
     {
@@ -630,10 +630,8 @@ TEST(span_test, last)
 
     {
         span<int, 5> av = arr;
-#ifdef FAIL_ON_SOME_PLATFORMS
-        EXPECT_TRUE(av.last<6>().size() == 6);
-#endif
-        EXPECT_DEATH(av.last(6).size(), expected);
+        EXPECT_DEATH(av.last<6>(), expected);
+        EXPECT_DEATH(av.last(6), expected);
     }
 
     {
@@ -674,8 +672,8 @@ TEST(span_test, subspan)
         EXPECT_TRUE(decltype(av.subspan<0, 5>())::extent == 5);
         EXPECT_TRUE(av.subspan(0, 5).size() == 5);
 
-        EXPECT_DEATH(av.subspan(0, 6).size(), expected);
-        EXPECT_DEATH(av.subspan(1, 5).size(), expected);
+        EXPECT_DEATH(av.subspan(0, 6), expected);
+        EXPECT_DEATH(av.subspan(1, 5), expected);
     }
 
     {
@@ -684,7 +682,7 @@ TEST(span_test, subspan)
         EXPECT_TRUE(decltype(av.subspan<4, 0>())::extent == 0);
         EXPECT_TRUE(av.subspan(4, 0).size() == 0);
         EXPECT_TRUE(av.subspan(5, 0).size() == 0);
-        EXPECT_DEATH(av.subspan(6, 0).size(), expected);
+        EXPECT_DEATH(av.subspan(6, 0), expected);
     }
 
     {
@@ -698,13 +696,13 @@ TEST(span_test, subspan)
         EXPECT_TRUE((av.subspan<0, 0>().size()) == 0);
         EXPECT_TRUE(decltype(av.subspan<0, 0>())::extent == 0);
         EXPECT_TRUE(av.subspan(0, 0).size() == 0);
-        EXPECT_DEATH((av.subspan<1, 0>().size()), expected);
+        EXPECT_DEATH((av.subspan<1, 0>()), expected);
     }
 
     {
         span<int> av;
         EXPECT_TRUE(av.subspan(0).size() == 0);
-        EXPECT_DEATH(av.subspan(1).size(), expected);
+        EXPECT_DEATH(av.subspan(1), expected);
     }
 
     {
@@ -713,7 +711,7 @@ TEST(span_test, subspan)
         EXPECT_TRUE(av.subspan(1).size() == 4);
         EXPECT_TRUE(av.subspan(4).size() == 1);
         EXPECT_TRUE(av.subspan(5).size() == 0);
-        EXPECT_DEATH(av.subspan(6).size(), expected);
+        EXPECT_DEATH(av.subspan(6), expected);
         const auto av2 = av.subspan(1);
         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == static_cast<int>(i) + 2);
     }
@@ -724,7 +722,7 @@ TEST(span_test, subspan)
         EXPECT_TRUE(av.subspan(1).size() == 4);
         EXPECT_TRUE(av.subspan(4).size() == 1);
         EXPECT_TRUE(av.subspan(5).size() == 0);
-        EXPECT_DEATH(av.subspan(6).size(), expected);
+        EXPECT_DEATH(av.subspan(6), expected);
         const auto av2 = av.subspan(1);
         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == static_cast<int>(i) + 2);
     }
