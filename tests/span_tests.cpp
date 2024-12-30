@@ -447,7 +447,7 @@ TEST(span_test, from_container_constructor)
     const std::string cstr = "hello";
 
     {
-#ifdef FAIL_ON_SOME_PLATFORMS
+#if __cplusplus >= 201703L
         span<char> s{str};
         EXPECT_TRUE(s.size() == str.size());
         EXPECT_TRUE(s.data() == str.data());
@@ -1287,9 +1287,9 @@ static_assert(!CtorCompilesFor<span<int>, const std::vector<int>&&>,
               "!CtorCompilesFor<span<int>, const std::vector<int>&&>");
 #endif
 
-#ifdef FAIL_ON_SOME_PLATFORMS
-static_assert(CtorCompilesFor<span<char>, std::string&>,
-              "CtorCompilesFor<span<char>, std::string&>");
+#if __cplusplus < 201703L
+static_assert(!CtorCompilesFor<span<char>, std::string&>,
+              "!CtorCompilesFor<span<char>, std::string&>");
 #endif
 static_assert(CtorCompilesFor<span<const char>, std::string&&>,
               "CtorCompilesFor<span<const char>, std::string&&>");
