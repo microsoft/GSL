@@ -531,53 +531,6 @@ TEST(span_test, from_convertible_span_constructor)
         using T = span<const DerivedClass, 2>;
         EXPECT_DEATH(T{avd}, expected);
     }
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-    {
-        std::array<DerivedClass, 2> arr{};
-        span<DerivedClass> avd{arr};
-        span<const DerivedClass, 2> avcd = avd;
-        static_cast<void>(avcd);
-    }
-
-    {
-        std::array<DerivedClass, 2> arr{};
-        span<DerivedClass, 2> avd{arr};
-        span<const DerivedClass, 1> avcd = avd;
-        static_cast<void>(avcd);
-    }
-
-    {
-        std::array<DerivedClass, 2> arr{};
-        span<DerivedClass, 2> avd{arr};
-        span<const DerivedClass, 3> avcd = avd;
-        static_cast<void>(avcd);
-    }
-
-    {
-        span<DerivedClass> avd;
-        span<BaseClass> avb = avd;
-        static_cast<void>(avb);
-    }
-
-    {
-        span<int> s;
-        span<unsigned int> s2 = s;
-        static_cast<void>(s2);
-    }
-
-    {
-        span<int> s;
-        span<const unsigned int> s2 = s;
-        static_cast<void>(s2);
-    }
-
-    {
-        span<int> s;
-        span<short> s2 = s;
-        static_cast<void>(s2);
-    }
-#endif
 }
 
 TEST(span_test, copy_move_and_assignment)
@@ -1023,31 +976,6 @@ TEST(span_test, fixed_size_conversions)
         static_cast<void>(s);
     }
 
-#ifdef CONFIRM_COMPILATION_ERRORS
-    // initialization or assignment to static span that REDUCES size is NOT ok
-    {
-        span<int, 2> s = arr;
-    }
-    {
-        span<int, 2> s2 = s4;
-        static_cast<void>(s2);
-    }
-
-    // even when done dynamically
-    {
-        // this now results in a compile-time error, rather than runtime.
-        // There is no suitable conversion from dynamic span to fixed span.
-        span<int> s = arr;
-        auto f = [&]() {
-            const span<int, 2> s2 = s;
-            static_cast<void>(s2);
-        };
-        EXPECT_DEATH(f(), expected);
-    }
-#endif
-
-    // but doing so explicitly is ok
-
     // you can convert statically
     {
         const span<int, 2> s2{&arr[0], 2};
@@ -1058,32 +986,9 @@ TEST(span_test, fixed_size_conversions)
         static_cast<void>(s1);
     }
 
-#ifdef CONFIRM_COMPILATION_ERRORS
-    // this is not a legal operation in std::span, so we are no longer supporting it
-    // conversion from span<int, 4> to span<int, dynamic_extent> via call to `first`
-    // then convert from span<int, dynamic_extent> to span<int, 1>
-    // The dynamic to fixed extents are not supported in the standard
-    // to make this work, span<int, 1> would need to be span<int>.
-    {
-
-        // NB: implicit conversion to span<int,1> from span<int>
-        span<int, 1> s1 = s4.first(1);
-        static_cast<void>(s1);
-    }
-#endif
-
     // initialization or assignment to static span that requires size INCREASE is not ok.
     int arr2[2] = {1, 2};
 
-#ifdef CONFIRM_COMPILATION_ERRORS
-    {
-        span<int, 4> s3 = arr2;
-    }
-    {
-        span<int, 2> s2 = arr2;
-        span<int, 4> s4a = s2;
-    }
-#endif
     {
         auto f = [&]() {
             const span<int, 4> _s4{arr2, 2};
@@ -1091,18 +996,6 @@ TEST(span_test, fixed_size_conversions)
         };
         EXPECT_DEATH(f(), expected);
     }
-
-#ifdef CONFIRM_COMPILATION_ERRORS
-    // This no longer compiles. There is no suitable conversion from dynamic span to a fixed size
-    // span. this should fail - we are trying to assign a small dynamic span to a fixed_size larger
-    // one
-    span<int> av = arr2;
-    auto f = [&]() {
-        const span<int, 4> _s4 = av;
-        static_cast<void>(_s4);
-    };
-    EXPECT_DEATH(f(), expected);
-#endif
 }
 
 TEST(span_test, interop_with_std_regex)
@@ -1273,6 +1166,8 @@ static_assert(!CtorCompilesFor<span<const int, 5>, std::array<const int, 4>&>,
               "!CtorCompilesFor<span<const int, 5>, std::array<const int, 4>&>");
 static_assert(!CtorCompilesFor<span<int, 4>, std::array<const int, 4>&>,
               "!CtorCompilesFor<span<int, 4>, std::array<const int, 4>&>");
+static_assert(CtorCompilesFor<span<const char>, const std::string&>,
+              "CtorCompilesFor<span<const char>, const std::string&>");
 static_assert(!CtorCompilesFor<span<char>, const std::string&>,
               "!CtorCompilesFor<span<char>, const std::string&>");
 
@@ -1308,12 +1203,64 @@ static_assert(CtorCompilesFor<span<int, 4>, span<int, 4>&>,
 static_assert(!CtorCompilesFor<span<int, 2>, span<int, 4>&>,
               "!CtorCompilesFor<span<int, 2>, span<int, 4>&>");
 
+template <typename U, typename V, typename = void>
+static constexpr bool ConversionCompilesFor = false;
+template <typename U, typename V>
+static constexpr bool
+    ConversionCompilesFor<U, V, void_t<decltype(std::declval<void (*)(U)>()(std::declval<V>()))>> =
+        true;
+static_assert(ConversionCompilesFor<span<int, 2>, span<int, 2>>,
+              "ConversionCompilesFor<span<int, 2>, span<int, 2>>");
+static_assert(ConversionCompilesFor<span<const int, 2>, span<int, 2>>,
+              "ConversionCompilesFor<span<const int, 2>, span<int, 2>>");
+static_assert(!ConversionCompilesFor<span<int, 2>, std::array<int, 4>>,
+              "!ConversionCompilesFor<span<int, 2>, std::array<int, 4>>");
+static_assert(!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>,
+              "!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>");
+static_assert(ConversionCompilesFor<span<const int>, std::vector<int>>,
+              "ConversionCompilesFor<span<const int>, std::vector<int>>");
+static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
+              "!ConversionCompilesFor<span<int>, std::vector<int>>");
+#if __cplusplus < 201703L
+static_assert(!ConversionCompilesFor<span<char>, std::string>,
+              "!ConversionCompilesFor<span<char>, std::string>");
+#endif
+static_assert(ConversionCompilesFor<span<const char>, const std::string&>,
+              "ConversionCompilesFor<span<const char>, const std::string&>");
+static_assert(!ConversionCompilesFor<span<char>, const std::string&>,
+              "!ConversionCompilesFor<span<char>, const std::string&>");
+static_assert(!ConversionCompilesFor<span<const DerivedClass, 2>, span<DerivedClass>&>,
+              "!ConversionCompilesFor<span<const DerivedClass, 2>, span<DerivedClass>&>");
+static_assert(!ConversionCompilesFor<span<const DerivedClass, 1>, span<DerivedClass, 2>&>,
+              "!ConversionCompilesFor<span<const DerivedClass, 1>, span<DerivedClass, 2>&>");
+static_assert(!ConversionCompilesFor<span<const DerivedClass, 3>, span<DerivedClass, 2>&>,
+              "!ConversionCompilesFor<span<const DerivedClass, 3>, span<DerivedClass, 2>&>");
+static_assert(!ConversionCompilesFor<span<BaseClass, 3>, span<DerivedClass>&>,
+              "!ConversionCompilesFor<span<BaseClass, 3>, span<DerivedClass>&>");
+static_assert(!ConversionCompilesFor<span<unsigned int>, span<int>&>,
+              "!ConversionCompilesFor<span<unsigned int>, span<int>&>");
+static_assert(!ConversionCompilesFor<span<const unsigned int>, span<int>&>,
+              "!ConversionCompilesFor<span<const unsigned int>, span<int>&>");
+static_assert(!ConversionCompilesFor<span<short>, span<int>&>,
+              "!ConversionCompilesFor<span<short>, span<int>&>");
+static_assert(!ConversionCompilesFor<span<int, 2>, int[4]>,
+              "!ConversionCompilesFor<span<int, 2>, int[4]>");
+static_assert(!ConversionCompilesFor<span<int, 2>, span<int, 4>>,
+              "!ConversionCompilesFor<span<int, 2>, span<int, 4>>");
+static_assert(!ConversionCompilesFor<span<int, 2>, span<int>>,
+              "!ConversionCompilesFor<span<int, 2>, span<int>>");
+static_assert(!ConversionCompilesFor<span<int, 4>, int[2]>,
+              "!ConversionCompilesFor<span<int, 4>, int[2]>");
+static_assert(!ConversionCompilesFor<span<int, 2>, int[2]>,
+              "!ConversionCompilesFor<span<int, 2>, int[2]>");
+static_assert(!ConversionCompilesFor<span<int, 4>, span<int, 2>>,
+              "!ConversionCompilesFor<span<int, 4>, span<int, 2>>");
+
 template <typename U, typename = void>
 static constexpr bool AsWritableBytesCompilesFor = false;
 template <typename U>
 static constexpr bool
     AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(std::declval<U>()))>> = true;
-static_assert(AsWritableBytesCompilesFor<span<int>>,
-              "AsWriteableBytesCompilesFor<span<int>>");
+static_assert(AsWritableBytesCompilesFor<span<int>>, "AsWriteableBytesCompilesFor<span<int>>");
 static_assert(!AsWritableBytesCompilesFor<span<const int>>,
               "!AsWriteableBytesCompilesFor<span<const int>>");
