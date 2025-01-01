@@ -215,6 +215,14 @@ TEST(span_test, from_pointer_length_constructor)
 
 TEST(span_test, from_pointer_pointer_construction)
 {
+#if !(defined _MSVC_STL_VERSION) || defined(NDEBUG)
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. from_pointer_pointer_construction";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+#endif
+
     int arr[4] = {1, 2, 3, 4};
 
     {
@@ -244,18 +252,20 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.data() == &arr[0]);
     }
 
+#if !(defined _MSVC_STL_VERSION) || defined(NDEBUG)
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    //{
-    //    auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
-    //    EXPECT_DEATH(workaround_macro(), expected);
-    //}
+    {
+        auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
+        EXPECT_DEATH(workaround_macro(), expected);
+    }
 
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    //{
-    //    int* p = nullptr;
-    //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-    //    EXPECT_DEATH(workaround_macro(), expected);
-    //}
+    {
+        int* p = nullptr;
+        auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+        EXPECT_DEATH(workaround_macro(), expected);
+    }
+#endif
 
     {
         int* p = nullptr;
@@ -271,12 +281,14 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.data() == nullptr);
     }
 
+#if !(defined _MSVC_STL_VERSION) || defined(NDEBUG)
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    //{
-    //    int* p = nullptr;
-    //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-    //    EXPECT_DEATH(workaround_macro(), expected);
-    //}
+    {
+        int* p = nullptr;
+        auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+        EXPECT_DEATH(workaround_macro(), expected);
+    }
+#endif
 }
 
 TEST(span_test, from_array_constructor)
