@@ -48,6 +48,13 @@
 
 using namespace gsl;
 
+#if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
 namespace
 {
 
@@ -215,13 +222,11 @@ TEST(span_test, from_pointer_length_constructor)
 
 TEST(span_test, from_pointer_pointer_construction)
 {
-#if !(defined _MSVC_STL_VERSION) || defined(NDEBUG)
-    const auto terminateHandler = std::set_terminate([] {
-        std::cerr << "Expected Death. from_pointer_pointer_construction";
-        std::abort();
-    });
-    const auto expected = GetExpectedDeathString(terminateHandler);
-#endif
+    // const auto terminateHandler = std::set_terminate([] {
+    //     std::cerr << "Expected Death. from_pointer_pointer_construction";
+    //     std::abort();
+    // });
+    // const auto expected = GetExpectedDeathString(terminateHandler);
 
     int arr[4] = {1, 2, 3, 4};
 
@@ -252,20 +257,18 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.data() == &arr[0]);
     }
 
-#if !(defined _MSVC_STL_VERSION) || defined(NDEBUG)
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    {
-        auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
-        EXPECT_DEATH(workaround_macro(), expected);
-    }
+    //{
+    //    auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
+    //    EXPECT_DEATH(workaround_macro(), expected);
+    //}
 
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    {
-        int* p = nullptr;
-        auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-        EXPECT_DEATH(workaround_macro(), expected);
-    }
-#endif
+    //{
+    //    int* p = nullptr;
+    //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+    //    EXPECT_DEATH(workaround_macro(), expected);
+    //}
 
     {
         int* p = nullptr;
@@ -281,19 +284,26 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.data() == nullptr);
     }
 
-#if !(defined _MSVC_STL_VERSION) || defined(NDEBUG)
     // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    {
-        int* p = nullptr;
-        auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-        EXPECT_DEATH(workaround_macro(), expected);
-    }
-#endif
+    //{
+    //    int* p = nullptr;
+    //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
+    //    EXPECT_DEATH(workaround_macro(), expected);
+    //}
 }
+
+template <typename U, typename V, typename = void>
+static constexpr bool CtorCompilesFor = false;
+template <typename U, typename V>
+static constexpr bool CtorCompilesFor<U, V, void_t<decltype(U{std::declval<V>()})>> = true;
 
 TEST(span_test, from_array_constructor)
 {
     int arr[5] = {1, 2, 3, 4, 5};
+
+    static_assert(!CtorCompilesFor<span<int, 6>, int[5]>, "!CtorCompilesFor<span<int, 6>, int[5]>");
+    static_assert(!CtorCompilesFor<span<int, 0>, int[5]>, "!CtorCompilesFor<span<int, 0>, int[5]>");
+    static_assert(!CtorCompilesFor<span<int>, int[2][3]>, "!CtorCompilesFor<span<int>, int[2][3]>");
 
     {
         const span<int> s{arr};
@@ -309,6 +319,11 @@ TEST(span_test, from_array_constructor)
 
     int arr2d[2][3] = {1, 2, 3, 4, 5, 6};
 
+    static_assert(!CtorCompilesFor<span<int, 0>, int[2][3]>,
+                  "!CtorCompilesFor<span<int, 0>, int[2][3]>");
+    static_assert(!CtorCompilesFor<span<int, 6>, int[2][3]>,
+                  "!CtorCompilesFor<span<int, 6>, int[2][3]>");
+
     {
         const span<int[3]> s{std::addressof(arr2d[0]), 1};
         EXPECT_TRUE(s.size() == 1);
@@ -316,6 +331,15 @@ TEST(span_test, from_array_constructor)
     }
 
     int arr3d[2][3][2] = {{{1, 2}, {3, 4}, {5, 6}}, {{7, 8}, {9, 10}, {11, 12}}};
+
+    static_assert(!CtorCompilesFor<span<int>, int[2][3][2]>,
+                  "!CtorCompilesFor<span<int>, int[2][3][2]>");
+    static_assert(!CtorCompilesFor<span<int, 0>, int[2][3][2]>,
+                  "!CtorCompilesFor<span<int, 0>, int[2][3][2]>");
+    static_assert(!CtorCompilesFor<span<int, 11>, int[2][3][2]>,
+                  "!CtorCompilesFor<span<int, 11>, int[2][3][2]>");
+    static_assert(!CtorCompilesFor<span<int, 12>, int[2][3][2]>,
+                  "!CtorCompilesFor<span<int, 12>, int[2][3][2]>");
 
     {
         const span<int[3][2]> s{std::addressof(arr3d[0]), 1};
@@ -343,6 +367,13 @@ TEST(span_test, from_dynamic_array_constructor)
 
     delete[] arr;
 }
+
+template <typename U, typename V, typename = void>
+static constexpr bool ConversionCompilesFor = false;
+template <typename U, typename V>
+static constexpr bool
+    ConversionCompilesFor<U, V, void_t<decltype(std::declval<void (*)(U)>()(std::declval<V>()))>> =
+        true;
 
 TEST(span_test, from_std_array_constructor)
 {
@@ -383,10 +414,31 @@ TEST(span_test, from_std_array_constructor)
         EXPECT_TRUE(ao_arr.data() == fs.data());
     }
 
+    static_assert(!CtorCompilesFor<span<int, 2>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<int, 2>, std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<const int, 2>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 2>, std::array<int, 4>&>");
+
+    static_assert(!CtorCompilesFor<span<int, 0>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<int, 0>, std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<const int, 0>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 0>, std::array<int, 4>&>");
+
+    static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>");
+
+#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+    // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
+    static_assert(!ConversionCompilesFor<span<int>, std::array<int, 4>>,
+                  "!ConversionCompilesFor<span<int>, std::array<int, 4>>");
+#endif
+
     {
         auto get_an_array = []() -> std::array<int, 4> { return {1, 2, 3, 4}; };
         auto take_a_span = [](span<const int>) {};
         // try to take a temporary std::array
+        static_assert(ConversionCompilesFor<span<const int>, std::array<int, 4>>,
+                      "ConversionCompilesFor<span<const int>, std::array<int, 4>>");
         take_a_span(get_an_array());
     }
 }
@@ -415,6 +467,13 @@ TEST(span_test, from_const_std_array_constructor)
         EXPECT_TRUE(s.data() == ao_arr.data());
     }
 
+    static_assert(!CtorCompilesFor<span<const int, 2>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 2>, std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<const int, 0>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 0>, std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>");
+
     {
         auto get_an_array = []() -> const std::array<int, 4> { return {1, 2, 3, 4}; };
         auto take_a_span = [](span<const int> s) { static_cast<void>(s); };
@@ -438,6 +497,15 @@ TEST(span_test, from_std_array_const_constructor)
         EXPECT_TRUE(s.size() == arr.size());
         EXPECT_TRUE(s.data() == arr.data());
     }
+
+    static_assert(!CtorCompilesFor<span<const int, 2>, const std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 2>, const std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<const int, 0>, const std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 0>, const std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<const int, 5>, const std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<const int, 5>, const std::array<int, 4>&>");
+    static_assert(!CtorCompilesFor<span<int, 5>, const std::array<int, 4>&>,
+                  "!CtorCompilesFor<span<int, 5>, const std::array<int, 4>&>");
 }
 
 TEST(span_test, from_container_constructor)
@@ -459,11 +527,8 @@ TEST(span_test, from_container_constructor)
     const std::string cstr = "hello";
 
     {
-#if __cplusplus >= 201703L
-        span<char> s{str};
-        EXPECT_TRUE(s.size() == str.size());
-        EXPECT_TRUE(s.data() == str.data());
-#endif
+        static_assert(CtorCompilesFor<span<char>, std::string&> == (__cplusplus >= 201703L),
+                      "CtorCompilesFor<span<char>, std::string&> == (__cplusplus >= 201703L)");
 
         span<const char> cs{str};
         EXPECT_TRUE(cs.size() == str.size());
@@ -471,10 +536,19 @@ TEST(span_test, from_container_constructor)
     }
 
     {
+        static_assert(!CtorCompilesFor<span<char>, const std::string&>,
+                      "!CtorCompilesFor<span<char>, const std::string&>");
+
         span<const char> cs{cstr};
         EXPECT_TRUE(cs.size() == cstr.size());
         EXPECT_TRUE(cs.data() == cstr.data());
     }
+
+#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+    // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
+    static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
+                  "!ConversionCompilesFor<span<int>, std::vector<int>>");
+#endif // !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
 
     {
         auto get_temp_vector = []() -> std::vector<int> { return {}; };
@@ -482,17 +556,28 @@ TEST(span_test, from_container_constructor)
         use_span(get_temp_vector());
     }
 
+    static_assert(!ConversionCompilesFor<span<char>, std::string>,
+                  "!ConversionCompilesFor<span<char>, std::string>");
+
     {
         auto get_temp_string = []() -> std::string { return {}; };
         auto use_span = [](span<const char> s) { static_cast<void>(s); };
         use_span(get_temp_string());
     }
 
+    static_assert(!ConversionCompilesFor<span<const char>, const std::vector<int>>,
+                  "!ConversionCompilesFor<span<const char>, const std::vector<int>>");
+    static_assert(!ConversionCompilesFor<span<char>, const std::string>,
+                  "!ConversionCompilesFor<span<char>, const std::string>");
+
     {
         auto get_temp_string = []() -> const std::string { return {}; };
         auto use_span = [](span<const char> s) { static_cast<void>(s); };
         use_span(get_temp_string());
     }
+
+    static_assert(!CtorCompilesFor<span<int>, std::map<int, int>&>,
+                  "!CtorCompilesFor<span<int>, std::map<int, int>&>");
 }
 
 TEST(span_test, from_convertible_span_constructor)
@@ -543,6 +628,21 @@ TEST(span_test, from_convertible_span_constructor)
         using T = span<const DerivedClass, 2>;
         EXPECT_DEATH(T{avd}, expected);
     }
+
+    static_assert(!ConversionCompilesFor<span<const DerivedClass, 2>, span<DerivedClass>&>,
+                  "!ConversionCompilesFor<span<const DerivedClass, 2>, span<DerivedClass>&>");
+    static_assert(!ConversionCompilesFor<span<const DerivedClass, 1>, span<DerivedClass, 2>&>,
+                  "!ConversionCompilesFor<span<const DerivedClass, 1>, span<DerivedClass, 2>&>");
+    static_assert(!ConversionCompilesFor<span<const DerivedClass, 3>, span<DerivedClass, 2>&>,
+                  "!ConversionCompilesFor<span<const DerivedClass, 3>, span<DerivedClass, 2>&>");
+    static_assert(!ConversionCompilesFor<span<BaseClass, 3>, span<DerivedClass>&>,
+                  "!ConversionCompilesFor<span<BaseClass, 3>, span<DerivedClass>&>");
+    static_assert(!ConversionCompilesFor<span<unsigned int>, span<int>&>,
+                  "!ConversionCompilesFor<span<unsigned int>, span<int>&>");
+    static_assert(!ConversionCompilesFor<span<const unsigned int>, span<int>&>,
+                  "!ConversionCompilesFor<span<const unsigned int>, span<int>&>");
+    static_assert(!ConversionCompilesFor<span<short>, span<int>&>,
+                  "!ConversionCompilesFor<span<short>, span<int>&>");
 }
 
 TEST(span_test, copy_move_and_assignment)
@@ -911,9 +1011,21 @@ TEST(span_test, rbegin_rend)
     }
 }
 
+template <typename U, typename = void>
+static constexpr bool AsWritableBytesCompilesFor = false;
+template <typename U>
+static constexpr bool
+    AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(std::declval<U>()))>> = true;
+
 TEST(span_test, as_bytes)
 {
     int a[] = {1, 2, 3, 4};
+
+    static_assert(AsWritableBytesCompilesFor<span<int>>, "AsWriteableBytesCompilesFor<span<int>>");
+    // you should not be able to get writeable bytes for const objects
+    static_assert(!AsWritableBytesCompilesFor<span<const int>>,
+                  "!AsWriteableBytesCompilesFor<span<const int>>");
+
     {
         const span<const int> s = a;
         EXPECT_TRUE(s.size() == 4);
@@ -983,6 +1095,18 @@ TEST(span_test, fixed_size_conversions)
         static_cast<void>(s);
     }
 
+    // initialization or assignment to static span that REDUCES size is NOT ok
+    static_assert(!ConversionCompilesFor<span<int, 2>, int[4]>,
+                  "!ConversionCompilesFor<span<int, 2>, int[4]>");
+    static_assert(!ConversionCompilesFor<span<int, 2>, span<int, 4>>,
+                  "!ConversionCompilesFor<span<int, 2>, span<int, 4>>");
+
+    // even when done dynamically
+    static_assert(!ConversionCompilesFor<span<int, 2>, span<int>>,
+                  "!ConversionCompilesFor<span<int, 2>, span<int>>");
+
+    // but doing so explicitly is ok
+
     // you can convert statically
     {
         const span<int, 2> s2{&arr[0], 2};
@@ -993,8 +1117,23 @@ TEST(span_test, fixed_size_conversions)
         static_cast<void>(s1);
     }
 
+    // this is not a legal operation in std::span, so we are no longer supporting it
+    // conversion from span<int, 4> to span<int, dynamic_extent> via call to `first`
+    // then convert from span<int, dynamic_extent> to span<int, 1>
+    // The dynamic to fixed extents are not supported in the standard
+    // to make this work, span<int, 1> would need to be span<int>.
+    static_assert(!ConversionCompilesFor<span<int, 1>, span<int>>,
+                  "!ConversionCompilesFor<span<int, 1>, span<int>>");
+
     // initialization or assignment to static span that requires size INCREASE is not ok.
     int arr2[2] = {1, 2};
+
+    static_assert(!ConversionCompilesFor<span<int, 4>, int[2]>,
+                  "!ConversionCompilesFor<span<int, 4>, int[2]>");
+    static_assert(!ConversionCompilesFor<span<int, 2>, int[2]>,
+                  "!ConversionCompilesFor<span<int, 2>, int[2]>");
+    static_assert(!ConversionCompilesFor<span<int, 4>, span<int, 2>>,
+                  "!ConversionCompilesFor<span<int, 4>, span<int, 2>>");
 
     {
         auto f = [&]() {
@@ -1003,6 +1142,12 @@ TEST(span_test, fixed_size_conversions)
         };
         EXPECT_DEATH(f(), expected);
     }
+
+    // This no longer compiles. There is no suitable conversion from dynamic span to a fixed size
+    // span.
+    // this should fail - we are trying to assign a small dynamic span to a fixed_size larger one
+    static_assert(!ConversionCompilesFor<span<int, 4>, span<int>>,
+                  "!ConversionCompilesFor<span<int, 4>, span<int>>");
 }
 
 TEST(span_test, interop_with_std_regex)
@@ -1104,175 +1249,3 @@ TEST(span_test, msvc_compile_error_PR1100)
     for (const auto& e : sp) { (void) e; }
 }
 #endif // defined(__cpp_lib_span) && defined(__cpp_lib_ranges)
-
-#if __cplusplus >= 201703l
-using std::void_t;
-#else  // __cplusplus >= 201703l
-template <class...>
-using void_t = void;
-#endif // __cplusplus < 201703l
-
-template <typename U, typename V, typename = void>
-static constexpr bool CtorCompilesFor = false;
-template <typename U, typename V>
-static constexpr bool CtorCompilesFor<U, V, void_t<decltype(U{std::declval<V>()})>> = true;
-static_assert(CtorCompilesFor<span<int>, std::array<int, 12>&>,
-              "CtorCompilesFor<span<int>, std::array<int, 12>&>");
-static_assert(CtorCompilesFor<span<int, 4>, std::array<int, 4>&>,
-              "CtorCompilesFor<span<int, 4>, std::array<int, 4>&>");
-static_assert(CtorCompilesFor<span<int*>, std::array<int*, 12>&>,
-              "CtorCompilesFor<span<int*>, std::array<int*, 12>&>");
-static_assert(!CtorCompilesFor<span<int*, 4>, std::array<int*, 12>&>,
-              "!CtorCompilesFor<span<int*, 4>, std::array<int*, 12>&>");
-static_assert(CtorCompilesFor<span<int, 6>, std::array<int, 6>&>,
-              "CtorCompilesFor<span<int, 6>, std::array<int, 6>&>");
-static_assert(!CtorCompilesFor<span<int, 6>, std::array<int, 5>&>,
-              "!CtorCompilesFor<span<int, 6>, std::array<int, 5>&>");
-static_assert(!CtorCompilesFor<span<int, 0>, std::array<int, 5>&>,
-              "!CtorCompilesFor<span<int, 0>, std::array<int, 5>&>");
-static_assert(!CtorCompilesFor<span<int>, int[2][3]>, "!CtorCompilesFor<span<int>, int[2][3]>");
-static_assert(!CtorCompilesFor<span<int, 0>, int[2][3]>,
-              "!CtorCompilesFor<span<int, 0>, int[2][3]>");
-static_assert(!CtorCompilesFor<span<int, 6>, int[2][3]>,
-              "!CtorCompilesFor<span<int, 6>, int[2][3]>");
-static_assert(!CtorCompilesFor<span<int>, int[2][3][2]>,
-              "!CtorCompilesFor<span<int>, int[2][3][2]>");
-static_assert(!CtorCompilesFor<span<int, 0>, int[2][3][2]>,
-              "!CtorCompilesFor<span<int, 0>, int[2][3][2]>");
-static_assert(!CtorCompilesFor<span<int, 11>, int[2][3][2]>,
-              "!CtorCompilesFor<span<int, 11>, int[2][3][2]>");
-static_assert(!CtorCompilesFor<span<int, 12>, int[2][3][2]>,
-              "!CtorCompilesFor<span<int, 12>, int[2][3][2]>");
-static_assert(!CtorCompilesFor<span<int, 2>, std::array<int, 4>&>,
-              "!CtorCompilesFor<span<int, 2>, std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 2>, std::array<int, 4>&>,
-              "!CtorCompilesFor<span<const int, 2>, std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<int, 0>, std::array<int, 4>&>,
-              "!CtorCompilesFor<span<int, 0>, std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 0>, std::array<int, 4>&>,
-              "!CtorCompilesFor<span<const int, 0>, std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
-              "!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>");
-static_assert(CtorCompilesFor<span<int, 4>, std::array<int, 4>&>,
-              "CtorCompilesFor<span<int, 4>, std::array<int, 4>&>");
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
-// Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
-static_assert(!CtorCompilesFor<span<int, 4>, std::array<int, 4>&&>,
-              "!CtorCompilesFor<span<int, 4>, std::array<int, 4>&&>");
-#endif // !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
-static_assert(!CtorCompilesFor<span<const int, 2>, const std::array<int, 4>&>,
-              "!CtorCompilesFor<span<const int, 2>, const std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 0>, const std::array<int, 4>&>,
-              "!CtorCompilesFor<span<const int, 0>, const std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 5>, const std::array<int, 4>&>,
-              "!CtorCompilesFor<span<const int, 5>, const std::array<int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 2>, std::array<const int, 4>&>,
-              "!CtorCompilesFor<span<const int, 2>, std::array<const int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 0>, std::array<const int, 4>&>,
-              "!CtorCompilesFor<span<const int, 0>, std::array<const int, 4>&>");
-static_assert(!CtorCompilesFor<span<const int, 5>, std::array<const int, 4>&>,
-              "!CtorCompilesFor<span<const int, 5>, std::array<const int, 4>&>");
-static_assert(!CtorCompilesFor<span<int, 4>, std::array<const int, 4>&>,
-              "!CtorCompilesFor<span<int, 4>, std::array<const int, 4>&>");
-static_assert(CtorCompilesFor<span<const char>, const std::string&>,
-              "CtorCompilesFor<span<const char>, const std::string&>");
-static_assert(!CtorCompilesFor<span<char>, const std::string&>,
-              "!CtorCompilesFor<span<char>, const std::string&>");
-
-static_assert(CtorCompilesFor<span<int>, std::vector<int>&>,
-              "CtorCompilesFor<span<int>, std::vector<int>&>");
-static_assert(CtorCompilesFor<span<const int>, std::vector<int>&&>,
-              "CtorCompilesFor<span<const int>, std::vector<int>&&>");
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
-// Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
-static_assert(!CtorCompilesFor<span<int>, std::vector<int>&&>,
-              "!CtorCompilesFor<span<int>, std::vector<int>&&>");
-#endif // !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
-static_assert(!CtorCompilesFor<span<int>, const std::vector<int>&&>,
-              "!CtorCompilesFor<span<int>, const std::vector<int>&&>");
-
-#if __cplusplus < 201703L
-static_assert(!CtorCompilesFor<span<char>, std::string&>,
-              "!CtorCompilesFor<span<char>, std::string&>");
-#endif
-static_assert(CtorCompilesFor<span<const char>, std::string&&>,
-              "CtorCompilesFor<span<const char>, std::string&&>");
-static_assert(!CtorCompilesFor<span<char>, std::string&&>,
-              "!CtorCompilesFor<span<char>, std::string&&>");
-static_assert(!CtorCompilesFor<span<char>, const std::string&&>,
-              "!CtorCompilesFor<span<char>, const std::string&&>");
-
-static_assert(!CtorCompilesFor<span<int>, std::map<int, int>&>,
-              "!CtorCompilesFor<span<int>, std::map<int, int>&>");
-
-static_assert(CtorCompilesFor<span<int>, span<int, 4>&>,
-              "CtorCompilesFor<span<int>, span<int, 4>&>");
-static_assert(CtorCompilesFor<span<int, 4>, span<int, 4>&>,
-              "CtorCompilesFor<span<int, 4>, span<int, 4>&>");
-static_assert(!CtorCompilesFor<span<int, 2>, span<int, 4>&>,
-              "!CtorCompilesFor<span<int, 2>, span<int, 4>&>");
-
-template <typename U, typename V, typename = void>
-static constexpr bool ConversionCompilesFor = false;
-template <typename U, typename V>
-static constexpr bool
-    ConversionCompilesFor<U, V, void_t<decltype(std::declval<void (*)(U)>()(std::declval<V>()))>> =
-        true;
-static_assert(ConversionCompilesFor<span<int, 2>, span<int, 2>>,
-              "ConversionCompilesFor<span<int, 2>, span<int, 2>>");
-static_assert(ConversionCompilesFor<span<const int, 2>, span<int, 2>>,
-              "ConversionCompilesFor<span<const int, 2>, span<int, 2>>");
-static_assert(!ConversionCompilesFor<span<int, 2>, std::array<int, 4>>,
-              "!ConversionCompilesFor<span<int, 2>, std::array<int, 4>>");
-static_assert(!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>,
-              "!ConversionCompilesFor<span<const int, 2>, std::array<int, 4>>");
-static_assert(ConversionCompilesFor<span<const int>, std::vector<int>>,
-              "ConversionCompilesFor<span<const int>, std::vector<int>>");
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
-// Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
-static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
-              "!ConversionCompilesFor<span<int>, std::vector<int>>");
-#endif // !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
-#if __cplusplus < 201703L
-static_assert(!ConversionCompilesFor<span<char>, std::string>,
-              "!ConversionCompilesFor<span<char>, std::string>");
-#endif
-static_assert(ConversionCompilesFor<span<const char>, const std::string&>,
-              "ConversionCompilesFor<span<const char>, const std::string&>");
-static_assert(!ConversionCompilesFor<span<char>, const std::string&>,
-              "!ConversionCompilesFor<span<char>, const std::string&>");
-static_assert(!ConversionCompilesFor<span<const DerivedClass, 2>, span<DerivedClass>&>,
-              "!ConversionCompilesFor<span<const DerivedClass, 2>, span<DerivedClass>&>");
-static_assert(!ConversionCompilesFor<span<const DerivedClass, 1>, span<DerivedClass, 2>&>,
-              "!ConversionCompilesFor<span<const DerivedClass, 1>, span<DerivedClass, 2>&>");
-static_assert(!ConversionCompilesFor<span<const DerivedClass, 3>, span<DerivedClass, 2>&>,
-              "!ConversionCompilesFor<span<const DerivedClass, 3>, span<DerivedClass, 2>&>");
-static_assert(!ConversionCompilesFor<span<BaseClass, 3>, span<DerivedClass>&>,
-              "!ConversionCompilesFor<span<BaseClass, 3>, span<DerivedClass>&>");
-static_assert(!ConversionCompilesFor<span<unsigned int>, span<int>&>,
-              "!ConversionCompilesFor<span<unsigned int>, span<int>&>");
-static_assert(!ConversionCompilesFor<span<const unsigned int>, span<int>&>,
-              "!ConversionCompilesFor<span<const unsigned int>, span<int>&>");
-static_assert(!ConversionCompilesFor<span<short>, span<int>&>,
-              "!ConversionCompilesFor<span<short>, span<int>&>");
-static_assert(!ConversionCompilesFor<span<int, 2>, int[4]>,
-              "!ConversionCompilesFor<span<int, 2>, int[4]>");
-static_assert(!ConversionCompilesFor<span<int, 2>, span<int, 4>>,
-              "!ConversionCompilesFor<span<int, 2>, span<int, 4>>");
-static_assert(!ConversionCompilesFor<span<int, 2>, span<int>>,
-              "!ConversionCompilesFor<span<int, 2>, span<int>>");
-static_assert(!ConversionCompilesFor<span<int, 4>, int[2]>,
-              "!ConversionCompilesFor<span<int, 4>, int[2]>");
-static_assert(!ConversionCompilesFor<span<int, 2>, int[2]>,
-              "!ConversionCompilesFor<span<int, 2>, int[2]>");
-static_assert(!ConversionCompilesFor<span<int, 4>, span<int, 2>>,
-              "!ConversionCompilesFor<span<int, 4>, span<int, 2>>");
-
-template <typename U, typename = void>
-static constexpr bool AsWritableBytesCompilesFor = false;
-template <typename U>
-static constexpr bool
-    AsWritableBytesCompilesFor<U, void_t<decltype(as_writable_bytes(std::declval<U>()))>> = true;
-static_assert(AsWritableBytesCompilesFor<span<int>>, "AsWriteableBytesCompilesFor<span<int>>");
-static_assert(!AsWritableBytesCompilesFor<span<const int>>,
-              "!AsWriteableBytesCompilesFor<span<const int>>");

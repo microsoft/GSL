@@ -23,6 +23,13 @@
 
 using namespace gsl;
 
+#if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
 // stand-in for a user-defined ref-counted class
 template <typename T>
 struct RefCounted
@@ -57,9 +64,36 @@ bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 int* return_pointer() { return nullptr; }
 } // namespace
 
+template <typename U, typename = void>
+static constexpr bool CtorCompilesFor_A = false;
+template <typename U>
+static constexpr bool
+    CtorCompilesFor_A<U, void_t<decltype(gsl::strict_not_null<void*>{std::declval<U>()})>> = true;
+
+template <typename U, int N, typename = void>
+static constexpr bool CtorCompilesFor_B = false;
+template <typename U, int N>
+static constexpr bool CtorCompilesFor_B<U, N, void_t<decltype(gsl::strict_not_null<U>{N})>> = true;
+
+template <typename U, typename = void>
+static constexpr bool DefaultCtorCompilesFor = false;
+template <typename U>
+static constexpr bool DefaultCtorCompilesFor<U, void_t<decltype(gsl::strict_not_null<U>{})>> = true;
+
+template <typename U, typename = void>
+static constexpr bool CtorCompilesFor_C = false;
+template <typename U>
+static constexpr bool CtorCompilesFor_C<
+    U, void_t<decltype(gsl::strict_not_null<U*>{std::declval<std::unique_ptr<U>>()})>> = true;
+
 TEST(strict_notnull_tests, TestStrictNotNullConstructors)
 {
     {
+        static_assert(CtorCompilesFor_A<void*>, "CtorCompilesFor_A<void*>");
+        static_assert(!CtorCompilesFor_A<std::nullptr_t>, "!CtorCompilesFor_A<std::nullptr_t>");
+        static_assert(!CtorCompilesFor_B<void*, 0>, "!CtorCompilesFor_B<void*, 0>");
+        static_assert(!DefaultCtorCompilesFor<void*>, "!DefaultCtorCompilesFor<void*>");
+        static_assert(!CtorCompilesFor_C<int>, "CtorCompilesFor_C<int>");
 #ifdef CONFIRM_COMPILATION_ERRORS
         // Forbid non-nullptr assignable types
         strict_not_null<std::vector<int>> f(std::vector<int>{1});
@@ -155,6 +189,26 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructors)
     }
 }
 
+template <typename U, typename = void>
+static constexpr bool StrictHelperCompilesFor = false;
+template <typename U>
+static constexpr bool
+    StrictHelperCompilesFor<U, void_t<decltype(strict_helper(std::declval<U>()))>> = true;
+
+
+template <typename U, typename = void>
+static constexpr bool StrictHelperConstCompilesFor = false;
+template <typename U>
+static constexpr bool
+    StrictHelperConstCompilesFor<U, void_t<decltype(strict_helper_const(std::declval<U>()))>> =
+        true;
+
+
+template <typename U, typename = void>
+static constexpr bool HelperCompilesFor = false;
+template <typename U>
+static constexpr bool HelperCompilesFor<U, void_t<decltype(helper(std::declval<U>()))>> = true;
+
 TEST(strict_notnull_tests, TestStrictNotNull)
 {
     {
@@ -164,9 +218,14 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 #ifdef CONFIRM_COMPILATION_ERRORS
         strict_not_null<int*> snn = &x;
 #endif
+        static_assert(!StrictHelperCompilesFor<int*>, "!StrictHelperCompilesFor<int*>");
+        static_assert(!StrictHelperConstCompilesFor<int*>,
+                      "!StrictHelperCompilesFor<int*>");
 
         const strict_not_null<int*> snn1{&x};
 
+        static_assert(StrictHelperCompilesFor<const strict_not_null<int*>>,
+                          "StrictHelperCompilesFor<const strict_not_null<int*>>");
         helper(snn1);
         helper_const(snn1);
 
@@ -180,9 +239,16 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 #ifdef CONFIRM_COMPILATION_ERRORS
         strict_not_null<int*> snn = &x;
 #endif
+        static_assert(!StrictHelperCompilesFor<const int*>, "!StrictHelperFor<const int*>");
+        static_assert(!StrictHelperConstCompilesFor<const int*>,
+                      "!StrictHelperCompilesFor<const int*>");
 
         const strict_not_null<const int*> snn1{&x};
 
+        static_assert(!HelperCompilesFor<const strict_not_null<const int*>>,
+                      "!HelperCompilesFor<const strict_not_null<const int*>>");
+        static_assert(StrictHelperConstCompilesFor<const strict_not_null<const int*>>,
+                      "StrictHelperCompilesFor<const strict_not_null<const int*>>");
         helper_const(snn1);
 
         EXPECT_TRUE(*snn1 == 42);
@@ -209,6 +275,8 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         strict_not_null<const int*> snn1{&x};
         const strict_not_null<const int*> snn2{&x};
 
+        static_assert(!StrictHelperCompilesFor<strict_not_null<const int*>>,
+                      "!StrictHelperCompilesFor<strict_not_null<const int*>>");
         strict_helper_const(snn1);
         strict_helper_const(snn2);
 
@@ -240,6 +308,8 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         const not_null<const int*> nn1 = snn;
         const not_null<const int*> nn2{snn};
 
+        static_assert(!HelperCompilesFor<strict_not_null<const int*>>,
+                      "!HelperCompilesFor<strict_not_null<const int*>>");
         helper_const(snn);
 
         EXPECT_TRUE(snn == nn1);
@@ -279,6 +349,8 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         const strict_not_null<const int*> snn1{nn};
         const strict_not_null<const int*> snn2{nn};
 
+        static_assert(!StrictHelperCompilesFor<not_null<const int*>>,
+                      "!StrictHelperCompilesFor<not_null<const int*>>");
         strict_helper_const(nn);
 
         EXPECT_TRUE(snn1 == nn);
@@ -318,6 +390,8 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
         const int i = 42;
 
         strict_not_null x{&i};
+        static_assert(!HelperCompilesFor<strict_not_null<const int*>>,
+                      "!HelperCompilesFor<strict_not_null<const int*>>");
         helper_const(strict_not_null{&i});
 
         EXPECT_TRUE(*x == 42);
@@ -339,6 +413,8 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
         const int* p = &i;
 
         strict_not_null x{p};
+        static_assert(!HelperCompilesFor<strict_not_null<const int*>>,
+                      "!HelperCompilesFor<strict_not_null<const int*>>");
         helper_const(strict_not_null{p});
 
         EXPECT_TRUE(*x == 42);
@@ -376,73 +452,3 @@ TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
 #endif
 }
 #endif // #if defined(__cplusplus) && (__cplusplus >= 201703L)
-
-#if __cplusplus >= 201703l
-using std::void_t;
-#else  // __cplusplus >= 201703l
-template <class...>
-using void_t = void;
-#endif // __cplusplus < 201703l
-
-template <typename U, typename = void>
-static constexpr bool CtorCompilesFor_A = false;
-template <typename U>
-static constexpr bool
-    CtorCompilesFor_A<U, void_t<decltype(gsl::strict_not_null<void*>{std::declval<U>()})>> = true;
-static_assert(CtorCompilesFor_A<void*>, "CtorCompilesFor_A<void*>");
-static_assert(!CtorCompilesFor_A<std::nullptr_t>, "!CtorCompilesFor_A<std::nullptr_t>");
-
-template <typename U, int N, typename = void>
-static constexpr bool CtorCompilesFor_B = false;
-template <typename U, int N>
-static constexpr bool CtorCompilesFor_B<U, N, void_t<decltype(gsl::strict_not_null<U>{N})>> = true;
-static_assert(!CtorCompilesFor_B<void*, 0>, "!CtorCompilesFor_B<void*, 0>");
-
-template <typename U, typename = void>
-static constexpr bool CtorCompilesFor_C = false;
-template <typename U>
-static constexpr bool CtorCompilesFor_C<
-    U, void_t<decltype(gsl::strict_not_null<U*>{std::declval<std::unique_ptr<U>>()})>> =
-        true;
-static_assert(!CtorCompilesFor_C<int>, "CtorCompilesFor_C<int>");
-
-template <typename U, typename = void>
-static constexpr bool DefaultCtorCompilesFor = false;
-template <typename U>
-static constexpr bool DefaultCtorCompilesFor<U, void_t<decltype(gsl::strict_not_null<U>{})>> = true;
-static_assert(!DefaultCtorCompilesFor<void*>, "!DefaultCtorCompilesFor<void*>");
-
-template <typename U, typename = void>
-static constexpr bool StrictHelperCompilesFor = false;
-template <typename U>
-static constexpr bool
-    StrictHelperCompilesFor<U, void_t<decltype(strict_helper(std::declval<U>()))>> = true;
-static_assert(StrictHelperCompilesFor<strict_not_null<int*>>,
-              "StrictHelperCompilesFor<strict_not_null<int*>>");
-static_assert(!StrictHelperCompilesFor<const strict_not_null<const int*>>,
-              "!StrictHelperCompilesFor<const strict_not_null<const int*>>");
-static_assert(!StrictHelperCompilesFor<const not_null<const int*>>,
-              "!StrictHelperCompilesFor<const not_null<const int*>>");
-static_assert(!StrictHelperCompilesFor<int*>, "!StrictHelperCompilesFor<int*>");
-
-template <typename U, typename = void>
-static constexpr bool HelperCompilesFor = false;
-template <typename U>
-static constexpr bool
-    HelperCompilesFor<U, void_t<decltype(helper(std::declval<U>()))>> = true;
-static_assert(HelperCompilesFor<not_null<int*>>,
-              "HelperCompilesFor<not_null<int*>>");
-static_assert(!HelperCompilesFor<const strict_not_null<const int*>>,
-              "!HelperCompilesFor<const strict_not_null<const int*>>");
-static_assert(!HelperCompilesFor<const not_null<const int*>>,
-              "!HelperCompilesFor<const not_null<const int*>>");
-static_assert(HelperCompilesFor<int*>, "HelperCompilesFor<int*>");
-
-template <typename U, typename = void>
-static constexpr bool StrictHelperConstCompilesFor = false;
-template <typename U>
-static constexpr bool
-    StrictHelperConstCompilesFor<U, void_t<decltype(strict_helper_const(std::declval<U>()))>> = true;
-static_assert(StrictHelperConstCompilesFor<strict_not_null<const int*>>,
-              "StrictHelperCompilesFor<strict_not_null<const int*>>");
-static_assert(!StrictHelperConstCompilesFor<const int*>, "!StrictHelperCompilesFor<const int*>");
