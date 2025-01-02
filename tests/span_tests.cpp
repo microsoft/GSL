@@ -701,7 +701,9 @@ TEST(span_test, first)
 
     {
         span<int, 5> av = arr;
-        EXPECT_DEATH(av.first<6>(), expected);
+#ifdef CONFIRM_COMPILATION_ERRORS
+        (void) av.first<6>();
+#endif
         EXPECT_DEATH(av.first(6), expected);
     }
 
@@ -742,7 +744,9 @@ TEST(span_test, last)
 
     {
         span<int, 5> av = arr;
-        EXPECT_DEATH(av.last<6>(), expected);
+#ifdef CONFIRM_COMPILATION_ERRORS
+        (void) av.last<6>();
+#endif
         EXPECT_DEATH(av.last(6), expected);
     }
 
@@ -768,6 +772,9 @@ TEST(span_test, subspan)
         EXPECT_TRUE((av.subspan<2, 2>().size()) == 2);
         EXPECT_TRUE(decltype(av.subspan<2, 2>())::extent == 2);
         EXPECT_TRUE(av.subspan(2, 2).size() == 2);
+
+        EXPECT_TRUE((av.subspan<2, 3>().size()) == 3);
+        EXPECT_TRUE(decltype(av.subspan<2, 3>())::extent == 3);
         EXPECT_TRUE(av.subspan(2, 3).size() == 3);
     }
 
@@ -784,6 +791,10 @@ TEST(span_test, subspan)
         EXPECT_TRUE(decltype(av.subspan<0, 5>())::extent == 5);
         EXPECT_TRUE(av.subspan(0, 5).size() == 5);
 
+#ifdef CONFIRM_COMPILATION_ERRORS
+        (void) av.subspan<0, 6>();
+        (void) av.subspan<1, 5>();
+#endif
         EXPECT_DEATH(av.subspan(0, 6), expected);
         EXPECT_DEATH(av.subspan(1, 5), expected);
     }
@@ -793,7 +804,14 @@ TEST(span_test, subspan)
         EXPECT_TRUE((av.subspan<4, 0>().size()) == 0);
         EXPECT_TRUE(decltype(av.subspan<4, 0>())::extent == 0);
         EXPECT_TRUE(av.subspan(4, 0).size() == 0);
+
+        EXPECT_TRUE((av.subspan<5, 0>().size()) == 0);
+        EXPECT_TRUE(decltype(av.subspan<5, 0>())::extent == 0);
         EXPECT_TRUE(av.subspan(5, 0).size() == 0);
+
+#ifdef CONFIRM_COMPILATION_ERRORS
+        (void) av.subspan<6, 0>();
+#endif
         EXPECT_DEATH(av.subspan(6, 0), expected);
     }
 
@@ -801,6 +819,7 @@ TEST(span_test, subspan)
         span<int, 5> av = arr;
         EXPECT_TRUE(av.subspan<1>().size() == 4);
         EXPECT_TRUE(decltype(av.subspan<1>())::extent == 4);
+        EXPECT_TRUE(av.subspan(1).size() == 4);
     }
 
     {
@@ -808,35 +827,58 @@ TEST(span_test, subspan)
         EXPECT_TRUE((av.subspan<0, 0>().size()) == 0);
         EXPECT_TRUE(decltype(av.subspan<0, 0>())::extent == 0);
         EXPECT_TRUE(av.subspan(0, 0).size() == 0);
+
         EXPECT_DEATH((av.subspan<1, 0>()), expected);
+        EXPECT_DEATH((av.subspan(1, 0)), expected);
     }
 
     {
         span<int> av;
+        EXPECT_TRUE((av.subspan<0>().size()) == 0);
+        EXPECT_TRUE(decltype(av.subspan<0>())::extent == dynamic_extent);
         EXPECT_TRUE(av.subspan(0).size() == 0);
+
+        EXPECT_DEATH(av.subspan<1>(), expected);
+        EXPECT_TRUE(decltype(av.subspan<1>())::extent == dynamic_extent);
         EXPECT_DEATH(av.subspan(1), expected);
     }
 
     {
         span<int> av = arr;
         EXPECT_TRUE(av.subspan(0).size() == 5);
+        EXPECT_TRUE(av.subspan<0>().size() == 5);
         EXPECT_TRUE(av.subspan(1).size() == 4);
+        EXPECT_TRUE(av.subspan<1>().size() == 4);
         EXPECT_TRUE(av.subspan(4).size() == 1);
+        EXPECT_TRUE(av.subspan<4>().size() == 1);
         EXPECT_TRUE(av.subspan(5).size() == 0);
+        EXPECT_TRUE(av.subspan<5>().size() == 0);
         EXPECT_DEATH(av.subspan(6), expected);
+        EXPECT_DEATH(av.subspan<6>(), expected);
         const auto av2 = av.subspan(1);
         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == static_cast<int>(i) + 2);
+        const auto av3 = av.subspan<1>();
+        for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av3[i] == static_cast<int>(i) + 2);
     }
 
     {
         span<int, 5> av = arr;
         EXPECT_TRUE(av.subspan(0).size() == 5);
+        EXPECT_TRUE(av.subspan<0>().size() == 5);
         EXPECT_TRUE(av.subspan(1).size() == 4);
+        EXPECT_TRUE(av.subspan<1>().size() == 4);
         EXPECT_TRUE(av.subspan(4).size() == 1);
+        EXPECT_TRUE(av.subspan<4>().size() == 1);
         EXPECT_TRUE(av.subspan(5).size() == 0);
+        EXPECT_TRUE(av.subspan<5>().size() == 0);
         EXPECT_DEATH(av.subspan(6), expected);
+#ifdef CONFIRM_COMPILATION_ERRORS
+        EXPECT_DEATH(av.subspan<6>(), expected);
+#endif
         const auto av2 = av.subspan(1);
         for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av2[i] == static_cast<int>(i) + 2);
+        const auto av3 = av.subspan<1>();
+        for (std::size_t i = 0; i < 4; ++i) EXPECT_TRUE(av3[i] == static_cast<int>(i) + 2);
     }
 }
 
