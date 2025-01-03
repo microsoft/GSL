@@ -17,12 +17,10 @@ jobs:
   gcc:
     strategy:
       matrix:
-        gcc_version: [ 10, 11, 12 ]
+        gcc_version: [ 12, 13, 14 ]
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
         exclude:
-          - gcc_version: 10
-            cxx_version: 23
           # https://github.com/google/googletest/issues/4232
           # Looks like GoogleTest is not interested in making version 1.14
           # work with gcc-12.
@@ -44,7 +42,7 @@ jobs:
   clang:
     strategy:
       matrix:
-        clang_version: [ 13, 14, 15 ]
+        clang_version: [ 16, 17, 18 ]
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: ubuntu-latest
