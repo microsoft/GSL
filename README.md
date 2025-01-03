@@ -93,9 +93,9 @@ Below is a table showing the versions currently being tested (also see [.github/
 
 Compiler |Toolset Versions Currently Tested
 :------- |--:
- GCC | 10, 11, 12
+ GCC | 12, 13, 14
  XCode | 14.3.1, 15.4
- Clang | 13, 14, 15
+ Clang | 16, 17, 18
  Visual Studio with MSVC | VS2019, VS2022 
  Visual Studio with LLVM | VS2019, VS2022
 
