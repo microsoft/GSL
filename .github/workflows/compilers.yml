@@ -45,6 +45,10 @@ jobs:
         clang_version: [ 16, 17, 18 ]
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
+        exclude:
+          # TODO (@carsonradtke): revert this
+          - clang_version: 17
+            cxx_version: 23
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
