@@ -188,7 +188,7 @@ TEST(algorithm_tests, incompatible_type)
     span<int> src_span_dyn(src);
     span<int, 4> src_span_static(src);
     span<int*> dst_span_dyn(dst);
-    span<int*, 4> dst_span_static(dst);
+    span<int*, 4> dst_span_static(gsl::make_span(dst));
 
     // every line should produce a compilation error
     copy(src_span_dyn, dst_span_dyn);
