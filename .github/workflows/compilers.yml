@@ -46,7 +46,9 @@ jobs:
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
         exclude:
-          # TODO (@carsonradtke): revert this
+          # https://github.com/llvm/llvm-project/issues/93734
+          # Looks like clang fixed this issue in clang-18, but won't backport
+          # the fix.
           - clang_version: 17
             cxx_version: 23
     runs-on: ubuntu-latest
