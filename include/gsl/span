@@ -582,6 +582,8 @@ public:
     template <std::size_t Count>
     constexpr span<element_type, Count> first() const noexcept
     {
+        static_assert(Extent == dynamic_extent || Count <= Extent,
+                      "first() cannot extract more elements from a span than it contains.");
         Expects(Count <= size());
         return span<element_type, Count>{data(), Count};
     }
@@ -592,6 +594,8 @@ public:
         // clang-format on
         constexpr span<element_type, Count> last() const noexcept
     {
+        static_assert(Extent == dynamic_extent || Count <= Extent,
+                      "last() cannot extract more elements from a span than it contains.");
         Expects(Count <= size());
         return span<element_type, Count>{data() + (size() - Count), Count};
     }
@@ -603,6 +607,9 @@ public:
         constexpr auto subspan() const noexcept ->
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
+        static_assert(Extent == dynamic_extent || (Extent >= Offset && (Count == dynamic_extent ||
+                                                                        Count <= Extent - Offset)),
+                      "subspan() cannot extract more elements from a span than it contains.");
         Expects((size() >= Offset) && (Count == dynamic_extent || (Count <= size() - Offset)));
         using type =
             typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type;

@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 
 #include <gsl/pointers> // for owner
+#include <type_traits>  // for declval
 
 using namespace gsl;
 
@@ -32,12 +33,18 @@ TEST(owner_tests, basic_test)
     delete p;
 }
 
-TEST(owner_tests, check_pointer_constraint)
-{
-#ifdef CONFIRM_COMPILATION_ERRORS
-    {
-        owner<int> integerTest = 10;
-        owner<std::shared_ptr<int>> sharedPtrTest(new int(10));
-    }
-#endif
-}
+#if __cplusplus >= 201703l
+using std::void_t;
+#else  // __cplusplus >= 201703l
+template <class...>
+using void_t = void;
+#endif // __cplusplus < 201703l
+
+template <typename U, typename = void>
+static constexpr bool OwnerCompilesFor = false;
+template <typename U>
+static constexpr bool OwnerCompilesFor<U, void_t<decltype(gsl::owner<U>{})>> =
+        true;
+static_assert(OwnerCompilesFor<int*>, "OwnerCompilesFor<int*>");
+static_assert(!OwnerCompilesFor<int>, "!OwnerCompilesFor<int>");
+static_assert(!OwnerCompilesFor<std::shared_ptr<int>>, "!OwnerCompilesFor<std::shared_ptr<int>>");
