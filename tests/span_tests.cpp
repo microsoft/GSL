@@ -257,8 +257,7 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.data() == &arr[0]);
     }
 
-    // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    //{ // this test succeeds on all platforms, but it relies on UB
+    //{ // this test succeeds on all platforms, gsl::span is more relaxed than std::span where this would be UB
     //    auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
     //    EXPECT_DEATH(workaround_macro(), expected);
     //}
