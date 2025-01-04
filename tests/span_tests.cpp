@@ -263,13 +263,6 @@ TEST(span_test, from_pointer_pointer_construction)
     //    EXPECT_DEATH(workaround_macro(), expected);
     //}
 
-    // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    //{ // this test fails on gcc 13, clang 16, clang 17, xcode 15.4, vs 16
-    //    int* p = nullptr;
-    //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-    //    EXPECT_DEATH(workaround_macro(), expected);
-    //}
-
     {
         int* p = nullptr;
         span<int> s{p, p};
@@ -283,14 +276,6 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.size() == 0);
         EXPECT_TRUE(s.data() == nullptr);
     }
-
-    // this will fail the std::distance() precondition, which asserts on MSVC debug builds
-    //{ // this test fails on gcc 13/14, clang 16/17/18, xcode 15.4, vs 16
-    //    int* p = nullptr;
-    //    auto workaround_macro = [&]() { span<int> s{&arr[0], p}; };
-    //    span<int> s{&arr[0], p};
-    //    EXPECT_DEATH(workaround_macro(), expected);
-    //}
 }
 
 template <typename U, typename V, typename = void>
