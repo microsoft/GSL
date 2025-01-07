@@ -676,10 +676,6 @@ template <class Container>
 constexpr span<typename Container::value_type> make_span(Container& cont);
 template <class Container>
 constexpr span<const typename Container::value_type> make_span(const Container& cont);
-template <class Ptr>
-constexpr span<typename Ptr::element_type> make_span(Ptr& cont, std::size_t count);
-template <class Ptr>
-constexpr span<typename Ptr::element_type> make_span(Ptr& cont);
 ```
 
 Utility function for creating a `span` with [`gsl::dynamic_extent`](#user-content-H-span_ext-dynamic_extent) from
