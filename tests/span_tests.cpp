@@ -412,7 +412,7 @@ TEST(span_test, from_std_array_constructor)
     static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
                   "!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>");
 
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+#if !defined(_MSC_VER) || (_MSC_VER > 1943) || (__cplusplus >= 201703L)
     // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
     static_assert(!ConversionCompilesFor<span<int>, std::array<int, 4>>,
                   "!ConversionCompilesFor<span<int>, std::array<int, 4>>");
@@ -529,7 +529,7 @@ TEST(span_test, from_container_constructor)
         EXPECT_TRUE(cs.data() == cstr.data());
     }
 
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+#if !defined(_MSC_VER) || (_MSC_VER > 1943) || (__cplusplus >= 201703L)
     // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
     static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
                   "!ConversionCompilesFor<span<int>, std::vector<int>>");
@@ -1293,9 +1293,15 @@ TEST(span_test, empty_span)
 TEST(span_test, conversions)
 {
     int arr[5] = {1, 2, 3, 4, 5};
-    span s = arr;
 
+#if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L)
+    span s = arr;
     span cs = s;
+#else
+    span<int, 5> s = arr;
+    span<int, 5> cs = s;
+#endif
+
     EXPECT_TRUE(cs.size() == s.size());
     EXPECT_TRUE(cs.data() == s.data());
 
