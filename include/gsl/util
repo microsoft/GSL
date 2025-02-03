@@ -73,6 +73,8 @@ using index = std::ptrdiff_t;
 template <class F>
 class final_action
 {
+	static_assert(std::is_nothrow_invocable_v<F>, "the provided action must be non-throwing");
+
 public:
     explicit final_action(const F& ff) noexcept : f{ff} { }
     explicit final_action(F&& ff) noexcept : f{std::move(ff)} { }
