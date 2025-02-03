@@ -50,7 +50,7 @@ dyn_array                                                                | &#x26
 [**4. Utilities**][cg-utilities]                                         |            |
 move_owner                                                               | &#x2610;   | A helper function that moves one `owner` to the other
 [byte](docs/headers.md#user-content-H-byte-byte)                         | &#x2611;   | Either an alias to `std::byte` or a byte type
-[final_action](docs/headers.md#user-content-H-util-final_action)         | &#x2611;   | A RAII style class that invokes a functor on its destruction
+[final_action](docs/headers.md#user-content-H-util-final_action)         | &#x2611;   | A RAII style class that invokes a non-throwing functor on its destruction
 [finally](docs/headers.md#user-content-H-util-finally)                   | &#x2611;   | A helper function instantiating [final_action](docs/headers.md#user-content-H-util-final_action)
 [GSL_SUPPRESS](docs/headers.md#user-content-H-assert-gsl_suppress)       | &#x2611;   | A macro that takes an argument and turns it into `[[gsl::suppress(x)]]` or `[[gsl::suppress("x")]]`
 [[implicit]]                                                             | &#x2610;   | A "marker" to put on single-argument constructors to explicitly make them non-explicit
