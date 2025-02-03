@@ -69,10 +69,12 @@ namespace gsl
 // index type for all container indexes/subscripts/sizes
 using index = std::ptrdiff_t;
 
-// final_action allows you to ensure something gets run at the end of a scope
+// final_action allows you to ensure non-throwing code is executed at the end of a scope.
 template <class F>
 class final_action
 {
+	static_assert(std::is_nothrow_invocable_v<F>, "the provided action must be non-throwing");
+
 public:
     explicit final_action(const F& ff) noexcept : f{ff} { }
     explicit final_action(F&& ff) noexcept : f{std::move(ff)} { }
