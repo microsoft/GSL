@@ -369,7 +369,7 @@ TEST(strict_notnull_tests, TestStrictNotNull)
 TEST(pointers_test, member_types)
 {
     // make sure `element_type` is inherited from `gsl::not_null`
-    static_assert(std::is_same_v<gsl::strict_not_null<int>::element_type, int>,
+    static_assert(std::is_same<gsl::strict_not_null<int>::element_type, int>::value,
                   "check member type: element_type");
 }
 
