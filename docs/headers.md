@@ -224,6 +224,14 @@ When a nullptr check fails, `std::terminate` is called.
 
 See [F.23: Use a `not_null<T>` to indicate that “null” is not a valid value](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-nullptr)
 
+#### Member Types
+
+```cpp
+using element_type = T;
+```
+
+The type of the pointed-to object.
+
 #### Member functions
 
 ##### Construct/Copy
