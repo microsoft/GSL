@@ -17,7 +17,7 @@
 #ifndef GSL_ZSTRING_H
 #define GSL_ZSTRING_H
 
-#include "gsl/span_ext" // for dynamic_extent
+#include "./span_ext" // for dynamic_extent
 
 #include <cstddef>   // for size_t, nullptr_t
 
