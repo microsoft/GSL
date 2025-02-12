@@ -412,7 +412,7 @@ TEST(span_test, from_std_array_constructor)
     static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
                   "!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>");
 
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+#if !defined(_MSC_VER) || (_MSC_VER > 1943) || (__cplusplus >= 201703L)
     // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
     static_assert(!ConversionCompilesFor<span<int>, std::array<int, 4>>,
                   "!ConversionCompilesFor<span<int>, std::array<int, 4>>");
@@ -529,7 +529,7 @@ TEST(span_test, from_container_constructor)
         EXPECT_TRUE(cs.data() == cstr.data());
     }
 
-#if !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+#if !defined(_MSC_VER) || (_MSC_VER > 1943) || (__cplusplus >= 201703L)
     // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
     static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
                   "!ConversionCompilesFor<span<int>, std::vector<int>>");
@@ -1276,3 +1276,151 @@ TEST(span_test, msvc_compile_error_PR1100)
     for (const auto& e : sp) { (void) e; }
 }
 #endif // defined(__cpp_lib_span) && defined(__cpp_lib_ranges)
+
+TEST(span_test, empty_span)
+{
+    span<int> s{};
+    EXPECT_TRUE(s.empty());
+    EXPECT_TRUE(s.size() == 0);
+    EXPECT_TRUE(s.data() == nullptr);
+
+    span<const int> cs{};
+    EXPECT_TRUE(cs.empty());
+    EXPECT_TRUE(cs.size() == 0);
+    EXPECT_TRUE(cs.data() == nullptr);
+}
+
+TEST(span_test, conversions)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+
+#if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L)
+    span s = arr;
+    span cs = s;
+#else
+    span<int, 5> s = arr;
+    span<int, 5> cs = s;
+#endif
+
+    EXPECT_TRUE(cs.size() == s.size());
+    EXPECT_TRUE(cs.data() == s.data());
+
+    span<int, 5> fs = s;
+    EXPECT_TRUE(fs.size() == s.size());
+    EXPECT_TRUE(fs.data() == s.data());
+
+    span<const int, 5> cfs = s;
+    EXPECT_TRUE(cfs.size() == s.size());
+    EXPECT_TRUE(cfs.data() == s.data());
+}
+
+TEST(span_test, comparison_operators)
+{
+    int arr1[3] = {1, 2, 3};
+    int arr2[3] = {1, 2, 3};
+    int arr3[3] = {4, 5, 6};
+
+    span<int> s1 = arr1;
+    span<int> s2 = arr2;
+    span<int> s3 = arr3;
+
+    EXPECT_TRUE(s1 == s2);
+    EXPECT_FALSE(s1 != s2);
+    EXPECT_FALSE(s1 == s3);
+    EXPECT_TRUE(s1 != s3);
+    EXPECT_TRUE(s1 < s3);
+    EXPECT_FALSE(s3 < s1);
+    EXPECT_TRUE(s1 <= s2);
+    EXPECT_TRUE(s1 <= s3);
+    EXPECT_FALSE(s3 <= s1);
+    EXPECT_TRUE(s3 > s1);
+    EXPECT_FALSE(s1 > s3);
+    EXPECT_TRUE(s3 >= s1);
+    EXPECT_TRUE(s1 >= s2);
+    EXPECT_FALSE(s1 >= s3);
+}
+
+// ...existing code...
+
+#if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
+
+#include <span> // for std::span
+
+TEST(span_test, compare_empty_span)
+{
+    gsl::span<int> gsl_s{};
+    std::span<int> std_s{};
+
+    EXPECT_TRUE(gsl_s.empty());
+    EXPECT_TRUE(std_s.empty());
+    EXPECT_EQ(gsl_s.size(), std_s.size());
+    EXPECT_EQ(gsl_s.data(), std_s.data());
+}
+
+TEST(span_test, compare_subspan)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+    gsl::span gsl_s = arr;
+    std::span std_s = arr;
+
+    auto gsl_sub1 = gsl_s.subspan(1);
+    auto std_sub1 = std_s.subspan(1);
+    EXPECT_EQ(gsl_sub1.size(), std_sub1.size());
+    EXPECT_EQ(gsl_sub1.data(), std_sub1.data());
+
+    auto gsl_sub2 = gsl_s.subspan(1, 2);
+    auto std_sub2 = std_s.subspan(1, 2);
+    EXPECT_EQ(gsl_sub2.size(), std_sub2.size());
+    EXPECT_EQ(gsl_sub2.data(), std_sub2.data());
+}
+
+TEST(span_test, compare_conversions)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+    gsl::span gsl_s = arr;
+    std::span std_s = arr;
+
+    gsl::span gsl_cs = gsl_s;
+    std::span std_cs = std_s;
+    EXPECT_EQ(gsl_cs.size(), std_cs.size());
+    EXPECT_EQ(gsl_cs.data(), std_cs.data());
+
+    gsl::span<int, 5> gsl_fs = gsl_s;
+    std::span<int, 5> std_fs = std_s;
+    EXPECT_EQ(gsl_fs.size(), std_fs.size());
+    EXPECT_EQ(gsl_fs.data(), std_fs.data());
+
+    gsl::span<const int, 5> gsl_cfs = gsl_s;
+    std::span<const int, 5> std_cfs = std_s;
+    EXPECT_EQ(gsl_cfs.size(), std_cfs.size());
+    EXPECT_EQ(gsl_cfs.data(), std_cfs.data());
+}
+
+TEST(span_test, deduction_guides)
+{
+    int arr[5] = {1, 2, 3, 4, 5};
+    std::array<int, 5> std_arr = {1, 2, 3, 4, 5};
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+
+    // Test deduction guides for gsl::span
+    gsl::span gsl_s1 = arr;
+    gsl::span gsl_s2 = std_arr;
+    gsl::span gsl_s3 = vec;
+
+    // Test deduction guides for std::span (for sanity checks)
+    std::span std_s1 = arr;
+    std::span std_s2 = std_arr;
+    std::span std_s3 = vec;
+
+    // Compare sizes
+    EXPECT_EQ(gsl_s1.size(), std_s1.size());
+    EXPECT_EQ(gsl_s2.size(), std_s2.size());
+    EXPECT_EQ(gsl_s3.size(), std_s3.size());
+
+    // Compare data pointers
+    EXPECT_EQ(gsl_s1.data(), std_s1.data());
+    EXPECT_EQ(gsl_s2.data(), std_s2.data());
+    EXPECT_EQ(gsl_s3.data(), std_s3.data());
+}
+
+#endif // defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
