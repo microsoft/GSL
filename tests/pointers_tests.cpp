@@ -88,4 +88,10 @@ TEST(pointers_test, swap)
                   "!SwapCompilesFor<NotMoveAssignableCustomPtr>");
 }
 
+TEST(pointers_test, member_types)
+{
+    static_assert(std::is_same<gsl::not_null<int*>::element_type, int*>::value,
+                  "check member type: element_type");
+}
+
 } // namespace

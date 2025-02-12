@@ -366,6 +366,13 @@ TEST(strict_notnull_tests, TestStrictNotNull)
     }
 }
 
+TEST(pointers_test, member_types)
+{
+    // make sure `element_type` is inherited from `gsl::not_null`
+    static_assert(std::is_same<gsl::strict_not_null<int*>::element_type, int*>::value,
+                  "check member type: element_type");
+}
+
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
 
 TEST(strict_notnull_tests, TestStrictNotNullConstructorTypeDeduction)
