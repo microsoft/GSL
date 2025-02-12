@@ -17,7 +17,7 @@
 #ifndef GSL_UTIL_H
 #define GSL_UTIL_H
 
-#include "gsl/assert" // for Expects
+#include "./assert" // for Expects
 
 #include <array>
 #include <cstddef>          // for ptrdiff_t, size_t
