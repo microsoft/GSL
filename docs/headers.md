@@ -802,7 +802,7 @@ template <class F>
 class final_action { ... };
 ```
 
-`final_action` allows you to ensure something gets run at the end of a scope.
+`final_action` allows you to ensure non-throwing code is executed at the end of a scope.
 
 See [E.19: Use a final_action object to express cleanup if no suitable resource handle is available](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Re-finally)
 
@@ -813,13 +813,13 @@ explicit final_action(const F& ff) noexcept;
 explicit final_action(F&& ff) noexcept;
 ```
 
-Construct an object with the action to invoke in the destructor.
+Construct an object with the non-throwing action to invoke in the destructor.
 
 ```cpp
 ~final_action() noexcept;
 ```
 
-The destructor will call the action that was passed in the constructor.
+The destructor will invoke the action that was passed in the constructor; if the action throws an exception the program will terminate.
 
 ```cpp
 final_action(final_action&& other) noexcept;
