@@ -17,6 +17,8 @@
 #ifndef GSL_BYTE_H
 #define GSL_BYTE_H
 
+#include "./util" // for GSL_DEPRECATED
+
 #include <type_traits>
 
 #ifdef _MSC_VER
@@ -80,8 +82,10 @@ namespace gsl
 {
 #if GSL_USE_STD_BYTE
 
-using std::byte;
-using std::to_integer;
+using byte GSL_DEPRECATED("Use std::byte instead.") = std::byte;
+
+template <typename T>
+using to_integer GSL_DEPRECATED("Use std::to_integer instead.") = std::to_integer<T>;
 
 #else // GSL_USE_STD_BYTE
 

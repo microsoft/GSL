@@ -18,6 +18,7 @@
 #define GSL_POINTERS_H
 
 #include "./assert" // for Ensures, Expects
+#include "./util" // for GSL_DEPRECATED
 
 #include <cstddef>      // for ptrdiff_t, nullptr_t, size_t
 #include <functional>   // for less, greater
@@ -62,8 +63,11 @@ namespace details
 //
 // GSL.owner: ownership pointers
 //
-using std::shared_ptr;
-using std::unique_ptr;
+template <typename... Ts>
+using shared_ptr GSL_DEPRECATED("Use std::shared_ptr instead") = std::shared_ptr<Ts...>;
+
+template <typename... Ts>
+using unique_ptr GSL_DEPRECATED("Use std::unique_ptr instead") = std::unique_ptr<Ts...>;
 
 //
 // owner
