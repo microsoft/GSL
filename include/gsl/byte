@@ -84,8 +84,7 @@ namespace gsl
 
 using byte GSL_DEPRECATED("Use std::byte instead.") = std::byte;
 
-template <typename T>
-using to_integer GSL_DEPRECATED("Use std::to_integer instead.") = std::to_integer<T>;
+using std::to_integer;
 
 #else // GSL_USE_STD_BYTE
 
