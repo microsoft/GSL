@@ -74,12 +74,12 @@ u32string_span                     | &#x2610;   | Deprecated. An alias to `basic
 cu32string_span                    | &#x2610;   | Deprecated. An alias to `basic_string_span` with a char type of `const char32_t`
 
 ## The following features have been adopted by WG21. They are deprecated in GSL.
-Feature                            | Deprecated Since | Notes
------------------------------------|------------------|------
-gsl::unique_ptr                    | C++11            | Use std::unique_ptr instead.
-gsl::shared_ptr                    | C++11            | Use std::shared_ptr instead.
-gsl::byte                          | C++17            | Use std::byte instead.
-gsl:joining_thread                 | C++20 (Note: Not yet implemented in GSL) | Use std::jthread instead.
+Feature                                                           | Deprecated Since | Notes
+------------------------------------------------------------------|------------------|------
+[unique_ptr](docs/headers.md#user-content-H-pointers-unique_ptr)  | C++11            | Use std::unique_ptr instead.
+[shared_ptr](docs/headers.md#user-content-H-pointers-shared_ptr)  | C++11            | Use std::shared_ptr instead.
+[byte](docs/headers.md#user-content-H-byte-byte)                  | C++17            | Use std::byte instead.
+joining_thread                                                    | C++20 (Note: Not yet implemented in GSL) | Use std::jthread instead.
 
 This is based on [CppCoreGuidelines semi-specification](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gsl-guidelines-support-library).
 
