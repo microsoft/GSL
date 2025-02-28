@@ -230,7 +230,7 @@ See [F.23: Use a `not_null<T>` to indicate that “null” is not a valid value]
 using element_type = T;
 ```
 
-The type of the pointed-to object.
+The type of the pointer or smart pointer that is managed by this object.
 
 #### Member functions
 
