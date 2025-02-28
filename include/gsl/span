@@ -18,7 +18,7 @@
 #define GSL_SPAN_H
 
 #include "./assert"   // for Expects
-#include "./byte"     // for BYTE_TYPE
+#include "./byte"     // for gsl::impl::byte
 #include "./span_ext" // for span specialization of gsl::at and other span-related extensions
 #include "./util"     // for narrow_cast
 
@@ -824,28 +824,28 @@ namespace details
 
 // [span.objectrep], views of object representation
 template <class ElementType, std::size_t Extent>
-span<const BYTE_TYPE, details::calculate_byte_size<ElementType, Extent>::value>
+span<const gsl::impl::byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_bytes(span<ElementType, Extent> s) noexcept
 {
-    using type = span<const BYTE_TYPE, details::calculate_byte_size<ElementType, Extent>::value>;
+    using type = span<const gsl::impl::byte, details::calculate_byte_size<ElementType, Extent>::value>;
 
     // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     // clang-format on
-    return type{reinterpret_cast<const BYTE_TYPE*>(s.data()), s.size_bytes()};
+    return type{reinterpret_cast<const gsl::impl::byte*>(s.data()), s.size_bytes()};
 }
 
 template <class ElementType, std::size_t Extent,
           std::enable_if_t<!std::is_const<ElementType>::value, int> = 0>
-span<BYTE_TYPE, details::calculate_byte_size<ElementType, Extent>::value>
+span<gsl::impl::byte, details::calculate_byte_size<ElementType, Extent>::value>
 as_writable_bytes(span<ElementType, Extent> s) noexcept
 {
-    using type = span<BYTE_TYPE, details::calculate_byte_size<ElementType, Extent>::value>;
+    using type = span<gsl::impl::byte, details::calculate_byte_size<ElementType, Extent>::value>;
 
     // clang-format off
     GSL_SUPPRESS(type.1) // NO-FORMAT: attribute
     // clang-format on
-    return type{reinterpret_cast<BYTE_TYPE*>(s.data()), s.size_bytes()};
+    return type{reinterpret_cast<gsl::impl::byte*>(s.data()), s.size_bytes()};
 }
 
 } // namespace gsl
