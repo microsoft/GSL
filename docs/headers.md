@@ -417,22 +417,16 @@ The key differences between `gsl::span` and `std::span` are:
 - Any violations of the bounds check results in termination of the program
 - `gsl::span`'s iterators also perform bounds checking, unlike `std::span`'s iterators
 
-With the adoption of [P3471: Standard library hardening](https://isocpp.org/files/papers/P3471R4.html) in C++26, 
-the gap between `std::span` and `gsl::span` is narrowing, but differences remain. For detailed information about the 
-differences and guidance on which one to use, see the [FAQ](FAQ.md#what-are-the-differences-between-gslspan-and-hardened-stdspan-in-c26).
-
 #### Which version of span should I use?
 
-##### Use `gsl::span` if
+- C++14 & C++17 → Use `gsl::span` because it is your only option
+- C++20 & C++23 → Use `gsl::span` because accesses are bounds checked
+- C++26* → Use `gsl::span` because iterators are hardened too
 
-- you want to guarantee bounds safety in your project.
-  - All data accessing operations use bounds checking to ensure you are only accessing valid memory.
-- your project uses C++14 or C++17.
-  - `std::span` is not available as it was not introduced into the STL until C++20.
+\* C++26 or a backported standard library implementation.
 
-##### Use `std::span` if
-
-- your project is C++20 and you need the performance offered by `std::span`.
+Note that the behavior on bounds check violations is not configurable for GSL (`std::terminate()`), 
+but it may be configurable for some standard library implementations.
 
 #### Types
 
