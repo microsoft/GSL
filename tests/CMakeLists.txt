@@ -204,6 +204,7 @@ add_executable(gsl_tests
     assertion_tests.cpp
     at_tests.cpp
     byte_tests.cpp
+    constexpr_notnull_tests.cpp
     notnull_tests.cpp
     owner_tests.cpp
     pointers_tests.cpp
