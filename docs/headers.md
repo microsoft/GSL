@@ -419,14 +419,30 @@ The key differences between `gsl::span` and `std::span` are:
 
 #### Which version of span should I use?
 
-- C++14 & C++17 → Use `gsl::span` because it is your only option
-- C++20 & C++23 → Use `gsl::span` because accesses are bounds checked
-- C++26* → Use `gsl::span` because iterators are hardened too
+The following table compares the different span implementations to help you choose which one is best for your project:
 
-\* C++26 or a backported standard library implementation.
+| Feature/Version | `std::span` (C++20/23) | Hardened `std::span` (C++26) | `gsl::span` |
+|-----------------|------------------------|------------------------------|-------------|
+| **C++ Standard** | Requires C++20 or later | Requires C++26 or backported implementation | Works with C++14 or later |
+| **Element Access** | No bounds checking | Bounds checking | Bounds checking |
+| **Iterator Safety** | No bounds checking | Implementation-defined, may depend on vendor | Full bounds checking |
+| **Error Behavior** | Undefined behavior on invalid access | Implementation-defined, may be configurable | Always calls [`std::terminate()`](https://en.cppreference.com/w/cpp/error/terminate) via [gsl::details::terminate()](https://github.com/microsoft/GSL/blob/main/include/gsl/assert#L111-L118) |
+| **Performance** | Fastest (no checking) | Varies by implementation and configuration | May have performance impact from bounds checking |
 
-Note that the behavior on bounds check violations is not configurable for GSL (`std::terminate()`), 
-but it may be configurable for some standard library implementations.
+**Recommendations:**
+
+- **C++14 & C++17 projects**: Use `gsl::span` as `std::span` is not available.
+- **C++20 & C++23 projects**: 
+  - Use `gsl::span` if safety is your priority.
+  - Use `std::span` if performance is critical and you're confident in your index calculations.
+- **C++26 projects**: 
+  - Use `gsl::span` if you need guaranteed iterator safety across all platforms.
+  - Use hardened `std::span` if you want standard library compliance and acceptable safety.
+
+**Implementation notes for hardened `std::span` in C++26:**
+- For MSVC: See [Microsoft STL documentation](https://learn.microsoft.com/cpp/standard-library/library-features-cpp) for hardening options
+- For Clang/LLVM: See [libc++ implementation notes](https://libcxx.llvm.org/)
+- For GCC: See [libstdc++ implementation notes](https://gcc.gnu.org/onlinedocs/libstdc++/)
 
 #### Types
 
