@@ -412,9 +412,14 @@ The `gsl::span` is based on the standardized version of `std::span` which was ad
 deprecate `gsl::span` when `std::span` finished standardization, however that plan changed when the runtime bounds checking
 was removed from `std::span`'s design.
 
-The only difference between `gsl::span` and `std::span` is that `gsl::span` strictly enforces runtime bounds checking.
-Any violations of the bounds check results in termination of the program.
-Like `gsl::span`, `gsl::span`'s iterators also differ from `std::span`'s iterator in that all access operations are bounds checked.
+The key differences between `gsl::span` and `std::span` are:
+- `gsl::span` strictly enforces runtime bounds checking for all access operations
+- Any violations of the bounds check results in termination of the program
+- `gsl::span`'s iterators also perform bounds checking, unlike `std::span`'s iterators
+
+With the adoption of [P3471: Standard library hardening](https://isocpp.org/files/papers/P3471R4.html) in C++26, 
+the gap between `std::span` and `gsl::span` is narrowing, but differences remain. For detailed information about the 
+differences and guidance on which one to use, see the [FAQ](FAQ.md#what-are-the-differences-between-gslspan-and-hardened-stdspan-in-c26).
 
 #### Which version of span should I use?
 

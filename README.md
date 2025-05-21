@@ -28,7 +28,7 @@ Feature                                                                  | Suppo
 [**1. Views**][cg-views]                                                 |            |
 [owner](docs/headers.md#user-content-H-pointers-owner)                   | &#x2611;   | An alias for a raw pointer
 [not_null](docs/headers.md#user-content-H-pointers-not_null)             | &#x2611;   | Restricts a pointer/smart pointer to hold non-null values
-[span](docs/headers.md#user-content-H-span-span)                         | &#x2611;   | A view over a contiguous sequence of memory. Based on the standardized version of `std::span`, however `gsl::span` enforces bounds checking.
+[span](docs/headers.md#user-content-H-span-span)                         | &#x2611;   | A view over a contiguous sequence of memory. Based on the standardized version of `std::span`, however `gsl::span` enforces bounds checking. See [FAQ](docs/FAQ.md#what-are-the-differences-between-gslspan-and-stdspan) for details about `gsl::span` vs `std::span`.
 span_p                                                                   | &#x2610;   | Spans a range starting from a pointer to the first place for which the predicate is true
 [basic_zstring](docs/headers.md#user-content-H-zstring)                  | &#x2611;   | A pointer to a C-string (zero-terminated array) with a templated char type
 [zstring](docs/headers.md#user-content-H-zstring)                        | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of `char`
