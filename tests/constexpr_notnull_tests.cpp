@@ -56,15 +56,11 @@ constexpr bool workaround_test(const int* ptr1, const int* ptr2)
 }
 } // namespace
 
-// Only enable these static_assert tests for C++14 and above
-#if defined(__cpp_constexpr) && (__cpp_constexpr >= 201304)
-
 constexpr int test_value1 = 1;
 constexpr int test_value2 = 2;
 
 static_assert(comparison_test(&test_value1, &test_value2), "not_null comparison operators should be constexpr");
 static_assert(workaround_test(&test_value1, &test_value2), "not_null .get() comparison workaround should work");
-#endif
 
 TEST(notnull_constexpr_tests, TestNotNullConstexprComparison)
 {
