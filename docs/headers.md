@@ -440,9 +440,8 @@ The following table compares the different span implementations to help you choo
   - Use hardened `std::span` if you want standard library compliance and acceptable safety.
 
 **Implementation notes for hardened `std::span` in C++26:**
-- For MSVC: See [Microsoft STL documentation](https://learn.microsoft.com/cpp/standard-library/library-features-cpp) for hardening options
-- For Clang/LLVM: See [libc++ implementation notes](https://libcxx.llvm.org/)
-- For GCC: See [libstdc++ implementation notes](https://gcc.gnu.org/onlinedocs/libstdc++/)
+- For MSVC: See [Microsoft STL Hardening](https://github.com/microsoft/STL/wiki/STL-Hardening)
+- For Clang/LLVM: See [libc++ Hardening](https://libcxx.llvm.org/Hardening.html)
 
 #### Types
 
