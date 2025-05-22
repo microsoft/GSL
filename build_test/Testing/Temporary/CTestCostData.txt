@@ -1,3 +1,0 @@
-gsl_tests 1 6.82956
-gsl_noexcept_tests 1 0.00251828
----
