@@ -1,0 +1,22 @@
+name: "Copilot Setup Steps"
+
+on: workflow_dispatch
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Build Dependencies
+        run: sudo apt-get update && sudo apt-get install -y clang cmake make
+
+      - name: Configure CMake (C++14)
+        run: cmake -B build-cxx14 . -DGSL_CXX_STANDARD=14 -DGSL_TEST=ON -G "Unix Makefiles"
+
+      - name: Configure CMake (C++20)
+        run: cmake -B build-cxx20 . -DGSL_CXX_STANDARD=20 -DGSL_TEST=ON -G "Unix Makefiles"
+

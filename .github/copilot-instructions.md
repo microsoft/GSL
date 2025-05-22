@@ -75,3 +75,10 @@ correctness, and zero overhead.
   - Linux (GCC, Clang)
   - macOS (AppleClang)
   - Android and iOS where applicable
+
+## Copilot Tasks
+- You can find the CMake artifacts for C++20 in build-cxx20 and C++14 in build-cxx14.
+- Before publishing a PR, verify the following:
+  - There are no compiler warnings or errors when building the test suite.
+  - The test suite passes on all supported platforms and compilers.
+  - The test suite passes for both C++14 and C++20.
