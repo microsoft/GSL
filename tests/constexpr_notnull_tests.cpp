@@ -56,11 +56,8 @@ constexpr bool workaround_test(const int* ptr1, const int* ptr2)
 }
 } // namespace
 
-// Only enable these static_assert tests for C++14 and above with compilers that
-// fully support relaxed constexpr requirements
-#if defined(__cpp_constexpr) && (__cpp_constexpr >= 201304) && \
-    !(defined(_MSC_VER) && _MSC_VER < 1910) && \
-    !(defined(__GNUC__) && !defined(__clang__) && __GNUC__ < 5)
+// Only enable these static_assert tests for C++14 and above
+#if defined(__cpp_constexpr) && (__cpp_constexpr >= 201304)
 
 constexpr int test_value1 = 1;
 constexpr int test_value2 = 2;
@@ -78,3 +75,4 @@ TEST(notnull_constexpr_tests, TestNotNullConstexprComparison)
     EXPECT_TRUE(comparison_test(&value1, &value2));
     EXPECT_TRUE(workaround_test(&value1, &value2));
 }
+

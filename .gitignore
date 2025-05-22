@@ -1,7 +1,5 @@
 CMakeFiles
-build
-build_*/
-build-cxx*/
+build*/
 tests/CMakeFiles
 tests/Debug
 *.opensdf
