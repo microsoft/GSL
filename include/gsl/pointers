@@ -173,7 +173,7 @@ std::ostream& operator<<(std::ostream& os, const not_null<T>& val)
 #endif // !defined(GSL_NO_IOSTREAMS)
 
 template <class T, class U>
-auto operator==(const not_null<T>& lhs,
+constexpr auto operator==(const not_null<T>& lhs,
                 const not_null<U>& rhs) noexcept(noexcept(lhs.get() == rhs.get()))
     -> decltype(lhs.get() == rhs.get())
 {
@@ -181,7 +181,7 @@ auto operator==(const not_null<T>& lhs,
 }
 
 template <class T, class U>
-auto operator!=(const not_null<T>& lhs,
+constexpr auto operator!=(const not_null<T>& lhs,
                 const not_null<U>& rhs) noexcept(noexcept(lhs.get() != rhs.get()))
     -> decltype(lhs.get() != rhs.get())
 {
@@ -189,7 +189,7 @@ auto operator!=(const not_null<T>& lhs,
 }
 
 template <class T, class U>
-auto operator<(const not_null<T>& lhs,
+constexpr auto operator<(const not_null<T>& lhs,
                const not_null<U>& rhs) noexcept(noexcept(std::less<>{}(lhs.get(), rhs.get())))
     -> decltype(std::less<>{}(lhs.get(), rhs.get()))
 {
@@ -197,7 +197,7 @@ auto operator<(const not_null<T>& lhs,
 }
 
 template <class T, class U>
-auto operator<=(const not_null<T>& lhs,
+constexpr auto operator<=(const not_null<T>& lhs,
                 const not_null<U>& rhs) noexcept(noexcept(std::less_equal<>{}(lhs.get(), rhs.get())))
     -> decltype(std::less_equal<>{}(lhs.get(), rhs.get()))
 {
@@ -205,7 +205,7 @@ auto operator<=(const not_null<T>& lhs,
 }
 
 template <class T, class U>
-auto operator>(const not_null<T>& lhs,
+constexpr auto operator>(const not_null<T>& lhs,
                const not_null<U>& rhs) noexcept(noexcept(std::greater<>{}(lhs.get(), rhs.get())))
     -> decltype(std::greater<>{}(lhs.get(), rhs.get()))
 {
@@ -213,7 +213,7 @@ auto operator>(const not_null<T>& lhs,
 }
 
 template <class T, class U>
-auto operator>=(const not_null<T>& lhs,
+constexpr auto operator>=(const not_null<T>& lhs,
                 const not_null<U>& rhs) noexcept(noexcept(std::greater_equal<>{}(lhs.get(), rhs.get())))
     -> decltype(std::greater_equal<>{}(lhs.get(), rhs.get()))
 {
