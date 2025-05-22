@@ -28,21 +28,21 @@ constexpr bool comparison_test()
     int value1 = 1;
     int value2 = 2;
     
-    not_null<int*> p1(&value1);
-    not_null<int*> p1_same(&value1);
-    not_null<int*> p2(&value2);
+    const not_null<int*> p1(&value1);
+    const not_null<int*> p1_same(&value1);
+    const not_null<int*> p2(&value2);
     
     // Testing operator==
-    bool eq_result = (p1 == p1_same); // Should be true
-    bool neq_result = (p1 != p2);     // Should be true
+    const bool eq_result = (p1 == p1_same); // Should be true
+    const bool neq_result = (p1 != p2);     // Should be true
     
     // Testing operator< and operator>
-    bool lt_result = (p1 < p2);      // Implementation dependent
-    bool gt_result = (p2 > p1);      // Should be the same as lt_result
+    const bool lt_result = (p1 < p2);      // Implementation dependent
+    const bool gt_result = (p2 > p1);      // Should be the same as lt_result
     
     // Testing operator<= and operator>=
-    bool le_result = (p1 <= p1_same); // Should be true
-    bool ge_result = (p1 >= p1_same); // Should be true
+    const bool le_result = (p1 <= p1_same); // Should be true
+    const bool ge_result = (p1 >= p1_same); // Should be true
     
     // The exact comparison results will depend on pointer ordering,
     // but we can verify that the equality checks work as expected
@@ -54,19 +54,23 @@ constexpr bool workaround_test()
     int value1 = 1;
     int value2 = 2;
     
-    not_null<int*> p1(&value1);
-    not_null<int*> p1_same(&value1);
-    not_null<int*> p2(&value2);
+    const not_null<int*> p1(&value1);
+    const not_null<int*> p1_same(&value1);
+    const not_null<int*> p2(&value2);
     
     // Using .get() to compare
-    bool eq_result = (p1.get() == p1_same.get()); // Should be true
-    bool neq_result = (p1.get() != p2.get());     // Should be true
+    const bool eq_result = (p1.get() == p1_same.get()); // Should be true
+    const bool neq_result = (p1.get() != p2.get());     // Should be true
     
     return eq_result && neq_result;
 }
 } // namespace
 
-#if defined(__cpp_constexpr) && (__cpp_constexpr >= 201304)
+// Only enable these static_assert tests for C++14 and above with compilers that
+// fully support relaxed constexpr requirements
+#if defined(__cpp_constexpr) && (__cpp_constexpr >= 201304) && \
+    !(defined(_MSC_VER) && _MSC_VER < 1910) && \
+    !(defined(__GNUC__) && !defined(__clang__) && __GNUC__ < 5)
 static_assert(comparison_test(), "not_null comparison operators should be constexpr");
 static_assert(workaround_test(), "not_null .get() comparison workaround should work");
 #endif
