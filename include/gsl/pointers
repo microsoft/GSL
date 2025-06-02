@@ -231,7 +231,7 @@ template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 
 
-template <class T, class U = decltype(std::declval<const T&>().get()), bool = std::is_default_constructible<std::hash<U>>::value>
+template <class T, class U = typename T::element_type, bool = std::is_default_constructible<std::hash<U>>::value>
 struct not_null_hash
 {
     std::size_t operator()(const T& value) const { return std::hash<U>{}(value.get()); }
