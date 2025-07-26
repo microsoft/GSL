@@ -231,6 +231,7 @@ template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 
 
+// T is conceptually a pointer so we don't have to worry about it being a reference and violating std::hash requirements
 template <class T, class U = typename T::element_type, bool = std::is_default_constructible<std::hash<U>>::value>
 struct not_null_hash
 {
