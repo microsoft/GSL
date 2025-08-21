@@ -101,7 +101,6 @@ if(MSVC) # MSVC or simulating MSVC
           -Wfloat-equal
           -Wno-c++98-compat
           -Wno-c++98-compat-pedantic
-          -Wno-reserved-identifier
           -Wno-covered-switch-default # GTest
           -Wno-deprecated-declarations # Allow tests for [[deprecated]] elements
           -Wno-global-constructors # GTest
