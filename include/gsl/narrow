@@ -18,7 +18,13 @@
 #define GSL_NARROW_H
 #include "./assert"    // for GSL_SUPPRESS
 #include "./util"      // for narrow_cast
-#include <exception> // for std::exception
+
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <exception> // for std::exception
+#endif
+
 namespace gsl
 {
 struct narrowing_error : public std::exception

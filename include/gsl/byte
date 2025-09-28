@@ -19,7 +19,11 @@
 
 #include "./util" // for GSL_DEPRECATED
 
-#include <type_traits>
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <type_traits>
+#endif
 
 #ifdef _MSC_VER
 
@@ -45,7 +49,9 @@
 #else // _MSC_VER
 
 #ifndef GSL_USE_STD_BYTE
-#include <cstddef> /* __cpp_lib_byte */
+#if !defined(GSL_BUILD_USING_STD_MODULE)
+    #include <cstddef> /* __cpp_lib_byte */
+#endif
 // this tests if we are under GCC or Clang with enough -std=c++1z power to get us std::byte
 // also check if libc++ version is sufficient (> 5.0) or libstdc++ actually contains std::byte
 #if defined(__cplusplus) && (__cplusplus >= 201703L) &&                                            \
@@ -75,7 +81,9 @@
 #endif // defined __clang__ || defined __GNUC__
 
 #if GSL_USE_STD_BYTE
-#include <cstddef>
+#if !defined(GSL_BUILD_USING_STD_MODULE)
+    #include <cstddef>
+#endif
 #endif
 
 namespace gsl
