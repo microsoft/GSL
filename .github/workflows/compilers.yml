@@ -65,7 +65,7 @@ jobs:
   xcode:
     strategy:
       matrix:
-        xcode_version: [ '15.4' ]
+        xcode_version: [ '16.4' ]
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: macos-latest
