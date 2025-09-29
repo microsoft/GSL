@@ -81,6 +81,7 @@ jobs:
           cmake_build_type: ${{ matrix.build_type }}
           cmake_cxx_compiler: clang++
           gsl_cxx_standard: ${{ matrix.cxx_version }}
+          extra_cmake_args: '-DCMAKE_CXX_FLAGS="-isysroot \"$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\""'
 
   VisualStudio:
     strategy:
