@@ -87,7 +87,7 @@ jobs:
     strategy:
       matrix:
         generator: [ 'Visual Studio 16 2019', 'Visual Studio 17 2022' ]
-        image: [ windows-2019, windows-2022 ]
+        image: [ windows-2022, windows-2025 ]
         build_type: [ Debug, Release ]
         extra_args: [ '', '-T ClangCL' ]
         cxx_version: [ 14, 17, 20, 23 ]
