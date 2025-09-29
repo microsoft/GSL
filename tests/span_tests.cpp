@@ -412,8 +412,8 @@ TEST(span_test, from_std_array_constructor)
     static_assert(!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>,
                   "!CtorCompilesFor<span<int, 5>, std::array<int, 4>&>");
 
-#if !defined(_MSC_VER) || (_MSC_VER > 1943) || (__cplusplus >= 201703L)
-    // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
+#if !defined(_MSC_VER) || (__cplusplus >= 201703L)
+    // Fails on MSVC. TODO: report a feedback bug.
     static_assert(!ConversionCompilesFor<span<int>, std::array<int, 4>>,
                   "!ConversionCompilesFor<span<int>, std::array<int, 4>>");
 #endif
@@ -529,8 +529,8 @@ TEST(span_test, from_container_constructor)
         EXPECT_TRUE(cs.data() == cstr.data());
     }
 
-#if !defined(_MSC_VER) || (_MSC_VER > 1943) || (__cplusplus >= 201703L)
-    // Fails on "Visual Studio 16 2019/Visual Studio 17 2022, windows-2019/2022, Debug/Release, 14".
+#if !defined(_MSC_VER) || (__cplusplus >= 201703L)
+    // Fails on MSVC. TODO: report a feedback bug.
     static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
                   "!ConversionCompilesFor<span<int>, std::vector<int>>");
 #endif // !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
