@@ -30,6 +30,7 @@ jobs:
             "-DMACOSX_BUNDLE_GUI_IDENTIFIER=GSL.\$(EXECUTABLE_NAME)" \
             -DMACOSX_BUNDLE_BUNDLE_VERSION=4.2.0 \
             -DMACOSX_BUNDLE_SHORT_VERSION_STRING=4.2.0 \
+            -DCMAKE_CXX_FLAGS="-Wno-missing-include-dirs" \
             ..
 
       - name: Build
