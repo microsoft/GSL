@@ -65,7 +65,7 @@ jobs:
   xcode:
     strategy:
       matrix:
-        xcode_version: [ '15.4' ]
+        xcode_version: [ '16.4' ]
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: macos-latest
@@ -81,22 +81,16 @@ jobs:
           cmake_build_type: ${{ matrix.build_type }}
           cmake_cxx_compiler: clang++
           gsl_cxx_standard: ${{ matrix.cxx_version }}
+          extra_cmake_args: '-DCMAKE_CXX_FLAGS="-isysroot \"$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\""'
 
   VisualStudio:
     strategy:
       matrix:
-        generator: [ 'Visual Studio 16 2019', 'Visual Studio 17 2022' ]
-        image: [ windows-2019, windows-2022 ]
+        generator: [ 'Visual Studio 17 2022' ]
+        image: [ windows-2022, windows-2025 ]
         build_type: [ Debug, Release ]
         extra_args: [ '', '-T ClangCL' ]
         cxx_version: [ 14, 17, 20, 23 ]
-        exclude:
-          - generator: 'Visual Studio 17 2022'
-            image: windows-2019
-          - generator: 'Visual Studio 16 2019'
-            image: windows-2022
-          - generator: 'Visual Studio 16 2019'
-            cxx_version: 23
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
