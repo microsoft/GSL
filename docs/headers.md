@@ -49,9 +49,9 @@ See [GSL.assert: Assertions](https://isocpp.github.io/CppCoreGuidelines/CppCoreG
 This macro can be used to suppress a code analysis warning.
 
 The core guidelines request tools that check for the rules to respect suppressing a rule by writing
-`[[gsl::suppress(tag)]]` or `[[gsl::suppress(tag, justification: "message")]]`.
+`[[gsl::suppress("tag")]]` or `[[gsl::suppress("tag", justification: "message")]]`.
 
-Clang does not use exactly that syntax, but requires `tag` to be put in double quotes `[[gsl::suppress("tag")]]`.
+Older versions of MSVC (VS 2022 and earlier) only understand `[[gsl::suppress(tag)]]` without the double quotes around `tag`.
 
 For portable code you can use `GSL_SUPPRESS(tag)`.
 
