@@ -49,7 +49,7 @@ dyn_array                                                                | &#x26
 move_owner                                                               | &#x2610;   | A helper function that moves one `owner` to the other
 [final_action](docs/headers.md#user-content-H-util-final_action)         | &#x2611;   | A RAII style class that invokes a functor on its destruction
 [finally](docs/headers.md#user-content-H-util-finally)                   | &#x2611;   | A helper function instantiating [final_action](docs/headers.md#user-content-H-util-final_action)
-[GSL_SUPPRESS](docs/headers.md#user-content-H-assert-gsl_suppress)       | &#x2611;   | A macro that takes an argument and turns it into `[[gsl::suppress(x)]]` or `[[gsl::suppress("x")]]`
+[GSL_SUPPRESS](docs/headers.md#user-content-H-assert-gsl_suppress)       | &#x2611;   | A macro that takes an argument and turns it into `[[gsl::suppress(x)]]` or `[[gsl::suppress("x")]]` depending on the compiler.
 [[implicit]]                                                             | &#x2610;   | A "marker" to put on single-argument constructors to explicitly make them non-explicit
 [index](docs/headers.md#user-content-H-util-index)                       | &#x2611;   | A type to use for all container and array indexing (currently an alias for `std::ptrdiff_t`)
 [narrow](docs/headers.md#user-content-H-narrow-narrow)                   | &#x2611;   | A checked version of `narrow_cast`; it can throw [narrowing_error](docs/headers.md#user-content-H-narrow-narrowing_error)
