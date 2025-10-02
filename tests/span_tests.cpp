@@ -533,7 +533,7 @@ TEST(span_test, from_container_constructor)
     // Fails on MSVC. TODO: report a feedback bug.
     static_assert(!ConversionCompilesFor<span<int>, std::vector<int>>,
                   "!ConversionCompilesFor<span<int>, std::vector<int>>");
-#endif // !defined(_MSC_VER) || (_MSC_VER > 1942) || (__cplusplus >= 201703L)
+#endif // !defined(_MSC_VER) || (__cplusplus >= 201703L)
 
     {
         auto get_temp_vector = []() -> std::vector<int> { return {}; };
