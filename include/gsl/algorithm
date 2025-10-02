@@ -20,9 +20,13 @@
 #include "./assert" // for Expects
 #include "./span"   // for dynamic_extent, span
 
-#include <algorithm>   // for copy_n
-#include <cstddef>     // for ptrdiff_t
-#include <type_traits> // for is_assignable
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <algorithm>   // for copy_n
+    #include <cstddef>     // for ptrdiff_t
+    #include <type_traits> // for is_assignable
+#endif
 
 #ifdef _MSC_VER
 #pragma warning(push)

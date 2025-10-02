@@ -36,7 +36,11 @@
 #else // defined(_MSC_VER) && (defined(_KERNEL_MODE) || (defined(_HAS_EXCEPTIONS) &&
       // !_HAS_EXCEPTIONS))
 
-#include <exception>
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <exception>
+#endif
 
 #endif // defined(_MSC_VER) && (defined(_KERNEL_MODE) || (defined(_HAS_EXCEPTIONS) &&
        // !_HAS_EXCEPTIONS))
