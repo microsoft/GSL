@@ -1,0 +1,463 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "installDir": "${sourceDir}/install/${presetName}",
+            "cacheVariables": {
+                "GSL_CXX_STANDARD": "14",
+                "GSL_TEST": "ON"
+            }
+        },
+        {
+            "name": "msvc-base",
+            "inherits": "base",
+            "hidden": true,
+            "generator": "Visual Studio 17 2022",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "toolset": "host=x64",
+            "architecture": "x64",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "cl"
+            }
+        },
+        {
+            "name": "gcc-base",
+            "inherits": "base",
+            "hidden": true,
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc"
+            }
+        },
+        {
+            "name": "clang-base",
+            "inherits": "base",
+            "hidden": true,
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_COMPILER": "clang"
+            }
+        },
+        {
+            "name": "msvc-14-debug",
+            "displayName": "MSVC C++14 Debug",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "14"
+            }
+        },
+        {
+            "name": "msvc-14-release",
+            "displayName": "MSVC C++14 Release",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "14"
+            }
+        },
+        {
+            "name": "msvc-17-debug",
+            "displayName": "MSVC C++17 Debug",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "msvc-17-release",
+            "displayName": "MSVC C++17 Release",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "msvc-20-debug",
+            "displayName": "MSVC C++20 Debug",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "20"
+            }
+        },
+        {
+            "name": "msvc-20-release",
+            "displayName": "MSVC C++20 Release",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "20"
+            }
+        },
+        {
+            "name": "msvc-23-debug",
+            "displayName": "MSVC C++23 Debug",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "23"
+            }
+        },
+        {
+            "name": "msvc-23-release",
+            "displayName": "MSVC C++23 Release",
+            "inherits": "msvc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "23"
+            }
+        },
+        {
+            "name": "gcc-14-debug",
+            "displayName": "GCC C++14 Debug",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "14"
+            }
+        },
+        {
+            "name": "gcc-14-release",
+            "displayName": "GCC C++14 Release",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "14"
+            }
+        },
+        {
+            "name": "gcc-17-debug",
+            "displayName": "GCC C++17 Debug",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "gcc-17-release",
+            "displayName": "GCC C++17 Release",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "gcc-20-debug",
+            "displayName": "GCC C++20 Debug",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "20"
+            }
+        },
+        {
+            "name": "gcc-20-release",
+            "displayName": "GCC C++20 Release",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "20"
+            }
+        },
+        {
+            "name": "gcc-23-debug",
+            "displayName": "GCC C++23 Debug",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "23"
+            }
+        },
+        {
+            "name": "gcc-23-release",
+            "displayName": "GCC C++23 Release",
+            "inherits": "gcc-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "23"
+            }
+        },
+        {
+            "name": "clang-14-debug",
+            "displayName": "Clang C++14 Debug",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "14"
+            }
+        },
+        {
+            "name": "clang-14-release",
+            "displayName": "Clang C++14 Release",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "14"
+            }
+        },
+        {
+            "name": "clang-17-debug",
+            "displayName": "Clang C++17 Debug",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "clang-17-release",
+            "displayName": "Clang C++17 Release",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "clang-20-debug",
+            "displayName": "Clang C++20 Debug",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "20"
+            }
+        },
+        {
+            "name": "clang-20-release",
+            "displayName": "Clang C++20 Release",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "20"
+            }
+        },
+        {
+            "name": "clang-23-debug",
+            "displayName": "Clang C++23 Debug",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GSL_CXX_STANDARD": "23"
+            }
+        },
+        {
+            "name": "clang-23-release",
+            "displayName": "Clang C++23 Release",
+            "inherits": "clang-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GSL_CXX_STANDARD": "23"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc-14-debug",
+            "configurePreset": "msvc-14-debug"
+        },
+        {
+            "name": "msvc-14-release",
+            "configurePreset": "msvc-14-release"
+        },
+        {
+            "name": "msvc-17-debug",
+            "configurePreset": "msvc-17-debug"
+        },
+        {
+            "name": "msvc-17-release",
+            "configurePreset": "msvc-17-release"
+        },
+        {
+            "name": "msvc-20-debug",
+            "configurePreset": "msvc-20-debug"
+        },
+        {
+            "name": "msvc-20-release",
+            "configurePreset": "msvc-20-release"
+        },
+        {
+            "name": "msvc-23-debug",
+            "configurePreset": "msvc-23-debug"
+        },
+        {
+            "name": "msvc-23-release",
+            "configurePreset": "msvc-23-release"
+        },
+        {
+            "name": "gcc-14-debug",
+            "configurePreset": "gcc-14-debug"
+        },
+        {
+            "name": "gcc-14-release",
+            "configurePreset": "gcc-14-release"
+        },
+        {
+            "name": "gcc-17-debug",
+            "configurePreset": "gcc-17-debug"
+        },
+        {
+            "name": "gcc-17-release",
+            "configurePreset": "gcc-17-release"
+        },
+        {
+            "name": "gcc-20-debug",
+            "configurePreset": "gcc-20-debug"
+        },
+        {
+            "name": "gcc-20-release",
+            "configurePreset": "gcc-20-release"
+        },
+        {
+            "name": "gcc-23-debug",
+            "configurePreset": "gcc-23-debug"
+        },
+        {
+            "name": "gcc-23-release",
+            "configurePreset": "gcc-23-release"
+        },
+        {
+            "name": "clang-14-debug",
+            "configurePreset": "clang-14-debug"
+        },
+        {
+            "name": "clang-14-release",
+            "configurePreset": "clang-14-release"
+        },
+        {
+            "name": "clang-17-debug",
+            "configurePreset": "clang-17-debug"
+        },
+        {
+            "name": "clang-17-release",
+            "configurePreset": "clang-17-release"
+        },
+        {
+            "name": "clang-20-debug",
+            "configurePreset": "clang-20-debug"
+        },
+        {
+            "name": "clang-20-release",
+            "configurePreset": "clang-20-release"
+        },
+        {
+            "name": "clang-23-debug",
+            "configurePreset": "clang-23-debug"
+        },
+        {
+            "name": "clang-23-release",
+            "configurePreset": "clang-23-release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "msvc-14-debug",
+            "configurePreset": "msvc-14-debug"
+        },
+        {
+            "name": "msvc-14-release",
+            "configurePreset": "msvc-14-release"
+        },
+        {
+            "name": "msvc-17-debug",
+            "configurePreset": "msvc-17-debug"
+        },
+        {
+            "name": "msvc-17-release",
+            "configurePreset": "msvc-17-release"
+        },
+        {
+            "name": "msvc-20-debug",
+            "configurePreset": "msvc-20-debug"
+        },
+        {
+            "name": "msvc-20-release",
+            "configurePreset": "msvc-20-release"
+        },
+        {
+            "name": "msvc-23-debug",
+            "configurePreset": "msvc-23-debug"
+        },
+        {
+            "name": "msvc-23-release",
+            "configurePreset": "msvc-23-release"
+        },
+        {
+            "name": "gcc-14-debug",
+            "configurePreset": "gcc-14-debug"
+        },
+        {
+            "name": "gcc-14-release",
+            "configurePreset": "gcc-14-release"
+        },
+        {
+            "name": "gcc-17-debug",
+            "configurePreset": "gcc-17-debug"
+        },
+        {
+            "name": "gcc-17-release",
+            "configurePreset": "gcc-17-release"
+        },
+        {
+            "name": "gcc-20-debug",
+            "configurePreset": "gcc-20-debug"
+        },
+        {
+            "name": "gcc-20-release",
+            "configurePreset": "gcc-20-release"
+        },
+        {
+            "name": "gcc-23-debug",
+            "configurePreset": "gcc-23-debug"
+        },
+        {
+            "name": "gcc-23-release",
+            "configurePreset": "gcc-23-release"
+        },
+        {
+            "name": "clang-14-debug",
+            "configurePreset": "clang-14-debug"
+        },
+        {
+            "name": "clang-14-release",
+            "configurePreset": "clang-14-release"
+        },
+        {
+            "name": "clang-17-debug",
+            "configurePreset": "clang-17-debug"
+        },
+        {
+            "name": "clang-17-release",
+            "configurePreset": "clang-17-release"
+        },
+        {
+            "name": "clang-20-debug",
+            "configurePreset": "clang-20-debug"
+        },
+        {
+            "name": "clang-20-release",
+            "configurePreset": "clang-20-release"
+        },
+        {
+            "name": "clang-23-debug",
+            "configurePreset": "clang-23-debug"
+        },
+        {
+            "name": "clang-23-release",
+            "configurePreset": "clang-23-release"
+        }
+    ]
+}
