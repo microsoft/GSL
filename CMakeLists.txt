@@ -17,7 +17,41 @@ target_compile_features(GSL INTERFACE "cxx_std_14")
 # Setup include directory
 add_subdirectory(include)
 
-target_sources(GSL INTERFACE $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>)
+set(GSL_HEADER_FILES
+    ${GSL_SOURCE_DIR}/include/gsl/algorithm
+    ${GSL_SOURCE_DIR}/include/gsl/assert
+    ${GSL_SOURCE_DIR}/include/gsl/byte
+    ${GSL_SOURCE_DIR}/include/gsl/gsl
+    ${GSL_SOURCE_DIR}/include/gsl/narrow
+    ${GSL_SOURCE_DIR}/include/gsl/pointers
+    ${GSL_SOURCE_DIR}/include/gsl/span
+    ${GSL_SOURCE_DIR}/include/gsl/span_ext
+    ${GSL_SOURCE_DIR}/include/gsl/util
+    ${GSL_SOURCE_DIR}/include/gsl/zstring
+)
+
+target_sources(GSL INTERFACE
+    ${GSL_HEADER_FILES}
+    $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>
+)
+
+if (CMAKE_GENERATOR MATCHES "Visual Studio")
+    source_group(TREE ${GSL_SOURCE_DIR}/include PREFIX "Header Files" FILES ${GSL_HEADER_FILES})
+
+    set(GSL_SOLUTION_FILES
+        ${GSL_SOURCE_DIR}/.clang-format
+        ${GSL_SOURCE_DIR}/.gitattributes
+        ${GSL_SOURCE_DIR}/.gitignore
+        ${GSL_SOURCE_DIR}/CMakeSettings.json
+        ${GSL_SOURCE_DIR}/CONTRIBUTING.md
+        ${GSL_SOURCE_DIR}/LICENSE
+        ${GSL_SOURCE_DIR}/README.md
+        ${GSL_SOURCE_DIR}/SECURITY.md
+        ${GSL_SOURCE_DIR}/ThirdPartyNotices.txt
+    )
+
+    set_property(DIRECTORY APPEND PROPERTY VS_SOLUTION_ITEMS ${GSL_SOLUTION_FILES})
+endif()
 
 if (GSL_TEST)
     enable_testing()
