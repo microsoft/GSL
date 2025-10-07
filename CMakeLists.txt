@@ -18,25 +18,41 @@ target_compile_features(GSL INTERFACE "cxx_std_14")
 add_subdirectory(include)
 
 set(GSL_HEADER_FILES
-    ${GSL_SOURCE_DIR}/include/gsl/algorithm
-    ${GSL_SOURCE_DIR}/include/gsl/assert
-    ${GSL_SOURCE_DIR}/include/gsl/byte
-    ${GSL_SOURCE_DIR}/include/gsl/gsl
-    ${GSL_SOURCE_DIR}/include/gsl/narrow
-    ${GSL_SOURCE_DIR}/include/gsl/pointers
-    ${GSL_SOURCE_DIR}/include/gsl/span
-    ${GSL_SOURCE_DIR}/include/gsl/span_ext
-    ${GSL_SOURCE_DIR}/include/gsl/util
-    ${GSL_SOURCE_DIR}/include/gsl/zstring
+    gsl/algorithm
+    gsl/assert
+    gsl/byte
+    gsl/gsl
+    gsl/narrow
+    gsl/pointers
+    gsl/span
+    gsl/span_ext
+    gsl/util
+    gsl/zstring
 )
 
+# Build/install interface lists ensure CMake is happy when exporting headers via
+# INTERFACE sources. Absolute paths would be rejected by newer CMake versions
+# (discovered while testing with 4.1).
+set(GSL_HEADER_INTERFACE_SOURCES)
+foreach(header ${GSL_HEADER_FILES})
+    list(APPEND GSL_HEADER_INTERFACE_SOURCES
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${header}>
+        $<INSTALL_INTERFACE:include/${header}>
+    )
+endforeach()
+
 target_sources(GSL INTERFACE
-    ${GSL_HEADER_FILES}
+    ${GSL_HEADER_INTERFACE_SOURCES}
     $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>
 )
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
-    source_group(TREE ${GSL_SOURCE_DIR}/include PREFIX "Header Files" FILES ${GSL_HEADER_FILES})
+    # Visual Studio still needs concrete file paths for solution grouping.
+    set(GSL_HEADER_ABSOLUTE_PATHS)
+    foreach(header ${GSL_HEADER_FILES})
+        list(APPEND GSL_HEADER_ABSOLUTE_PATHS ${GSL_SOURCE_DIR}/include/${header})
+    endforeach()
+    source_group(TREE ${GSL_SOURCE_DIR}/include PREFIX "Header Files" FILES ${GSL_HEADER_ABSOLUTE_PATHS})
 
     set(GSL_SOLUTION_FILES
         ${GSL_SOURCE_DIR}/.clang-format
