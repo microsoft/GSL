@@ -17,18 +17,11 @@ target_compile_features(GSL INTERFACE "cxx_std_14")
 # Setup include directory
 add_subdirectory(include)
 
-set(GSL_HEADER_FILES
-    gsl/algorithm
-    gsl/assert
-    gsl/byte
-    gsl/gsl
-    gsl/narrow
-    gsl/pointers
-    gsl/span
-    gsl/span_ext
-    gsl/util
-    gsl/zstring
+file(GLOB GSL_HEADER_FILES
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/gsl/*"
 )
+list(SORT GSL_HEADER_FILES)
 
 # Build/install interface lists ensure CMake is happy when exporting headers via
 # INTERFACE sources. Absolute paths would be rejected by newer CMake versions
@@ -66,7 +59,8 @@ if (CMAKE_GENERATOR MATCHES "Visual Studio")
         ${GSL_SOURCE_DIR}/ThirdPartyNotices.txt
     )
 
-    set_property(DIRECTORY APPEND PROPERTY VS_SOLUTION_ITEMS ${GSL_SOLUTION_FILES})
+    set_property(DIRECTORY PROPERTY VS_SOLUTION_ITEMS ${GSL_SOLUTION_FILES})
+    source_group("Solution Items" FILES ${GSL_SOLUTION_FILES})
 endif()
 
 if (GSL_TEST)
