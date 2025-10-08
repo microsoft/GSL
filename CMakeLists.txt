@@ -21,11 +21,9 @@ file(GLOB GSL_HEADER_FILES
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/gsl/*"
 )
-list(SORT GSL_HEADER_FILES)
 
 # Build/install interface lists ensure CMake is happy when exporting headers via
-# INTERFACE sources. Absolute paths would be rejected by newer CMake versions
-# (discovered while testing with 4.1).
+# INTERFACE sources. Absolute paths would be rejected starting with CMake 4.1.2.
 set(GSL_HEADER_INTERFACE_SOURCES)
 foreach(header ${GSL_HEADER_FILES})
     list(APPEND GSL_HEADER_INTERFACE_SOURCES
@@ -40,14 +38,8 @@ target_sources(GSL INTERFACE
 )
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
-    # Visual Studio still needs concrete file paths for solution grouping.
-    set(GSL_HEADER_ABSOLUTE_PATHS)
-    foreach(header ${GSL_HEADER_FILES})
-        list(APPEND GSL_HEADER_ABSOLUTE_PATHS ${GSL_SOURCE_DIR}/include/${header})
-    endforeach()
-    source_group(TREE ${GSL_SOURCE_DIR}/include PREFIX "Header Files" FILES ${GSL_HEADER_ABSOLUTE_PATHS})
-
-    set(GSL_SOLUTION_FILES
+    file(GLOB GSL_WORKSPACE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/gsl/*")
+    list(APPEND GSL_WORKSPACE_FILES
         ${GSL_SOURCE_DIR}/.clang-format
         ${GSL_SOURCE_DIR}/.gitattributes
         ${GSL_SOURCE_DIR}/.gitignore
@@ -59,8 +51,14 @@ if (CMAKE_GENERATOR MATCHES "Visual Studio")
         ${GSL_SOURCE_DIR}/ThirdPartyNotices.txt
     )
 
-    set_property(DIRECTORY PROPERTY VS_SOLUTION_ITEMS ${GSL_SOLUTION_FILES})
-    source_group("Solution Items" FILES ${GSL_SOLUTION_FILES})
+    target_sources(GSL PRIVATE ${GSL_WORKSPACE_FILES})
+
+    set(GSL_HEADER_ABSOLUTE_PATHS)
+    foreach(header ${GSL_HEADER_FILES})
+        list(APPEND GSL_HEADER_ABSOLUTE_PATHS ${GSL_SOURCE_DIR}/include/${header})
+    endforeach()
+    source_group(TREE ${GSL_SOURCE_DIR}/include PREFIX "Header Files" FILES ${GSL_HEADER_ABSOLUTE_PATHS})
+    source_group("Solution Items" FILES ${GSL_WORKSPACE_FILES})
 endif()
 
 if (GSL_TEST)
