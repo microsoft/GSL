@@ -103,7 +103,7 @@ jobs:
           cmake_build_type: ${{ matrix.build_type }}
           gsl_cxx_standard: ${{ matrix.cxx_version }}
           extra_cmake_args: ${{ matrix.extra_args }}
-          build_cmd: msbuild GSL.sln
+          build_cmd: cmake --build . --config ${{ matrix.build_type }}
           test_cmd: ctest -C ${{ matrix.build_type }} . --output-on-failure --no-compress-output
           shell: pwsh
 
