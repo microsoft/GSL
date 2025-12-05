@@ -94,7 +94,6 @@ jobs:
         uses: ./.github/workflows/cmake
         with:
           cmake_preset: msvc-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
-          extra_cmake_args: ${{ matrix.extra_args }}
+          extra_cmake_args: ${{ matrix.extra_args }} --config ${{ matrix.build_type }}
           extra_ctest_args: -C ${{ matrix.build_type }}
-          shell: pwsh
 
