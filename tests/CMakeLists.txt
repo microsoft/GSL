@@ -200,21 +200,9 @@ target_include_directories(gsl_tests_config SYSTEM INTERFACE
 )
 
 # Individually build and register each test source (except no_exception_ensure_tests.cpp)
-set(GSL_TEST_SOURCES
-  algorithm_tests.cpp
-  assertion_tests.cpp
-  at_tests.cpp
-  byte_tests.cpp
-  constexpr_notnull_tests.cpp
-  notnull_tests.cpp
-  owner_tests.cpp
-  pointers_tests.cpp
-  span_compatibility_tests.cpp
-  span_ext_tests.cpp
-  span_tests.cpp
-  strict_notnull_tests.cpp
-  utils_tests.cpp
-)
+# no_exception_ensure_tests.cpp is built separately with exceptions disabled
+file(GLOB GSL_TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+list(FILTER GSL_TEST_SOURCES EXCLUDE REGEX "no_exception_ensure_tests\\.cpp$")
 
 foreach(src IN LISTS GSL_TEST_SOURCES)
   get_filename_component(test_name "${src}" NAME_WE)
