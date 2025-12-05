@@ -7,6 +7,10 @@ inputs:
     required: false
     type: string
     default: ''
+  extra_ctest_args:
+    required: false
+    type: string
+    default: ''
 
 runs:
   using: composite
@@ -20,6 +24,6 @@ runs:
       shell: bash
 
     - name: Test (with preset)
-      run: ctest --preset ${{ inputs.cmake_preset }} --output-on-failure --no-compress-output
+      run: ctest ${{ inputs.extra_ctest_args }} --preset ${{ inputs.cmake_preset }} --output-on-failure --no-compress-output
       shell: pwsh
 
