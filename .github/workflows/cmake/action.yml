@@ -3,7 +3,7 @@ inputs:
   cmake_preset:
     required: true
     type: string
-  extra_cmake_configure_args:
+  extra_cmake_build_args:
     required: false
     type: string
     default: ''
