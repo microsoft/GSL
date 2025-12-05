@@ -735,4 +735,18 @@ TEST(notnull_tests, TestStdHash)
         EXPECT_FALSE(hash_nn(nn) == hash_intptr(&y));
         EXPECT_FALSE(hash_nn(nn) == hash_intptr(nullptr));
     }
+
+    {
+        auto x = std::make_shared<int>(42);
+        auto y = std::make_shared<int>(99);
+        not_null<std::shared_ptr<int>> nn{x};
+        const not_null<std::shared_ptr<int>> cnn{x};
+
+        std::hash<not_null<std::shared_ptr<int>>> hash_nn;
+        std::hash<std::shared_ptr<int>> hash_sharedptr;
+
+        EXPECT_TRUE(hash_nn(nn) == hash_sharedptr(x));
+        EXPECT_FALSE(hash_nn(nn) == hash_sharedptr(y));
+        EXPECT_TRUE(hash_nn(cnn) == hash_sharedptr(x));
+    }
 }
