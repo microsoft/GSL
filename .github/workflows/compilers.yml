@@ -75,7 +75,7 @@ jobs:
         uses: ./.github/workflows/cmake
         with:
           cmake_preset: clang-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
-          extra_cmake_args: '-DCMAKE_CXX_FLAGS="-isysroot \"$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\""'
+          extra_cmake_configure_args: '-DCMAKE_CXX_FLAGS="-isysroot \"$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\""'
 
   VisualStudio:
     strategy:
@@ -94,6 +94,7 @@ jobs:
         uses: ./.github/workflows/cmake
         with:
           cmake_preset: msvc-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
-          extra_cmake_args: ${{ matrix.extra_args }}
-          shell: pwsh
+          extra_cmake_configure_args: ${{ matrix.extra_args }}
+          extra_cmake_build_args: --config ${{ matrix.build_type }}
+          extra_ctest_args: -C ${{ matrix.build_type }}
 

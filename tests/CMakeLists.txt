@@ -199,29 +199,22 @@ target_include_directories(gsl_tests_config SYSTEM INTERFACE
     googletest/googletest/include
 )
 
-add_executable(gsl_tests
-    algorithm_tests.cpp
-    assertion_tests.cpp
-    at_tests.cpp
-    byte_tests.cpp
-    constexpr_notnull_tests.cpp
-    notnull_tests.cpp
-    owner_tests.cpp
-    pointers_tests.cpp
-    span_compatibility_tests.cpp
-    span_ext_tests.cpp
-    span_tests.cpp
-    strict_notnull_tests.cpp
-    
-    utils_tests.cpp
-)
+# Individually build and register each test source (except no_exception_ensure_tests.cpp)
+# no_exception_ensure_tests.cpp is built separately with exceptions disabled
+file(GLOB GSL_TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+list(FILTER GSL_TEST_SOURCES EXCLUDE REGEX "no_exception_ensure_tests\\.cpp$")
 
-target_link_libraries(gsl_tests
+foreach(src IN LISTS GSL_TEST_SOURCES)
+  get_filename_component(test_name "${src}" NAME_WE)
+  add_executable(${test_name} ${src})
+  target_link_libraries(${test_name}
     Microsoft.GSL::GSL
     gsl_tests_config
     ${GTestMain_LIBRARIES}
-)
-add_test(gsl_tests gsl_tests)
+  )
+  add_test(NAME ${test_name} COMMAND ${test_name})
+  set_target_properties(${test_name} PROPERTIES FOLDER "tests")
+endforeach()
 
 # No exception tests
 

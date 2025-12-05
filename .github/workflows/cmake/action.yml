@@ -3,7 +3,15 @@ inputs:
   cmake_preset:
     required: true
     type: string
-  extra_cmake_args:
+  extra_cmake_build_args:
+    required: false
+    type: string
+    default: ''
+  extra_cmake_configure_args:
+    required: false
+    type: string
+    default: ''
+  extra_ctest_args:
     required: false
     type: string
     default: ''
@@ -12,14 +20,14 @@ runs:
   using: composite
   steps:
     - name: Configure CMake
-      run: cmake --preset ${{ inputs.cmake_preset }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev ${{ inputs.extra_cmake_args }}
-      shell: bash
+      run: cmake --preset ${{ inputs.cmake_preset }} ${{ inputs.extra_cmake_configure_args }} -DCI_TESTING:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -Werror=dev 
+      shell: ${{ env.RUNNER_OS == 'Windows' && 'pwsh' || 'bash' }}
 
     - name: Build (with preset)
-      run: cmake --build --preset ${{ inputs.cmake_preset }}
-      shell: bash
+      run: cmake --build --preset ${{ inputs.cmake_preset }} ${{ inputs.extra_cmake_build_args }}
+      shell: ${{ env.RUNNER_OS == 'Windows' && 'pwsh' || 'bash' }}
 
     - name: Test (with preset)
-      run: ctest --preset ${{ inputs.cmake_preset }} --output-on-failure --no-compress-output
-      shell: pwsh
+      run: ctest --preset ${{ inputs.cmake_preset }} ${{ inputs.extra_ctest_args }} --output-on-failure --no-compress-output
+      shell: ${{ env.RUNNER_OS == 'Windows' && 'pwsh' || 'bash' }}
 
