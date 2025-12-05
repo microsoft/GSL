@@ -15,8 +15,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y clang cmake make
 
       - name: Configure CMake (C++14)
-        run: cmake -B build-cxx14 . -DGSL_CXX_STANDARD=14 -DGSL_TEST=ON -G "Unix Makefiles"
+        run: cmake --preset clang-14-debug
 
       - name: Configure CMake (C++20)
-        run: cmake -B build-cxx20 . -DGSL_CXX_STANDARD=20 -DGSL_TEST=ON -G "Unix Makefiles"
+        run: cmake --preset clang-20-debug
 

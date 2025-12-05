@@ -35,9 +35,7 @@ jobs:
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
         with:
-          cmake_build_type: ${{ matrix.build_type }}
-          cmake_cxx_compiler: g++-${{ matrix.gcc_version }}
-          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          cmake_preset: gcc-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
           
   clang:
     strategy:
@@ -58,9 +56,7 @@ jobs:
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
         with:
-          cmake_build_type: ${{ matrix.build_type }}
-          cmake_cxx_compiler: clang++-${{ matrix.clang_version }}
-          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          cmake_preset: clang-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
 
   xcode:
     strategy:
@@ -78,9 +74,7 @@ jobs:
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
         with:
-          cmake_build_type: ${{ matrix.build_type }}
-          cmake_cxx_compiler: clang++
-          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          cmake_preset: clang-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
           extra_cmake_args: '-DCMAKE_CXX_FLAGS="-isysroot \"$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\""'
 
   VisualStudio:
@@ -99,11 +93,7 @@ jobs:
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
         with:
-          cmake_generator: ${{ matrix.generator }}
-          cmake_build_type: ${{ matrix.build_type }}
-          gsl_cxx_standard: ${{ matrix.cxx_version }}
+          cmake_preset: msvc-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
           extra_cmake_args: ${{ matrix.extra_args }}
-          build_cmd: cmake --build . --config ${{ matrix.build_type }}
-          test_cmd: ctest -C ${{ matrix.build_type }} . --output-on-failure --no-compress-output
           shell: pwsh
 
