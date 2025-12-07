@@ -830,7 +830,7 @@ explicit final_action(F&& ff) noexcept;
 Construct an object with the action to invoke in the destructor.
 
 ```cpp
-~final_action() noexcept;
+~final_action() noexcept(std::is_nothrow_invocable_v<F>);
 ```
 
 The destructor will call the action that was passed in the constructor.
