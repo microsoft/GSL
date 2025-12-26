@@ -19,7 +19,11 @@
 
 #include "./span_ext" // for dynamic_extent
 
-#include <cstddef>   // for size_t, nullptr_t
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <cstddef>   // for size_t, nullptr_t
+#endif
 
 namespace gsl
 {
