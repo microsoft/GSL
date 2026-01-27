@@ -151,6 +151,7 @@ else()
           -Wno-unknown-attributes
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           -Wno-weak-vtables
+          -Wno-poison-system-directories
           $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
             -Wno-unused-member-function
             -Wno-unused-variable
@@ -280,6 +281,7 @@ else()
           -Wno-missing-prototypes
           -Wno-unknown-attributes
           -Wno-weak-vtables
+          -Wno-poison-system-directories
         >
         $<$<CXX_COMPILER_ID:GNU>:
           -Wdouble-promotion # float implicit to double

@@ -41,7 +41,7 @@ span_p                                                                   | &#x26
 [cu32zstring](docs/headers.md#user-content-H-zstring)                    | &#x2611;   | An alias to `basic_zstring` with dynamic extent and a char type of `const char32_t`
 [**2. Owners**][cg-owners]                                               |            |
 stack_array                                                              | &#x2610;   | A stack-allocated array
-dyn_array                                                                | &#x2610;   | A heap-allocated array
+dyn_array                                                                | &#x2611;   | A heap-allocated array
 [**3. Assertions**][cg-assertions]                                       |            |
 [Expects](docs/headers.md#user-content-H-assert-expects)                 | &#x2611;   | A precondition assertion; on failure it terminates
 [Ensures](docs/headers.md#user-content-H-assert-ensures)                 | &#x2611;   | A postcondition assertion; on failure it terminates
