@@ -9,6 +9,7 @@ See [GSL: Guidelines support library](https://isocpp.github.io/CppCoreGuidelines
 - [`<algorithms>`](#user-content-H-algorithms)
 - [`<assert>`](#user-content-H-assert)
 - [`<byte>`](#user-content-H-byte)
+- [`<dyn_array>`](#user-content-H-dyn_array)
 - [`<gsl>`](#user-content-H-gsl)
 - [`<narrow>`](#user-content-H-narrow)
 - [`<pointers>`](#user-content-H-pointers)
@@ -154,6 +155,10 @@ constexpr byte to_byte() noexcept;
 ```
 
 Convert the given value `I` to a `byte`. The template requires `I` to be in the valid range 0..255 for a `gsl::byte`.
+
+## <a name="H-dyn_array" />`<dyn_array>`
+
+# TODO (@carsonradtke)
 
 ## <a name="H-gsl" />`<gsl>`
 

@@ -32,14 +32,14 @@
 #include <vector> // for vector
 
 // the string_view include and macro are used in the deduction guide verification
-#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#ifdef GSL_HAS_DEDUCTION_GUIDES
 #ifdef __has_include
 #if __has_include(<string_view>)
 #include <string_view>
 #define HAS_STRING_VIEW
 #endif // __has_include(<string_view>)
 #endif // __has_include
-#endif // (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#endif // GSL_HAS_DEDUCTION_GUIDES
 #if defined(__cplusplus) && __cplusplus >= 202002L
 #include <span>
 #endif // __cplusplus >= 202002L
@@ -1209,7 +1209,7 @@ TEST(span_test, default_constructible)
 
 TEST(span_test, std_container_ctad)
 {
-#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#ifdef GSL_HAS_DEDUCTION_GUIDES
     // this test is just to verify that these compile
     {
         std::vector<int> v{1, 2, 3, 4};
@@ -1228,7 +1228,7 @@ TEST(span_test, std_container_ctad)
         static_assert(std::is_same<decltype(sp), gsl::span<const char>>::value);
     }
 #endif
-#endif
+#endif // GSL_HAS_DEDUCTION_GUIDES
 }
 
 TEST(span_test, front_back)
@@ -1294,13 +1294,13 @@ TEST(span_test, conversions)
 {
     int arr[5] = {1, 2, 3, 4, 5};
 
-#if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L)
+#ifdef GSL_HAS_DEDUCTION_GUIDES
     span s = arr;
     span cs = s;
-#else
+#else // ^^^ deduction guides /// no deduction guides vvv
     span<int, 5> s = arr;
     span<int, 5> cs = s;
-#endif
+#endif // GSL_HAS_DEDUCTION_GUIDES
 
     EXPECT_TRUE(cs.size() == s.size());
     EXPECT_TRUE(cs.data() == s.data());
