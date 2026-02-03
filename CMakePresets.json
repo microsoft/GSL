@@ -31,7 +31,7 @@
             "name": "gcc-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Unix Makefiles",
+            "generator": "Ninja",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "g++",
                 "CMAKE_C_COMPILER": "gcc"
@@ -41,7 +41,7 @@
             "name": "clang-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Unix Makefiles",
+            "generator": "Ninja",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "clang++",
                 "CMAKE_C_COMPILER": "clang"
