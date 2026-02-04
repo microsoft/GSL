@@ -15,14 +15,12 @@
             "name": "msvc-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Visual Studio 17 2022",
+            "generator": "Ninja",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
             },
-            "toolset": "host=x64",
-            "architecture": "x64",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "cl"
             }
