@@ -80,10 +80,9 @@ jobs:
   VisualStudio:
     strategy:
       matrix:
-        generator: [ 'Visual Studio 17 2022' ]
         image: [ windows-2022, windows-2025 ]
         build_type: [ Debug, Release ]
-        extra_args: [ '', '-T ClangCL' ]
+        toolset: [ '', 'ClangCL' ]
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: ${{ matrix.image }}
     steps:
@@ -94,7 +93,7 @@ jobs:
         uses: ./.github/workflows/cmake
         with:
           cmake_preset: msvc-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
-          extra_cmake_configure_args: ${{ matrix.extra_args }}
-          extra_cmake_build_args: --config ${{ matrix.build_type }}
-          extra_ctest_args: -C ${{ matrix.build_type }}
+          extra_cmake_configure_args: ${{ matrix.toolset != '' && format('-G "Visual Studio 17 2022" -T {0}', matrix.toolset) || '' }}
+          extra_cmake_build_args: ${{ matrix.toolset != '' && format('--config {0}', matrix.build_type) || '' }}
+          extra_ctest_args: ${{ matrix.toolset != '' && format('-C {0}', matrix.build_type) || '' }}
 
