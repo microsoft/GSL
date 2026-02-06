@@ -42,7 +42,7 @@ namespace details
         using reference = T&;
         using const_reference = const T&;
         using difference_type = std::ptrdiff_t;
-        using size_type = decltype(sizeof(0));
+        using size_type = std::size_t;
     };
 
     template <typename T, typename Allocator = std::allocator<T>>
@@ -51,6 +51,7 @@ namespace details
         using pointer = typename dyn_array_traits<T>::pointer;
         using size_type = typename dyn_array_traits<T>::size_type;
 
+        protected:
         const class dyn_array_impl
         {
         public:
@@ -76,10 +77,8 @@ namespace details
 
         GSL_CONSTEXPR_SINCE_CPP20 ~dyn_array_base()
         {
-            if (impl().data()) Allocator::deallocate(impl().data(), impl().count());
+            if (_impl.data()) Allocator::deallocate(_impl.data(), _impl.count());
         }
-
-        constexpr auto impl() const -> const dyn_array_impl& { return _impl; }
     };
 
     template <typename T>
@@ -96,7 +95,7 @@ namespace details
         using iterator_category = std::random_access_iterator_tag;
 
 #ifdef GSL_HAS_RANGES
-        constexpr dyn_array_iterator() : dyn_array_iterator(nullptr, 0, 0) {}
+        constexpr dyn_array_iterator() = default;
 #endif /* GSL_HAS_RANGES */
 
         constexpr dyn_array_iterator(pointer ptr, size_type pos, size_type end_pos)
@@ -134,7 +133,7 @@ namespace details
         constexpr auto operator++() -> dyn_array_iterator&
         {
             Expects(_pos < _end_pos);
-            _pos++;
+            ++_pos;
             return *this;
         }
 
@@ -148,7 +147,7 @@ namespace details
         constexpr auto operator--() -> dyn_array_iterator&
         {
             Expects(_pos > 0);
-            _pos--;
+            --_pos;
             return *this;
         }
 
@@ -161,17 +160,19 @@ namespace details
 
         constexpr auto operator+=(difference_type diff) -> dyn_array_iterator&
         {
-            auto pos = gsl::narrow<difference_type>(_pos);
-            Expects(pos + diff <= gsl::narrow<difference_type>(_end_pos));
-            _pos = gsl::narrow<size_type>(pos + diff);
+            auto new_pos = gsl::narrow<difference_type>(_pos) + diff;
+            Expects(new_pos >= 0);
+            Expects(new_pos <= gsl::narrow<difference_type>(_end_pos));
+            _pos = gsl::narrow<size_type>(new_pos);
             return *this;
         }
 
         constexpr auto operator-=(difference_type diff) -> dyn_array_iterator&
         {
-            auto pos = gsl::narrow<difference_type>(_pos);
-            Expects(pos >= diff);
-            _pos = gsl::narrow<size_type>(pos - diff);
+            auto new_pos = gsl::narrow<difference_type>(_pos) - diff;
+            Expects(new_pos >= 0);
+            Expects(new_pos <= gsl::narrow<difference_type>(_end_pos));
+            _pos = gsl::narrow<size_type>(new_pos);
             return *this;
         }
 
@@ -204,14 +205,14 @@ namespace details
         }
 
     private:
-        pointer _ptr;
-        size_type _pos;
-        size_type _end_pos;
+        pointer _ptr{};
+        size_type _pos{};
+        size_type _end_pos{};
     };
 } // namespace details
 
 template <typename T, typename Allocator = std::allocator<T>>
-class dyn_array : public details::dyn_array_base<T, Allocator>
+class dyn_array : private details::dyn_array_base<T, Allocator>
 {
     using base = details::dyn_array_base<T, Allocator>;
     using pointer = typename details::dyn_array_traits<T>::pointer;
@@ -231,7 +232,7 @@ public:
 
     explicit constexpr dyn_array(const Allocator& alloc = {}) : base{alloc} {}
 
-    explicit constexpr dyn_array(size_type count, const T& value, const Allocator& alloc = {})
+    constexpr dyn_array(size_type count, const T& value, const Allocator& alloc = {})
         : base{count, alloc}
     {
         std::fill(begin(), end(), value);
@@ -278,7 +279,7 @@ public:
 
     constexpr auto operator!=(const dyn_array& other) const { return !(*this == other); }
 
-    constexpr auto size() const { return impl().count(); }
+    constexpr auto size() const { return base::_impl.count(); }
 
     constexpr auto empty() const { return size() == 0; }
 
@@ -297,14 +298,16 @@ public:
         return const_cast<dyn_array&>(*this)[pos];
     }
 
-    constexpr auto data() { return impl().data(); }
+    constexpr auto data() { return base::_impl.data(); }
     constexpr auto data() const -> const T* { return const_cast<dyn_array&>(*this).data(); }
 
     constexpr auto begin() { return iterator{data(), 0, size()}; }
     constexpr auto begin() const { return const_iterator{data(), 0, size()}; }
+    constexpr auto cbegin() const { return begin(); }
 
     constexpr auto rbegin() { return reverse_iterator{end()}; }
     constexpr auto rbegin() const { return const_reverse_iterator{end()}; }
+    constexpr auto crbegin() const { return rbegin(); }
 
 #ifdef _MSC_VER
     constexpr auto _Unchecked_begin() { return data(); }
@@ -316,9 +319,11 @@ public:
 
     constexpr auto end() { return iterator{data(), size(), size()}; }
     constexpr auto end() const { return const_iterator{data(), size(), size()}; }
+    constexpr auto cend() const { return end(); }
 
     constexpr auto rend() { return reverse_iterator{begin()}; }
     constexpr auto rend() const { return const_reverse_iterator{begin()}; }
+    constexpr auto crend() const { return rend(); }
 
 #ifdef _MSC_VER
     constexpr auto _Unchecked_end() { return data() + size(); }
@@ -327,9 +332,6 @@ public:
         return const_cast<dyn_array&>(*this)._Unchecked_end();
     }
 #endif /* MSC_VER */
-
-private:
-    constexpr auto impl() const { return base::impl(); }
 };
 
 #ifdef GSL_HAS_DEDUCTION_GUIDES
