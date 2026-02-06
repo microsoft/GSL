@@ -88,8 +88,6 @@ jobs:
           # Regular MSVC builds use Ninja (from preset)
           - toolset: ''
             generator_override: ''
-            build_config_args: ''
-            test_config_args: ''
           # ClangCL builds require Visual Studio generator
           - toolset: 'ClangCL'
             generator_override: '-G "Visual Studio 17 2022" -T ClangCL'
