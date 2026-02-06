@@ -15,14 +15,12 @@
             "name": "msvc-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Visual Studio 17 2022",
+            "generator": "Ninja",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
             },
-            "toolset": "host=x64",
-            "architecture": "x64",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "cl"
             }
@@ -31,7 +29,7 @@
             "name": "gcc-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Unix Makefiles",
+            "generator": "Ninja",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "g++",
                 "CMAKE_C_COMPILER": "gcc"
@@ -41,7 +39,7 @@
             "name": "clang-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Unix Makefiles",
+            "generator": "Ninja",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "clang++",
                 "CMAKE_C_COMPILER": "clang"
