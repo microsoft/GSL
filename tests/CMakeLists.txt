@@ -76,6 +76,10 @@ include(CheckCXXCompilerFlag)
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
+    set(CMAKE_VS_GLOBALS
+        "EnableMicrosoftCodeAnalysis=true"
+        "CodeAnalysisRuleSet=AllRules.ruleset"
+    )
     target_compile_options(gsl_tests_config INTERFACE
         ${GSL_CPLUSPLUS_OPT}
         /EHsc

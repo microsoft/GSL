@@ -113,7 +113,7 @@
     template <typename Ty>                                                                         \
         requires(std::input_iterator<Ty>)
 #else // ^^^ since C++20 /// before C++20 vvv
-#define GSL_UNTIL_CPP20
+#define GSL_BEFORE_CPP20
 #define GSL_CONSTEXPR_SINCE_CPP20
 #define GSL_TYPE_IS_ITERATOR(Ty)                                                                   \
     template <typename Ty, std::enable_if_t<details::is_iterator<Ty>::value, bool> = true>
@@ -128,7 +128,7 @@ namespace gsl
 // index type for all container indexes/subscripts/sizes
 using index = std::ptrdiff_t;
 
-#ifdef GSL_UNTIL_CPP20
+#ifdef GSL_BEFORE_CPP20
 namespace details
 {
     template <typename ...>
@@ -142,7 +142,7 @@ namespace details
     struct is_iterator<T, void_t<typename std::iterator_traits<T>::value_type>>
         : std::true_type {};
 } // namespace details
-#endif /* GSL_UNTIL_CPP20 */
+#endif /* GSL_BEFORE_CPP20 */
 
 // final_action allows you to ensure something gets run at the end of a scope
 template <class F>

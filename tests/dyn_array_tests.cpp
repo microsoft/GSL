@@ -167,7 +167,7 @@ TEST(dyn_array_tests, ranges)
 
 #ifdef GSL_HAS_CONTAINER_RANGES
     std::vector<char> twins(10, 'c');
-    gsl::dyn_array<char> mets(std::from_range_t{}, twins);
+    gsl::dyn_array<char> mets(std::from_range, twins);
     EXPECT_EQ(twins.size(), mets.size());
     EXPECT_TRUE(std::ranges::all_of(mets, [](char c) { return c == 'c'; }));
 #endif /* GSL_HAS_CONTAINER_RANGES */
@@ -178,10 +178,8 @@ TEST(dyn_array_tests, ranges)
 template <typename T, unsigned N>
 struct ConstexprAllocator
 {
-    T buf[N];
-    std::size_t sz;
-
-    constexpr ConstexprAllocator() : buf{}, sz{} {}
+    T buf[N]{};
+    std::size_t sz{};
 
     constexpr auto allocate(std::size_t n)
     {
@@ -283,7 +281,7 @@ TEST(dyn_array_tests, deduction_guides)
 {
     std::vector<char> giants{10};
 #ifdef GSL_HAS_CONTAINER_RANGES
-    gsl::dyn_array mariners(std::from_range_t{}, giants);
+    gsl::dyn_array mariners(std::from_range, giants);
 #endif /* GSL_HAS_CONTAINER_RANGES */
     gsl::dyn_array cardinals(std::begin(giants), std::end(giants));
 }
