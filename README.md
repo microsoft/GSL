@@ -1,3 +1,6 @@
+# This is a test
+This header is added to check for the GSL CLA policy for first-time contributors
+
 # GSL: Guidelines Support Library
 [![CI](https://github.com/Microsoft/GSL/actions/workflows/compilers.yml/badge.svg)](https://github.com/microsoft/GSL/actions/workflows/compilers.yml?query=branch%3Amain)
 [![vcpkg](https://img.shields.io/vcpkg/v/ms-gsl)](https://vcpkg.io/en/package/ms-gsl)
