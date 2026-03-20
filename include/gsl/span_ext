@@ -30,12 +30,16 @@
 #include "./assert" // GSL_KERNEL_MODE
 #include "./util"   // for narrow_cast, narrow
 
-#include <cstddef> // for ptrdiff_t, size_t
-#include <utility>
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <cstddef> // for ptrdiff_t, size_t
+    #include <utility>
 
-#ifndef GSL_KERNEL_MODE
-#include <algorithm> // for lexicographical_compare
-#endif               // GSL_KERNEL_MODE
+    #ifndef GSL_KERNEL_MODE
+    #include <algorithm> // for lexicographical_compare
+    #endif               // GSL_KERNEL_MODE
+#endif
 
 namespace gsl
 {
