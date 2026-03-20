@@ -2,7 +2,7 @@ The Guidelines Support Library (GSL) interface is very lightweight and exposed v
 
 Types and functions are exported in the namespace `gsl`.
 
-See [GSL: Guidelines support library](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-gsl)
+See [GSL: Guidelines support library](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#s-gsl)
 
 # <a name="H" />Headers
 
@@ -38,7 +38,7 @@ that the destination `span` is at least as large as the source `span`.
 
 This header contains some macros used for contract checking and suppressing code analysis warnings.
 
-See [GSL.assert: Assertions](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-assertions)
+See [GSL.assert: Assertions](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-assertions)
 
 - [`GSL_SUPPRESS`](#user-content-H-assert-gsl_suppress)
 - [`Expects`](#user-content-H-assert-expects)
@@ -86,7 +86,7 @@ If `GSL_USE_STD_BYTE` is not defined, then the header file will check if `std::b
 If you do so, you might want to `#define GSL_USE_STD_BYTE 0` to a fixed value to be sure that both projects use exactly
 the same type. Otherwise you might get linker errors.
 
-See [SL.str.5: Use `std::byte` to refer to byte values that do not necessarily represent characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-byte)
+See [SL.str.5: Use `std::byte` to refer to byte values that do not necessarily represent characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rstr-byte)
 
 ### Non-member functions
 
@@ -164,7 +164,7 @@ Since `<narrow>` requires exceptions, it will only be included if exceptions are
 
 This header contains utility functions and classes, for narrowing casts, which require exceptions. The narrowing-related utilities that don't require exceptions are found inside [util](#user-content-H-util).
 
-See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-utilities)
+See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-utilities)
 
 - [`gsl::narrowing_error`](#user-content-H-narrow-narrowing_error)
 - [`gsl::narrow`](#user-content-H-narrow-narrow)
@@ -180,13 +180,13 @@ If the argument `x` cannot be represented in the target type `T`, then the funct
 
 Note: compare [`gsl::narrow_cast`](#user-content-H-util-narrow_cast) in header [util](#user-content-H-util).
 
-See [ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-narrowing) and [ES.49: If you must use a cast, use a named cast](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-casts-named)
+See [ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#res-narrowing) and [ES.49: If you must use a cast, use a named cast](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#res-casts-named)
 
 ## <a name="H-pointers" />`<pointers>`
 
 This header contains some pointer types.
 
-See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-views)
+See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-views)
 
 - [`gsl::unique_ptr`](#user-content-H-pointers-unique_ptr)
 - [`gsl::shared_ptr`](#user-content-H-pointers-shared_ptr)
@@ -198,13 +198,13 @@ See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-v
 
 `gsl::unique_ptr` is an alias to `std::unique_ptr`.
 
-See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-ownership)
+See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-ownership)
 
 ### <a name="H-pointers-shared_ptr" />`gsl::shared_ptr`
 
 `gsl::shared_ptr` is an alias to `std::shared_ptr`.
 
-See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-ownership)
+See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-ownership)
 
 ### <a name="H-pointers-owner" />`gsl::owner`
 
@@ -213,7 +213,7 @@ See [GSL.owner: Ownership pointers](https://isocpp.github.io/CppCoreGuidelines/C
 
 A `gsl::owner<T>` is a typedef to `T`. It adds no runtime overhead whatsoever, as it is purely syntactic and does not add any runtime checks.  Instead, it serves as an annotation for static analysis tools which check for memory safety, and as a code comprehension guide for human readers.
 
-See Enforcement section of [C.31: All resources acquired by a class must be released by the class’s destructor](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-dtor-release).
+See Enforcement section of [C.31: All resources acquired by a class must be released by the class’s destructor](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rc-dtor-release).
 
 ### <a name="H-pointers-not_null" />`gsl::not_null`
 
@@ -222,7 +222,7 @@ See Enforcement section of [C.31: All resources acquired by a class must be rele
 The checks for ensuring that the pointer is not null are done in the constructor. There is no overhead when retrieving or dereferencing the checked pointer.
 When a nullptr check fails, `std::terminate` is called.
 
-See [F.23: Use a `not_null<T>` to indicate that “null” is not a valid value](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-nullptr)
+See [F.23: Use a `not_null<T>` to indicate that “null” is not a valid value](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rf-nullptr)
 
 #### Member Types
 
@@ -278,7 +278,7 @@ not_null& operator+=(std::ptrdiff_t) = delete;
 not_null& operator-=(std::ptrdiff_t) = delete;
 ```
 
-Explicitly deleted operators. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Ri-array)), so don't allow these operators.
+Explicitly deleted operators. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow these operators.
 
 ##### Observers
 
@@ -300,7 +300,7 @@ Dereference the underlying pointer.
 void operator[](std::ptrdiff_t) const = delete;
 ```
 
-Array index operator is explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Ri-array)), so don't allow treating them as an array.
+Array index operator is explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow treating them as an array.
 
 ```cpp
 void swap(not_null<T>& other) { std::swap(ptr_, other.ptr_); }
@@ -375,7 +375,7 @@ template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 ```
 
-Addition and subtraction are explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Ri-array)), so don't allow these operators.
+Addition and subtraction are explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow these operators.
 
 ##### STL integration
 
@@ -784,14 +784,14 @@ that a pointer points to a zero terminated C style string. This helps static cod
 `u32zstring` is a zero terminated `char32_t` string.  
 `cu32zstring` is a const zero terminated `char32_t` string.  
 
-See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-views) and [SL.str.3: Use zstring or czstring to refer to a C-style, zero-terminated, sequence of characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-zstring).
+See [GSL.view](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-views) and [SL.str.3: Use zstring or czstring to refer to a C-style, zero-terminated, sequence of characters](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rstr-zstring).
 
 ## <a name="H-util" />`<util>`
 
 This header contains utility functions and classes. This header works without exceptions being available. The parts that require
 exceptions being available are in their own header file [narrow](#user-content-H-narrow).
 
-See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#SS-utilities)
+See [GSL.util: Utilities](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-utilities)
 
 - [`gsl::narrow_cast`](#user-content-H-util-narrow_cast)
 - [`gsl::final_action`](#user-content-H-util-final_action)
@@ -807,7 +807,7 @@ An alias to `std::ptrdiff_t`. It serves as the index type for all container inde
 
 Note: compare the throwing version [`gsl::narrow`](#user-content-H-narrow-narrow) in header [narrow](#user-content-H-narrow).
 
-See [ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-narrowing) and [ES.49: If you must use a cast, use a named cast](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-casts-named)
+See [ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#res-narrowing) and [ES.49: If you must use a cast, use a named cast](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#res-casts-named)
 
 ### <a name="H-util-final_action" />`gsl::final_action`
 
@@ -818,7 +818,7 @@ class final_action { ... };
 
 `final_action` allows you to ensure something gets run at the end of a scope.
 
-See [E.19: Use a final_action object to express cleanup if no suitable resource handle is available](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Re-finally)
+See [E.19: Use a final_action object to express cleanup if no suitable resource handle is available](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#re-finally)
 
 #### Member functions
 
@@ -858,7 +858,7 @@ The function `gsl::at` offers a safe way to access data with index bounds checki
 
 Note: `gsl::at` supports indexes up to `PTRDIFF_MAX`.
 
-See [ES.42: Keep use of pointers simple and straightforward](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-ptr)
+See [ES.42: Keep use of pointers simple and straightforward](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#res-ptr)
 
 ```cpp
 template <class T, std::size_t N>
