@@ -30,7 +30,7 @@ jobs:
             cxx_version: 23
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
@@ -51,7 +51,7 @@ jobs:
             cxx_version: 23
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
      
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
@@ -66,7 +66,7 @@ jobs:
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: select xcode version
         run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode_version }}.app
@@ -87,7 +87,7 @@ jobs:
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: ${{ matrix.image }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: microsoft/setup-msbuild@v2
 
       - name: Run CMake (configure, build, test)
@@ -97,4 +97,3 @@ jobs:
           extra_cmake_configure_args: ${{ matrix.extra_args }}
           extra_cmake_build_args: --config ${{ matrix.build_type }}
           extra_ctest_args: -C ${{ matrix.build_type }}
-
