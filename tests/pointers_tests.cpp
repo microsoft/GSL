@@ -43,6 +43,8 @@ TEST(pointers_test, swap)
         gsl::not_null<std::unique_ptr<int>> a(std::make_unique<int>(0));
         gsl::not_null<std::unique_ptr<int>> b(std::make_unique<int>(1));
 
+        static_assert(noexcept(gsl::swap(a, b)), "not null unique_ptr should be noexcept-swappable");
+
         EXPECT_TRUE(*a == 0);
         EXPECT_TRUE(*b == 1);
 
@@ -61,6 +63,8 @@ TEST(pointers_test, swap)
     {
         gsl::strict_not_null<std::unique_ptr<int>> a{std::make_unique<int>(0)};
         gsl::strict_not_null<std::unique_ptr<int>> b{std::make_unique<int>(1)};
+
+        static_assert(noexcept(gsl::swap(a, b)), "strict not null unique_ptr should be noexcept-swappable");
 
         EXPECT_TRUE(*a == 0);
         EXPECT_TRUE(*b == 1);

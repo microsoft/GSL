@@ -145,14 +145,14 @@ public:
     not_null& operator-=(std::ptrdiff_t) = delete;
     void operator[](std::ptrdiff_t) const = delete;
 
-    void swap(not_null<T>& other) { std::swap(ptr_, other.ptr_); }
+    void swap(not_null<T>& other) noexcept { std::swap(ptr_, other.ptr_); }
 
 private:
     T ptr_;
 };
 
 template <typename T, std::enable_if_t<std::is_move_assignable<T>::value && std::is_move_constructible<T>::value, bool> = true>
-void swap(not_null<T>& a, not_null<T>& b)
+void swap(not_null<T>& a, not_null<T>& b) noexcept
 {
     a.swap(b);
 }
