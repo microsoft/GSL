@@ -17,7 +17,7 @@ jobs:
       run:
         working-directory: build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Create build directory
         run: mkdir -p build
