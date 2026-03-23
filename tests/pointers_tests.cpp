@@ -2,6 +2,7 @@
 
 #include <gsl/pointers>
 
+#include <functional>
 #include <memory>
 #include <type_traits>
 #include <utility>
@@ -96,6 +97,21 @@ TEST(pointers_test, member_types)
 {
     static_assert(std::is_same<gsl::not_null<int*>::element_type, int*>::value,
                   "check member type: element_type");
+}
+
+TEST(pointers_test, hash_noexcept_compiles)
+{
+    {
+        using Key = gsl::not_null<std::shared_ptr<int>>;
+        static_assert(noexcept(std::hash<Key>{}(std::declval<Key>())),
+                      "gsl::not_null hash operator must be noexcept");
+    }
+
+    {
+        using Key = gsl::strict_not_null<std::shared_ptr<int>>;
+        static_assert(noexcept(std::hash<Key>{}(std::declval<Key>())),
+                      "gsl::strict_not_null hash operator must be noexcept");
+    }
 }
 
 } // namespace
