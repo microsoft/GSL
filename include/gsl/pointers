@@ -95,6 +95,12 @@ using owner = T;
 // - disallow default construction
 // - ensure construction from null U* fails
 // - allow implicit conversion to U*
+// - allow move constructors, and move getters
+//
+// Warning: After a move, dereferencing the not_null pointer is not allowed,
+// because it *will* be null. Users may use the clang-tidy rule use-after-move
+// or otherwise must follow
+// https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#es56-write-stdmove-only-when-you-need-to-explicitly-move-an-object-to-another-scope
 //
 template <class T>
 class not_null
@@ -117,18 +123,27 @@ public:
     }
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr not_null(const not_null<U>& other) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null(other.get())
+    constexpr not_null(const not_null<U>& other) noexcept(std::is_nothrow_move_constructible<T>::value) : ptr_(other.get())
+    {}
+
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+    constexpr not_null(not_null<U>&& other) noexcept(std::is_nothrow_move_constructible<T>::value) : ptr_(std::move(other.ptr_))
     {}
 
     not_null(const not_null& other) = default;
     not_null& operator=(const not_null& other) = default;
-    constexpr details::value_or_reference_return_t<T> get() const
+    not_null(not_null&& other) = default;
+    not_null& operator=(not_null&& other) = default;
+
+    constexpr details::value_or_reference_return_t<T> get() const &
         noexcept(noexcept(details::value_or_reference_return_t<T>(std::declval<T&>())))
     {
         return ptr_;
     }
+    constexpr T&& get() && noexcept { return std::move(ptr_); }
 
-    constexpr operator T() const { return get(); }
+    constexpr operator T() const & { return get(); }
+    constexpr operator T() && noexcept { return std::move(*this).get(); }
     constexpr decltype(auto) operator->() const { return get(); }
     constexpr decltype(auto) operator*() const { return *get(); }
 
@@ -148,6 +163,7 @@ public:
     void swap(not_null<T>& other) noexcept { std::swap(ptr_, other.ptr_); }
 
 private:
+    template <class U> friend class not_null;
     T ptr_;
 };
 
@@ -294,17 +310,25 @@ public:
     {}
 
     template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
-    constexpr strict_not_null(const strict_not_null<U>& other) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null<T>(other)
+    constexpr strict_not_null(not_null<U>&& other) noexcept(std::is_nothrow_move_constructible<T>::value) : not_null<T>(std::move(other))
     {}
 
-    // To avoid invalidating the "not null" invariant, the contained pointer is actually copied
-    // instead of moved. If it is a custom pointer, its constructor could in theory throw exceptions.
-    strict_not_null(strict_not_null&& other) noexcept(std::is_nothrow_copy_constructible<T>::value) = default;
     strict_not_null(const strict_not_null& other) = default;
     strict_not_null& operator=(const strict_not_null& other) = default;
-    strict_not_null& operator=(const not_null<T>& other)
+    strict_not_null(strict_not_null&& other) = default;
+    strict_not_null& operator=(strict_not_null&& other) = default;
+
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+    strict_not_null& operator=(const not_null<U>& other)
     {
         not_null<T>::operator=(other);
+        return *this;
+    }
+
+    template <typename U, typename = std::enable_if_t<std::is_convertible<U, T>::value>>
+    strict_not_null& operator=(not_null<U>&& other)
+    {
+        not_null<T>::operator=(std::move(other));
         return *this;
     }
 
