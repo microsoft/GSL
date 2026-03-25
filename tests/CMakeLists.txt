@@ -76,6 +76,10 @@ include(CheckCXXCompilerFlag)
 # please try to keep entries ordered =)
 add_library(gsl_tests_config INTERFACE)
 if(MSVC) # MSVC or simulating MSVC
+    set(CMAKE_VS_GLOBALS
+        "EnableMicrosoftCodeAnalysis=true"
+        "CodeAnalysisRuleSet=AllRules.ruleset"
+    )
     target_compile_options(gsl_tests_config INTERFACE
         ${GSL_CPLUSPLUS_OPT}
         /EHsc
@@ -151,6 +155,7 @@ else()
           -Wno-unknown-attributes
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           -Wno-weak-vtables
+          -Wno-poison-system-directories
           $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
             -Wno-unused-member-function
             -Wno-unused-variable
@@ -280,6 +285,7 @@ else()
           -Wno-missing-prototypes
           -Wno-unknown-attributes
           -Wno-weak-vtables
+          -Wno-poison-system-directories
         >
         $<$<CXX_COMPILER_ID:GNU>:
           -Wdouble-promotion # float implicit to double

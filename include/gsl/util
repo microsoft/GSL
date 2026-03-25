@@ -1,3 +1,4 @@
+// -*- C++ -*-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2015 Microsoft Corporation. All rights reserved.
@@ -19,8 +20,8 @@
 
 #include "./assert" // for Expects
 
-#include <array>
 #include <cstddef>          // for ptrdiff_t, size_t
+#include <iterator>         // for is_iterator, iterator_traits
 #include <limits>           // for numeric_limits
 #include <initializer_list> // for initializer_list
 #include <type_traits>      // for is_signed, integral_constant
@@ -86,6 +87,38 @@
 #define GSL_DEPRECATED(msg)
 #endif // !defined(GSL_DEPRECATED)
 
+#if (defined(__cpp_deduction_guides) && __cpp_deduction_guides >= 201703L)
+#define GSL_HAS_DEDUCTION_GUIDES
+#endif // (defined(__cpp_deduction_guides) && __cpp_deduction_guides >= 201703L)
+
+#if (defined(__cpp_lib_ranges) && __cpp_lib_ranges >= 201911L)
+#define GSL_HAS_RANGES
+#endif // (defined(__cpp_lib_ranges) && __cpp_lib_ranges >= 201911L)
+
+#if (defined(__cpp_lib_containers_ranges) && __cpp_lib_containers_ranges >= 202202L)
+#define GSL_HAS_CONTAINER_RANGES
+#endif // (defined(__cpp_lib_containers_ranges) && __cpp_lib_containers_ranges >= 202202L)
+
+#if (defined(__cpp_lib_concepts) && __cpp_lib_concepts >= 202002L)
+#define GSL_HAS_CONCEPTS
+#endif // (defined(__cpp_lib_concepts) && __cpp_lib_concepts >= 202002L)
+
+#if (defined(__cpp_lib_constexpr_dynamic_alloc) && __cpp_lib_constexpr_dynamic_alloc >= 201907L)
+#define GSL_HAS_CONSTEXPR_ALLOCATOR
+#endif // (defined(__cpp_lib_constexpr_dynamic_alloc) && __cpp_lib_constexpr_dynamic_alloc >= 201907L)
+
+#if __cplusplus >= 202002L
+#define GSL_CONSTEXPR_SINCE_CPP20 constexpr
+#define GSL_TYPE_IS_ITERATOR(Ty)                                                                   \
+    template <typename Ty>                                                                         \
+        requires(std::input_iterator<Ty>)
+#else // ^^^ since C++20 /// before C++20 vvv
+#define GSL_BEFORE_CPP20
+#define GSL_CONSTEXPR_SINCE_CPP20
+#define GSL_TYPE_IS_ITERATOR(Ty)                                                                   \
+    template <typename Ty, std::enable_if_t<details::is_iterator<Ty>::value, bool> = true>
+#endif // __cplusplus >= 202002L
+
 namespace gsl
 {
 //
@@ -94,6 +127,22 @@ namespace gsl
 
 // index type for all container indexes/subscripts/sizes
 using index = std::ptrdiff_t;
+
+#ifdef GSL_BEFORE_CPP20
+namespace details
+{
+    template <typename ...>
+    using void_t = void;
+
+    template <typename T, typename = void>
+    struct is_iterator : std::false_type
+    {};
+
+   template <typename T>
+    struct is_iterator<T, void_t<typename std::iterator_traits<T>::value_type>>
+        : std::true_type {};
+} // namespace details
+#endif /* GSL_BEFORE_CPP20 */
 
 // final_action allows you to ensure something gets run at the end of a scope
 template <class F>

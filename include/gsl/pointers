@@ -1,3 +1,4 @@
+// -*- C++ -*-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2015 Microsoft Corporation. All rights reserved.
@@ -338,7 +339,7 @@ auto make_strict_not_null(T&& t) noexcept
     return strict_not_null<std::remove_cv_t<std::remove_reference_t<T>>>{std::forward<T>(t)};
 }
 
-#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#ifdef GSL_HAS_DEDUCTION_GUIDES
 
 // deduction guides to prevent the ctad-maybe-unsupported warning
 template <class T>
@@ -346,7 +347,7 @@ not_null(T) -> not_null<T>;
 template <class T>
 strict_not_null(T) -> strict_not_null<T>;
 
-#endif // ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
+#endif // GSL_HAS_DEDUCTION_GUIDES
 
 } // namespace gsl
 

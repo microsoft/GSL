@@ -1,3 +1,4 @@
+// -*- C++ -*-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2015 Microsoft Corporation. All rights reserved.
@@ -767,7 +768,7 @@ private:
     }
 };
 
-#if (defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L))
+#ifdef GSL_HAS_DEDUCTION_GUIDES
 
 // Deduction Guides
 template <class Type, std::size_t Extent>
@@ -787,7 +788,7 @@ template <class Container,
           class Element = std::remove_pointer_t<decltype(std::declval<const Container&>().data())>>
 span(const Container&) -> span<Element>;
 
-#endif // ( defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201611L) )
+#endif // GSL_HAS_DEDUCTION_GUIDES
 
 #if defined(GSL_USE_STATIC_CONSTEXPR_WORKAROUND)
 #if defined(__clang__) && defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus < 201703L)
