@@ -6,6 +6,7 @@
             "hidden": true,
             "binaryDir": "${sourceDir}/build/${presetName}",
             "installDir": "${sourceDir}/install/${presetName}",
+            "generator": "Ninja",
             "cacheVariables": {
                 "GSL_CXX_STANDARD": "14",
                 "GSL_TEST": "ON"
@@ -15,14 +16,11 @@
             "name": "msvc-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Visual Studio 17 2022",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
             },
-            "toolset": "host=x64",
-            "architecture": "x64",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "cl"
             }
@@ -31,7 +29,6 @@
             "name": "gcc-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Unix Makefiles",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "g++",
                 "CMAKE_C_COMPILER": "gcc"
@@ -41,7 +38,6 @@
             "name": "clang-base",
             "inherits": "base",
             "hidden": true,
-            "generator": "Unix Makefiles",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "clang++",
                 "CMAKE_C_COMPILER": "clang"
