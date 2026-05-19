@@ -42,7 +42,8 @@ jobs:
 
       - name: Run benchmarks
         working-directory: benchmark/build
-        run: ./span_bench --benchmark_format=json > benchmark_results.json 2>&1 | tee benchmark_output.txt
+        run: |\n          ./span_bench > benchmark_output.txt 2>&1
+          ./span_bench --benchmark_format=json > benchmark_results.json 2>/dev/null
         continue-on-error: true
 
       - name: Upload benchmark results
@@ -84,7 +85,9 @@ jobs:
 
       - name: Run benchmarks
         working-directory: benchmark/build
-        run: ./span_bench --benchmark_format=json > benchmark_results.json 2>&1 | tee benchmark_output.txt
+        run: |
+          ./span_bench > benchmark_output.txt 2>&1
+          ./span_bench --benchmark_format=json > benchmark_results.json 2>/dev/null
         continue-on-error: true
 
       - name: Upload benchmark results
@@ -120,7 +123,8 @@ jobs:
         working-directory: benchmark/build
         run: |
           $config = "${{ matrix.build_type }}"
-          & ".\$config\span_bench.exe" --benchmark_format=json > benchmark_results.json 2>&1 | Tee-Object -FilePath benchmark_output.txt
+          & ".\$config\span_bench.exe" | Tee-Object -FilePath benchmark_output.txt | Out-Null
+          & ".\$config\span_bench.exe" --benchmark_format=json | Out-File -FilePath benchmark_results.json
         shell: pwsh
         continue-on-error: true
 
