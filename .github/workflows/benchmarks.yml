@@ -1,0 +1,133 @@
+name: Performance Benchmarks
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  benchmarks-gcc:
+    strategy:
+      matrix:
+        gcc_version: [ 14 ]
+        build_type: [ Release ]
+        cxx_version: [ 20 ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install GCC
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-${{ matrix.gcc_version }}
+
+      - name: Configure CMake for benchmarks
+        working-directory: benchmark
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. \
+            -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_version }}
+
+      - name: Build benchmarks
+        working-directory: benchmark/build
+        run: cmake --build . --config ${{ matrix.build_type }}
+
+      - name: Run benchmarks
+        working-directory: benchmark/build
+        run: ./span_bench --benchmark_format=json > benchmark_results.json 2>&1 | tee benchmark_output.txt
+        continue-on-error: true
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-gcc-${{ matrix.gcc_version }}-cxx${{ matrix.cxx_version }}
+          path: |
+            benchmark/build/benchmark_results.json
+            benchmark/build/benchmark_output.txt
+
+  benchmarks-clang:
+    strategy:
+      matrix:
+        clang_version: [ 18 ]
+        build_type: [ Release ]
+        cxx_version: [ 20 ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Clang
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-${{ matrix.clang_version }}
+
+      - name: Configure CMake for benchmarks
+        working-directory: benchmark
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. \
+            -DCMAKE_CXX_COMPILER=clang++-${{ matrix.clang_version }} \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_version }}
+
+      - name: Build benchmarks
+        working-directory: benchmark/build
+        run: cmake --build . --config ${{ matrix.build_type }}
+
+      - name: Run benchmarks
+        working-directory: benchmark/build
+        run: ./span_bench --benchmark_format=json > benchmark_results.json 2>&1 | tee benchmark_output.txt
+        continue-on-error: true
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-clang-${{ matrix.clang_version }}-cxx${{ matrix.cxx_version }}
+          path: |
+            benchmark/build/benchmark_results.json
+            benchmark/build/benchmark_output.txt
+
+  benchmarks-msvc:
+    strategy:
+      matrix:
+        image: [ windows-2025 ]
+        build_type: [ Release ]
+        cxx_version: [ 20 ]
+    runs-on: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Configure CMake for benchmarks
+        working-directory: benchmark
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx_version }}
+
+      - name: Build benchmarks
+        working-directory: benchmark/build
+        run: cmake --build . --config ${{ matrix.build_type }}
+
+      - name: Run benchmarks
+        working-directory: benchmark/build
+        run: |
+          $config = "${{ matrix.build_type }}"
+          & ".\$config\span_bench.exe" --benchmark_format=json > benchmark_results.json 2>&1 | Tee-Object -FilePath benchmark_output.txt
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-msvc-${{ matrix.image }}-cxx${{ matrix.cxx_version }}
+          path: |
+            benchmark/build/benchmark_results.json
+            benchmark/build/benchmark_output.txt
