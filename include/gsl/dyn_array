@@ -57,14 +57,18 @@ namespace details
         }
 
         constexpr dyn_array_base(size_type count, const Allocator& alloc)
-            : Allocator{alloc}, _data{count == 0 ? nullptr : Allocator::allocate(count)}, _count{count}
+            : Allocator{alloc},
+            _data{count == 0 ? nullptr : std::allocator_traits<Allocator>::allocate(static_cast<Allocator&>(*this), count)},
+            _count{count}
         {
             Ensures((_count == 0 && _data == nullptr) || (_count > 0 && _data != nullptr));
         }
 
         GSL_CONSTEXPR_SINCE_CPP20 ~dyn_array_base()
         {
-            if (_data) Allocator::deallocate(_data, _count);
+            if (_data) {
+                std::allocator_traits<Allocator>::deallocate(static_cast<Allocator&>(*this), _data, _count);
+            }
         }
     };
 

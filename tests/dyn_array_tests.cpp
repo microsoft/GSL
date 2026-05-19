@@ -180,18 +180,47 @@ TEST(dyn_array_tests, ranges)
 template <typename T, unsigned N>
 struct ConstexprAllocator
 {
+    using value_type = T;
+
     T buf[N]{};
     std::size_t sz{};
 
-    constexpr auto allocate(std::size_t n)
+    constexpr ConstexprAllocator() = default;
+
+    template <typename U>
+    constexpr ConstexprAllocator(const ConstexprAllocator<U, N>&) noexcept
+        : buf{}, sz{}
+    {}
+
+    template <typename U>
+    struct rebind
+    {
+        using other = ConstexprAllocator<U, N>;
+    };
+
+    constexpr auto allocate(std::size_t n) -> value_type*
     {
         auto addr = &buf[sz];
         sz += n;
         return addr;
     }
 
-    constexpr void deallocate(T*, size_t) {}
+    constexpr void deallocate(value_type*, std::size_t) noexcept {}
 };
+
+template <typename T1, unsigned N1, typename T2, unsigned N2>
+constexpr auto operator==(const ConstexprAllocator<T1, N1>& lhs,
+                          const ConstexprAllocator<T2, N2>& rhs) noexcept
+{
+    return std::addressof(lhs) == std::addressof(rhs);
+}
+
+template <typename T1, unsigned N1, typename T2, unsigned N2>
+constexpr auto operator!=(const ConstexprAllocator<T1, N1>& lhs,
+                          const ConstexprAllocator<T2, N2>& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
 #endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
 
 template <typename T>
@@ -203,10 +232,15 @@ static int DeallocCounter = 0;
 template <typename T>
 class Newocator
 {
-    static int allocations;
-    static int deallocations;
-
 public:
+    using value_type = T;
+
+    Newocator() = default;
+
+    template <typename U>
+    Newocator(const Newocator<U>&) noexcept
+    {}
+
     static void init()
     {
         AllocCounter<Newocator<T>> = 0;
@@ -215,18 +249,54 @@ public:
 
     static void check() { EXPECT_EQ(AllocCounter<Newocator<T>>, DeallocCounter<Newocator<T>>); }
 
-    T* allocate(std::size_t n)
+    auto allocate(std::size_t n) -> value_type*
     {
-        AllocCounter<Newocator<T>> ++;
-        return static_cast<T*>(new T[n]);
+        AllocCounter<Newocator<T>>++;
+        return static_cast<value_type*>(::operator new(n * sizeof(value_type)));
     }
 
-    void deallocate(T* p, size_t)
+    void deallocate(value_type* p, std::size_t) noexcept
     {
-        DeallocCounter<Newocator<T>> ++;
-        delete[] p;
+        DeallocCounter<Newocator<T>>++;
+        ::operator delete(p);
     }
+
+    template <typename U>
+    struct rebind
+    {
+        using other = Newocator<U>;
+    };
 };
+
+template <typename T, typename U>
+constexpr auto operator==(const Newocator<T>&, const Newocator<U>&) noexcept
+{
+    return true;
+}
+
+template <typename T, typename U>
+constexpr auto operator!=(const Newocator<T>& lhs, const Newocator<U>& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
+TEST(dyn_array_tests, custom_allocator_models_allocator)
+{
+    using traits = std::allocator_traits<Newocator<char>>;
+    using ptr = traits::pointer;
+
+    static_assert(std::is_same_v<traits::value_type, char>);
+    static_assert(std::is_same_v<ptr, char*>);
+
+    Newocator<char> alloc;
+    auto p = traits::allocate(alloc, 1);
+    traits::deallocate(alloc, p, 1);
+
+#ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
+    using constexpr_traits = std::allocator_traits<ConstexprAllocator<char, 10>>;
+    static_assert(std::is_same_v<constexpr_traits::value_type, char>);
+#endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
+}
 
 TEST(dyn_array_tests, custom_allocator)
 {
