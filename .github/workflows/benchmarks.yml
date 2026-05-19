@@ -42,7 +42,8 @@ jobs:
 
       - name: Run benchmarks
         working-directory: benchmark/build
-        run: |\n          ./span_bench > benchmark_output.txt 2>&1
+        run: |
+          ./span_bench > benchmark_output.txt 2>&1
           ./span_bench --benchmark_format=json > benchmark_results.json 2>/dev/null
         continue-on-error: true
 
