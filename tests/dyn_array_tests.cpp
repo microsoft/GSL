@@ -2,6 +2,8 @@
 
 #include <gsl/dyn_array>
 #include <gsl/util>
+#include "gsl/dyn_array"
+#include <type_traits>
 
 // Despite using <algorithm> and <ranges> utilities in this test, they
 // are not being included directly by this file as a test to ensure
@@ -274,6 +276,18 @@ TEST(dyn_array_tests, reverse_iterator)
     EXPECT_EQ(*it++, 'c');
     EXPECT_EQ(*it++, 'b');
     EXPECT_EQ(*it++, 'a');
+}
+
+TEST(DynArrayTests, TypeConsistency)
+{
+    static_assert(std::is_same_v<gsl::dyn_array<int>::value_type, int>, "Value type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::reference, int&>, "Reference type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::const_reference, const int&>, "Const reference type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::iterator::value_type, int>, "Iterator value type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::iterator::reference, int&>, "Iterator reference type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::iterator::const_reference, const int&>, "Iterator const reference type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::size_type, std::size_t>, "Size type mismatch");
+    static_assert(std::is_same_v<gsl::dyn_array<int>::difference_type, std::ptrdiff_t>, "Difference type mismatch");
 }
 
 #ifdef GSL_HAS_DEDUCTION_GUIDES

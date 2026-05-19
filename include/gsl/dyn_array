@@ -34,22 +34,11 @@ namespace gsl
 {
 namespace details
 {
-    template <typename T>
-    struct dyn_array_traits
-    {
-        using value_type = T;
-        using pointer = T*;
-        using reference = T&;
-        using const_reference = const T&;
-        using difference_type = std::ptrdiff_t;
-        using size_type = std::size_t;
-    };
-
     template <typename T, typename Allocator = std::allocator<T>>
     class dyn_array_base : public Allocator
     {
-        using pointer = typename dyn_array_traits<T>::pointer;
-        using size_type = typename dyn_array_traits<T>::size_type;
+        using pointer = T*;
+        using size_type = std::size_t;
 
     protected:
         constexpr auto data() const { return _data; }
@@ -82,14 +71,14 @@ namespace details
     template <typename T>
     class dyn_array_iterator
     {
-        using size_type = typename dyn_array_traits<T>::size_type;
+        using size_type = std::size_t;
 
     public:
-        using difference_type = typename dyn_array_traits<T>::difference_type;
-        using value_type = typename dyn_array_traits<T>::value_type;
-        using pointer = typename dyn_array_traits<T>::pointer;
-        using reference = typename dyn_array_traits<T>::reference;
-        using const_reference = typename dyn_array_traits<T>::const_reference;
+        using difference_type = std::ptrdiff_t;
+        using value_type = T;
+        using pointer = T*;
+        using reference = T&;
+        using const_reference = const T&;
         using iterator_category = std::random_access_iterator_tag;
 
 #ifdef GSL_HAS_RANGES
@@ -213,18 +202,18 @@ template <typename T, typename Allocator = std::allocator<T>>
 class dyn_array : private details::dyn_array_base<T, Allocator>
 {
     using base = details::dyn_array_base<T, Allocator>;
-    using pointer = typename details::dyn_array_traits<T>::pointer;
+    using pointer = T*;
 
 public:
-    using value_type = typename details::dyn_array_traits<T>::value_type;
-    using reference = typename details::dyn_array_traits<T>::reference;
-    using const_reference = typename details::dyn_array_traits<T>::const_reference;
+    using value_type = T;
+    using reference = T&;
+    using const_reference = const T&;
     using iterator = details::dyn_array_iterator<T>;
     using const_iterator = details::dyn_array_iterator<const T>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-    using difference_type = typename details::dyn_array_traits<T>::difference_type;
-    using size_type = typename details::dyn_array_traits<T>::size_type;
+    using difference_type = std::ptrdiff_t;
+    using size_type = std::size_t;
 
     using allocator_type = Allocator;
 
