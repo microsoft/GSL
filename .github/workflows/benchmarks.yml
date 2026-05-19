@@ -48,12 +48,26 @@ jobs:
         continue-on-error: true
 
       - name: Upload benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: benchmark-results-gcc-${{ matrix.gcc_version }}-cxx${{ matrix.cxx_version }}
           path: |
             benchmark/build/benchmark_results.json
             benchmark/build/benchmark_output.txt
+
+      - name: Comment PR with benchmark results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const benchmark_output = fs.readFileSync('benchmark/build/benchmark_output.txt', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Benchmark Results - GCC ${{ matrix.gcc_version }} (C++${{ matrix.cxx_version }})\n\n\`\`\`\n${benchmark_output}\n\`\`\``
+            });
 
   benchmarks-clang:
     strategy:
@@ -92,12 +106,26 @@ jobs:
         continue-on-error: true
 
       - name: Upload benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: benchmark-results-clang-${{ matrix.clang_version }}-cxx${{ matrix.cxx_version }}
           path: |
             benchmark/build/benchmark_results.json
             benchmark/build/benchmark_output.txt
+
+      - name: Comment PR with benchmark results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const benchmark_output = fs.readFileSync('benchmark/build/benchmark_output.txt', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Benchmark Results - Clang ${{ matrix.clang_version }} (C++${{ matrix.cxx_version }})\n\n\`\`\`\n${benchmark_output}\n\`\`\``
+            });
 
   benchmarks-msvc:
     strategy:
@@ -130,9 +158,23 @@ jobs:
         continue-on-error: true
 
       - name: Upload benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: benchmark-results-msvc-${{ matrix.image }}-cxx${{ matrix.cxx_version }}
           path: |
             benchmark/build/benchmark_results.json
             benchmark/build/benchmark_output.txt
+
+      - name: Comment PR with benchmark results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const benchmark_output = fs.readFileSync('benchmark/build/benchmark_output.txt', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Benchmark Results - MSVC on ${{ matrix.image }} (C++${{ matrix.cxx_version }})\n\n\`\`\`\n${benchmark_output}\n\`\`\``
+            });
