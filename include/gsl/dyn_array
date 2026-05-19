@@ -51,33 +51,31 @@ namespace details
         using pointer = typename dyn_array_traits<T>::pointer;
         using size_type = typename dyn_array_traits<T>::size_type;
 
-        protected:
-        const class dyn_array_impl
-        {
-        public:
-            constexpr dyn_array_impl(pointer data, size_type count) : _data{data}, _count{count}
-            {
-                Ensures((_count == 0 && _data == nullptr) || (_count > 0 && _data != nullptr));
-            }
+    protected:
+        constexpr auto data() const { return _data; }
 
-            constexpr auto data() const { return _data; }
+        constexpr auto count() const { return _count; }
 
-            constexpr auto count() const { return _count; }
-
-        private:
-            pointer _data;
-            size_type _count;
-        } _impl;
+    private:
+        pointer _data;
+        size_type _count;
 
     public:
-        constexpr dyn_array_base(const Allocator& alloc) : Allocator{alloc}, _impl{nullptr, 0} {}
+        constexpr dyn_array_base(const Allocator& alloc)
+            : Allocator{alloc}, _data{nullptr}, _count{0}
+        {
+            Ensures((_count == 0 && _data == nullptr) || (_count > 0 && _data != nullptr));
+        }
+
         constexpr dyn_array_base(size_type count, const Allocator& alloc)
-            : Allocator{alloc}, _impl{count == 0 ? nullptr : Allocator::allocate(count), count}
-        {}
+            : Allocator{alloc}, _data{count == 0 ? nullptr : Allocator::allocate(count)}, _count{count}
+        {
+            Ensures((_count == 0 && _data == nullptr) || (_count > 0 && _data != nullptr));
+        }
 
         GSL_CONSTEXPR_SINCE_CPP20 ~dyn_array_base()
         {
-            if (_impl.data()) Allocator::deallocate(_impl.data(), _impl.count());
+            if (_data) Allocator::deallocate(_data, _count);
         }
     };
 
@@ -279,7 +277,7 @@ public:
 
     constexpr auto operator!=(const dyn_array& other) const { return !(*this == other); }
 
-    constexpr auto size() const { return base::_impl.count(); }
+    constexpr auto size() const { return base::count(); }
 
     constexpr auto empty() const { return size() == 0; }
 
@@ -298,7 +296,7 @@ public:
         return const_cast<dyn_array&>(*this)[pos];
     }
 
-    constexpr auto data() { return base::_impl.data(); }
+    constexpr auto data() { return base::data(); }
     constexpr auto data() const -> const T* { return const_cast<dyn_array&>(*this).data(); }
 
     constexpr auto begin() { return iterator{data(), 0, size()}; }
