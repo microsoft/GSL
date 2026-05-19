@@ -229,6 +229,48 @@ static int AllocCounter = 0;
 template <typename T>
 static int DeallocCounter = 0;
 
+struct LifetimeCounter
+{
+    static int alive_count;
+
+    int value{};
+
+    explicit LifetimeCounter(int v = 0) : value(v) { ++alive_count; }
+
+    LifetimeCounter(const LifetimeCounter& other) : value(other.value) { ++alive_count; }
+
+    ~LifetimeCounter() { --alive_count; }
+};
+
+int LifetimeCounter::alive_count = 0;
+
+struct ThrowOnCopy
+{
+    static int alive_count;
+    static int copy_count;
+    static int throw_on_copy_index;
+
+    int value{};
+
+    explicit ThrowOnCopy(int v = 0) : value(v) { ++alive_count; }
+
+    ThrowOnCopy(const ThrowOnCopy& other) : value(other.value)
+    {
+        if (copy_count == throw_on_copy_index) {
+            ++copy_count;
+            throw 42;
+        }
+        ++copy_count;
+        ++alive_count;
+    }
+
+    ~ThrowOnCopy() { --alive_count; }
+};
+
+int ThrowOnCopy::alive_count = 0;
+int ThrowOnCopy::copy_count = 0;
+int ThrowOnCopy::throw_on_copy_index = -1;
+
 template <typename T>
 class Newocator
 {
@@ -321,6 +363,31 @@ TEST(dyn_array_tests, custom_allocator)
         yankees.get_allocator().deallocate(yankees.get_allocator().allocate(1), 1);
     }
     Newocator<char>::check();
+}
+
+TEST(dyn_array_tests, non_trivial_elements_are_destroyed)
+{
+    LifetimeCounter::alive_count = 0;
+
+    {
+        gsl::dyn_array<LifetimeCounter> values(5, LifetimeCounter{7});
+        EXPECT_EQ(values.size(), 5);
+        EXPECT_EQ(LifetimeCounter::alive_count, 5);
+    }
+
+    EXPECT_EQ(LifetimeCounter::alive_count, 0);
+}
+
+TEST(dyn_array_tests, failed_element_construction_rolls_back)
+{
+    ThrowOnCopy::alive_count = 0;
+    ThrowOnCopy::copy_count = 0;
+    ThrowOnCopy::throw_on_copy_index = 2;
+
+    EXPECT_THROW((gsl::dyn_array<ThrowOnCopy>(5, ThrowOnCopy{1})), int);
+    EXPECT_EQ(ThrowOnCopy::alive_count, 0);
+
+    ThrowOnCopy::throw_on_copy_index = -1;
 }
 
 TEST(dyn_array_tests, init_list)
