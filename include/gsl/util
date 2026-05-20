@@ -23,7 +23,7 @@
 #include <cstddef>          // for ptrdiff_t, size_t
 #include <limits>           // for numeric_limits
 #include <initializer_list> // for initializer_list
-#include <iterator>         // for is_iterator, iterator_traits
+#include <iterator>         // for iterator_traits
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for exchange, forward
 

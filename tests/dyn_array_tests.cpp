@@ -332,8 +332,8 @@ TEST(dyn_array_tests, custom_allocator_models_allocator)
     using traits = std::allocator_traits<Newocator<char>>;
     using ptr = traits::pointer;
 
-    static_assert(std::is_same_v<traits::value_type, char>);
-    static_assert(std::is_same_v<ptr, char*>);
+    static_assert(std::is_same<traits::value_type, char>::value, "allocator trait type mismatch");
+    static_assert(std::is_same<ptr, char*>::value, "allocator trait type mismatch");
 
     Newocator<char> alloc;
     auto p = traits::allocate(alloc, 1);

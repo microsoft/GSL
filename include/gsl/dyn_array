@@ -351,7 +351,7 @@ public:
     {}
 
     constexpr auto operator=(const dyn_array& other) -> dyn_array& {
-        auto tmp = dyn_array{other};
+        dyn_array tmp{other};
         swap(tmp);
         return *this;
     }
