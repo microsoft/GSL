@@ -112,6 +112,19 @@ namespace details
             }
         }
 
+        void default_construct(pointer first, size_type count) {
+            pointer current = first;
+            try {
+                for (size_type i = 0; i < count; ++i, ++current) {
+                    construct(current);
+                }
+            }
+            catch (...) {
+                rollback_construction(first, current);
+                throw;
+            }
+        }
+
         void swap(dyn_array_base& other) {
             auto old_count = _count;
             auto old_data = _data;
@@ -248,12 +261,13 @@ namespace details
 
         constexpr auto operator+(difference_type diff) const
         {
-            return dyn_array_iterator{_ptr, _pos + gsl::narrow<size_type>(diff), _end_pos};
+            auto new_pos = gsl::narrow<difference_type>(_pos) + diff;
+            return dyn_array_iterator{_ptr, gsl::narrow<size_type>(new_pos), _end_pos};
         }
 
         constexpr auto operator-(difference_type diff) const
         {
-            return dyn_array_iterator{_ptr, _pos - gsl::narrow<size_type>(diff), _end_pos};
+            return *this + (-diff);
         }
 
         constexpr auto operator-(const dyn_array_iterator& other) const
@@ -339,8 +353,10 @@ public:
 #endif /* GSL_HAS_RANGES */
 
     constexpr explicit dyn_array(size_type count, const Allocator& alloc = {})
-        : dyn_array{count, T{}, alloc}
-    {}
+        : base{count, alloc}
+    {
+        base::default_construct(data(), size());
+    }
 
     constexpr dyn_array(const dyn_array& other, const Allocator& alloc = {})
         : dyn_array(other.begin(), other.end(), alloc)
@@ -351,7 +367,7 @@ public:
     {}
 
     constexpr auto operator=(const dyn_array& other) -> dyn_array& {
-        dyn_array tmp{other};
+        dyn_array tmp{other, get_allocator()};
         swap(tmp);
         return *this;
     }

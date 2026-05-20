@@ -249,6 +249,39 @@ struct LifetimeCounter
 
 int LifetimeCounter::alive_count = 0;
 
+struct DefaultConstructionCounter
+{
+    static int default_constructor_count;
+    static int copy_constructor_count;
+
+    int value{};
+
+    DefaultConstructionCounter() { ++default_constructor_count; }
+
+    DefaultConstructionCounter(const DefaultConstructionCounter& other) : value(other.value)
+    {
+        ++copy_constructor_count;
+    }
+
+    static void reset()
+    {
+        default_constructor_count = 0;
+        copy_constructor_count = 0;
+    }
+};
+
+int DefaultConstructionCounter::default_constructor_count = 0;
+int DefaultConstructionCounter::copy_constructor_count = 0;
+
+struct DefaultOnlyElement
+{
+    DefaultOnlyElement() = default;
+    DefaultOnlyElement(const DefaultOnlyElement&) = delete;
+    DefaultOnlyElement& operator=(const DefaultOnlyElement&) = delete;
+    DefaultOnlyElement(DefaultOnlyElement&&) = delete;
+    DefaultOnlyElement& operator=(DefaultOnlyElement&&) = delete;
+};
+
 struct ThrowOnCopy
 {
     static int alive_count;
@@ -327,6 +360,95 @@ constexpr auto operator!=(const Newocator<T>& lhs, const Newocator<U>& rhs) noex
     return !(lhs == rhs);
 }
 
+template <typename T>
+class OwnershipTrackingAllocator
+{
+public:
+    using value_type = T;
+
+    OwnershipTrackingAllocator() noexcept : owner_id(next_owner_id()) { ++next_owner_id(); }
+
+    explicit OwnershipTrackingAllocator(int owner) noexcept : owner_id(owner) {}
+
+    template <typename U>
+    OwnershipTrackingAllocator(const OwnershipTrackingAllocator<U>& other) noexcept
+        : owner_id(other.owner())
+    {}
+
+    auto allocate(std::size_t count) -> value_type*
+    {
+        static_assert(alignof(value_type) <= alignof(int),
+                      "test allocator only supports types with int-or-smaller alignment");
+        auto raw = static_cast<unsigned char*>(::operator new(sizeof(int) + count * sizeof(value_type)));
+        *reinterpret_cast<int*>(raw) = owner_id;
+        ++allocation_count();
+        return reinterpret_cast<value_type*>(raw + sizeof(int));
+    }
+
+    void deallocate(value_type* pointer, std::size_t) noexcept
+    {
+        auto raw = reinterpret_cast<unsigned char*>(pointer) - sizeof(int);
+        if (*reinterpret_cast<int*>(raw) != owner_id) {
+            ++mismatched_deallocation_count();
+        }
+        ++deallocation_count();
+        ::operator delete(raw);
+    }
+
+    auto owner() const noexcept { return owner_id; }
+
+    static void reset()
+    {
+        next_owner_id() = 1;
+        allocation_count() = 0;
+        deallocation_count() = 0;
+        mismatched_deallocation_count() = 0;
+    }
+
+    static auto mismatched_deallocations() { return mismatched_deallocation_count(); }
+
+private:
+    int owner_id;
+
+    static auto next_owner_id() -> int&
+    {
+        static int value = 1;
+        return value;
+    }
+
+    static auto allocation_count() -> int&
+    {
+        static int value = 0;
+        return value;
+    }
+
+    static auto deallocation_count() -> int&
+    {
+        static int value = 0;
+        return value;
+    }
+
+    static auto mismatched_deallocation_count() -> int&
+    {
+        static int value = 0;
+        return value;
+    }
+};
+
+template <typename T, typename U>
+constexpr auto operator==(const OwnershipTrackingAllocator<T>& lhs,
+                          const OwnershipTrackingAllocator<U>& rhs) noexcept
+{
+    return lhs.owner() == rhs.owner();
+}
+
+template <typename T, typename U>
+constexpr auto operator!=(const OwnershipTrackingAllocator<T>& lhs,
+                          const OwnershipTrackingAllocator<U>& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
 TEST(dyn_array_tests, custom_allocator_models_allocator)
 {
     using traits = std::allocator_traits<Newocator<char>>;
@@ -370,6 +492,23 @@ TEST(dyn_array_tests, custom_allocator)
     Newocator<char>::check();
 }
 
+TEST(dyn_array_tests, copy_assignment_deallocates_with_the_allocator_that_owns_the_storage)
+{
+    using allocator_type = OwnershipTrackingAllocator<char>;
+    using array_type = gsl::dyn_array<char, allocator_type>;
+
+    allocator_type::reset();
+
+    {
+        array_type source(3, 's', allocator_type{1});
+        array_type target(2, 't', allocator_type{2});
+
+        target = source;
+    }
+
+    EXPECT_EQ(allocator_type::mismatched_deallocations(), 0);
+}
+
 TEST(dyn_array_tests, non_trivial_elements_are_destroyed)
 {
     LifetimeCounter::alive_count = 0;
@@ -382,6 +521,27 @@ TEST(dyn_array_tests, non_trivial_elements_are_destroyed)
 
     EXPECT_EQ(LifetimeCounter::alive_count, 0);
 }
+
+TEST(dyn_array_tests, count_constructor_default_constructs_each_element)
+{
+    DefaultConstructionCounter::reset();
+
+    {
+        gsl::dyn_array<DefaultConstructionCounter> values(4);
+        EXPECT_EQ(values.size(), 4);
+    }
+
+    EXPECT_EQ(DefaultConstructionCounter::default_constructor_count, 4);
+    EXPECT_EQ(DefaultConstructionCounter::copy_constructor_count, 0);
+}
+
+#ifdef GSL_DYN_ARRAY_COMPILE_FAILURE_TESTS
+TEST(dyn_array_compile_failure_tests, count_constructor_accepts_default_constructible_only_elements)
+{
+    gsl::dyn_array<DefaultOnlyElement> values(4);
+    EXPECT_EQ(values.size(), 4);
+}
+#endif /* GSL_DYN_ARRAY_COMPILE_FAILURE_TESTS */
 
 TEST(dyn_array_tests, failed_element_construction_rolls_back)
 {
@@ -445,6 +605,21 @@ TEST(dyn_array_tests, random_access_iterator_arithmetic)
     EXPECT_EQ(third - first, 2);
     EXPECT_EQ(*(third - 1), 'b');
     EXPECT_EQ(*std::prev(third), 'b');
+}
+
+TEST(dyn_array_tests, random_access_iterator_arithmetic_accepts_negative_offsets)
+{
+    gsl::dyn_array<char> bluejays{'a', 'b', 'c', 'd'};
+
+    auto third = bluejays.begin() + 2;
+    char previous{};
+    char next{};
+
+    EXPECT_NO_THROW(previous = *(third + -1));
+    EXPECT_EQ(previous, 'b');
+
+    EXPECT_NO_THROW(next = *(third - -1));
+    EXPECT_EQ(next, 'd');
 }
 
 TEST(dyn_array_tests, input_iterator_constructor)
