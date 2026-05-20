@@ -19,7 +19,7 @@ static_assert(sizeof(gsl::dyn_array<int>) == 2 * sizeof(void*),
 
 #ifdef GSL_HAS_CONCEPTS
 static_assert(std::input_iterator<gsl::dyn_array<int>::iterator>,
-              "gsl_dyn_array should expose a valid input_iterator");
+              "gsl::dyn_array should expose a valid input_iterator");
 #endif /* GSL_HAS_CONCEPTS */
 
 #ifdef GSL_HAS_RANGES

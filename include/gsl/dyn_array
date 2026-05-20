@@ -74,7 +74,7 @@ namespace details
         constexpr auto count() const { return _count; }
 
         GSL_CONSTEXPR_SINCE_CPP20 void resize(size_type count) {
-            // This should only be called when constructing a non-forward iteartor.
+            // This should only be called when constructing a non-forward iterator.
             // It neither frees nor copies `_data`.
             Expects(_data == nullptr && _count == 0);
             if (count != 0) {
@@ -190,7 +190,7 @@ namespace details
 
 #if defined(_MSC_VER) && defined(GSL_HAS_RANGES)
         // TODO (@carsonradtke): Investigate why this is necessary for MSVC.
-        // Is it a a bug in GSL? STL? MSVC?
+        // Is it a bug in GSL? STL? MSVC?
         constexpr operator pointer() const { return _ptr + gsl::narrow<size_type>(_pos); }
 #endif /* defined(_MSC_VER) && defined(GSL_HAS_RANGES) */
 
@@ -350,7 +350,7 @@ public:
     {
         base::copy(std::ranges::begin(rg), std::ranges::end(rg), data());
     }
-#endif /* GSL_HAS_RANGES */
+#endif /* GSL_HAS_CONTAINER_RANGES */
 
     constexpr explicit dyn_array(size_type count, const Allocator& alloc = {})
         : base{count, alloc}
@@ -434,7 +434,7 @@ public:
     {
         return const_cast<dyn_array&>(*this)._Unchecked_end();
     }
-#endif /* MSC_VER */
+#endif /* _MSC_VER */
 };
 
 #ifdef GSL_HAS_DEDUCTION_GUIDES
@@ -449,7 +449,7 @@ template <std::ranges::input_range InputRg,
           class Alloc = std::allocator<std::ranges::range_value_t<InputRg>>>
 dyn_array(std::from_range_t, InputRg&&,
           Alloc = {}) -> dyn_array<std::ranges::range_value_t<InputRg>, Alloc>;
-#endif /* GSL_HAS_RANGES */
+#endif /* GSL_HAS_CONTAINER_RANGES */
 
 #endif /* GSL_HAS_DEDUCTION_GUIDES */
 } // namespace gsl
