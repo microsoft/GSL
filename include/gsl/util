@@ -109,14 +109,9 @@
 
 #if __cplusplus >= 202002L
 #define GSL_CONSTEXPR_SINCE_CPP20 constexpr
-#define GSL_TYPE_IS_ITERATOR(Ty)                                                                   \
-    template <typename Ty>                                                                         \
-        requires(std::input_iterator<Ty>)
 #else // ^^^ since C++20 /// before C++20 vvv
 #define GSL_BEFORE_CPP20
 #define GSL_CONSTEXPR_SINCE_CPP20
-#define GSL_TYPE_IS_ITERATOR(Ty)                                                                   \
-    template <typename Ty, std::enable_if_t<details::is_iterator<Ty>::value, bool> = true>
 #endif // __cplusplus >= 202002L
 
 namespace gsl
@@ -128,21 +123,26 @@ namespace gsl
 // index type for all container indexes/subscripts/sizes
 using index = std::ptrdiff_t;
 
-#ifdef GSL_BEFORE_CPP20
 namespace details
 {
     template <typename ...>
     using void_t = void;
 
     template <typename T, typename = void>
-    struct is_iterator : std::false_type
+    struct is_iterator : std::false_type {};
+
+    template <typename T>
+    struct is_iterator<T, void_t<typename std::iterator_traits<T>::value_type>>
+        : std::true_type {};
+
+    template <typename T, typename = void>
+    struct is_fwd_iterator : std::false_type
     {};
 
    template <typename T>
-    struct is_iterator<T, void_t<typename std::iterator_traits<T>::value_type>>
-        : std::true_type {};
+    struct is_fwd_iterator<T, void_t<typename std::iterator_traits<T>::iterator_category>>
+        : std::integral_constant<bool, std::is_base_of<std::forward_iterator_tag, typename std::iterator_traits<T>::iterator_category>::value> {};
 } // namespace details
-#endif /* GSL_BEFORE_CPP20 */
 
 // final_action allows you to ensure something gets run at the end of a scope
 template <class F>

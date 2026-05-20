@@ -1,8 +1,13 @@
 #include <gtest/gtest.h>
 
+#include "deathTestCommon.h"
 #include <gsl/dyn_array>
 #include <gsl/util>
 #include "gsl/dyn_array"
+#include <cstdlib>
+#include <exception>
+#include <iostream>
+#include <sstream>
 #include <type_traits>
 
 // Despite using <algorithm> and <ranges> utilities in this test, they
@@ -414,6 +419,87 @@ TEST(dyn_array_tests, reverse_iterator)
     EXPECT_EQ(*it++, 'b');
     EXPECT_EQ(*it++, 'a');
 }
+
+TEST(dyn_array_tests, copy_assignment)
+{
+    gsl::dyn_array<char> rays(3, 'r');
+    const gsl::dyn_array<char> rangers{'a', 'b', 'c'};
+
+    auto& assigned = (rays = rangers);
+
+    EXPECT_EQ(&assigned, &rays);
+    EXPECT_EQ(rays.size(), rangers.size());
+    EXPECT_EQ(rays[0], 'a');
+    EXPECT_EQ(rays[1], 'b');
+    EXPECT_EQ(rays[2], 'c');
+}
+
+TEST(dyn_array_tests, random_access_iterator_arithmetic)
+{
+    gsl::dyn_array<char> bluejays{'a', 'b', 'c', 'd'};
+
+    auto first = bluejays.begin();
+    auto third = first + 2;
+
+    EXPECT_EQ(*third, 'c');
+    EXPECT_EQ(third - first, 2);
+    EXPECT_EQ(*(third - 1), 'b');
+    EXPECT_EQ(*std::prev(third), 'b');
+}
+
+TEST(dyn_array_tests, input_iterator_constructor)
+{
+    std::istringstream stream{"n a t s"};
+    std::istream_iterator<char> first{stream};
+    const std::istream_iterator<char> last{};
+
+    gsl::dyn_array<char> nationals(first, last);
+
+    ASSERT_EQ(nationals.size(), 4);
+    EXPECT_EQ(nationals[0], 'n');
+    EXPECT_EQ(nationals[1], 'a');
+    EXPECT_EQ(nationals[2], 't');
+    EXPECT_EQ(nationals[3], 's');
+}
+
+TEST(dyn_array_tests, contract_violations)
+{
+    const auto terminateHandler = std::set_terminate([] {
+        std::cerr << "Expected Death. dyn_array_contract_violations";
+        std::abort();
+    });
+    const auto expected = GetExpectedDeathString(terminateHandler);
+
+    gsl::dyn_array<char> values(3, 'v');
+    gsl::dyn_array<char> other(3, 'o');
+
+    EXPECT_DEATH(values[values.size()], expected);
+    EXPECT_DEATH((void) *values.end(), expected);
+    EXPECT_DEATH(++values.end(), expected);
+    EXPECT_DEATH(--values.begin(), expected);
+    EXPECT_DEATH((void) (values.begin() == other.begin()), expected);
+}
+
+#ifdef _MSC_VER
+TEST(dyn_array_tests, unchecked_iterators)
+{
+    gsl::dyn_array<char> values;
+    const gsl::dyn_array<char> const_values(3, 'v');
+
+    EXPECT_TRUE((std::is_same<decltype(const_values._Unchecked_begin()), const char*>::value));
+    EXPECT_TRUE((std::is_same<decltype(const_values._Unchecked_end()), const char*>::value));
+
+    std::size_t count = 0;
+    for (const auto value : const_values) {
+        EXPECT_EQ(value, 'v');
+        ++count;
+    }
+    EXPECT_EQ(count, const_values.size());
+
+    EXPECT_EQ(values._Unchecked_begin(), nullptr);
+    EXPECT_EQ(values._Unchecked_end(), nullptr);
+}
+#endif /* _MSC_VER */
 
 TEST(DynArrayTests, TypeConsistency)
 {

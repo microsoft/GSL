@@ -68,10 +68,20 @@ namespace details
             _count = 0;
         }
 
-    protected:
+        protected:
         constexpr auto data() const { return _data; }
 
         constexpr auto count() const { return _count; }
+
+        void resize(size_type count) {
+            // This should only be called when constructing a non-forward iteartor.
+            // It neither frees nor copies `_data`.
+            Expects(_data == nullptr && _count == 0);
+            if (count != 0) {
+                _data = std::allocator_traits<Allocator>::allocate(static_cast<Allocator&>(*this), count);
+                _count = count;
+            }
+        }
 
         GSL_CONSTEXPR_SINCE_CPP20 void fill(pointer first, size_type count, const T& value)
         {
@@ -100,6 +110,15 @@ namespace details
                 rollback_construction(output, current);
                 throw;
             }
+        }
+
+        void swap(dyn_array_base& other) {
+            auto old_count = _count;
+            auto old_data = _data;
+            _count = other._count;
+            _data = other._data;
+            other._count = old_count;
+            other._data = old_data;
         }
 
     private:
@@ -234,7 +253,7 @@ namespace details
 
         constexpr auto operator-(difference_type diff) const
         {
-            return dyn_array_iterator{_ptr, _pos + gsl::narrow<size_type>(diff), _end_pos};
+            return dyn_array_iterator{_ptr, _pos - gsl::narrow<size_type>(diff), _end_pos};
         }
 
         constexpr auto operator-(const dyn_array_iterator& other) const
@@ -268,6 +287,11 @@ class dyn_array : private details::dyn_array_base<T, Allocator>
     using base = details::dyn_array_base<T, Allocator>;
     using pointer = T*;
 
+    constexpr void swap(dyn_array& other) {
+        // TODO (@carsonradtke): This was not in the spec, should it have been?
+        base::swap(other);
+    }
+
 public:
     using value_type = T;
     using reference = T&;
@@ -289,11 +313,19 @@ public:
         base::fill(data(), size(), value);
     }
 
-    GSL_TYPE_IS_ITERATOR(InputIt)
+    template <typename InputIt, std::enable_if_t<details::is_fwd_iterator<InputIt>::value, bool> = true>
     constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc = {})
         : base{gsl::narrow<size_type>(std::distance(first, last)), alloc}
     {
         base::copy(first, last, data());
+    }
+
+    template <typename InputIt, std::enable_if_t<!details::is_fwd_iterator<InputIt>::value && details::is_iterator<InputIt>::value, bool> = true>
+    constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc={}) : dyn_array{alloc} {
+        // TODO (@carsonradtke): Can this be done better?
+        std::vector<T> tmp(first, last);
+        base::resize(tmp.size());
+        base::copy(std::begin(tmp), std::end(tmp), data());
     }
 
 #ifdef GSL_HAS_CONTAINER_RANGES
@@ -318,7 +350,11 @@ public:
         : dyn_array(init.begin(), init.end(), alloc)
     {}
 
-    constexpr auto operator=(const dyn_array& other) -> dyn_array& { return dyn_array{other}; }
+    constexpr auto operator=(const dyn_array& other) -> dyn_array& {
+        auto tmp = dyn_array{other};
+        swap(tmp);
+        return *this;
+    }
 
     constexpr dyn_array(dyn_array&&) = delete;
     dyn_array& operator=(dyn_array&&) = delete;
@@ -362,7 +398,7 @@ public:
 
 #ifdef _MSC_VER
     constexpr auto _Unchecked_begin() { return data(); }
-    constexpr auto _Unchecked_begin() const -> const pointer
+    constexpr auto _Unchecked_begin() const -> const T*
     {
         return const_cast<dyn_array&>(*this)._Unchecked_begin();
     }
@@ -378,7 +414,7 @@ public:
 
 #ifdef _MSC_VER
     constexpr auto _Unchecked_end() { return data() + size(); }
-    constexpr auto _Unchecked_end() const -> const pointer
+    constexpr auto _Unchecked_end() const -> const T*
     {
         return const_cast<dyn_array&>(*this)._Unchecked_end();
     }
