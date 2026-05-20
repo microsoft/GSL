@@ -95,6 +95,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: microsoft/setup-msbuild@v3
+      - uses: ilammy/msvc-dev-cmd@v1
 
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
