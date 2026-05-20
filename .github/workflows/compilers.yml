@@ -83,7 +83,7 @@ jobs:
         generator: [ 'Visual Studio 17 2022' ]
         image: [ windows-2022, windows-2025 ]
         build_type: [ Debug, Release ]
-        extra_args: [ '', '-T ClangCL' ]
+        extra_args: [ '', '-DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_C_COMPILER=clang-cl' ]
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: ${{ matrix.image }}
     steps:
