@@ -146,6 +146,22 @@ TEST(dyn_array_tests, use_std_algorithms)
 }
 
 #ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
+constexpr auto default_constructed_count_dyn_array_is_constexpr()
+{
+    gsl::dyn_array<int> values(3);
+    return values.size() == 3 && values[0] == 0 && values[1] == 0 && values[2] == 0;
+}
+
+constexpr auto copy_assigned_dyn_array_is_constexpr()
+{
+    gsl::dyn_array<int> source(3, 7);
+    gsl::dyn_array<int> target(2, 4);
+
+    target = source;
+
+    return target.size() == 3 && target[0] == 7 && target[1] == 7 && target[2] == 7;
+}
+
 TEST(dyn_array_tests, constexprness)
 {
     constexpr gsl::dyn_array<char> marlins;
@@ -155,6 +171,8 @@ TEST(dyn_array_tests, constexprness)
     static_assert(marlins.data() == nullptr);
     static_assert(marlins.begin() == marlins.end());
     static_assert(std::distance(marlins.begin(), marlins.end()) == 0);
+    static_assert(default_constructed_count_dyn_array_is_constexpr());
+    static_assert(copy_assigned_dyn_array_is_constexpr());
 }
 #endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
 
