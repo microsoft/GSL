@@ -27,9 +27,9 @@
 #include <memory>
 #include <type_traits>
 
-#ifdef GSL_HAS_RANGES
+#if defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
 #include <ranges>
-#endif /* GSL_HAS_RANGES */
+#endif /* __cpp_lib_ranges >= 201911L */
 
 namespace gsl
 {
@@ -177,9 +177,9 @@ namespace details
         using const_reference = const T&;
         using iterator_category = std::random_access_iterator_tag;
 
-#ifdef GSL_HAS_RANGES
+#if defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
         constexpr dyn_array_iterator() = default;
-#endif /* GSL_HAS_RANGES */
+#endif /* __cpp_lib_ranges >= 201911L */
 
         constexpr dyn_array_iterator(pointer ptr, size_type pos, size_type end_pos)
             : _ptr{ptr}, _pos{pos}, _end_pos{end_pos}
@@ -188,9 +188,9 @@ namespace details
             Ensures(_pos <= _end_pos);
         }
 
-#if defined(_MSC_VER) && defined(GSL_HAS_RANGES)
+#if defined(_MSC_VER) && defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
         constexpr operator pointer() const { return _ptr + gsl::narrow<size_type>(_pos); }
-#endif /* defined(_MSC_VER) && defined(GSL_HAS_RANGES) */
+#endif /* defined(_MSC_VER) && __cpp_lib_ranges >= 201911L */
 
         constexpr auto operator==(const dyn_array_iterator& other) const
         {
@@ -338,7 +338,7 @@ public:
         base::copy(std::begin(tmp), std::end(tmp), data());
     }
 
-#ifdef GSL_HAS_CONTAINER_RANGES
+#if defined(__cpp_lib_containers_ranges) && (__cpp_lib_containers_ranges >= 202202L)
     template <typename InputRg>
         requires(std::ranges::input_range<InputRg>)
     constexpr dyn_array(std::from_range_t, InputRg&& rg, const Allocator& alloc = {})
@@ -346,7 +346,7 @@ public:
     {
         base::copy(std::ranges::begin(rg), std::ranges::end(rg), data());
     }
-#endif /* GSL_HAS_CONTAINER_RANGES */
+#endif /* __cpp_lib_containers_ranges >= 202202L */
 
     constexpr explicit dyn_array(size_type count, const Allocator& alloc = {})
         : base{count, alloc}
@@ -433,21 +433,21 @@ public:
 #endif /* _MSC_VER */
 };
 
-#ifdef GSL_HAS_DEDUCTION_GUIDES
+#if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201703L)
 
 template <class InputIt,
           class Alloc = std::allocator<typename std::iterator_traits<InputIt>::value_type>>
 dyn_array(InputIt, InputIt,
           Alloc = {}) -> dyn_array<typename std::iterator_traits<InputIt>::value_type, Alloc>;
 
-#ifdef GSL_HAS_CONTAINER_RANGES
+#if defined(__cpp_lib_containers_ranges) && (__cpp_lib_containers_ranges >= 202202L)
 template <std::ranges::input_range InputRg,
           class Alloc = std::allocator<std::ranges::range_value_t<InputRg>>>
 dyn_array(std::from_range_t, InputRg&&,
           Alloc = {}) -> dyn_array<std::ranges::range_value_t<InputRg>, Alloc>;
-#endif /* GSL_HAS_CONTAINER_RANGES */
+#endif /* __cpp_lib_containers_ranges >= 202202L */
 
-#endif /* GSL_HAS_DEDUCTION_GUIDES */
+#endif /* __cpp_deduction_guides >= 201703L */
 } // namespace gsl
 
 #endif /* defined(GSL_DYN_ARRAY_H) */

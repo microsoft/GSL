@@ -17,15 +17,15 @@
 static_assert(sizeof(gsl::dyn_array<int>) == 2 * sizeof(void*),
               "gsl::dyn_array (with the default allocator) should be 16 bytes");
 
-#ifdef GSL_HAS_CONCEPTS
+#if defined(__cpp_lib_concepts) && (__cpp_lib_concepts >= 202002L)
 static_assert(std::input_iterator<gsl::dyn_array<int>::iterator>,
               "gsl::dyn_array should expose a valid input_iterator");
-#endif /* GSL_HAS_CONCEPTS */
+#endif /* __cpp_lib_concepts >= 202002L */
 
-#ifdef GSL_HAS_RANGES
+#if defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
 static_assert(std::ranges::input_range<gsl::dyn_array<int>>,
               "gsl::dyn_array should be a valid input range");
-#endif /* GSL_HAS_RANGES */
+#endif /* __cpp_lib_ranges >= 201911L */
 
 TEST(dyn_array_tests, default_ctor)
 {
@@ -145,7 +145,7 @@ TEST(dyn_array_tests, use_std_algorithms)
     EXPECT_EQ(dodgers.end(), std::end(dodgers));
 }
 
-#ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
+#if defined(__cpp_lib_constexpr_dynamic_alloc) && (__cpp_lib_constexpr_dynamic_alloc >= 201907L)
 constexpr auto default_constructed_count_dyn_array_is_constexpr()
 {
     gsl::dyn_array<int> values(3);
@@ -174,9 +174,9 @@ TEST(dyn_array_tests, constexprness)
     static_assert(default_constructed_count_dyn_array_is_constexpr());
     static_assert(copy_assigned_dyn_array_is_constexpr());
 }
-#endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
+#endif /* __cpp_lib_constexpr_dynamic_alloc >= 201907L */
 
-#ifdef GSL_HAS_RANGES
+#if defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
 TEST(dyn_array_tests, ranges)
 {
     gsl::dyn_array<char> brewers(26);
@@ -190,16 +190,16 @@ TEST(dyn_array_tests, ranges)
         EXPECT_EQ(std::ranges::distance(it, std::ranges::begin(brewers)), 'a' - 'c');
     }
 
-#ifdef GSL_HAS_CONTAINER_RANGES
+#if defined(__cpp_lib_containers_ranges) && (__cpp_lib_containers_ranges >= 202202L)
     std::vector<char> twins(10, 'c');
     gsl::dyn_array<char> mets(std::from_range, twins);
     EXPECT_EQ(twins.size(), mets.size());
     EXPECT_TRUE(std::ranges::all_of(mets, [](char c) { return c == 'c'; }));
-#endif /* GSL_HAS_CONTAINER_RANGES */
+#endif /* __cpp_lib_containers_ranges >= 202202L */
 }
-#endif /* GSL_HAS_RANGES */
+#endif /* __cpp_lib_ranges >= 201911L */
 
-#ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
+#if defined(__cpp_lib_constexpr_dynamic_alloc) && (__cpp_lib_constexpr_dynamic_alloc >= 201907L)
 template <typename T, unsigned N>
 struct ConstexprAllocator
 {
@@ -244,7 +244,7 @@ constexpr auto operator!=(const ConstexprAllocator<T1, N1>& lhs,
 {
     return !(lhs == rhs);
 }
-#endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
+#endif /* __cpp_lib_constexpr_dynamic_alloc >= 201907L */
 
 template <typename T>
 static int AllocCounter = 0;
@@ -479,20 +479,20 @@ TEST(dyn_array_tests, custom_allocator_models_allocator)
     auto p = traits::allocate(alloc, 1);
     traits::deallocate(alloc, p, 1);
 
-#ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
+#if defined(__cpp_lib_constexpr_dynamic_alloc) && (__cpp_lib_constexpr_dynamic_alloc >= 201907L)
     using constexpr_traits = std::allocator_traits<ConstexprAllocator<char, 10>>;
     static_assert(std::is_same<constexpr_traits::value_type, char>::value, "allocator trait type mismatch");
-#endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
+#endif /* __cpp_lib_constexpr_dynamic_alloc >= 201907L */
 }
 
 TEST(dyn_array_tests, custom_allocator)
 {
-#ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
+#if defined(__cpp_lib_constexpr_dynamic_alloc) && (__cpp_lib_constexpr_dynamic_alloc >= 201907L)
     static constexpr gsl::dyn_array<char, ConstexprAllocator<char, 10>> mets(10, 'c');
     static_assert(mets.size() == 10);
     static_assert(mets[0] == 'c');
     static_assert(std::all_of(std::begin(mets), std::end(mets), [](char c) { return c == 'c'; }));
-#endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
+#endif /* __cpp_lib_constexpr_dynamic_alloc >= 201907L */
 
     Newocator<char>::init();
     {
@@ -706,13 +706,13 @@ TEST(DynArrayTests, TypeConsistency)
     static_assert(std::is_same<gsl::dyn_array<int>::difference_type, std::ptrdiff_t>::value, "Difference type mismatch");
 }
 
-#ifdef GSL_HAS_DEDUCTION_GUIDES
+#if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201703L)
 TEST(dyn_array_tests, deduction_guides)
 {
     std::vector<char> giants{10};
-#ifdef GSL_HAS_CONTAINER_RANGES
+#if defined(__cpp_lib_containers_ranges) && (__cpp_lib_containers_ranges >= 202202L)
     gsl::dyn_array mariners(std::from_range, giants);
-#endif /* GSL_HAS_CONTAINER_RANGES */
+#endif /* __cpp_lib_containers_ranges >= 202202L */
     gsl::dyn_array cardinals(std::begin(giants), std::end(giants));
 }
-#endif /* GSL_HAS_DEDUCTION_GUIDES */
+#endif /* __cpp_deduction_guides >= 201703L */

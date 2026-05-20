@@ -87,26 +87,6 @@
 #define GSL_DEPRECATED(msg)
 #endif // !defined(GSL_DEPRECATED)
 
-#if (defined(__cpp_deduction_guides) && __cpp_deduction_guides >= 201703L)
-#define GSL_HAS_DEDUCTION_GUIDES
-#endif // (defined(__cpp_deduction_guides) && __cpp_deduction_guides >= 201703L)
-
-#if (defined(__cpp_lib_ranges) && __cpp_lib_ranges >= 201911L)
-#define GSL_HAS_RANGES
-#endif // (defined(__cpp_lib_ranges) && __cpp_lib_ranges >= 201911L)
-
-#if (defined(__cpp_lib_containers_ranges) && __cpp_lib_containers_ranges >= 202202L)
-#define GSL_HAS_CONTAINER_RANGES
-#endif // (defined(__cpp_lib_containers_ranges) && __cpp_lib_containers_ranges >= 202202L)
-
-#if (defined(__cpp_lib_concepts) && __cpp_lib_concepts >= 202002L)
-#define GSL_HAS_CONCEPTS
-#endif // (defined(__cpp_lib_concepts) && __cpp_lib_concepts >= 202002L)
-
-#if (defined(__cpp_lib_constexpr_dynamic_alloc) && __cpp_lib_constexpr_dynamic_alloc >= 201907L)
-#define GSL_HAS_CONSTEXPR_ALLOCATOR
-#endif // (defined(__cpp_lib_constexpr_dynamic_alloc) && __cpp_lib_constexpr_dynamic_alloc >= 201907L)
-
 #if __cplusplus >= 202002L
 #define GSL_CONSTEXPR_SINCE_CPP20 constexpr
 #else // ^^^ since C++20 /// before C++20 vvv
