@@ -341,7 +341,7 @@ TEST(dyn_array_tests, custom_allocator_models_allocator)
 
 #ifdef GSL_HAS_CONSTEXPR_ALLOCATOR
     using constexpr_traits = std::allocator_traits<ConstexprAllocator<char, 10>>;
-    static_assert(std::is_same_v<constexpr_traits::value_type, char>);
+    static_assert(std::is_same<constexpr_traits::value_type, char>::value, "allocator trait type mismatch");
 #endif /* GSL_HAS_CONSTEXPR_ALLOCATOR */
 }
 
@@ -503,14 +503,14 @@ TEST(dyn_array_tests, unchecked_iterators)
 
 TEST(DynArrayTests, TypeConsistency)
 {
-    static_assert(std::is_same_v<gsl::dyn_array<int>::value_type, int>, "Value type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::reference, int&>, "Reference type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::const_reference, const int&>, "Const reference type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::iterator::value_type, int>, "Iterator value type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::iterator::reference, int&>, "Iterator reference type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::iterator::const_reference, const int&>, "Iterator const reference type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::size_type, std::size_t>, "Size type mismatch");
-    static_assert(std::is_same_v<gsl::dyn_array<int>::difference_type, std::ptrdiff_t>, "Difference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::value_type, int>::value, "Value type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::reference, int&>::value, "Reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::const_reference, const int&>::value, "Const reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::iterator::value_type, int>::value, "Iterator value type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::iterator::reference, int&>::value, "Iterator reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::iterator::const_reference, const int&>::value, "Iterator const reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::size_type, std::size_t>::value, "Size type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::difference_type, std::ptrdiff_t>::value, "Difference type mismatch");
 }
 
 #ifdef GSL_HAS_DEDUCTION_GUIDES
