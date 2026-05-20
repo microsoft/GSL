@@ -189,8 +189,6 @@ namespace details
         }
 
 #if defined(_MSC_VER) && defined(GSL_HAS_RANGES)
-        // TODO (@carsonradtke): Investigate why this is necessary for MSVC.
-        // Is it a bug in GSL? STL? MSVC?
         constexpr operator pointer() const { return _ptr + gsl::narrow<size_type>(_pos); }
 #endif /* defined(_MSC_VER) && defined(GSL_HAS_RANGES) */
 
@@ -302,7 +300,6 @@ class dyn_array : private details::dyn_array_base<T, Allocator>
     using pointer = T*;
 
     constexpr void swap(dyn_array& other) {
-        // TODO (@carsonradtke): This was not in the spec, should it have been?
         base::swap(other);
     }
 
@@ -336,7 +333,6 @@ public:
 
     template <typename InputIt, std::enable_if_t<!details::is_fwd_iterator<InputIt>::value && details::is_iterator<InputIt>::value, bool> = true>
     constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc={}) : dyn_array{alloc} {
-        // TODO (@carsonradtke): Can this be done better?
         std::vector<T> tmp(first, last);
         base::resize(tmp.size());
         base::copy(std::begin(tmp), std::end(tmp), data());
