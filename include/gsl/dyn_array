@@ -125,16 +125,7 @@ namespace details
             }
         }
 
-        constexpr void swap(dyn_array_base& other) {
-            auto old_count = _count;
-            auto old_data = _data;
-            _count = other._count;
-            _data = other._data;
-            other._count = old_count;
-            other._data = old_data;
-        }
-
-    private:
+        private:
         pointer _data;
         size_type _count;
 
@@ -299,10 +290,6 @@ class dyn_array : private details::dyn_array_base<T, Allocator>
     using base = details::dyn_array_base<T, Allocator>;
     using pointer = T*;
 
-    constexpr void swap(dyn_array& other) {
-        base::swap(other);
-    }
-
 public:
     using value_type = T;
     using reference = T&;
@@ -361,12 +348,6 @@ public:
     constexpr dyn_array(std::initializer_list<T> init, const Allocator& alloc = {})
         : dyn_array(init.begin(), init.end(), alloc)
     {}
-
-    constexpr auto operator=(const dyn_array& other) -> dyn_array& {
-        dyn_array tmp{other, get_allocator()};
-        swap(tmp);
-        return *this;
-    }
 
     constexpr dyn_array(dyn_array&&) = delete;
     dyn_array& operator=(dyn_array&&) = delete;

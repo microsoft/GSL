@@ -77,16 +77,16 @@ jobs:
           cmake_preset: clang-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
           extra_cmake_configure_args: '-DCMAKE_CXX_FLAGS="-isysroot \"$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\""'
 
-  VisualStudio:
+  msvc:
     strategy:
       matrix:
         image: [ windows-2022, windows-2025 ]
         build_type: [ Debug, Release ]
-        toolset: [ '', 'ClangCL' ]
+        toolset: [ 'msvc', 'ClangCL' ]
         cxx_version: [ 14, 17, 20, 23 ]
         include:
           # Regular MSVC builds use Ninja (from preset)
-          - toolset: ''
+          - toolset: 'msvc'
             generator_override: ''
           # ClangCL builds require Visual Studio generator
           - toolset: 'ClangCL'
@@ -104,4 +104,3 @@ jobs:
           extra_cmake_configure_args: ${{ matrix.generator_override }}
           extra_cmake_build_args: ${{ matrix.toolset == 'ClangCL' && format('--config {0}', matrix.build_type) || '' }}
           extra_ctest_args: ${{ matrix.toolset == 'ClangCL' && format('-C {0}', matrix.build_type) || '' }}
-

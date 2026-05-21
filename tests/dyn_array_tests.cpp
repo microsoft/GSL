@@ -152,16 +152,6 @@ constexpr auto default_constructed_count_dyn_array_is_constexpr()
     return values.size() == 3 && values[0] == 0 && values[1] == 0 && values[2] == 0;
 }
 
-constexpr auto copy_assigned_dyn_array_is_constexpr()
-{
-    gsl::dyn_array<int> source(3, 7);
-    gsl::dyn_array<int> target(2, 4);
-
-    target = source;
-
-    return target.size() == 3 && target[0] == 7 && target[1] == 7 && target[2] == 7;
-}
-
 TEST(dyn_array_tests, constexprness)
 {
     constexpr gsl::dyn_array<char> marlins;
@@ -172,7 +162,6 @@ TEST(dyn_array_tests, constexprness)
     static_assert(marlins.begin() == marlins.end());
     static_assert(std::distance(marlins.begin(), marlins.end()) == 0);
     static_assert(default_constructed_count_dyn_array_is_constexpr());
-    static_assert(copy_assigned_dyn_array_is_constexpr());
 }
 #endif /* __cpp_lib_constexpr_dynamic_alloc >= 201907L */
 
@@ -510,23 +499,6 @@ TEST(dyn_array_tests, custom_allocator)
     Newocator<char>::check();
 }
 
-TEST(dyn_array_tests, copy_assignment_deallocates_with_the_allocator_that_owns_the_storage)
-{
-    using allocator_type = OwnershipTrackingAllocator<char>;
-    using array_type = gsl::dyn_array<char, allocator_type>;
-
-    allocator_type::reset();
-
-    {
-        array_type source(3, 's', allocator_type{1});
-        array_type target(2, 't', allocator_type{2});
-
-        target = source;
-    }
-
-    EXPECT_EQ(allocator_type::mismatched_deallocations(), 0);
-}
-
 TEST(dyn_array_tests, non_trivial_elements_are_destroyed)
 {
     LifetimeCounter::alive_count = 0;
@@ -596,20 +568,6 @@ TEST(dyn_array_tests, reverse_iterator)
     EXPECT_EQ(*it++, 'c');
     EXPECT_EQ(*it++, 'b');
     EXPECT_EQ(*it++, 'a');
-}
-
-TEST(dyn_array_tests, copy_assignment)
-{
-    gsl::dyn_array<char> rays(3, 'r');
-    const gsl::dyn_array<char> rangers{'a', 'b', 'c'};
-
-    auto& assigned = (rays = rangers);
-
-    EXPECT_EQ(&assigned, &rays);
-    EXPECT_EQ(rays.size(), rangers.size());
-    EXPECT_EQ(rays[0], 'a');
-    EXPECT_EQ(rays[1], 'b');
-    EXPECT_EQ(rays[2], 'c');
 }
 
 TEST(dyn_array_tests, random_access_iterator_arithmetic)

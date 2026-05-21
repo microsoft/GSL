@@ -116,10 +116,9 @@ namespace details
         : std::true_type {};
 
     template <typename T, typename = void>
-    struct is_fwd_iterator : std::false_type
-    {};
-
-   template <typename T>
+    struct is_fwd_iterator : std::false_type {};
+    
+    template <typename T>
     struct is_fwd_iterator<T, void_t<typename std::iterator_traits<T>::iterator_category>>
         : std::integral_constant<bool, std::is_base_of<std::forward_iterator_tag, typename std::iterator_traits<T>::iterator_category>::value> {};
 } // namespace details
