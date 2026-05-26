@@ -298,8 +298,8 @@ public:
     {}
 
     // To avoid invalidating the "not null" invariant, the contained pointer is actually copied
-    // instead of moved. If it is a custom pointer, its constructor could in theory throw exceptions.
-    strict_not_null(strict_not_null&& other) noexcept(std::is_nothrow_copy_constructible<T>::value) = default;
+    // instead of moved. If it is a custom pointer type, its copy constructor must not throw exceptions.
+    strict_not_null(strict_not_null&& other) noexcept = default;
     strict_not_null(const strict_not_null& other) = default;
     strict_not_null& operator=(const strict_not_null& other) = default;
     strict_not_null& operator=(const not_null<T>& other)
