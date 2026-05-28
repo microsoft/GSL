@@ -21,7 +21,7 @@
 
 using namespace gsl;
 
-GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
+GSL_SUPPRESS(f.23)
 void f(int* i) { *i += 1; }
 
 TEST(owner_tests, basic_test)
@@ -43,8 +43,7 @@ using void_t = void;
 template <typename U, typename = void>
 static constexpr bool OwnerCompilesFor = false;
 template <typename U>
-static constexpr bool OwnerCompilesFor<U, void_t<decltype(gsl::owner<U>{})>> =
-        true;
+static constexpr bool OwnerCompilesFor<U, void_t<decltype(gsl::owner<U>{})>> = true;
 static_assert(OwnerCompilesFor<int*>, "OwnerCompilesFor<int*>");
 static_assert(!OwnerCompilesFor<int>, "!OwnerCompilesFor<int>");
 static_assert(!OwnerCompilesFor<std::shared_ptr<int>>, "!OwnerCompilesFor<std::shared_ptr<int>>");

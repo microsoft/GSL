@@ -41,24 +41,16 @@ struct RefCounted
 
 namespace
 {
-// clang-format off
-GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-// clang-format on
+GSL_SUPPRESS(f.4)
 bool helper(not_null<int*> p) { return *p == 12; }
 
-// clang-format off
-GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-// clang-format on
+GSL_SUPPRESS(f.4)
 bool helper_const(not_null<const int*> p) { return *p == 12; }
 
-// clang-format off
-GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-// clang-format on
+GSL_SUPPRESS(f.4)
 bool strict_helper(strict_not_null<int*> p) { return *p == 12; }
 
-// clang-format off
-GSL_SUPPRESS(f.4) // NO-FORMAT: attribute
-// clang-format on
+GSL_SUPPRESS(f.4)
 bool strict_helper_const(strict_not_null<const int*> p) { return *p == 12; }
 
 int* return_pointer() { return nullptr; }
@@ -195,14 +187,12 @@ template <typename U>
 static constexpr bool
     StrictHelperCompilesFor<U, void_t<decltype(strict_helper(std::declval<U>()))>> = true;
 
-
 template <typename U, typename = void>
 static constexpr bool StrictHelperConstCompilesFor = false;
 template <typename U>
 static constexpr bool
     StrictHelperConstCompilesFor<U, void_t<decltype(strict_helper_const(std::declval<U>()))>> =
         true;
-
 
 template <typename U, typename = void>
 static constexpr bool HelperCompilesFor = false;
@@ -219,13 +209,12 @@ TEST(strict_notnull_tests, TestStrictNotNull)
         strict_not_null<int*> snn = &x;
 #endif
         static_assert(!StrictHelperCompilesFor<int*>, "!StrictHelperCompilesFor<int*>");
-        static_assert(!StrictHelperConstCompilesFor<int*>,
-                      "!StrictHelperCompilesFor<int*>");
+        static_assert(!StrictHelperConstCompilesFor<int*>, "!StrictHelperCompilesFor<int*>");
 
         const strict_not_null<int*> snn1{&x};
 
         static_assert(StrictHelperCompilesFor<const strict_not_null<int*>>,
-                          "StrictHelperCompilesFor<const strict_not_null<int*>>");
+                      "StrictHelperCompilesFor<const strict_not_null<int*>>");
         helper(snn1);
         helper_const(snn1);
 

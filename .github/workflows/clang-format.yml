@@ -1,0 +1,26 @@
+name: Code Formatting
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  clang-format:
+    name: Run clang-format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Runs clang-format over the repository codebase
+      - name: Check format
+        uses: jidicula/clang-format-action@v4.11.0
+        with:
+          clang-format-version: '19'
+          check-path: 'include tests'
