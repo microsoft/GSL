@@ -70,9 +70,7 @@ struct AddressOverloaded
     [[maybe_unused]]
 #endif
     AddressOverloaded operator&() const
-    {
-        return {};
-    }
+    { return {}; }
 };
 } // namespace
 
@@ -344,7 +342,7 @@ TEST(span_test, from_array_constructor)
 
 TEST(span_test, from_dynamic_array_constructor)
 {
-    double(*arr)[3][4] = new double[100][3][4];
+    double (*arr)[3][4] = new double[100][3][4];
 
     {
         span<double> s(&arr[0][0][0], 10);

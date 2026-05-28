@@ -22,5 +22,5 @@ jobs:
       - name: Check format
         uses: jidicula/clang-format-action@v4.11.0
         with:
-          clang-format-version: '19'
+          clang-format-version: '20'
           check-path: 'include tests'
