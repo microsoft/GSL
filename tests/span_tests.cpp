@@ -70,7 +70,9 @@ struct AddressOverloaded
     [[maybe_unused]]
 #endif
     AddressOverloaded operator&() const
-    { return {}; }
+    {
+        return {};
+    }
 };
 } // namespace
 
