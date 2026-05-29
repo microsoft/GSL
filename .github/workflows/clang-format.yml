@@ -18,6 +18,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Prints the version of clang-format being used
+      - name: Log clang-format version
+        run: clang-format --version
+        
       # Runs clang-format over the repository codebase
       - name: Check format
         run: |
