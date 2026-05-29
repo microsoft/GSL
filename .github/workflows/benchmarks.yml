@@ -1,180 +1,363 @@
-name: Performance Benchmarks
+# .github/workflows/span_benchmark.yml
+#
+# Benchmarks gsl::span vs std::span on every PR across all supported compilers.
+# Strategy: in-run ratio (gsl_ns / std_ns) — noise-resistant because both
+# spans run in the same process, same machine, same moment.
+#
+# All dependencies (google-benchmark v1.9.0, GSL v4.1.0) are pulled via
+# FetchContent inside the repo's CMakeLists.txt — no separate install steps.
+# The build/_deps directory is cached, keyed on CMakeLists.txt hash, so
+# repeated runs don't re-clone anything.
+#
+# Three separate job groups (one per OS) because `runs-on` can't share a
+# matrix with OS-specific shell/path differences cleanly:
+#
+#   benchmark-linux   → ubuntu-latest  → GCC-13, GCC-14, Clang-17, Clang-18
+#   benchmark-windows → windows-latest → MSVC 2022, clang-cl
+#   benchmark-macos   → macos-14       → Apple Clang (Xcode latest)
+#
+# A final `comment` job waits for all three groups, collects every JSON
+# artifact, runs check_regression.py, and posts (or updates) one PR comment.
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+name: Span Benchmark
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+# Cancel stale runs when a new commit is pushed to the same PR.
+concurrency:
+  group: span-bench-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
-  benchmarks-gcc:
-    strategy:
-      matrix:
-        gcc_version: [ 14 ]
-        build_type: [ Release ]
-        cxx_version: [ 20 ]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LINUX  —  GCC 13/14  ·  Clang 17/18  (× C++20 and C++23)
+# ─────────────────────────────────────────────────────────────────────────────
+  benchmark-linux:
+    name: Linux / ${{ matrix.label }}
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Install GCC
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y g++-${{ matrix.gcc_version }}
-
-      - name: Configure CMake for benchmarks
-        working-directory: benchmark
-        run: |
-          mkdir -p build
-          cd build
-          cmake .. \
-            -DCMAKE_CXX_COMPILER=g++-${{ matrix.gcc_version }} \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_version }}
-
-      - name: Build benchmarks
-        working-directory: benchmark/build
-        run: cmake --build . --config ${{ matrix.build_type }}
-
-      - name: Run benchmarks
-        working-directory: benchmark/build
-        run: |
-          ./span_bench > benchmark_output.txt 2>&1
-          ./span_bench --benchmark_format=json > benchmark_results.json 2>/dev/null
-        continue-on-error: true
-
-      - name: Upload benchmark results
-        uses: actions/upload-artifact@v5
-        with:
-          name: benchmark-results-gcc-${{ matrix.gcc_version }}-cxx${{ matrix.cxx_version }}
-          path: |
-            benchmark/build/benchmark_results.json
-            benchmark/build/benchmark_output.txt
-
-      - name: Comment PR with benchmark results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const benchmark_output = fs.readFileSync('benchmark/build/benchmark_output.txt', 'utf8');
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Benchmark Results - GCC ${{ matrix.gcc_version }} (C++${{ matrix.cxx_version }})\n\n\`\`\`\n${benchmark_output}\n\`\`\``
-            });
-
-  benchmarks-clang:
     strategy:
+      fail-fast: false
       matrix:
-        clang_version: [ 18 ]
-        build_type: [ Release ]
-        cxx_version: [ 20 ]
-    runs-on: ubuntu-latest
+        include:
+          # ── GCC ────────────────────────────────────────────────────────
+          - label: GCC-13-cpp20
+            cxx: g++-13
+            cppstd: 20
+            extra_flags: ""
+
+          - label: GCC-14-cpp20
+            cxx: g++-14
+            cppstd: 20
+            extra_flags: ""
+
+          - label: GCC-14-cpp23
+            cxx: g++-14
+            cppstd: 23
+            extra_flags: ""
+
+          # ── Clang ──────────────────────────────────────────────────────
+          - label: Clang-17-cpp20
+            cxx: clang++-17
+            cppstd: 20
+            extra_flags: ""
+
+          - label: Clang-18-cpp20
+            cxx: clang++-18
+            cppstd: 20
+            extra_flags: ""
+
+          - label: Clang-18-cpp23
+            cxx: clang++-18
+            cppstd: 23
+            extra_flags: ""
+
+          # ── Clang + -fbounds-safety (core motivation of issue #1167) ───
+          # Safe Buffers enforcement is what triggered this whole tracking effort.
+          - label: Clang-18-cpp20-bounds-safety
+            cxx: clang++-18
+            cppstd: 20
+            extra_flags: "-fbounds-safety"
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
-      - name: Install Clang
+      # ── Compiler install ───────────────────────────────────────────────
+      # GCC-13 and Clang pre-17 are already on ubuntu-latest (24.04).
+      - name: Install GCC 14
+        if: startsWith(matrix.cxx, 'g++-14')
         run: |
-          sudo apt-get update
-          sudo apt-get install -y clang-${{ matrix.clang_version }}
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+          sudo apt-get update -qq
+          sudo apt-get install -y g++-14
 
-      - name: Configure CMake for benchmarks
-        working-directory: benchmark
+      - name: Install Clang 17
+        if: matrix.cxx == 'clang++-17'
         run: |
-          mkdir -p build
-          cd build
-          cmake .. \
-            -DCMAKE_CXX_COMPILER=clang++-${{ matrix.clang_version }} \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_version }}
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+            | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-17 main" \
+            | sudo tee /etc/apt/sources.list.d/llvm-17.list
+          sudo apt-get update -qq && sudo apt-get install -y clang-17
 
-      - name: Build benchmarks
-        working-directory: benchmark/build
-        run: cmake --build . --config ${{ matrix.build_type }}
-
-      - name: Run benchmarks
-        working-directory: benchmark/build
+      - name: Install Clang 18
+        if: matrix.cxx == 'clang++-18'
         run: |
-          ./span_bench > benchmark_output.txt 2>&1
-          ./span_bench --benchmark_format=json > benchmark_results.json 2>/dev/null
-        continue-on-error: true
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+            | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" \
+            | sudo tee /etc/apt/sources.list.d/llvm-18.list
+          sudo apt-get update -qq && sudo apt-get install -y clang-18
 
-      - name: Upload benchmark results
-        uses: actions/upload-artifact@v5
+      # ── FetchContent cache ─────────────────────────────────────────────
+      # Caches the cloned sources for google-benchmark, googletest, and GSL.
+      # Key is the hash of CMakeLists.txt — busts automatically on any
+      # GIT_TAG bump without manual intervention.
+      - name: Cache FetchContent dependencies
+        uses: actions/cache@v4
         with:
-          name: benchmark-results-clang-${{ matrix.clang_version }}-cxx${{ matrix.cxx_version }}
-          path: |
-            benchmark/build/benchmark_results.json
-            benchmark/build/benchmark_output.txt
+          path: build/_deps
+          key: fetchcontent-linux-${{ matrix.cxx }}-${{ hashFiles('CMakeLists.txt') }}
+          restore-keys: |
+            fetchcontent-linux-${{ matrix.cxx }}-
 
-      - name: Comment PR with benchmark results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+      # ── Configure → Build → Run ────────────────────────────────────────
+      # FetchContent handles benchmark + GSL — no separate install needed.
+      # -DCMAKE_CXX_STANDARD overrides the default C++20 set in CMakeLists
+      # so we can test C++23 configs from the matrix.
+      - name: Configure
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
+            -DCMAKE_CXX_FLAGS="${{ matrix.extra_flags }}"
+
+      - name: Build
+        run: cmake --build build --target span_bench -j$(nproc)
+
+      # 10 repetitions → mean + stddev aggregates in the JSON output.
+      # benchmark_report_aggregates_only keeps the file compact.
+      - name: Run benchmark
+        run: |
+          ./build/span_bench \
+            --benchmark_format=json \
+            --benchmark_repetitions=10 \
+            --benchmark_report_aggregates_only=true \
+            --benchmark_out=results_${{ matrix.label }}.json
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
         with:
-          script: |
-            const fs = require('fs');
-            const benchmark_output = fs.readFileSync('benchmark/build/benchmark_output.txt', 'utf8');
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Benchmark Results - Clang ${{ matrix.clang_version }} (C++${{ matrix.cxx_version }})\n\n\`\`\`\n${benchmark_output}\n\`\`\``
-            });
+          name: bench-${{ matrix.label }}
+          path: results_${{ matrix.label }}.json
+          retention-days: 7
 
-  benchmarks-msvc:
+# ─────────────────────────────────────────────────────────────────────────────
+# WINDOWS  —  MSVC 2022  ·  clang-cl  (× C++20 and C++23)
+#
+# Notes:
+#   • Uses the Visual Studio 17 2022 generator for both MSVC and clang-cl.
+#     The -T ClangCL toolset switch selects the clang-cl frontend that ships
+#     bundled with VS 2022 — no extra install needed.
+#   • Multi-config generator: output binary is at
+#     build\Release\span_bench.exe (FetchContent flat layout, no subdir).
+#   • FetchContent cache is keyed per-toolset because MSVC and clang-cl
+#     produce ABI-incompatible object files.
+#   • PowerShell is used throughout (shell: pwsh) for consistent quoting.
+# ─────────────────────────────────────────────────────────────────────────────
+  benchmark-windows:
+    name: Windows / ${{ matrix.label }}
+    runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
-        image: [ windows-2025 ]
-        build_type: [ Release ]
-        cxx_version: [ 20 ]
-    runs-on: ${{ matrix.image }}
+        include:
+          # ── MSVC 2022 ──────────────────────────────────────────────────
+          - label: MSVC-2022-cpp20
+            toolset: ""
+            cppstd: 20
+            extra_flags: ""
+
+          - label: MSVC-2022-cpp23
+            toolset: ""
+            cppstd: 23
+            extra_flags: ""
+
+          # ── clang-cl (bundled with VS 2022) ────────────────────────────
+          - label: clang-cl-cpp20
+            toolset: "ClangCL"
+            cppstd: 20
+            extra_flags: ""
+
+          - label: clang-cl-cpp23
+            toolset: "ClangCL"
+            cppstd: 23
+            extra_flags: ""
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
-      - name: Configure CMake for benchmarks
-        working-directory: benchmark
-        run: |
-          mkdir build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx_version }}
+      # ── FetchContent cache ─────────────────────────────────────────────
+      - name: Cache FetchContent dependencies
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: fetchcontent-windows-${{ matrix.toolset }}-${{ hashFiles('CMakeLists.txt') }}
+          restore-keys: |
+            fetchcontent-windows-${{ matrix.toolset }}-
 
-      - name: Build benchmarks
-        working-directory: benchmark/build
-        run: cmake --build . --config ${{ matrix.build_type }}
-
-      - name: Run benchmarks
-        working-directory: benchmark/build
-        run: |
-          $config = "${{ matrix.build_type }}"
-          & ".\$config\span_bench.exe" | Tee-Object -FilePath benchmark_output.txt | Out-Null
-          & ".\$config\span_bench.exe" --benchmark_format=json | Out-File -FilePath benchmark_results.json
+      # ── Configure → Build → Run ────────────────────────────────────────
+      - name: Configure
         shell: pwsh
+        run: |
+          $tsArg = if ("${{ matrix.toolset }}" -ne "") { @("-T", "${{ matrix.toolset }}") } else { @() }
+
+          cmake -S . -B build `
+            -G "Visual Studio 17 2022" @tsArg `
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} `
+            -DCMAKE_CXX_FLAGS="${{ matrix.extra_flags }}"
+
+      - name: Build
+        shell: pwsh
+        run: |
+          cmake --build build --target span_bench `
+            --config Release -j $env:NUMBER_OF_PROCESSORS
+
+      # Multi-config generator places the binary under build\Release\
+      - name: Run benchmark
+        shell: pwsh
+        run: |
+          .\build\Release\span_bench.exe `
+            --benchmark_format=json `
+            --benchmark_repetitions=10 `
+            --benchmark_report_aggregates_only=true `
+            --benchmark_out=results_${{ matrix.label }}.json
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ matrix.label }}
+          path: results_${{ matrix.label }}.json
+          retention-days: 7
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MACOS  —  Apple Clang via Xcode (latest)  (× C++20 and C++23)
+#
+# Notes:
+#   • macos-14 = Apple Silicon (M1). Switch to macos-13 for Intel if needed.
+#   • No extra compiler install — Apple Clang from Xcode is used directly.
+#   • -j uses sysctl (macOS equivalent of nproc).
+# ─────────────────────────────────────────────────────────────────────────────
+  benchmark-macos:
+    name: macOS / ${{ matrix.label }}
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: AppleClang-cpp20
+            cppstd: 20
+            extra_flags: ""
+
+          - label: AppleClang-cpp23
+            cppstd: 23
+            extra_flags: ""
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ── FetchContent cache ─────────────────────────────────────────────
+      - name: Cache FetchContent dependencies
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: fetchcontent-macos-${{ matrix.cppstd }}-${{ hashFiles('CMakeLists.txt') }}
+          restore-keys: |
+            fetchcontent-macos-${{ matrix.cppstd }}-
+
+      # ── Configure → Build → Run ────────────────────────────────────────
+      - name: Configure
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
+            -DCMAKE_CXX_FLAGS="${{ matrix.extra_flags }}"
+
+      - name: Build
+        run: cmake --build build --target span_bench -j$(sysctl -n hw.logicalcpu)
+
+      - name: Run benchmark
+        run: |
+          ./build/span_bench \
+            --benchmark_format=json \
+            --benchmark_repetitions=10 \
+            --benchmark_report_aggregates_only=true \
+            --benchmark_out=results_${{ matrix.label }}.json
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ matrix.label }}
+          path: results_${{ matrix.label }}.json
+          retention-days: 7
+
+# ─────────────────────────────────────────────────────────────────────────────
+# COMMENT  —  collect every result artifact → one PR comment
+#
+# Waits for all three OS groups. `if: always()` ensures this runs even when
+# some benchmark jobs fail — partial results are always reported.
+# The CI check fails at the very end (after posting) if any regression found.
+# ─────────────────────────────────────────────────────────────────────────────
+  comment:
+    name: Post PR comment
+    needs: [benchmark-linux, benchmark-windows, benchmark-macos]
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all result artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: bench-*
+          merge-multiple: true    # flatten all artifacts into CWD
+
+      # continue-on-error so the comment step always runs even on regression.
+      - name: Generate regression report
+        id: report
+        run: |
+          python3 benchmark/check_regression.py \
+            --threshold 0.15 \
+            --output comment.md \
+            results_*.json
         continue-on-error: true
 
-      - name: Upload benchmark results
-        uses: actions/upload-artifact@v5
+      - name: Find existing bot comment
+        uses: peter-evans/find-comment@v3
+        id: find_comment
         with:
-          name: benchmark-results-msvc-${{ matrix.image }}-cxx${{ matrix.cxx_version }}
-          path: |
-            benchmark/build/benchmark_results.json
-            benchmark/build/benchmark_output.txt
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: github-actions[bot]
+          body-includes: "<!-- span-bench-report -->"
 
-      - name: Comment PR with benchmark results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+      # One comment per PR, updated on every push — not a flood of new ones.
+      - name: Create or update PR comment
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          script: |
-            const fs = require('fs');
-            const benchmark_output = fs.readFileSync('benchmark/build/benchmark_output.txt', 'utf8');
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Benchmark Results - MSVC on ${{ matrix.image }} (C++${{ matrix.cxx_version }})\n\n\`\`\`\n${benchmark_output}\n\`\`\``
-            });
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: comment.md
+          edit-mode: replace
+
+      # Surface the failure visibly in the CI check panel.
+      - name: Fail if regression detected
+        if: steps.report.outcome == 'failure'
+        run: |
+          echo "::error::Performance regression detected. See the PR comment for the full table."
+          exit 1
