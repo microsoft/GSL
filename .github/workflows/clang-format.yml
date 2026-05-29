@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
 
+env:
+  CLANG_VERSION: "20"
+
 jobs:
   clang-format:
     name: Run clang-format
@@ -18,9 +21,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Install the exact clang-format binary
+      - name: Install clang-format
+        run: |
+          sudo apt install clang-format-${{ env.CLANG_VERSION }}
+
       # Prints the version of clang-format being used
       - name: Log clang-format version
-        run: clang-format --version
+        run: clang-format-${{ env.CLANG_VERSION }} --version
         
       # Runs clang-format over the repository codebase
       - name: Check format
@@ -28,4 +36,4 @@ jobs:
           {
             find include -type f
             find tests -type f \( -name '*.cpp' -o -name '*.h' \)
-          } | xargs clang-format --dry-run --Werror
+          } | xargs clang-format-${{ env.CLANG_VERSION }} --dry-run --Werror
