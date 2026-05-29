@@ -110,9 +110,9 @@ jobs:
       - name: Install Clang 17
         if: matrix.cxx == 'clang++-17'
         run: |
-          wget -qO- [https://apt.llvm.org/llvm-snapshot.gpg.key](https://apt.llvm.org/llvm-snapshot.gpg.key) \
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
             | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-          echo "deb [http://apt.llvm.org/noble/](http://apt.llvm.org/noble/) llvm-toolchain-noble-17 main" \
+          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-17 main" \
             | sudo tee /etc/apt/sources.list.d/llvm-17.list
           sudo apt-get update -qq && sudo apt-get install -y clang-17
 
@@ -120,9 +120,9 @@ jobs:
       - name: Install Clang 18
         if: matrix.cxx == 'clang++-18'
         run: |
-          wget -qO- [https://apt.llvm.org/llvm-snapshot.gpg.key](https://apt.llvm.org/llvm-snapshot.gpg.key) \
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
             | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-          echo "deb [http://apt.llvm.org/noble/](http://apt.llvm.org/noble/) llvm-toolchain-noble-18 main" \
+          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" \
             | sudo tee /etc/apt/sources.list.d/llvm-18.list
           sudo apt-get update -qq && sudo apt-get install -y clang-18
 
