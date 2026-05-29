@@ -1,83 +1,144 @@
-# GSL Performance Benchmarks
+# `gsl::span` vs `std::span` Benchmark
 
-This directory contains performance benchmarks comparing `gsl::span` with `std::span` across various workloads and compiler implementations.
+Performance parity tracking between `gsl::span` and `std::span` across all supported compilers, platforms, and C++ standards — as part of [microsoft/GSL#1167](https://github.com/microsoft/GSL/issues/1167) and [microsoft/GSL#1165](https://github.com/microsoft/GSL/issues/1165).
+
+---
 
 ## Overview
 
-The benchmarks test critical span operations to ensure `gsl::span` maintains **performance parity** with `std::span`, particularly when [Safe Buffers](https://clang.llvm.org/docs/SafeBuffers.html) are enabled.
+`gsl::span` should be a zero-overhead abstraction over `std::span`. This benchmark suite verifies that claim continuously — on every PR — so performance regressions are caught before they land in main.
 
-### Tested Operations
+The comparison strategy is **in-run ratio** (`gsl_ns / std_ns`): both spans are measured in the same process on the same machine at the same moment, so runner noise cancels out. A ratio close to `1.0` means parity. If `gsl::span` is more than **15% slower** than `std::span` on any benchmark, CI flags it and posts a detailed table in the PR comment.
 
-- **`is_sorted`**: Custom iterator-based check, `std::is_sorted`, and `std::ranges::is_sorted`
-- **`min_element`**: Algorithm-based and range-for iteration approaches
+---
 
-Each test compares both `std::span` and `gsl::span` implementations.
+## Benchmarks
 
-## Building Locally
+All benchmarks run on a sorted vector of 1000 integers.
 
-### Prerequisites
+| Benchmark | What it tests |
+|---|---|
+| `IsSorted` | `std::is_sorted` via span iterators |
+| `IsSortedRanges` | `std::ranges::is_sorted` via the span range interface |
+| `IsSortedCustom` | Custom hand-rolled `is_sorted` loop via span iterators |
+| `MinElementAlgorithm` | `std::min_element` via span iterators |
+| `MinElementRangeFor` | Range-for loop with a custom min accumulator |
 
-- CMake 3.20+
-- C++20 compiler or newer (GCC, Clang, or MSVC)
-- Google Benchmark (fetched automatically via CMake)
-- Google Test (fetched automatically via CMake)
+Each benchmark has a `StdSpan` and `GslSpan` variant. The Python script pairs them by name and computes the ratio.
 
-### Build Steps
+---
 
-```bash
-# From the repository root
-cd benchmark
-mkdir -p build
-cd build
+## CI Matrix
 
-# Configure with Release build type (important for accurate benchmarks)
-cmake .. -DCMAKE_BUILD_TYPE=Release
+The benchmark runs on every pull request across 13 configurations:
 
-# Build
-cmake --build . --config Release
+| OS | Compiler | C++ Standard |
+|---|---|---|
+| ubuntu-latest | GCC 13 | C++20 |
+| ubuntu-latest | GCC 14 | C++20, C++23 |
+| ubuntu-latest | Clang 17 | C++20 |
+| ubuntu-latest | Clang 18 | C++20, C++23 |
+| windows-latest | MSVC 2022 | C++20, C++23 |
+| windows-latest | clang-cl (VS 2022 bundled) | C++20, C++23 |
+| macos-14 (Apple Silicon) | Apple Clang (Xcode latest) | C++20, C++23 |
+
+Results from all 13 jobs are collected and posted as a **single PR comment**, updated on every push.
+
+---
+
+## Repository Layout
+
+```
+benchmark/
+├── CMakeLists.txt        # self-contained build — fetches benchmark + googletest
+├── span_bench.cpp        # the benchmark source
+├── check_regression.py   # parses JSON results, writes the PR comment markdown
+└── README.md             # this file
+
+.github/workflows/
+└── span_benchmark.yml    # CI workflow
 ```
 
-## Running Benchmarks
+The benchmark folder is self-contained. `CMakeLists.txt` fetches `google/benchmark` (v1.9.0) and `google/googletest` via `FetchContent`. GSL itself is sourced from the **local repo checkout** — not a pinned tag — so the benchmark always tests the code in the PR, not a release.
+
+---
+
+## Running Locally
+
+**Prerequisites:** CMake ≥ 3.20, a C++20-capable compiler, internet access for `FetchContent`.
 
 ```bash
-# Run all benchmarks with default output
-./span_bench
+# From the benchmark/ directory:
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --target span_bench
 
-# Run with JSON output (useful for analysis)
-./span_bench --benchmark_format=json > results.json
+# Run with JSON output (matches what CI does):
+./build/span_bench \
+  --benchmark_format=json \
+  --benchmark_repetitions=10 \
+  --benchmark_report_aggregates_only=true \
+  --benchmark_out=results.json
 
-# Run specific benchmark (regex matching)
-./span_bench --benchmark_filter="IsSorted"
-
-# Show detailed statistics
-./span_bench --benchmark_report_aggregates_only=true
+# Generate the regression report locally:
+python3 check_regression.py --threshold 0.15 results.json
 ```
 
-For more options, see [Google Benchmark documentation](https://github.com/google/benchmark#usage).
+To test a specific compiler or standard:
 
-## CI Integration
+```bash
+cmake -S . -B build \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_CXX_COMPILER=clang++-18 \
+  -DCMAKE_CXX_STANDARD=23
+```
 
-Benchmarks automatically run on every pull request across:
-- **Compilers**: GCC 14 (latest), Clang 18 (latest), MSVC (latest)
-- **Standards**: C++20
-- **Platforms**: Linux (GCC/Clang), Windows (MSVC on windows-2025)
+---
 
-Results are uploaded as GitHub Actions artifacts for easy download and analysis.
+## Regression Detection
 
-Results are uploaded as GitHub Actions artifacts and can be analyzed for performance regressions.
+The `check_regression.py` script:
 
-## Performance Analysis
+1. Reads one or more Google Benchmark JSON files (one per CI matrix config)
+2. Pairs `*StdSpan` benchmarks with their `*GslSpan` counterparts by name
+3. Computes `ratio = gsl_mean / std_mean` using the 10-repetition mean
+4. Flags any ratio above `1 + threshold` (default **15%**) as a regression
+5. Writes a Markdown table per config, collected into a single PR comment
+6. Exits with code `1` if any regression is found — failing the CI check
 
-When comparing results:
-1. Always compare the same compiler, C++ standard, and platform
-2. Release builds should be used for accurate measurements
-3. Significant differences (>5%) between `std::span` and `gsl::span` warrant investigation
-4. Account for noise in CI environments when analyzing small variations
+```
+python3 check_regression.py [--threshold 0.15] [--output report.md] results_*.json
+```
 
-## Contributing
+### Example PR comment output
 
-When adding new benchmarks:
-1. Follow the existing pattern in `span_bench.cpp`
-2. Compare both `std::span` and `gsl::span` implementations
-3. Use `benchmark::DoNotOptimize` to prevent compiler optimizations from skewing results
-4. Document what the benchmark tests and why it matters
+```
+## 📊 gsl::span vs std::span benchmark results
+
+### `GCC-14-cpp20`
+| Benchmark            | std mean | std σ  | gsl mean | gsl σ  | ratio | status   |
+|----------------------|----------|--------|----------|--------|-------|----------|
+| IsSorted             | 124.1 ns | ±1.2%  | 125.3 ns | ±1.4%  | 1.01× | ✅ 1.01× |
+| IsSortedRanges       |  88.4 ns | ±0.9%  |  89.1 ns | ±1.1%  | 1.01× | ✅ 1.01× |
+| IsSortedCustom       | 112.6 ns | ±1.5%  | 113.2 ns | ±1.3%  | 1.01× | ✅ 1.01× |
+| MinElementAlgorithm  |  95.2 ns | ±1.0%  |  96.0 ns | ±1.2%  | 1.01× | ✅ 1.01× |
+| MinElementRangeFor   |  98.7 ns | ±1.1%  |  99.4 ns | ±0.8%  | 1.01× | ✅ 1.01× |
+```
+
+Status icons:
+- ✅ — within the threshold (parity)
+- 🔴 — `gsl::span` is more than 15% slower (regression, CI fails)
+- 🟢 — `gsl::span` is more than 15% faster (improvement, noted but not a failure)
+
+---
+
+## Noise Considerations
+
+GitHub-hosted runners are shared VMs with a typical noise floor of **±10–15%** on absolute timing. The ratio strategy mitigates this because both span variants experience the same CPU conditions simultaneously. The 15% threshold is chosen to sit just above the noise floor — tight enough to catch real regressions, loose enough to avoid false positives on every PR.
+
+To further reduce variance, each benchmark runs **10 repetitions** and the script uses the **mean** (not a single sample) for the ratio calculation. The stddev column in the comment table lets reviewers eyeball how stable each measurement was.
+
+---
+
+## Background
+
+This benchmark was created in response to [microsoft/GSL#1167](https://github.com/microsoft/GSL/issues/1167), which highlighted the need to maintain performance parity with `std::span`, especially when [Safe Buffers / `-fbounds-safety`](https://clang.llvm.org/docs/SafeBuffers.html) are enabled. The initial benchmark scaffolding was provided by @galenelias.

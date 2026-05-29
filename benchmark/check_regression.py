@@ -234,7 +234,7 @@ def build_report(json_paths: list[str], threshold: float, workflow_url: str = No
     lines.append(
         "_Ratio = `gsl_ns / std_ns`. "
         "Values close to 1.0 mean performance parity. "
-        "Run by [span-benchmark CI]({workflow_url})._"
+        f"Run by [span-benchmark CI]({workflow_url})._"
     )
 
     return "\n".join(lines), had_regression
