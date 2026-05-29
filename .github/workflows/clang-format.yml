@@ -20,7 +20,8 @@ jobs:
 
       # Runs clang-format over the repository codebase
       - name: Check format
-        uses: jidicula/clang-format-action@v4.11.0
-        with:
-          clang-format-version: '20'
-          check-path: 'include tests'
+        run: |
+          {
+            find include -type f
+            find tests -type f \( -name '*.cpp' -o -name '*.h' \)
+          } | xargs clang-format --dry-run --Werror
