@@ -381,7 +381,7 @@ jobs:
           python3 benchmark/check_regression.py \
             --threshold 0.15 \
             --output comment.md \
-            --workflow-url "https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/span_benchmark.yml" \
+            --workflow-url "https://github.com/${{ github.repository }}/blob/tree/main/.github/workflows/span_benchmark.yml" \
             results_*.json
         continue-on-error: true
 
