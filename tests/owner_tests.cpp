@@ -21,7 +21,7 @@
 
 using namespace gsl;
 
-GSL_SUPPRESS(f .23) // NO-FORMAT: attribute
+GSL_SUPPRESS(f.23) // NO-FORMAT: attribute
 void f(int* i) { *i += 1; }
 
 TEST(owner_tests, basic_test)
