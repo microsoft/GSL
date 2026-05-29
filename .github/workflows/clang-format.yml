@@ -34,6 +34,6 @@ jobs:
       - name: Check format
         run: |
           {
-            find include -type f
+            find include/gsl -type f
             find tests -type f \( -name '*.cpp' -o -name '*.h' \)
           } | xargs clang-format-${{ env.CLANG_VERSION }} --dry-run --Werror
