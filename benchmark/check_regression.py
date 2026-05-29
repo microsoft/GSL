@@ -131,7 +131,7 @@ def fmt_stddev(stddev: float, mean: float) -> str:
 
 # ─── report builder ───────────────────────────────────────────────────────────
 
-def build_report(json_paths: list[str], threshold: float) -> tuple[str, bool]:
+def build_report(json_paths: list[str], threshold: float, workflow_url: str = None) -> tuple[str, bool]:
     """
     Returns (markdown_text, had_regression).
     """
@@ -234,7 +234,7 @@ def build_report(json_paths: list[str], threshold: float) -> tuple[str, bool]:
     lines.append(
         "_Ratio = `gsl_ns / std_ns`. "
         "Values close to 1.0 mean performance parity. "
-        "Run by [span-benchmark CI](.github/workflows/span_benchmark.yml)._"
+        f"Run by [span-benchmark CI]({workflow_url})._"
     )
 
     return "\n".join(lines), had_regression
@@ -264,9 +264,15 @@ def main():
         metavar="FILE",
         help="Write Markdown report to FILE instead of stdout.",
     )
+    parser.add_argument(
+        "--workflow-url",
+        default=None,
+        metavar="URL",
+        help="GitHub URL to the workflow YAML (shows in the report footer).",
+    )
     args = parser.parse_args()
 
-    report, had_regression = build_report(args.json_files, args.threshold)
+    report, had_regression = build_report(args.json_files, args.threshold, args.workflow_url)
 
     if args.output:
         Path(args.output).write_text(report, encoding="utf-8")
