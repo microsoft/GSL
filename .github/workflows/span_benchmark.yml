@@ -19,18 +19,23 @@
 # A final `comment` job waits for all three groups, collects every JSON
 # artifact, runs check_regression.py, and posts (or updates) one PR comment.
 
+
 name: Span Benchmark
+
 
 on:
   pull_request:
     branches: [main]
+
 
 # Cancel stale runs when a new commit is pushed to the same PR.
 concurrency:
   group: span-bench-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+
 jobs:
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # LINUX  —  GCC 13/14  ·  Clang 17/18  (× C++20 and C++23)
@@ -48,15 +53,18 @@ jobs:
             cppstd: 20
             extra_flags: ""
 
+
           - label: GCC-14-cpp20
             cxx: g++-14
             cppstd: 20
             extra_flags: ""
 
+
           - label: GCC-14-cpp23
             cxx: g++-14
             cppstd: 23
             extra_flags: ""
+
 
           # ── Clang ──────────────────────────────────────────────────────
           - label: Clang-17-cpp20
@@ -64,15 +72,18 @@ jobs:
             cppstd: 20
             extra_flags: ""
 
+
           - label: Clang-18-cpp20
             cxx: clang++-18
             cppstd: 20
             extra_flags: ""
 
+
           - label: Clang-18-cpp23
             cxx: clang++-18
             cppstd: 23
             extra_flags: ""
+
 
           # ── Clang + -fbounds-safety (core motivation of issue #1167) ───
           # Safe Buffers enforcement is what triggered this whole tracking effort.
@@ -81,8 +92,10 @@ jobs:
             cppstd: 20
             extra_flags: "-fbounds-safety"
 
+
     steps:
       - uses: actions/checkout@v4
+
 
       # ── Compiler install ───────────────────────────────────────────────
       # GCC-13 and Clang pre-17 are already on ubuntu-latest (24.04).
@@ -93,23 +106,26 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y g++-14
 
+
       - name: Install Clang 17
         if: matrix.cxx == 'clang++-17'
         run: |
-          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+          wget -qO- [https://apt.llvm.org/llvm-snapshot.gpg.key](https://apt.llvm.org/llvm-snapshot.gpg.key) \
             | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-17 main" \
+          echo "deb [http://apt.llvm.org/noble/](http://apt.llvm.org/noble/) llvm-toolchain-noble-17 main" \
             | sudo tee /etc/apt/sources.list.d/llvm-17.list
           sudo apt-get update -qq && sudo apt-get install -y clang-17
+
 
       - name: Install Clang 18
         if: matrix.cxx == 'clang++-18'
         run: |
-          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+          wget -qO- [https://apt.llvm.org/llvm-snapshot.gpg.key](https://apt.llvm.org/llvm-snapshot.gpg.key) \
             | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" \
+          echo "deb [http://apt.llvm.org/noble/](http://apt.llvm.org/noble/) llvm-toolchain-noble-18 main" \
             | sudo tee /etc/apt/sources.list.d/llvm-18.list
           sudo apt-get update -qq && sudo apt-get install -y clang-18
+
 
       # ── FetchContent cache ─────────────────────────────────────────────
       # Caches the cloned sources for google-benchmark, googletest, and GSL.
@@ -123,20 +139,23 @@ jobs:
           restore-keys: |
             fetchcontent-linux-${{ matrix.cxx }}-
 
+
       # ── Configure → Build → Run ────────────────────────────────────────
       # FetchContent handles benchmark + GSL — no separate install needed.
       # -DCMAKE_CXX_STANDARD overrides the default C++20 set in CMakeLists
       # so we can test C++23 configs from the matrix.
       - name: Configure
         run: |
-          cmake -S . -B build \
+          cmake -S benchmark -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} \
             -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
             -DCMAKE_CXX_FLAGS="${{ matrix.extra_flags }}"
 
+
       - name: Build
         run: cmake --build build --target span_bench -j$(nproc)
+
 
       # 10 repetitions → mean + stddev aggregates in the JSON output.
       # benchmark_report_aggregates_only keeps the file compact.
@@ -148,12 +167,14 @@ jobs:
             --benchmark_report_aggregates_only=true \
             --benchmark_out=results_${{ matrix.label }}.json
 
+
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
           name: bench-${{ matrix.label }}
           path: results_${{ matrix.label }}.json
           retention-days: 7
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # WINDOWS  —  MSVC 2022  ·  clang-cl  (× C++20 and C++23)
@@ -181,10 +202,12 @@ jobs:
             cppstd: 20
             extra_flags: ""
 
+
           - label: MSVC-2022-cpp23
             toolset: ""
             cppstd: 23
             extra_flags: ""
+
 
           # ── clang-cl (bundled with VS 2022) ────────────────────────────
           - label: clang-cl-cpp20
@@ -192,13 +215,16 @@ jobs:
             cppstd: 20
             extra_flags: ""
 
+
           - label: clang-cl-cpp23
             toolset: "ClangCL"
             cppstd: 23
             extra_flags: ""
 
+
     steps:
       - uses: actions/checkout@v4
+
 
       # ── FetchContent cache ─────────────────────────────────────────────
       - name: Cache FetchContent dependencies
@@ -209,22 +235,26 @@ jobs:
           restore-keys: |
             fetchcontent-windows-${{ matrix.toolset }}-
 
+
       # ── Configure → Build → Run ────────────────────────────────────────
       - name: Configure
         shell: pwsh
         run: |
           $tsArg = if ("${{ matrix.toolset }}" -ne "") { @("-T", "${{ matrix.toolset }}") } else { @() }
 
-          cmake -S . -B build `
+
+          cmake -S benchmark -B build `
             -G "Visual Studio 17 2022" @tsArg `
             -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} `
             -DCMAKE_CXX_FLAGS="${{ matrix.extra_flags }}"
+
 
       - name: Build
         shell: pwsh
         run: |
           cmake --build build --target span_bench `
             --config Release -j $env:NUMBER_OF_PROCESSORS
+
 
       # Multi-config generator places the binary under build\Release\
       - name: Run benchmark
@@ -236,12 +266,14 @@ jobs:
             --benchmark_report_aggregates_only=true `
             --benchmark_out=results_${{ matrix.label }}.json
 
+
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
           name: bench-${{ matrix.label }}
           path: results_${{ matrix.label }}.json
           retention-days: 7
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # MACOS  —  Apple Clang via Xcode (latest)  (× C++20 and C++23)
@@ -262,12 +294,15 @@ jobs:
             cppstd: 20
             extra_flags: ""
 
+
           - label: AppleClang-cpp23
             cppstd: 23
             extra_flags: ""
 
+
     steps:
       - uses: actions/checkout@v4
+
 
       # ── FetchContent cache ─────────────────────────────────────────────
       - name: Cache FetchContent dependencies
@@ -278,16 +313,19 @@ jobs:
           restore-keys: |
             fetchcontent-macos-${{ matrix.cppstd }}-
 
+
       # ── Configure → Build → Run ────────────────────────────────────────
       - name: Configure
         run: |
-          cmake -S . -B build \
+          cmake -S benchmark -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
             -DCMAKE_CXX_FLAGS="${{ matrix.extra_flags }}"
 
+
       - name: Build
         run: cmake --build build --target span_bench -j$(sysctl -n hw.logicalcpu)
+
 
       - name: Run benchmark
         run: |
@@ -297,12 +335,14 @@ jobs:
             --benchmark_report_aggregates_only=true \
             --benchmark_out=results_${{ matrix.label }}.json
 
+
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
           name: bench-${{ matrix.label }}
           path: results_${{ matrix.label }}.json
           retention-days: 7
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # COMMENT  —  collect every result artifact → one PR comment
@@ -319,14 +359,17 @@ jobs:
     permissions:
       pull-requests: write
 
+
     steps:
       - uses: actions/checkout@v4
+
 
       - name: Download all result artifacts
         uses: actions/download-artifact@v4
         with:
           pattern: bench-*
           merge-multiple: true    # flatten all artifacts into CWD
+
 
       # continue-on-error so the comment step always runs even on regression.
       - name: Generate regression report
@@ -338,6 +381,7 @@ jobs:
             results_*.json
         continue-on-error: true
 
+
       - name: Find existing bot comment
         uses: peter-evans/find-comment@v3
         id: find_comment
@@ -345,6 +389,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: github-actions[bot]
           body-includes: "<!-- span-bench-report -->"
+
 
       # One comment per PR, updated on every push — not a flood of new ones.
       - name: Create or update PR comment
@@ -354,6 +399,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-path: comment.md
           edit-mode: replace
+
 
       # Surface the failure visibly in the CI check panel.
       - name: Fail if regression detected
