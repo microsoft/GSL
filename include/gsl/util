@@ -19,17 +19,23 @@
 
 #include "./assert" // for Expects
 
-#include <array>
-#include <cstddef>          // for ptrdiff_t, size_t
-#include <limits>           // for numeric_limits
-#include <initializer_list> // for initializer_list
-#include <type_traits>      // for is_signed, integral_constant
-#include <utility>          // for exchange, forward
+#if defined(GSL_BUILD_USING_STD_MODULE)
+    import std;
+#else
+    #include <array>
+    #include <cstddef>          // for ptrdiff_t, size_t
+    #include <limits>           // for numeric_limits
+    #include <initializer_list> // for initializer_list
+    #include <type_traits>      // for is_signed, integral_constant
+    #include <utility>          // for exchange, forward
+#endif
 
 #if defined(__has_include) && __has_include(<version>)
-#include <version>
+    #include <version>
 #if defined(__cpp_lib_span) && __cpp_lib_span >= 202002L
-#include <span>
+#if !defined(GSL_BUILD_USING_STD_MODULE)
+    #include <span>
+#endif
 #endif // __cpp_lib_span >= 202002L
 #endif //__has_include(<version>)
 
