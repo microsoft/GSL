@@ -16,8 +16,8 @@
 
 #ifndef GSL_NARROW_H
 #define GSL_NARROW_H
-#include "./assert"    // for GSL_SUPPRESS
-#include "./util"      // for narrow_cast
+#include "./assert"  // for GSL_SUPPRESS
+#include "./util"    // for narrow_cast
 #include <exception> // for std::exception
 namespace gsl
 {
@@ -38,16 +38,18 @@ GSL_SUPPRESS(es.46) // The warning suggests that a floating->unsigned conversion
     constexpr const bool is_different_signedness =
         (std::is_signed<T>::value != std::is_signed<U>::value);
 
-GSL_SUPPRESS(es.103) // don't overflow
-GSL_SUPPRESS(es.104) // don't underflow
-GSL_SUPPRESS(p.2) // don't rely on undefined behavior
-    const T t = narrow_cast<T>(u); // While this is technically undefined behavior in some cases (i.e., if the source value is of floating-point type
-                                   // and cannot fit into the destination integral type), the resultant behavior is benign on the platforms
-                                   // that we target (i.e., no hardware trap representations are hit).
+    GSL_SUPPRESS(es.103) // don't overflow
+    GSL_SUPPRESS(es.104) // don't underflow
+    GSL_SUPPRESS(p.2)    // don't rely on undefined behavior
+    const T t = narrow_cast<T>(
+        u); // While this is technically undefined behavior in some cases (i.e., if the source value
+            // is of floating-point type and cannot fit into the destination integral type), the
+            // resultant behavior is benign on the platforms that we target (i.e., no hardware trap
+            // representations are hit).
 
 #if defined(__clang__) || defined(__GNUC__)
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wfloat-equal"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 #endif
     // Note: NaN will always throw, since NaN != NaN
     if (static_cast<U>(t) != u || (is_different_signedness && ((t < T{}) != (u < U{}))))
@@ -55,7 +57,7 @@ GSL_SUPPRESS(p.2) // don't rely on undefined behavior
         throw narrowing_error{};
     }
 #if defined(__clang__) || defined(__GNUC__)
-    #pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif
 
     return t;
@@ -67,10 +69,7 @@ constexpr T narrow(U u)
 {
     const T t = narrow_cast<T>(u);
 
-    if (static_cast<U>(t) != u)
-    {
-        throw narrowing_error{};
-    }
+    if (static_cast<U>(t) != u) { throw narrowing_error{}; }
 
     return t;
 }
