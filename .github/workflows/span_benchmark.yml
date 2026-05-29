@@ -87,10 +87,13 @@ jobs:
 
           # ── Clang + -fbounds-safety (core motivation of issue #1167) ───
           # Safe Buffers enforcement is what triggered this whole tracking effort.
-          - label: Clang-18-cpp20-bounds-safety
-            cxx: clang++-18
-            cppstd: 20
-            extra_flags: "-fbounds-safety"
+          # - label: Clang-18-cpp20-bounds-safety
+          #   cxx: clang++-18
+          #   cppstd: 20
+          #   extra_flags: "-fbounds-safety"
+          # ----------------------------------------------------------------------------
+          # ⚠️ Note: As of early 2026, the feature is not yet fully available or stable in mainline, official releases (like Clang 20, 21, or 22).
+          # ----------------------------------------------------------------------------
 
 
     steps:
@@ -378,6 +381,7 @@ jobs:
           python3 benchmark/check_regression.py \
             --threshold 0.15 \
             --output comment.md \
+            --workflow-url "https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/span_benchmark.yml" \
             results_*.json
         continue-on-error: true
 
