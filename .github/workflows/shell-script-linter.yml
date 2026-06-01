@@ -1,0 +1,32 @@
+name: Shell script linter
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  clang-format:
+    name: Run shfmt and shellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install the needed binaries
+      - name: Install shfmt and shellcheck
+        run: |
+          sudo apt install shfmt shellcheck
+
+      - name: Check format
+        run: |
+          find scripts -type f -name '*.sh' -exec shfmt -l {} \;
+
+      - name: Run shellcheck
+        run: |
+          find scripts -type f -name '*.sh' -exec shellcheck {} \;
