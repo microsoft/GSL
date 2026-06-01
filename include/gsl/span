@@ -585,8 +585,7 @@ public:
     }
 
     template <std::size_t Count>
-    GSL_SUPPRESS(bounds.1)
-    constexpr span<element_type, Count> last() const noexcept
+    GSL_SUPPRESS(bounds.1) constexpr span<element_type, Count> last() const noexcept
     {
         static_assert(Extent == dynamic_extent || Count <= Extent,
                       "last() cannot extract more elements from a span than it contains.");
@@ -595,8 +594,7 @@ public:
     }
 
     template <std::size_t Offset, std::size_t Count = dynamic_extent>
-    GSL_SUPPRESS(bounds.1)
-    constexpr auto subspan() const noexcept ->
+    GSL_SUPPRESS(bounds.1) constexpr auto subspan() const noexcept ->
         typename details::calculate_subspan_type<ElementType, Extent, Offset, Count>::type
     {
         static_assert(Extent == dynamic_extent || (Extent >= Offset && (Count == dynamic_extent ||

@@ -31,3 +31,4 @@ AlignConsecutiveAssignments: false
 AlignTrailingComments: true
 
 SpaceAfterCStyleCast: true
+WhitespaceSensitiveMacros: [GSL_SUPPRESS]
