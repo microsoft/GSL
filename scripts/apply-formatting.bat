@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-clang-format -version
+"%VCINSTALLDIR%Tools\Llvm\bin\clang-format" -version
 if %errorlevel% neq 0 (
     echo [ERROR] clang-format not found, script should be called from a visual studio developer command prompt.
     exit /b %errorlevel%
@@ -9,5 +9,5 @@ if %errorlevel% neq 0 (
 
 for %%f in (include\gsl\* tests\*.h tests\*.cpp) do (
     echo formatting %%f
-    clang-format -i --assume-filename x.cpp "%%f"
+    "%VCINSTALLDIR%Tools\Llvm\bin\clang-format" -i --assume-filename x.cpp "%%f"
 )
