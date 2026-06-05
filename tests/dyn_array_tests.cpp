@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
 #include "deathTestCommon.h"
-#include <gsl/dyn_array>
-#include <gsl/util>
 #include "gsl/dyn_array"
 #include <cstdlib>
 #include <exception>
+#include <gsl/dyn_array>
+#include <gsl/util>
 #include <iostream>
 #include <sstream>
 #include <type_traits>
@@ -200,8 +200,7 @@ struct ConstexprAllocator
     constexpr ConstexprAllocator() = default;
 
     template <typename U>
-    constexpr ConstexprAllocator(const ConstexprAllocator<U, N>&) noexcept
-        : buf{}, sz{}
+    constexpr ConstexprAllocator(const ConstexprAllocator<U, N>&) noexcept : buf{}, sz{}
     {}
 
     template <typename U>
@@ -301,7 +300,8 @@ struct ThrowOnCopy
 
     ThrowOnCopy(const ThrowOnCopy& other) : value(other.value)
     {
-        if (copy_count == throw_on_copy_index) {
+        if (copy_count == throw_on_copy_index)
+        {
             ++copy_count;
             throw 42;
         }
@@ -338,13 +338,13 @@ public:
 
     auto allocate(std::size_t n) -> value_type*
     {
-        AllocCounter<Newocator<T>>++;
+        AllocCounter<Newocator<T>> ++;
         return static_cast<value_type*>(::operator new(n * sizeof(value_type)));
     }
 
     void deallocate(value_type* p, std::size_t) noexcept
     {
-        DeallocCounter<Newocator<T>>++;
+        DeallocCounter<Newocator<T>> ++;
         ::operator delete(p);
     }
 
@@ -386,7 +386,8 @@ public:
     {
         static_assert(alignof(value_type) <= alignof(int),
                       "test allocator only supports types with int-or-smaller alignment");
-        auto raw = static_cast<unsigned char*>(::operator new(sizeof(int) + count * sizeof(value_type)));
+        auto raw =
+            static_cast<unsigned char*>(::operator new(sizeof(int) + count * sizeof(value_type)));
         *reinterpret_cast<int*>(raw) = owner_id;
         ++allocation_count();
         return reinterpret_cast<value_type*>(raw + sizeof(int));
@@ -395,9 +396,7 @@ public:
     void deallocate(value_type* pointer, std::size_t) noexcept
     {
         auto raw = reinterpret_cast<unsigned char*>(pointer) - sizeof(int);
-        if (*reinterpret_cast<int*>(raw) != owner_id) {
-            ++mismatched_deallocation_count();
-        }
+        if (*reinterpret_cast<int*>(raw) != owner_id) { ++mismatched_deallocation_count(); }
         ++deallocation_count();
         ::operator delete(raw);
     }
@@ -470,7 +469,8 @@ TEST(dyn_array_tests, custom_allocator_models_allocator)
 
 #if defined(__cpp_lib_constexpr_dynamic_alloc) && (__cpp_lib_constexpr_dynamic_alloc >= 201907L)
     using constexpr_traits = std::allocator_traits<ConstexprAllocator<char, 10>>;
-    static_assert(std::is_same<constexpr_traits::value_type, char>::value, "allocator trait type mismatch");
+    static_assert(std::is_same<constexpr_traits::value_type, char>::value,
+                  "allocator trait type mismatch");
 #endif /* __cpp_lib_constexpr_dynamic_alloc >= 201907L */
 }
 
@@ -641,7 +641,8 @@ TEST(dyn_array_tests, unchecked_iterators)
     EXPECT_TRUE((std::is_same<decltype(const_values._Unchecked_end()), const char*>::value));
 
     std::size_t count = 0;
-    for (const auto value : const_values) {
+    for (const auto value : const_values)
+    {
         EXPECT_EQ(value, 'v');
         ++count;
     }
@@ -655,13 +656,20 @@ TEST(dyn_array_tests, unchecked_iterators)
 TEST(DynArrayTests, TypeConsistency)
 {
     static_assert(std::is_same<gsl::dyn_array<int>::value_type, int>::value, "Value type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::reference, int&>::value, "Reference type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::const_reference, const int&>::value, "Const reference type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::iterator::value_type, int>::value, "Iterator value type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::iterator::reference, int&>::value, "Iterator reference type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::iterator::const_reference, const int&>::value, "Iterator const reference type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::size_type, std::size_t>::value, "Size type mismatch");
-    static_assert(std::is_same<gsl::dyn_array<int>::difference_type, std::ptrdiff_t>::value, "Difference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::reference, int&>::value,
+                  "Reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::const_reference, const int&>::value,
+                  "Const reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::iterator::value_type, int>::value,
+                  "Iterator value type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::iterator::reference, int&>::value,
+                  "Iterator reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::iterator::const_reference, const int&>::value,
+                  "Iterator const reference type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::size_type, std::size_t>::value,
+                  "Size type mismatch");
+    static_assert(std::is_same<gsl::dyn_array<int>::difference_type, std::ptrdiff_t>::value,
+                  "Difference type mismatch");
 }
 
 #if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201703L)

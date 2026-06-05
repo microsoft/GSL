@@ -1299,7 +1299,7 @@ TEST(span_test, conversions)
 #if defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201703L)
     span s = arr;
     span cs = s;
-#else // ^^^ deduction guides /// no deduction guides vvv
+#else  // ^^^ deduction guides /// no deduction guides vvv
     span<int, 5> s = arr;
     span<int, 5> cs = s;
 #endif // defined(__cpp_deduction_guides) && (__cpp_deduction_guides >= 201703L)

@@ -55,30 +55,32 @@ namespace details
 
         GSL_CONSTEXPR_SINCE_CPP20 void destroy_range(pointer first, pointer last)
         {
-            for (; first != last; ++first) {
-                destroy(first);
-            }
+            for (; first != last; ++first) { destroy(first); }
         }
 
         GSL_CONSTEXPR_SINCE_CPP20 void rollback_construction(pointer first, pointer last)
         {
             destroy_range(first, last);
-            std::allocator_traits<Allocator>::deallocate(static_cast<Allocator&>(*this), _data, _count);
+            std::allocator_traits<Allocator>::deallocate(static_cast<Allocator&>(*this), _data,
+                                                         _count);
             _data = nullptr;
             _count = 0;
         }
 
-        protected:
+    protected:
         constexpr auto data() const { return _data; }
 
         constexpr auto count() const { return _count; }
 
-        GSL_CONSTEXPR_SINCE_CPP20 void resize(size_type count) {
+        GSL_CONSTEXPR_SINCE_CPP20 void resize(size_type count)
+        {
             // This should only be called when constructing a non-forward iterator.
             // It neither frees nor copies `_data`.
             Expects(_data == nullptr && _count == 0);
-            if (count != 0) {
-                _data = std::allocator_traits<Allocator>::allocate(static_cast<Allocator&>(*this), count);
+            if (count != 0)
+            {
+                _data = std::allocator_traits<Allocator>::allocate(static_cast<Allocator&>(*this),
+                                                                   count);
                 _count = count;
             }
         }
@@ -86,12 +88,11 @@ namespace details
         GSL_CONSTEXPR_SINCE_CPP20 void fill(pointer first, size_type count, const T& value)
         {
             pointer current = first;
-            try {
-                for (size_type i = 0; i < count; ++i, ++current) {
-                    construct(current, value);
-                }
-            }
-            catch (...) {
+            try
+            {
+                for (size_type i = 0; i < count; ++i, ++current) { construct(current, value); }
+            } catch (...)
+            {
                 rollback_construction(first, current);
                 throw;
             }
@@ -101,31 +102,30 @@ namespace details
         GSL_CONSTEXPR_SINCE_CPP20 void copy(InputIt first, InputIt last, pointer output)
         {
             pointer current = output;
-            try {
-                for (; first != last; ++first, ++current) {
-                    construct(current, *first);
-                }
-            }
-            catch (...) {
+            try
+            {
+                for (; first != last; ++first, ++current) { construct(current, *first); }
+            } catch (...)
+            {
                 rollback_construction(output, current);
                 throw;
             }
         }
 
-        GSL_CONSTEXPR_SINCE_CPP20 void default_construct(pointer first, size_type count) {
+        GSL_CONSTEXPR_SINCE_CPP20 void default_construct(pointer first, size_type count)
+        {
             pointer current = first;
-            try {
-                for (size_type i = 0; i < count; ++i, ++current) {
-                    construct(current);
-                }
-            }
-            catch (...) {
+            try
+            {
+                for (size_type i = 0; i < count; ++i, ++current) { construct(current); }
+            } catch (...)
+            {
                 rollback_construction(first, current);
                 throw;
             }
         }
 
-        private:
+    private:
         pointer _data;
         size_type _count;
 
@@ -137,20 +137,25 @@ namespace details
         }
 
         constexpr dyn_array_base(size_type count, const Allocator& alloc)
-            : Allocator{alloc},
-            _data{count == 0 ? nullptr : std::allocator_traits<Allocator>::allocate(static_cast<Allocator&>(*this), count)},
-            _count{count}
+            : Allocator{alloc}
+            , _data{count == 0 ? nullptr
+                               : std::allocator_traits<Allocator>::allocate(
+                                     static_cast<Allocator&>(*this), count)}
+            , _count{count}
         {
             Ensures((_count == 0 && _data == nullptr) || (_count > 0 && _data != nullptr));
         }
 
         GSL_CONSTEXPR_SINCE_CPP20 ~dyn_array_base()
         {
-            if (_data) {
-                if (!std::is_trivially_destructible<T>::value) {
+            if (_data)
+            {
+                if (!std::is_trivially_destructible<T>::value)
+                {
                     destroy_range(_data, _data + _count);
                 }
-                std::allocator_traits<Allocator>::deallocate(static_cast<Allocator&>(*this), _data, _count);
+                std::allocator_traits<Allocator>::deallocate(static_cast<Allocator&>(*this), _data,
+                                                             _count);
             }
         }
     };
@@ -254,10 +259,7 @@ namespace details
             return dyn_array_iterator{_ptr, gsl::narrow<size_type>(new_pos), _end_pos};
         }
 
-        constexpr auto operator-(difference_type diff) const
-        {
-            return *this + (-diff);
-        }
+        constexpr auto operator-(difference_type diff) const { return *this + (-diff); }
 
         constexpr auto operator-(const dyn_array_iterator& other) const
         {
@@ -311,15 +313,19 @@ public:
         base::fill(data(), size(), value);
     }
 
-    template <typename InputIt, std::enable_if_t<details::is_fwd_iterator<InputIt>::value, bool> = true>
+    template <typename InputIt,
+              std::enable_if_t<details::is_fwd_iterator<InputIt>::value, bool> = true>
     constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc = {})
         : base{gsl::narrow<size_type>(std::distance(first, last)), alloc}
     {
         base::copy(first, last, data());
     }
 
-    template <typename InputIt, std::enable_if_t<!details::is_fwd_iterator<InputIt>::value && details::is_iterator<InputIt>::value, bool> = true>
-    constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc={}) : dyn_array{alloc} {
+    template <typename InputIt, std::enable_if_t<!details::is_fwd_iterator<InputIt>::value &&
+                                                     details::is_iterator<InputIt>::value,
+                                                 bool> = true>
+    constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc = {}) : dyn_array{alloc}
+    {
         std::vector<T> tmp(first, last);
         base::resize(tmp.size());
         base::copy(std::begin(tmp), std::end(tmp), data());
@@ -335,8 +341,7 @@ public:
     }
 #endif /* __cpp_lib_containers_ranges >= 202202L */
 
-    constexpr explicit dyn_array(size_type count, const Allocator& alloc = {})
-        : base{count, alloc}
+    constexpr explicit dyn_array(size_type count, const Allocator& alloc = {}) : base{count, alloc}
     {
         base::default_construct(data(), size());
     }
@@ -418,14 +423,14 @@ public:
 
 template <class InputIt,
           class Alloc = std::allocator<typename std::iterator_traits<InputIt>::value_type>>
-dyn_array(InputIt, InputIt,
-          Alloc = {}) -> dyn_array<typename std::iterator_traits<InputIt>::value_type, Alloc>;
+dyn_array(InputIt, InputIt, Alloc = {})
+    -> dyn_array<typename std::iterator_traits<InputIt>::value_type, Alloc>;
 
 #if defined(__cpp_lib_containers_ranges) && (__cpp_lib_containers_ranges >= 202202L)
 template <std::ranges::input_range InputRg,
           class Alloc = std::allocator<std::ranges::range_value_t<InputRg>>>
-dyn_array(std::from_range_t, InputRg&&,
-          Alloc = {}) -> dyn_array<std::ranges::range_value_t<InputRg>, Alloc>;
+dyn_array(std::from_range_t, InputRg&&, Alloc = {})
+    -> dyn_array<std::ranges::range_value_t<InputRg>, Alloc>;
 #endif /* __cpp_lib_containers_ranges >= 202202L */
 
 #endif /* __cpp_deduction_guides >= 201703L */
