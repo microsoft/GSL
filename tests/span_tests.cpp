@@ -257,7 +257,9 @@ TEST(span_test, from_pointer_pointer_construction)
         EXPECT_TRUE(s.data() == &arr[0]);
     }
 
-    //{ // this test succeeds on all platforms, gsl::span is more relaxed than std::span where this would be UB
+    // this test succeeds on all platforms, gsl::span is more relaxed than std::span where this
+    // would be UB
+    //{
     //    auto workaround_macro = [&]() { span<int> s{&arr[1], &arr[0]}; };
     //    EXPECT_DEATH(workaround_macro(), expected);
     //}
@@ -342,7 +344,7 @@ TEST(span_test, from_array_constructor)
 
 TEST(span_test, from_dynamic_array_constructor)
 {
-    double(*arr)[3][4] = new double[100][3][4];
+    double (*arr)[3][4] = new double[100][3][4];
 
     {
         span<double> s(&arr[0][0][0], 10);

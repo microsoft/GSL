@@ -32,7 +32,7 @@
 TEST(at_tests, static_array)
 {
     int a[4] = {1, 2, 3, 4};
-    const int(&c_a)[4] = a;
+    const int (&c_a)[4] = a;
 
     for (int i = 0; i < 4; ++i)
     {
@@ -152,7 +152,7 @@ TEST(at_tests, std_span)
 static constexpr bool test_constexpr()
 {
     int a1[4] = {1, 2, 3, 4};
-    const int(&c_a1)[4] = a1;
+    const int (&c_a1)[4] = a1;
     std::array<int, 4> a2 = {1, 2, 3, 4};
     const std::array<int, 4>& c_a2 = a2;
 

@@ -61,10 +61,10 @@ void ArrayConvertibilityCheck()
 
         static_assert(std::is_same<decltype(gsl::span{stl_nullptr}), gsl::span<T*, 3>>::value,
                       "std::is_same< decltype(span{stl_nullptr}), span<T*, 3>>::value");
-        static_assert(
-            std::is_same<decltype(gsl::span{std::as_const(stl_nullptr)}), gsl::span<T* const, 3>>::value,
-            "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<T* const, "
-            "3>>::value");
+        static_assert(std::is_same<decltype(gsl::span{std::as_const(stl_nullptr)}),
+                                   gsl::span<T* const, 3>>::value,
+                      "std::is_same< decltype(span{std::as_const(stl_nullptr)}), span<T* const, "
+                      "3>>::value");
     }
 #endif
 }
