@@ -114,7 +114,7 @@ TEST(span_ext_test, make_span_from_array_constructor)
 
 TEST(span_ext_test, make_span_from_dynamic_array_constructor)
 {
-    double(*arr)[3][4] = new double[100][3][4];
+    double (*arr)[3][4] = new double[100][3][4];
 
     {
         auto s = make_span(&arr[0][0][0], 10);

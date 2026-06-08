@@ -93,9 +93,7 @@ namespace details
 
     typedef void(__cdecl* terminate_handler)();
 
-    // clang-format off
-    GSL_SUPPRESS(f.6) // NO-FORMAT: attribute
-    // clang-format on
+    GSL_SUPPRESS(f.6)
     [[noreturn]] inline void __cdecl default_terminate_handler()
     {
         __fastfail(RANGE_CHECKS_FAILURE);

@@ -171,8 +171,8 @@ static_assert(!RShiftAssignCompilesFor<float>, "!RShiftAssignCompilesFor<float>"
 template <typename U, typename = void>
 static constexpr bool ToIntegerCompilesFor = false;
 template <typename U>
-static constexpr bool
-    ToIntegerCompilesFor<U, void_t<decltype(gsl::to_integer<U>(gsl::byte{}))>> = true;
+static constexpr bool ToIntegerCompilesFor<U, void_t<decltype(gsl::to_integer<U>(gsl::byte{}))>> =
+    true;
 static_assert(!ToIntegerCompilesFor<float>, "!ToIntegerCompilesFor<float>");
 
 } // namespace
