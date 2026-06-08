@@ -10,7 +10,7 @@ string(COMPARE EQUAL ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR} PROJECT_IS_
 
 option(GSL_INSTALL "Generate and install GSL target" ${PROJECT_IS_TOP_LEVEL})
 option(GSL_TEST "Build and perform GSL tests" ${PROJECT_IS_TOP_LEVEL})
-option(GSL_BENCHMARK "Build span benchmarks" ${PROJECT_IS_TOP_LEVEL})
+option(GSL_BENCHMARK "Build span benchmarks" OFF)
 
 # The implementation generally assumes a platform that implements C++14 support
 target_compile_features(GSL INTERFACE "cxx_std_14")

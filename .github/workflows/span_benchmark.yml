@@ -40,7 +40,7 @@ jobs:
             -DGSL_BENCHMARK=ON \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} \
-            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }}"
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
 
       - name: Build
         run: cmake --build build --target span_bench -j$(nproc)
@@ -88,7 +88,7 @@ jobs:
           cmake -S . -B build `
             -DGSL_BENCHMARK=ON `
             -G "${{ matrix.generator }}" @tsArg `
-            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }}"
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} `
 
       - name: Build
         shell: pwsh
@@ -135,7 +135,7 @@ jobs:
           cmake -S . -B build \
             -DGSL_BENCHMARK=ON \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }}"
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
 
       - name: Build
         run: cmake --build build --target span_bench -j$(sysctl -n hw.logicalcpu)
