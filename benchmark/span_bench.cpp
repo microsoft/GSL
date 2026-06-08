@@ -1,10 +1,10 @@
-// Setup:
-//  1) cmake . -DCMAKE_BUILD_TYPE=Release
-//  2) cmake --build . --config Release
-
 #include "gsl/span"
+#include <algorithm>
 #include <benchmark/benchmark.h>
-#include <numeric>
+#include <limits>
+#include <ranges>
+#include <span>
+#include <vector>
 
 static std::vector<int> make_vector()
 {

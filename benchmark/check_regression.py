@@ -131,7 +131,7 @@ def fmt_stddev(stddev: float, mean: float) -> str:
 
 # ─── report builder ───────────────────────────────────────────────────────────
 
-def build_report(json_paths: list[str], threshold: float, workflow_url: str = None) -> tuple[str, bool]:
+def build_report(json_paths: list[str], threshold: float) -> tuple[str, bool]:
     """
     Returns (markdown_text, had_regression).
     """
@@ -202,6 +202,7 @@ def build_report(json_paths: list[str], threshold: float, workflow_url: str = No
         config_regression = False
         for p in pairs:
             ratio, status = ratio_and_status(p["gsl_mean"], p["std_mean"], threshold)
+            ratio_str = "—" if ratio is None else f"{ratio:.2f}×"
             if "regression" in status:
                 had_regression = True
                 config_regression = True
@@ -212,7 +213,7 @@ def build_report(json_paths: list[str], threshold: float, workflow_url: str = No
                 f"| {fmt_stddev(p['std_stddev'], p['std_mean'])} "
                 f"| {fmt(p['gsl_mean'])} "
                 f"| {fmt_stddev(p['gsl_stddev'], p['gsl_mean'])} "
-                f"| {ratio:.2f}× "
+                f"| {ratio_str} "
                 f"| {status} |"
             )
 
@@ -228,14 +229,6 @@ def build_report(json_paths: list[str], threshold: float, workflow_url: str = No
 
     if not found_any:
         lines.append("> ❌ No benchmark results could be loaded.")
-
-    # Footer
-    lines.append("---")
-    lines.append(
-        "_Ratio = `gsl_ns / std_ns`. "
-        "Values close to 1.0 mean performance parity. "
-        f"Run by [span-benchmark CI]({workflow_url})._"
-    )
 
     return "\n".join(lines), had_regression
 
@@ -264,15 +257,9 @@ def main():
         metavar="FILE",
         help="Write Markdown report to FILE instead of stdout.",
     )
-    parser.add_argument(
-        "--workflow-url",
-        default=None,
-        metavar="URL",
-        help="GitHub URL to the workflow YAML (shows in the report footer).",
-    )
     args = parser.parse_args()
 
-    report, had_regression = build_report(args.json_files, args.threshold, args.workflow_url)
+    report, had_regression = build_report(args.json_files, args.threshold)
 
     if args.output:
         Path(args.output).write_text(report, encoding="utf-8")
