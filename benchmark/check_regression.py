@@ -55,7 +55,9 @@ def parse_benchmarks(data: dict) -> dict[str, dict]:
             continue
 
         # Strip the trailing _mean / _stddev to get the canonical name
-        base_name = name[: name.rfind(f"_{agg}")]
+        suffix = f"_{agg}"
+        assert name.endswith(suffix)
+        base_name = name[:-len(suffix)]
 
         entry = result.setdefault(base_name, {"mean": None, "stddev": None})
         entry[agg] = bm.get("real_time") or bm.get("cpu_time", 0.0)
