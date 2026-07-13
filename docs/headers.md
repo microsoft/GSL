@@ -9,6 +9,7 @@ See [GSL: Guidelines support library](https://isocpp.github.io/CppCoreGuidelines
 - [`<algorithms>`](#user-content-H-algorithms)
 - [`<assert>`](#user-content-H-assert)
 - [`<byte>`](#user-content-H-byte)
+- [`<dyn_array>`](#user-content-H-dyn_array)
 - [`<gsl>`](#user-content-H-gsl)
 - [`<narrow>`](#user-content-H-narrow)
 - [`<pointers>`](#user-content-H-pointers)
@@ -154,6 +155,178 @@ constexpr byte to_byte() noexcept;
 ```
 
 Convert the given value `I` to a `byte`. The template requires `I` to be in the valid range 0..255 for a `gsl::byte`.
+
+## <a name="H-dyn_array" />`<dyn_array>`
+
+This header contains an owning dynamically allocated array type whose size is fixed between assignments.
+
+- [`gsl::dyn_array`](#user-content-H-dyn_array-dyn_array)
+
+### <a name="H-dyn_array-dyn_array" />`gsl::dyn_array`
+
+```cpp
+template <typename T, typename Allocator = std::allocator<T>>
+class dyn_array;
+```
+
+`gsl::dyn_array` owns a contiguous sequence of `T` objects allocated with `Allocator`.
+The number of elements is established when the object is constructed and remains unchanged until the object is copy-assigned.
+It provides bounds-checked element access and checked random-access iterators.
+
+`gsl::dyn_array` is useful when the number of elements is known only at runtime, but the array should not grow or shrink through container operations.
+
+#### Member Types
+
+```cpp
+using value_type = T;
+using reference = T&;
+using const_reference = const T&;
+using iterator = details::dyn_array_iterator<T>;
+using const_iterator = details::dyn_array_iterator<const T>;
+using reverse_iterator = std::reverse_iterator<iterator>;
+using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+using difference_type = std::ptrdiff_t;
+using size_type = std::size_t;
+
+using allocator_type = Allocator;
+```
+
+#### Member functions
+
+##### Construct/Copy
+
+```cpp
+explicit constexpr dyn_array(const Allocator& alloc = {});
+```
+
+Constructs an empty `dyn_array`.
+No elements are allocated and `data()` returns `nullptr`.
+
+```cpp
+constexpr explicit dyn_array(size_type count, const Allocator& alloc = {});
+
+constexpr dyn_array(size_type count, const T& value, const Allocator& alloc = {});
+```
+
+Constructs a `dyn_array` with `count` elements using `alloc`.
+The first overload default-constructs each element.
+The second overload constructs each element as a copy of `value`.
+
+```cpp
+template <typename InputIt>
+constexpr dyn_array(InputIt first, InputIt last, const Allocator& alloc = {});
+```
+
+Constructs a `dyn_array` by copying the elements in the range `[first, last)`.
+
+```cpp
+template <std::ranges::input_range InputRg>
+constexpr dyn_array(std::from_range_t, InputRg&& rg, const Allocator& alloc = {});
+```
+
+Constructs a `dyn_array` by copying the elements in `rg`.
+This overload is available when container ranges are supported.
+
+```cpp
+constexpr dyn_array(const dyn_array& other, const Allocator& alloc = {});
+
+constexpr dyn_array(std::initializer_list<T> init, const Allocator& alloc = {});
+```
+
+Constructs a `dyn_array` by copying the elements from another `dyn_array` or from an initializer list.
+
+```cpp
+constexpr auto operator=(const dyn_array& other) -> dyn_array&;
+
+constexpr dyn_array(dyn_array&&) = delete;
+dyn_array& operator=(dyn_array&&) = delete;
+```
+
+Copy assignment replaces the contents with copies of the elements in `other`.
+Move construction and move assignment are explicitly deleted.
+
+##### Observers
+
+```cpp
+constexpr auto size() const;
+constexpr auto empty() const;
+constexpr auto max_size() const;
+constexpr auto get_allocator() -> Allocator&;
+```
+
+Returns the number of elements, whether the array is empty, the maximum representable size, or the allocator used by the `dyn_array`.
+
+##### Element access
+
+```cpp
+constexpr auto operator[](size_type pos) -> reference;
+constexpr auto operator[](size_type pos) const -> const_reference;
+```
+
+Returns a reference to the element at the given index.
+[`Expects`](#user-content-H-assert-expects) that `pos` is less than the `dyn_array`'s size.
+
+```cpp
+constexpr auto data();
+constexpr auto data() const -> const T*;
+```
+
+Returns a pointer to the beginning of the contained data.
+If the `dyn_array` is empty, this returns `nullptr`.
+
+##### Iterators
+
+```cpp
+constexpr auto begin();
+constexpr auto begin() const;
+constexpr auto cbegin() const;
+
+constexpr auto end();
+constexpr auto end() const;
+constexpr auto cend() const;
+```
+
+Returns an iterator to the first element or to one past the last element.
+
+```cpp
+constexpr auto rbegin();
+constexpr auto rbegin() const;
+constexpr auto crbegin() const;
+
+constexpr auto rend();
+constexpr auto rend() const;
+constexpr auto crend() const;
+```
+
+Returns a reverse iterator to the first element of the reversed range or to one past the last element of the reversed range.
+
+The iterators are random-access iterators and perform bounds checking.
+Dereferencing `end()`, moving before `begin()` or past `end()`, or comparing iterators from different arrays violates preconditions.
+
+##### Comparisons
+
+```cpp
+constexpr auto operator==(const dyn_array& other) const;
+constexpr auto operator!=(const dyn_array& other) const;
+```
+
+Compares two `dyn_array`s by size and element value.
+
+#### Deduction guides
+
+```cpp
+template <class InputIt,
+          class Alloc = std::allocator<typename std::iterator_traits<InputIt>::value_type>>
+dyn_array(InputIt, InputIt,
+          Alloc = {}) -> dyn_array<typename std::iterator_traits<InputIt>::value_type, Alloc>;
+
+template <std::ranges::input_range InputRg,
+          class Alloc = std::allocator<std::ranges::range_value_t<InputRg>>>
+dyn_array(std::from_range_t, InputRg&&,
+          Alloc = {}) -> dyn_array<std::ranges::range_value_t<InputRg>, Alloc>;
+```
+
+The range deduction guide is available when container ranges are supported.
 
 ## <a name="H-gsl" />`<gsl>`
 

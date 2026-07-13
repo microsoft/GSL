@@ -1,3 +1,4 @@
+// -*- C++ -*-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2015 Microsoft Corporation. All rights reserved.
@@ -19,9 +20,9 @@
 
 #include "./assert" // for Expects
 
-#include <array>
 #include <cstddef>          // for ptrdiff_t, size_t
 #include <initializer_list> // for initializer_list
+#include <iterator>         // for iterator_traits
 #include <limits>           // for numeric_limits
 #include <type_traits>      // for is_signed, integral_constant
 #include <utility>          // for exchange, forward
@@ -86,6 +87,13 @@
 #define GSL_DEPRECATED(msg)
 #endif // !defined(GSL_DEPRECATED)
 
+#if __cplusplus >= 202002L
+#define GSL_CONSTEXPR_SINCE_CPP20 constexpr
+#else // ^^^ since C++20 /// before C++20 vvv
+#define GSL_BEFORE_CPP20
+#define GSL_CONSTEXPR_SINCE_CPP20
+#endif // __cplusplus >= 202002L
+
 namespace gsl
 {
 //
@@ -94,6 +102,35 @@ namespace gsl
 
 // index type for all container indexes/subscripts/sizes
 using index = std::ptrdiff_t;
+
+namespace details
+{
+    template <typename...>
+    using void_t = void;
+
+    template <typename T, typename = void>
+    struct is_iterator : std::false_type
+    {
+    };
+
+    template <typename T>
+    struct is_iterator<T, void_t<typename std::iterator_traits<T>::value_type>> : std::true_type
+    {
+    };
+
+    template <typename T, typename = void>
+    struct is_fwd_iterator : std::false_type
+    {
+    };
+
+    template <typename T>
+    struct is_fwd_iterator<T, void_t<typename std::iterator_traits<T>::iterator_category>>
+        : std::integral_constant<
+              bool, std::is_base_of<std::forward_iterator_tag,
+                                    typename std::iterator_traits<T>::iterator_category>::value>
+    {
+    };
+} // namespace details
 
 // final_action allows you to ensure something gets run at the end of a scope
 template <class F>
