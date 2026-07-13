@@ -54,6 +54,14 @@ if (NOT GTestMain_FOUND)
         ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL
     )
+
+    # googletest is built as its own target, so apply this workaround there.
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"
+      AND CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC"
+      AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 22)
+      target_compile_options(gtest PRIVATE -Wno-character-conversion)
+      target_compile_options(gtest_main PRIVATE -Wno-character-conversion)
+    endif()
 endif()
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -111,7 +119,7 @@ if(MSVC) # MSVC or simulating MSVC
           -Wno-undef # GTest
           -Wno-used-but-marked-unused # GTest EXPECT_DEATH
           -Wno-switch-default # GTest EXPECT_DEATH
-          $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
+           $<$<EQUAL:${GSL_CXX_STANDARD},14>: # no support for [[maybe_unused]]
             -Wno-unused-member-function
             -Wno-unused-variable
             $<$<VERSION_EQUAL:$<CXX_COMPILER_VERSION>,15.0.1>:
