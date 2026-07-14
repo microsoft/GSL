@@ -1,0 +1,156 @@
+name: Span Benchmark
+
+on:
+  pull_request:
+    branches: [main]
+
+# Cancel stale runs when a new commit is pushed to the same PR.
+concurrency:
+  group: span-bench-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  benchmark-linux:
+    name: Linux / ${{ format('{0}-cpp{1}', matrix.cxx, matrix.cppstd) }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cxx: [g++-13, g++-14, clang++-16, clang++-17, clang++-18]
+        cppstd: [20, 23]
+        exclude:
+          - cxx: g++-13
+            cppstd: 23 
+          - cxx: clang++-17
+            cppstd: 23 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache FetchContent dependencies
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: fetchcontent-linux-${{ matrix.cxx }}-${{ hashFiles('benchmark/CMakeLists.txt') }}
+          restore-keys: |
+            fetchcontent-linux-${{ matrix.cxx }}-
+
+      - name: Configure
+        run: |
+          cmake -S . -B build \
+            -DGSL_BENCHMARK=ON \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
+
+      - name: Build
+        run: cmake --build build --target span_bench -j$(nproc)
+
+      - name: Run benchmark
+        run: |
+          ./build/span_bench \
+            --benchmark_format=json \
+            --benchmark_repetitions=10 \
+            --benchmark_report_aggregates_only=true \
+            --benchmark_out=results_${{ format('{0}-cpp{1}', matrix.cxx, matrix.cppstd) }}.json
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ format('{0}-cpp{1}', matrix.cxx, matrix.cppstd) }}
+          path: results_${{ format('{0}-cpp{1}', matrix.cxx, matrix.cppstd) }}.json
+          retention-days: 7
+
+  benchmark-windows:
+    name: Windows / ${{ format('{0}-cpp{1}', matrix.toolset || 'MSVC', matrix.cppstd) }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        generator: [ 'Visual Studio 17 2022' ]
+        toolset: [ '', 'ClangCL' ]
+        cppstd: [ 20, 23 ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache FetchContent dependencies
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: fetchcontent-windows-${{ matrix.toolset }}-${{ hashFiles('benchmark/CMakeLists.txt') }}
+          restore-keys: |
+            fetchcontent-windows-${{ matrix.toolset }}-
+
+      - name: Configure
+        shell: pwsh
+        run: |
+          $tsArg = if ("${{ matrix.toolset }}" -ne "") { @("-T", "${{ matrix.toolset }}") } else { @() }
+
+          cmake -S . -B build `
+            -DGSL_BENCHMARK=ON `
+            -G "${{ matrix.generator }}" @tsArg `
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} `
+
+      - name: Build
+        shell: pwsh
+        run: |
+          cmake --build build --target span_bench `
+            --config Release -j $env:NUMBER_OF_PROCESSORS
+
+      - name: Run benchmark
+        shell: pwsh
+        run: |
+          .\build\Release\span_bench.exe `
+            --benchmark_format=json `
+            --benchmark_repetitions=10 `
+            --benchmark_report_aggregates_only=true `
+            --benchmark_out=results_${{ format('{0}-cpp{1}', matrix.toolset || 'MSVC', matrix.cppstd) }}.json
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ format('{0}-cpp{1}', matrix.toolset || 'MSVC', matrix.cppstd) }}
+          path: results_${{ format('{0}-cpp{1}', matrix.toolset || 'MSVC', matrix.cppstd) }}.json
+          retention-days: 7
+
+  benchmark-macos:
+    name: macOS / ${{ format('AppleClang-cpp{0}', matrix.cppstd) }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cppstd: [ 20, 23 ]          
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache FetchContent dependencies
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: fetchcontent-macos-${{ matrix.cppstd }}-${{ hashFiles('benchmark/CMakeLists.txt') }}
+          restore-keys: |
+            fetchcontent-macos-${{ matrix.cppstd }}-
+
+      - name: Configure
+        run: |
+          cmake -S . -B build \
+            -DGSL_BENCHMARK=ON \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cppstd }} \
+
+      - name: Build
+        run: cmake --build build --target span_bench -j$(sysctl -n hw.logicalcpu)
+
+      - name: Run benchmark
+        run: |
+          ./build/span_bench \
+            --benchmark_format=json \
+            --benchmark_repetitions=10 \
+            --benchmark_report_aggregates_only=true \
+            --benchmark_out=results_${{ format('AppleClang-cpp{0}', matrix.cppstd) }}.json
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ format('AppleClang-cpp{0}', matrix.cppstd) }}
+          path: results_${{ format('AppleClang-cpp{0}', matrix.cppstd) }}.json
+          retention-days: 7
