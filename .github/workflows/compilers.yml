@@ -61,7 +61,7 @@ jobs:
   xcode:
     strategy:
       matrix:
-        xcode_version: [ '16.4' ]
+        xcode_version: [ '26.6' ]
         build_type: [ Debug, Release ]
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: macos-latest
@@ -88,9 +88,13 @@ jobs:
           # Regular MSVC builds use Ninja (from preset)
           - toolset: 'msvc'
             generator_override: ''
-          # ClangCL builds require Visual Studio generator
-          - toolset: 'ClangCL'
+          # ClangCL builds require Visual Studio generator; version depends on image
+          - image: windows-2022
+            toolset: 'ClangCL'
             generator_override: '-G "Visual Studio 17 2022" -T ClangCL'
+          - image: windows-2025
+            toolset: 'ClangCL'
+            generator_override: '-G "Visual Studio 18 2026" -T ClangCL'
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v6
