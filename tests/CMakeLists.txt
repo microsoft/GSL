@@ -18,8 +18,21 @@ if(CI_TESTING AND GSL_CXX_STANDARD EQUAL 20)
     add_compile_definitions(FORCE_STD_SPAN_TESTS=1)
 endif()
 
-pkg_search_module(GTestMain gtest_main)
-if (NOT GTestMain_FOUND)
+if(IOS)
+    add_compile_definitions(GTEST_HAS_DEATH_TEST=1 IOS_PROCESS_DELAY_WORKAROUND=1)
+endif()
+
+find_package(GTest QUIET)
+
+if(GTest_FOUND)
+    set(GTestMain_LIBRARIES GTest::gtest_main)
+endif()
+
+if(NOT GTest_FOUND)
+    pkg_search_module(GTestMain gtest_main)
+endif()
+
+if(NOT GTest_FOUND AND NOT GTestMain_FOUND)
     # No pre-installed GTest is available, try to download it using Git.
     find_package(Git REQUIRED QUIET)
 
