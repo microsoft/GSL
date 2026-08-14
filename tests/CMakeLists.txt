@@ -22,7 +22,16 @@ if(IOS)
     add_compile_definitions(GTEST_HAS_DEATH_TEST=1 IOS_PROCESS_DELAY_WORKAROUND=1)
 endif()
 
-pkg_search_module(GTestMain gtest_main)
+# Prefer CMake package config (vcpkg / most package managers) before pkg-config,
+# which is often unavailable on Windows (#1256).
+find_package(GTest QUIET)
+if (GTest_FOUND)
+    set(GTestMain_FOUND TRUE)
+    set(GTestMain_LIBRARIES GTest::gtest_main)
+else()
+    pkg_search_module(GTestMain gtest_main)
+endif()
+
 if (NOT GTestMain_FOUND)
     # No pre-installed GTest is available, try to download it using Git.
     find_package(Git REQUIRED QUIET)
