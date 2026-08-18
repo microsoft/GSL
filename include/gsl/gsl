@@ -21,6 +21,7 @@
 #include "./algorithm" // copy
 #include "./assert"    // Ensures/Expects
 #include "./byte"      // byte
+#include "./dyn_array" // dyn_array
 #include "./pointers"  // owner, not_null
 #include "./span"      // span
 #include "./util"      // finally()/narrow_cast()...
