@@ -133,6 +133,12 @@ namespace details
 } // namespace details
 
 // final_action allows you to ensure something gets run at the end of a scope
+// The bool member causes trailing padding when F has alignment > 1; suppress
+// -Wpadded since the padding is unavoidable for a generic callable wrapper.
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpadded"
+#endif // defined(__clang__)
 template <class F>
 class final_action
 {
@@ -157,6 +163,9 @@ private:
     F f;
     bool invoke = true;
 };
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif // defined(__clang__)
 
 // finally() - convenience function to generate a final_action
 template <class F>

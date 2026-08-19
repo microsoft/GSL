@@ -216,9 +216,8 @@ namespace details
 
         constexpr auto operator++(int)
         {
-            auto rv = *this;
             ++(*this);
-            return rv;
+            return dyn_array_iterator{_ptr, _pos - 1, _end_pos};
         }
 
         constexpr auto operator--() -> dyn_array_iterator&
@@ -230,9 +229,8 @@ namespace details
 
         constexpr auto operator--(int)
         {
-            auto rv = *this;
             --(*this);
-            return rv;
+            return dyn_array_iterator{_ptr, _pos + 1, _end_pos};
         }
 
         constexpr auto operator+=(difference_type diff) -> dyn_array_iterator&

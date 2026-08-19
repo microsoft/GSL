@@ -189,6 +189,10 @@ TEST(dyn_array_tests, ranges)
 #endif /* __cpp_lib_ranges >= 201911L */
 
 #if defined(__cpp_lib_constexpr_dynamic_alloc) && (__cpp_lib_constexpr_dynamic_alloc >= 201907L)
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpadded"
+#endif // defined(__clang__)
 template <typename T, unsigned N>
 struct ConstexprAllocator
 {
@@ -218,6 +222,9 @@ struct ConstexprAllocator
 
     constexpr void deallocate(value_type*, std::size_t) noexcept {}
 };
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif // defined(__clang__)
 
 template <typename T1, unsigned N1, typename T2, unsigned N2>
 constexpr auto operator==(const ConstexprAllocator<T1, N1>& lhs,
