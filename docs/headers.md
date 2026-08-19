@@ -158,7 +158,7 @@ Convert the given value `I` to a `byte`. The template requires `I` to be in the 
 
 ## <a name="H-dyn_array" />`<dyn_array>`
 
-This header contains an owning dynamically allocated array type whose size is fixed between assignments.
+This header contains an owning dynamically allocated array type whose size is fixed at construction.
 
 - [`gsl::dyn_array`](#user-content-H-dyn_array-dyn_array)
 
@@ -170,7 +170,7 @@ class dyn_array;
 ```
 
 `gsl::dyn_array` owns a contiguous sequence of `T` objects allocated with `Allocator`.
-The number of elements is established when the object is constructed and remains unchanged until the object is copy-assigned.
+The number of elements is established when the object is constructed and remains unchanged.
 It provides bounds-checked element access and checked random-access iterators.
 
 `gsl::dyn_array` is useful when the number of elements is known only at runtime, but the array should not grow or shrink through container operations.
@@ -242,8 +242,7 @@ constexpr dyn_array(dyn_array&&) = delete;
 dyn_array& operator=(dyn_array&&) = delete;
 ```
 
-Copy assignment replaces the contents with copies of the elements in `other`.
-Move construction and move assignment are explicitly deleted.
+Copy assignment, move assignment, and move construction are explicitly deleted.
 
 ##### Observers
 
@@ -300,7 +299,7 @@ constexpr auto crend() const;
 
 Returns a reverse iterator to the first element of the reversed range or to one past the last element of the reversed range.
 
-The iterators are random-access iterators and perform bounds checking.
+The iterators are random-access iterators and perform bounds checking; they can never be invalidated.
 Dereferencing `end()`, moving before `begin()` or past `end()`, or comparing iterators from different arrays violates preconditions.
 
 ##### Comparisons
