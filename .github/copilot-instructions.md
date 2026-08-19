@@ -74,7 +74,6 @@ correctness, and zero overhead.
   - Windows (MSVC)
   - Linux (GCC, Clang)
   - macOS (AppleClang)
-  - Android and iOS where applicable
 
 ## Copilot Tasks
 - You can find the CMake artifacts for C++20 in build-cxx20 and C++14 in build-cxx14.

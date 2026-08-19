@@ -2,8 +2,6 @@
 
 1. [ ] [CMakeLists.txt](../CMakeLists.txt) Bump `GSL_VERSION`
 1. [ ] [README.md](../README.md) Bump `GIT_TAG`
-1. [ ] [ios.yml](../.github/workflows/ios.yml) Bump `MACOSX_BUNDLE_BUNDLE_VERSION` and
-`MACOSX_BUNDLE_SHORT_VERSION_STRING`
 
 > After updating, you need to create a new GitHub release:
 
