@@ -89,6 +89,14 @@
             }
         },
         {
+            "name": "msvc-20-debug-asan",
+            "displayName": "MSVC C++20 Debug with AddressSanitizer",
+            "inherits": "msvc-20-debug",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "/fsanitize=address"
+            }
+        },
+        {
             "name": "msvc-20-release",
             "displayName": "MSVC C++20 Release",
             "inherits": "msvc-base",
@@ -233,6 +241,20 @@
             }
         },
         {
+            "name": "clang-20-debug-asan-ubsan",
+            "displayName": "Clang C++20 Debug with AddressSanitizer and UndefinedBehaviorSanitizer",
+            "inherits": "clang-20-debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer",
+                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined"
+            }
+        },
+        {
             "name": "clang-20-release",
             "displayName": "Clang C++20 Release",
             "inherits": "clang-base",
@@ -282,6 +304,10 @@
             "configurePreset": "msvc-20-debug"
         },
         {
+            "name": "msvc-20-debug-asan",
+            "configurePreset": "msvc-20-debug-asan"
+        },
+        {
             "name": "msvc-20-release",
             "configurePreset": "msvc-20-release"
         },
@@ -344,6 +370,10 @@
         {
             "name": "clang-20-debug",
             "configurePreset": "clang-20-debug"
+        },
+        {
+            "name": "clang-20-debug-asan-ubsan",
+            "configurePreset": "clang-20-debug-asan-ubsan"
         },
         {
             "name": "clang-20-release",
@@ -380,6 +410,13 @@
             "configurePreset": "msvc-20-debug"
         },
         {
+            "name": "msvc-20-debug-asan",
+            "configurePreset": "msvc-20-debug-asan",
+            "environment": {
+                "ASAN_OPTIONS": "halt_on_error=1"
+            }
+        },
+        {
             "name": "msvc-20-release",
             "configurePreset": "msvc-20-release"
         },
@@ -442,6 +479,14 @@
         {
             "name": "clang-20-debug",
             "configurePreset": "clang-20-debug"
+        },
+        {
+            "name": "clang-20-debug-asan-ubsan",
+            "configurePreset": "clang-20-debug-asan-ubsan",
+            "environment": {
+                "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1",
+                "UBSAN_OPTIONS": "print_stacktrace=1:halt_on_error=1"
+            }
         },
         {
             "name": "clang-20-release",
