@@ -178,7 +178,14 @@ GSL_NODISCARD auto finally(F&& f) noexcept
 template <class T, class U>
 GSL_SUPPRESS(type.1) constexpr T narrow_cast(U&& u) noexcept
 {
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
     return static_cast<T>(std::forward<U>(u));
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 }
 
 //
