@@ -58,6 +58,16 @@ jobs:
         with:
           cmake_preset: clang-${{ matrix.cxx_version }}-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
 
+  linux-sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run CMake with AddressSanitizer and UndefinedBehaviorSanitizer
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_preset: clang-20-debug-asan-ubsan
+
   xcode:
     strategy:
       matrix:
@@ -108,3 +118,15 @@ jobs:
           extra_cmake_configure_args: ${{ matrix.generator_override }}
           extra_cmake_build_args: ${{ matrix.toolset == 'ClangCL' && format('--config {0}', matrix.build_type) || '' }}
           extra_ctest_args: ${{ matrix.toolset == 'ClangCL' && format('-C {0}', matrix.build_type) || '' }}
+
+  windows-sanitizer:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: microsoft/setup-msbuild@v3
+      - uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Run CMake with AddressSanitizer
+        uses: ./.github/workflows/cmake
+        with:
+          cmake_preset: msvc-20-debug-asan
