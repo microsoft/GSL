@@ -23,27 +23,28 @@ namespace gsl
 {
 namespace details
 {
-template <class T, class U>
-constexpr bool static_cast_is_defined(U u, /*is_floating_point_to_integral=*/std::true_type)
-{
-    if (std::is_same<typename std::remove_cv<T>::type, bool>::value) { return true; }
+    template <class T, class U>
+    constexpr bool static_cast_is_defined(U u, /*is_floating_point_to_integral=*/std::true_type)
+    {
+        if (std::is_same<typename std::remove_cv<T>::type, bool>::value) { return true; }
 
-    U upper_bound{1};
-    for (int i = 0; i < std::numeric_limits<T>::digits; i++) {
-        upper_bound *= std::numeric_limits<T>::radix;
+        U upper_bound{1};
+        for (int i = 0; i < std::numeric_limits<T>::digits; i++)
+        {
+            upper_bound *= std::numeric_limits<T>::radix;
+        }
+
+        if (u >= U{}) { return u < upper_bound; }
+        if (!std::is_signed<T>::value) { return u > U{-1}; }
+
+        return u + upper_bound > U{-1};
     }
 
-    if (u >= U{}) { return u < upper_bound; }
-    if (!std::is_signed<T>::value) { return u > U{-1}; }
-
-    return u + upper_bound > U{-1};
-}
-
-template <class T, class U>
-constexpr bool static_cast_is_defined(U, /*is_floating_point_to_integral=*/std::false_type)
-{
-    return true;
-}
+    template <class T, class U>
+    constexpr bool static_cast_is_defined(U, /*is_floating_point_to_integral=*/std::false_type)
+    {
+        return true;
+    }
 } // namespace details
 
 struct narrowing_error : public std::exception
@@ -53,14 +54,14 @@ struct narrowing_error : public std::exception
 
 // narrow() : a checked version of narrow_cast() that throws if the cast changed the value
 template <class T, class U, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-GSL_SUPPRESS(type.1)
-constexpr T narrow(U u)
+GSL_SUPPRESS(type.1) constexpr T narrow(U u)
 {
     constexpr const bool is_different_signedness =
         (std::is_signed<T>::value != std::is_signed<U>::value);
 
     using is_floating_point_to_integral =
-        std::integral_constant<bool, std::is_integral<T>::value && std::is_floating_point<U>::value>;
+        std::integral_constant<bool,
+                               std::is_integral<T>::value && std::is_floating_point<U>::value>;
     if (!details::static_cast_is_defined<T, U>(u, is_floating_point_to_integral{}))
     {
         throw narrowing_error{};

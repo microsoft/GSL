@@ -141,19 +141,19 @@ TEST(utils_tests, static_cast_is_defined)
     EXPECT_FALSE(details::static_cast_is_defined<unsigned>(-1.0, std::true_type{}));
 
     const double uint32_upper_bound = std::ldexp(1.0, std::numeric_limits<uint32_t>::digits);
-    EXPECT_TRUE(details::static_cast_is_defined<uint32_t>(
-        std::nextafter(uint32_upper_bound, 0.0), std::true_type{}));
-    EXPECT_FALSE(
-        details::static_cast_is_defined<uint32_t>(uint32_upper_bound, std::true_type{}));
+    EXPECT_TRUE(details::static_cast_is_defined<uint32_t>(std::nextafter(uint32_upper_bound, 0.0),
+                                                          std::true_type{}));
+    EXPECT_FALSE(details::static_cast_is_defined<uint32_t>(uint32_upper_bound, std::true_type{}));
 
     const double int32_lower_bound = -std::ldexp(1.0, std::numeric_limits<int32_t>::digits);
-    EXPECT_TRUE(details::static_cast_is_defined<int32_t>(int32_lower_bound - 0.5, std::true_type{}));
+    EXPECT_TRUE(
+        details::static_cast_is_defined<int32_t>(int32_lower_bound - 0.5, std::true_type{}));
     EXPECT_FALSE(
         details::static_cast_is_defined<int32_t>(int32_lower_bound - 1.0, std::true_type{}));
 
     const double int32_upper_bound = std::ldexp(1.0, std::numeric_limits<int32_t>::digits);
-    EXPECT_TRUE(details::static_cast_is_defined<int32_t>(
-        std::nextafter(int32_upper_bound, 0.0), std::true_type{}));
+    EXPECT_TRUE(details::static_cast_is_defined<int32_t>(std::nextafter(int32_upper_bound, 0.0),
+                                                         std::true_type{}));
     EXPECT_FALSE(details::static_cast_is_defined<int32_t>(int32_upper_bound, std::true_type{}));
 
     const float int32_min = static_cast<float>((std::numeric_limits<int32_t>::min)());
@@ -163,23 +163,25 @@ TEST(utils_tests, static_cast_is_defined)
 
     EXPECT_TRUE(details::static_cast_is_defined<const bool>(-1.0, std::true_type{}));
     EXPECT_TRUE(details::static_cast_is_defined<int>(0, std::false_type{}));
-    EXPECT_FALSE(details::static_cast_is_defined<int>(
-        std::numeric_limits<double>::infinity(), std::true_type{}));
-    EXPECT_FALSE(details::static_cast_is_defined<int>(
-        -std::numeric_limits<double>::infinity(), std::true_type{}));
-    EXPECT_FALSE(details::static_cast_is_defined<int>(
-        std::numeric_limits<double>::quiet_NaN(), std::true_type{}));
+    EXPECT_FALSE(details::static_cast_is_defined<int>(std::numeric_limits<double>::infinity(),
+                                                      std::true_type{}));
+    EXPECT_FALSE(details::static_cast_is_defined<int>(-std::numeric_limits<double>::infinity(),
+                                                      std::true_type{}));
+    EXPECT_FALSE(details::static_cast_is_defined<int>(std::numeric_limits<double>::quiet_NaN(),
+                                                      std::true_type{}));
 }
 
 TEST(utils_tests, narrow_exact_signed_minimum)
 {
     EXPECT_NO_THROW({
-        const auto value = narrow<int32_t>(static_cast<float>((std::numeric_limits<int32_t>::min)()));
+        const auto value =
+            narrow<int32_t>(static_cast<float>((std::numeric_limits<int32_t>::min)()));
         EXPECT_EQ(value, (std::numeric_limits<int32_t>::min)());
     });
 
     EXPECT_NO_THROW({
-        const auto value = narrow<int64_t>(static_cast<double>((std::numeric_limits<int64_t>::min)()));
+        const auto value =
+            narrow<int64_t>(static_cast<double>((std::numeric_limits<int64_t>::min)()));
         EXPECT_EQ(value, (std::numeric_limits<int64_t>::min)());
     });
 }
