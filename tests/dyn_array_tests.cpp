@@ -16,6 +16,9 @@
 
 static_assert(sizeof(gsl::dyn_array<int>) == 2 * sizeof(void*),
               "gsl::dyn_array (with the default allocator) should be 16 bytes");
+static_assert(
+    std::is_convertible<gsl::dyn_array<int>::iterator, gsl::dyn_array<int>::const_iterator>::value,
+    "gsl::dyn_array iterator should be implicitly convertible to const_iterator");
 
 #if defined(__cpp_lib_concepts) && (__cpp_lib_concepts >= 202002L)
 static_assert(std::input_iterator<gsl::dyn_array<int>::iterator>,
