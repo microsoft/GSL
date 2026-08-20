@@ -34,6 +34,9 @@
 
 namespace gsl
 {
+template <typename T, typename Allocator = std::allocator<T>>
+class dyn_array;
+
 namespace details
 {
     template <typename T, typename Allocator = std::allocator<T>>
@@ -178,13 +181,6 @@ namespace details
         constexpr dyn_array_iterator() = default;
 #endif /* __cpp_lib_ranges >= 201911L */
 
-        constexpr dyn_array_iterator(pointer ptr, size_type pos, size_type end_pos)
-            : _ptr{ptr}, _pos{pos}, _end_pos{end_pos}
-        {
-            Ensures((_ptr != nullptr && _end_pos > 0) || (_ptr == nullptr && _end_pos == 0));
-            Ensures(_pos <= _end_pos);
-        }
-
         constexpr operator dyn_array_iterator<const T>() const { return {_ptr, _pos, _end_pos}; }
 
 #if defined(_MSC_VER) && defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
@@ -281,13 +277,23 @@ namespace details
         }
 
     private:
+        constexpr dyn_array_iterator(pointer ptr, size_type pos, size_type end_pos)
+            : _ptr{ptr}, _pos{pos}, _end_pos{end_pos}
+        {
+            Ensures((_ptr != nullptr && _end_pos > 0) || (_ptr == nullptr && _end_pos == 0));
+            Ensures(_pos <= _end_pos);
+        }
+
         pointer _ptr{};
         size_type _pos{};
         size_type _end_pos{};
+
+        template <typename, typename>
+        friend class ::gsl::dyn_array;
     };
 } // namespace details
 
-template <typename T, typename Allocator = std::allocator<T>>
+template <typename T, typename Allocator>
 class dyn_array : private details::dyn_array_base<T, Allocator>
 {
     using base = details::dyn_array_base<T, Allocator>;
