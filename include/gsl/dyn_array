@@ -185,6 +185,8 @@ namespace details
             Ensures(_pos <= _end_pos);
         }
 
+        constexpr operator dyn_array_iterator<const T>() const { return {_ptr, _pos, _end_pos}; }
+
 #if defined(_MSC_VER) && defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
         constexpr operator pointer() const { return _ptr + gsl::narrow<size_type>(_pos); }
 #endif /* defined(_MSC_VER) && __cpp_lib_ranges >= 201911L */

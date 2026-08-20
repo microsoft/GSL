@@ -601,6 +601,8 @@ static_assert(std::is_same<gsl::span<const int, 3>::const_reference, const int&>
               "span<const int, 3>::const_reference should be const int&");
 
 // assertions for span_iterator
+static_assert(std::is_convertible<gsl::span<int>::iterator, gsl::span<const int>::iterator>::value,
+              "span<int>::iterator should be implicitly convertible to span<const int>::iterator");
 static_assert(std::is_same<std::iterator_traits<gsl::span<int>::iterator>::pointer, int*>::value,
               "span<int>::iterator's pointer should be int*");
 static_assert(
