@@ -16,9 +16,8 @@
 
 static_assert(sizeof(gsl::dyn_array<int>) == 2 * sizeof(void*),
               "gsl::dyn_array (with the default allocator) should be 16 bytes");
-static_assert(
-    !std::is_constructible<gsl::dyn_array<int>::iterator, gsl::dyn_array<int>&>::value,
-    "dyn_array<int>::iterator should not be constructible from dyn_array<int>");
+static_assert(!std::is_constructible<gsl::dyn_array<int>::iterator, gsl::dyn_array<int>&>::value,
+              "dyn_array<int>::iterator should not be constructible from dyn_array<int>");
 static_assert(
     !std::is_constructible<gsl::dyn_array<int>::iterator, int*, std::size_t, std::size_t>::value,
     "dyn_array<int>::iterator should not be constructible from an arbitrary state triple");
@@ -26,7 +25,7 @@ static_assert(
     !std::is_constructible<gsl::dyn_array<int>::const_iterator, const gsl::dyn_array<int>&>::value,
     "dyn_array<int>::const_iterator should not be constructible from dyn_array<int>");
 static_assert(!std::is_constructible<gsl::dyn_array<int>::const_iterator, const int*, std::size_t,
-                                    std::size_t>::value,
+                                     std::size_t>::value,
               "dyn_array<int>::const_iterator should not be constructible from an arbitrary state "
               "triple");
 static_assert(std::is_copy_constructible<gsl::dyn_array<int>::iterator>::value,
