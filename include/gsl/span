@@ -139,12 +139,6 @@ namespace details
 #endif // _MSC_VER
         constexpr span_iterator() = default;
 
-        constexpr span_iterator(pointer begin, pointer end, pointer current)
-            : begin_(begin), end_(end), current_(current)
-        {
-            Expects(begin_ <= current_ && current <= end_);
-        }
-
         constexpr operator span_iterator<const Type>() const noexcept
         {
             return {begin_, end_, current_};
@@ -335,10 +329,21 @@ namespace details
         }
 #endif
 
+    private:
+        constexpr span_iterator(pointer begin, pointer end, pointer current)
+            : begin_(begin), end_(end), current_(current)
+        {
+            Expects(begin_ <= current_ && current <= end_);
+        }
+
         pointer begin_ = nullptr;
         pointer end_ = nullptr;
         pointer current_ = nullptr;
 
+        template <class>
+        friend class span_iterator;
+        template <class, std::size_t>
+        friend class ::gsl::span;
         template <typename Ptr>
         friend struct std::pointer_traits;
     };
