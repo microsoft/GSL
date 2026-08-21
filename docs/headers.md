@@ -450,7 +450,7 @@ not_null& operator+=(std::ptrdiff_t) = delete;
 not_null& operator-=(std::ptrdiff_t) = delete;
 ```
 
-Explicitly deleted operators. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow these operators.
+Explicitly deleted operators. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow these operators.
 
 ##### Observers
 
@@ -472,7 +472,7 @@ Dereference the underlying pointer.
 void operator[](std::ptrdiff_t) const = delete;
 ```
 
-Array index operator is explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow treating them as an array.
+Array index operator is explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow treating them as an array.
 
 ```cpp
 void swap(not_null<T>& other) { std::swap(ptr_, other.ptr_); }
@@ -547,7 +547,7 @@ template <class T>
 not_null<T> operator+(std::ptrdiff_t, const not_null<T>&) = delete;
 ```
 
-Addition and subtraction are explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow these operators.
+Addition and subtraction are explicitly deleted. Pointers point to single objects ([I.13: Do not pass an array as a single pointer](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ri-array)), so don't allow these operators.
 
 ##### STL integration
 
