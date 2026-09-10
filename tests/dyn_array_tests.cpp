@@ -585,6 +585,15 @@ TEST(dyn_array_tests, const_operations)
     EXPECT_EQ(pirates[0], 'a');
 }
 
+TEST(dyn_array_tests, iterator_converts_to_const_iterator)
+{
+    gsl::dyn_array<char> mariners{'a', 'b', 'c'};
+    gsl::dyn_array<char>::const_iterator it = mariners.begin();
+    EXPECT_EQ(*it, 'a');
+    EXPECT_TRUE(it == mariners.cbegin());
+    EXPECT_TRUE(mariners.cend() == mariners.end());
+}
+
 TEST(dyn_array_tests, reverse_iterator)
 {
     const gsl::dyn_array<char> padres{'a', 'b', 'c'};

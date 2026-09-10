@@ -288,6 +288,8 @@ namespace details
         size_type _pos{};
         size_type _end_pos{};
 
+        template <typename>
+        friend class dyn_array_iterator;
         template <typename, typename>
         friend class ::gsl::dyn_array;
     };
