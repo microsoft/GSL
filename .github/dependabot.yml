@@ -8,3 +8,5 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    cooldown:
+      default-days: 7
