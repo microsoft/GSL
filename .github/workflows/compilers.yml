@@ -30,7 +30,7 @@ jobs:
             cxx_version: 23
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
@@ -51,7 +51,7 @@ jobs:
             cxx_version: 23
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
      
       - name: Run CMake (configure, build, test)
         uses: ./.github/workflows/cmake
@@ -61,7 +61,7 @@ jobs:
   linux-sanitizers:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Run CMake with AddressSanitizer and UndefinedBehaviorSanitizer
         uses: ./.github/workflows/cmake
@@ -76,7 +76,7 @@ jobs:
         cxx_version: [ 14, 17, 20, 23 ]
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: select xcode version
         run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode_version }}.app
@@ -107,7 +107,7 @@ jobs:
             generator_override: '-G "Visual Studio 18 2026" -T ClangCL'
     runs-on: ${{ matrix.image }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: microsoft/setup-msbuild@v3
       - uses: ilammy/msvc-dev-cmd@v1
 
@@ -122,7 +122,7 @@ jobs:
   windows-sanitizer:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: microsoft/setup-msbuild@v3
       - uses: ilammy/msvc-dev-cmd@v1
 
