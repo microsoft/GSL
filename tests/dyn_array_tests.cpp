@@ -9,6 +9,10 @@
 #include <iostream>
 #include <sstream>
 #include <type_traits>
+#include <utility>
+#if defined(__cplusplus) && __cplusplus >= 202002L
+#include <span>
+#endif /* __cplusplus >= 202002L */
 
 // Despite using <algorithm> and <ranges> utilities in this test, they
 // are not being included directly by this file as a test to ensure
@@ -37,11 +41,21 @@ static_assert(std::is_copy_constructible<gsl::dyn_array<int>::iterator>::value,
 #if defined(__cpp_lib_concepts) && (__cpp_lib_concepts >= 202002L)
 static_assert(std::input_iterator<gsl::dyn_array<int>::iterator>,
               "gsl::dyn_array should expose a valid input_iterator");
+static_assert(std::random_access_iterator<gsl::dyn_array<int>::iterator>,
+              "gsl::dyn_array should expose a valid random_access_iterator");
+static_assert(std::random_access_iterator<gsl::dyn_array<int>::const_iterator>,
+              "gsl::dyn_array should expose a valid random_access const_iterator");
+static_assert(std::contiguous_iterator<gsl::dyn_array<int>::iterator>,
+              "gsl::dyn_array should expose a valid contiguous_iterator");
+static_assert(std::contiguous_iterator<gsl::dyn_array<int>::const_iterator>,
+              "gsl::dyn_array should expose a valid contiguous const_iterator");
 #endif /* __cpp_lib_concepts >= 202002L */
 
 #if defined(__cpp_lib_ranges) && (__cpp_lib_ranges >= 201911L)
 static_assert(std::ranges::input_range<gsl::dyn_array<int>>,
               "gsl::dyn_array should be a valid input range");
+static_assert(std::ranges::contiguous_range<gsl::dyn_array<int>>,
+              "gsl::dyn_array should be a valid contiguous range");
 #endif /* __cpp_lib_ranges >= 201911L */
 
 TEST(dyn_array_tests, default_ctor)
@@ -630,6 +644,51 @@ TEST(dyn_array_tests, random_access_iterator_arithmetic_accepts_negative_offsets
     EXPECT_NO_THROW(next = *(third - -1));
     EXPECT_EQ(next, 'd');
 }
+
+TEST(dyn_array_tests, random_access_iterator_comparisons)
+{
+    gsl::dyn_array<char> giants{'c', 'a', 'b'};
+
+    const auto first = giants.begin();
+    const auto last = giants.end();
+
+    EXPECT_TRUE(first < last);
+    EXPECT_TRUE(last > first);
+    EXPECT_TRUE(first <= first);
+    EXPECT_TRUE(first >= first);
+    EXPECT_FALSE(last <= first);
+    EXPECT_EQ(2 + first, last - 1);
+    EXPECT_EQ(*(1 + first), 'a');
+
+    std::sort(giants.begin(), giants.end());
+    EXPECT_EQ(giants[0], 'a');
+    EXPECT_EQ(giants[1], 'b');
+    EXPECT_EQ(giants[2], 'c');
+}
+
+TEST(dyn_array_tests, iterator_member_access_and_default_construction)
+{
+    gsl::dyn_array<std::pair<char, int>> rockies{{'a', 1}, {'b', 2}};
+    EXPECT_EQ(rockies.begin()->second, 1);
+    EXPECT_EQ((rockies.begin() + 1)->first, 'b');
+
+    gsl::dyn_array<int>::iterator it{};
+    gsl::dyn_array<int>::const_iterator cit{};
+    EXPECT_TRUE(it == gsl::dyn_array<int>::iterator{});
+    EXPECT_TRUE(cit == gsl::dyn_array<int>::const_iterator{});
+}
+
+#if defined(__cpp_lib_span) && (__cpp_lib_span >= 202002L)
+TEST(dyn_array_tests, converts_to_a_span)
+{
+    gsl::dyn_array<char> giants{'a', 'b', 'c'};
+    const std::span<char> span{giants};
+
+    EXPECT_EQ(span.size(), giants.size());
+    EXPECT_EQ(span.data(), giants.data());
+    EXPECT_EQ(std::to_address(giants.end()), giants.data() + giants.size());
+}
+#endif /* __cpp_lib_span >= 202002L */
 
 TEST(dyn_array_tests, input_iterator_constructor)
 {
