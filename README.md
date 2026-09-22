@@ -189,7 +189,7 @@ include(FetchContent)
 
 FetchContent_Declare(GSL
     GIT_REPOSITORY "https://github.com/microsoft/GSL"
-    GIT_TAG "v5.0.0"
+    GIT_TAG "v5.0.1"
     GIT_SHALLOW ON
 )
 
