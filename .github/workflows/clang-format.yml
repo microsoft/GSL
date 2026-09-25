@@ -2,9 +2,9 @@ name: Code Formatting
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, 'rel/*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, 'rel/*' ]
 
 permissions:
   contents: read

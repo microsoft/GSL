@@ -1,9 +1,9 @@
 name: cmake_find_package
 on:
   push:
-    branches: [ main ]
+    branches: [ main, 'rel/*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, 'rel/*' ]
 
 jobs:
   cmake-find-package:
