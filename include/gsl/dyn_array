@@ -300,6 +300,10 @@ namespace details
         constexpr auto operator[](difference_type pos) const -> reference { return *(*this + pos); }
 
     private:
+#if defined(__GNUC__) && defined(__aarch64__) && !defined(__NO_INLINE__)
+        // workaround bug 108912 in g++ on aarch64
+        [[gnu::always_inline]]
+#endif /* __GNUC__ && __aarch64__ && !__NO_INLINE__ */
         constexpr dyn_array_iterator(pointer ptr, size_type pos, size_type end_pos)
             : _ptr{ptr}, _pos{pos}, _end_pos{end_pos}
         {
