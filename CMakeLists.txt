@@ -17,7 +17,49 @@ target_compile_features(GSL INTERFACE "cxx_std_14")
 # Setup include directory
 add_subdirectory(include)
 
-target_sources(GSL INTERFACE $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>)
+file(GLOB GSL_HEADER_FILES
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/gsl/*"
+)
+
+# Build/install interface lists ensure CMake is happy when exporting headers via
+# INTERFACE sources. Absolute paths would be rejected starting with CMake 4.1.2.
+set(GSL_HEADER_INTERFACE_SOURCES)
+foreach(header ${GSL_HEADER_FILES})
+    list(APPEND GSL_HEADER_INTERFACE_SOURCES
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${header}>
+        $<INSTALL_INTERFACE:include/${header}>
+    )
+endforeach()
+
+target_sources(GSL INTERFACE
+    ${GSL_HEADER_INTERFACE_SOURCES}
+    $<BUILD_INTERFACE:${GSL_SOURCE_DIR}/GSL.natvis>
+)
+
+if (CMAKE_GENERATOR MATCHES "Visual Studio")
+    file(GLOB GSL_WORKSPACE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/gsl/*")
+    list(APPEND GSL_WORKSPACE_FILES
+        ${GSL_SOURCE_DIR}/.clang-format
+        ${GSL_SOURCE_DIR}/.gitattributes
+        ${GSL_SOURCE_DIR}/.gitignore
+        ${GSL_SOURCE_DIR}/CMakeSettings.json
+        ${GSL_SOURCE_DIR}/CONTRIBUTING.md
+        ${GSL_SOURCE_DIR}/LICENSE
+        ${GSL_SOURCE_DIR}/README.md
+        ${GSL_SOURCE_DIR}/SECURITY.md
+        ${GSL_SOURCE_DIR}/ThirdPartyNotices.txt
+    )
+
+    target_sources(GSL PRIVATE ${GSL_WORKSPACE_FILES})
+
+    set(GSL_HEADER_ABSOLUTE_PATHS)
+    foreach(header ${GSL_HEADER_FILES})
+        list(APPEND GSL_HEADER_ABSOLUTE_PATHS ${GSL_SOURCE_DIR}/include/${header})
+    endforeach()
+    source_group(TREE ${GSL_SOURCE_DIR}/include PREFIX "Header Files" FILES ${GSL_HEADER_ABSOLUTE_PATHS})
+    source_group("Solution Items" FILES ${GSL_WORKSPACE_FILES})
+endif()
 
 if (GSL_TEST)
     enable_testing()
